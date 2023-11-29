@@ -99,7 +99,7 @@
           </ul>
         </li>
 
-        @if(Session::get('kurikulum') == '2013')
+        {{-- @if(Session::get('kurikulum') == '2013') --}}
 
         <!-- Kurikulum 2013 -->
         <li class="nav-header">SETTING RAPORT K-2013</li>
@@ -238,7 +238,7 @@
 
         <!-- End Kurikulum 2013 -->
 
-        @elseif(Session::get('kurikulum') == '2006')
+        {{-- @elseif(Session::get('kurikulum') == '2006') --}}
 
         <!-- Kurikulum 2006 -->
         <li class="nav-header">SETTING RAPORT KTSP 2006</li>
@@ -358,7 +358,7 @@
         </li>
         <!-- End Kurikulum 2006 -->
 
-        @endif
+        {{-- @endif --}}
 
         <li class="nav-item bg-danger mt-2">
           <a href="{{ route('logout') }}" class="nav-link" onclick="return confirm('Apakah anda yakin ingin keluar ?')">

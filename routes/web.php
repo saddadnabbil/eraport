@@ -398,34 +398,32 @@ Route::group(['middleware' => ['auth']], function () {
   // End Route User Guru 
 
   // Route User Siswa 
-  Route::group(['middleware' => 'checkRole:3'], function () {
 
-    Route::resource('profilesiswa', 'Siswa\ProfileController',  [
-      'uses' => ['update']
-    ]);
-    Route::resource('ekstra', 'Siswa\EkstrakulikulerController',  [
+  Route::resource('profilesiswa', 'Siswa\ProfileController',  [
+    'uses' => ['update']
+  ]);
+  Route::resource('ekstra', 'Siswa\EkstrakulikulerController',  [
+    'uses' => ['index']
+  ]);
+  Route::resource('presensi', 'Siswa\RekapKehadiranController',  [
+    'uses' => ['index']
+  ]);
+
+  // Raport K13 Siswa
+  Route::group(['middleware' => 'checkKurikulum:2013'], function () {
+    Route::resource('nilaiakhir', 'Siswa\K13\NilaiAkhirSemesterController',  [
       'uses' => ['index']
     ]);
-    Route::resource('presensi', 'Siswa\RekapKehadiranController',  [
-      'uses' => ['index']
-    ]);
-
-    // Raport K13 Siswa
-    Route::group(['middleware' => 'checkKurikulum:2013'], function () {
-      Route::resource('nilaiakhir', 'Siswa\K13\NilaiAkhirSemesterController',  [
-        'uses' => ['index']
-      ]);
-    });
-    // End  Raport K13 Siswa
-
-    // Raport KTSP Siswa
-    Route::group(['middleware' => 'checkKurikulum:2006'], function () {
-      Route::resource('nilaisemester', 'Siswa\KTSP\NilaiAkhirSemesterController',  [
-        'uses' => ['index']
-      ]);
-    });
-    // End  Raport KTSP Siswa
   });
+  // End  Raport K13 Siswa
+
+  // Raport KTSP Siswa
+  Route::group(['middleware' => 'checkKurikulum:2006'], function () {
+    Route::resource('nilaisemester', 'Siswa\KTSP\NilaiAkhirSemesterController',  [
+      'uses' => ['index']
+    ]);
+  });
+  // End  Raport KTSP Siswa
   // End Route User Siswa 
 
 });

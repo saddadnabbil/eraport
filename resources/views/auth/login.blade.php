@@ -4,7 +4,7 @@
   <div class="login-box">
     <div class="login-logo">
       <img src="/assets/dist/img/logo.png" alt="Logo" class="brand-image img-circle">
-      <p class="login-box-msg">Aplikasi <b>E</b>-Raport</p>
+      <p class="login-box-msg">Sister GIS</p>
     </div>
     <!-- /.login-logo -->
     <div class="card">
@@ -29,14 +29,14 @@
               </div>
             </div>
           </div>
-          <div class="mb-3">
+          {{-- <div class="mb-3">
             <select class="form-control" name="kurikulum" style="width: 100%;">
               <option value="">-- Pilih Kurikulum Sekolah -- </option>
               <option value="2013">Kurikulum 2013 </option>
               <option value="2006">Kurikulum 2006 (KTSP) </option>
             </select>
-          </div>
-          <div class="mb-1">
+          </div> --}}
+          {{-- <div class="mb-1">
             <select class="form-control" name="tahun_pelajaran" style="width: 100%;">
               <option value="" disabled>-- Pilih Tahun Pelajaran -- </option>
               <?php $no = 0; ?>
@@ -51,7 +51,7 @@
               </option>
               @endforeach
             </select>
-          </div>
+          </div> --}}
           <div class="form-check mt-2 mb-2">
             <input type="checkbox" class="form-check-input" id="exampleCheck2">
             <label class="form-check-label" for="exampleCheck2">Remember me</label>
