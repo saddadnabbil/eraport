@@ -13,7 +13,7 @@ class CreateTapelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tapel', function (Blueprint $table) {
+        Schema::create('tapels', function (Blueprint $table) {
             $table->id();
             $table->string('tahun_pelajaran', 9);
             $table->enum('semester', ['1', '2']);
@@ -28,6 +28,6 @@ class CreateTapelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tapel');
+        Schema::dropIfExists('tapels');
     }
 }

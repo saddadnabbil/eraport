@@ -3,15 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Guru;
-use App\Kelas;
-use App\RiwayatLogin;
-use App\Rules\MatchOldPassword;
-use App\Tapel;
 use App\User;
+use App\Kelas;
+use App\Tapel;
+use App\Sekolah;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Validator;
+use App\RiwayatLogin;
 use Illuminate\Http\Request;
+use App\Rules\MatchOldPassword;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -83,9 +84,15 @@ class AuthController extends Controller
                 } else {
                     $cek_riwayat->update(['status_login' => true]);
                 }
+
+                // $sekolah = Sekolah::find(Auth::id());
+
+                $sekolah = Sekolah::first()->tapel_id;
+
                 session([
                     // 'kurikulum' => $request->kurikulum,
-                    'tapel_id' => $request->tahun_pelajaran,
+                    // 'tapel_id' => $request->tahun_pelajaran,
+                    'tapel_id' => $sekolah,
                 ]);
 
                 if (Auth::user()->role == 2) {

@@ -47,7 +47,7 @@ class UserController extends Controller
         } else {
             $user = new User([
                 'username' => strtolower(str_replace(' ', '', $request->nama_lengkap)),
-                'password' => bcrypt('123456'),
+                'password' => bcrypt(strtolower(str_replace(' ', '', $request->nama_lengkap))),
                 'role' => 1,
                 'status' => true
             ]);

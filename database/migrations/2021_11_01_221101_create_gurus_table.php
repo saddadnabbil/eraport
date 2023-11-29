@@ -17,12 +17,13 @@ class CreateGurusTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id')->unique()->unsigned();
             $table->string('nama_lengkap', 100);
-            $table->string('gelar', 10);
-            $table->string('nip', 18)->unique();
+            $table->string('gelar', 10)->nullable();
+            $table->string('nip', 18)->unique()->nullable();
             $table->enum('jenis_kelamin', ['L', 'P']);
             $table->string('tempat_lahir', 30);
             $table->date('tanggal_lahir');
-            $table->string('nuptk', 16)->unique();
+            $table->string('nuptk', 16)->unique()->nullable();
+            $table->string('alamat', 100);
             $table->string('avatar');
             $table->timestamps();
 

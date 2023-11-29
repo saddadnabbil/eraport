@@ -37,7 +37,7 @@ class GuruController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nama_lengkap' => 'required|min:3|max:100|unique:guru',
-            'gelar' => 'required|min:3|max:10',
+            'gelar' => 'nullable|min:3|max:10',
             'nip' => 'nullable|digits:18|unique:guru',
             'jenis_kelamin' => 'required',
             'tempat_lahir' => 'required|min:3',
@@ -88,7 +88,7 @@ class GuruController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'gelar' => 'required|min:3|max:10',
+            'gelar' => 'nullable|min:3|max:10',
             'nip' => 'nullable|digits:18',
             'jenis_kelamin' => 'required',
             'tempat_lahir' => 'required|min:3',

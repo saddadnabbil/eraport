@@ -19,5 +19,17 @@ class Sekolah extends Model
         'logo',
         'kepala_sekolah',
         'nip_kepala_sekolah',
+        'tapel_id'
     ];
+
+    public function tapel()
+    {
+        return $this->belongsTo(Tapel::class, 'tapel_id');
+    }
+
+    // Contoh metode untuk mendapatkan tapel_id
+    public function getTapelIdAttribute()
+    {
+        return $this->attributes['tapel_id'];
+    }
 }

@@ -20,7 +20,7 @@ class CreateK13TglRaportsTable extends Migration
             $table->date('tanggal_pembagian');
             $table->timestamps();
 
-            $table->foreign('tapel_id')->references('id')->on('tapel');
+            $table->foreign('tapel_id')->references('id')->on('tapels');
         });
     }
 

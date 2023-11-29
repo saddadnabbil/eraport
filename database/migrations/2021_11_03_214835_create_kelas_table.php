@@ -21,7 +21,7 @@ class CreateKelasTable extends Migration
             $table->string('nama_kelas', 30);
             $table->timestamps();
 
-            $table->foreign('tapel_id')->references('id')->on('tapel');
+            $table->foreign('tapel_id')->references('id')->on('tapels');
             $table->foreign('guru_id')->references('id')->on('guru');
         });
     }

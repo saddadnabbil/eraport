@@ -19,6 +19,7 @@ class SekolahTableSeeder extends Seeder
             'alamat' => 'Jl. Indonesia Merdeka',
             'logo' => 'default.png',
             'kepala_sekolah' => 'SOEKARNO',
+            'tapel_id' => 1,
         ]);
     }
 }

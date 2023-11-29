@@ -20,7 +20,7 @@ class CreateEkstrakulikulersTable extends Migration
             $table->string('nama_ekstrakulikuler', 50);
             $table->timestamps();
 
-            $table->foreign('tapel_id')->references('id')->on('tapel');
+            $table->foreign('tapel_id')->references('id')->on('tapels');
             $table->foreign('pembina_id')->references('id')->on('guru');
 
             // Guru ID == Pembina
