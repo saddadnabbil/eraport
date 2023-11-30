@@ -36,7 +36,6 @@
           </a>
         </li>
 
-        @if(Session::get('kurikulum') == '2013')
 
         <!-- Kurikulum 2013 -->
 
@@ -50,21 +49,6 @@
         </li>
 
         <!-- End Kurikulum 2013 -->
-
-        @elseif(Session::get('kurikulum') == '2006')
-
-        <!-- Kurikulum 2006 -->
-        <li class="nav-item">
-          <a href="{{ route('nilaisemester.index') }}" class="nav-link">
-            <i class="nav-icon fas fa-table"></i>
-            <p>
-              Nilai Akhir Semester
-            </p>
-          </a>
-        </li>
-        <!-- End Kurikulum 2006 -->
-
-        @endif
 
         <li class="nav-item bg-danger mt-2">
           <a href="{{ route('logout') }}" class="nav-link" onclick="return confirm('Apakah anda yakin ingin keluar ?')">

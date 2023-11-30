@@ -215,112 +215,108 @@ Route::group(['middleware' => ['auth']], function () {
         ]);
 
         // Raport K13 Guru
-        Route::group(['middleware' => 'checkKurikulum:2013'], function () {
 
-          Route::resource('kdk13', 'Guru\K13\KdMapelController',  [
-            'uses' => ['index', 'create', 'store', 'update', 'destroy']
-          ]);
+        Route::resource('kdk13', 'Guru\K13\KdMapelController',  [
+          'uses' => ['index', 'create', 'store', 'update', 'destroy']
+        ]);
 
-          Route::resource('rencanapengetahuan', 'Guru\K13\RencanaNilaiPengetahuanController',  [
-            'uses' => ['index', 'create', 'store', 'show', 'edit', 'update']
-          ]);
-          Route::resource('rencanaketerampilan', 'Guru\K13\RencanaNilaiKeterampilanController',  [
-            'uses' => ['index', 'create', 'store', 'show', 'edit', 'update']
-          ]);
-          Route::resource('rencanaspiritual', 'Guru\K13\RencanaNilaiSpiritualController',  [
-            'uses' => ['index', 'create', 'store', 'show', 'edit', 'update']
-          ]);
-          Route::resource('rencanasosial', 'Guru\K13\RencanaNilaiSosialController',  [
-            'uses' => ['index', 'create', 'store', 'show', 'edit', 'update']
-          ]);
-          Route::resource('bobotnilai', 'Guru\K13\RencanaBobotPenilaianController',  [
-            'uses' => ['index', 'store', 'update']
-          ]);
+        Route::resource('rencanapengetahuan', 'Guru\K13\RencanaNilaiPengetahuanController',  [
+          'uses' => ['index', 'create', 'store', 'show', 'edit', 'update']
+        ]);
+        Route::resource('rencanaketerampilan', 'Guru\K13\RencanaNilaiKeterampilanController',  [
+          'uses' => ['index', 'create', 'store', 'show', 'edit', 'update']
+        ]);
+        Route::resource('rencanaspiritual', 'Guru\K13\RencanaNilaiSpiritualController',  [
+          'uses' => ['index', 'create', 'store', 'show', 'edit', 'update']
+        ]);
+        Route::resource('rencanasosial', 'Guru\K13\RencanaNilaiSosialController',  [
+          'uses' => ['index', 'create', 'store', 'show', 'edit', 'update']
+        ]);
+        Route::resource('bobotnilai', 'Guru\K13\RencanaBobotPenilaianController',  [
+          'uses' => ['index', 'store', 'update']
+        ]);
 
-          // Import Nilai
-          Route::get('nilaipengetahuan/import', 'Guru\K13\NilaiPengetahuanController@format_import')->name('nilaipengetahuan.format_import');
-          Route::post('nilaipengetahuan/import', 'Guru\K13\NilaiPengetahuanController@import')->name('nilaipengetahuan.import');
+        // Import Nilai
+        Route::get('nilaipengetahuan/import', 'Guru\K13\NilaiPengetahuanController@format_import')->name('nilaipengetahuan.format_import');
+        Route::post('nilaipengetahuan/import', 'Guru\K13\NilaiPengetahuanController@import')->name('nilaipengetahuan.import');
 
-          Route::get('nilaiketerampilan/import', 'Guru\K13\NilaiKeterampilanController@format_import')->name('nilaiketerampilan.format_import');
-          Route::post('nilaiketerampilan/import', 'Guru\K13\NilaiKeterampilanController@import')->name('nilaiketerampilan.import');
+        Route::get('nilaiketerampilan/import', 'Guru\K13\NilaiKeterampilanController@format_import')->name('nilaiketerampilan.format_import');
+        Route::post('nilaiketerampilan/import', 'Guru\K13\NilaiKeterampilanController@import')->name('nilaiketerampilan.import');
 
-          Route::get('nilaispiritual/import', 'Guru\K13\NilaiSpiritualController@format_import')->name('nilaispiritual.format_import');
-          Route::post('nilaispiritual/import', 'Guru\K13\NilaiSpiritualController@import')->name('nilaispiritual.import');
+        Route::get('nilaispiritual/import', 'Guru\K13\NilaiSpiritualController@format_import')->name('nilaispiritual.format_import');
+        Route::post('nilaispiritual/import', 'Guru\K13\NilaiSpiritualController@import')->name('nilaispiritual.import');
 
-          Route::get('nilaisosial/import', 'Guru\K13\NilaiSosialController@format_import')->name('nilaisosial.format_import');
-          Route::post('nilaisosial/import', 'Guru\K13\NilaiSosialController@import')->name('nilaisosial.import');
+        Route::get('nilaisosial/import', 'Guru\K13\NilaiSosialController@format_import')->name('nilaisosial.format_import');
+        Route::post('nilaisosial/import', 'Guru\K13\NilaiSosialController@import')->name('nilaisosial.import');
 
-          Route::get('nilaiptspas/import', 'Guru\K13\NilaiPtsPasController@format_import')->name('nilaiptspas.format_import');
-          Route::post('nilaiptspas/import', 'Guru\K13\NilaiPtsPasController@import')->name('nilaiptspas.import');
+        Route::get('nilaiptspas/import', 'Guru\K13\NilaiPtsPasController@format_import')->name('nilaiptspas.format_import');
+        Route::post('nilaiptspas/import', 'Guru\K13\NilaiPtsPasController@import')->name('nilaiptspas.import');
 
-          // End Import Nilai 
-          Route::resource('nilaipengetahuan', 'Guru\K13\NilaiPengetahuanController',  [
-            'uses' => ['index', 'create', 'store', 'update']
-          ]);
-          Route::resource('nilaiketerampilan', 'Guru\K13\NilaiKeterampilanController',  [
-            'uses' => ['index', 'create', 'store', 'update']
-          ]);
-          Route::resource('nilaispiritual', 'Guru\K13\NilaiSpiritualController',  [
-            'uses' => ['index', 'create', 'store', 'update']
-          ]);
-          Route::resource('nilaisosial', 'Guru\K13\NilaiSosialController',  [
-            'uses' => ['index', 'create', 'store', 'update']
-          ]);
-          Route::resource('nilaiptspas', 'Guru\K13\NilaiPtsPasController',  [
-            'uses' => ['index', 'create', 'store', 'update']
-          ]);
+        // End Import Nilai 
+        Route::resource('nilaipengetahuan', 'Guru\K13\NilaiPengetahuanController',  [
+          'uses' => ['index', 'create', 'store', 'update']
+        ]);
+        Route::resource('nilaiketerampilan', 'Guru\K13\NilaiKeterampilanController',  [
+          'uses' => ['index', 'create', 'store', 'update']
+        ]);
+        Route::resource('nilaispiritual', 'Guru\K13\NilaiSpiritualController',  [
+          'uses' => ['index', 'create', 'store', 'update']
+        ]);
+        Route::resource('nilaisosial', 'Guru\K13\NilaiSosialController',  [
+          'uses' => ['index', 'create', 'store', 'update']
+        ]);
+        Route::resource('nilaiptspas', 'Guru\K13\NilaiPtsPasController',  [
+          'uses' => ['index', 'create', 'store', 'update']
+        ]);
 
-          Route::resource('kirimnilaiakhir', 'Guru\K13\KirimNilaiAkhirController',  [
-            'uses' => ['index', 'create', 'store']
-          ]);
-          Route::resource('nilaiterkirim', 'Guru\K13\LihatNilaiTerkirimController',  [
-            'uses' => ['index', 'create']
-          ]);
-          Route::resource('prosesdeskripsi', 'Guru\K13\ProsesDeskripsiSiswaController',  [
-            'uses' => ['index', 'create', 'store']
-          ]);
-        });
+        Route::resource('kirimnilaiakhir', 'Guru\K13\KirimNilaiAkhirController',  [
+          'uses' => ['index', 'create', 'store']
+        ]);
+        Route::resource('nilaiterkirim', 'Guru\K13\LihatNilaiTerkirimController',  [
+          'uses' => ['index', 'create']
+        ]);
+        Route::resource('prosesdeskripsi', 'Guru\K13\ProsesDeskripsiSiswaController',  [
+          'uses' => ['index', 'create', 'store']
+        ]);
         // End  Raport K13 Guru
 
         // Raport KTSP Guru
-        Route::group(['middleware' => 'checkKurikulum:2006'], function () {
 
-          Route::resource('bobot', 'Guru\KTSP\BobotPenilaianController',  [
-            'uses' => ['index', 'store', 'update']
-          ]);
+        Route::resource('bobot', 'Guru\KTSP\BobotPenilaianController',  [
+          'uses' => ['index', 'store', 'update']
+        ]);
 
-          // Import Nilai
-          Route::get('nilaitugas/import', 'Guru\KTSP\NilaiTugasController@format_import')->name('nilaitugas.format_import');
-          Route::post('nilaitugas/import', 'Guru\KTSP\NilaiTugasController@import')->name('nilaitugas.import');
+        // Import Nilai
+        Route::get('nilaitugas/import', 'Guru\KTSP\NilaiTugasController@format_import')->name('nilaitugas.format_import');
+        Route::post('nilaitugas/import', 'Guru\KTSP\NilaiTugasController@import')->name('nilaitugas.import');
 
-          Route::get('nilaiuh/import', 'Guru\KTSP\NilaiUhController@format_import')->name('nilaiuh.format_import');
-          Route::post('nilaiuh/import', 'Guru\KTSP\NilaiUhController@import')->name('nilaiuh.import');
+        Route::get('nilaiuh/import', 'Guru\KTSP\NilaiUhController@format_import')->name('nilaiuh.format_import');
+        Route::post('nilaiuh/import', 'Guru\KTSP\NilaiUhController@import')->name('nilaiuh.import');
 
-          Route::get('nilaiutsuas/import', 'Guru\KTSP\NilaiUtsUasController@format_import')->name('nilaiutsuas.format_import');
-          Route::post('nilaiutsuas/import', 'Guru\KTSP\NilaiUtsUasController@import')->name('nilaiutsuas.import');
-          // End Import Nilai
+        Route::get('nilaiutsuas/import', 'Guru\KTSP\NilaiUtsUasController@format_import')->name('nilaiutsuas.format_import');
+        Route::post('nilaiutsuas/import', 'Guru\KTSP\NilaiUtsUasController@import')->name('nilaiutsuas.import');
+        // End Import Nilai
 
-          Route::resource('nilaitugas', 'Guru\KTSP\NilaiTugasController',  [
-            'uses' => ['index', 'create', 'store', 'update']
-          ]);
-          Route::resource('nilaiuh', 'Guru\KTSP\NilaiUhController',  [
-            'uses' => ['index', 'create', 'store', 'update']
-          ]);
-          Route::resource('nilaiutsuas', 'Guru\KTSP\NilaiUtsUasController',  [
-            'uses' => ['index', 'create', 'store', 'update']
-          ]);
+        Route::resource('nilaitugas', 'Guru\KTSP\NilaiTugasController',  [
+          'uses' => ['index', 'create', 'store', 'update']
+        ]);
+        Route::resource('nilaiuh', 'Guru\KTSP\NilaiUhController',  [
+          'uses' => ['index', 'create', 'store', 'update']
+        ]);
+        Route::resource('nilaiutsuas', 'Guru\KTSP\NilaiUtsUasController',  [
+          'uses' => ['index', 'create', 'store', 'update']
+        ]);
 
-          Route::resource('kirimnilai', 'Guru\KTSP\KirimNilaiController',  [
-            'uses' => ['index', 'create', 'store']
-          ]);
-          Route::resource('lihatnilai', 'Guru\KTSP\LihatNilaiController',  [
-            'uses' => ['index', 'create']
-          ]);
+        Route::resource('kirimnilai', 'Guru\KTSP\KirimNilaiController',  [
+          'uses' => ['index', 'create', 'store']
+        ]);
+        Route::resource('lihatnilai', 'Guru\KTSP\LihatNilaiController',  [
+          'uses' => ['index', 'create']
+        ]);
 
-          Route::resource('inputdeskripsi', 'Guru\KTSP\InputDeskripsiSiswaController',  [
-            'uses' => ['index', 'create', 'store']
-          ]);
-        });
+        Route::resource('inputdeskripsi', 'Guru\KTSP\InputDeskripsiSiswaController',  [
+          'uses' => ['index', 'create', 'store']
+        ]);
         // End  Raport KTSP Guru
       });
       // End Route Guru Mapel
@@ -345,51 +341,47 @@ Route::group(['middleware' => ['auth']], function () {
         ]);
 
         // Raport K13 Wali Kelas
-        Route::group(['middleware' => 'checkKurikulum:2013'], function () {
-          Route::resource('prosesdeskripsisikap', 'Walikelas\K13\ProsesDeskripsiSikapController',  [
-            'uses' => ['index', 'store']
-          ]);
-          Route::resource('statusnilaiguru', 'Walikelas\K13\StatusPenilaianGuruController',  [
-            'uses' => ['index']
-          ]);
-          Route::resource('hasilnilai', 'Walikelas\K13\HasilPengelolaanNilaiController',  [
-            'uses' => ['index']
-          ]);
-          Route::get('leger/export', 'Walikelas\K13\LihatLegerNilaiController@export')->name('leger.export');
-          Route::resource('leger', 'Walikelas\K13\LihatLegerNilaiController',  [
-            'uses' => ['index']
-          ]);
+        Route::resource('prosesdeskripsisikap', 'Walikelas\K13\ProsesDeskripsiSikapController',  [
+          'uses' => ['index', 'store']
+        ]);
+        Route::resource('statusnilaiguru', 'Walikelas\K13\StatusPenilaianGuruController',  [
+          'uses' => ['index']
+        ]);
+        Route::resource('hasilnilai', 'Walikelas\K13\HasilPengelolaanNilaiController',  [
+          'uses' => ['index']
+        ]);
+        Route::get('leger/export', 'Walikelas\K13\LihatLegerNilaiController@export')->name('leger.export');
+        Route::resource('leger', 'Walikelas\K13\LihatLegerNilaiController',  [
+          'uses' => ['index']
+        ]);
 
-          Route::resource('raportpts', 'Walikelas\K13\CetakRaportPTSController',  [
-            'uses' => ['index', 'store', 'show']
-          ]);
-          Route::resource('raportsemester', 'Walikelas\K13\CetakRaportSemesterController',  [
-            'uses' => ['index', 'store', 'show']
-          ]);
-        });
+        Route::resource('raportpts', 'Walikelas\K13\CetakRaportPTSController',  [
+          'uses' => ['index', 'store', 'show']
+        ]);
+        Route::resource('raportsemester', 'Walikelas\K13\CetakRaportSemesterController',  [
+          'uses' => ['index', 'store', 'show']
+        ]);
         // End  Raport K13 Wali Kelas
 
         // Raport KTSP Wali Kelas
-        Route::group(['middleware' => 'checkKurikulum:2006'], function () {
-          Route::resource('statuspenilaian', 'Walikelas\KTSP\StatusPenilaianController',  [
-            'uses' => ['index']
-          ]);
-          Route::resource('hasilpenilaian', 'Walikelas\KTSP\HasilPenilaianController',  [
-            'uses' => ['index']
-          ]);
-          Route::get('legernilai/export', 'Walikelas\KTSP\LegerNilaiController@export')->name('legernilai.export');
+        Route::resource('statuspenilaian', 'Walikelas\KTSP\StatusPenilaianController',  [
+          'uses' => ['index']
+        ]);
+        Route::resource('hasilpenilaian', 'Walikelas\KTSP\HasilPenilaianController',  [
+          'uses' => ['index']
+        ]);
+        Route::get('legernilai/export', 'Walikelas\KTSP\LegerNilaiController@export')->name('legernilai.export');
 
-          Route::resource('legernilai', 'Walikelas\KTSP\LegerNilaiController',  [
-            'uses' => ['index']
-          ]);
+        Route::resource('legernilai', 'Walikelas\KTSP\LegerNilaiController',  [
+          'uses' => ['index']
+        ]);
 
-          Route::resource('raportuts', 'Walikelas\KTSP\CetakRaportUTSController',  [
-            'uses' => ['index', 'store', 'show']
-          ]);
-          Route::resource('raportuas', 'Walikelas\KTSP\CetakRaportUASController',  [
-            'uses' => ['index', 'store', 'show']
-          ]);
-        });
+        Route::resource('raportuts', 'Walikelas\KTSP\CetakRaportUTSController',  [
+          'uses' => ['index', 'store', 'show']
+        ]);
+        Route::resource('raportuas', 'Walikelas\KTSP\CetakRaportUASController',  [
+          'uses' => ['index', 'store', 'show']
+        ]);
         // End  Raport KTSP Wali Kelas
       });
       // End Route Wali Kelas
@@ -410,19 +402,15 @@ Route::group(['middleware' => ['auth']], function () {
   ]);
 
   // Raport K13 Siswa
-  Route::group(['middleware' => 'checkKurikulum:2013'], function () {
-    Route::resource('nilaiakhir', 'Siswa\K13\NilaiAkhirSemesterController',  [
-      'uses' => ['index']
-    ]);
-  });
+  Route::resource('nilaiakhir', 'Siswa\K13\NilaiAkhirSemesterController',  [
+    'uses' => ['index']
+  ]);
   // End  Raport K13 Siswa
 
   // Raport KTSP Siswa
-  Route::group(['middleware' => 'checkKurikulum:2006'], function () {
-    Route::resource('nilaisemester', 'Siswa\KTSP\NilaiAkhirSemesterController',  [
-      'uses' => ['index']
-    ]);
-  });
+  Route::resource('nilaisemester', 'Siswa\KTSP\NilaiAkhirSemesterController',  [
+    'uses' => ['index']
+  ]);
   // End  Raport KTSP Siswa
   // End Route User Siswa 
 

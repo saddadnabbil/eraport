@@ -113,7 +113,6 @@
             </div>
             <!-- /.card-header -->
             <div class="card-body">
-              @if(Session::get('kurikulum') == '2013')
               <div class="table-responsive">
                 <table class="table table-bordered">
                   <thead class="bg-success">
@@ -308,95 +307,6 @@
               </div>
               <!-- /.table-responsive -->
 
-              @elseif(Session::get('kurikulum') == '2006')
-              <div class="table-responsive">
-                <table class="table table-bordered">
-                  <thead class="bg-success">
-                    <tr>
-                      <th rowspan="2" class="text-center">No</th>
-                      <th rowspan="2" class="text-center">Kelas</th>
-                      <th rowspan="2" class="text-center">Mata Pelajaran</th>
-                      <th rowspan="2" class="text-center" style="width: 50px;">KKM</th>
-                      <th rowspan="2" class="text-center" style="width: 100px;">Bobot</th>
-                      <th colspan="4" class="text-center" style="width: 200px;">Input Nilai</th>
-                      <th colspan="2" class="text-center" style="width: 100px;">Status Nilai Raport</th>
-                    </tr>
-                    <tr>
-                      <th class="text-center" style="width: 100px;">Tugas</th>
-                      <th class="text-center" style="width: 100px;">UH</th>
-                      <th class="text-center" style="width: 100px;">UTS</th>
-                      <th class="text-center" style="width: 100px;">UAS</th>
-
-                      <th class="text-center" style="width: 100px;">Kirim Nilai</th>
-                      <th class="text-center" style="width: 100px;">Input Deskripsi</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php $no = 0; ?>
-                    @foreach($data_capaian_penilaian as $penilaian)
-                    <?php $no++; ?>
-                    <tr>
-                      <td class="text-center">{{$no}}</td>
-                      <td class="text-center">{{$penilaian->kelas->nama_kelas}}</td>
-                      <td>{{$penilaian->mapel->nama_mapel}}</td>
-                      <td class="text-center">
-                        @if(is_null($penilaian->kkm))
-                        <span class="badge badge-danger">0</span>
-                        @else
-                        <span class="badge badge-success">{{$penilaian->kkm}}</span>
-                        @endif
-                      </td>
-
-                      <td class="text-center">
-                        @if(is_null($penilaian->bobot_tugas))
-                        <b class="text-danger">
-                          0
-                        </b>
-                        @else
-                        <b class="text-success">
-                          {{$penilaian->bobot_tugas}};{{$penilaian->bobot_uh}};{{$penilaian->bobot_uts}};{{$penilaian->bobot_uas}}
-                        </b>
-                        @endif
-                      </td>
-
-                      @if($penilaian->nilai_tugas == 0)
-                      <td><span class="badge badge-danger">Belum Input</span></td>
-                      @else
-                      <td><span class="badge badge-success">Sudah Input</span></td>
-                      @endif
-
-                      @if($penilaian->nilai_uh == 0)
-                      <td><span class="badge badge-danger">Belum Input</span></td>
-                      @else
-                      <td><span class="badge badge-success">Sudah Input</span></td>
-                      @endif
-
-                      @if($penilaian->nilai_uts_uas == 0)
-                      <td><span class="badge badge-danger">Belum Input</span></td>
-                      <td><span class="badge badge-danger">Belum Input</span></td>
-                      @else
-                      <td><span class="badge badge-success">Sudah Input</span></td>
-                      <td><span class="badge badge-success">Sudah Input</span></td>
-                      @endif
-
-                      @if($penilaian->kirim_nilai == 0)
-                      <td><span class="badge badge-danger">Belum Kirim</span></td>
-                      @else
-                      <td><span class="badge badge-success">Sudah Kirim</span></td>
-                      @endif
-
-                      @if($penilaian->deskripsi == 0)
-                      <td><span class="badge badge-danger">Belum Input</span></td>
-                      @else
-                      <td><span class="badge badge-success">Sudah Input</span></td>
-                      @endif
-
-                    </tr>
-                    @endforeach
-                  </tbody>
-                </table>
-              </div>
-              @endif
             </div>
             <!-- /.card-body -->
           </div>
