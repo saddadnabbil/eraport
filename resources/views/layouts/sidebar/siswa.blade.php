@@ -12,7 +12,7 @@
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <li class="nav-item">
-          <a href="{{ route('dashboard') }}" class="nav-link">
+          <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }} ">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
               Dashboard
@@ -20,7 +20,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="{{ route('ekstra.index') }}" class="nav-link">
+          <a href="{{ route('ekstra.index') }}" class="nav-link {{ request()->routeIs('ekstra.index') ? 'active' : '' }}">
             <i class="nav-icon fas fa-book-reader"></i>
             <p>
               Ekstrakulikuler
@@ -28,7 +28,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="{{ route('presensi.index') }}" class="nav-link">
+          <a href="{{ route('presensi.index') }}" class="nav-link {{ request()->routeIs('presensi.index') ? 'active' : '' }}">
             <i class="nav-icon fas fa-user-check"></i>
             <p>
               Rekap Kehadiran
@@ -40,7 +40,7 @@
         <!-- Kurikulum 2013 -->
 
         <li class="nav-item">
-          <a href="{{ route('nilaiakhir.index') }}" class="nav-link">
+          <a href="{{ route('nilaiakhir.index') }}" class="nav-link {{ request()->routeIs('nilaiakhir.index') ? 'active' : '' }}">
             <i class="nav-icon fas fa-table"></i>
             <p>
               Nilai Akhir Semester
