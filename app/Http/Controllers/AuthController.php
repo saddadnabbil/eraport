@@ -94,21 +94,26 @@ class AuthController extends Controller
                 ]);
 
                 $guru = Guru::where('user_id', Auth::id())->first();
-                $cek_wali_kelas = Kelas::where('guru_id', $guru->id)->first();
 
-                if (Auth::user()->role == 2) {
-                    if ($cek_wali_kelas == null) {
-                        session([
-                            'akses_sebagai' => 'Guru Mapel',
-                            'cek_wali_kelas' => false,
-                        ]);
-                    } else {
-                        session([
-                            'akses_sebagai' => 'Guru Mapel',
-                            'cek_wali_kelas' => true,
-                        ]);
+                if ($guru) {
+                    $cek_wali_kelas = Kelas::where('guru_id', $guru->id)->first();
+
+                    if (Auth::user()->role == 2) {
+                        if ($cek_wali_kelas == null) {
+                            session([
+                                'akses_sebagai' => 'Guru Mapel',
+                                'cek_wali_kelas' => false,
+                            ]);
+                        } else {
+                            session([
+                                'akses_sebagai' => 'Guru Mapel',
+                                'cek_wali_kelas' => true,
+                            ]);
+                        }
                     }
                 }
+
+
 
                 return redirect('/dashboard')->with('toast_success', 'Login berhasil');
             }

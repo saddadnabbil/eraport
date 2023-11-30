@@ -87,7 +87,6 @@
               @endif
             @endif
             <div class="dropdown-divider"></div>
-            <div class="dropdown-divider"></div>
             <a href="{{ route('logout') }}" class="dropdown-item dropdown-footer bg-danger" onclick="return confirm('Apakah anda yakin ingin keluar ?')"><i class="fas fa-sign-out-alt mr-1"></i> Keluar / Logout</a>
           </div>
           <!-- End User Dropdown  -->
