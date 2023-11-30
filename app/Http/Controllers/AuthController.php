@@ -85,8 +85,6 @@ class AuthController extends Controller
                     $cek_riwayat->update(['status_login' => true]);
                 }
 
-                // $sekolah = Sekolah::find(Auth::id());
-
                 $sekolah = Sekolah::first()->tapel_id;
 
                 session([
@@ -95,10 +93,21 @@ class AuthController extends Controller
                     'tapel_id' => $sekolah,
                 ]);
 
+                $guru = Guru::where('user_id', Auth::id())->first();
+                $cek_wali_kelas = Kelas::where('guru_id', $guru->id)->first();
+
                 if (Auth::user()->role == 2) {
-                    session([
-                        'akses_sebagai' => 'Guru Mapel',
-                    ]);
+                    if ($cek_wali_kelas == null) {
+                        session([
+                            'akses_sebagai' => 'Guru Mapel',
+                            'cek_wali_kelas' => false,
+                        ]);
+                    } else {
+                        session([
+                            'akses_sebagai' => 'Guru Mapel',
+                            'cek_wali_kelas' => true,
+                        ]);
+                    }
                 }
 
                 return redirect('/dashboard')->with('toast_success', 'Login berhasil');

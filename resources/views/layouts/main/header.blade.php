@@ -73,15 +73,18 @@
             <a href="{{ route('gantipassword') }}" class="dropdown-item">
               <i class="fas fa-key mr-2"></i> Ganti Password
             </a>
+            
             @if(Auth::user()->role == 2)
             <div class="dropdown-divider"></div>
-            <a href="{{ route('akses') }}" class="dropdown-item" onclick="return confirm('Apakah anda yakin akan ganti akses login ?')">
-              @if(session()->get('akses_sebagai') == 'Guru Mapel')
-              <i class="fas fa-chalkboard-teacher mr-2"></i> Akses Sebagai Wali Kelas
-              @else
-              <i class="fas fa-chalkboard-teacher mr-2"></i> Akses Sebagai Guru Mapel
+              @if(session()->get('akses_sebagai') == 'Guru Mapel' && session()->get('cek_wali_kelas') == true)
+                <a href="{{ route('akses') }}" class="dropdown-item" onclick="return confirm('Apakah anda yakin akan ganti akses login ?')">
+                  <i class="fas fa-chalkboard-teacher mr-2"></i> Akses Sebagai Wali Kelas
+                </a>
+              @elseif (session()->get('akses_sebagai') == 'Wali Kelas')
+                <a href="{{ route('akses') }}" class="dropdown-item" onclick="return confirm('Apakah anda yakin akan ganti akses login ?')">
+                  <i class="fas fa-chalkboard-teacher mr-2"></i> Akses Sebagai Guru Mapel
+                </a>
               @endif
-            </a>
             @endif
             <div class="dropdown-divider"></div>
             <div class="dropdown-divider"></div>
