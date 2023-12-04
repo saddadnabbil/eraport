@@ -48,7 +48,7 @@
                     </button>
                   </div>
                   <div class="modal-body">
-                    <form action="{{ route('k13kd.create') }}" method="GET">
+                    <form action="{{ route('kd.create') }}" method="GET">
                       @csrf
                       <div class="form-group row">
                         <label for="mapel_id" class="col-sm-3 col-form-label">Mata Pelajaran</label>

@@ -35,7 +35,7 @@
 
             <div class="card-body">
               <div class="callout callout-info">
-                <form action="{{ route('k13kd.create') }}" method="GET">
+                <form action="{{ route('kd.create') }}" method="GET">
                   @csrf
                   <div class="form-group row">
                     <label for="mapel_id" class="col-sm-2 col-form-label">Mata Pelajaran</label>

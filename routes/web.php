@@ -106,49 +106,49 @@ Route::group(['middleware' => ['auth']], function () {
       // Raport K13 Admin
 
       // Setting Raport K13
-      Route::resource('k13mapping', 'Admin\K13\MapingMapelController',  [
+      Route::resource('mapping', 'Admin\K13\MapingMapelController',  [
         'uses' => ['index', 'store']
       ]);
-      Route::get('k13kkm/import', 'Admin\K13\KkmMapelController@format_import')->name('k13kkm.format_import');
-      Route::post('k13kkm/import', 'Admin\K13\KkmMapelController@import')->name('k13kkm.import');
-      Route::resource('k13kkm', 'Admin\K13\KkmMapelController',  [
+      Route::get('kkm/import', 'Admin\K13\KkmMapelController@format_import')->name('kkm.format_import');
+      Route::post('kkm/import', 'Admin\K13\KkmMapelController@import')->name('kkm.import');
+      Route::resource('kkm', 'Admin\K13\KkmMapelController',  [
         'uses' => ['index', 'store', 'update', 'destroy']
       ]);
-      Route::resource('k13interval', 'Admin\K13\IntervalPredikatController',  [
+      Route::resource('interval', 'Admin\K13\IntervalPredikatController',  [
         'uses' => ['index']
       ]);
-      Route::get('k13sikap/import', 'Admin\K13\ButirSikapController@format_import')->name('k13sikap.format_import');
-      Route::post('k13sikap/import', 'Admin\K13\ButirSikapController@import')->name('k13sikap.import');
-      Route::resource('k13sikap', 'Admin\K13\ButirSikapController',  [
+      Route::get('sikap/import', 'Admin\K13\ButirSikapController@format_import')->name('sikap.format_import');
+      Route::post('sikap/import', 'Admin\K13\ButirSikapController@import')->name('sikap.import');
+      Route::resource('sikap', 'Admin\K13\ButirSikapController',  [
         'uses' => ['index', 'store', 'update',]
       ]);
-      Route::resource('k13kd', 'Admin\K13\KdMapelController',  [
+      Route::resource('kd', 'Admin\K13\KdMapelController',  [
         'uses' => ['index', 'create', 'store', 'update', 'destroy']
       ]);
-      Route::resource('k13tglraport', 'Admin\K13\TglRaportController',  [
+      Route::resource('tglraport', 'Admin\K13\TglRaportController',  [
         'uses' => ['index', 'store', 'update', 'destroy']
       ]);
-      Route::resource('k13validasi', 'Admin\K13\ValidasiController',  [
+      Route::resource('validasi', 'Admin\K13\ValidasiController',  [
         'uses' => ['index']
       ]);
 
       // Hasil Raport K13 
-      Route::resource('k13statuspenilaian', 'Admin\K13\StatusPenilaianController',  [
+      Route::resource('raportstatuspenilaian', 'Admin\K13\StatusPenilaianController',  [
         'uses' => ['index', 'store']
       ]);
-      Route::resource('k13pengelolaannilai', 'Admin\K13\PengelolaanNilaiController',  [
+      Route::resource('pengelolaannilai', 'Admin\K13\PengelolaanNilaiController',  [
         'uses' => ['index', 'store']
       ]);
-      Route::resource('k13nilairaport', 'Admin\K13\NilaiRaportSemesterController',  [
+      Route::resource('nilairaport', 'Admin\K13\NilaiRaportSemesterController',  [
         'uses' => ['index', 'store']
       ]);
-      Route::resource('k13leger', 'Admin\K13\LegerNilaiSiswaController',  [
+      Route::resource('leger', 'Admin\K13\LegerNilaiSiswaController',  [
         'uses' => ['index', 'store', 'show']
       ]);
-      Route::resource('k13raportpts', 'Admin\K13\CetakRaportPTSController',  [
+      Route::resource('raportpts', 'Admin\K13\CetakRaportPTSController',  [
         'uses' => ['index', 'store', 'show']
       ]);
-      Route::resource('k13raportsemester', 'Admin\K13\CetakRaportSemesterController',  [
+      Route::resource('raportsemester', 'Admin\K13\CetakRaportSemesterController',  [
         'uses' => ['index', 'store', 'show']
       ]);
       // End  Raport K13 Admin
