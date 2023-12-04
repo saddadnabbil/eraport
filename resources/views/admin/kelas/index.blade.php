@@ -60,12 +60,23 @@
                           @endif </div>
                       </div>
                       <div class="form-group row">
-                        <label for="guru_id" class="col-sm-3 col-form-label">Tingkatan Kelas</label>
+                        <label for="tingkatan_id" class="col-sm-3 col-form-label">Tingkatan</label>
                         <div class="col-sm-9">
                           <select class="form-control select2" name="tingkatan_id" style="width: 100%;" required>
-                            <option value="">-- Pilih Tingkatan Kelas --</option>
+                            <option value="">-- Pilih Tingkatan --</option>
                             @foreach($data_tingkatan as $tingkatan)
                               <option value="{{$tingkatan->id}}">{{$tingkatan->nama_tingkatan}}</option>
+                            @endforeach
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="jurusan_id" class="col-sm-3 col-form-label">Jurusan Kelas</label>
+                        <div class="col-sm-9">
+                          <select class="form-control select2" name="jurusan_id" style="width: 100%;" required>
+                            <option value="">-- Pilih Jurusan Kelas --</option>
+                            @foreach($data_jurusan as $jurusan)
+                              <option value="{{$jurusan->id}}">{{$jurusan->nama_jurusan}}</option>
                             @endforeach
                           </select>
                         </div>
@@ -106,7 +117,8 @@
                       <th>No</th>
                       <th>Semester</th>
                       <th>Tingkatan</th>
-                      <th>Nama Kelas</th>
+                      <th>Jurusan</th>
+                      <th>Kelas</th>
                       <th>Wali Kelas</th>
                       <th>Jml Anggota</th>
                       <th>Aksi</th>
@@ -126,6 +138,7 @@
                         @endif
                       </td>
                       <td>{{$kelas->tingkatan->nama_tingkatan}}</td>
+                      <td>{{$kelas->jurusan->nama_jurusan}}</td>
                       <td>{{$kelas->nama_kelas}}</td>
                       <td>{{$kelas->guru->nama_lengkap}}, {{$kelas->guru->gelar}}</td>
                       <td>
@@ -168,6 +181,17 @@
                                     <option value=""></option>
                                     @foreach($data_tingkatan as $tingkatan)
                                       <option value="{{$tingkatan->id}}" @if($tingkatan->id == $kelas->tingkatan->id) selected @endif>{{$tingkatan->nama_tingkatan}}</option>
+                                    @endforeach
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label for="jurusan_id" class="col-sm-3 col-form-label">Jurusan</label>
+                                <div class="col-sm-9">
+                                  <select class="form-control select2" name="jurusan_id" style="width: 100%;" required>
+                                    <option value=""></option>
+                                    @foreach($data_jurusan as $jurusan)
+                                      <option value="{{$jurusan->id}}" @if($jurusan->id == $kelas->jurusan->id) selected @endif>{{$jurusan->nama_jurusan}}</option>
                                     @endforeach
                                   </select>
                                 </div>

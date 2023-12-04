@@ -60,9 +60,9 @@ Route::group(['middleware' => ['auth']], function () {
         'except' => ['create', 'edit'],
       ]);
 
-      Route::resource('tingkatan', 'Admin\TingkatanController', [
-        'uses' => ['index', 'store', 'update', 'destroy']
-      ]);
+      Route::resource('tingkatan', 'Admin\TingkatanController')->only(['index', 'store', 'update', 'destroy']);
+
+      Route::resource('jurusan', 'Admin\JurusanController')->only(['index', 'store', 'update', 'destroy']);
 
       Route::post('tapel/set', 'Admin\TapelController@setAcademicYear')->name('tapel.setAcademicYear');
 

@@ -30,7 +30,15 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title"><i class="fas fa-users"></i> {{$title}} {{$kelas->nama_kelas}} {{$kelas->tapel->tahun_pelajaran}} Semester
+              <h3 class="card-title"><i class="fas fa-users"></i> 
+                {{$title}} 
+                {{$kelas->nama_kelas}} -
+                @if ($kelas->tingkatan_id == 5)
+                    Jurusan {{ ucwords(strtolower($kelas->jurusan->nama_jurusan)) }} - SHS 
+                @else
+                    {{ $kelas->tingkatan->nama_tingkatan }} - {{ ucwords(strtolower($kelas->jurusan->nama_jurusan)) }} Jurusan -
+                @endif
+                {{$kelas->tapel->tahun_pelajaran}} Semester
                 @if($kelas->tapel->semester ==1)
                 Ganjil
                 @else

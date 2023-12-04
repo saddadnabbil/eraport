@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\AnggotaKelas;
 use App\Guru;
 use App\Http\Controllers\Controller;
+use App\Jurusan;
 use App\Kelas;
 use App\Mapel;
 use App\Siswa;
@@ -25,18 +26,23 @@ class KelasController extends Controller
     {
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
         $data_mapel = Mapel::where('tapel_id', $tapel->id)->get();
+
         if (count($data_mapel) == 0) {
             return redirect('admin/mapel')->with('toast_warning', 'Mohon isikan data mata pelajaran');
         } else {
             $title = 'Data Kelas';
             $data_kelas = Kelas::where('tapel_id', $tapel->id)->orderBy('tingkatan_id', 'ASC')->get();
+
             foreach ($data_kelas as $kelas) {
                 $jumlah_anggota = Siswa::where('kelas_id', $kelas->id)->count();
                 $kelas->jumlah_anggota = $jumlah_anggota;
             }
+
             $data_guru = Guru::orderBy('nama_lengkap', 'ASC')->get();
             $data_tingkatan = Tingkatan::orderBy('id', 'ASC')->get();
-            return view('admin.kelas.index', compact('title', 'data_kelas', 'tapel', 'data_guru', 'data_tingkatan'));
+            $data_jurusan = Jurusan::orderBy('id', 'ASC')->get();
+
+            return view('admin.kelas.index', compact('title', 'data_kelas', 'tapel', 'data_guru', 'data_tingkatan', 'data_jurusan'));
         }
     }
 
@@ -50,19 +56,32 @@ class KelasController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'tingkatan_id' => 'required',
-            'tingkatan_id' => 'required',
-            'nama_kelas' => 'required|min:1|max:30',
+            'jurusan_id' => 'required',
+            'nama_kelas' => 'required|min:2|max:30',
             'guru_id' => 'required',
         ]);
+
+        $tingkatan = Tingkatan::find($request->tingkatan_id);
+        $jurusan = Jurusan::find($request->jurusan_id);
+ 
+        if ($tingkatan->id != '5' && ($jurusan->id == '1' || $jurusan->id == '2')) {
+            return back()->with('toast_error', $tingkatan->nama_tingkatan . ' Tidak boleh mengambil jurusan ' . $jurusan->nama_jurusan)->withInput();
+        }
+
+        if (!preg_match('/[a-zA-Z]/', $request->nama_kelas) || !preg_match('/\d/', $request->nama_kelas)) {
+            return back()->with('toast_error', 'Nama kelas harus mengandung setidaknya satu huruf dan satu angka')->withInput();
+        }
+
         if ($validator->fails()) {
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
         } else {
             $tapel = Tapel::findorfail(session()->get('tapel_id'));
             $kelas = new Kelas([
+                'tingkatan_id' => $request->tingkatan_id,
+                'jurusan_id' => $request->jurusan_id,
                 'tapel_id' => $tapel->id,
                 'guru_id' => $request->guru_id,
-                'tingkatan_id' => $request->tingkatan_id,
-                'nama_kelas' => $request->nama_kelas,
+                'nama_kelas' => strtoupper($request->nama_kelas),
             ]);
             $kelas->save();
             return back()->with('toast_success', 'Kelas berhasil ditambahkan');
@@ -107,12 +126,28 @@ class KelasController extends Controller
         $validator = Validator::make($request->all(), [
             'nama_kelas' => 'required|min:1|max:30',
             'guru_id' => 'required',
+            'tingkatan_id' => 'required',
+            'jurusan_id' => 'required',
         ]);
+
+        $tingkatan = Tingkatan::find($request->tingkatan_id);
+        $jurusan = Jurusan::find($request->jurusan_id);
+
+        if ($tingkatan->id != '5' && ($jurusan->id == '1' || $jurusan->id == '2')) {
+            return back()->with('toast_error', $tingkatan->nama_tingkatan . ' Tidak boleh mengambil jurusan ' . $jurusan->nama_jurusan)->withInput();
+        }
+
+        if (!preg_match('/[a-zA-Z]/', $request->nama_kelas) || !preg_match('/\d/', $request->nama_kelas)) {
+            return back()->with('toast_error', 'Nama kelas harus mengandung setidaknya satu huruf dan satu angka')->withInput();
+        }
+
         if ($validator->fails()) {
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
         } else {
             $kelas = Kelas::findorfail($id);
             $data_kelas = [
+                'tingkatan_id' => $request->tingkatan_id,
+                'jurusan_id' => $request->jurusan_id,
                 'nama_kelas' => $request->nama_kelas,
                 'guru_id' => $request->guru_id,
             ];

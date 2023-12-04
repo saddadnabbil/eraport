@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Jurusan;
 use Illuminate\Database\Eloquent\Model;
 
 class Kelas extends Model
@@ -11,6 +12,7 @@ class Kelas extends Model
         'tapel_id',
         'guru_id',
         'tingkatan_id',
+        'jurusan_id',
         'nama_kelas',
     ];
 
@@ -55,5 +57,11 @@ class Kelas extends Model
     public function tingkatan()
     {
         return $this->belongsTo(Tingkatan::class);
+    }
+
+    // Relasi Jurusan
+    public function jurusan()
+    {
+        return $this->belongsTo(Jurusan::class);
     }
 }

@@ -38,7 +38,7 @@
           </a>
         </li>
 
-        <li class="nav-item has-treeview {{ request()->routeIs(['sekolah.index', 'guru.index', 'tapel.index', 'mapel.index', 'kelas.index', 'siswa.index', 'pembelajaran.index', 'ekstrakulikuler.index', 'tingkatan.index']) ? 'menu-open' : '' }}">
+        <li class="nav-item has-treeview {{ request()->routeIs(['sekolah.index', 'guru.index', 'tapel.index', 'mapel.index', 'kelas.index', 'siswa.index', 'pembelajaran.index', 'ekstrakulikuler.index', 'tingkatan.index', 'jurusan.index', 'k13kkm.index']) ? 'menu-open' : '' }}">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-server"></i>
             <p>
@@ -66,6 +66,12 @@
               </a>
             </li>
             <li class="nav-item">
+              <a href="{{ route('jurusan.index') }}" class="nav-link {{ request()->routeIs('jurusan.index') ? 'active' : '' }}">
+                <i class="fas fa-user-tie nav-icon"></i>
+                <p>Data Jurusan</p>
+              </a>
+            </li>
+            <li class="nav-item">
               <a href="{{ route('tapel.index') }}" class="nav-link {{ request()->routeIs('tapel.index') ? 'active' : '' }}">
                 <i class="fas fa-calendar-week nav-icon"></i>
                 <p>Data Tahun Pelajaran</p>
@@ -75,6 +81,14 @@
               <a href="{{ route('mapel.index') }}" class="nav-link {{ request()->routeIs('mapel.index') ? 'active' : '' }}">
                 <i class="fas fa-book nav-icon"></i>
                 <p>Data Mata Pelajaran</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ route('k13kkm.index') }}" class="nav-link {{ request()->routeIs('k13kkm.index') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-greater-than-equal"></i>
+                <p>
+                  KKM Mapel
+                </p>
               </a>
             </li>
             <li class="nav-item">
@@ -112,14 +126,6 @@
             <i class="nav-icon fas fa-list-ol"></i>
             <p>
               Mapping Mapel
-            </p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="{{ route('k13kkm.index') }}" class="nav-link {{ request()->routeIs('k13kkm.index') ? 'active' : '' }}">
-            <i class="nav-icon fas fa-greater-than-equal"></i>
-            <p>
-              KKM Mapel
             </p>
           </a>
         </li>
