@@ -50,13 +50,13 @@
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
-                  <form name="contact-form" action="{{ route('k13sikap.import') }}" method="POST" enctype="multipart/form-data">
+                  <form name="contact-form" action="{{ route('sikap.import') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                       <div class="callout callout-info">
                         <h5>Download format import</h5>
                         <p>Silahkan download file format import melalui tombol dibawah ini.</p>
-                        <a href="{{ route('k13sikap.format_import') }}" class="btn btn-primary text-white" style="text-decoration:none"><i class="fas fa-file-download"></i> Download</a>
+                        <a href="{{ route('sikap.format_import') }}" class="btn btn-primary text-white" style="text-decoration:none"><i class="fas fa-file-download"></i> Download</a>
                       </div>
                       <div class="form-group row pt-2">
                         <label for="file_import" class="col-sm-2 col-form-label">File Import</label>
@@ -88,7 +88,7 @@
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
-                  <form action="{{ route('k13sikap.store') }}" method="POST">
+                  <form action="{{ route('sikap.store') }}" method="POST">
                     @csrf
                     <div class="modal-body">
                       <div class="form-group row">
@@ -166,7 +166,7 @@
                               <span aria-hidden="true">&times;</span>
                             </button>
                           </div>
-                          <form action="{{ route('k13sikap.update', $sikap->id) }}" method="POST">
+                          <form action="{{ route('sikap.update', $sikap->id) }}" method="POST">
                             {{ method_field('PATCH') }}
                             @csrf
                             <div class="modal-body">

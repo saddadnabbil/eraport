@@ -38,7 +38,7 @@
           </a>
         </li>
 
-        <li class="nav-item has-treeview {{ request()->routeIs(['sekolah.index', 'guru.index', 'tapel.index', 'mapel.index', 'kelas.index', 'siswa.index', 'pembelajaran.index', 'ekstrakulikuler.index', 'tingkatan.index', 'jurusan.index', 'k13kkm.index']) ? 'menu-open' : '' }}">
+        <li class="nav-item has-treeview {{ request()->routeIs(['sekolah.index', 'guru.index', 'tapel.index', 'mapel.index', 'kelas.index', 'siswa.index', 'pembelajaran.index', 'ekstrakulikuler.index', 'tingkatan.index', 'jurusan.index', 'kkm.index']) ? 'menu-open' : '' }}">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-server"></i>
             <p>
@@ -84,7 +84,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{ route('k13kkm.index') }}" class="nav-link {{ request()->routeIs('k13kkm.index') ? 'active' : '' }}">
+              <a href="{{ route('kkm.index') }}" class="nav-link {{ request()->routeIs('kkm.index') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-greater-than-equal"></i>
                 <p>
                   KKM Mapel
@@ -122,7 +122,7 @@
         <!-- Kurikulum -->
         <li class="nav-header">SETTING RAPORT</li>
         <li class="nav-item">
-          <a href="{{ route('k13mapping.index') }}" class="nav-link {{ request()->routeIs('k13mapping.index') ? 'active' : '' }}">
+          <a href="{{ route('mapping.index') }}" class="nav-link {{ request()->routeIs('mapping.index') ? 'active' : '' }}">
             <i class="nav-icon fas fa-list-ol"></i>
             <p>
               Mapping Mapel
@@ -130,7 +130,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="{{ route('k13interval.index') }}" class="nav-link {{ request()->routeIs('k13interval.index') ? 'active' : '' }}">
+          <a href="{{ route('interval.index') }}" class="nav-link {{ request()->routeIs('interval.index') ? 'active' : '' }}">
             <i class="nav-icon fas fa-columns"></i>
             <p>
               Interval Predikat
@@ -138,7 +138,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="{{ route('k13sikap.index') }}" class="nav-link {{ request()->routeIs('k13sikap.index') ? 'active' : '' }}">
+          <a href="{{ route('sikap.index') }}" class="nav-link {{ request()->routeIs('sikap.index') ? 'active' : '' }}">
             <i class="nav-icon fas fa-clipboard"></i>
             <p>
               Butir-Butir Sikap
@@ -146,7 +146,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="{{ route('k13kd.index') }}" class="nav-link {{ request()->routeIs('k13kd.index') ? 'active' : '' }}">
+          <a href="{{ route('kd.index') }}" class="nav-link {{ request()->routeIs('kd.index') ? 'active' : '' }}">
             <i class="nav-icon fas fa-clipboard-list"></i>
             <p>
               Data Kompetensi Dasar
@@ -155,7 +155,7 @@
         </li>
 
         <li class="nav-item">
-          <a href="{{ route('k13tglraport.index') }}" class="nav-link {{ request()->routeIs('k13tglraport.index') ? 'active' : '' }}">
+          <a href="{{ route('tglraport.index') }}" class="nav-link {{ request()->routeIs('tglraport.index') ? 'active' : '' }}">
             <i class="nav-icon fas fa-calendar-week"></i>
             <p>
               Input Tanggal Raport
@@ -164,7 +164,7 @@
         </li>
 
         <li class="nav-item">
-          <a href="{{ route('k13validasi.index') }}" class="nav-link {{ request()->routeIs('k13validasi.index') ? 'active' : '' }}">
+          <a href="{{ route('validasi.index') }}" class="nav-link {{ request()->routeIs('validasi.index') ? 'active' : '' }}">
             <i class="nav-icon fas fa-check-square"></i>
             <p>
               Validasi Data
@@ -173,7 +173,7 @@
         </li>
 
         <li class="nav-header">HASIL RAPORT</li>
-        <li class="nav-item has-treeview {{ request()->routeIs(['k13statuspenilaian.index', 'k13pengelolaannilai.index', 'k13nilairaport.index']) ? 'menu-open' : '' }}">
+        <li class="nav-item has-treeview {{ request()->routeIs(['raportstatuspenilaian.index', 'pengelolaannilai.index', 'nilairaport.index']) ? 'menu-open' : '' }}">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-list-ol"></i>
             <p>
@@ -183,19 +183,19 @@
           </a>
           <ul class="nav nav-treeview bg-secondary">
             <li class="nav-item">
-              <a href="{{ route('k13statuspenilaian.index') }}" class="nav-link {{ request()->routeIs('k13statuspenilaian.index') ? 'active' : '' }}">
+              <a href="{{ route('raportstatuspenilaian.index') }}" class="nav-link {{ request()->routeIs('raportstatuspenilaian.index') ? 'active' : '' }}">
                 <i class="fas fa-check-circle nav-icon"></i>
                 <p>Status Penilaian</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{ route('k13pengelolaannilai.index') }}" class="nav-link {{ request()->routeIs('k13pengelolaannilai.index') ? 'active' : '' }}">
+              <a href="{{ route('pengelolaannilai.index') }}" class="nav-link {{ request()->routeIs('pengelolaannilai.index') ? 'active' : '' }}">
                 <i class="fas fa-check-square nav-icon"></i>
                 <p>Hasil Pengelolaan Nilai</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{ route('k13nilairaport.index') }}" class="nav-link {{ request()->routeIs('k13nilairaport.index') ? 'active' : '' }}">
+              <a href="{{ route('nilairaport.index') }}" class="nav-link {{ request()->routeIs('nilairaport.index') ? 'active' : '' }}">
                 <i class="fas fa-clipboard-check nav-icon"></i>
                 <p>Nilai Raport Semester</p>
               </a>
@@ -213,7 +213,7 @@
         </li>
 
         <li class="nav-item">
-          <a href="{{ route('k13leger.index') }}" class="nav-link {{ request()->routeIs('k13leger.index') ? 'active' : '' }}">
+          <a href="{{ route('leger.index') }}" class="nav-link {{ request()->routeIs('leger.index') ? 'active' : '' }}">
             <i class="nav-icon fas fa-table"></i>
             <p>
               Leger Nilai Siswa
@@ -221,7 +221,7 @@
           </a>
         </li>
 
-        <li class="nav-item has-treeview {{ request()->routeIs(['k13raportpts.index', 'k13raportsemester.index']) ? 'menu-open' : '' }}">
+        <li class="nav-item has-treeview {{ request()->routeIs(['raportpts.index', 'raportsemester.index']) ? 'menu-open' : '' }}">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-print"></i>
             <p>
@@ -231,13 +231,13 @@
           </a>
           <ul class="nav nav-treeview bg-secondary">
             <li class="nav-item">
-              <a href="{{ route('k13raportpts.index') }}" class="nav-link {{ request()->routeIs('k13raportpts.index') ? 'active' : '' }}">
+              <a href="{{ route('raportpts.index') }}" class="nav-link {{ request()->routeIs('raportpts.index') ? 'active' : '' }}">
                 <i class="fas fa-print nav-icon"></i>
                 <p>Raport Tengah Semester</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{ route('k13raportsemester.index') }}" class="nav-link {{ request()->routeIs('k13raportsemester.index') ? 'active' : '' }}">
+              <a href="{{ route('raportsemester.index') }}" class="nav-link {{ request()->routeIs('raportsemester.index') ? 'active' : '' }}">
                 <i class="fas fa-print nav-icon"></i>
                 <p>Raport Semester</p>
               </a>

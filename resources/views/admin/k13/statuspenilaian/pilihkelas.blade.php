@@ -34,7 +34,7 @@
 
             <div class="card-body">
               <div class="callout callout-info">
-                <form action="{{ route('k13statuspenilaian.store') }}" method="POST">
+                <form action="{{ route('raportstatuspenilaian.store') }}" method="POST">
                   @csrf
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Kelas</label>
