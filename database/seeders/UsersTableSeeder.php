@@ -1,7 +1,9 @@
 <?php
 
-use App\Admin;
+use App\Guru;
 use App\User;
+use App\Admin;
+use App\Siswa;
 use Illuminate\Database\Seeder;
 
 class UsersTableSeeder extends Seeder
@@ -20,14 +22,18 @@ class UsersTableSeeder extends Seeder
             'status' => true,
         ]);
 
-        Admin::create([
-            'user_id' => '1',
-            'nama_lengkap' => 'Admin',
-            'jenis_kelamin' => 'L',
-            'tanggal_lahir' => '1998-05-30',
-            'email' => 'admin@mail.com',
-            'nomor_hp' => '085232077932',
-            'avatar' => 'default.png',
+        User::create([
+            'username' => 'guru',
+            'password' => bcrypt('123456'),
+            'role' => '2',
+            'status' => true,
+        ]);
+
+        User::create([
+            'username' => 'siswa',
+            'password' => bcrypt('123456'),
+            'role' => '3',
+            'status' => true,
         ]);
     }
 }

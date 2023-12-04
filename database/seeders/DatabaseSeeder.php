@@ -1,7 +1,23 @@
 <?php
 
-use Database\Seeders\TapelTableSeeder;
+use App\Kelas;
+use App\AnggotaKelas;
 use Illuminate\Database\Seeder;
+use Database\Seeders\GuruTableSeeder;
+use Database\Seeders\AdminTableSeeder;
+use Database\Seeders\AnggotaEkstrakulikulerTableSeeder;
+use Database\Seeders\KelasTableSeeder;
+use Database\Seeders\MapelTableSeeder;
+use Database\Seeders\SiswaTableSeeder;
+use Database\Seeders\TapelTableSeeder;
+use Database\Seeders\JurusanTableSeeder;
+use Database\Seeders\TingkatanTableSeeder;
+use Database\Seeders\AnggotaKelasTableSeeder;
+use Database\Seeders\EkstrakulikulerTableSeeder;
+use Database\Seeders\K13KkmTableSeeder;
+use Database\Seeders\PembelajaranTableSeeder;
+use UsersTableSeeder as GlobalUsersTableSeeder;
+use SekolahTableSeeder as GlobalSekolahTableSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,10 +29,22 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
+            // Master Data Seeder
+            TingkatanTableSeeder::class,
+            JurusanTableSeeder::class,
             TapelTableSeeder::class,
-            UsersTableSeeder::class,
-            SekolahTableSeeder::class,
-            // Add other seeders if needed
+            GlobalUsersTableSeeder::class,
+            AdminTableSeeder::class,
+            GuruTableSeeder::class,
+            KelasTableSeeder::class,
+            SiswaTableSeeder::class,
+            AnggotaKelasTableSeeder::class,
+            EkstrakulikulerTableSeeder::class,
+            AnggotaEkstrakulikulerTableSeeder::class,
+            MapelTableSeeder::class,
+            PembelajaranTableSeeder::class,
+            GlobalSekolahTableSeeder::class,
+            K13KkmTableSeeder::class,
         ]);
     }
 }
