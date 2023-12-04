@@ -153,7 +153,7 @@
                         Genap
                         @endif
                       </td>
-                      <td>Tingkat {{$kkm->kelas->tingkatan_kelas}} {{$kkm->kelas->nama_kelas}}</td>
+                      <td>Level {{$kkm->kelas->tingkatan->nama_tingkatan}} - {{$kkm->kelas->nama_kelas}}</td>
                       <td>{{$kkm->kkm}}</td>
                       <td>
                         <form action="{{ route('k13kkm.destroy', $kkm->id) }}" method="POST">

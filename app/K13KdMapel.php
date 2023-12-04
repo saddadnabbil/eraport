@@ -9,7 +9,7 @@ class K13KdMapel extends Model
     protected $table = 'k13_kd_mapel';
     protected $fillable = [
         'mapel_id',
-        'tingkatan_kelas',
+        'tingkatan_id',
         'jenis_kompetensi',
         'semester',
         'kode_kd',

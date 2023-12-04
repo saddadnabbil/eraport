@@ -16,7 +16,7 @@ class CreateK13KdMapelsTable extends Migration
         Schema::create('k13_kd_mapel', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('mapel_id')->unsigned();
-            $table->string('tingkatan_kelas', 2);
+            $table->unsignedBigInteger('tingkatan_id')->unsigned();
             $table->enum('jenis_kompetensi', ['1', '2', '3', '4']);
             $table->enum('semester', ['1', '2']);
             $table->string('kode_kd', 10);
@@ -25,6 +25,7 @@ class CreateK13KdMapelsTable extends Migration
             $table->timestamps();
 
             $table->foreign('mapel_id')->references('id')->on('mapel');
+            $table->foreign('tingkatan_id')->references('id')->on('tingkatans');
 
             // Jenis Kompetensi
             // 1 = Sikap Spiritual

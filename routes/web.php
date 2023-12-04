@@ -60,7 +60,10 @@ Route::group(['middleware' => ['auth']], function () {
         'except' => ['create', 'edit'],
       ]);
 
-      // Route::match(['post', 'get'], 'tapel/set-academic-year/{id}', 'Admin\TapelController@setAcademicYear')->name('tapel.setAcademicYear');
+      Route::resource('tingkatan', 'Admin\TingkatanController', [
+        'uses' => ['index', 'store', 'update', 'destroy']
+      ]);
+
       Route::post('tapel/set', 'Admin\TapelController@setAcademicYear')->name('tapel.setAcademicYear');
 
       Route::post('kelas/anggota', 'Admin\KelasController@store_anggota')->name('kelas.anggota');

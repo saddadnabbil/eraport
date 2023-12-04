@@ -39,7 +39,7 @@ class KenaikanKelasController extends Controller
                 }
             }
 
-            $tingkatan_akhir = Kelas::where('tapel_id', $tapel->id)->max('tingkatan_kelas');
+            $tingkatan_akhir = Kelas::where('tapel_id', $tapel->id)->max('tingkatan_id');
 
             return view('walikelas.kenaikan.index', compact('title', 'data_anggota_kelas', 'tingkatan_akhir'));
         } else {

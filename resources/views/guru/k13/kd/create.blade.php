@@ -47,12 +47,12 @@
                         @endforeach
                       </select>
                     </div>
-                    <label for="tingkatan_kelas" class="col-sm-2 col-form-label">Tingkatan Kelas</label>
+                    <label for="tingkatan_id" class="col-sm-2 col-form-label">Tingkatan</label>
                     <div class="col-sm-4">
-                      <select class="form-control select2" name="tingkatan_kelas" style="width: 100%;" required onchange="this.form.submit();">
-                        <option value="" disabled>-- Pilih Tingkatan Kelas --</option>
-                        @foreach($tingkatan_kelas_diampu as $kelas)
-                        <option value="{{$kelas->tingkatan_kelas}}" @if ($kelas->tingkatan_kelas==$tingkatan_kelas ) selected @endif>{{$kelas->tingkatan_kelas}}</option>
+                      <select class="form-control select2" name="tingkatan_id" style="width: 100%;" required onchange="this.form.submit();">
+                        <option value="" disabled>-- Pilih Tingkatan --</option>
+                        @foreach($tingkatan_id_diampu as $kelas)
+                        <option value="{{$kelas->tingkatan_id}}" @if ($kelas->tingkatan_id==$tingkatan_id ) selected @endif>{{$kelas->tingkatan->nama_tingkatan}}</option>
                         @endforeach
                       </select>
                     </div>
@@ -64,7 +64,7 @@
               <form id="dynamic_form" action="{{ route('kdk13.store') }}" method="POST">
                 @csrf
                 <input type="hidden" name="mapel_id" value="{{$mapel_id}}">
-                <input type="hidden" name="tingkatan_kelas" value="{{$tingkatan_kelas}}">
+                <input type="hidden" name="tingkatan_id" value="{{$tingkatan_id}}">
                 <input type="hidden" name="semester" value="{{$tapel->semester}}">
 
                 <div class="table-responsive">

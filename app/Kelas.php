@@ -10,7 +10,7 @@ class Kelas extends Model
     protected $fillable = [
         'tapel_id',
         'guru_id',
-        'tingkatan_kelas',
+        'tingkatan_id',
         'nama_kelas',
     ];
 
@@ -49,5 +49,11 @@ class Kelas extends Model
     public function ktsp_kkm_mapel()
     {
         return $this->hasOne('App\KtspKkmMapel');
+    }
+
+    // Relasi Tingkatan
+    public function tingkatan()
+    {
+        return $this->belongsTo(Tingkatan::class);
     }
 }

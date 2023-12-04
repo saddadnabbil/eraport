@@ -60,9 +60,14 @@
                           @endif </div>
                       </div>
                       <div class="form-group row">
-                        <label for="tingkatan_kelas" class="col-sm-3 col-form-label">Tingkatan Kelas</label>
+                        <label for="guru_id" class="col-sm-3 col-form-label">Tingkatan Kelas</label>
                         <div class="col-sm-9">
-                          <input type="number" class="form-control" id="tingkatan_kelas" name="tingkatan_kelas" placeholder="Tingkatan Kelas" value="{{old('tingkatan_kelas')}}">
+                          <select class="form-control select2" name="tingkatan_id" style="width: 100%;" required>
+                            <option value="">-- Pilih Tingkatan Kelas --</option>
+                            @foreach($data_tingkatan as $tingkatan)
+                              <option value="{{$tingkatan->id}}">{{$tingkatan->nama_tingkatan}}</option>
+                            @endforeach
+                          </select>
                         </div>
                       </div>
                       <div class="form-group row">
@@ -100,7 +105,7 @@
                     <tr>
                       <th>No</th>
                       <th>Semester</th>
-                      <th>Tingkat</th>
+                      <th>Tingkatan</th>
                       <th>Nama Kelas</th>
                       <th>Wali Kelas</th>
                       <th>Jml Anggota</th>
@@ -120,7 +125,7 @@
                         Genap
                         @endif
                       </td>
-                      <td>{{$kelas->tingkatan_kelas}}</td>
+                      <td>{{$kelas->tingkatan->nama_tingkatan}}</td>
                       <td>{{$kelas->nama_kelas}}</td>
                       <td>{{$kelas->guru->nama_lengkap}}, {{$kelas->guru->gelar}}</td>
                       <td>
@@ -157,9 +162,14 @@
                             @csrf
                             <div class="modal-body">
                               <div class="form-group row">
-                                <label for="tingkatan_kelas" class="col-sm-3 col-form-label">Tingkatan Kelas</label>
+                                <label for="tingkatan_id" class="col-sm-3 col-form-label">Tingkatan</label>
                                 <div class="col-sm-9">
-                                  <input type="text" class="form-control" id="tingkatan_kelas" name="tingkatan_kelas" value="{{$kelas->tingkatan_kelas}}" readonly>
+                                  <select class="form-control select2" name="tingkatan_id" style="width: 100%;" required>
+                                    <option value=""></option>
+                                    @foreach($data_tingkatan as $tingkatan)
+                                      <option value="{{$tingkatan->id}}" @if($tingkatan->id == $kelas->tingkatan->id) selected @endif>{{$tingkatan->nama_tingkatan}}</option>
+                                    @endforeach
+                                  </select>
                                 </div>
                               </div>
                               <div class="form-group row">

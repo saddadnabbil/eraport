@@ -38,7 +38,7 @@
           </a>
         </li>
 
-        <li class="nav-item has-treeview {{ request()->routeIs(['sekolah.index', 'guru.index', 'tapel.index', 'mapel.index', 'kelas.index', 'siswa.index', 'pembelajaran.index', 'ekstrakulikuler.index']) ? 'menu-open' : '' }}">
+        <li class="nav-item has-treeview {{ request()->routeIs(['sekolah.index', 'guru.index', 'tapel.index', 'mapel.index', 'kelas.index', 'siswa.index', 'pembelajaran.index', 'ekstrakulikuler.index', 'tingkatan.index']) ? 'menu-open' : '' }}">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-server"></i>
             <p>
@@ -57,6 +57,12 @@
               <a href="{{ route('guru.index') }}" class="nav-link {{ request()->routeIs('guru.index') ? 'active' : '' }}">
                 <i class="fas fa-user-tie nav-icon"></i>
                 <p>Data Guru</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ route('tingkatan.index') }}" class="nav-link {{ request()->routeIs('tingkatan.index') ? 'active' : '' }}">
+                <i class="fas fa-user-tie nav-icon"></i>
+                <p>Data Tingkatan</p>
               </a>
             </li>
             <li class="nav-item">

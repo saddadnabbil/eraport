@@ -85,7 +85,7 @@
           {{$pembelajaran->kelas->nama_kelas}}
         </td>
         <td align="center" style="border: 1px solid #000000;">
-          {{$pembelajaran->kelas->tingkatan_kelas}}
+          {{$pembelajaran->kelas->tingkatan_id}}
         </td>
         <td style="border: 1px solid #000000; width: 12px">
 

@@ -56,18 +56,18 @@
                           <select class="form-control select2" name="mapel_id" style="width: 100%;" required>
                             <option value="">-- Pilih Mapel --</option>
                             @foreach($data_mapel as $mapel)
-                            <option value="{{$mapel->id}}">{{$mapel->nama_mapel}}</option>
+                              <option value="{{$mapel->id}}">{{$mapel->nama_mapel}}</option>
                             @endforeach
                           </select>
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label for="tingkatan_kelas" class="col-sm-3 col-form-label">Tingkatan Kelas</label>
+                        <label for="tingkatan_id" class="col-sm-3 col-form-label">Tingkatan</label>
                         <div class="col-sm-9">
-                          <select class="form-control" name="tingkatan_kelas" style="width: 100%;" required onchange="this.form.submit();">
-                            <option value="">-- Pilih Tingkatan Kelas --</option>
+                          <select class="form-control" name="tingkatan_id" style="width: 100%;" required onchange="this.form.submit();">
+                            <option value="">-- Pilih Tingkatan --</option>
                             @foreach($data_kelas as $kelas)
-                            <option value="{{$kelas->tingkatan_kelas}}">{{$kelas->tingkatan_kelas}}</option>
+                              <option value="{{$kelas->tingkatan_id}}">{{$kelas->tingkatan->nama_tingkatan}}</option>
                             @endforeach
                           </select>
                         </div>
@@ -87,7 +87,7 @@
                       <th>No</th>
                       <th>Mata Pelajaran</th>
                       <th>Kompetensi</th>
-                      <th>Tingkatan Kelas</th>
+                      <th>Tingkatan</th>
                       <th>Semester</th>
                       <th>Kode</th>
                       <th>Kompetensi Dasar</th>
@@ -112,7 +112,7 @@
                         Keterampilan
                         @endif
                       </td>
-                      <td>{{$kd->tingkatan_kelas}}</td>
+                      <td>{{$kd->tingkatan->nama_tingkatan}}</td>
                       <td>
                         @if($kd->semester == 1)
                         Ganjil

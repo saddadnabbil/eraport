@@ -51,7 +51,7 @@ class RencanaNilaiKeterampilanController extends Controller
         $kelas = Kelas::findorfail($pembelajaran->kelas_id);
         $data_kd = K13KdMapel::where([
             'mapel_id' => $pembelajaran->mapel_id,
-            'tingkatan_kelas' => $kelas->tingkatan_kelas,
+            'tingkatan_id' => $kelas->tingkatan_id,
             'jenis_kompetensi' => 4,
             'semester' => $tapel->semester,
         ])->orderBy('kode_kd', 'ASC')->get();
@@ -123,7 +123,7 @@ class RencanaNilaiKeterampilanController extends Controller
         $kelas = Kelas::findorfail($pembelajaran->kelas_id);
         $data_kd = K13KdMapel::where([
             'mapel_id' => $pembelajaran->mapel_id,
-            'tingkatan_kelas' => $kelas->tingkatan_kelas,
+            'tingkatan_id' => $kelas->tingkatan_id,
             'jenis_kompetensi' => 4,
             'semester' => $tapel->semester,
         ])->orderBy('kode_kd', 'ASC')->get();

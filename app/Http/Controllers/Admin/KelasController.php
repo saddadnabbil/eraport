@@ -9,6 +9,7 @@ use App\Kelas;
 use App\Mapel;
 use App\Siswa;
 use App\Tapel;
+use App\Tingkatan;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -28,13 +29,14 @@ class KelasController extends Controller
             return redirect('admin/mapel')->with('toast_warning', 'Mohon isikan data mata pelajaran');
         } else {
             $title = 'Data Kelas';
-            $data_kelas = Kelas::where('tapel_id', $tapel->id)->orderBy('tingkatan_kelas', 'ASC')->get();
+            $data_kelas = Kelas::where('tapel_id', $tapel->id)->orderBy('tingkatan_id', 'ASC')->get();
             foreach ($data_kelas as $kelas) {
                 $jumlah_anggota = Siswa::where('kelas_id', $kelas->id)->count();
                 $kelas->jumlah_anggota = $jumlah_anggota;
             }
             $data_guru = Guru::orderBy('nama_lengkap', 'ASC')->get();
-            return view('admin.kelas.index', compact('title', 'data_kelas', 'tapel', 'data_guru'));
+            $data_tingkatan = Tingkatan::orderBy('id', 'ASC')->get();
+            return view('admin.kelas.index', compact('title', 'data_kelas', 'tapel', 'data_guru', 'data_tingkatan'));
         }
     }
 
@@ -47,7 +49,8 @@ class KelasController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'tingkatan_kelas' => 'required|numeric|digits_between:1,2',
+            'tingkatan_id' => 'required',
+            'tingkatan_id' => 'required',
             'nama_kelas' => 'required|min:1|max:30',
             'guru_id' => 'required',
         ]);
@@ -58,7 +61,7 @@ class KelasController extends Controller
             $kelas = new Kelas([
                 'tapel_id' => $tapel->id,
                 'guru_id' => $request->guru_id,
-                'tingkatan_kelas' => $request->tingkatan_kelas,
+                'tingkatan_id' => $request->tingkatan_id,
                 'nama_kelas' => $request->nama_kelas,
             ]);
             $kelas->save();

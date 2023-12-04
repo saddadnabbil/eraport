@@ -26,7 +26,7 @@ class KdMapelController extends Controller
         $data_mapel = Mapel::where('tapel_id', $tapel->id)->orderBy('nama_mapel', 'ASC')->get();
         $id_mapel = Mapel::where('tapel_id', $tapel->id)->get('id');
 
-        $data_kelas = Kelas::where('tapel_id', $tapel->id)->groupBy('tingkatan_kelas')->orderBy('tingkatan_kelas', 'ASC')->get();
+        $data_kelas = Kelas::where('tapel_id', $tapel->id)->groupBy('tingkatan_id')->orderBy('tingkatan_id', 'ASC')->get();
 
         if (count($data_mapel) == 0) {
             return redirect('admin/mapel')->with('toast_warning', 'Mohon isikan data mata pelajaran');
@@ -47,19 +47,19 @@ class KdMapelController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'mapel_id' => 'required',
-            'tingkatan_kelas' => 'required',
+            'tingkatan_id' => 'required',
         ]);
         if ($validator->fails()) {
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
         } else {
             $title = 'Tambah Kompetensi Dasar';
             $mapel_id = $request->mapel_id;
-            $tingkatan_kelas = $request->tingkatan_kelas;
+            $tingkatan_id = $request->tingkatan_id;
 
             $tapel = Tapel::findorfail(session()->get('tapel_id'));
             $data_mapel = Mapel::where('tapel_id', $tapel->id)->orderBy('nama_mapel', 'ASC')->get();
-            $data_kelas = Kelas::where('tapel_id', $tapel->id)->groupBy('tingkatan_kelas')->orderBy('tingkatan_kelas', 'ASC')->get();
-            return view('admin.k13.kd.create', compact('title', 'mapel_id', 'tingkatan_kelas', 'tapel', 'data_mapel', 'data_kelas'));
+            $data_kelas = Kelas::where('tapel_id', $tapel->id)->groupBy('tingkatan_id')->orderBy('tingkatan_id', 'ASC')->get();
+            return view('admin.k13.kd.create', compact('title', 'mapel_id', 'tingkatan_id', 'tapel', 'data_mapel', 'data_kelas'));
         }
     }
 
@@ -83,7 +83,7 @@ class KdMapelController extends Controller
             for ($count = 0; $count < count($request->jenis_kompetensi); $count++) {
                 $data_kd = array(
                     'mapel_id'  => $request->mapel_id,
-                    'tingkatan_kelas'  => $request->tingkatan_kelas,
+                    'tingkatan_id'  => $request->tingkatan_id,
                     'semester'  => $request->semester,
                     'jenis_kompetensi'  => $request->jenis_kompetensi[$count],
                     'kode_kd'  => $request->kode_kd[$count],

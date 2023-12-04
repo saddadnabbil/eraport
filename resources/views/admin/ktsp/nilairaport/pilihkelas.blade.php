@@ -41,7 +41,7 @@
                     <div class="col-sm-10">
                       <select class="form-control select2" name="kelas_id" style="width: 100%;" required>
                         <option value="">-- Pilih Kelas --</option>
-                        @foreach($data_kelas->sortBy('tingkatan_kelas') as $kelas)
+                        @foreach($data_kelas->sortBy('tingkatan_id') as $kelas)
                         <option value="{{$kelas->id}}">{{$kelas->nama_kelas}}</option>
                         @endforeach
                       </select>

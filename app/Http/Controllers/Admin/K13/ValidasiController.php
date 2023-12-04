@@ -34,7 +34,7 @@ class ValidasiController extends Controller
         $count_guru =  Guru::count();
         $count_mapel = Mapel::where('tapel_id', $tapel->id)->orderBy('nama_mapel', 'ASC')->count();
 
-        $data_kelas = Kelas::where('tapel_id', $tapel->id)->orderBy('tingkatan_kelas', 'ASC')->get();
+        $data_kelas = Kelas::where('tapel_id', $tapel->id)->orderBy('tingkatan_id', 'ASC')->get();
         foreach ($data_kelas as $kelas) {
             $jumlah_anggota = Siswa::where('kelas_id', $kelas->id)->count();
             $kelas->jumlah_anggota = $jumlah_anggota;
@@ -61,7 +61,7 @@ class ValidasiController extends Controller
         $mapel_belum_mapping = Mapel::whereNotIn('id', $id_telah_mapping)->get();
         $count_mapel_belum_mapping = count($mapel_belum_mapping);
 
-        $id_kelas = Kelas::where('tapel_id', $tapel->id)->orderBy('tingkatan_kelas', 'ASC')->get('id');
+        $id_kelas = Kelas::where('tapel_id', $tapel->id)->orderBy('tingkatan_id', 'ASC')->get('id');
         $count_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->whereNotNull('guru_id')->where('status', 1)->count();
         $count_kkm = K13KkmMapel::whereIn('kelas_id', $id_kelas)->whereIn('mapel_id', $id_mapel)->count();
 
@@ -81,5 +81,4 @@ class ValidasiController extends Controller
 
         return view('admin.k13.validasi.index', compact('title', 'tapel', 'count_guru', 'count_mapel', 'data_kelas', 'count_kelas', 'count_siswa', 'count_siswa_invalid', 'data_ekstrakulikuler', 'count_ekstrakulikuler', 'mapel_belum_mapping', 'count_mapel_belum_mapping', 'count_pembelajaran', 'count_kkm', 'count_sikap_spiritual', 'count_sikap_sosial', 'data_kd', 'count_data_kd', 'count_tgl_raport'));
     }
-
 }

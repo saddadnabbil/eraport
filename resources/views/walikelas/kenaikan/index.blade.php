@@ -60,7 +60,7 @@
                         <td>
                           <select class="form-control select2" name="keputusan[]" style="width: 100%;" required>
                             <option value="" @if($anggota_kelas->keputusan == null) selected @endif>-- Pilih Keputusan --</option>
-                            @if($anggota_kelas->kelas->tingkatan_kelas != $tingkatan_akhir)
+                            @if($anggota_kelas->kelas->tingkatan_id != $tingkatan_akhir)
                             <option value="1" @if($anggota_kelas->keputusan == 1) selected @endif>Naik Kelas</option>
                             <option value="2" @if($anggota_kelas->keputusan == 2) selected @endif>Tinggal Dikelas</option>
                             @else
@@ -69,7 +69,7 @@
                             @endif
                           </select>
                         </td>
-                        @if($anggota_kelas->kelas->tingkatan_kelas != $tingkatan_akhir)
+                        @if($anggota_kelas->kelas->tingkatan_id != $tingkatan_akhir)
                         <td>
                           <input type="text" class="form-control" name="kelas_tujuan[]" placeholder="Kelas Tujuan" value="{{$anggota_kelas->kelas_tujuan}}" required>
                         </td>

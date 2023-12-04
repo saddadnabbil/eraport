@@ -15,12 +15,13 @@ class CreateKelasTable extends Migration
     {
         Schema::create('kelas', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('tingkatan_id')->unsigned();
             $table->unsignedBigInteger('tapel_id')->unsigned();
             $table->unsignedBigInteger('guru_id')->unsigned();
-            $table->string('tingkatan_kelas', 2);
             $table->string('nama_kelas', 30);
             $table->timestamps();
 
+            $table->foreign('tingkatan_id')->references('id')->on('tingkatans');
             $table->foreign('tapel_id')->references('id')->on('tapels');
             $table->foreign('guru_id')->references('id')->on('guru');
         });

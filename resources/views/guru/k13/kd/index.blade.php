@@ -62,12 +62,12 @@
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label for="tingkatan_kelas" class="col-sm-3 col-form-label">Tingkatan Kelas</label>
+                        <label for="tingkatan_id" class="col-sm-3 col-form-label">Tingkatan</label>
                         <div class="col-sm-9">
-                          <select class="form-control" name="tingkatan_kelas" style="width: 100%;" required onchange="this.form.submit();">
-                            <option value="">-- Pilih Tingkatan Kelas --</option>
-                            @foreach($tingkatan_kelas_diampu as $kelas)
-                            <option value="{{$kelas->tingkatan_kelas}}">{{$kelas->tingkatan_kelas}}</option>
+                          <select class="form-control" name="tingkatan_id" style="width: 100%;" required onchange="this.form.submit();">
+                            <option value="">-- Pilih Tingkatan --</option>
+                            @foreach($tingkatan_id_diampu as $kelas)
+                            <option value="{{$kelas->tingkatan_id}}">{{$kelas->tingkatan->nama_tingkatan}}</option>
                             @endforeach
                           </select>
                         </div>
@@ -112,7 +112,7 @@
                         Keterampilan
                         @endif
                       </td>
-                      <td>{{$kd->tingkatan_kelas}}</td>
+                      <td>{{$kd->tingkatan_id}}</td>
                       <td>
                         @if($kd->semester == 1)
                         Ganjil
