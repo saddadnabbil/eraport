@@ -31,13 +31,13 @@ class KdMapelController extends Controller
 
         $id_mapel_diampu = Pembelajaran::where('guru_id', $guru->id)->whereIn('kelas_id', $id_kelas)->where('status', 1)->get('mapel_id');
         $id_kelas_diampu = Pembelajaran::where('guru_id', $guru->id)->whereIn('kelas_id', $id_kelas)->where('status', 1)->get('kelas_id');
-        $tingkatan_id_diampu = Kelas::whereIn('id', $id_kelas_diampu)->groupBy('tingkatan_id')->get('nama_tingkatan');
+        $tingkatan_id_diampu = Kelas::whereIn('id', $id_kelas_diampu)->groupBy('tingkatan_id')->get('tingkatan_id');
 
         $data_mapel_diampu = Mapel::whereIn('id', $id_mapel_diampu)->get();
 
         $data_kd = K13KdMapel::whereIn('mapel_id', $id_mapel_diampu)->whereIn('tingkatan_id', $tingkatan_id_diampu)->get();
 
-        return view('guru.k13.kd.index', compact('title', 'data_mapel_diampu', 'tingkatan_ids_diampu', 'data_kd'));
+        return view('guru.k13.kd.index', compact('title', 'data_mapel_diampu', 'tingkatan_id_diampu', 'data_kd'));
     }
 
     /**
@@ -64,7 +64,7 @@ class KdMapelController extends Controller
 
             $id_mapel_diampu = Pembelajaran::where('guru_id', $guru->id)->whereIn('kelas_id', $id_kelas)->where('status', 1)->get('mapel_id');
             $id_kelas_diampu = Pembelajaran::where('guru_id', $guru->id)->whereIn('kelas_id', $id_kelas)->where('status', 1)->get('kelas_id');
-            $tingkatan_id_diampu = Kelas::whereIn('id', $id_kelas_diampu)->groupBy('tingkatan_id')->get('nama_tingkatan');
+            $tingkatan_id_diampu = Kelas::whereIn('id', $id_kelas_diampu)->groupBy('tingkatan_id')->get('tingkatan_id');
 
             $data_mapel_diampu = Mapel::whereIn('id', $id_mapel_diampu)->get();
 
