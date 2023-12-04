@@ -113,11 +113,12 @@
                             </div>
                             <form action="{{ route('tingkatan.update', $tingkatan->id) }}" method="POST">
                             @csrf
+                            @method('PUT')
                             <div class="modal-body">
                                 <div class="form-group row">
                                 <label for="tahun_pelajaran" class="col-sm-3 col-form-label">Nama Tingkatan</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="nama_tingkatan" name="nama_tingkatan" placeholder="Nama Tingkatan" {{$tingkatan->nama_tingkatan}}">
+                                    <input type="text" class="form-control" id="nama_tingkatan" name="nama_tingkatan" placeholder="Nama Tingkatan" value="{{$tingkatan->nama_tingkatan}}"">
                                 </div>
                                 </div>
                             </div>
