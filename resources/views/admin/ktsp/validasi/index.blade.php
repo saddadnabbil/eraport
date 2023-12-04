@@ -54,6 +54,16 @@
                 @endif
               </div>
               <div class="callout callout-success">
+                <h5>KKM Mapel</h5>
+                @if($count_pembelajaran == 0)
+                <span class="text-danger"><i class="icon fas fa-ban"></i> Belum ditemukan data KKM mapel.</span>
+                @elseif($count_pembelajaran == $count_kkm)
+                <span class="text-success"><i class="icon fas fa-check"></i> Seluruh data KKM mapel valid.</span>
+                @else
+                <span class="text-danger"><i class="icon fas fa-ban"></i> Terdapat {{$count_pembelajaran-$count_kkm}} pembelajaran belum ditentukan KKM.</span>
+                @endif
+              </div>
+              <div class="callout callout-success">
                 <h5>Kelas & Wali</h5>
                 @if($count_kelas == 0)
                 <span class="text-danger"><i class="icon fas fa-ban"></i> Belum ditemukan data kelas.</span>
@@ -120,16 +130,6 @@
                 @foreach($mapel_belum_mapping as $mapel)
                 <span class="text-danger"><i class="icon fas fa-ban"></i> Mata pelajaran <b>{{$mapel->nama_mapel}}</b> belum dilakukan mapping</span><br>
                 @endforeach
-                @endif
-              </div>
-              <div class="callout callout-success">
-                <h5>KKM Mapel</h5>
-                @if($count_pembelajaran == 0)
-                <span class="text-danger"><i class="icon fas fa-ban"></i> Belum ditemukan data KKM mapel.</span>
-                @elseif($count_pembelajaran == $count_kkm)
-                <span class="text-success"><i class="icon fas fa-check"></i> Seluruh data KKM mapel valid.</span>
-                @else
-                <span class="text-danger"><i class="icon fas fa-ban"></i> Terdapat {{$count_pembelajaran-$count_kkm}} pembelajaran belum ditentukan KKM.</span>
                 @endif
               </div>
               <div class="callout callout-success">
