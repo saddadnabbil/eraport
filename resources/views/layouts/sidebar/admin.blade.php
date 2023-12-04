@@ -213,7 +213,7 @@
         </li>
 
         <li class="nav-item">
-          <a href="{{ route('leger.index') }}" class="nav-link {{ request()->routeIs('leger.index') ? 'active' : '' }}">
+          <a href="{{ route('adminleger.index') }}" class="nav-link {{ request()->routeIs('adminleger.index') ? 'active' : '' }}">
             <i class="nav-icon fas fa-table"></i>
             <p>
               Leger Nilai Siswa

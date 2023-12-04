@@ -142,7 +142,7 @@ Route::group(['middleware' => ['auth']], function () {
       Route::resource('nilairaport', 'Admin\K13\NilaiRaportSemesterController',  [
         'uses' => ['index', 'store']
       ]);
-      Route::resource('leger', 'Admin\K13\LegerNilaiSiswaController',  [
+      Route::resource('adminleger', 'Admin\K13\LegerNilaiSiswaController',  [
         'uses' => ['index', 'store', 'show']
       ]);
       Route::resource('raportpts', 'Admin\K13\CetakRaportPTSController',  [
