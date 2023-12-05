@@ -145,10 +145,10 @@ Route::group(['middleware' => ['auth']], function () {
       Route::resource('adminleger', 'Admin\K13\LegerNilaiSiswaController',  [
         'uses' => ['index', 'store', 'show']
       ]);
-      Route::resource('raportpts', 'Admin\K13\CetakRaportPTSController',  [
+      Route::resource('adminraportpts', 'Admin\K13\CetakRaportPTSController',  [
         'uses' => ['index', 'store', 'show']
       ]);
-      Route::resource('raportsemester', 'Admin\K13\CetakRaportSemesterController',  [
+      Route::resource('adminraportsemester', 'Admin\K13\CetakRaportSemesterController',  [
         'uses' => ['index', 'store', 'show']
       ]);
       // End  Raport K13 Admin

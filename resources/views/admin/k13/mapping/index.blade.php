@@ -34,7 +34,7 @@
 
             <div class="card-body">
 
-              <form action="{{ route('k13mapping.store') }}" method="POST">
+              <form action="{{ route('mapping.store') }}" method="POST">
                 @csrf
                 <div class="table-responsive">
                   <table class="table table-bordered table-striped table-hover">

@@ -34,7 +34,7 @@
 
             <div class="card-body">
               <div class="callout callout-info">
-                <form action="{{ route('k13raportpts.store') }}" method="POST">
+                <form action="{{ route('adminraportpts.store') }}" method="POST">
                   @csrf
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Ukuran Kertas</label>
@@ -90,7 +90,7 @@
                       <td>{{$anggota_kelas->siswa->nama_lengkap}}</td>
                       <td class="text-center">{{$anggota_kelas->siswa->jenis_kelamin}}</td>
                       <td class="text-center">
-                        <form action="{{ route('k13raportpts.show', $anggota_kelas->id) }}" target="_black" method="GET">
+                        <form action="{{ route('adminraportpts.show', $anggota_kelas->id) }}" target="_black" method="GET">
                           @csrf
                           <input type="hidden" name="paper_size" value="{{$paper_size}}">
                           <input type="hidden" name="orientation" value="{{$orientation}}">

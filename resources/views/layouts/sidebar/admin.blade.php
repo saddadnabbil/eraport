@@ -221,7 +221,7 @@
           </a>
         </li>
 
-        <li class="nav-item has-treeview {{ request()->routeIs(['raportpts.index', 'raportsemester.index']) ? 'menu-open' : '' }}">
+        <li class="nav-item has-treeview {{ request()->routeIs(['adminraportpts.index', 'adminraportsemester.index']) ? 'menu-open' : '' }}">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-print"></i>
             <p>
@@ -231,13 +231,13 @@
           </a>
           <ul class="nav nav-treeview bg-secondary">
             <li class="nav-item">
-              <a href="{{ route('raportpts.index') }}" class="nav-link {{ request()->routeIs('raportpts.index') ? 'active' : '' }}">
+              <a href="{{ route('adminraportpts.index') }}" class="nav-link {{ request()->routeIs('adminraportpts.index') ? 'active' : '' }}">
                 <i class="fas fa-print nav-icon"></i>
                 <p>Raport Tengah Semester</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{ route('raportsemester.index') }}" class="nav-link {{ request()->routeIs('raportsemester.index') ? 'active' : '' }}">
+              <a href="{{ route('adminraportsemester.index') }}" class="nav-link {{ request()->routeIs('adminraportsemester.index') ? 'active' : '' }}">
                 <i class="fas fa-print nav-icon"></i>
                 <p>Raport Semester</p>
               </a>

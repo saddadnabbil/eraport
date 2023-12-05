@@ -50,13 +50,13 @@
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
-                  <form name="contact-form" action="{{ route('k13kkm.import') }}" method="POST" enctype="multipart/form-data">
+                  <form name="contact-form" action="{{ route('kkm.import') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                       <div class="callout callout-info">
                         <h5>Download format import</h5>
                         <p>Silahkan download file format import melalui tombol dibawah ini.</p>
-                        <a href="{{ route('k13kkm.format_import') }}" class="btn btn-primary text-white" style="text-decoration:none"><i class="fas fa-file-download"></i> Download</a>
+                        <a href="{{ route('kkm.format_import') }}" class="btn btn-primary text-white" style="text-decoration:none"><i class="fas fa-file-download"></i> Download</a>
                       </div>
                       <div class="form-group row pt-2">
                         <label for="file_import" class="col-sm-2 col-form-label">File Import</label>
@@ -88,7 +88,7 @@
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
-                  <form action="{{ route('k13kkm.store') }}" method="POST">
+                  <form action="{{ route('kkm.store') }}" method="POST">
                     @csrf
                     <div class="modal-body">
                       <div class="form-group row">
@@ -156,7 +156,7 @@
                       <td>Level {{$kkm->kelas->tingkatan->nama_tingkatan}} - {{$kkm->kelas->nama_kelas}}</td>
                       <td>{{$kkm->kkm}}</td>
                       <td>
-                        <form action="{{ route('k13kkm.destroy', $kkm->id) }}" method="POST">
+                        <form action="{{ route('kkm.destroy', $kkm->id) }}" method="POST">
                           @csrf
                           @method('DELETE')
                           <button type="button" class="btn btn-warning btn-sm mt-1" data-toggle="modal" data-target="#modal-edit{{$kkm->id}}">
@@ -179,7 +179,7 @@
                               <span aria-hidden="true">&times;</span>
                             </button>
                           </div>
-                          <form action="{{ route('k13kkm.update', $kkm->id) }}" method="POST">
+                          <form action="{{ route('kkm.update', $kkm->id) }}" method="POST">
                             {{ method_field('PATCH') }}
                             @csrf
                             <div class="modal-body">

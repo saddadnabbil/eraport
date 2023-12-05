@@ -47,7 +47,7 @@
                       <span aria-hidden="true">&times;</span>
                     </button>
                   </div>
-                  <form action="{{ route('k13tglraport.store') }}" method="POST">
+                  <form action="{{ route('tglraport.store') }}" method="POST">
                     @csrf
                     <div class="modal-body">
                       <div class="form-group row">
