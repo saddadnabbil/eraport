@@ -158,6 +158,7 @@
 
                         <form action="{{ route('tapel.update', $tapel->id) }}" method="POST">
                           @csrf
+                          @method('PUT')
                           <div class="modal-body">
                             <div class="form-group row">
                               <label for="tahun_pelajaran" class="col-sm-3 col-form-label">Tahun Pelajaran</label>
