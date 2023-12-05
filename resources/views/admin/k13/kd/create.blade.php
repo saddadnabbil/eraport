@@ -13,7 +13,7 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item "><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item "><a href="{{ route('k13kd.index') }}">Data Kompetensi Dasar</a></li>
+            <li class="breadcrumb-item "><a href="{{ route('kd.index') }}">Data Kompetensi Dasar</a></li>
             <li class="breadcrumb-item active">{{$title}}</li>
           </ol>
         </div><!-- /.col -->
@@ -61,7 +61,7 @@
                 </form>
               </div>
 
-              <form id="dynamic_form" action="{{ route('k13kd.store') }}" method="POST">
+              <form id="dynamic_form" action="{{ route('kd.store') }}" method="POST">
                 @csrf
                 <input type="hidden" name="mapel_id" value="{{$mapel_id}}">
                 <input type="hidden" name="tingkatan_id" value="{{$tingkatan_id}}">
@@ -87,7 +87,7 @@
 
             <div class="card-footer clearfix">
               <button type="submit" class="btn btn-primary float-right">Simpan</button>
-              <a href="{{ route('k13kd.index') }}" class="btn btn-default float-right mr-2">Batal</a>
+              <a href="{{ route('kd.index') }}" class="btn btn-default float-right mr-2">Batal</a>
             </div>
             </form>
           </div>

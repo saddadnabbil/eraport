@@ -123,7 +123,7 @@
                       <td>{{$kd->kode_kd}}</td>
                       <td>{{$kd->kompetensi_dasar}}</td>
                       <td>
-                        <form action="{{ route('k13kd.destroy', $kd->id) }}" method="POST">
+                        <form action="{{ route('kd.destroy', $kd->id) }}" method="POST">
                           @csrf
                           @method('DELETE')
                           <button type="button" class="btn btn-warning btn-sm mt-1" data-toggle="modal" data-target="#modal-edit{{$kd->id}}">
@@ -146,7 +146,7 @@
                               <span aria-hidden="true">&times;</span>
                             </button>
                           </div>
-                          <form action="{{ route('k13kd.update', $kd->id) }}" method="POST">
+                          <form action="{{ route('kd.update', $kd->id) }}" method="POST">
                             {{ method_field('PATCH') }}
                             @csrf
                             <div class="modal-body">

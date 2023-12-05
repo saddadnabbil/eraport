@@ -31,4 +31,9 @@ class K13KdMapel extends Model
     {
         return $this->hasMany('App\K13RencanaNilaiKeterampilan');
     }
+
+    public function tingkatan()
+    {
+        return $this->belongsTo(Tingkatan::class);
+    }
 }

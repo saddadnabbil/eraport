@@ -95,7 +95,7 @@ class KdMapelController extends Controller
                 $store_data_kd[] = $data_kd;
             }
             K13KdMapel::insert($store_data_kd);
-            return redirect('admin/k13kd')->with('toast_success', 'Kompetensi dasar berhasil ditambahkan');
+            return redirect('admin/kd')->with('toast_success', 'Kompetensi dasar berhasil ditambahkan');
         }
     }
 
