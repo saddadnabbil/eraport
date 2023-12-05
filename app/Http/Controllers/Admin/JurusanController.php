@@ -12,7 +12,7 @@ class JurusanController extends Controller
     {
         $title = 'Data Jurusan';
 
-    $data_jurusan = Jurusan::orderBy('id', 'ASC')->get();
+        $data_jurusan = Jurusan::orderBy('id', 'ASC')->get();
 
         return view('admin.jurusan.index', compact('title', 'data_jurusan'));
     }
@@ -41,9 +41,14 @@ class JurusanController extends Controller
 
     public function destroy($id)
     {
-        $jurusan = Jurusan::findorfail($id);
-        $jurusan->delete();
 
-        return back()->with('toast_success', 'Jurusan berhasil dihapus');
+
+        $jurusan = Jurusan::findorfail($id);
+        try {
+            $jurusan->delete();
+            return back()->with('toast_success', 'Jurusan berhasil dihapus');
+        } catch (\Throwable $th) {
+            return back()->with('toast_warning', 'Jurusan ini gagal dihapus karena memiliki relasi dengan data kelas');
+        }
     }
 }

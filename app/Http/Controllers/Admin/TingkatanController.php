@@ -52,8 +52,11 @@ class TingkatanController extends Controller
     public function destroy($id)
     {
         $tingkatan = Tingkatan::findorfail($id);
-        $tingkatan->delete();
-
-        return back()->with('toast_success', 'Tingkatan berhasil dihapus');
+        try {
+            $tingkatan->delete();
+            return back()->with('toast_success', 'Tingkatan berhasil dihapus');
+        } catch (\Throwable $th) {
+            return back()->with('toast_warning', 'Tingkatan ini gagal dihapus karena memiliki relasi dengan data kelas');
+        }
     }
 }
