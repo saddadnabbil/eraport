@@ -150,9 +150,19 @@
                       <td>{{$sikap->butir_sikap}}</td>
 
                       <td>
-                        <button type="button" class="btn btn-warning btn-sm mt-1" data-toggle="modal" data-target="#modal-edit{{$sikap->id}}">
+                        {{-- <button type="button" class="btn btn-warning btn-sm mt-1" data-toggle="modal" data-target="#modal-edit{{$sikap->id}}">
                           <i class="fas fa-pencil-alt"></i>
-                        </button>
+                        </button> --}}
+                        <form action="{{ route('sikap.destroy', $sikap->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="button" class="btn btn-warning btn-sm mt-1" data-toggle="modal" data-target="#modal-edit{{$sikap->id}}">
+                                <i class="fas fa-pencil-alt"></i>
+                            </button>
+                            <button type="submit" class="btn btn-danger btn-sm mt-1" onclick="return confirm('Hapus {{$title}} ?')">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </form>
                       </td>
                     </tr>
 

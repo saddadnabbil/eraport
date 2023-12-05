@@ -81,6 +81,17 @@ class ButirSikapController extends Controller
         }
     }
 
+    public function destroy($id)
+    {
+        $sikap = K13ButirSikap::findorfail($id);
+        try {
+            $sikap->delete();
+            return back()->with('toast_success', 'Butir sikap berhasil dihapus');
+        } catch (\Throwable $th) {
+            return back()->with('toast_error', 'Butir sikap tidak bisa di hapus');
+        }
+    }
+
     public function format_import()
     {
         $file = public_path() . "/format_import/format_import_sikap.xls";
