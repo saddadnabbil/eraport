@@ -1,0 +1,7 @@
+.form-group .required:after { 
+    content:"*";
+    color:red;
+    font-weight: 100;
+    margin-left: 2px;
+}
+  
