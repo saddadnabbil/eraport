@@ -38,7 +38,7 @@
           </a>
         </li>
 
-        <li class="nav-item has-treeview {{ request()->routeIs(['sekolah.index', 'guru.index', 'tapel.index', 'mapel.index', 'kelas.index', 'siswa.index', 'pembelajaran.index', 'ekstrakulikuler.index', 'tingkatan.index', 'jurusan.index', 'kkm.index']) ? 'menu-open' : '' }}">
+        <li class="nav-item has-treeview {{ request()->routeIs(['sekolah.index', 'guru.index', 'tapel.index', 'mapel.index', 'kelas.index', 'siswa.index', 'pembelajaran.index', 'ekstrakulikuler.index', 'tingkatan.index', 'jurusan.index', 'kkm.index', 'silabus.index']) ? 'menu-open' : '' }}">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-server"></i>
             <p>
@@ -113,6 +113,12 @@
               <a href="{{ route('ekstrakulikuler.index') }}" class="nav-link {{ request()->routeIs('ekstrakulikuler.index') ? 'active' : '' }}">
                 <i class="fas fa-book-reader nav-icon"></i>
                 <p>Data Ekstrakulikuler</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ route('silabus.index') }}" class="nav-link {{ request()->routeIs('silabus.index') ? 'active' : '' }}">
+                <i class="fas fa-book-reader nav-icon"></i>
+                <p>Silabus</p>
               </a>
             </li>
 

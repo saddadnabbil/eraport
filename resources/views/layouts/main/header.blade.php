@@ -27,6 +27,8 @@
   <link rel="stylesheet" href="/assets/plugins/summernote/summernote-bs4.css">
   <!-- DataTables -->
   <link rel="stylesheet" href="/assets/plugins/datatables-bs4/css/dataTables.bootstrap4.css">
+  {{-- Custom Css --}}
+  <link rel="stylesheet" href="/assets/dist/css/custom.css">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed pace-primary">

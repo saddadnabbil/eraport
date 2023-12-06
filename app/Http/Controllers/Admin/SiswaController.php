@@ -49,28 +49,29 @@ class SiswaController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'nama_lengkap' => 'required|min:3|max:100',
-            'jenis_kelamin' => 'required',
-            'jenis_pendaftaran' => 'required',
-            'kelas_id' => 'required',
-            'nis' => 'required|numeric|digits_between:1,10|unique:siswa',
-            'nisn' => 'nullable|numeric|digits:10|unique:siswa',
-            'tempat_lahir' => 'required|min:3|max:50',
-            'tanggal_lahir' => 'required',
-            'agama' => 'required',
-            'anak_ke' => 'required|numeric|digits_between:1,2',
-            'status_dalam_keluarga' => 'required',
-            'alamat' => 'required|min:3|max:255',
-            'nomor_hp' => 'nullable|numeric|digits_between:11,13|unique:siswa',
+        $validator = Validator::make($request->all(), 
+            [
+                'nama_lengkap' => 'required|min:3|max:100',
+                'jenis_kelamin' => 'required',
+                'jenis_pendaftaran' => 'required',
+                'kelas_id' => 'required',
+                'nis' => 'required|numeric|digits_between:1,10|unique:siswa',
+                'nisn' => 'nullable|numeric|digits:10|unique:siswa',
+                'tempat_lahir' => 'required|min:3|max:50',
+                'tanggal_lahir' => 'required',
+                'agama' => 'required',
+                'anak_ke' => 'required|numeric|digits_between:1,2',
+                'status_dalam_keluarga' => 'required',
+                'alamat' => 'required|min:3|max:255',
+                'nomor_hp' => 'nullable|numeric|digits_between:11,13|unique:siswa',
 
-            'nama_ayah' => 'required|min:3|max:100',
-            'nama_ibu' => 'required|min:3|max:100',
-            'pekerjaan_ayah' => 'required|min:3|max:100',
-            'pekerjaan_ibu' => 'required|min:3|max:100',
-            'nama_wali' => 'nullable|min:3|max:100',
-            'pekerjaan_wali' => 'nullable|min:3|max:100',
-        ]);
+                'nama_ayah' => 'required|min:3|max:100',
+                'nama_ibu' => 'required|min:3|max:100',
+                'pekerjaan_ayah' => 'required|min:3|max:100',
+                'pekerjaan_ibu' => 'required|min:3|max:100',
+                'nama_wali' => 'nullable|min:3|max:100',
+                'pekerjaan_wali' => 'nullable|min:3|max:100',
+            ]);
         if ($validator->fails()) {
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
         } else {

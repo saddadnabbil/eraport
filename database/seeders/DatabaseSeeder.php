@@ -16,6 +16,7 @@ use Database\Seeders\AnggotaKelasTableSeeder;
 use Database\Seeders\EkstrakulikulerTableSeeder;
 use Database\Seeders\K13KkmTableSeeder;
 use Database\Seeders\PembelajaranTableSeeder;
+use Database\Seeders\SilabusSeeder;
 use UsersTableSeeder as GlobalUsersTableSeeder;
 use SekolahTableSeeder as GlobalSekolahTableSeeder;
 
@@ -45,6 +46,7 @@ class DatabaseSeeder extends Seeder
             PembelajaranTableSeeder::class,
             GlobalSekolahTableSeeder::class,
             K13KkmTableSeeder::class,
+            SilabusSeeder::class
         ]);
     }
 }

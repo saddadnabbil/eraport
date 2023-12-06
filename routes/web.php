@@ -64,6 +64,8 @@ Route::group(['middleware' => ['auth']], function () {
 
       Route::resource('jurusan', 'Admin\JurusanController')->only(['index', 'store', 'update', 'destroy']);
 
+      Route::resource('silabus', 'Admin\SilabusController')->only(['index', 'store', 'update', 'destroy']);
+
       Route::post('tapel/set', 'Admin\TapelController@setAcademicYear')->name('tapel.setAcademicYear');
 
       Route::post('kelas/anggota', 'Admin\KelasController@store_anggota')->name('kelas.anggota');
