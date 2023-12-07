@@ -22,7 +22,7 @@
 
         <li class="nav-header">Tools</li>
         <li class="nav-item">
-          <a href="{{ route('guru.silabus.index') }}" class="nav-link {{ request()->routeIs('guru.silabus.index') ? 'active' : '' }} {{ request()->routeIs('kdk13.index') ? 'active' : '' }}">
+          <a href="{{ route('guru.silabus.index') }}" class="nav-link {{ request()->routeIs('guru.silabus.index') ? 'active' : '' }} {{ request()->routeIs('guru.silabus.index') ? 'active' : '' }}">
             <i class="nav-icon fas fa-clipboard-list"></i>
             <p>
               Silabus
