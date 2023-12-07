@@ -27,7 +27,6 @@ class SilabusController extends Controller
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
 
         $mapel    = Mapel::all();
-        $data_silabus = Silabus::with('kelas', 'mapel')->orderBy('kelas_id', 'asc')->get();
         $id_kelas = Kelas::where('tapel_id', session()->get('tapel_id'))->get('id');
 
         $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
@@ -45,7 +44,7 @@ class SilabusController extends Controller
         foreach ($data_pembelajaran as $data_silabus_filtered) {
             $data_pembelajaran = $data_silabus_filtered;
 
-            // $kelas = $data_silabus_filtered->kelas;
+            $data_silabus = $data_silabus_filtered->silabus;
         }
 
         return view('admin.silabus.index', compact('title', 'data_silabus', 'kelas', 'mapel', 'data_pembelajaran'));
