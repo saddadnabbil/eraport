@@ -12,7 +12,7 @@
   <div class="sidebar">
     <!-- Sidebar Menu -->
     <nav class="mt-2">
-      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" >
         <li class="nav-item">
           <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
             <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -26,7 +26,7 @@
           <a href="{{ route('user.index') }}" class="nav-link {{ request()->routeIs('user.index') ? 'active' : '' }}">
             <i class="nav-icon fas fa-user-friends"></i>
             <p>
-              Data User
+              User Data
             </p>
           </a>
         </li>
@@ -35,7 +35,7 @@
           <a href="{{ route('pengumuman.index') }}" class="nav-link" {{ request()->routeIs('pengumuman.index') ? 'active' : '' }}>
             <i class="nav-icon fas fa-bullhorn"></i>
             <p>
-              Pengumuman
+              Announcement
             </p>
           </a>
         </li>
@@ -44,7 +44,7 @@
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-server"></i>
             <p>
-              Data Master
+              Master Data
               <i class="fas fa-angle-left right"></i>
             </p>
           </a>
@@ -52,75 +52,75 @@
             <li class="nav-item">
               <a href="{{ route('sekolah.index') }}" class="nav-link {{ request()->routeIs('sekolah.index') ? 'active' : '' }}">
                 <i class="fas fa-school nav-icon"></i>
-                <p>Profil Sekolah</p>
+                <p>School Profile</p>
               </a>
             </li>
             <li class="nav-item">
               <a href="{{ route('guru.index') }}" class="nav-link {{ request()->routeIs('guru.index') ? 'active' : '' }}">
                 <i class="fas fa-user-tie nav-icon"></i>
-                <p>Data Guru</p>
+                <p>Teachers</p>
               </a>
             </li>
             <li class="nav-item">
               <a href="{{ route('tingkatan.index') }}" class="nav-link {{ request()->routeIs('tingkatan.index') ? 'active' : '' }}">
                 <i class="fas fa-user-tie nav-icon"></i>
-                <p>Data Tingkatan</p>
+                <p>Level</p>
               </a>
             </li>
             <li class="nav-item">
               <a href="{{ route('jurusan.index') }}" class="nav-link {{ request()->routeIs('jurusan.index') ? 'active' : '' }}">
                 <i class="fas fa-user-tie nav-icon"></i>
-                <p>Data Jurusan</p>
+                <p>Line</p>
               </a>
             </li>
             <li class="nav-item">
               <a href="{{ route('tapel.index') }}" class="nav-link {{ request()->routeIs('tapel.index') ? 'active' : '' }}">
                 <i class="fas fa-calendar-week nav-icon"></i>
-                <p>Data Tahun Pelajaran</p>
+                <p>Academic Year</p>
               </a>
             </li>
             <li class="nav-item">
               <a href="{{ route('mapel.index') }}" class="nav-link {{ request()->routeIs('mapel.index') ? 'active' : '' }}">
                 <i class="fas fa-book nav-icon"></i>
-                <p>Data Mata Pelajaran</p>
+                <p>Subjects</p>
               </a>
             </li>
             <li class="nav-item">
               <a href="{{ route('kkm.index') }}" class="nav-link {{ request()->routeIs('kkm.index') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-greater-than-equal"></i>
                 <p>
-                  KKM Mapel
+                  Minimum Criteria
                 </p>
               </a>
             </li>
             <li class="nav-item">
               <a href="{{ route('kelas.index') }}" class="nav-link {{ request()->routeIs('kelas.index') ? 'active' : '' }}">
                 <i class="fas fa-layer-group nav-icon"></i>
-                <p>Data Kelas & Wali</p>
+                <p>Class & Homeroom</p>
               </a>
             </li>
             <li class="nav-item">
               <a href="{{ route('siswa.index') }}" class="nav-link {{ request()->routeIs('siswa.index') ? 'active' : '' }}">
                 <i class="fas fa-users nav-icon"></i>
-                <p>Data Siswa</p>
+                <p>Students</p>
               </a>
             </li>
             <li class="nav-item">
               <a href="{{ route('pembelajaran.index') }}" class="nav-link {{ request()->routeIs('pembelajaran.index') ? 'active' : '' }}">
                 <i class="fas fa-book-open nav-icon"></i>
-                <p>Data Pembelajaran</p>
+                <p>Learning Data</p>
               </a>
             </li>
             <li class="nav-item">
               <a href="{{ route('ekstrakulikuler.index') }}" class="nav-link {{ request()->routeIs('ekstrakulikuler.index') ? 'active' : '' }}">
                 <i class="fas fa-book-reader nav-icon"></i>
-                <p>Data Ekstrakulikuler</p>
+                <p>Extracurricular</p>
               </a>
             </li>
             <li class="nav-item">
               <a href="{{ route('admin.silabus.index') }}" class="nav-link {{ request()->routeIs('admin.silabus.index') ? 'active' : '' }}">
                 <i class="fas fa-book-reader nav-icon"></i>
-                <p>Silabus</p>
+                <p>Syllabus</p>
               </a>
             </li>
 
@@ -128,12 +128,12 @@
         </li>
 
         <!-- Kurikulum -->
-        <li class="nav-header">SETTING RAPORT</li>
+        <li class="nav-header">SETTING REPORT</li>
         <li class="nav-item">
           <a href="{{ route('mapping.index') }}" class="nav-link {{ request()->routeIs('mapping.index') ? 'active' : '' }}">
             <i class="nav-icon fas fa-list-ol"></i>
             <p>
-              Mapping Mapel
+              Mapping Subject
             </p>
           </a>
         </li>
@@ -180,12 +180,12 @@
           </a>
         </li>
 
-        <li class="nav-header">HASIL RAPORT</li>
+        <li class="nav-header">REPORT RESULTS</li>
         <li class="nav-item has-treeview {{ request()->routeIs(['raportstatuspenilaian.index', 'pengelolaannilai.index', 'nilairaport.index']) ? 'menu-open' : '' }}">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-list-ol"></i>
             <p>
-              Hasil Penilaian
+              Rating result
               <i class="fas fa-angle-left right"></i>
             </p>
           </a>
@@ -193,19 +193,19 @@
             <li class="nav-item">
               <a href="{{ route('raportstatuspenilaian.index') }}" class="nav-link {{ request()->routeIs('raportstatuspenilaian.index') ? 'active' : '' }}">
                 <i class="fas fa-check-circle nav-icon"></i>
-                <p>Status Penilaian</p>
+                <p>Assessment Status</p>
               </a>
             </li>
             <li class="nav-item">
               <a href="{{ route('pengelolaannilai.index') }}" class="nav-link {{ request()->routeIs('pengelolaannilai.index') ? 'active' : '' }}">
                 <i class="fas fa-check-square nav-icon"></i>
-                <p>Hasil Pengelolaan Nilai</p>
+                <p>Value Management Results</p>
               </a>
             </li>
             <li class="nav-item">
               <a href="{{ route('nilairaport.index') }}" class="nav-link {{ request()->routeIs('nilairaport.index') ? 'active' : '' }}">
                 <i class="fas fa-clipboard-check nav-icon"></i>
-                <p>Nilai Raport Semester</p>
+                <p>Semester Report Value</p>
               </a>
             </li>
           </ul>
@@ -215,7 +215,7 @@
           <a href="{{ route('rekapkehadiran.index') }}" class="nav-link {{ request()->routeIs('rekapkehadiran.index') ? 'active' : '' }}">
             <i class="nav-icon fas fa-calendar-check"></i>
             <p>
-              Rekap Kehadiran Siswa
+              Student Attendance
             </p>
           </a>
         </li>
@@ -224,7 +224,7 @@
           <a href="{{ route('adminleger.index') }}" class="nav-link {{ request()->routeIs('adminleger.index') ? 'active' : '' }}">
             <i class="nav-icon fas fa-table"></i>
             <p>
-              Leger Nilai Siswa
+              Leger Student Values
             </p>
           </a>
         </li>
@@ -233,7 +233,7 @@
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-print"></i>
             <p>
-              Cetak Raport
+              Print Report
               <i class="fas fa-angle-left right"></i>
             </p>
           </a>
@@ -241,13 +241,13 @@
             <li class="nav-item">
               <a href="{{ route('adminraportpts.index') }}" class="nav-link {{ request()->routeIs('adminraportpts.index') ? 'active' : '' }}">
                 <i class="fas fa-print nav-icon"></i>
-                <p>Raport Tengah Semester</p>
+                <p>Mid-Semester Report</p>
               </a>
             </li>
             <li class="nav-item">
               <a href="{{ route('adminraportsemester.index') }}" class="nav-link {{ request()->routeIs('adminraportsemester.index') ? 'active' : '' }}">
                 <i class="fas fa-print nav-icon"></i>
-                <p>Raport Semester</p>
+                <p>Semester Report</p>
               </a>
             </li>
           </ul>

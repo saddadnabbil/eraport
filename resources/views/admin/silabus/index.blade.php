@@ -52,25 +52,20 @@
                             <div class="modal-body">
                                 <input type="hidden" name="pembelajaran_id" value="{{$data_pembelajaran->id}}">
                                 <div class="form-group">
-                                    <label for="kelas_id" class="required">Class</label>
-                                    <select id="kelas_id" name="kelas_id" class="form-control ">
-                                    <option value="">-- Select Class Name --</option>
-                                    @foreach ($kelas as $data)
-                                        <option value="{{ $data->id }}">{{ $data->nama_kelas }}</option>
-                                    @endforeach
-                                    </select>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="mapel_id" class="required">Subject Name</label>
-                                    <select id="mapel_id" name="mapel_id" class="select2bs4 form-control">
-                                        <option value="">-- Select Subject Name --</option>
-                                        @foreach ($mapel as $data)
-                                        <option value="{{ $data->id }}">{{ $data->nama_mapel }}</option>
+                                    <label for="mapel_id">Subject Name</label>
+                                    <select class="form-control select2" name="mapel_id" style="width: 100%;" required>
+                                        <option value="">-- Select Subject Name -- </option>
+                                        @foreach($mapel as $data)
+                                        <option value="{{$data->id}}"> {{$data->nama_mapel}}</option>
                                         @endforeach
+                                    </select> 
+                                </div>
+                                <div class="form-group">
+                                    <label for="kelas_id">Class</label>
+                                    <select class="form-control select2" name="kelas_id" style="width: 100%;" required>
+                                    <!--  -->
                                     </select>
                                 </div>
-
                                 <div class="form-group row">
                                     <div class="col-sm-6">
                                         <label for="k_tigabelas">Input File K13</label>
@@ -338,3 +333,34 @@
 <!-- /.content-wrapper -->  
 
 @include('layouts.main.footer')
+
+<!-- ajax -->
+<script type="text/javascript">
+    $(document).ready(function() {
+      $('select[name="mapel_id"]').on('change', function() {
+        var mapel_id = $(this).val();
+        if (mapel_id) {
+          $.ajax({
+            url: '/admin/getKelas/ajax/' + mapel_id,
+            type: "GET",
+            dataType: "json",
+            success: function(data) {
+              $('select[name="kelas_id"').empty();
+  
+              $('select[name="kelas_id"]').append(
+                '<option value="">-- Select Class Name --</option>'
+              );
+  
+              $.each(data, function(i, data) {
+                $('select[name="kelas_id"]').append(
+                  '<option value="' +
+                  data.kelas_id + '">' + data.nama_kelas + '</option>');
+              });
+            }
+          });
+        } else {
+          $('select[name="kelas_id"').empty();
+        }
+      });
+    });
+  </script>

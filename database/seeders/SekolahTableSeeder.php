@@ -13,7 +13,7 @@ class SekolahTableSeeder extends Seeder
     public function run()
     {
         Sekolah::create([
-            'nama_sekolah' => 'SEKOLAH INDONESIA',
+            'nama_sekolah' => 'Global Indonesia School',
             'npsn' => '0000000000',
             'kode_pos' => '62001',
             'alamat' => 'Jl. Indonesia Merdeka',

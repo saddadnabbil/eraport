@@ -119,7 +119,7 @@
         <div class="col-md-6">
           <div class="card card-default">
             <div class="card-header">
-              <h3 class="card-title"><i class="fas fa-cogs"></i> Validasi Setting Raport</h3>
+              <h3 class="card-title"><i class="fas fa-cogs"></i> Validasi Setting Report</h3>
             </div>
             <div class="card-body">
               <div class="callout callout-success">

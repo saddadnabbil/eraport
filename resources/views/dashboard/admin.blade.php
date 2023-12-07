@@ -28,11 +28,11 @@
       <!-- Info -->
       <div class="callout callout-success">
         <h5>{{$sekolah->nama_sekolah}}</h5>
-        <p>Tahun Pelajaran {{$tapel->tahun_pelajaran}}
+        <p>{{$tapel->tahun_pelajaran}} Academic Year 
           @if($tapel->semester == 1)
-          Semester Ganjil
+          Odd Semester
           @else
-          Semester Genap
+          Even Semester
           @endif
         </p>
       </div>
@@ -45,7 +45,7 @@
             <span class="info-box-icon bg-info elevation-1"><i class="fas fa-user-tie"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Jumlah Guru</span>
+              <span class="info-box-text">Total Teachers</span>
               <span class="info-box-number">
                 {{$jumlah_guru}}
               </span>
@@ -60,7 +60,7 @@
             <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-users"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Jumlah Siswa</span>
+              <span class="info-box-text">Total Students</span>
               <span class="info-box-number">{{$jumlah_siswa}}</span>
             </div>
             <!-- /.info-box-content -->
@@ -77,7 +77,7 @@
             <span class="info-box-icon bg-success elevation-1"><i class="fas fa-layer-group"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Jumlah Kelas</span>
+              <span class="info-box-text">Total Classes</span>
               <span class="info-box-number">{{$jumlah_kelas}}</span>
             </div>
             <!-- /.info-box-content -->
@@ -90,7 +90,7 @@
             <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-book-reader "></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Jumlah Ekstrakulikuler</span>
+              <span class="info-box-text">Total Extracurriculars</span>
               <span class="info-box-number">{{$jumlah_ekstrakulikuler}}</span>
             </div>
             <!-- /.info-box-content -->
@@ -109,7 +109,7 @@
           <!-- MAP & BOX PANE -->
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Pengumuman</h3>
+              <h3 class="card-title">Announcement</h3>
 
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -128,7 +128,7 @@
                   <div class="timeline">
                     <!-- timeline time label -->
                     <div class="time-label">
-                      <span class="bg-success">Pengumuman Terakhir</span>
+                      <span class="bg-success">Final Announcement</span>
                     </div>
                     <!-- /.timeline-label -->
                     <!-- timeline item -->
@@ -165,7 +165,7 @@
           <!-- PRODUCT LIST -->
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Riwayat Login</h3>
+              <h3 class="card-title">Login History</h3>
 
               <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -214,9 +214,9 @@
                       @if($riwayat_login->user->role == 1)
                       Administrator
                       @elseif($riwayat_login->user->role == 2)
-                      Guru
+                      Teacher
                       @elseif($riwayat_login->user->role == 3)
-                      Siswa
+                      Student
                       @endif
 
                       @if($riwayat_login->status_login == false)
