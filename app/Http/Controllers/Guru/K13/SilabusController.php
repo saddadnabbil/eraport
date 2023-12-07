@@ -89,7 +89,7 @@ class SilabusController extends Controller
         Silabus::Create(
             [
                 'id' => $request->id,
-                'pembelajaran_id' => $request->id,
+                'pembelajaran_id' => $request->pembelajaran_id,
                 'kelas_id' => $request->kelas_id,
                 'mapel_id' => $request->mapel_id,
                 'k_tigabelas' => $k_tigabelas,
@@ -142,6 +142,8 @@ class SilabusController extends Controller
 
         $data->kelas_id = $request->input('kelas_id');
         $data->mapel_id = $request->input('mapel_id');
+        $data->mapel_id = $request->input('pembelajaran_id');
+
 
         if ($request->hasFile('k_tigabelas')) {
             $newK_tigabelas = $this->moveToPublic($request->file('k_tigabelas'));
