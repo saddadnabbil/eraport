@@ -15,6 +15,7 @@ class CreateSilabusesTable extends Migration
     {
         Schema::create('silabuses', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('pembelajaran_id')->unsigned();
             $table->unsignedBigInteger('kelas_id')->unsigned();
             $table->unsignedBigInteger('mapel_id')->unsigned();
             $table->string('k_tigabelas')->nullable();
@@ -26,6 +27,7 @@ class CreateSilabusesTable extends Migration
             $table->string('book_english_guru')->nullable();
             $table->timestamps();
 
+            $table->foreign('pembelajaran_id')->references('id')->on('pembelajaran');
             $table->foreign('kelas_id')->references('id')->on('kelas');
             $table->foreign('mapel_id')->references('id')->on('mapel');
         });

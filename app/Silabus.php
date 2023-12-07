@@ -2,15 +2,16 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Pembelajaran;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Silabus extends Model
 {
     use HasFactory;
 
     protected $table = 'silabuses';
-    protected $fillable = ['kelas_id', 'mapel_id', 'k_tigabelas', 'cambridge', 'edexcel', 'book_indo_siswa', 'book_english_siswa', 'book_indo_guru', 'book_english_guru'];
+    protected $fillable = ['pembelajaran_id', 'kelas_id', 'mapel_id', 'k_tigabelas', 'cambridge', 'edexcel', 'book_indo_siswa', 'book_english_siswa', 'book_indo_guru', 'book_english_guru'];
 
     public function kelas()
     {
@@ -20,5 +21,10 @@ class Silabus extends Model
     public function mapel()
     {
         return $this->belongsTo(Mapel::class)->withDefault();
+    }
+
+    public function pembelajaran()
+    {
+        return $this->belongsTo(Pembelajaran::class)->withDefault();
     }
 }

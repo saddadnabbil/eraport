@@ -21,5 +21,13 @@ class KelasTableSeeder extends Seeder
             'guru_id' => 1,
             'nama_kelas' => 'PA1',
         ]);
+
+        Kelas::create([
+            'tingkatan_id' => 2,
+            'jurusan_id' => 3,
+            'tapel_id' => 1,
+            'guru_id' => 2,
+            'nama_kelas' => 'PA2',
+        ]);
     }
 }

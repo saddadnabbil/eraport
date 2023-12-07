@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class AnggotaKelas extends Model
 {
     protected $table = 'anggota_kelas';
-    protected $fillable = [
+    protected $fillable = [ 
         'siswa_id',
         'kelas_id',
         'pendaftaran',

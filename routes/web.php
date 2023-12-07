@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PdfController;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,7 +65,15 @@ Route::group(['middleware' => ['auth']], function () {
 
       Route::resource('jurusan', 'Admin\JurusanController')->only(['index', 'store', 'update', 'destroy']);
 
-      Route::resource('silabus', 'Admin\SilabusController')->only(['index', 'store', 'update', 'destroy']);
+      Route::resource('silabus', 'Admin\SilabusController')->only(['index', 'store', 'update', 'destroy'])->names(
+        [
+          'index' => 'admin.silabus.index',
+          'store' => 'admin.silabus.store',
+          'update' => 'admin.silabus.update',
+          'destroy' => 'admin.silabus.destroy'
+        ]
+      );
+      Route::get('/pdf/{filename}', 'Admin\PdfController@viewSilabusPDF')->name('admin.silabus.pdf.view');
 
       Route::post('tapel/set', 'Admin\TapelController@setAcademicYear')->name('tapel.setAcademicYear');
 
@@ -213,6 +222,7 @@ Route::group(['middleware' => ['auth']], function () {
 
       // Route Guru Mapel
       Route::group(['middleware' => 'checkAksesGuru:Guru Mapel'], function () {
+
         Route::get('getKelas/ekstra/{id}', 'AjaxController@ajax_kelas_ekstra');
 
         Route::resource('nilaiekstra', 'Guru\NilaiEkstrakulikulerController',  [
@@ -220,6 +230,13 @@ Route::group(['middleware' => ['auth']], function () {
         ]);
 
         // Raport K13 Guru
+        Route::resource('silabus', 'Guru\K13\SilabusController')->only(['index', 'store', 'update', 'destroy'])->names([
+          'index' => 'guru.silabus.index',
+          'store' => 'guru.silabus.store',
+          'update' => 'guru.silabus.update',
+          'destroy' => 'guru.silabus.destroy'
+        ]);
+        Route::get('/pdf/{filename}', 'Admin\PdfController@viewSilabusPDF')->name('silabus.guru.pdf.view');
 
         Route::resource('kdk13', 'Guru\K13\KdMapelController',  [
           'uses' => ['index', 'create', 'store', 'update', 'destroy']
@@ -405,6 +422,11 @@ Route::group(['middleware' => ['auth']], function () {
   Route::resource('presensi', 'Siswa\RekapKehadiranController',  [
     'uses' => ['index']
   ]);
+
+  Route::resource('silabus', 'Siswa\K13\SilabusController')->only(['index'])->names([
+    'index' => 'siswa.silabus.index',
+  ]);
+  Route::get('/pdf/{filename}', 'Admin\PdfController@viewSilabusPDF')->name('silabus.siswa.pdf.view');
 
   // Raport K13 Siswa
   Route::resource('nilaiakhir', 'Siswa\K13\NilaiAkhirSemesterController',  [

@@ -1,15 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Guru\K13;
 
+use App\Guru;
 use App\Kelas;
 use App\Mapel;
 use App\Tapel;
 use App\Sekolah;
 use App\Silabus;
+use App\AnggotaKelas;
 use App\Pembelajaran;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -26,13 +29,17 @@ class SilabusController extends Controller
         $title = 'Silabus';
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
 
-        $mapel    = Mapel::all();
-        $data_silabus = Silabus::with('kelas', 'mapel')->orderBy('kelas_id', 'asc')->get();
-        $id_kelas = Kelas::where('tapel_id', session()->get('tapel_id'))->get('id');
+        $guru = Guru::where('user_id', Auth::user()->id)->first();
 
-        $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
+        $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
+        $data_id_kelas = Kelas::where('tapel_id', session()->get('tapel_id'))->get('id');
+        // $anggota_kelas = AnggotaKelas::;
 
-        $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
+        // dd($data_id_kelas->pluck('anggota_kelas')->whereIn('kelas_id', $data_id_kelas)->where('siswa_id', $guru->id));
+
+        $data_pembelajaran = Pembelajaran::where('guru_id', $guru->id)->whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
+
+        // dd($data_pembelajaran);
 
         $kelas = Kelas::whereIn('id', $data_pembelajaran->pluck('kelas_id'))
             ->orderBy('nama_kelas', 'ASC')
@@ -43,30 +50,18 @@ class SilabusController extends Controller
             ->get();
 
         foreach ($data_pembelajaran as $data_silabus_filtered) {
+            if ($data_silabus_filtered->where('status', 1)) {
+                $data_silabus = $data_silabus_filtered->silabus;
+                $data_pembelajaran = $data_silabus_filtered;
+            }
             $data_pembelajaran = $data_silabus_filtered;
-
-            // $kelas = $data_silabus_filtered->kelas;
         }
 
-        return view('admin.silabus.index', compact('title', 'data_silabus', 'kelas', 'mapel', 'data_pembelajaran'));
-    }
 
-    public function indexGuru()
-    {
-        $kelas    = Kelas::all();
-        $mapel    = Mapel::all();
-        $data_silabus = Silabus::with('kelas', 'mapel')->orderBy('kelas_id', 'asc')->get();
-        return view('guru.silabus', compact('data_silabus', 'kelas', 'mapel'));
-    }
+        // $data_silabus = $data_silabus_berdasarkan_guru->where('guru_id', $guru->id)->whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('mapel_id', 'ASC')->get();
 
-    public function indexSiswa()
-    {
-        $kelas    = Kelas::all();
-        $mapel    = Mapel::all();
-        $data_silabus = Silabus::with('kelas', 'mapel')->orderBy('kelas_id', 'asc')->get();
-        return view('siswa.silabus', compact('data_silabus', 'kelas', 'mapel'));
+        return view('guru.k13.silabus.index', compact('data_silabus', 'kelas', 'mapel', 'title', 'data_pembelajaran'));
     }
-
 
     public function store(Request $request)
     {
@@ -83,7 +78,6 @@ class SilabusController extends Controller
             'book_english_guru'  => 'nullable|mimes:pdf',
         ]);
 
-
         $k_tigabelas = $this->moveToPublic($request->file('k_tigabelas'));
         $cambridge = $this->moveToPublic($request->file('cambridge'));
         $edexcel = $this->moveToPublic($request->file('edexcel'));
@@ -95,7 +89,7 @@ class SilabusController extends Controller
         Silabus::Create(
             [
                 'id' => $request->id,
-                'pembelajaran_id' => $request->pembelajaran_id,
+                'pembelajaran_id' => $request->id,
                 'kelas_id' => $request->kelas_id,
                 'mapel_id' => $request->mapel_id,
                 'k_tigabelas' => $k_tigabelas,
@@ -108,8 +102,7 @@ class SilabusController extends Controller
             ]
         );
 
-
-        return redirect()->back()->with('toast_success', 'Data syllabus berhasil ditambahkan!');
+        return redirect()->back()->with('toast_success', 'Data silabus berhasil ditambahkan!');
     }
 
     /**
@@ -129,7 +122,6 @@ class SilabusController extends Controller
 
         $this->validate($request, [
             'kelas_id' => 'required',
-            'pembelajaran_id' => 'required',
             'mapel_id' => 'required',
             'k_tigabelas' => 'nullable|mimes:pdf',
             'cambridge' => 'nullable|mimes:pdf',
@@ -150,7 +142,6 @@ class SilabusController extends Controller
 
         $data->kelas_id = $request->input('kelas_id');
         $data->mapel_id = $request->input('mapel_id');
-        $data->mapel_id = $request->input('pembelajaran_id');
 
         if ($request->hasFile('k_tigabelas')) {
             $newK_tigabelas = $this->moveToPublic($request->file('k_tigabelas'));
@@ -222,7 +213,7 @@ class SilabusController extends Controller
             $destination = storage_path('app/public/silabus');
             $file->move($destination, $fileName);
 
-            return $fileName;
+            return 'storage/silabus' . $fileName;
         }
 
         return null;

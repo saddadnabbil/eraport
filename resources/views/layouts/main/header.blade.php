@@ -6,9 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-  <title>E-Raport | {{$title}}</title>
+  <title>{{$title}} | {{ env('APP_NAME') }} </title>
 
-  <link rel="icon" type="image/png" sizes="16x16" href="/assets/dist/img/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{asset('assets/dist/img/logo.png')}}">
 
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="/assets/plugins/fontawesome-free/css/all.min.css">

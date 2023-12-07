@@ -47,9 +47,10 @@
                             <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form action="{{ route('silabusadmin.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('admin.silabus.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="modal-body">
+                                <input type="hidden" name="pembelajaran_id" value="{{$data_pembelajaran->id}}">
                                 <div class="form-group">
                                     <label for="kelas_id" class="required">Class</label>
                                     <select id="kelas_id" name="kelas_id" class="form-control ">
@@ -175,22 +176,20 @@
                                 <td>{{ $silabus->mapel->nama_mapel }}</td>
                                 <td>{{ $silabus->kelas->nama_kelas }}</td>
                                 <td>
-                                    <a href="{{ route('download.silabus', ['file' => $silabus->k_tigabelas]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; K13</a>
-                                    <a href="{{ route('download.silabus', ['file' => $silabus->cambridge]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; Cambridge</a>
-                                    <a href="{{ route('download.silabus', ['file' => $silabus->edexcel]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; Edexcel</a>
+                                    <a href="{{ route('admin.silabus.pdf.view', ['filename' => $silabus->k_tigabelas]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; K13</a>
+                                    <a href="{{ route('admin.silabus.pdf.view', ['filename' => $silabus->cambridge]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; Cambridge</a>
+                                    <a href="{{ route('admin.silabus.pdf.view', ['filename' => $silabus->edexcel]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; Edexcel</a>
                                 </td>
                                 <td>
-                                    <a href="{{ route('download.silabus', ['file' => $silabus->book_indo_siswa]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; Indonesian</a>
-                                    <a href="{{ route('download.silabus', ['file' => $silabus->book_english_siswa]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; English</a>
+                                    <a href="{{ route('admin.silabus.pdf.view', ['filename' => $silabus->book_indo_siswa]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; Indonesian</a>
+                                    <a href="{{ route('admin.silabus.pdf.view', ['filename' => $silabus->book_english_siswa]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; English</a>
                                 </td>
                                 <td>
-                                    <a href="{{ route('download.silabus', ['file' => $silabus->book_indo_guru]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; Indonesian</a>
-                                    <a href="{{ route('download.silabus', ['file' => $silabus->book_english_guru]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; English</a>
-                                    {{-- <a href="{{ Storage::download('silabus/'.$silabus->book_indo_guru)}}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; Indonesian</a>
-                                    <a href="{{ Storage::download('silabus/'.$silabus->book_english_guru)}}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; English</a> --}}
+                                    <a href="{{ route('admin.silabus.pdf.view', ['filename' => $silabus->book_indo_guru]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; Indonesian</a>
+                                    <a href="{{ route('admin.silabus.pdf.view', ['filename' => $silabus->book_english_guru]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; English</a>
                                 </td>
                                 <td>
-                                    <form action="{{ route('silabusadmin.destroy', $silabus->id) }}" method="POST">
+                                    <form action="{{ route('admin.silabus.destroy', $silabus->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button type="button" class="btn btn-warning btn-sm mt-1" data-toggle="modal" data-target="#modal-edit{{$silabus->id}}">
@@ -214,10 +213,11 @@
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                         </div>
-                                        <form action="{{ route('silabusadmin.update', $silabus->id) }}" method="POST" enctype="multipart/form-data">
+                                        <form action="{{ route('admin.silabus.update', $silabus->id) }}" method="POST" enctype="multipart/form-data">
                                             @csrf
                                             @method('PUT')
                                             <div class="modal-body">
+                                                <input type="hidden" name="pembelajaran_id" value="{{$data_pembelajaran->id}}">
                                                 <div class="form-group">
                                                     <label for="kelas_id" class="required">Class</label>
                                                     <select id="kelas_id" name="kelas_id" class="form-control" required>

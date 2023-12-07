@@ -26,5 +26,18 @@ class GuruTableSeeder extends Seeder
             'alamat' => 'Alamat',
             'avatar' => 'default.png',
         ]);
+
+        Guru::create([
+            'user_id' => 4,
+            'nama_lengkap' => 'Guru Firmansyah',
+            'gelar' => 'S.Kom',
+            'nip' => '111111111111111122',
+            'jenis_kelamin' => 'L',
+            'tempat_lahir' => 'Tempat Lahir',
+            'tanggal_lahir' => 'Tanggal Lahir',
+            'nuptk' => '1111111111111122',
+            'alamat' => 'Alamat',
+            'avatar' => 'default.png',
+        ]);
     }
 }

@@ -100,4 +100,9 @@ class Pembelajaran extends Model
     {
         return $this->hasMany('App\KtspDeskripsiNilaiSiswa');
     }
+
+    public function silabus()
+    {
+        return $this->hasMany('App\Silabus');
+    }
 }
