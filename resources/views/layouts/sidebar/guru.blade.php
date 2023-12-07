@@ -2,8 +2,8 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <!-- Brand Logo -->
   <a href="{{ route('dashboard') }}" class="brand-link">
-    <img src="/assets/dist/img/logo.png" alt="Logo" class="brand-image img-circle">
-    <span class="brand-text font-weight-light">Aplikasi E-Raport</span>
+    <img src="{{asset('assets/dist/img/logo.png')}}" alt="Logo" class="brand-image img-circle">
+    <span class="brand-text font-weight-light">{{ env('APP_NAME') }} </span>
   </a>
 
   <!-- Sidebar -->
@@ -16,6 +16,16 @@
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
               Dashboard
+            </p>
+          </a>
+        </li>
+
+        <li class="nav-header">Tools</li>
+        <li class="nav-item">
+          <a href="{{ route('guru.silabus.index') }}" class="nav-link {{ request()->routeIs('guru.silabus.index') ? 'active' : '' }} {{ request()->routeIs('kdk13.index') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-clipboard-list"></i>
+            <p>
+              Silabus
             </p>
           </a>
         </li>

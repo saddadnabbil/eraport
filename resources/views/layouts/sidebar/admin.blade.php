@@ -2,8 +2,10 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <!-- Brand Logo -->
   <a href="{{ route('dashboard') }}" class="brand-link">
-    <img src="/assets/dist/img/logo.png" alt="Logo" class="brand-image img-circle">
-    <span class="brand-text font-weight-light">Aplikasi E-Raport</span>
+    <img src="{{asset('assets/dist/img/logo.png')}}" alt="Logo" class="brand-image img-circle">
+    <span class="brand-text font-weight-light">
+      {{ env('APP_NAME') }} 
+    </span>
   </a>
 
   <!-- Sidebar -->
@@ -38,7 +40,7 @@
           </a>
         </li>
 
-        <li class="nav-item has-treeview {{ request()->routeIs(['sekolah.index', 'guru.index', 'tapel.index', 'mapel.index', 'kelas.index', 'siswa.index', 'pembelajaran.index', 'ekstrakulikuler.index', 'tingkatan.index', 'jurusan.index', 'kkm.index', 'silabus.index']) ? 'menu-open' : '' }}">
+        <li class="nav-item has-treeview {{ request()->routeIs(['sekolah.index', 'guru.index', 'tapel.index', 'mapel.index', 'kelas.index', 'siswa.index', 'pembelajaran.index', 'ekstrakulikuler.index', 'tingkatan.index', 'jurusan.index', 'kkm.index', 'admin.silabus.index']) ? 'menu-open' : '' }}">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-server"></i>
             <p>
@@ -116,7 +118,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{ route('silabus.index') }}" class="nav-link {{ request()->routeIs('silabus.index') ? 'active' : '' }}">
+              <a href="{{ route('admin.silabus.index') }}" class="nav-link {{ request()->routeIs('admin.silabus.index') ? 'active' : '' }}">
                 <i class="fas fa-book-reader nav-icon"></i>
                 <p>Silabus</p>
               </a>

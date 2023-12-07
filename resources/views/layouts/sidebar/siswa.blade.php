@@ -2,8 +2,8 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <!-- Brand Logo -->
   <a href="{{ route('dashboard') }}" class="brand-link">
-    <img src="/assets/dist/img/logo.png" alt="Logo" class="brand-image img-circle">
-    <span class="brand-text font-weight-light">Aplikasi E-Raport</span>
+    <img src="{{asset('assets/dist/img/logo.png')}}" alt="Logo" class="brand-image img-circle">
+    <span class="brand-text font-weight-light">{{ env('APP_NAME') }} </span>
   </a>
 
   <!-- Sidebar -->
@@ -16,6 +16,14 @@
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>
               Dashboard
+            </p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ route('siswa.silabus.index') }}" class="nav-link {{ request()->routeIs('siswa.silabus.index') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-user-check"></i>
+            <p>
+              Silabus
             </p>
           </a>
         </li>

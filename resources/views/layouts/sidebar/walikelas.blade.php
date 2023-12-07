@@ -3,7 +3,7 @@
   <!-- Brand Logo -->
   <a href="{{ route('dashboard') }}" class="brand-link">
     <img src="/assets/dist/img/logo.png" alt="Logo" class="brand-image img-circle">
-    <span class="brand-text font-weight-light">Aplikasi E-Raport</span>
+    <span class="brand-text font-weight-light">{{ env('APP_NAME') }} </span>
   </a>
 
   <!-- Sidebar -->
