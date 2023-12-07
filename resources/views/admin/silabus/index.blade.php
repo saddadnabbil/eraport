@@ -171,17 +171,31 @@
                                 <td>{{ $silabus->mapel->nama_mapel }}</td>
                                 <td>{{ $silabus->kelas->nama_kelas }}</td>
                                 <td>
-                                    <a href="{{ route('admin.silabus.pdf.view', ['filename' => $silabus->k_tigabelas]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; K13</a>
-                                    <a href="{{ route('admin.silabus.pdf.view', ['filename' => $silabus->cambridge]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; Cambridge</a>
-                                    <a href="{{ route('admin.silabus.pdf.view', ['filename' => $silabus->edexcel]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; Edexcel</a>
+                                    @if (isset($silabus->k_tigabelas))
+                                        <a href="{{ route('admin.silabus.pdf.view', ['filename' => $silabus->k_tigabelas]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; K13</a>
+                                    @endif
+                                    @if (isset($silabus->cambridge))
+                                        <a href="{{ route('admin.silabus.pdf.view', ['filename' => $silabus->cambridge]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; Cambridge</a>
+                                    @endif
+                                    @if (isset($silabus->edexcel))
+                                        <a href="{{ route('admin.silabus.pdf.view', ['filename' => $silabus->edexcel]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; Edexcel</a>
+                                    @endif
                                 </td>
                                 <td>
-                                    <a href="{{ route('admin.silabus.pdf.view', ['filename' => $silabus->book_indo_siswa]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; Indonesian</a>
-                                    <a href="{{ route('admin.silabus.pdf.view', ['filename' => $silabus->book_english_siswa]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; English</a>
+                                    @if (isset($silabus->book_indo_siswa))
+                                        <a href="{{ route('admin.silabus.pdf.view', ['filename' => $silabus->book_indo_siswa]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; Indonesian</a>
+                                    @endif
+                                    @if (isset($silabus->book_english_siswa))
+                                        <a href="{{ route('admin.silabus.pdf.view', ['filename' => $silabus->book_english_siswa]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; English</a>
+                                    @endif
                                 </td>
                                 <td>
-                                    <a href="{{ route('admin.silabus.pdf.view', ['filename' => $silabus->book_indo_guru]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; Indonesian</a>
-                                    <a href="{{ route('admin.silabus.pdf.view', ['filename' => $silabus->book_english_guru]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; English</a>
+                                    @if (isset($silabus->book_indo_guru))
+                                        <a href="{{ route('admin.silabus.pdf.view', ['filename' => $silabus->book_indo_guru]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; Indonesian</a>
+                                    @endif
+                                    @if (isset($silabus->book_english_guru))
+                                        <a href="{{ route('admin.silabus.pdf.view', ['filename' => $silabus->book_english_guru]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; English</a>
+                                    @endif
                                 </td>
                                 <td>
                                     <form action="{{ route('admin.silabus.destroy', $silabus->id) }}" method="POST">

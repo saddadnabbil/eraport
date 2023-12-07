@@ -45,6 +45,8 @@ class SilabusController extends Controller
             $data_pembelajaran = $data_silabus_filtered;
 
             $data_silabus = $data_silabus_filtered->silabus;
+
+            // dd($data_silabus);
         }
 
         return view('admin.silabus.index', compact('title', 'data_silabus', 'kelas', 'mapel', 'data_pembelajaran'));
