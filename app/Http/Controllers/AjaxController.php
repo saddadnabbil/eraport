@@ -2,17 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\AnggotaEkstrakulikuler;
-use App\AnggotaKelas;
+use App\Guru;
 use App\Kelas;
+use App\Mapel;
+use App\Tapel;
+use App\AnggotaKelas;
 use App\Pembelajaran;
 use Illuminate\Http\Request;
+use App\AnggotaEkstrakulikuler;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class AjaxController extends Controller
 {
     public function ajax_kelas($id)
     {
         $data_kelas = Pembelajaran::whereNotNull('guru_id')->where('mapel_id', $id)->where('status', true)->get('kelas_id');
+
         foreach ($data_kelas as $kelas) {
             $kls = Kelas::findorfail($kelas->kelas_id);
             $kelas->tingkatan_id = $kls->tingkatan->nama_tingkatan;
@@ -29,5 +35,74 @@ class AjaxController extends Controller
         $data_kelas = Kelas::whereIn('id', $id_kelas)->get();
 
         return json_encode($data_kelas, true);
+    }
+
+    // public function ajax_kelas_silabus($id)
+    // {
+    //     $data_kelas = Pembelajaran::whereNotNull('guru_id')->where('mapel_id', $id)->where('status', true)->get('kelas_id');
+
+    //     foreach ($data_kelas as $kelas) {
+    //         $kls = Kelas::findorfail($kelas->kelas_id);
+    //         $kelas->tingkatan_id = $kls->tingkatan->nama_tingkatan;
+    //         $kelas->nama_kelas = $kls->nama_kelas;
+    //     }
+    //     // dd($data_kelas);
+    //     return json_encode($data_kelas, true);
+    // }
+
+    public function ajax_kelas_silabus($id)
+    {
+        $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $guru = Guru::where('user_id', Auth::user()->id)->first();
+        $id_kelas = Kelas::where('tapel_id', $tapel->id)
+            ->where('guru_id', $guru->id)
+            ->pluck('id');
+
+        $data_pembelajaran = Pembelajaran::where('guru_id', $guru->id)
+            ->whereIn('kelas_id', $id_kelas)
+            ->where('status', 1)
+            ->orderBy('mapel_id', 'ASC')
+            ->orderBy('kelas_id', 'ASC')
+            ->get();
+
+        $kelas = Kelas::whereIn('id', $data_pembelajaran->pluck('kelas_id'))
+            ->orderBy('nama_kelas', 'ASC')
+            ->get();
+
+        $data_kelas = Pembelajaran::whereNotNull('guru_id')
+            ->whereIn('kelas_id', $kelas->pluck('id'))
+            ->where('mapel_id', $id)
+            ->where('status', true)
+            ->get('kelas_id');
+
+        foreach ($data_kelas as $kelas) {
+            $kls = Kelas::findorfail($kelas->kelas_id);
+            $kelas->tingkatan_id = $kls->tingkatan->nama_tingkatan;
+            $kelas->nama_kelas = $kls->nama_kelas;
+        }
+
+        return json_encode($data_kelas, true);
+    }
+
+    public function getPembelajaranId(Request $request)
+    {
+        $mapelId = $request->input('mapel_id');
+        $kelasId = $request->input('kelas_id');
+
+        // Hanya cari pembelajaran jika kelasId tidak kosong
+        if ($kelasId) {
+            // Gantilah sesuai dengan model dan field yang sesuai
+            $pembelajaran = Pembelajaran::where('mapel_id', $mapelId)
+                ->where('kelas_id', $kelasId)
+                ->first();
+
+            if ($pembelajaran) {
+                return response()->json(['pembelajaran_id' => $pembelajaran->id]);
+            } else {
+                return response()->json(['error' => 'Pembelajaran not found'], 404);
+            }
+        } else {
+            return response()->json(['error' => 'Kelas not selected'], 400);
+        }
     }
 }

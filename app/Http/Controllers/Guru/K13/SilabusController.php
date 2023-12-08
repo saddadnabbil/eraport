@@ -27,19 +27,19 @@ class SilabusController extends Controller
     public function index()
     {
         $title = 'Silabus';
+
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
-
         $guru = Guru::where('user_id', Auth::user()->id)->first();
+        $id_kelas = Kelas::where('tapel_id', $tapel->id)
+            ->where('guru_id', $guru->id)
+            ->pluck('id');
 
-        $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
-        $data_id_kelas = Kelas::where('tapel_id', session()->get('tapel_id'))->get('id');
-        // $anggota_kelas = AnggotaKelas::;
-
-        // dd($data_id_kelas->pluck('anggota_kelas')->whereIn('kelas_id', $data_id_kelas)->where('siswa_id', $guru->id));
-
-        $data_pembelajaran = Pembelajaran::where('guru_id', $guru->id)->whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
-
-        // dd($data_pembelajaran);
+        $data_pembelajaran = Pembelajaran::where('guru_id', $guru->id)
+            ->whereIn('kelas_id', $id_kelas)
+            ->where('status', 1)
+            ->orderBy('mapel_id', 'ASC')
+            ->orderBy('kelas_id', 'ASC')
+            ->get();
 
         $kelas = Kelas::whereIn('id', $data_pembelajaran->pluck('kelas_id'))
             ->orderBy('nama_kelas', 'ASC')
@@ -49,13 +49,17 @@ class SilabusController extends Controller
             ->orderBy('nama_mapel', 'ASC')
             ->get();
 
+        $data_silabus = [];
+
         foreach ($data_pembelajaran as $data_silabus_filtered) {
-            if ($data_silabus_filtered->where('status', 1)) {
+            if (!empty($data_silabus_filtered->silabus)) {
                 $data_silabus = $data_silabus_filtered->silabus;
-                $data_pembelajaran = $data_silabus_filtered;
+                $data_pembelajaran_filtered = $data_silabus_filtered;
             }
-            $data_pembelajaran = $data_silabus_filtered;
+
+            $data_pembelajaran = $data_pembelajaran_filtered;
         }
+
 
 
         // $data_silabus = $data_silabus_berdasarkan_guru->where('guru_id', $guru->id)->whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('mapel_id', 'ASC')->get();

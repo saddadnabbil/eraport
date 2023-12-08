@@ -44,7 +44,6 @@
                         <th>Silabus</th>
                         <th>Buku Siswa</th>
                         <th>Buku Guru</th>
-                        <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -55,30 +54,81 @@
                             <td>{{ $silabus->mapel->nama_mapel }}</td>
                             <td>{{ $silabus->kelas->nama_kelas }}</td>
 
-                           <td>
-                                <a href="{{ route('silabus.siswa.pdf.view', ['filename' => $silabus->k_tigabelas]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; K13</a>
-                                <a href="{{ route('silabus.siswa.pdf.view', ['filename' => $silabus->cambridge]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; Cambridge</a>
-                                <a href="{{ route('silabus.siswa.pdf.view', ['filename' => $silabus->edexcel]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; Edexcel</a>
+                            <td>
+                                @php
+                                $flag = false;
+                                @endphp
+                            
+                                @if (isset($silabus->k_tigabelas))
+                                    <a href="{{ route('silabus.guru.pdf.view', ['filename' => $silabus->k_tigabelas]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; K13</a>
+                                    @php
+                                    $flag = true;
+                                    @endphp
+                                @endif
+                            
+                                @if (isset($silabus->cambridge))
+                                    <a href="{{ route('silabus.guru.pdf.view', ['filename' => $silabus->cambridge]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; Cambridge</a>
+                                    @php
+                                    $flag = true;
+                                    @endphp
+                                @endif
+                            
+                                @if (isset($silabus->edexcel))
+                                    <a href="{{ route('silabus.guru.pdf.view', ['filename' => $silabus->edexcel]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; Edexcel</a>
+                                    @php
+                                    $flag = true;
+                                    @endphp
+                                @endif
+                            
+                                @if (!$flag)
+                                    <p> Not available yet </p>
+                                @endif
                             </td>
                             <td>
-                                <a href="{{ route('silabus.siswa.pdf.view', ['filename' => $silabus->book_indo_siswa]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; Indonesian</a>
-                                <a href="{{ route('silabus.siswa.pdf.view', ['filename' => $silabus->book_english_siswa]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; English</a>
+                                @php
+                                $flag = false;
+                                @endphp
+                            
+                                @if (isset($silabus->book_indo_siswa))
+                                    <a href="{{ route('silabus.guru.pdf.view', ['filename' => $silabus->book_indo_siswa]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; Indonesian</a>
+                                    @php
+                                    $flag = true;
+                                    @endphp
+                                @endif
+                            
+                                @if (isset($silabus->book_english_siswa))
+                                    <a href="{{ route('silabus.guru.pdf.view', ['filename' => $silabus->book_english_siswa]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; English</a>
+                                    @php
+                                    $flag = true;
+                                    @endphp
+                                @endif
+                            
+                                @if (!$flag)
+                                    <p> Not available yet </p>
+                                @endif
                             </td>
                             <td>
-                                <a href="{{ route('silabus.siswa.pdf.view', ['filename' => $silabus->book_indo_guru]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; Indonesian</a>
-                                <a href="{{ route('silabus.siswa.pdf.view', ['filename' => $silabus->book_english_guru]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; English</a>
-                            </td>
-                            <td> 
-                                {{-- <form action="{{ route('guru.silabus.destroy', $silabus->id) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="button" class="btn btn-warning btn-sm mt-1" data-toggle="modal" data-target="#modal-edit{{$silabus->id}}">
-                                        <i class="fas fa-pencil-alt"></i>
-                                    </button>
-                                    <button type="submit" class="btn btn-danger btn-sm mt-1" onclick="return confirm('Hapus {{$title}} ?')">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </form> --}}
+                                @php
+                                $flag = false;
+                                @endphp
+                            
+                                @if (isset($silabus->book_indo_guru))
+                                    <a href="{{ route('silabus.guru.pdf.view', ['filename' => $silabus->book_indo_guru]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; Indonesian</a>
+                                    @php
+                                    $flag = true;
+                                    @endphp
+                                @endif
+                            
+                                @if (isset($silabus->book_english_guru))
+                                    <a href="{{ route('silabus.guru.pdf.view', ['filename' => $silabus->book_english_guru]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; English</a>
+                                    @php
+                                    $flag = true;
+                                    @endphp
+                                @endif
+                            
+                                @if (!$flag)
+                                    <p> Not available yet </p>
+                                @endif
                             </td>
                             </tr> 
 

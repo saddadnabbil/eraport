@@ -31,7 +31,7 @@ class SilabusController extends Controller
 
         $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
 
-        $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
+        // dd($data_pembelajaran->pluck('id'));
 
         $kelas = Kelas::whereIn('id', $data_pembelajaran->pluck('kelas_id'))
             ->orderBy('nama_kelas', 'ASC')
@@ -42,31 +42,15 @@ class SilabusController extends Controller
             ->get();
 
         foreach ($data_pembelajaran as $data_silabus_filtered) {
-            $data_pembelajaran = $data_silabus_filtered;
-
+            // $data_pembelajaran = $data_silabus_filtered;
             $data_silabus = $data_silabus_filtered->silabus;
-
-            // dd($data_silabus);
         }
+        // dd($data_pembelajaran->id);
+
 
         return view('admin.silabus.index', compact('title', 'data_silabus', 'kelas', 'mapel', 'data_pembelajaran'));
     }
 
-    public function indexGuru()
-    {
-        $kelas    = Kelas::all();
-        $mapel    = Mapel::all();
-        $data_silabus = Silabus::with('kelas', 'mapel')->orderBy('kelas_id', 'asc')->get();
-        return view('guru.silabus', compact('data_silabus', 'kelas', 'mapel'));
-    }
-
-    public function indexSiswa()
-    {
-        $kelas    = Kelas::all();
-        $mapel    = Mapel::all();
-        $data_silabus = Silabus::with('kelas', 'mapel')->orderBy('kelas_id', 'asc')->get();
-        return view('siswa.silabus', compact('data_silabus', 'kelas', 'mapel'));
-    }
 
 
     public function store(Request $request)

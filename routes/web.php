@@ -114,6 +114,8 @@ Route::group(['middleware' => ['auth']], function () {
 
       Route::get('getKelas/ajax/{id}', 'AjaxController@ajax_kelas');
 
+      Route::get('getPembelajaranId/', 'AjaxController@getPembelajaranId')->name('get.pembelajaran.id');;
+
       // Raport K13 Admin
 
       // Setting Raport K13
@@ -230,6 +232,10 @@ Route::group(['middleware' => ['auth']], function () {
         ]);
 
         // Raport K13 Guru
+        Route::get('getKelas/ajax/{id}', 'AjaxController@ajax_kelas_silabus');
+        Route::get('getPembelajaranId/', 'AjaxController@getPembelajaranId')->name('guru.get.pembelajaran.id');;
+
+
         Route::resource('silabus', 'Guru\K13\SilabusController')->only(['index', 'store', 'update', 'destroy'])->names([
           'index' => 'guru.silabus.index',
           'store' => 'guru.silabus.store',

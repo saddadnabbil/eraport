@@ -50,10 +50,11 @@
                         <form action="{{ route('admin.silabus.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="modal-body">
-                                <input type="hidden" name="pembelajaran_id" value="{{$data_pembelajaran->id}}">
+                                <input type="hidden" name="pembelajaran_id" id="pembelajaran_id">
+
                                 <div class="form-group">
                                     <label for="mapel_id">Subject Name</label>
-                                    <select class="form-control select2" name="mapel_id" style="width: 100%;" required>
+                                    <select class="form-control select2" name="mapel_id" id="mapel_id" style="width: 100%;" required>
                                         <option value="">-- Select Subject Name -- </option>
                                         @foreach($mapel as $data)
                                         <option value="{{$data->id}}"> {{$data->nama_mapel}}</option>
@@ -62,7 +63,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="kelas_id">Class</label>
-                                    <select class="form-control select2" name="kelas_id" style="width: 100%;" required>
+                                    <select class="form-control select2" name="kelas_id" id="kelas_id" style="width: 100%;" required>
                                     <!--  -->
                                     </select>
                                 </div>
@@ -226,27 +227,22 @@
                                             @csrf
                                             @method('PUT')
                                             <div class="modal-body">
-                                                <input type="hidden" name="pembelajaran_id" value="{{$data_pembelajaran->id}}">
+                                                <input type="hidden" name="pembelajaran_id" id="pembelajaran_id">
                                                 <div class="form-group">
-                                                    <label for="kelas_id" class="required">Class</label>
-                                                    <select id="kelas_id" name="kelas_id" class="form-control" required>
-                                                    <option value="">-- Select Class Name --</option>
-                                                    @foreach ($kelas as $data)
-                                                        <option value="{{ $data->id }}" @if ($silabus->kelas_id == $data->id) selected @endif>{{ $data->nama_kelas }}</option>
-                                                    @endforeach
-                                                    </select>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label for="mapel_id" class="required">Subject Name</label>
-                                                    <select id="mapel_id" name="mapel_id" class="select2bs4 form-control " required>
-                                                        <option value="">-- Select Subject Name --</option>
-                                                        @foreach ($mapel as $data)
-                                                        <option value="{{ $data->id }}" @if ($silabus->mapel_id == $data->id) selected @endif>{{ $data->nama_mapel }}</option>
+                                                    <label for="mapel_id">Subject Name</label>
+                                                    <select class="form-control select2" name="mapel_id" id="mapel_id" style="width: 100%;" required>
+                                                        <option value="">-- Select Subject Name -- </option>
+                                                        @foreach($mapel as $data)
+                                                        <option value="{{$data->id}}"> {{$data->nama_mapel}}</option>
                                                         @endforeach
+                                                    </select> 
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="kelas_id">Class Name</label>
+                                                    <select class="form-control select2" name="kelas_id" id="kelas_id" style="width: 100%;" required>
+                                                    <!--  -->
                                                     </select>
                                                 </div>
-
                                                 <div class="form-group row">
                                                     <div class="col-sm-6">
                                                         <label for="k_tigabelas">Input File K13</label>
@@ -378,3 +374,48 @@
       });
     });
   </script>
+
+<script>
+    $(document).ready(function () {
+        // Inisialisasi nilai pembelajaran_id ketika halaman dimuat
+        updatePembelajaranId();
+
+        // Event listener untuk perubahan pada elemen-elemen dengan name yang diinginkan
+        $(document).on('change', '[name="kelas_id"], [name^="mapel_id"]', function () {
+            // Dapatkan name dari elemen yang memicu perubahan
+            var name = $(this).attr('name');
+
+            // Panggil fungsi untuk mengupdate nilai pembelajaran_id pada elemen yang memiliki name tersebut
+            updatePembelajaranId(name);
+        });
+
+        // Fungsi untuk mengupdate nilai pembelajaran_id pada elemen dengan name tertentu
+        function updatePembelajaranId(name) {
+            var mapelId = $('[name^="mapel_id"]').val(); // Jika Anda memiliki lebih dari satu elemen mapel_id, sesuaikan dengan kebutuhan
+            var kelasId = $('[name="kelas_id"]').val();
+            var pembelajaranIdField = $('[name="pembelajaran_id"]');
+
+            // Hanya panggil AJAX jika kelasId tidak kosong
+            if (kelasId) {
+                $.ajax({
+                    url: '{{ route('get.pembelajaran.id') }}',
+                    method: 'GET',
+                    data: {
+                        mapel_id: mapelId,
+                        kelas_id: kelasId
+                    },
+                    success: function (response) {
+                        // Setel nilai pembelajaran_id sesuai respons
+                        pembelajaranIdField.val(response.pembelajaran_id);
+                    },
+                    error: function (error) {
+                        console.error('Error fetching pembelajaran_id:', error);
+                    }
+                });
+            }
+        }
+    });
+</script>
+
+
+
