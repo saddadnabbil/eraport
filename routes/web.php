@@ -73,6 +73,7 @@ Route::group(['middleware' => ['auth']], function () {
           'destroy' => 'admin.silabus.destroy'
         ]
       );
+      Route::delete('/silabus/{id}/destroy/{fileType}', 'Admin\SilabusController@destroyFile')->name('admin.silabus.destroyFile');
       Route::get('/pdf/{filename}', 'Admin\PdfController@viewSilabusPDF')->name('admin.silabus.pdf.view');
 
       Route::post('tapel/set', 'Admin\TapelController@setAcademicYear')->name('tapel.setAcademicYear');
@@ -113,8 +114,8 @@ Route::group(['middleware' => ['auth']], function () {
       ]);
 
       Route::get('getKelas/ajax/{id}', 'AjaxController@ajax_kelas');
-
-      Route::get('getPembelajaranId/', 'AjaxController@getPembelajaranId')->name('get.pembelajaran.id');;
+      Route::get('getAllSilabus/ajax/{id}', 'AjaxController@getAllSilabus')->name('admin.get.all.silabus');
+      Route::get('getPembelajaranId/', 'AjaxController@getPembelajaranId')->name('get.pembelajaran.id');
 
       // Raport K13 Admin
 
@@ -165,49 +166,6 @@ Route::group(['middleware' => ['auth']], function () {
         'uses' => ['index', 'store', 'show']
       ]);
       // End  Raport K13 Admin
-
-      // Raport KTSP Admin
-
-      // Setting Raport KTSP
-      // Route::resource('mapping', 'Admin\KTSP\MapingMapelController',  [
-      //   'uses' => ['index', 'store']
-      // ]);
-      // Route::get('kkm/import', 'Admin\KTSP\KkmMapelController@format_import')->name('kkm.format_import');
-      // Route::post('kkm/import', 'Admin\KTSP\KkmMapelController@import')->name('kkm.import');
-      // Route::resource('kkm', 'Admin\KTSP\KkmMapelController',  [
-      //   'uses' => ['index', 'store', 'update', 'destroy']
-      // ]);
-      // Route::resource('interval', 'Admin\KTSP\IntervalPredikatController',  [
-      //   'uses' => ['index']
-      // ]);
-      // Route::resource('tglraport', 'Admin\KTSP\TglRaportController',  [
-      //   'uses' => ['index', 'store', 'update', 'destroy']
-      // ]);
-      // Route::resource('validasi', 'Admin\KTSP\ValidasiController',  [
-      //   'uses' => ['index']
-      // ]);
-
-      // Hasil Raport K13 
-      // Route::resource('ktspstatuspenilaian', 'Admin\KTSP\StatusPenilaianController',  [
-      //   'uses' => ['index', 'store']
-      // ]);
-      // Route::resource('ktsppengelolaannilai', 'Admin\KTSP\PengelolaanNilaiController',  [
-      //   'uses' => ['index', 'store']
-      // ]);
-      // Route::resource('ktspnilairaport', 'Admin\KTSP\NilaiRaportSemesterController',  [
-      //   'uses' => ['index', 'store']
-      // ]);
-      // Route::resource('ktspleger', 'Admin\KTSP\LegerNilaiSiswaController',  [
-      //   'uses' => ['index', 'store', 'show']
-      // ]);
-      // Route::resource('ktspraportuts', 'Admin\KTSP\CetakRaportUTSController',  [
-      //   'uses' => ['index', 'store', 'show']
-      // ]);
-      // Route::resource('ktspraportsemester', 'Admin\KTSP\CetakRaportSemesterController',  [
-      //   'uses' => ['index', 'store', 'show']
-      // ]);
-      // End  Raport KTSP Admin
-
     });
   });
   // End Route User Admin 
@@ -233,6 +191,9 @@ Route::group(['middleware' => ['auth']], function () {
 
         // Raport K13 Guru
         Route::get('getKelas/ajax/{id}', 'AjaxController@ajax_kelas_silabus');
+        Route::get('getAllSilabus/ajax/{id}', 'AjaxController@getAllSilabus')->name('guru.get.all.silabus');
+        // Route::get('getKelas/ajax/{id}', 'AjaxController@ajax_kelas');
+
         Route::get('getPembelajaranId/', 'AjaxController@getPembelajaranId')->name('guru.get.pembelajaran.id');;
 
 
@@ -242,6 +203,9 @@ Route::group(['middleware' => ['auth']], function () {
           'update' => 'guru.silabus.update',
           'destroy' => 'guru.silabus.destroy'
         ]);
+        Route::delete('/silabus/{id}/destroy/{fileType}', 'Guru\K13\SilabusController@destroyFile')->name('guru.silabus.destroyFile');
+
+
         Route::get('/pdf/{filename}', 'Admin\PdfController@viewSilabusPDF')->name('silabus.guru.pdf.view');
 
         Route::resource('kdk13', 'Guru\K13\KdMapelController',  [
@@ -307,45 +271,6 @@ Route::group(['middleware' => ['auth']], function () {
           'uses' => ['index', 'create', 'store']
         ]);
         // End  Raport K13 Guru
-
-        // // Raport KTSP Guru
-
-        // Route::resource('bobot', 'Guru\KTSP\BobotPenilaianController',  [
-        //   'uses' => ['index', 'store', 'update']
-        // ]);
-
-        // // Import Nilai
-        // Route::get('nilaitugas/import', 'Guru\KTSP\NilaiTugasController@format_import')->name('nilaitugas.format_import');
-        // Route::post('nilaitugas/import', 'Guru\KTSP\NilaiTugasController@import')->name('nilaitugas.import');
-
-        // Route::get('nilaiuh/import', 'Guru\KTSP\NilaiUhController@format_import')->name('nilaiuh.format_import');
-        // Route::post('nilaiuh/import', 'Guru\KTSP\NilaiUhController@import')->name('nilaiuh.import');
-
-        // Route::get('nilaiutsuas/import', 'Guru\KTSP\NilaiUtsUasController@format_import')->name('nilaiutsuas.format_import');
-        // Route::post('nilaiutsuas/import', 'Guru\KTSP\NilaiUtsUasController@import')->name('nilaiutsuas.import');
-        // // End Import Nilai
-
-        // Route::resource('nilaitugas', 'Guru\KTSP\NilaiTugasController',  [
-        //   'uses' => ['index', 'create', 'store', 'update']
-        // ]);
-        // Route::resource('nilaiuh', 'Guru\KTSP\NilaiUhController',  [
-        //   'uses' => ['index', 'create', 'store', 'update']
-        // ]);
-        // Route::resource('nilaiutsuas', 'Guru\KTSP\NilaiUtsUasController',  [
-        //   'uses' => ['index', 'create', 'store', 'update']
-        // ]);
-
-        // Route::resource('kirimnilai', 'Guru\KTSP\KirimNilaiController',  [
-        //   'uses' => ['index', 'create', 'store']
-        // ]);
-        // Route::resource('lihatnilai', 'Guru\KTSP\LihatNilaiController',  [
-        //   'uses' => ['index', 'create']
-        // ]);
-
-        // Route::resource('inputdeskripsi', 'Guru\KTSP\InputDeskripsiSiswaController',  [
-        //   'uses' => ['index', 'create', 'store']
-        // ]);
-        // // End  Raport KTSP Guru
       });
       // End Route Guru Mapel
 
@@ -390,27 +315,6 @@ Route::group(['middleware' => ['auth']], function () {
           'uses' => ['index', 'store', 'show']
         ]);
         // End  Raport K13 Wali Kelas
-
-        // // Raport KTSP Wali Kelas
-        // Route::resource('statuspenilaian', 'Walikelas\KTSP\StatusPenilaianController',  [
-        //   'uses' => ['index']
-        // ]);
-        // Route::resource('hasilpenilaian', 'Walikelas\KTSP\HasilPenilaianController',  [
-        //   'uses' => ['index']
-        // ]);
-        // Route::get('legernilai/export', 'Walikelas\KTSP\LegerNilaiController@export')->name('legernilai.export');
-
-        // Route::resource('legernilai', 'Walikelas\KTSP\LegerNilaiController',  [
-        //   'uses' => ['index']
-        // ]);
-
-        // Route::resource('raportuts', 'Walikelas\KTSP\CetakRaportUTSController',  [
-        //   'uses' => ['index', 'store', 'show']
-        // ]);
-        // Route::resource('raportuas', 'Walikelas\KTSP\CetakRaportUASController',  [
-        //   'uses' => ['index', 'store', 'show']
-        // ]);
-        // // End  Raport KTSP Wali Kelas
       });
       // End Route Wali Kelas
     });
@@ -418,35 +322,26 @@ Route::group(['middleware' => ['auth']], function () {
   // End Route User Guru 
 
   // Route User Siswa 
+    Route::resource('profilesiswa', 'Siswa\ProfileController',  [
+      'uses' => ['update']
+    ]);
+    Route::resource('ekstra', 'Siswa\EkstrakulikulerController',  [
+      'uses' => ['index']
+    ]);
+    Route::resource('presensi', 'Siswa\RekapKehadiranController',  [
+      'uses' => ['index']
+    ]);
 
-  Route::resource('profilesiswa', 'Siswa\ProfileController',  [
-    'uses' => ['update']
-  ]);
-  Route::resource('ekstra', 'Siswa\EkstrakulikulerController',  [
-    'uses' => ['index']
-  ]);
-  Route::resource('presensi', 'Siswa\RekapKehadiranController',  [
-    'uses' => ['index']
-  ]);
+    Route::resource('silabus', 'Siswa\K13\SilabusController')->only(['index'])->names([
+      'index' => 'siswa.silabus.index',
+    ]);
+    Route::get('/pdf/{filename}', 'Admin\PdfController@viewSilabusPDF')->name('silabus.siswa.pdf.view');
 
-  Route::resource('silabus', 'Siswa\K13\SilabusController')->only(['index'])->names([
-    'index' => 'siswa.silabus.index',
-  ]);
-  Route::get('/pdf/{filename}', 'Admin\PdfController@viewSilabusPDF')->name('silabus.siswa.pdf.view');
-
-  // Raport K13 Siswa
-  Route::resource('nilaiakhir', 'Siswa\K13\NilaiAkhirSemesterController',  [
-    'uses' => ['index']
-  ]);
-  // End  Raport K13 Siswa
-
-  // Raport KTSP Siswa
-  Route::resource('nilaisemester', 'Siswa\KTSP\NilaiAkhirSemesterController',  [
-    'uses' => ['index']
-  ]);
-  // End  Raport KTSP Siswa
+    // Raport K13 Siswa
+      Route::resource('nilaiakhir', 'Siswa\K13\NilaiAkhirSemesterController',  [
+        'uses' => ['index']
+      ]);
+    // End  Raport K13 Siswa
   // End Route User Siswa 
 
 });
-
-// LANJUT KE GURU KTSP

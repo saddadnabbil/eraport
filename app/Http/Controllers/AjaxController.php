@@ -11,6 +11,7 @@ use App\Pembelajaran;
 use Illuminate\Http\Request;
 use App\AnggotaEkstrakulikuler;
 use App\Http\Controllers\Controller;
+use App\Silabus;
 use Illuminate\Support\Facades\Auth;
 
 class AjaxController extends Controller
@@ -103,6 +104,16 @@ class AjaxController extends Controller
             }
         } else {
             return response()->json(['error' => 'Kelas not selected'], 400);
+        }
+    }
+
+    public function getAllSilabus($id)
+    {
+        try {
+            $silabus = Silabus::findOrFail($id);
+            return response()->json(['success' => true, 'data' => $silabus]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }
     }
 }

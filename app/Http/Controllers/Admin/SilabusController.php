@@ -26,12 +26,9 @@ class SilabusController extends Controller
         $title = 'Silabus';
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
 
-        $mapel    = Mapel::all();
         $id_kelas = Kelas::where('tapel_id', session()->get('tapel_id'))->get('id');
 
         $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
-
-        // dd($data_pembelajaran->pluck('id'));
 
         $kelas = Kelas::whereIn('id', $data_pembelajaran->pluck('kelas_id'))
             ->orderBy('nama_kelas', 'ASC')
@@ -41,12 +38,7 @@ class SilabusController extends Controller
             ->orderBy('nama_mapel', 'ASC')
             ->get();
 
-        foreach ($data_pembelajaran as $data_silabus_filtered) {
-            // $data_pembelajaran = $data_silabus_filtered;
-            $data_silabus = $data_silabus_filtered->silabus;
-        }
-        // dd($data_pembelajaran->id);
-
+        $data_silabus = $data_pembelajaran->pluck('silabus');
 
         return view('admin.silabus.index', compact('title', 'data_silabus', 'kelas', 'mapel', 'data_pembelajaran'));
     }
@@ -68,6 +60,16 @@ class SilabusController extends Controller
             'book_english_guru'  => 'nullable|mimes:pdf',
         ]);
 
+        // Check if the combination of kelas_id, pembelajaran_id, and mapel_id already exists
+        $existingRecord = Silabus::where('kelas_id', $request->kelas_id)
+        ->where('pembelajaran_id', $request->pembelajaran_id)
+        ->where('mapel_id', $request->mapel_id)
+        ->first();
+
+        if ($existingRecord) {
+            // Data already exists, return with a notification
+            return redirect()->back()->with('toast_error', 'Data silabus sudah tersedia!');
+        }
 
         $k_tigabelas = $this->moveToPublic($request->file('k_tigabelas'));
         $cambridge = $this->moveToPublic($request->file('cambridge'));
@@ -110,8 +112,6 @@ class SilabusController extends Controller
 
     public function update(Request $request, $id)
     {
-        $data = Silabus::findOrFail($id);
-
         $this->validate($request, [
             'kelas_id' => 'required',
             'pembelajaran_id' => 'required',
@@ -124,6 +124,22 @@ class SilabusController extends Controller
             'book_indo_guru' => 'nullable|mimes:pdf',
             'book_english_guru' => 'nullable|mimes:pdf',
         ]);
+
+        $data = Silabus::findOrFail($id);
+
+        $nama_kelas = Kelas::find($request->input('kelas_id'))->nama_kelas;
+        $nama_mapel = Mapel::find($request->input('mapel_id'))->nama_mapel;
+
+        // Check if the combination of kelas_id, mapel_id, and pembelajaran_id already exists
+        $existingRecord = Silabus::where('kelas_id', $request->input('kelas_id'))
+            ->where('pembelajaran_id', $request->input('pembelajaran_id'))
+            ->where('mapel_id', $request->input('mapel_id'))
+            ->where('id', '!=', $id)
+            ->first();
+    
+        if ($existingRecord) {
+            return back()->with('toast_error', 'Class ' . $nama_kelas . ' and Subject ' . $nama_mapel . ' ini sudah ada!');
+        }
 
         $oldK_tigabelas = $data->k_tigabelas;
         $oldCambridge = $data->cambridge;
@@ -197,6 +213,47 @@ class SilabusController extends Controller
             \Storage::delete('public/' . $data->book_indo_guru);
             \Storage::delete('public/' . $data->book_english_guru);
             return back()->with('toast_success', 'Silabus berhasil dihapus');
+        }
+    }
+
+    public function destroyFile(Request $request, $id, $fileType)
+    {
+        $silabus = Silabus::findOrFail($id);
+    
+        // Get the file name based on the file type
+        $fileName = $silabus->{$fileType};
+    
+        // Delete the file from storage
+        if ($this->deleteFile($fileName)) {
+            // Set the file name to null in the database
+            $silabus->{$fileType} = null;
+            $silabus->save();
+    
+            // Flash a success message
+            $request->session()->flash('toast_success', 'File deleted successfully');
+            return response()->json(['success' => true]);
+        } else {
+            // Flash an error message
+            $request->session()->flash('toast_error', 'Error deleting file');
+            return response()->json(['success' => false]);
+        }
+    }
+    
+    protected function deleteFile($fileName)
+    {
+        // Assuming your files are stored in the 'public/silabus' directory
+        $filePath = public_path('silabus/' . $fileName);
+    
+        // Check if the file exists before attempting to delete
+        if (file_exists($filePath)) {
+            // Attempt to delete the file
+            if (unlink($filePath)) {
+                return true; // File deleted successfully
+            } else {
+                return false; // Error deleting file
+            }
+        } else {
+            return true; // File does not exist, consider it deleted
         }
     }
 

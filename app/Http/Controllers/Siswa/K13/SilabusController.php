@@ -26,12 +26,15 @@ class SilabusController extends Controller
             return back()->with('toast_warning', 'Belum tersedia silabus');
         } else {
             $data = Pembelajaran::where('kelas_id', $anggota_kelas->kelas_id)->where('status', 1)->get();
-            foreach ($data as $data_silabus_pembelajaran) {
-                $data_silabus = $data_silabus_pembelajaran->silabus->where('pembelajaran_id', $data_silabus_pembelajaran->id)->where('kelas_id', $anggota_kelas->id);
-                $data_silabus = $data_silabus;
 
-                $data_silabus_pembelajaran->silabus = $data_silabus->where('pembelajaran_id', $data_silabus_pembelajaran->id)->where('kelas_id', $anggota_kelas->id);
-            }
+            $data_silabus = $data->pluck('silabus');
+
+            // foreach ($data as $data_silabus_pembelajaran) {
+            //     $data_silabus = $data_silabus_pembelajaran->silabus->where('pembelajaran_id', $data_silabus_pembelajaran->id)->where('kelas_id', $anggota_kelas->id);
+            //     $data_silabus = $data_silabus;
+
+            //     $data_silabus_pembelajaran->silabus = $data_silabus->where('pembelajaran_id', $data_silabus_pembelajaran->id)->where('kelas_id', $anggota_kelas->id);
+            // }
             return view('siswa.k13.silabus.index', compact('title', 'siswa', 'data_silabus'));
         }
     }
