@@ -20,6 +20,7 @@ class TglRaportController extends Controller
         $title = 'Tanggal Raport';
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
         $data_tgl_raport = K13TglRaport::where('tapel_id', $tapel->id)->get();
+
         return view('admin.k13.tgl_raport.index', compact('title', 'tapel', 'data_tgl_raport'));
     }
 
