@@ -4,7 +4,7 @@
   <div class="login-box">
     <div class="login-logo">
       <img src="/assets/dist/img/logo.png" alt="Logo" class="brand-image img-circle">
-      <p class="login-box-msg">Sister GIS</p>
+      <p class="login-box-msg">{{ env('APP_NAME') }}</p>
     </div>
     <!-- /.login-logo -->
     <div class="card">
