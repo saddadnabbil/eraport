@@ -87,6 +87,7 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('siswa/import', 'Admin\SiswaController@format_import')->name('siswa.format_import');
       Route::post('siswa/import', 'Admin\SiswaController@import')->name('siswa.import');
       Route::post('siswa/registrasi', 'Admin\SiswaController@registrasi')->name('siswa.registrasi');
+      Route::post('siswa/activate', 'Admin\SiswaController@activate')->name('siswa.activate');
       Route::resource('siswa', 'Admin\SiswaController',  [
         'uses' => ['index', 'store', 'update', 'destroy']
       ]);
@@ -322,26 +323,26 @@ Route::group(['middleware' => ['auth']], function () {
   // End Route User Guru 
 
   // Route User Siswa 
-    Route::resource('profilesiswa', 'Siswa\ProfileController',  [
-      'uses' => ['update']
-    ]);
-    Route::resource('ekstra', 'Siswa\EkstrakulikulerController',  [
-      'uses' => ['index']
-    ]);
-    Route::resource('presensi', 'Siswa\RekapKehadiranController',  [
-      'uses' => ['index']
-    ]);
+  Route::resource('profilesiswa', 'Siswa\ProfileController',  [
+    'uses' => ['update']
+  ]);
+  Route::resource('ekstra', 'Siswa\EkstrakulikulerController',  [
+    'uses' => ['index']
+  ]);
+  Route::resource('presensi', 'Siswa\RekapKehadiranController',  [
+    'uses' => ['index']
+  ]);
 
-    Route::resource('silabus', 'Siswa\K13\SilabusController')->only(['index'])->names([
-      'index' => 'siswa.silabus.index',
-    ]);
-    Route::get('/pdf/{filename}', 'Admin\PdfController@viewSilabusPDF')->name('silabus.siswa.pdf.view');
+  Route::resource('silabus', 'Siswa\K13\SilabusController')->only(['index'])->names([
+    'index' => 'siswa.silabus.index',
+  ]);
+  Route::get('/pdf/{filename}', 'Admin\PdfController@viewSilabusPDF')->name('silabus.siswa.pdf.view');
 
-    // Raport K13 Siswa
-      Route::resource('nilaiakhir', 'Siswa\K13\NilaiAkhirSemesterController',  [
-        'uses' => ['index']
-      ]);
-    // End  Raport K13 Siswa
+  // Raport K13 Siswa
+  Route::resource('nilaiakhir', 'Siswa\K13\NilaiAkhirSemesterController',  [
+    'uses' => ['index']
+  ]);
+  // End  Raport K13 Siswa
   // End Route User Siswa 
 
 });

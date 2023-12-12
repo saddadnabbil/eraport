@@ -39,107 +39,108 @@
 
                     <!-- Modal tambah  -->
                     <div class="modal fade" id="modal-tambah">
-                    <div class="modal-dialog modal-xl">
-                        <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Tambah {{$title}}</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <form action="{{ route('admin.silabus.store') }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            <div class="modal-body">
-                                <input type="hidden" name="pembelajaran_id" id="pembelajaran_id_tambah">
-
-                                <div class="form-group">
-                                    <label for="mapel_id_tambah">Subject Name</label>
-                                    <select class="form-control select2" name="mapel_id" id="mapel_id_tambah" style="width: 100%;" required>
-                                        <option value="">-- Select Subject Name -- </option>
-                                        @foreach($mapel as $data)
-                                        <option value="{{$data->id}}"> {{$data->nama_mapel}}</option>
-                                        @endforeach
-                                    </select> 
-                                </div>
-                                <div class="form-group">
-                                    <label for="kelas_id_tambah">Class</label>
-                                    <select class="form-control select2" name="kelas_id" id="kelas_id_tambah" style="width: 100%;" required>
-                                    <!--  -->
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="k_tigabelas">Input File K13</label>
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <input type="file" name="k_tigabelas" class="custom-file-input" id="k_tigabelas">
-                                            <label class="custom-file-label" for="k_tigabelas">Choose file</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="cambridge">Input File Cambridge</label>
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <input type="file" name="cambridge" class="custom-file-input" id="cambridge">
-                                            <label class="custom-file-label" for="cambridge">Choose file</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="edexcel">Input File Edexcel</label>
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <input type="file" name="edexcel" class="custom-file-input" id="edexcel">
-                                            <label class="custom-file-label" for="edexcel">Choose file</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="book_indo_siswa">Input File Book Indo Student</label>
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <input type="file" name="book_indo_siswa" class="custom-file-input" id="book_indo_siswa">
-                                            <label class="custom-file-label" for="book_indo_siswa">Choose file</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="book_english_siswa">Input File Book English Student</label>
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <input type="file" name="book_english_siswa" class="custom-file-input" id="book_english_siswa">
-                                            <label class="custom-file-label" for="book_english_siswa">Choose file</label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="book_indo_guru">Input File Book Indo Teacher</label>
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <input type="file" name="book_indo_guru" class="custom-file-input" id="book_indo_guru">
-                                            <label class="custom-file-label" for="book_indo_guru">Choose file</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="book_english_guru">Input File Book English Teacher</label>
-                                    <div class="input-group">
-                                        <div class="custom-file">
-                                            <input type="file" name="book_english_guru" class="custom-file-input" id="book_english_guru">
-                                            <label class="custom-file-label" for="book_english_guru">Choose file</label>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="modal-dialog modal-xl">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Tambah {{$title}}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
-                            <div class="modal-footer justify-content-end">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-                                <button type="submit" class="btn btn-primary">Simpan</button>
+                            <form action="{{ route('admin.silabus.store') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <div class="modal-body">
+                                    <input type="hidden" name="pembelajaran_id" id="pembelajaran_id_tambah">
+
+                                    <div class="form-group">
+                                        <label for="mapel_id_tambah">Subject Name</label>
+                                        <select class="form-control select2" name="mapel_id" id="mapel_id_tambah" style="width: 100%;" required>
+                                            <option value="">-- Select Subject Name -- </option>
+                                            @foreach($mapel as $data)
+                                            <option value="{{$data->id}}"> {{$data->nama_mapel}}</option>
+                                            @endforeach
+                                        </select> 
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="kelas_id_tambah">Class</label>
+                                        <select class="form-control select2" name="kelas_id" id="kelas_id_tambah" style="width: 100%;" required>
+                                        <!--  -->
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="k_tigabelas">Input File K13</label>
+                                        <div class="input-group">
+                                            <div class="custom-file">
+                                                <input type="file" name="k_tigabelas" class="custom-file-input" id="k_tigabelas">
+                                                <label class="custom-file-label" for="k_tigabelas">Choose file</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cambridge">Input File Cambridge</label>
+                                        <div class="input-group">
+                                            <div class="custom-file">
+                                                <input type="file" name="cambridge" class="custom-file-input" id="cambridge">
+                                                <label class="custom-file-label" for="cambridge">Choose file</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="edexcel">Input File Edexcel</label>
+                                        <div class="input-group">
+                                            <div class="custom-file">
+                                                <input type="file" name="edexcel" class="custom-file-input" id="edexcel">
+                                                <label class="custom-file-label" for="edexcel">Choose file</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="book_indo_siswa">Input File Book Indo Student</label>
+                                        <div class="input-group">
+                                            <div class="custom-file">
+                                                <input type="file" name="book_indo_siswa" class="custom-file-input" id="book_indo_siswa">
+                                                <label class="custom-file-label" for="book_indo_siswa">Choose file</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="book_english_siswa">Input File Book English Student</label>
+                                        <div class="input-group">
+                                            <div class="custom-file">
+                                                <input type="file" name="book_english_siswa" class="custom-file-input" id="book_english_siswa">
+                                                <label class="custom-file-label" for="book_english_siswa">Choose file</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="book_indo_guru">Input File Book Indo Teacher</label>
+                                        <div class="input-group">
+                                            <div class="custom-file">
+                                                <input type="file" name="book_indo_guru" class="custom-file-input" id="book_indo_guru">
+                                                <label class="custom-file-label" for="book_indo_guru">Choose file</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="book_english_guru">Input File Book English Teacher</label>
+                                        <div class="input-group">
+                                            <div class="custom-file">
+                                                <input type="file" name="book_english_guru" class="custom-file-input" id="book_english_guru">
+                                                <label class="custom-file-label" for="book_english_guru">Choose file</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer justify-content-end">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                </div>
+                            </form>
                             </div>
-                        </form>
                         </div>
                     </div>
-                </div>
                     <!-- End Modal tambah -->
 
                     <div class="card-body">
@@ -249,7 +250,7 @@
                                                             <div class="input-group">
                                                                 <div class="custom-file">
                                                                     <input type="file" name="k_tigabelas" class="custom-file-input" id="k_tigabelas_edit">
-                                                                    <label class="custom-file-label" for="k_tigabelas">Choose file</label>
+                                                                    <label class="custom-file-label" for="k_tigabelas">{{$silabus->k_tigabelas ? $silabus->k_tigabelas : 'Choose File'}}</label>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -264,7 +265,7 @@
                                                             <div class="input-group">
                                                                 <div class="custom-file">
                                                                     <input type="file" name="cambridge" class="custom-file-input" id="cambridge_edit">
-                                                                    <label class="custom-file-label" for="cambridge">Choose file</label>
+                                                                    <label class="custom-file-label" for="cambridge">{{$silabus->cambridge ? $silabus->cambridge : 'Choose File'}}</label>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -279,7 +280,7 @@
                                                             <div class="input-group">
                                                                 <div class="custom-file">
                                                                     <input type="file" name="edexcel" class="custom-file-input" id="edexcel_edit">
-                                                                    <label class="custom-file-label" for="edexcel">Choose file</label>
+                                                                    <label class="custom-file-label" for="edexcel">{{$silabus->edexcel ? $silabus->edexcel : 'Choose File'}}</label>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -295,7 +296,7 @@
                                                             <div class="input-group">
                                                                 <div class="custom-file">
                                                                     <input type="file" name="book_indo_siswa" class="custom-file-input" id="book_indo_siswa_edit">
-                                                                    <label class="custom-file-label" for="book_indo_siswa">Choose file</label>
+                                                                    <label class="custom-file-label" for="book_indo_siswa">{{$silabus->book_indo_siswa ? $silabus->book_indo_siswa : 'Choose File'}}</label>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -310,7 +311,7 @@
                                                             <div class="input-group">
                                                                 <div class="custom-file">
                                                                     <input type="file" name="book_english_siswa" class="custom-file-input" id="book_english_siswa_edit">
-                                                                    <label class="custom-file-label" for="book_english_siswa">Choose file</label>
+                                                                    <label class="custom-file-label" for="book_english_siswa">{{$silabus->book_english_siswa ? $silabus->book_english_siswa : 'Choose File'}}</label>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -325,7 +326,7 @@
                                                             <div class="input-group">
                                                                 <div class="custom-file">
                                                                     <input type="file" name="book_indo_guru" class="custom-file-input " id="book_indo_guru_edit">
-                                                                    <label class="custom-file-label" for="book_indo_guru">Choose file</label>
+                                                                    <label class="custom-file-label" for="book_indo_guru">{{$silabus->book_indo_guru ? $silabus->book_indo_guru : 'Choose File'}}</label>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -340,7 +341,7 @@
                                                             <div class="input-group">
                                                                 <div class="custom-file">
                                                                     <input type="file" name="book_english_guru" class="custom-file-input " id="book_english_guru_edit">
-                                                                    <label class="custom-file-label" for="book_english_guru">Choose file</label>
+                                                                    <label class="custom-file-label" for="book_english_guru">{{$silabus->book_english_guru ? $silabus->book_english_guru : 'Choose File'}}</label>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -552,24 +553,5 @@
     }
 </script>
 
-<!-- sweetalert confirm delete -->
-<script>
-    function confirmAndSubmit(title, id) {
-        Swal.fire({
-            title: 'Delete ' + title + ' ?',
-            text: 'This action cannot be undone.',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Yes, Delete!',
-            cancelButtonText: 'Cancel',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // If the user confirms, submit the form
-                document.getElementById('deleteForm' + id).submit();
-            }
-        });
-    }
-</script>
+
 

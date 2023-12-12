@@ -34,7 +34,9 @@ class KelasController extends Controller
             $data_kelas = Kelas::where('tapel_id', $tapel->id)->orderBy('tingkatan_id', 'ASC')->get();
 
             foreach ($data_kelas as $kelas) {
-                $jumlah_anggota = Siswa::where('kelas_id', $kelas->id)->count();
+                $jumlah_anggota = Siswa::where('kelas_id', $kelas->id)
+                    ->where('status', 1)
+                    ->count();
                 $kelas->jumlah_anggota = $jumlah_anggota;
             }
 
@@ -63,7 +65,7 @@ class KelasController extends Controller
 
         $tingkatan = Tingkatan::find($request->tingkatan_id);
         $jurusan = Jurusan::find($request->jurusan_id);
- 
+
         if ($tingkatan->id != '5' && ($jurusan->id == '1' || $jurusan->id == '2')) {
             return back()->with('toast_error', $tingkatan->nama_tingkatan . ' Tidak boleh mengambil jurusan ' . $jurusan->nama_jurusan)->withInput();
         }
@@ -101,6 +103,7 @@ class KelasController extends Controller
         $anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
             ->orderBy('siswa.nama_lengkap', 'ASC')
             ->where('anggota_kelas.kelas_id', $id)
+            ->where('siswa.status', 1)
             ->get();
         $siswa_belum_masuk_kelas = Siswa::where('status', 1)->where('kelas_id', null)->get();
         foreach ($siswa_belum_masuk_kelas as $belum_masuk_kelas) {

@@ -62,9 +62,9 @@ class SilabusController extends Controller
 
         // Check if the combination of kelas_id, pembelajaran_id, and mapel_id already exists
         $existingRecord = Silabus::where('kelas_id', $request->kelas_id)
-        ->where('pembelajaran_id', $request->pembelajaran_id)
-        ->where('mapel_id', $request->mapel_id)
-        ->first();
+            ->where('pembelajaran_id', $request->pembelajaran_id)
+            ->where('mapel_id', $request->mapel_id)
+            ->first();
 
         if ($existingRecord) {
             // Data already exists, return with a notification
@@ -136,7 +136,7 @@ class SilabusController extends Controller
             ->where('mapel_id', $request->input('mapel_id'))
             ->where('id', '!=', $id)
             ->first();
-    
+
         if ($existingRecord) {
             return back()->with('toast_error', 'Class ' . $nama_kelas . ' and Subject ' . $nama_mapel . ' ini sudah ada!');
         }
@@ -219,16 +219,16 @@ class SilabusController extends Controller
     public function destroyFile(Request $request, $id, $fileType)
     {
         $silabus = Silabus::findOrFail($id);
-    
+
         // Get the file name based on the file type
         $fileName = $silabus->{$fileType};
-    
+
         // Delete the file from storage
         if ($this->deleteFile($fileName)) {
             // Set the file name to null in the database
             $silabus->{$fileType} = null;
             $silabus->save();
-    
+
             // Flash a success message
             $request->session()->flash('toast_success', 'File deleted successfully');
             return response()->json(['success' => true]);
@@ -238,12 +238,12 @@ class SilabusController extends Controller
             return response()->json(['success' => false]);
         }
     }
-    
+
     protected function deleteFile($fileName)
     {
         // Assuming your files are stored in the 'public/silabus' directory
         $filePath = public_path('silabus/' . $fileName);
-    
+
         // Check if the file exists before attempting to delete
         if (file_exists($filePath)) {
             // Attempt to delete the file

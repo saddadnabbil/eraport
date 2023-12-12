@@ -87,8 +87,8 @@
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label">Jenis Kelamin</label>
                   <div class="col-sm-10 pt-1">
-                    <label class="form-check-label mr-3"><input type="radio" name="jenis_kelamin" value="L" @if ($guru->jenis_kelamin =='L' ) checked @endif required> Male</label>
-                    <label class="form-check-label mr-3"><input type="radio" name="jenis_kelamin" value="P" @if ($guru->jenis_kelamin =='P' ) checked @endif required> Female</label>
+                    <label class="form-check-label mr-3"><input type="radio" name="jenis_kelamin" value="Male" @if ($guru->jenis_kelamin =='Male' ) checked @endif required> Male</label>
+                    <label class="form-check-label mr-3"><input type="radio" name="jenis_kelamin" value="Female" @if ($guru->jenis_kelamin =='Female' ) checked @endif required> Female</label>
                   </div>
                 </div>
 

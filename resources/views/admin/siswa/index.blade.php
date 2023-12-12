@@ -24,6 +24,81 @@
   <!-- Main content -->
   <section class="content">
     <div class="container-fluid">
+            <!-- Info boxes -->
+            <div class="row">
+              <div class="col-12 col-sm-6 col-md-2">
+                <div class="info-box">
+                  <span class="info-box-icon bg-info elevation-1"><i class="fas fa-layer-group"></i></span>
+      
+                  <div class="info-box-content">
+                    <span class="info-box-text">Playgroup</span>
+                    <span class="info-box-number">{{$jumlah_kelas_play_group}} <small>students</small></span>
+                  </div>
+                  <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+              </div>
+              <!-- /.col -->
+              <div class="col-12 col-sm-6 col-md-2">
+                <div class="info-box mb-3">
+                  <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-book"></i></span>
+      
+                  <div class="info-box-content">
+                    <span class="info-box-text">Kindergarten</span>
+                    <span class="info-box-number">{{$jumlah_kelas_kinder_garten}} <small>students</small></span>
+                  </div>
+                  <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+              </div>
+              <!-- /.col -->
+      
+              <!-- fix for small devices only -->
+              <div class="clearfix hidden-md-up"></div>
+      
+              <div class="col-12 col-sm-6 col-md-2">
+                <div class="info-box mb-3">
+                  <span class="info-box-icon bg-success elevation-1"><i class="fas fa-users"></i></span>
+      
+                  <div class="info-box-content">
+                    <span class="info-box-text">Primary School</span>
+                    <span class="info-box-number">{{$jumlah_kelas_primary_school}} <small>students</small></span>
+                  </div>
+                  <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+              </div>
+              <!-- /.col -->
+              <div class="col-12 col-sm-6 col-md-2">
+                <div class="info-box mb-3">
+                  <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-book-reader "></i></span>
+      
+                  <div class="info-box-content">
+                    <span class="info-box-text">Junior High School</span>
+                    <span class="info-box-number">{{$jumlah_kelas_junior_high_school}} <small>students</small></span>
+                  </div>
+                  <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+              </div>
+              <!-- /.col -->
+              <!-- /.col -->
+              <div class="col-12 col-sm-6 col-md-3">
+                <div class="info-box mb-3">
+                  <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-book-reader "></i></span>
+      
+                  <div class="info-box-content">
+                    <span class="info-box-text">Senior High School</span>
+                    <span class="info-box-number">{{$jumlah_kelas_senior_high_school}} <small>students</small></span>
+                  </div>
+                  <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+              </div>
+              <!-- /.col -->
+            </div>
+            <!-- /.row -->
+
       <!-- ./row -->
       <div class="row">
         <div class="col-12">
@@ -103,8 +178,8 @@
                       <div class="form-group row">
                         <label for="jenis_kelamin" class="col-sm-3 col-form-label">Jenis Kelamin</label>
                         <div class="col-sm-9 pt-1">
-                          <label class="form-check-label mr-3"><input type="radio" name="jenis_kelamin" value="L" @if (old('jenis_kelamin')=='L' ) checked @endif required> Laki-Laki</label>
-                          <label class="form-check-label mr-3"><input type="radio" name="jenis_kelamin" value="P" @if (old('jenis_kelamin')=='P' ) checked @endif required> Perempuan</label>
+                          <label class="form-check-label mr-3"><input type="radio" name="jenis_kelamin" value="Male" @if (old('jenis_kelamin')=='Male' ) checked @endif required> Male</label>
+                          <label class="form-check-label mr-3"><input type="radio" name="jenis_kelamin" value="Female" @if (old('jenis_kelamin')=='Female' ) checked @endif required> Female</label>
                         </div>
                       </div>
                       <div class="form-group row">
@@ -119,7 +194,6 @@
                             <option value="">-- Pilih Kelas --</option>
                             <option value="" disabled>Silahkan pilih jenis pendaftaran</option>
                           </select>
-
                           <select class="form-control" id="kelas_bawah" style='display:none;'>
                             <option value="">-- Pilih Kelas --</option>
                             @foreach($data_kelas_terendah as $kelas_rendah)
@@ -242,26 +316,32 @@
                   <thead>
                     <tr>
                       <th>No</th>
+                      <th>Name</th>
+                      <th>Level</th>
+                      <th>Class</th>
                       <th>NIS</th>
                       <th>NISN</th>
-                      <th>Nama Siswa</th>
-                      <th>Tanggal Lahir</th>
-                      <th>L/P</th>
-                      <th>Kelas Saat Ini</th>
-                      <th>Aksi</th>
+                      <th>Sex</th>
+                      <th>Status</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     <?php $no = 0; ?>
                     @foreach($data_siswa as $siswa)
                     <?php $no++; ?>
+
+                    {{-- @dd($siswa) --}}
                     <tr>
                       <td>{{$no}}</td>
-                      <td>{{$siswa->nis}}</td>
-                      <td>{{$siswa->nisn}}</td>
                       <td>{{$siswa->nama_lengkap}}</td>
-                      <td>{{$siswa->tanggal_lahir->format('d-M-Y')}}</td>
-                      <td>{{$siswa->jenis_kelamin}}</td>
+                      <td>    
+                        @if($siswa->kelas_id == null)
+                          <span class="badge light badge-warning">Belum terdata</span>
+                        @else
+                          {{ $siswa->kelas->tingkatan->nama_tingkatan }}
+                        @endif
+                      </td>
                       <td>
                         @if($siswa->kelas_id == null)
                         <span class="badge light badge-warning">Belum masuk anggota kelas</span>
@@ -269,23 +349,28 @@
                         {{$siswa->kelas->nama_kelas}}
                         @endif
                       </td>
+                      <td>{{$siswa->nis}}</td>
+                      <td>{{$siswa->nisn}}</td>
+                      <td>{{$siswa->jenis_kelamin}}</td>
+                      <td>
+                          @if($siswa->user->status == true && $siswa->status == true)
+                            <span class="badge bg-success">Active</span>
+                          @else
+                            <span class="badge bg-danger">Non Active</span>
+                          @endif
+                      </td>
+
                       <td>
                         <form action="{{ route('siswa.destroy', $siswa->id) }}" method="POST">
                           @csrf
                           @method('DELETE')
 
-                          @if($siswa->kelas_id != null)
-                          <button type="button" class="btn btn-primary btn-sm mt-1" data-toggle="modal" data-target="#modal-registrasi{{$siswa->id}}" title="Registrasi Siswa">
-                            <i class="fas fa-user-cog"></i>
-                          </button>
-                          @else
-                          <button type="button" class="btn btn-primary btn-sm mt-1" data-toggle="modal" data-target="#modal-registrasi{{$siswa->id}}" title="Registrasi Siswa" disabled>
-                            <i class="fas fa-user-cog"></i>
-                          </button>
-                          @endif
-                          <button type="button" class="btn btn-warning btn-sm mt-1" data-toggle="modal" data-target="#modal-edit{{$siswa->id}}">
+                          <a href="{{ route('siswa.show', $siswa->id) }}" class="btn btn-warning btn-sm mt-1">
+                            <i class="fas fa-eye"></i>
+                          </a>
+                          {{-- <button type="button" class="btn btn-warning btn-sm mt-1" data-toggle="modal" data-target="#modal-edit{{$siswa->id}}">
                             <i class="fas fa-pencil-alt"></i>
-                          </button>
+                          </button> --}}
                           <button type="submit" class="btn btn-danger btn-sm mt-1" onclick="return confirm('Hapus {{$title}} ?')">
                             <i class="fas fa-trash-alt"></i>
                           </button>
@@ -361,7 +446,7 @@
                     <!-- End Modal Registrasi -->
 
                     <!-- Modal edit  -->
-                    <div class="modal fade" id="modal-edit{{$siswa->id}}">
+                    {{-- <div class="modal fade" id="modal-edit{{$siswa->id}}">
                       <div class="modal-dialog modal-xl">
                         <div class="modal-content">
                           <div class="modal-header">
@@ -383,8 +468,8 @@
                               <div class="form-group row">
                                 <label for="jenis_kelamin" class="col-sm-3 col-form-label">Jenis Kelamin</label>
                                 <div class="col-sm-9 pt-1">
-                                  <label class="form-check-label mr-3"><input type="radio" name="jenis_kelamin" value="L" @if ($siswa->jenis_kelamin=='L' ) checked @endif required> Laki-Laki</label>
-                                  <label class="form-check-label mr-3"><input type="radio" name="jenis_kelamin" value="P" @if ($siswa->jenis_kelamin=='P' ) checked @endif required> Perempuan</label>
+                                  <label class="form-check-label mr-3"><input type="radio" name="jenis_kelamin" value="Male" @if ($siswa->jenis_kelamin=='Male' ) checked @endif required> Male</label>
+                                  <label class="form-check-label mr-3"><input type="radio" name="jenis_kelamin" value="Female" @if ($siswa->jenis_kelamin=='Female' ) checked @endif required> Female</label>
                                 </div>
                               </div>
                               <div class="form-group row">
@@ -501,7 +586,7 @@
                           </form>
                         </div>
                       </div>
-                    </div>
+                    </div> --}}
                     <!-- End Modal edit -->
 
                     @endforeach

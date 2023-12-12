@@ -19,5 +19,11 @@ class AnggotaKelasTableSeeder extends Seeder
             'kelas_id' => 1,
             'pendaftaran' => 1
         ]);
+
+        AnggotaKelas::create([
+            'siswa_id' => 2,
+            'kelas_id' => 1,
+            'pendaftaran' => 1
+        ]);
     }
 }

@@ -37,9 +37,17 @@ class UsersTableSeeder extends Seeder
         ]);
 
         User::create([
-            'username' => 'guru 2',
+            'username' => 'guru2',
             'password' => bcrypt('123456'),
             'role' => '2',
+            'status' => true,
+        ]);
+
+
+        User::create([
+            'username' => 'siswa2',
+            'password' => bcrypt('123456'),
+            'role' => '3',
             'status' => true,
         ]);
     }
