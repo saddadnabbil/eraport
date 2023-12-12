@@ -48,9 +48,9 @@
         <td style="border: 1px solid #000000;">{{ $guru->tanggal_lahir }}</td>
         <td style="border: 1px solid #000000;">
           @if($guru->jenis_kelamin == 'L')
-          Laki-Laki
+          Male
           @else
-          Perempuan
+          Female
           @endif
         </td>
         <td style="border: 1px solid #000000;">{{ $guru->alamat }}</td>

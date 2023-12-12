@@ -137,9 +137,9 @@
           <td style="width: 2%;">:</td>
           <td>
             @if($anggota_kelas->siswa->jenis_kelamin == 'L')
-            Laki-Laki
+            Male
             @else
-            Perempuan
+            Female
             @endif
           </td>
         </tr>

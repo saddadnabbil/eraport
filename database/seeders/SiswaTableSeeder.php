@@ -23,7 +23,7 @@ class SiswaTableSeeder extends Seeder
             'nama_lengkap' => 'John Doe',
             'tempat_lahir' => 'Jakarta',
             'tanggal_lahir' => '1990-01-01',
-            'jenis_kelamin' => 'L',
+            'jenis_kelamin' => 'Male',
             'agama' => '1',
             'status_dalam_keluarga' => '1',
             'anak_ke' => '1',

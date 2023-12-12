@@ -23,7 +23,7 @@ class CreateSiswasTable extends Migration
             $table->string('nama_lengkap', 100);
             $table->string('tempat_lahir', 50);
             $table->date('tanggal_lahir');
-            $table->enum('jenis_kelamin', ['L', 'P']);
+            $table->enum('jenis_kelamin', ['Male', 'Female']);
             $table->enum('agama', ['1', '2', '3', '4', '5', '6', '7']);
             $table->enum('status_dalam_keluarga', ['1', '2', '3']);
             $table->string('anak_ke', 2);

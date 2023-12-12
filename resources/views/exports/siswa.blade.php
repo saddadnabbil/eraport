@@ -59,9 +59,9 @@
         <td style="border: 1px solid #000000;">{{ date('d-m-Y', strtotime($siswa->tanggal_lahir)) }}</td>
         <td style="border: 1px solid #000000;">
           @if($siswa->jenis_kelamin == 'L')
-          Laki-Laki
+          Male
           @else
-          Perempuan
+          Female
           @endif
         </td>
         <td align="center" style="border: 1px solid #000000;">
