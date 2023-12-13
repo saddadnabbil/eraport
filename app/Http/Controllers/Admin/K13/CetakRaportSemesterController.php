@@ -46,7 +46,11 @@ class CetakRaportSemesterController extends Controller
         $title = 'Cetak Raport Semester';
         $kelas = Kelas::findorfail($request->kelas_id);
         $data_kelas = Kelas::where('tapel_id', session()->get('tapel_id'))->get();
-        $data_anggota_kelas = AnggotaKelas::where('kelas_id', $kelas->id)->get();
+        $data_anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
+            ->orderBy('siswa.nama_lengkap', 'ASC')
+            ->where('anggota_kelas.kelas_id', $kelas->id)
+            ->where('siswa.status', 1)
+            ->get();
 
         $paper_size = $request->paper_size;
         $orientation = $request->orientation;

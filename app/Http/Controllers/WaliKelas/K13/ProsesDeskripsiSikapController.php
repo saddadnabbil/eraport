@@ -36,7 +36,11 @@ class ProsesDeskripsiSikapController extends Controller
         $data_id_rencana_spiritual = K13RencanaNilaiSpiritual::whereIn('pembelajaran_id', $data_id_pembelajaran)->get('id');
         $data_id_rencana_sosial = K13RencanaNilaiSosial::whereIn('pembelajaran_id', $data_id_pembelajaran)->get('id');
 
-        $data_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get();
+        $data_anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
+        ->orderBy('siswa.nama_lengkap', 'ASC')
+        ->where('anggota_kelas.kelas_id', $id_kelas_diampu)
+        ->where('siswa.status', 1)
+        ->get();
         foreach ($data_anggota_kelas as $anggota_kelas) {
             $nilai_spiritual = K13NilaiAkhirRaport::where('anggota_kelas_id', $anggota_kelas->id)->avg('nilai_spiritual');
             if ($nilai_spiritual <= 4 && $nilai_spiritual > 3) {

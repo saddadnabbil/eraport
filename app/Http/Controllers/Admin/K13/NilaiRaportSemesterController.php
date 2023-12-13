@@ -52,7 +52,11 @@ class NilaiRaportSemesterController extends Controller
                 $kelas = Kelas::findorfail($request->kelas_id);
                 $mapel = Mapel::findorfail($request->mapel_id);
 
-                $data_anggota_kelas = AnggotaKelas::where('kelas_id', $kelas->id)->get();
+                $data_anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
+                    ->orderBy('siswa.nama_lengkap', 'ASC')
+                    ->where('anggota_kelas.kelas_id', $kelas)
+                    ->where('siswa.status', 1)
+                    ->get();
                 foreach ($data_anggota_kelas as $anggota_kelas) {
                     $anggota_kelas->nilai_raport = K13NilaiAkhirRaport::where('pembelajaran_id', $pembelajaran->id)->where('anggota_kelas_id', $anggota_kelas->id)->first();
                 }

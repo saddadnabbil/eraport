@@ -48,7 +48,11 @@ class PengelolaanNilaiController extends Controller
         $data_id_mapel_kelompok_b = K13MappingMapel::whereIn('mapel_id', $data_id_mapel_semester_ini)->where('kelompok', 'B')->get('mapel_id');
 
 
-        $data_anggota_kelas = AnggotaKelas::where('kelas_id', $kelas->id)->get();
+        $data_anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
+            ->orderBy('siswa.nama_lengkap', 'ASC')
+            ->where('anggota_kelas.kelas_id', $kelas)
+            ->where('siswa.status', 1)
+            ->get();
         foreach ($data_anggota_kelas as $anggota_kelas) {
             $data_id_pembelajaran_a = Pembelajaran::where('kelas_id', $anggota_kelas->kelas_id)->whereIn('mapel_id', $data_id_mapel_kelompok_a)->get('id');
             $data_id_pembelajaran_b = Pembelajaran::where('kelas_id', $anggota_kelas->kelas_id)->whereIn('mapel_id', $data_id_mapel_kelompok_b)->get('id');

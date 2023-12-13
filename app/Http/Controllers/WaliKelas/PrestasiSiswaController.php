@@ -28,7 +28,11 @@ class PrestasiSiswaController extends Controller
         $id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('id');
 
         $data_prestasi_siswa = PrestasiSiswa::whereIn('anggota_kelas_id', $id_anggota_kelas)->get();
-        $data_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get();
+        $data_anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
+            ->orderBy('siswa.nama_lengkap', 'ASC')
+            ->where('anggota_kelas.kelas_id', $id_kelas_diampu)
+            ->where('siswa.status', 1)
+            ->get();
 
         return view('walikelas.prestasi.index', compact('title', 'data_prestasi_siswa', 'data_anggota_kelas'));
     }

@@ -23,7 +23,11 @@ class PesertaDidikController extends Controller
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
         $guru = Guru::where('user_id', Auth::user()->id)->first();
         $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)->where('guru_id', $guru->id)->get('id');
-        $data_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get();
+        $data_anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
+            ->orderBy('siswa.nama_lengkap', 'ASC')
+            ->where('anggota_kelas.kelas_id', $id_kelas_diampu)
+            ->where('siswa.status', 1)
+            ->get();
 
         return view('walikelas.pesertadidik.index', compact('title', 'data_anggota_kelas'));
     }

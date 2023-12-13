@@ -23,7 +23,12 @@ class RekapKehadiranController extends Controller
         $siswa = Siswa::where('user_id', Auth::user()->id)->first();
 
         $data_id_kelas = Kelas::where('tapel_id', session()->get('tapel_id'))->get('id');
-        $anggota_kelas = AnggotaKelas::whereIn('kelas_id', $data_id_kelas)->where('siswa_id', $siswa->id)->first();
+        $anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
+            ->orderBy('siswa.nama_lengkap', 'ASC')
+            ->where('anggota_kelas.kelas_id', $data_id_kelas)
+            ->where('anggota_kelas.siswa_id', $siswa->id)
+            ->where('siswa.status', 1)
+            ->get();
         if (is_null($anggota_kelas)) {
             return back()->with('toast_warning', 'Anda belum masuk ke anggota kelas');
         } else {

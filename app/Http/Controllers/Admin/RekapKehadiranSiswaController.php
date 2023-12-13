@@ -33,7 +33,11 @@ class RekapKehadiranSiswaController extends Controller
         $title = 'Rekap Kehadiran Siswa';
         $data_kelas = Kelas::where('tapel_id', session()->get('tapel_id'))->get();
         $kelas = Kelas::findorfail($request->kelas_id);
-        $data_anggota_kelas = AnggotaKelas::where('kelas_id', $kelas->id)->get();
+        $data_anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
+            ->orderBy('siswa.nama_lengkap', 'ASC')
+            ->where('anggota_kelas.kelas_id', $kelas)
+            ->where('siswa.status', 1)
+            ->get();
         return view('admin.rekapkehadiran.index', compact('title', 'kelas', 'data_kelas', 'data_anggota_kelas'));
     }
 

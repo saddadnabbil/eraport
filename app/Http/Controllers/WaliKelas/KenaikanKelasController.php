@@ -27,7 +27,11 @@ class KenaikanKelasController extends Controller
         if ($tapel->semester == 2) {
             $guru = Guru::where('user_id', Auth::user()->id)->first();
             $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)->where('guru_id', $guru->id)->get('id');
-            $data_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get();
+            $data_anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
+            ->orderBy('siswa.nama_lengkap', 'ASC')
+            ->where('anggota_kelas.kelas_id', $id_kelas_diampu)
+            ->where('siswa.status', 1)
+            ->get();
             foreach ($data_anggota_kelas as $anggota) {
                 $kenaikan_kelas = KenaikanKelas::where('anggota_kelas_id', $anggota->id)->first();
                 if (is_null($kenaikan_kelas)) {
