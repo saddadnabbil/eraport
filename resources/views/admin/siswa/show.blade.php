@@ -36,7 +36,16 @@
 
               <h3 class="profile-username text-center">{{$siswa->nama_lengkap}}</h3>
 
-              <p class="text-muted text-center">Administrator</p>
+              <p class="text-muted text-center">
+                <!-- check for role in roles -->
+                @if($siswa->user->role == '1')
+                  Admin
+                @elseif($siswa->user->role == '2')
+                  Guru
+                @elseif($siswa->user->role == '3')
+                  Siswa
+                @endif
+              </p>
 
               <ul class="list-group list-group-unbordered mb-3">
                 <li class="list-group-item">
