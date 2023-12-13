@@ -26,8 +26,14 @@ class EkstrakulikulerController extends Controller
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
         $data_ekstrakulikuler = Ekstrakulikuler::where('tapel_id', $tapel->id)->orderBy('nama_ekstrakulikuler', 'ASC')->get();
         foreach ($data_ekstrakulikuler as $ekstrakulikuler) {
-            $jumlah_anggota = AnggotaEkstrakulikuler::where('ekstrakulikuler_id', $ekstrakulikuler->id)->count();
+                $anggota_ekstrakulikuler = AnggotaEkstrakulikuler::join('siswa', 'anggota_ekstrakulikuler.anggota_kelas_id', '=', 'siswa.id')
+                ->where('anggota_ekstrakulikuler.ekstrakulikuler_id', $ekstrakulikuler->id)
+                ->where('siswa.status', 1)
+                ->get();
+        
+            $jumlah_anggota = $anggota_ekstrakulikuler->count();
             $ekstrakulikuler->jumlah_anggota = $jumlah_anggota;
+            $ekstrakulikuler->anggota = $anggota_ekstrakulikuler;
         }
         $data_guru = Guru::orderBy('nama_lengkap', 'ASC')->get();
         return view('admin.ekstrakulikuler.index', compact('title', 'data_ekstrakulikuler', 'tapel', 'data_guru'));
@@ -68,9 +74,16 @@ class EkstrakulikulerController extends Controller
      */
     public function show($id)
     {
+        // AnggotaEkstrakulikuler::join('siswa', 'anggota_ekstrakulikuler.anggota_kelas_id', '=', 'siswa.id')
+        //         ->where('anggota_ekstrakulikuler.ekstrakulikuler_id', $ekstrakulikuler->id)
+        //         ->where('siswa.status', 1)
+        //         ->get();
         $title = 'Anggota Ekstrakulikuler';
         $ekstrakulikuler = Ekstrakulikuler::findorfail($id);
-        $anggota_ekstrakulikuler = AnggotaEkstrakulikuler::where('ekstrakulikuler_id', $id)->get();
+        $anggota_ekstrakulikuler = AnggotaEkstrakulikuler::join('siswa', 'anggota_ekstrakulikuler.anggota_kelas_id', '=', 'siswa.id')
+        ->where('anggota_ekstrakulikuler.ekstrakulikuler_id', $ekstrakulikuler->id)
+        ->where('siswa.status', 1)
+        ->get();
 
         $id_anggota_ekstrakulikuler = AnggotaEkstrakulikuler::where('ekstrakulikuler_id', $id)->get('anggota_kelas_id');
         $siswa_belum_masuk_ekstrakulikuler = AnggotaKelas::whereNotIn('id', $id_anggota_ekstrakulikuler)->get();
