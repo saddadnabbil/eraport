@@ -63,6 +63,6 @@ class MapingMapelController extends Controller
                 $mapel_mapping->update($update_mapping);
             }
         }
-        return redirect('admin/k13mapping')->with('toast_success', 'Mapping mata pembelajaran berhasil');
+        return back()->with('toast_success', 'Mapping mata pembelajaran berhasil');
     }
 }
