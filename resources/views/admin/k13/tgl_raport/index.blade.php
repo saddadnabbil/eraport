@@ -108,7 +108,7 @@
                       <td>{{$tgl_raport->tempat_penerbitan}}</td>
                       <td>{{ date('d-M-Y', strtotime($tgl_raport->tanggal_pembagian))}}</td>
                       <td>
-                        <form action="{{ route('k13tglraport.destroy', $tgl_raport->id) }}" method="POST">
+                        <form action="{{ route('tglraport.destroy', $tgl_raport->id) }}" method="POST">
                           @csrf
                           @method('DELETE')
                           <button type="button" class="btn btn-warning btn-sm mt-1" data-toggle="modal" data-target="#modal-edit{{$tgl_raport->id}}">
@@ -131,7 +131,7 @@
                               <span aria-hidden="true">&times;</span>
                             </button>
                           </div>
-                          <form action="{{ route('k13tglraport.update', $tgl_raport->id) }}" method="POST">
+                          <form action="{{ route('tglraport.update', $tgl_raport->id) }}" method="POST">
                             {{ method_field('PATCH') }}
                             @csrf
                             <div class="modal-body">
