@@ -14,34 +14,78 @@ class CreateSiswasTable extends Migration
     public function up()
     {
         Schema::create('siswa', function (Blueprint $table) {
+            // student information
             $table->id();
             $table->unsignedBigInteger('user_id')->unique()->unsigned();
             $table->unsignedBigInteger('kelas_id')->unsigned()->nullable();
+            $table->unsignedBigInteger('tingkatan_id')->unsigned()->nullable();
             $table->enum('jenis_pendaftaran', ['1', '2']);
+
             $table->string('nis', 10)->unique();
             $table->string('nisn', 10)->unique()->nullable();
             $table->string('nama_lengkap', 100);
+            $table->string('nama_panggilan', 100);
+            $table->string('nik', 16)->unique();
+            $table->string('email')->unique();
+            $table->string('nomor_hp', 13)->unique()->nullable();
+            $table->enum('jenis_kelamin', ['Male', 'Female']);
+            $table->enum('blood_type', ['A', 'B', 'AB', 'O'])->nullable();
+            $table->enum('agama', ['1', '2', '3', '4', '5', '6', '7']);
             $table->string('tempat_lahir', 50);
             $table->date('tanggal_lahir');
-            $table->enum('jenis_kelamin', ['Male', 'Female']);
-            $table->enum('agama', ['1', '2', '3', '4', '5', '6', '7']);
-            $table->enum('status_dalam_keluarga', ['1', '2', '3']);
             $table->string('anak_ke', 2);
-            $table->string('alamat');
-            $table->string('nomor_hp', 13)->unique()->nullable();
+            $table->string('jml_saudara_kandung', 2);
+            $table->string('warga_negara', 2);
 
+            // domicile information
+            $table->string('alamat');
+            $table->string('kota');
+            $table->unsignedInteger('kode_pos');
+            $table->unsignedInteger('jarak_rumah_ke_sekolah');
+            $table->enum('status_dalam_keluarga', ['1', '2', '3']);
+            $table->enum('tinggal_bersama', ['Parents', 'Others'])->nullable;
+            $table->string('transportasi')->nullable();
+
+            // parent information
             $table->string('nama_ayah', 100);
             $table->string('nama_ibu', 100);
-            $table->string('pekerjaan_ayah', 100);
-            $table->string('pekerjaan_ibu', 100);
             $table->string('nama_wali', 100)->nullable();
+            $table->string('nik_ayah', 16)->unique();
+            $table->string('nik_ibu', 16)->unique();
+            $table->string('nik_wali', 16)->unique()->nullable();
+            $table->string('email_ayah', 100)->unique()->nullable();
+            $table->string('email_ibu', 100)->unique()->nullable();
+            $table->string('email_wali', 100)->unique()->nullable();
+            $table->string('nomor_hp_ayah', 13)->unique()->nullable();
+            $table->string('nomor_hp_ibu', 13)->unique()->nullable();
+            $table->string('nomor_hp_wali', 13)->unique()->nullable();
+            $table->string('pekerjaan_ayah', 100)->nullable();
+            $table->string('pekerjaan_ibu', 100)->nullable();
             $table->string('pekerjaan_wali', 100)->nullable();
+
+            // student medical condition information
+            $table->unsignedInteger('tinggi_badan')->nullable();
+            $table->unsignedInteger('berat_badan')->nullable();
+            $table->string('spesial_treatment')->nullable();
+            $table->string('note_kesehatan')->nullable();
+            $table->string('file_document_kesehatan')->nullable();
+            $table->string('file_list_pertanyaan')->nullable();
+
+            // previeously formal school
+            $table->string('tanggal_masuk_sekolah_lama', 100)->nullable();
+            $table->string('tanggal_keluar_sekolah_lama', 100)->nullable();
+            $table->string('nama_sekolah_lama', 100)->nullable();
+            $table->string('alamat_lama', 100)->nullable();
+            $table->string('no_sttb')->nullable();
+            $table->unsignedInteger('nem')->nullable();
+            $table->string('file_dokument_sekolah_lama')->nullable();
 
             $table->string('avatar');
             $table->enum('status', ['1', '2', '3']);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('user');
+            $table->foreign('tingkatan_id')->references('id')->on('tingkatans');
             $table->foreign('kelas_id')->references('id')->on('kelas');
         });
 

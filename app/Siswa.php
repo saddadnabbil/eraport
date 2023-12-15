@@ -3,34 +3,16 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Siswa extends Model
 {
+    use HasFactory;
+    
     protected $table = 'siswa';
-    protected $fillable = [
-        'user_id',
-        'kelas_id',
-        'jenis_pendaftaran',
-        'nis',
-        'nisn',
-        'nama_lengkap',
-        'tempat_lahir',
-        'tanggal_lahir',
-        'jenis_kelamin',
-        'agama',
-        'status_dalam_keluarga',
-        'anak_ke',
-        'alamat',
-        'nomor_hp',
-        'nama_ayah',
-        'nama_ibu',
-        'pekerjaan_ayah',
-        'pekerjaan_ibu',
-        'nama_wali',
-        'pekerjaan_wali',
-        'avatar',
-        'status'
-    ];
+
+    protected $guarded = ['id'];
+
     protected $dates = ['tanggal_lahir'];
 
     public function user()
@@ -41,6 +23,11 @@ class Siswa extends Model
     public function kelas()
     {
         return $this->belongsTo('App\Kelas');
+    }
+
+    public function tingakatan()
+    {
+        return $this->belongsTo('App\Tingkat');
     }
 
     public function anggota_kelas()

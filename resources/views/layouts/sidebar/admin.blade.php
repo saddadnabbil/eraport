@@ -128,139 +128,160 @@
         </li>
 
         <!-- Kurikulum -->
-        <li class="nav-header">SETTING REPORT</li>
-        <li class="nav-item">
-          <a href="{{ route('mapping.index') }}" class="nav-link {{ request()->routeIs('mapping.index') ? 'active' : '' }}">
-            <i class="nav-icon fas fa-list-ol"></i>
-            <p>
-              Mapping Subject
-            </p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="{{ route('interval.index') }}" class="nav-link {{ request()->routeIs('interval.index') ? 'active' : '' }}">
-            <i class="nav-icon fas fa-columns"></i>
-            <p>
-              Interval Predikat
-            </p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="{{ route('sikap.index') }}" class="nav-link {{ request()->routeIs('sikap.index') ? 'active' : '' }}">
-            <i class="nav-icon fas fa-clipboard"></i>
-            <p>
-              Butir-Butir Sikap
-            </p>
-          </a>
-        </li>
+          <li class="nav-header">SETTING REPORT</li>
+          <li class="nav-item">
+            <a href="{{ route('mapping.index') }}" class="nav-link {{ request()->routeIs('mapping.index') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-list-ol"></i>
+              <p>
+                Mapping Subject
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('interval.index') }}" class="nav-link {{ request()->routeIs('interval.index') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-columns"></i>
+              <p>
+                Interval Predikat
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('sikap.index') }}" class="nav-link {{ request()->routeIs('sikap.index') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-clipboard"></i>
+              <p>
+                Butir-Butir Sikap
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('kd.index') }}" class="nav-link {{ request()->routeIs('kd.index') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-clipboard-list"></i>
+              <p>
+                Data Kompetensi Dasar
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{ route('tglraport.index') }}" class="nav-link {{ request()->routeIs('tglraport.index') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-calendar-week"></i>
+              <p>
+                Input Tanggal Raport
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{ route('validasi.index') }}" class="nav-link {{ request()->routeIs('validasi.index') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-check-square"></i>
+              <p>
+                Validasi Data
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-header">REPORT RESULTS</li>
+          <li class="nav-item has-treeview {{ request()->routeIs(['raportstatuspenilaian.index', 'pengelolaannilai.index', 'nilairaport.index']) ? 'menu-open' : '' }}">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-list-ol"></i>
+              <p>
+                Rating result
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview bg-secondary">
+              <li class="nav-item">
+                <a href="{{ route('raportstatuspenilaian.index') }}" class="nav-link {{ request()->routeIs('raportstatuspenilaian.index') ? 'active' : '' }}">
+                  <i class="fas fa-check-circle nav-icon"></i>
+                  <p>Assessment Status</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('pengelolaannilai.index') }}" class="nav-link {{ request()->routeIs('pengelolaannilai.index') ? 'active' : '' }}">
+                  <i class="fas fa-check-square nav-icon"></i>
+                  <p>Value Management Results</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('nilairaport.index') }}" class="nav-link {{ request()->routeIs('nilairaport.index') ? 'active' : '' }}">
+                  <i class="fas fa-clipboard-check nav-icon"></i>
+                  <p>Semester Report Value</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{ route('rekapkehadiran.index') }}" class="nav-link {{ request()->routeIs('rekapkehadiran.index') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-calendar-check"></i>
+              <p>
+                Student Attendance
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{ route('adminleger.index') }}" class="nav-link {{ request()->routeIs('adminleger.index') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-table"></i>
+              <p>
+                Leger Student Values
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item has-treeview {{ request()->routeIs(['adminraportpts.index', 'adminraportsemester.index']) ? 'menu-open' : '' }}">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-print"></i>
+              <p>
+                Print Report
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview bg-secondary">
+              <li class="nav-item">
+                <a href="{{ route('adminraportpts.index') }}" class="nav-link {{ request()->routeIs('adminraportpts.index') ? 'active' : '' }}">
+                  <i class="fas fa-print nav-icon"></i>
+                  <p>Mid-Semester Report</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('adminraportsemester.index') }}" class="nav-link {{ request()->routeIs('adminraportsemester.index') ? 'active' : '' }}">
+                  <i class="fas fa-print nav-icon"></i>
+                  <p>Semester Report</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item bg-danger mt-2">
+            <a href="{{ route('logout') }}" class="nav-link" onclick="return confirm('Apakah anda yakin ingin keluar ?')">
+              <i class="nav-icon fas fa-sign-out-alt"></i>
+              <p>
+                Keluar / Logout
+              </p>
+            </a>
+          </li>
+        {{-- end Kurikulum --}}
+
+        {{-- Kurikulum Merdeka --}}
+        <li class="nav-header">PERSIAPAN PENILAIAN KM</li>
         <li class="nav-item">
           <a href="{{ route('kd.index') }}" class="nav-link {{ request()->routeIs('kd.index') ? 'active' : '' }}">
             <i class="nav-icon fas fa-clipboard-list"></i>
             <p>
-              Data Kompetensi Dasar
+              Capaian Kompetensi
             </p>
           </a>
         </li>
-
         <li class="nav-item">
-          <a href="{{ route('tglraport.index') }}" class="nav-link {{ request()->routeIs('tglraport.index') ? 'active' : '' }}">
-            <i class="nav-icon fas fa-calendar-week"></i>
-            <p>
-              Input Tanggal Raport
-            </p>
-          </a>
-        </li>
-
-        <li class="nav-item">
-          <a href="{{ route('validasi.index') }}" class="nav-link {{ request()->routeIs('validasi.index') ? 'active' : '' }}">
-            <i class="nav-icon fas fa-check-square"></i>
-            <p>
-              Validasi Data
-            </p>
-          </a>
-        </li>
-
-        <li class="nav-header">REPORT RESULTS</li>
-        <li class="nav-item has-treeview {{ request()->routeIs(['raportstatuspenilaian.index', 'pengelolaannilai.index', 'nilairaport.index']) ? 'menu-open' : '' }}">
-          <a href="#" class="nav-link">
+          <a href="#" class="nav-link ">
             <i class="nav-icon fas fa-list-ol"></i>
             <p>
-              Rating result
-              <i class="fas fa-angle-left right"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview bg-secondary">
-            <li class="nav-item">
-              <a href="{{ route('raportstatuspenilaian.index') }}" class="nav-link {{ request()->routeIs('raportstatuspenilaian.index') ? 'active' : '' }}">
-                <i class="fas fa-check-circle nav-icon"></i>
-                <p>Assessment Status</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ route('pengelolaannilai.index') }}" class="nav-link {{ request()->routeIs('pengelolaannilai.index') ? 'active' : '' }}">
-                <i class="fas fa-check-square nav-icon"></i>
-                <p>Value Management Results</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ route('nilairaport.index') }}" class="nav-link {{ request()->routeIs('nilairaport.index') ? 'active' : '' }}">
-                <i class="fas fa-clipboard-check nav-icon"></i>
-                <p>Semester Report Value</p>
-              </a>
-            </li>
-          </ul>
-        </li>
-
-        <li class="nav-item">
-          <a href="{{ route('rekapkehadiran.index') }}" class="nav-link {{ request()->routeIs('rekapkehadiran.index') ? 'active' : '' }}">
-            <i class="nav-icon fas fa-calendar-check"></i>
-            <p>
-              Student Attendance
+              Deskripsi Rapor
             </p>
           </a>
         </li>
-
-        <li class="nav-item">
-          <a href="{{ route('adminleger.index') }}" class="nav-link {{ request()->routeIs('adminleger.index') ? 'active' : '' }}">
-            <i class="nav-icon fas fa-table"></i>
-            <p>
-              Leger Student Values
-            </p>
-          </a>
-        </li>
-
-        <li class="nav-item has-treeview {{ request()->routeIs(['adminraportpts.index', 'adminraportsemester.index']) ? 'menu-open' : '' }}">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-print"></i>
-            <p>
-              Print Report
-              <i class="fas fa-angle-left right"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview bg-secondary">
-            <li class="nav-item">
-              <a href="{{ route('adminraportpts.index') }}" class="nav-link {{ request()->routeIs('adminraportpts.index') ? 'active' : '' }}">
-                <i class="fas fa-print nav-icon"></i>
-                <p>Mid-Semester Report</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ route('adminraportsemester.index') }}" class="nav-link {{ request()->routeIs('adminraportsemester.index') ? 'active' : '' }}">
-                <i class="fas fa-print nav-icon"></i>
-                <p>Semester Report</p>
-              </a>
-            </li>
-          </ul>
-        </li>
-
-        <li class="nav-item bg-danger mt-2">
-          <a href="{{ route('logout') }}" class="nav-link" onclick="return confirm('Apakah anda yakin ingin keluar ?')">
-            <i class="nav-icon fas fa-sign-out-alt"></i>
-            <p>
-              Keluar / Logout
-            </p>
-          </a>
-        </li>
+        {{-- End Kurikulum Merdeka --}}
       </ul>
     </nav>
     <!-- /.sidebar-menu -->

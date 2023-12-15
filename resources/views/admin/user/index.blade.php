@@ -119,8 +119,12 @@
                         {{$user->admin->nama_lengkap}}
                         @elseif($user->role == 2)
                         {{$user->guru->nama_lengkap}}
-                        @elseif($user->role == 3)
-                        {{$user->siswa->nama_lengkap}}
+                        @elseif ($user->role == 3)
+                            @if ($user->siswa)
+                                {{ $user->siswa->nama_lengkap }}
+                            @else
+                                -
+                            @endif
                         @endif
                       </td>
                       <td>{{$user->username}}</td>
@@ -169,7 +173,11 @@
                                   @elseif($user->role == 2)
                                   <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap" value="{{$user->guru->nama_lengkap}}" readonly>
                                   @elseif($user->role == 3)
-                                  <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap" value="{{$user->siswa->nama_lengkap}}" readonly>
+                                  @if ($user->siswa)
+                                      <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap" value="{{$user->siswa->nama_lengkap}}" readonly>
+                                  @else
+                                      -
+                                  @endif
                                   @endif
                                 </div>
                               </div>

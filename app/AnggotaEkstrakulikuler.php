@@ -3,9 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class AnggotaEkstrakulikuler extends Model
 {
+
+    use HasFactory;
+
     protected $table = 'anggota_ekstrakulikuler';
     protected $fillable = [
         'anggota_kelas_id',

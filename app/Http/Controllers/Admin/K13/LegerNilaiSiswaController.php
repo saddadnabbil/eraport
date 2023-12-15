@@ -65,6 +65,7 @@ class LegerNilaiSiswaController extends Controller
             ->where('anggota_kelas.kelas_id', $kelas->id)
             ->where('siswa.status', 1)
             ->get();
+
         foreach ($data_anggota_kelas as $anggota_kelas) {
 
             $data_nilai_kelompok_a = K13NilaiAkhirRaport::whereIn('pembelajaran_id', $data_id_pembelajaran_a)->where('anggota_kelas_id', $anggota_kelas->id)->get();

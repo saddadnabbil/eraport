@@ -230,7 +230,7 @@
                   <div class="form-group row">
                     <label for="nama_lengkap" class="col-sm-3 col-form-label">Nama Siswa</label>
                     <div class="col-sm-9">
-                      <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap" placeholder="Nama Siswa" value="{{$siswa->nama_lengkap}}" readonly>
+                      <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap" placeholder="Nama Siswa" value="{{$siswa->nama_lengkap}}">
                     </div>
                   </div>
                   <div class="form-group row">

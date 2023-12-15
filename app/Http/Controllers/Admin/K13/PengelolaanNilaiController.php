@@ -50,7 +50,7 @@ class PengelolaanNilaiController extends Controller
 
         $data_anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
             ->orderBy('siswa.nama_lengkap', 'ASC')
-            ->where('anggota_kelas.kelas_id', $kelas)
+            ->where('anggota_kelas.kelas_id', $kelas->id)
             ->where('siswa.status', 1)
             ->get();
         foreach ($data_anggota_kelas as $anggota_kelas) {

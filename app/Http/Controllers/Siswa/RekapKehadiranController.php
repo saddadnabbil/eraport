@@ -22,19 +22,21 @@ class RekapKehadiranController extends Controller
         $title = 'Rekap Kehadiran';
         $siswa = Siswa::where('user_id', Auth::user()->id)->first();
 
-        $data_id_kelas = Kelas::where('tapel_id', session()->get('tapel_id'))->get('id');
+        $data_id_kelas = Kelas::where('tapel_id', session()->get('tapel_id'))->pluck('id');
         $anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
             ->orderBy('siswa.nama_lengkap', 'ASC')
-            ->where('anggota_kelas.kelas_id', $data_id_kelas)
+            ->whereIn('anggota_kelas.kelas_id', $data_id_kelas)
             ->where('anggota_kelas.siswa_id', $siswa->id)
             ->where('siswa.status', 1)
             ->get();
-        if (is_null($anggota_kelas)) {
-            return back()->with('toast_warning', 'Anda belum masuk ke anggota kelas');
-        } else {
-            $kehadiran = KehadiranSiswa::where('anggota_kelas_id', $anggota_kelas->id)->first();
-            return view('siswa.presensi.index', compact('title', 'siswa', 'kehadiran'));
-        }
+        
+            if ($anggota_kelas->isEmpty()) {
+                return back()->with('toast_warning', 'Anda belum masuk ke anggota kelas');
+            } else {
+                $kehadiran = KehadiranSiswa::where('anggota_kelas_id', $anggota_kelas->first()->id)->first();
+                return view('siswa.presensi.index', compact('title', 'siswa', 'kehadiran'));
+            }
+            
     }
 
 

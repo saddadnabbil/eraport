@@ -158,6 +158,29 @@ class AuthController extends Controller
         }
     }
 
+    public function admin_ganti_password(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            
+            'password_lama' => ['required', new MatchOldPassword],
+            'password_baru' => 'required|min:6',
+            'konfirmasi_password' => 'required|same:password_baru',
+        ]);
+
+        if ($validator->fails()) {
+            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+        } else {
+            $user = User::findorfail(Auth::id());
+            $data = [
+                'password' => bcrypt($request->password_baru),
+            ];
+            $user->update($data);
+            RiwayatLogin::where('user_id', Auth::id())->update(['status_login' => false]);
+            Auth::logout();
+            return redirect('/')->with('toast_success', 'Password berhasil diganti, silahkan login !');
+        }
+    }
+
     public function ganti_akses()
     {
         if (session()->get('akses_sebagai') == 'Guru Mapel') {

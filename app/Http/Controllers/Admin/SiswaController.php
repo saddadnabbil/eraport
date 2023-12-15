@@ -30,25 +30,26 @@ class SiswaController extends Controller
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
         $jumlah_kelas = Kelas::where('tapel_id', $tapel->id)->count();
 
-        $jumlah_kelas_play_group = Kelas::where('tapel_id', $tapel->id)
-            ->where('tingkatan_id', '1')
-            ->count();
-        $jumlah_kelas_kinder_garten = Kelas::where('tapel_id', $tapel->id)
-            ->where('tingkatan_id', '2')
-            ->count();
-        $jumlah_kelas_primary_school = Kelas::where('tapel_id', $tapel->id)
-            ->where('tingkatan_id', '3')
-            ->count();
-        $jumlah_kelas_junior_high_school = Kelas::where('tapel_id', $tapel->id)
-            ->where('tingkatan_id', '4')
-            ->count();
-        $jumlah_kelas_senior_high_school = Kelas::where('tapel_id', $tapel->id)
-            ->where('tingkatan_id', '5')
-            ->count();
-
         if ($jumlah_kelas == 0) {
             return redirect('admin/kelas')->with('toast_warning', 'Mohon isikan data kelas');
         } else {
+
+            $jumlah_kelas_play_group = Kelas::where('tapel_id', $tapel->id)
+                ->where('tingkatan_id', '1')
+                ->count();
+            $jumlah_kelas_kinder_garten = Kelas::where('tapel_id', $tapel->id)
+                ->where('tingkatan_id', '2')
+                ->count();
+            $jumlah_kelas_primary_school = Kelas::where('tapel_id', $tapel->id)
+                ->where('tingkatan_id', '3')
+                ->count();
+            $jumlah_kelas_junior_high_school = Kelas::where('tapel_id', $tapel->id)
+                ->where('tingkatan_id', '4')
+                ->count();
+            $jumlah_kelas_senior_high_school = Kelas::where('tapel_id', $tapel->id)
+                ->where('tingkatan_id', '5')
+                ->count();
+
             $tingkatan_terendah = Kelas::where('tapel_id', $tapel->id)->min('tingkatan_id');
             $tingkatan_akhir = Kelas::where('tapel_id', $tapel->id)->max('tingkatan_id');
             $data_kelas_terendah = Kelas::where('tapel_id', $tapel->id)->where('tingkatan_id', $tingkatan_terendah)->orderBy('tingkatan_id', 'ASC')->get();
