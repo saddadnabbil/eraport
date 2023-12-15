@@ -28,7 +28,7 @@ class GuruTableSeeder extends Seeder
         ]);
 
         Guru::create([
-            'user_id' => 4,
+            'user_id' => 3,
             'nama_lengkap' => 'Guru Firmansyah',
             'gelar' => 'S.Kom',
             'nip' => '111111111111111122',

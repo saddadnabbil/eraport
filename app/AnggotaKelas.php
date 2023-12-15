@@ -2,10 +2,13 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class AnggotaKelas extends Model
 {
+    use HasFactory;
+    
     protected $table = 'anggota_kelas';
     protected $fillable = [ 
         'siswa_id',

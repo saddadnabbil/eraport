@@ -1,9 +1,6 @@
 <?php
 
-use App\Guru;
 use App\User;
-use App\Admin;
-use App\Siswa;
 use Illuminate\Database\Seeder;
 
 class UsersTableSeeder extends Seeder
@@ -15,6 +12,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
+        // admins
         User::create([
             'username' => 'admin',
             'password' => bcrypt('admin123456'),
@@ -22,6 +20,7 @@ class UsersTableSeeder extends Seeder
             'status' => true,
         ]);
 
+        // gurus
         User::create([
             'username' => 'guru',
             'password' => bcrypt('123456'),
@@ -30,19 +29,19 @@ class UsersTableSeeder extends Seeder
         ]);
 
         User::create([
-            'username' => 'siswa',
-            'password' => bcrypt('123456'),
-            'role' => '3',
-            'status' => true,
-        ]);
-
-        User::create([
-            'username' => 'guru2',
+            'username' => 'guru 2',
             'password' => bcrypt('123456'),
             'role' => '2',
             'status' => true,
         ]);
 
+        // siswas
+        User::create([
+            'username' => 'siswa',
+            'password' => bcrypt('123456'),
+            'role' => '3',
+            'status' => true,
+        ]);
 
         User::create([
             'username' => 'siswa2',

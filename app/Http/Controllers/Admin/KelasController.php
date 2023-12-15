@@ -34,8 +34,10 @@ class KelasController extends Controller
             $data_kelas = Kelas::where('tapel_id', $tapel->id)->orderBy('tingkatan_id', 'ASC')->get();
 
             foreach ($data_kelas as $kelas) {
-                $jumlah_anggota = Siswa::where('kelas_id', $kelas->id)
-                    ->where('status', 1)
+                $jumlah_anggota =  AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
+                    ->where('anggota_kelas.kelas_id', $kelas->id)
+                    ->where('siswa.status', 1)
+                    ->orderBy('siswa.nama_lengkap', 'ASC')
                     ->count();
                 $kelas->jumlah_anggota = $jumlah_anggota;
             }
@@ -101,10 +103,10 @@ class KelasController extends Controller
         $title = 'Anggota Kelas';
         $kelas = Kelas::findorfail($id);
         $anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
-            ->orderBy('siswa.nama_lengkap', 'ASC')
-            ->where('anggota_kelas.kelas_id', $id)
-            ->where('siswa.status', 1)
-            ->get();
+        ->where('anggota_kelas.kelas_id', $id)
+        ->where('siswa.status', 1)
+        ->orderBy('siswa.nama_lengkap', 'ASC')
+        ->get();
         $siswa_belum_masuk_kelas = Siswa::where('status', 1)->where('kelas_id', null)->get();
         foreach ($siswa_belum_masuk_kelas as $belum_masuk_kelas) {
             $kelas_sebelumhya = AnggotaKelas::where('siswa_id', $belum_masuk_kelas->id)->orderBy('id', 'DESC')->first();
