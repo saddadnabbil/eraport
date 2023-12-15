@@ -38,11 +38,18 @@
                   @csrf
                   <div class="form-group">
                       <select class="custom-select" name="select_tapel_id">
-                        <option selected>{{ $tapel_id }}</option>
+                        {{-- <option selected>{{ $tapel_id }}</option> --}}
                         @foreach($data_tapel as $tapel)
-                          @if($tapel->tahun_pelajaran != $tapel_id)
-                            <option value="{{ $tapel->id }}">{{ $tapel->tahun_pelajaran }}</option>
-                          @endif
+                            <option value="{{ $tapel->id }}" @if ($tapel->id == $sekolah->tapel_id) selected @endif>
+                              {{ $tapel->tahun_pelajaran }} -                         
+                              
+                              @if($tapel->semester == 1)
+                              Semester Ganjil
+                              @else
+                              Semester Genap
+                              @endif
+                            
+                            </option>
                         @endforeach
                       </select>
                   </div>

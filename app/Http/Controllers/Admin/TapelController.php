@@ -23,13 +23,13 @@ class TapelController extends Controller
     public function index()
     {
         $title = 'Data Tahun Pelajaran';
-        $data_tapel = Tapel::orderBy('id', 'DESC')->get();
+        $data_tapel = Tapel::orderBy('id', 'ASC')->get();
 
         // Ambil nilai tapel_id jika ada, jika tidak, setel menjadi null
         $sekolah = Sekolah::first();
         $tapel_id = $sekolah ? $sekolah->tapel->tahun_pelajaran : null;
 
-        return view('admin.tapel.index', compact('title', 'data_tapel', 'tapel_id'));
+        return view('admin.tapel.index', compact('title', 'data_tapel', 'tapel_id', 'sekolah'));
     }
 
     /**
