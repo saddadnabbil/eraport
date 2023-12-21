@@ -9,7 +9,7 @@
   <title>{{$title}} | {{ env('APP_NAME') }} </title>
 
   <link rel="icon" type="image/png" sizes="16x16" href="{{asset('assets/dist/img/logo.png')}}">
-
+  
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="/assets/plugins/fontawesome-free/css/all.min.css">
   <!-- pace-progress -->
@@ -27,7 +27,7 @@
   <link rel="stylesheet" href="/assets/plugins/summernote/summernote-bs4.css">
   <!-- DataTables -->
   <link rel="stylesheet" href="/assets/plugins/datatables-bs4/css/dataTables.bootstrap4.css">
-  {{-- Custom Css --}}
+  <!-- Custom Css -->
   <link rel="stylesheet" href="/assets/dist/css/custom.css">
 </head>
 

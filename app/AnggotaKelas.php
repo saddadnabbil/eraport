@@ -51,6 +51,16 @@ class AnggotaKelas extends Model
         return $this->hasOne('App\KenaikanKelas');
     }
 
+    // Relasi Kurikulum Medeka 
+    public function nilai_formatif()
+    {
+        return $this->hasOne('App\NilaiFormatif');
+    }
+
+    public function nilai_sumatif()
+    {
+        return $this->hasOne('App\NilaiSumatif');
+    }
 
     // Relasi K13
     public function k13_nilai_pengetahuan()

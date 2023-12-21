@@ -125,7 +125,60 @@
             </li>
 
           </ul>
-        </li>
+        </li> 
+
+        {{-- Kurikulum Merdeka --}}
+          <li class="nav-header">PENILAIAN KM</li>
+          <li class="nav-item">
+            <a href="{{ route('cp.index') }}" class="nav-link {{ request()->routeIs('cp.index') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-clipboard-list"></i>
+              <p>
+                Capaian Kompetensi
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link ">
+              <i class="nav-icon fas fa-list-ol"></i>
+              <p>
+                Deskripsi Rapor
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item has-treeview {{ request()->routeIs(['rencanaformatif.index', 'rencanasumatif.index']) ? 'menu-open' : '' }}">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-server"></i>
+              <p>
+                Rencana Penilaian
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview bg-secondary">
+              <li class="nav-item">
+                <a href="{{ route('rencanaformatif.index') }}" class="nav-link {{ request()->routeIs('rencanaformatif.index') ? 'active' : '' }}">
+                  <i class="fas fa-school nav-icon"></i>
+                  <p>Formatif</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('rencanasumatif.index') }}" class="nav-link {{ request()->routeIs('rencanasumatif.index') ? 'active' : '' }}">
+                  <i class="fas fa-school nav-icon"></i>
+                  <p>Sumatif</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{ route('penilaian-kurikulummerdeka.index') }}" class="nav-link {{ request()->routeIs('penilaian-kurikulummerdeka.index') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-list-ol"></i>
+              <p>
+                Penilaian
+              </p>
+            </a>
+          </li>
+        {{-- End Kurikulum Merdeka --}}
 
         <!-- Kurikulum -->
           <li class="nav-header">SETTING REPORT</li>
@@ -263,25 +316,7 @@
           </li>
         {{-- end Kurikulum --}}
 
-        {{-- Kurikulum Merdeka --}}
-        <li class="nav-header">PERSIAPAN PENILAIAN KM</li>
-        <li class="nav-item">
-          <a href="{{ route('kd.index') }}" class="nav-link {{ request()->routeIs('kd.index') ? 'active' : '' }}">
-            <i class="nav-icon fas fa-clipboard-list"></i>
-            <p>
-              Capaian Kompetensi
-            </p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link ">
-            <i class="nav-icon fas fa-list-ol"></i>
-            <p>
-              Deskripsi Rapor
-            </p>
-          </a>
-        </li>
-        {{-- End Kurikulum Merdeka --}}
+
       </ul>
     </nav>
     <!-- /.sidebar-menu -->

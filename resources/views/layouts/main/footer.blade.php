@@ -88,7 +88,7 @@
 </script>
 
 <!-- PAGE SCRIPTS -->
-<script src="/assets/dist/js/pages/dashboard2.js"></script>
+<!-- <script src="/assets/dist/js/pages/dashboard2.js"></script> -->
 
 <script>
   $(function() {
@@ -125,6 +125,14 @@
     //Bootstrap Duallistbox
     $('.duallistbox').bootstrapDualListbox()
   });
+</script>
+
+<!-- Popover JS -->
+<script>
+  var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+  var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+    return new bootstrap.Popover(popoverTriggerEl)
+  })
 </script>
 
 </body>

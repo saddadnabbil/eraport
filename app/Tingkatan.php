@@ -30,4 +30,9 @@ class Tingkatan extends Model
     {
         return $this->hasMany(K13KdMapel::class);
     }
+
+    public function capaian_pembelajaran()
+    {
+        return $this->hasMany(CapaianPembelajaran::class);
+    }
 }

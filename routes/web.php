@@ -44,6 +44,27 @@ Route::group(['middleware' => ['auth']], function () {
         'uses' => ['index', 'store', 'update']
       ]);
 
+      // Penilaian Kurikulum Merdeka
+      // Route::resource('persiapanpenilian/cp/{kelasid}', 'Admin\CapaianPembelajaranController',  [
+      //   'uses' => ['index', 'store', 'update', 'destroy']
+      // ]);
+
+      Route::delete('/cp/delete/{id}', 'Admin\KM\CapaianPembelajaranController@destroy')->name('cp.destroy');
+      Route::resource('cp', 'Admin\KM\CapaianPembelajaranController', [
+          'uses' => ['index', 'store', 'update', 'create']
+      ]);
+
+      Route::resource('rencanaformatif', 'Admin\KM\RencanaNilaiFormatifController',  [
+        'uses' => ['index', 'create', 'store', 'show', 'edit', 'update']
+      ]);
+      Route::resource('rencanasumatif', 'Admin\KM\RencanaNilaiSumatifController',  [
+        'uses' => ['index', 'create', 'store', 'show', 'edit', 'update']
+      ]);
+
+      Route::resource('penilaian-kurikulum-merdeka', 'Admin\KM\PenilaianKurikulumMerdekaController',  [
+        'uses' => ['index', 'create', 'store', 'show', 'edit', 'update']
+      ]);
+
       Route::get('user/export', 'Admin\UserController@export')->name('user.export');
       Route::resource('user', 'Admin\UserController',  [
         'uses' => ['index', 'store', 'update']
@@ -138,9 +159,6 @@ Route::group(['middleware' => ['auth']], function () {
         'uses' => ['index', 'store', 'update',]
       ]);
       Route::resource('kd', 'Admin\K13\KdMapelController',  [
-        'uses' => ['index', 'create', 'store', 'update', 'destroy']
-      ]);
-      Route::resource('cp', 'Admin\K13\KdMapelController',  [
         'uses' => ['index', 'create', 'store', 'update', 'destroy']
       ]);
       Route::resource('tglraport', 'Admin\K13\TglRaportController',  [

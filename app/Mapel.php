@@ -39,6 +39,7 @@ class Mapel extends Model
         return $this->hasMany('App\K13KdMapel');
     }
 
+
     // Relasi KTSP
     public function ktsp_mapping_mapel()
     {
@@ -48,4 +49,12 @@ class Mapel extends Model
     {
         return $this->hasOne('App\KtspKkmMapel');
     }
+
+    // Relasi Kurikulum Merdeka
+        // Relasi CapaianPembelajaran
+        public function capaian_pembelajaran()
+        {
+            return $this->hasMany('App\CapaianPembelajaran');
+        }
+    // End Relasi Kurikulum Merdeka
 }

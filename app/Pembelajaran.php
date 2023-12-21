@@ -29,6 +29,22 @@ class Pembelajaran extends Model
         return $this->belongsTo('App\Guru');
     }
 
+    // Relasi Kurikulum Merdeka
+    public function capaian_pembelajaran()
+    {
+        return $this->hasMany('App\CapaianPembelajaran');
+    }
+
+    public function rencana_nilai_formatif() 
+    {
+        return $this->hasMany('App\RencanaNilaiFormatif');
+    }
+
+    public function rencana_nilai_sumatif()
+    {
+        return $this->hasMany('App\RencanaNilaiSumatif');
+    }
+
     // Relasi K13 
     public function k13_rencana_nilai_pengetahuan()
     {
