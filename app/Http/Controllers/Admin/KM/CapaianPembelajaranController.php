@@ -22,6 +22,9 @@ class CapaianPembelajaranController extends Controller
         $id_mapel = Mapel::where('tapel_id', $tapel->id)->get('id');
 
         $data_kelas = Kelas::where('tapel_id', $tapel->id)->groupBy('tingkatan_id')->orderBy('tingkatan_id', 'ASC')->get();
+        $id_kelas = Kelas::where('tapel_id', $tapel->id)->groupBy('tingkatan_id')->orderBy('tingkatan_id', 'ASC')->get('id');
+
+        $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
 
         if (count($data_mapel) == 0) {
             return redirect('admin/mapel')->with('toast_warning', 'Mohon isikan data mata pelajaran');
@@ -29,17 +32,46 @@ class CapaianPembelajaranController extends Controller
             return redirect('admin/kelas')->with('toast_warning', 'Mohon isikan data kelas');
         } else {
             $data_cp = CapaianPembelajaran::whereIn('mapel_id', $id_mapel)->get();
-            return view('admin.cp.pilihkelas', compact('title', 'data_mapel', 'data_kelas', 'data_cp'));
+            return view('admin.km.cp.pilihkelas', compact('title', 'data_mapel', 'data_kelas', 'data_cp', 'data_pembelajaran'));
         }
 
-        return view('admin.cp.pilihkelas', compact('title', 'data_mapel', 'data_kelas', 'data_cp'));
+        return view('admin.km.cp.pilihkelas', compact('title', 'data_mapel', 'data_kelas', 'data_cp', 'data_pembelajaran'));
     }
 
+    public function create(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'pembelajaran_id' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+        } else {
+            $title = 'Tambah Capaian Pembelajaran';
+            $tapel = Tapel::findorfail(session()->get('tapel_id'));
+            $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
+            $pembelajaran_id = $request->pembelajaran_id;
+            $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
+            $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
+            $mapel_id = $pembelajaran->mapel->id;
+            $tingkatan_id = $pembelajaran->kelas->tingkatan->id;
+            $existingData = CapaianPembelajaran::where('pembelajaran_id', $pembelajaran_id)->get();
+
+            // Menambah properti canDelete ke setiap item di $existingData
+            foreach ($existingData as $data) {
+                $data->canDelete = $this->isCapaianPembelajaranDeletable($data);
+            }
+
+
+            return view('admin.km.cp.create', compact('title', 'mapel_id', 'tingkatan_id', 'tapel', 'existingData', 'data_pembelajaran', 'pembelajaran_id', 'pembelajaran'));
+        }
+    }
+    
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'kode_cp.*' => 'required|min:2|max:10',
             'capaian_pembelajaran.*' => 'required|min:10|max:255',
+            'pembelajaran_id.*' => 'required',
             'ringkasan_cp.*' => 'required|min:10|max:150',
         ]);
 
@@ -48,9 +80,10 @@ class CapaianPembelajaranController extends Controller
             'capaian_pembelajaran.*' => 'Capaian Pembelajaran',
             'ringkasan_cp.*' => 'Ringkasan Capaian Pembelajaran',
         ]);
-        
+
         if ($validator->fails()) {
-            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+            $errorMessage = $validator->messages()->all()[0] . ' Jika ingin edit, hapus fields kosong.';
+            return back()->with('toast_error', $errorMessage)->withInput();
         } else {
             $existingData = CapaianPembelajaran::whereIn('kode_cp', $request->kode_cp)->pluck('kode_cp')->toArray();
             
@@ -58,6 +91,7 @@ class CapaianPembelajaranController extends Controller
                 $data_cp = array(
                     'mapel_id'  => $request->mapel_id,
                     'tingkatan_id'  => $request->tingkatan_id,
+                    'pembelajaran_id'  => $request->pembelajaran_id,
                     'semester'  => $request->semester,
                     'kode_cp'  => $request->kode_cp[$count],
                     'capaian_pembelajaran'  => $request->capaian_pembelajaran[$count],
@@ -82,6 +116,7 @@ class CapaianPembelajaranController extends Controller
                     $data_cp = array(
                         'mapel_id'  => $request->mapel_id,
                         'tingkatan_id'  => $request->tingkatan_id,
+                        'pembelajaran_id'  => $request->pembelajaran_id,
                         'semester'  => $request->semester,
                         'capaian_pembelajaran'  => $request->capaian_pembelajaran[$count],
                         'ringkasan_cp'  => $request->ringkasan_cp[$count],
@@ -106,37 +141,6 @@ class CapaianPembelajaranController extends Controller
         return !$isUsedInRencanaNilai;
     }
     
-
-    public function create(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'mapel_id' => 'required',
-            'tingkatan_id' => 'required',
-        ]);
-        if ($validator->fails()) {
-            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
-        } else {
-            $title = 'Tambah Capaian Pembelajaran';
-            $mapel_id = $request->mapel_id;
-            $tingkatan_id = $request->tingkatan_id;
-
-            $existingData = CapaianPembelajaran::where('mapel_id', $mapel_id)
-            ->where('tingkatan_id', $tingkatan_id)
-            ->get();
-
-            $tapel = Tapel::findorfail(session()->get('tapel_id'));
-            $data_mapel = Mapel::where('tapel_id', $tapel->id)->orderBy('nama_mapel', 'ASC')->get();
-            $data_kelas = Kelas::where('tapel_id', $tapel->id)->groupBy('tingkatan_id')->orderBy('tingkatan_id', 'ASC')->get();
-
-            // Menambah properti canDelete ke setiap item di $existingData
-            foreach ($existingData as $data) {
-                $data->canDelete = $this->isCapaianPembelajaranDeletable($data);
-            }
-
-
-            return view('admin.cp.create', compact('title', 'mapel_id', 'tingkatan_id', 'tapel', 'data_mapel', 'data_kelas', 'existingData'));
-        }
-    }
 
     public function destroy($id)
     {

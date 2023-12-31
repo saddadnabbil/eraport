@@ -13,7 +13,7 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item "><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item "><a href="{{ route('rencanasumatif.index') }}">Rencana Nilai Pengetahuan</a></li>
+            <li class="breadcrumb-item "><a href="{{ route('rencanaformatif.index') }}">Rencana Nilai Keterampilan</a></li>
             <li class="breadcrumb-item active">{{$title}}</li>
           </ol>
         </div><!-- /.col -->
@@ -35,7 +35,7 @@
 
             <div class="card-body">
               <div class="callout callout-info">
-                <form action="{{ route('rencanasumatif.create') }}" method="GET">
+                <form action="{{ route('rencanaformatif.create') }}" method="GET">
                   @csrf
                   <div class="form-group row">
                     <label for="pembelajaran_id" class="col-sm-2 col-form-label">Mata Pelajaran</label>
@@ -56,8 +56,7 @@
                 </form>
               </div>
 
-              <form action="{{ route('rencanasumatif.update', $pembelajaran->id) }}" method="POST">
-                {{ method_field('PATCH') }}
+              <form action="{{ route('rencanaformatif.store') }}" method="POST">
                 @csrf
 
                 <input type="hidden" name="pembelajaran_id" value="{{$pembelajaran->id}}">
@@ -75,10 +74,19 @@
                         @for ($i = 1; $i <= $jumlah_penilaian; $i++) <td>
                           <select class="form-control" name="teknik_penilaian[]" style="width: 100%;" required oninvalid="this.setCustomValidity('silakan pilih item dalam daftar')" oninput="setCustomValidity('')">
                             <option value="">-- Teknik Penilaian --</option>
-                            <option value="1">Tes Tulis</option>
-                            <option value="2">Tes Lisan</option>
-                            <option value="3">Penugasan</option>
+                            <option value="1">Praktik</option>
+                            <option value="2">Projek</option>
+                            <option value="3">Produk</option>
+                            <option value="4">Teknik 1</option>
+                            <option value="5">Teknik 2</option>
                           </select>
+                          </td>
+                          @endfor
+                      </tr>
+                      <tr class="bg-primary">
+                        <td>Kode Penilaian</td>
+                        @for ($i = 1; $i <= $jumlah_penilaian; $i++) <td>
+                          <input type="text" class="form-control" name="kode_penilaian[]" value="P{{$i}}" required oninvalid="this.setCustomValidity('data tidak boleh kosong')" oninput="setCustomValidity('')">
                           </td>
                           @endfor
                       </tr>
@@ -90,23 +98,15 @@
                           @endfor
                       </tr>
                       <tr class="bg-primary">
-                        <td>Kode Penilaian</td>
-                        @for ($i = 1; $i <= $jumlah_penilaian; $i++) <td>
-                          <input type="text" class="form-control" name="kode_penilaian[]" value="P{{$i}}" required oninvalid="this.setCustomValidity('data tidak boleh kosong')" oninput="setCustomValidity('')">
-                          </td>
-                          @endfor
-                      </tr>
-
-                      <tr class="bg-primary">
                         <th>Kompetensi Dasar</th>
                         @for ($i = 1; $i <= $jumlah_penilaian; $i++) <td>
                           </td>@endfor
                       </tr>
                       @foreach($data_cp as $cp)
                       <tr>
-                        <td><small><b>{{$cp->kode_cp}}</b> {{$cp->ringkasan_cp}}</small></td>
+                        <td data-bs-toggle="popover" data-bs-trigger="hover" data-bs-content="Konten Popover di sini"><small><b>{{$cp->kode_cp}}</b> {{$cp->ringkasan_cp}}</small></td>
                         @for ($i = 0; $i < $jumlah_penilaian; $i++) <td class="text-center">
-                          <input type="checkbox" name="capaian_pembelajaran_id[{{$i}}][]" value="{{$cp->id}}" class="form-check-input mx-0">
+                          <input type="radio" name="capaian_pembelajaran_id[{{$i}}][]" value="{{$cp->id}}" class="form-check-input mx-0">
                           </td>
                           @endfor
                       </tr>
@@ -118,13 +118,13 @@
                 <div class="alert alert-warning alert-dismissible">
                   <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                   <h5><i class="icon fas fa-exclamation-triangle"></i> Perhatian</h5>
-                  <p>Jika cp yang tampil tidak sesuai, silahkan cek dan lakukan mapping semester pada menu <a href="{{ route('cp.index') }}">Data Kompetensi Dasar</a></p>
+                  <p>Jika CP yang tampil tidak sesuai, silahkan cek dan lakukan mapping semester pada menu <a href="{{ route('cp.index') }}">Data Kompetensi Dasar</a></p>
                 </div>
             </div>
 
             <div class="card-footer clearfix">
               <button type="submit" class="btn btn-primary float-right">Simpan</button>
-              <a href="{{ route('rencanasumatif.index') }}" class="btn btn-default float-right mr-2">Batal</a>
+              <a href="{{ route('rencanaformatif.index') }}" class="btn btn-default float-right mr-2">Batal</a>
             </div>
             </form>
           </div>

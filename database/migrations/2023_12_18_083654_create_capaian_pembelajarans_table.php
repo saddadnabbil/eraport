@@ -15,8 +15,9 @@ class CreateCapaianPembelajaransTable extends Migration
     {
         Schema::create('capaian_pembelajarans', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('mapel_id')->unsigned();
-            $table->unsignedBigInteger('tingkatan_id')->unsigned();
+            $table->unsignedBigInteger('mapel_id')->nullable()->unsigned();
+            $table->unsignedBigInteger('tingkatan_id')->nullable()->unsigned();
+            $table->unsignedBigInteger('pembelajaran_id')->unsigned();
             $table->enum('semester', ['1', '2']);
             $table->string('kode_cp', 10);
             $table->string('capaian_pembelajaran');
@@ -25,6 +26,7 @@ class CreateCapaianPembelajaransTable extends Migration
 
             $table->foreign('mapel_id')->references('id')->on('mapel');
             $table->foreign('tingkatan_id')->references('id')->on('tingkatans');
+            $table->foreign('pembelajaran_id')->references('id')->on('pembelajaran');
         });
     }
 

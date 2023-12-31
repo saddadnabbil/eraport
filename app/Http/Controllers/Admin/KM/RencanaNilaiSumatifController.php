@@ -32,7 +32,7 @@ class RencanaNilaiSumatifController extends Controller
             $penilaian->jumlah_rencana_penilaian = count($rencana_penilaian);
         }
 
-        return view('admin.rencanasumatif.index', compact('title', 'data_rencana_penilaian'));
+        return view('admin.km.rencanasumatif.index', compact('title', 'data_rencana_penilaian'));
     }
 
     /**
@@ -48,16 +48,15 @@ class RencanaNilaiSumatifController extends Controller
         $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
         $kelas = Kelas::findorfail($pembelajaran->kelas_id);
         $data_cp = CapaianPembelajaran::where([
-            'mapel_id' => $pembelajaran->mapel_id,
-            'tingkatan_id' => $kelas->tingkatan_id,
             'semester' => $tapel->semester,
+            'pembelajaran_id' => $pembelajaran->id,
         ])->orderBy('kode_cp', 'ASC')->get();
 
         if (count($data_cp) == 0) {
             return redirect(route('cp.index'))->with('toast_error', 'Belum ditemukan data capaian pembelajaran sumatif, silahkan tambahkan data CP.');
         } else {
             $jumlah_penilaian = $request->jumlah_penilaian;
-            return view('admin.rencanasumatif.create', compact('title', 'pembelajaran', 'jumlah_penilaian', 'data_cp'));
+            return view('admin.km.rencanasumatif.create', compact('title', 'pembelajaran', 'jumlah_penilaian', 'data_cp'));
         }
     }
 
@@ -85,6 +84,7 @@ class RencanaNilaiSumatifController extends Controller
                 }
                 $store_data_penilaian = $data_penilaian_permapel;
             }
+
             RencanaNilaiSumatif::insert($store_data_penilaian);
             return redirect(route('rencanasumatif.index'))->with('toast_success', 'Rencana nilai sumatif berhasil disimpan.');
         } catch (\Throwable $th) {
@@ -103,7 +103,14 @@ class RencanaNilaiSumatifController extends Controller
         $title = 'Data Rencana Nilai Sumatif';
         $pembelajaran = Pembelajaran::findorfail($id);
         $data_rencana_penilaian = RencanaNilaiSumatif::where('pembelajaran_id', $id)->orderBy('kode_penilaian', 'ASC')->orderBy('capaian_pembelajaran_id', 'DESC')->get();
-        return view('admin.rencanasumatif.show', compact('title', 'pembelajaran', 'data_rencana_penilaian'));
+        $data_rencana_penilaian_tambah = Pembelajaran::where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
+        
+        foreach ($data_rencana_penilaian_tambah as $penilaian) {
+            $rencana_penilaian = RencanaNilaiSumatif::where('pembelajaran_id', $penilaian->id)->groupBy('kode_penilaian')->get();
+            $penilaian->jumlah_rencana_penilaian = count($rencana_penilaian);
+        }
+
+        return view('admin.km.rencanasumatif.show', compact('title', 'pembelajaran', 'data_rencana_penilaian', 'data_rencana_penilaian_tambah'));
     }
 
     /**
@@ -126,7 +133,7 @@ class RencanaNilaiSumatifController extends Controller
         ])->orderBy('kode_cp', 'ASC')->get();
         $jumlah_penilaian = $request->jumlah_penilaian;
 
-        return view('admin.rencanasumatif.edit', compact('title', 'pembelajaran', 'jumlah_penilaian', 'data_cp'));
+        return view('admin.km.rencanasumatif.edit', compact('title', 'pembelajaran', 'jumlah_penilaian', 'data_cp'));
     }
 
 
@@ -137,35 +144,66 @@ class RencanaNilaiSumatifController extends Controller
      * @param  \App\RencanaNilaiSumatif  $rencanaNilaiSumatif
      * @return \Illuminate\Http\Response
      */
+    // public function update(Request $request, $id)
+    // {
+    //     try {
+    //         for ($count_penilaian = 0; $count_penilaian < count($request->teknik_penilaian); $count_penilaian++) {
+    //             for ($count_cp = 0; $count_cp < count($request->capaian_pembelajaran_id[$count_penilaian]); $count_cp++) {
+    //                 $data_penilaian = array(
+    //                     'pembelajaran_id' => $request->pembelajaran_id,
+    //                     'capaian_pembelajaran_id'  => $request->capaian_pembelajaran_id[$count_penilaian][$count_cp],
+    //                     'kode_penilaian'  => $request->kode_penilaian[$count_penilaian],
+    //                     'teknik_penilaian'  => $request->teknik_penilaian[$count_penilaian],
+    //                     'bobot_teknik_penilaian'  => $request->bobot_teknik_penilaian[$count_penilaian],
+    //                     'created_at'  => Carbon::now(),
+    //                     'updated_at'  => Carbon::now(),
+    //                 );
+    //                 $data_penilaian_permapel[] = $data_penilaian;
+    //             }
+    //             $store_data_penilaian = $data_penilaian_permapel;
+    //         }
+    //         try {
+    //             RencanaNilaiSumatif::where('pembelajaran_id', $request->pembelajaran_id)->delete();
+    //             RencanaNilaiSumatif::insert($store_data_penilaian);
+    //             return redirect(route('rencanasumatif.index'))->with('toast_success', 'Rencana nilai sumatif berhasil diupdate.');
+    //         } catch (\Throwable $th) {
+    //             return back()->with('toast_warning', 'Perencanaan penilaian tidak dapat diupdate.');
+    //         }
+    //     } catch (\Throwable $th) {
+    //         return back()->with('toast_error', 'Pilih minimal 1 CP pada setiap kolom penilaian.');
+    //     }
+    // }
     public function update(Request $request, $id)
     {
+        // Validasi input
+        $validatedData = $request->validate([
+            'bobot_teknik_penilaian' => 'required|numeric',
+            'teknik_penilaian' => 'required|in:1,2,3,4,5', // hanya akan memvalidasi jika ada dalam request
+            'kode_penilaian' => 'required', 
+        ], [
+            'bobot_teknik_penilaian.required' => 'Bobot teknik penilaian wajib diisi.',
+            'bobot_teknik_penilaian.numeric' => 'Bobot teknik penilaian harus berupa angka.',
+            'kode_penilaian.required' => 'Kode Penilaian penilaian wajib diisi.',
+            'teknik_penilaian.in' => 'Teknik penilaian tidak valid.',
+        ]);
+    
         try {
-            for ($count_penilaian = 0; $count_penilaian < count($request->teknik_penilaian); $count_penilaian++) {
-                for ($count_cp = 0; $count_cp < count($request->capaian_pembelajaran_id[$count_penilaian]); $count_cp++) {
-                    $data_penilaian = array(
-                        'pembelajaran_id' => $request->pembelajaran_id,
-                        'capaian_pembelajaran_id'  => $request->capaian_pembelajaran_id[$count_penilaian][$count_cp],
-                        'kode_penilaian'  => $request->kode_penilaian[$count_penilaian],
-                        'teknik_penilaian'  => $request->teknik_penilaian[$count_penilaian],
-                        'bobot_teknik_penilaian'  => $request->bobot_teknik_penilaian[$count_penilaian],
-                        'created_at'  => Carbon::now(),
-                        'updated_at'  => Carbon::now(),
-                    );
-                    $data_penilaian_permapel[] = $data_penilaian;
-                }
-                $store_data_penilaian = $data_penilaian_permapel;
-            }
-            try {
-                RencanaNilaiSumatif::where('pembelajaran_id', $request->pembelajaran_id)->delete();
-                RencanaNilaiSumatif::insert($store_data_penilaian);
-                return redirect(route('rencanasumatif.index'))->with('toast_success', 'Rencana nilai sumatif berhasil diupdate.');
-            } catch (\Throwable $th) {
-                return back()->with('toast_warning', 'Perencanaan penilaian tidak dapat diupdate.');
-            }
+            $rencana_penilaian = RencanaNilaiSumatif::findOrFail($id);
+            $rencana_penilaian->bobot_teknik_penilaian = $request->bobot_teknik_penilaian;
+            $rencana_penilaian->kode_penilaian = $request->kode_penilaian; 
+            $rencana_penilaian->teknik_penilaian = $request->teknik_penilaian; 
+        
+            // Simpan perubahan
+            $rencana_penilaian->save();
+        
+            return back()->with('toast_success', 'Data berhasil diperbarui.');
         } catch (\Throwable $th) {
-            return back()->with('toast_error', 'Pilih minimal 1 CP pada setiap kolom penilaian.');
+            // Tangani kesalahan jika diperlukan
+            return back()->with('toast_error', 'Terjadi kesalahan saat memperbarui data.');
         }
+        
     }
+    
 
     /**
      * Remove the specified resource from storage.

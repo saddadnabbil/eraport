@@ -17,7 +17,7 @@ class CreateRencanaNilaiSumatifsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('pembelajaran_id')->unsigned();
             $table->unsignedBigInteger('capaian_pembelajaran_id')->unsigned();
-            $table->string('kode_penilaian', 4);
+            $table->string('kode_penilaian');
             $table->enum('teknik_penilaian', ['1', '2', '3']);
             $table->integer('bobot_teknik_penilaian');
             $table->timestamps();

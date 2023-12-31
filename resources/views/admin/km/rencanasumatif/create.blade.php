@@ -105,7 +105,7 @@
                       <tr>
                         <td><small><b>{{$cp->kode_cp}}</b> {{$cp->ringkasan_cp}}</small></td>
                         @for ($i = 0; $i < $jumlah_penilaian; $i++) <td class="text-center">
-                          <input type="checkbox" name="capaian_pembelajaran_id[{{$i}}][]" value="{{$cp->id}}" class="form-check-input mx-0">
+                          <input type="radio" name="capaian_pembelajaran_id[{{$i}}][]" value="{{$cp->id}}" class="form-check-input mx-0">
                           </td>
                           @endfor
                       </tr>

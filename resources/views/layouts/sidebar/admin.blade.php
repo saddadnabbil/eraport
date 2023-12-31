@@ -171,7 +171,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="{{ route('penilaian-kurikulummerdeka.index') }}" class="nav-link {{ request()->routeIs('penilaian-kurikulummerdeka.index') ? 'active' : '' }}">
+            <a href="{{ route('penilaiankm.index') }}" class="nav-link {{ request()->routeIs('penilaiankm.index') ? 'active' : '' }}">
               <i class="nav-icon fas fa-list-ol"></i>
               <p>
                 Penilaian

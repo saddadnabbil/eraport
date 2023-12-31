@@ -66,9 +66,9 @@
                         </button>
                         @else
                         <a href="{{ route('rencanaformatif.show', $penilaian->id) }}" class="btn btn-sm btn-success"><i class="fas fa-eye"></i></a>
-                        <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modal-edit{{$penilaian->id}}">
+                        <!-- <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modal-edit{{$penilaian->id}}">
                           <i class="fas fa-pencil-alt"></i>
-                        </button>
+                        </button> -->
                         @endif
                       </td>
                     </tr>

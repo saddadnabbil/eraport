@@ -61,7 +61,7 @@ Route::group(['middleware' => ['auth']], function () {
         'uses' => ['index', 'create', 'store', 'show', 'edit', 'update']
       ]);
 
-      Route::resource('penilaian-kurikulum-merdeka', 'Admin\KM\PenilaianKurikulumMerdekaController',  [
+      Route::resource('penilaiankm', 'Admin\KM\PenilaianKurikulumMerdekaController',  [
         'uses' => ['index', 'create', 'store', 'show', 'edit', 'update']
       ]);
 

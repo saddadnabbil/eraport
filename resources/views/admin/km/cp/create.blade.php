@@ -38,26 +38,16 @@
                 <form action="{{ route('cp.create') }}" method="GET">
                   @csrf
                   <div class="form-group row">
-                    <label for="mapel_id" class="col-sm-2 col-form-label">Mata Pelajaran</label>
-                    <div class="col-sm-4">
-                      <select class="form-control select2" name="mapel_id" style="width: 100%;" required onchange="this.form.submit();">
-                        <option value="" disabled>-- Pilih Mapel --</option>
-                        @foreach($data_mapel as $mapel)
-                        <option value="{{$mapel->id}}" @if ($mapel->id==$mapel_id ) selected @endif>{{$mapel->nama_mapel}}</option>
-                        @endforeach
-                      </select>
-                    </div>
-                    <label for="tingkatan_id" class="col-sm-2 col-form-label">Tingkatan</label>
-                    <div class="col-sm-4">
-                      <select class="form-control" name="tingkatan_id" style="width: 100%;" required onchange="this.form.submit();">
-                        <option value="" disabled>-- Pilih Tingkatan --</option>
-                        @foreach($data_kelas as $kelas)
-                        <option value="{{$kelas->tingkatan_id}}" @if ($kelas->tingkatan_id==$tingkatan_id ) selected @endif>{{$kelas->tingkatan->nama_tingkatan}}</option>
+                    <label class="col-sm-2 col-form-label">Kelas</label>
+                    <div class="col-sm-10">
+                      <select class="form-control select2" name="pembelajaran_id" style="width: 100%;" required onchange="this.form.submit();">
+                        <option value="" disabled>-- Pilih Kelas --</option>
+                        @foreach($data_pembelajaran as $pembelajaran)
+                        <option value="{{$pembelajaran->id}}" @if ($pembelajaran->id==$pembelajaran_id ) selected @endif>{{$pembelajaran->mapel->nama_mapel}} ({{$pembelajaran->kelas->nama_kelas}} - {{$pembelajaran->kelas->tingkatan->nama_tingkatan}})</option>
                         @endforeach
                       </select>
                     </div>
                   </div>
-
                 </form>
               </div>
 
@@ -66,6 +56,7 @@
                 <input type="hidden" name="mapel_id" value="{{$mapel_id}}">
                 <input type="hidden" name="tingkatan_id" value="{{$tingkatan_id}}">
                 <input type="hidden" name="semester" value="{{$tapel->semester}}">
+                <input type="hidden" name="pembelajaran_id" value="{{$pembelajaran_id}}">
 
                 <div class="table-responsive">
                   <table class="table table-bordered table-hover">
@@ -81,17 +72,26 @@
                     @if($existingData && count($existingData) > 0)
                       @foreach($existingData as $data)
                         <tr>
-                          <td>
-                            <input type="text" class="form-control" name="kode_cp[]" value="{{ $data->kode_cp }}" required oninvalid="this.setCustomValidity('data tidak boleh kosong')" oninput="setCustomValidity('')">
+                          <td {!! $data->canDelete ? '' : 'data-toggle="popover" data-placement="right" title data-content="<b>Tidak Bisa Diedit.</b> <br> Sedang digunakan dalam salah satu penilaian"' !!}>
+                              <!-- Isi dari td di sini -->
+                            <input type="text" class="form-control" name="kode_cp[]" value="{{ $data->kode_cp }}" required oninvalid="this.setCustomValidity('data tidak boleh kosong')" oninput="setCustomValidity('')" {{ $data->canDelete ? '' : 'disabled' }}>
                           </td>
-                          <td>
-                            <textarea class="form-control" name="capaian_pembelajaran[]" rows="2" required oninvalid="this.setCustomValidity('data tidak boleh kosong')" oninput="setCustomValidity('')">{{ $data->capaian_pembelajaran }}</textarea>
+
+                          <td {!! $data->canDelete ? '' : 'data-toggle="popover" data-placement="right" title data-content="<b>Tidak Bisa Diedit.</b> <br> Sedang digunakan dalam salah satu penilaian"' !!}>
+                            <textarea class="form-control" name="capaian_pembelajaran[]" rows="2" required oninvalid="this.setCustomValidity('data tidak boleh kosong')" oninput="setCustomValidity('')" {{ $data->canDelete ? '' : 'disabled' }}>{{ $data->capaian_pembelajaran }}</textarea>
                           </td>
-                          <td>
-                            <textarea class="form-control" name="ringkasan_cp[]" rows="2" required oninvalid="this.setCustomValidity('data tidak boleh kosong')" oninput="setCustomValidity('')">{{ $data->ringkasan_cp }}</textarea>
+
+                          <td {!! $data->canDelete ? '' : 'data-toggle="popover" data-placement="right" title data-content="<b>Tidak Bisa Diedit.</b> <br> Sedang digunakan dalam salah satu penilaian"' !!}>
+                            <textarea class="form-control" name="ringkasan_cp[]" rows="2" required oninvalid="this.setCustomValidity('data tidak boleh kosong')" oninput="setCustomValidity('')" {{ $data->canDelete ? '' : 'disabled' }}>{{ $data->ringkasan_cp }}</textarea>
                           </td>
+
                           <td>
-                            <button type="button" class="btn btn-danger shadow btn-xs sharp" onclick="deleteData({{ $data->id }})" id="deleteButton{{ $data->id }}" {{ $data->canDelete ? '' : 'disabled' }}>
+                            <button 
+                            type="button" 
+                            class="btn btn-danger shadow btn-xs sharp" 
+                            id="deleteButton{{ $data->id }}" 
+                            onclick="{{ $data->canDelete ? 'deleteData(' . $data->id . ')' : '' }}" 
+                            {{ $data->canDelete ? '' : 'data-toggle="popover" data-placement="right" title="Tidak Bisa Dihapus" data-content="<b>Sedang digunakan dalam salah satu penilaian.</b>" disabled' }}>
                               <i class="fas fa-trash-alt"></i>
                             </button>
                             <button type="button" name="add" id="add" class="btn btn-primary shadow btn-xs sharp"><i class="fa fa-plus"></i></button>
@@ -140,9 +140,12 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
-    var count = {{ isset($existingData) ? count($existingData) + 1 : 1 }};
+    var count = {{ isset($existingData) ? count($existingData) : 1 }};
 
-    dynamic_field(count);
+    // Jika tidak ada existingData, panggil dynamic_field
+    @if(!isset($existingData) || count($existingData) == 0)
+      dynamic_field(count);
+    @endif
 
     function dynamic_field(number) {
       html = '<tr>';
@@ -165,10 +168,6 @@
       }
     }
 
-    @if(!isset($existingData) || count($existingData) == 0)
-      dynamic_field(count);
-    @endif
-
     $(document).on('click', '#add', function() {
       count++;
       dynamic_field(count);
@@ -182,6 +181,16 @@
 </script>
 
 <script>
+  $(function() {
+      $('[data-toggle="popover"]').popover({
+          trigger: 'hover',
+          placement: function (popoverEl, targetEl) {
+              return $(targetEl).data('placement');
+          },
+          html: true,
+      });
+  });
+
 function deleteData(id) {
     Swal.fire({
         title: 'Are you sure?',

@@ -23,8 +23,12 @@ class RencanaNilaiSumatif extends Model
 
     public function nilai_sumatif()
     {
-        return $this->hasMany('App\NilaiSumatif', 'capaian_pembelajaran_id');
+        return $this->hasMany('App\NilaiSumatif');
     }
+    // public function nilai_sumatif()
+    // {
+    //     return $this->hasMany('App\NilaiSumatif', 'capaian_pembelajaran_id');
+    // }
 
     // Check if CapaianPembelajaran is used in RencanaNilaiSumatif
     public function isCapaianPembelajaranUsed()

@@ -26,6 +26,11 @@ class RencanaNilaiFormatif extends Model
         return $this->hasMany('App\NilaiFormatif');
     }
 
+    public function anggota_kelas() 
+    {
+        return $this->hasMany('App\AnggotaKelas');
+    }
+
     // Check if CapaianPembelajaran is used in RencanaNilaiFormatif
     public function isCapaianPembelajaranUsed()
     {

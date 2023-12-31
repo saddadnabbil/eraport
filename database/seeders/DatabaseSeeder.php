@@ -2,23 +2,27 @@
 
 use App\Kelas;
 use App\AnggotaKelas;
+use App\CapaianPembelajaran;
 use Illuminate\Database\Seeder;
+use Database\Seeders\SilabusSeeder;
 use Database\Seeders\GuruTableSeeder;
 use Database\Seeders\AdminTableSeeder;
-use Database\Seeders\AnggotaEkstrakulikulerTableSeeder;
 use Database\Seeders\KelasTableSeeder;
 use Database\Seeders\MapelTableSeeder;
 use Database\Seeders\SiswaTableSeeder;
 use Database\Seeders\TapelTableSeeder;
+use Database\Seeders\K13KkmTableSeeder;
 use Database\Seeders\JurusanTableSeeder;
 use Database\Seeders\TingkatanTableSeeder;
 use Database\Seeders\AnggotaKelasTableSeeder;
-use Database\Seeders\EkstrakulikulerTableSeeder;
-use Database\Seeders\K13KkmTableSeeder;
 use Database\Seeders\PembelajaranTableSeeder;
-use Database\Seeders\SilabusSeeder;
 use UsersTableSeeder as GlobalUsersTableSeeder;
+use Database\Seeders\EkstrakulikulerTableSeeder;
 use SekolahTableSeeder as GlobalSekolahTableSeeder;
+use Database\Seeders\CapaianPembelajaranTableSeeder;
+use Database\Seeders\RencanaNilaiSumatifTableSeeder;
+use Database\Seeders\RencanaNilaiFormatifTableSeeder;
+use Database\Seeders\AnggotaEkstrakulikulerTableSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -46,7 +50,10 @@ class DatabaseSeeder extends Seeder
             PembelajaranTableSeeder::class,
             GlobalSekolahTableSeeder::class,
             K13KkmTableSeeder::class,
-            SilabusSeeder::class
+            SilabusSeeder::class,
+            CapaianPembelajaranTableSeeder::class,
+            RencanaNilaiSumatifTableSeeder::class,
+            RencanaNilaiFormatifTableSeeder::class,
         ]);
     }
 }
