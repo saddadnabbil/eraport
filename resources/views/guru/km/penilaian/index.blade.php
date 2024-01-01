@@ -1,5 +1,5 @@
 @include('layouts.main.header')
-@include('layouts.sidebar.admin')
+@include('layouts.sidebar.guru')
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -34,7 +34,7 @@
 
             <div class="card-body">
               <div class="callout callout-info">
-                <form action="{{ route('penilaiankm.create') }}" method="GET">
+                <form action="{{ route('guru.penilaiankm.create') }}" method="GET">
                   @csrf
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Kelas</label>
@@ -50,7 +50,7 @@
                 </form>
               </div>
 
-              <form action="{{ route('penilaiankm.store') }}" method="POST">
+              <form action="{{ route('guru.penilaiankm.store') }}" method="POST">
                 @csrf
 
                 <div class="table-responsive">

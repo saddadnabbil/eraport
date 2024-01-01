@@ -17,7 +17,7 @@ class CreateNilaiSumatifsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('rencana_nilai_sumatif_id')->unsigned();
             $table->unsignedBigInteger('anggota_kelas_id')->unsigned();
-            $table->integer('nilai');
+            $table->integer('nilai')->nullable();
             $table->timestamps();
 
             $table->foreign('rencana_nilai_sumatif_id')->references('id')->on('rencana_nilai_sumatifs');

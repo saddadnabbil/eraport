@@ -36,158 +36,149 @@ Route::group(['middleware' => ['auth']], function () {
 
   // Route User Admin 
   Route::group(['middleware' => 'checkRole:1'], function () {
-    Route::group(['prefix' => 'admin'], function () {
-      Route::resource('profileadmin', 'Admin\ProfileController',  [
-        'uses' => ['update']
-      ]);
-      Route::resource('pengumuman', 'Admin\PengumumanController',  [
-        'uses' => ['index', 'store', 'update']
-      ]);
+    Route::prefix('admin')->group(function () {
+        // Profile Controller
+        Route::resource('profileadmin', 'Admin\ProfileController')->only(['update']);
 
-      // Penilaian Kurikulum Merdeka
-      // Route::resource('persiapanpenilian/cp/{kelasid}', 'Admin\CapaianPembelajaranController',  [
-      //   'uses' => ['index', 'store', 'update', 'destroy']
-      // ]);
+        // Pengumuman Controller
+        Route::resource('pengumuman', 'Admin\PengumumanController')->only(['index', 'store', 'update']);
 
-      Route::delete('/cp/delete/{id}', 'Admin\KM\CapaianPembelajaranController@destroy')->name('cp.destroy');
-      Route::resource('cp', 'Admin\KM\CapaianPembelajaranController', [
-          'uses' => ['index', 'store', 'update', 'create']
-      ]);
+        // Capaian Pembelajaran Controller
+        Route::delete('/cp/delete/{id}', 'Admin\KM\CapaianPembelajaranController@destroy')->name('cp.destroy');
+        Route::resource('cp', 'Admin\KM\CapaianPembelajaranController')->only(['index', 'store', 'update', 'create']);
 
-      Route::resource('rencanaformatif', 'Admin\KM\RencanaNilaiFormatifController',  [
-        'uses' => ['index', 'create', 'store', 'show', 'edit', 'update']
-      ]);
-      Route::resource('rencanasumatif', 'Admin\KM\RencanaNilaiSumatifController',  [
-        'uses' => ['index', 'create', 'store', 'show', 'edit', 'update']
-      ]);
+        // Rencana Nilai Formatif Controller
+        Route::resource('rencanaformatif', 'Admin\KM\RencanaNilaiFormatifController')->only(['index', 'create', 'store', 'show', 'edit', 'update', 'destroy']);
 
-      Route::resource('penilaiankm', 'Admin\KM\PenilaianKurikulumMerdekaController',  [
-        'uses' => ['index', 'create', 'store', 'show', 'edit', 'update']
-      ]);
+        // Rencana Nilai Sumatif Controller
+        Route::resource('rencanasumatif', 'Admin\KM\RencanaNilaiSumatifController')->only(['index', 'create', 'store', 'show', 'edit', 'update', 'destroy']);
 
-      Route::get('user/export', 'Admin\UserController@export')->name('user.export');
-      Route::resource('user', 'Admin\UserController',  [
-        'uses' => ['index', 'store', 'update']
-      ]);
-      Route::resource('sekolah', 'Admin\SekolahController',  [
-        'uses' => ['index', 'update']
-      ]);
-      Route::get('guru/export', 'Admin\GuruController@export')->name('guru.export');
-      Route::get('guru/import', 'Admin\GuruController@format_import')->name('guru.format_import');
-      Route::post('guru/import', 'Admin\GuruController@import')->name('guru.import');
-      Route::resource('guru', 'Admin\GuruController',  [
-        'uses' => ['index', 'store', 'update', 'destroy']
-      ]);
-      Route::resource('tapel', 'Admin\TapelController', [
-        'except' => ['create', 'edit'],
-      ]);
+        // Penilaian Kurikulum Merdeka Controller
+        Route::resource('penilaiankm', 'Admin\KM\PenilaianKurikulumMerdekaController')->only(['index', 'create', 'store', 'show', 'edit', 'update']);
 
-      Route::resource('tingkatan', 'Admin\TingkatanController')->only(['index', 'store', 'update', 'destroy']);
+        // User Controller
+        Route::get('user/export', 'Admin\UserController@export')->name('user.export');
+        Route::resource('user', 'Admin\UserController')->only(['index', 'store', 'update']);
 
-      Route::resource('jurusan', 'Admin\JurusanController')->only(['index', 'store', 'update', 'destroy']);
+        // Sekolah Controller
+        Route::resource('sekolah', 'Admin\SekolahController')->only(['index', 'update']);
 
-      Route::resource('silabus', 'Admin\SilabusController')->only(['index', 'store', 'update', 'destroy'])->names(
-        [
-          'index' => 'admin.silabus.index',
-          'store' => 'admin.silabus.store',
-          'update' => 'admin.silabus.update',
-          'destroy' => 'admin.silabus.destroy'
-        ]
-      );
-      Route::delete('/silabus/{id}/destroy/{fileType}', 'Admin\SilabusController@destroyFile')->name('admin.silabus.destroyFile');
-      Route::get('/pdf/{filename}', 'Admin\PdfController@viewSilabusPDF')->name('admin.silabus.pdf.view');
+        // Guru Controller
+        Route::get('guru/export', 'Admin\GuruController@export')->name('guru.export');
+        Route::get('guru/import', 'Admin\GuruController@format_import')->name('guru.format_import');
+        Route::post('guru/import', 'Admin\GuruController@import')->name('guru.import');
+        Route::resource('guru', 'Admin\GuruController')->only(['index', 'store', 'update', 'destroy']);
 
-      Route::post('tapel/set', 'Admin\TapelController@setAcademicYear')->name('tapel.setAcademicYear');
+        // Tapel Controller
+        Route::resource('tapel', 'Admin\TapelController')->except(['create', 'edit']);
 
-      Route::post('kelas/anggota', 'Admin\KelasController@store_anggota')->name('kelas.anggota');
-      Route::delete('kelas/anggota/{anggota}', 'Admin\KelasController@delete_anggota')->name('kelas.anggota.delete');
-      Route::resource('kelas', 'Admin\KelasController',  [
-        'uses' => ['index', 'store', 'show', 'destroy']
-      ]);
-      Route::get('siswa/export', 'Admin\SiswaController@export')->name('siswa.export');
-      Route::get('siswa/import', 'Admin\SiswaController@format_import')->name('siswa.format_import');
-      Route::post('siswa/import', 'Admin\SiswaController@import')->name('siswa.import');
-      Route::post('siswa/registrasi', 'Admin\SiswaController@registrasi')->name('siswa.registrasi');
-      Route::post('siswa/activate', 'Admin\SiswaController@activate')->name('siswa.activate');
-      Route::resource('siswa', 'Admin\SiswaController',  [
-        'uses' => ['index', 'store', 'update', 'destroy']
-      ]);
-      Route::get('mapel/import', 'Admin\MapelController@format_import')->name('mapel.format_import');
-      Route::post('mapel/import', 'Admin\MapelController@import')->name('mapel.import');
-      Route::resource('mapel', 'Admin\MapelController',  [
-        'uses' => ['index', 'store', 'update', 'destroy']
-      ]);
-      Route::resource('mapel', 'Admin\MapelController',  [
-        'uses' => ['index', 'store', 'update', 'destroy']
-      ]);
-      Route::get('pembelajaran/export', 'Admin\PembelajaranController@export')->name('pembelajaran.export');
-      Route::post('pembelajaran/settings', 'Admin\PembelajaranController@settings')->name('pembelajaran.settings');
-      Route::resource('pembelajaran', 'Admin\PembelajaranController',  [
-        'uses' => ['index', 'store']
-      ]);
-      Route::post('ekstrakulikuler/anggota', 'Admin\EkstrakulikulerController@store_anggota')->name('ekstrakulikuler.anggota');
-      Route::delete('ekstrakulikuler/anggota/{anggota}', 'Admin\EkstrakulikulerController@delete_anggota')->name('ekstrakulikuler.anggota.delete');
-      Route::resource('ekstrakulikuler', 'Admin\EkstrakulikulerController',  [
-        'uses' => ['index', 'store', 'show', 'destroy']
-      ]);
+        // Tingkatan Controller
+        Route::resource('tingkatan', 'Admin\TingkatanController')->only(['index', 'store', 'update', 'destroy']);
 
-      Route::resource('rekapkehadiran', 'Admin\RekapKehadiranSiswaController',  [
-        'uses' => ['index', 'store']
-      ]);
+        // Jurusan Controller
+        Route::resource('jurusan', 'Admin\JurusanController')->only(['index', 'store', 'update', 'destroy']);
 
-      Route::get('getKelas/ajax/{id}', 'AjaxController@ajax_kelas');
-      Route::get('getAllSilabus/ajax/{id}', 'AjaxController@getAllSilabus')->name('admin.get.all.silabus');
-      Route::get('getPembelajaranId/', 'AjaxController@getPembelajaranId')->name('get.pembelajaran.id');
+        // Silabus Controller
+        Route::resource('silabus', 'Admin\SilabusController')->only(['index', 'store', 'update', 'destroy'])->names([
+            'index' => 'admin.silabus.index',
+            'store' => 'admin.silabus.store',
+            'update' => 'admin.silabus.update',
+            'destroy' => 'admin.silabus.destroy'
+        ]);
+        Route::delete('/silabus/{id}/destroy/{fileType}', 'Admin\SilabusController@destroyFile')->name('admin.silabus.destroyFile');
+        Route::get('/pdf/{filename}', 'Admin\PdfController@viewSilabusPDF')->name('admin.silabus.pdf.view');
 
-      // Raport K13 Admin
+        Route::post('tapel/set', 'Admin\TapelController@setAcademicYear')->name('tapel.setAcademicYear');
 
-      // Setting Raport K13
-      Route::resource('mapping', 'Admin\K13\MapingMapelController',  [
-        'uses' => ['index', 'store']
-      ]);
-      Route::get('kkm/import', 'Admin\K13\KkmMapelController@format_import')->name('kkm.format_import');
-      Route::post('kkm/import', 'Admin\K13\KkmMapelController@import')->name('kkm.import');
-      Route::resource('kkm', 'Admin\K13\KkmMapelController',  [
-        'uses' => ['index', 'store', 'update', 'destroy']
-      ]);
-      Route::resource('interval', 'Admin\K13\IntervalPredikatController',  [
-        'uses' => ['index']
-      ]);
-      Route::get('sikap/import', 'Admin\K13\ButirSikapController@format_import')->name('sikap.format_import');
-      Route::post('sikap/import', 'Admin\K13\ButirSikapController@import')->name('sikap.import');
-      Route::resource('sikap', 'Admin\K13\ButirSikapController',  [
-        'uses' => ['index', 'store', 'update',]
-      ]);
-      Route::resource('kd', 'Admin\K13\KdMapelController',  [
-        'uses' => ['index', 'create', 'store', 'update', 'destroy']
-      ]);
-      Route::resource('tglraport', 'Admin\K13\TglRaportController',  [
-        'uses' => ['index', 'store', 'update', 'destroy']
-      ]);
-      Route::resource('validasi', 'Admin\K13\ValidasiController',  [
-        'uses' => ['index']
-      ]);
+        Route::post('kelas/anggota', 'Admin\KelasController@store_anggota')->name('kelas.anggota');
+        Route::delete('kelas/anggota/{anggota}', 'Admin\KelasController@delete_anggota')->name('kelas.anggota.delete');
+        Route::resource('kelas', 'Admin\KelasController',  [
+          'uses' => ['index', 'store', 'show', 'destroy']
+        ]);
+        Route::get('siswa/export', 'Admin\SiswaController@export')->name('siswa.export');
+        Route::get('siswa/import', 'Admin\SiswaController@format_import')->name('siswa.format_import');
+        Route::post('siswa/import', 'Admin\SiswaController@import')->name('siswa.import');
+        Route::post('siswa/registrasi', 'Admin\SiswaController@registrasi')->name('siswa.registrasi');
+        Route::post('siswa/activate', 'Admin\SiswaController@activate')->name('siswa.activate');
+        Route::resource('siswa', 'Admin\SiswaController',  [
+          'uses' => ['index', 'store', 'update', 'destroy']
+        ]);
+        Route::get('mapel/import', 'Admin\MapelController@format_import')->name('mapel.format_import');
+        Route::post('mapel/import', 'Admin\MapelController@import')->name('mapel.import');
+        Route::resource('mapel', 'Admin\MapelController',  [
+          'uses' => ['index', 'store', 'update', 'destroy']
+        ]);
+        Route::resource('mapel', 'Admin\MapelController',  [
+          'uses' => ['index', 'store', 'update', 'destroy']
+        ]);
+        Route::get('pembelajaran/export', 'Admin\PembelajaranController@export')->name('pembelajaran.export');
+        Route::post('pembelajaran/settings', 'Admin\PembelajaranController@settings')->name('pembelajaran.settings');
+        Route::resource('pembelajaran', 'Admin\PembelajaranController',  [
+          'uses' => ['index', 'store']
+        ]);
+        Route::post('ekstrakulikuler/anggota', 'Admin\EkstrakulikulerController@store_anggota')->name('ekstrakulikuler.anggota');
+        Route::delete('ekstrakulikuler/anggota/{anggota}', 'Admin\EkstrakulikulerController@delete_anggota')->name('ekstrakulikuler.anggota.delete');
+        Route::resource('ekstrakulikuler', 'Admin\EkstrakulikulerController',  [
+          'uses' => ['index', 'store', 'show', 'destroy']
+        ]);
 
-      // Hasil Raport K13 
-      Route::resource('raportstatuspenilaian', 'Admin\K13\StatusPenilaianController',  [
-        'uses' => ['index', 'store']
-      ]);
-      Route::resource('pengelolaannilai', 'Admin\K13\PengelolaanNilaiController',  [
-        'uses' => ['index', 'store']
-      ]);
-      Route::resource('nilairaport', 'Admin\K13\NilaiRaportSemesterController',  [
-        'uses' => ['index', 'store']
-      ]);
-      Route::resource('adminleger', 'Admin\K13\LegerNilaiSiswaController',  [
-        'uses' => ['index', 'store', 'show']
-      ]);
-      Route::resource('adminraportpts', 'Admin\K13\CetakRaportPTSController',  [
-        'uses' => ['index', 'store', 'show']
-      ]);
-      Route::resource('adminraportsemester', 'Admin\K13\CetakRaportSemesterController',  [
-        'uses' => ['index', 'store', 'show']
-      ]);
-      // End  Raport K13 Admin
+        Route::resource('rekapkehadiran', 'Admin\RekapKehadiranSiswaController',  [
+          'uses' => ['index', 'store']
+        ]);
+
+        Route::get('getKelas/ajax/{id}', 'AjaxController@ajax_kelas');
+        Route::get('getAllSilabus/ajax/{id}', 'AjaxController@getAllSilabus')->name('admin.get.all.silabus');
+        Route::get('getPembelajaranId/', 'AjaxController@getPembelajaranId')->name('get.pembelajaran.id');
+
+        // Raport K13 Admin
+
+        // Setting Raport K13
+        Route::resource('mapping', 'Admin\K13\MapingMapelController',  [
+          'uses' => ['index', 'store']
+        ]);
+        Route::get('kkm/import', 'Admin\K13\KkmMapelController@format_import')->name('kkm.format_import');
+        Route::post('kkm/import', 'Admin\K13\KkmMapelController@import')->name('kkm.import');
+        Route::resource('kkm', 'Admin\K13\KkmMapelController',  [
+          'uses' => ['index', 'store', 'update', 'destroy']
+        ]);
+        Route::resource('interval', 'Admin\K13\IntervalPredikatController',  [
+          'uses' => ['index']
+        ]);
+        Route::get('sikap/import', 'Admin\K13\ButirSikapController@format_import')->name('sikap.format_import');
+        Route::post('sikap/import', 'Admin\K13\ButirSikapController@import')->name('sikap.import');
+        Route::resource('sikap', 'Admin\K13\ButirSikapController',  [
+          'uses' => ['index', 'store', 'update',]
+        ]);
+        Route::resource('kd', 'Admin\K13\KdMapelController',  [
+          'uses' => ['index', 'create', 'store', 'update', 'destroy']
+        ]);
+        Route::resource('tglraport', 'Admin\K13\TglRaportController',  [
+          'uses' => ['index', 'store', 'update', 'destroy']
+        ]);
+        Route::resource('validasi', 'Admin\K13\ValidasiController',  [
+          'uses' => ['index']
+        ]);
+
+        // Hasil Raport K13 
+        Route::resource('raportstatuspenilaian', 'Admin\K13\StatusPenilaianController',  [
+          'uses' => ['index', 'store']
+        ]);
+        Route::resource('pengelolaannilai', 'Admin\K13\PengelolaanNilaiController',  [
+          'uses' => ['index', 'store']
+        ]);
+        Route::resource('nilairaport', 'Admin\K13\NilaiRaportSemesterController',  [
+          'uses' => ['index', 'store']
+        ]);
+        Route::resource('adminleger', 'Admin\K13\LegerNilaiSiswaController',  [
+          'uses' => ['index', 'store', 'show']
+        ]);
+        Route::resource('adminraportpts', 'Admin\K13\CetakRaportPTSController',  [
+          'uses' => ['index', 'store', 'show']
+        ]);
+        Route::resource('adminraportsemester', 'Admin\K13\CetakRaportSemesterController',  [
+          'uses' => ['index', 'store', 'show']
+        ]);
+        // End  Raport K13 Admin
     });
   });
   // End Route User Admin 
@@ -204,6 +195,44 @@ Route::group(['middleware' => ['auth']], function () {
 
       // Route Guru Mapel
       Route::group(['middleware' => 'checkAksesGuru:Guru Mapel'], function () {
+
+      Route::delete('/cp/delete/{id}', 'Guru\KM\CapaianPembelajaranController@destroy')->name('guru.cp.destroy');
+      Route::resource('cp', 'Guru\KM\CapaianPembelajaranController')->names([
+          'index' => 'guru.cp.index',
+          'create' => 'guru.cp.create',
+          'store' => 'guru.cp.store',
+          'update' => 'guru.cp.update'
+      ]);
+
+      Route::resource('rencanaformatif', 'Guru\KM\RencanaNilaiFormatifController')->names([
+          'index' => 'guru.rencanaformatif.index',
+          'create' => 'guru.rencanaformatif.create',
+          'store' => 'guru.rencanaformatif.store',
+          'show' => 'guru.rencanaformatif.show',
+          'edit' => 'guru.rencanaformatif.edit',
+          'update' => 'guru.rencanaformatif.update',
+          'destroy' => 'guru.rencanaformatif.destroy'
+      ]);
+      
+      Route::resource('rencanasumatif', 'Guru\KM\RencanaNilaiSumatifController')->names([
+          'index' => 'guru.rencanasumatif.index',
+          'create' => 'guru.rencanasumatif.create',
+          'store' => 'guru.rencanasumatif.store',
+          'show' => 'guru.rencanasumatif.show',
+          'edit' => 'guru.rencanasumatif.edit',
+          'update' => 'guru.rencanasumatif.update',
+          'destroy' => 'guru.rencanasumatif.destroy'
+      ]);
+      
+      Route::resource('penilaiankm', 'Guru\KM\PenilaianKurikulumMerdekaController')->names([
+          'index' => 'guru.penilaiankm.index',
+          'create' => 'guru.penilaiankm.create',
+          'store' => 'guru.penilaiankm.store',
+          'show' => 'guru.penilaiankm.show',
+          'edit' => 'guru.penilaiankm.edit',
+          'update' => 'guru.penilaiankm.update',
+          'destroy' => 'guru.penilaiankm.destroy'
+      ]);
 
         Route::get('getKelas/ekstra/{id}', 'AjaxController@ajax_kelas_ekstra');
 

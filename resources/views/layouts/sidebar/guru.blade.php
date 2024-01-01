@@ -30,141 +30,185 @@
           </a>
         </li>
 
+        {{-- Kurikulum Merdeka --}}
+          <li class="nav-header">RAPORT KM</li>
+          <li class="nav-item">
+            <a href="{{ route('guru.cp.index') }}" class="nav-link {{ request()->routeIs('guru.cp.index') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-clipboard-list"></i>
+              <p>
+                Capaian Kompetensi
+              </p>
+            </a>
+          </li>
+          <li class="nav-item has-treeview {{ request()->routeIs(['guru.rencanaformatif.index', 'guru.rencanasumatif.index']) ? 'menu-open' : '' }}">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-server"></i>
+              <p>
+                Rencana Penilaian
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview bg-secondary">
+              <li class="nav-item">
+                <a href="{{ route('guru.rencanaformatif.index') }}" class="nav-link {{ request()->routeIs('guru.rencanaformatif.index') ? 'active' : '' }}">
+                  <i class="fas fa-school nav-icon"></i>
+                  <p>Formatif</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('guru.rencanasumatif.index') }}" class="nav-link {{ request()->routeIs('guru.rencanasumatif.index') ? 'active' : '' }}">
+                  <i class="fas fa-school nav-icon"></i>
+                  <p>Sumatif</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{ route('guru.penilaiankm.index') }}" class="nav-link {{ request()->routeIs('guru.penilaiankm.index') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-list-ol"></i>
+              <p>
+                Penilaian
+              </p>
+            </a>
+          </li>
+        {{-- End Kurikulum Merdeka --}}
+
         <!-- Kurikulum 2013 -->
-        <li class="nav-header">RAPORT K-2013</li>
-        <li class="nav-item">
-          <a href="{{ route('kdk13.index') }}" class="nav-link {{ request()->routeIs('kdk13.index') ? 'active' : '' }} {{ request()->routeIs('kdk13.index') ? 'active' : '' }}">
-            <i class="nav-icon fas fa-clipboard-list"></i>
-            <p>
-              Data Kompetensi Dasar
-            </p>
-          </a>
-        </li>
-        <li class="nav-item has-treeview {{ request()->routeIs(['rencanapengetahuan.index', 'rencanaketerampilan.index', 'rencanaspiritual.index', 'rencanasosial.index', 'bobotnilai.index']) ? 'menu-open' : '' }}">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-list-alt"></i>
-            <p>
-              Rencana Penilaian
-              <i class="fas fa-angle-left right"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview bg-secondary">
-            <li class="nav-item">
-              <a href="{{ route('rencanapengetahuan.index') }}" class="nav-link {{ request()->routeIs('rencanapengetahuan.index') ? 'active' : '' }} {{ request()->routeIs('kdk13.index') ? 'active' : '' }}">
-                <i class="fas fa-check-circle nav-icon"></i>
-                <p>Nilai Pengetahuan</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ route('rencanaketerampilan.index') }}" class="nav-link {{ request()->routeIs('rencanaketerampilan.index') ? 'active' : '' }}">
-                <i class="fas fa-check-circle nav-icon"></i>
-                <p>Nilai Keterampilan</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ route('rencanaspiritual.index') }}" class="nav-link {{ request()->routeIs('rencanaspiritual.index') ? 'active' : '' }}">
-                <i class="fas fa-check-circle nav-icon"></i>
-                <p>Pilih KD/Butir Spiritual </p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ route('rencanasosial.index') }}" class="nav-link {{ request()->routeIs('rencanasosial.index') ? 'active' : '' }}">
-                <i class="fas fa-check-circle nav-icon"></i>
-                <p>Pilih KD/Butir Sosial </p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ route('bobotnilai.index') }}" class="nav-link {{ request()->routeIs('bobotnilai.index') ? 'active' : '' }}">
-                <i class="fas fa-check-circle nav-icon"></i>
-                <p>Bobot PH PTS dan PAS </p>
-              </a>
-            </li>
-          </ul>
-        </li>
+          <li class="nav-header">RAPORT K-2013</li>
+          <li class="nav-item">
+            <a href="{{ route('kdk13.index') }}" class="nav-link {{ request()->routeIs('kdk13.index') ? 'active' : '' }} {{ request()->routeIs('kdk13.index') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-clipboard-list"></i>
+              <p>
+                Data Kompetensi Dasar
+              </p>
+            </a>
+          </li>
+          <li class="nav-item has-treeview {{ request()->routeIs(['rencanapengetahuan.index', 'rencanaketerampilan.index', 'rencanaspiritual.index', 'rencanasosial.index', 'bobotnilai.index']) ? 'menu-open' : '' }}">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-list-alt"></i>
+              <p>
+                Rencana Penilaian
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview bg-secondary">
+              <li class="nav-item">
+                <a href="{{ route('rencanapengetahuan.index') }}" class="nav-link {{ request()->routeIs('rencanapengetahuan.index') ? 'active' : '' }} {{ request()->routeIs('kdk13.index') ? 'active' : '' }}">
+                  <i class="fas fa-check-circle nav-icon"></i>
+                  <p>Nilai Pengetahuan</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('rencanaketerampilan.index') }}" class="nav-link {{ request()->routeIs('rencanaketerampilan.index') ? 'active' : '' }}">
+                  <i class="fas fa-check-circle nav-icon"></i>
+                  <p>Nilai Keterampilan</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('rencanaspiritual.index') }}" class="nav-link {{ request()->routeIs('rencanaspiritual.index') ? 'active' : '' }}">
+                  <i class="fas fa-check-circle nav-icon"></i>
+                  <p>Pilih KD/Butir Spiritual </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('rencanasosial.index') }}" class="nav-link {{ request()->routeIs('rencanasosial.index') ? 'active' : '' }}">
+                  <i class="fas fa-check-circle nav-icon"></i>
+                  <p>Pilih KD/Butir Sosial </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('bobotnilai.index') }}" class="nav-link {{ request()->routeIs('bobotnilai.index') ? 'active' : '' }}">
+                  <i class="fas fa-check-circle nav-icon"></i>
+                  <p>Bobot PH PTS dan PAS </p>
+                </a>
+              </li>
+            </ul>
+          </li>
 
-        <li class="nav-item has-treeview {{ request()->routeIs(['nilaipengetahuan.index', 'nilaiketerampilan.index', 'nilaispiritual.index', 'nilaisosial.index', 'nilaiptspas.index', 'nilaiekstra.index']) ? 'menu-open' : '' }}">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-list-ol"></i>
-            <p>
-              Input Nilai
-              <i class="fas fa-angle-left right"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview bg-secondary">
-            <li class="nav-item">
-              <a href="{{ route('nilaipengetahuan.index') }}" class="nav-link {{ request()->routeIs('nilaipengetahuan.index') ? 'active' : '' }}">
-                <i class="fas fa-edit nav-icon"></i>
-                <p>Nilai Pengetahuan</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ route('nilaiketerampilan.index') }}" class="nav-link {{ request()->routeIs('nilaiketerampilan.index') ? 'active' : '' }}">
-                <i class="fas fa-edit nav-icon"></i>
-                <p>Nilai Keterampilan</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ route('nilaispiritual.index') }}" class="nav-link {{ request()->routeIs('nilaispiritual.index') ? 'active' : '' }}">
-                <i class="fas fa-edit nav-icon"></i>
-                <p>Nilai Sikap Spiritual </p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ route('nilaisosial.index') }}" class="nav-link {{ request()->routeIs('nilaisosial.index') ? 'active' : '' }}">
-                <i class="fas fa-edit nav-icon"></i>
-                <p>Nilai Sikap Sosial </p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ route('nilaiptspas.index') }}" class="nav-link {{ request()->routeIs('nilaiptspas.index') ? 'active' : '' }}">
-                <i class="fas fa-edit nav-icon"></i>
-                <p>Nilai PTS dan PAS </p>
-              </a>
-            </li>
-          </ul>
-        </li>
+          <li class="nav-item has-treeview {{ request()->routeIs(['nilaipengetahuan.index', 'nilaiketerampilan.index', 'nilaispiritual.index', 'nilaisosial.index', 'nilaiptspas.index', 'nilaiekstra.index']) ? 'menu-open' : '' }}">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-list-ol"></i>
+              <p>
+                Input Nilai
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview bg-secondary">
+              <li class="nav-item">
+                <a href="{{ route('nilaipengetahuan.index') }}" class="nav-link {{ request()->routeIs('nilaipengetahuan.index') ? 'active' : '' }}">
+                  <i class="fas fa-edit nav-icon"></i>
+                  <p>Nilai Pengetahuan</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('nilaiketerampilan.index') }}" class="nav-link {{ request()->routeIs('nilaiketerampilan.index') ? 'active' : '' }}">
+                  <i class="fas fa-edit nav-icon"></i>
+                  <p>Nilai Keterampilan</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('nilaispiritual.index') }}" class="nav-link {{ request()->routeIs('nilaispiritual.index') ? 'active' : '' }}">
+                  <i class="fas fa-edit nav-icon"></i>
+                  <p>Nilai Sikap Spiritual </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('nilaisosial.index') }}" class="nav-link {{ request()->routeIs('nilaisosial.index') ? 'active' : '' }}">
+                  <i class="fas fa-edit nav-icon"></i>
+                  <p>Nilai Sikap Sosial </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('nilaiptspas.index') }}" class="nav-link {{ request()->routeIs('nilaiptspas.index') ? 'active' : '' }}">
+                  <i class="fas fa-edit nav-icon"></i>
+                  <p>Nilai PTS dan PAS </p>
+                </a>
+              </li>
+            </ul>
+          </li>
 
-        <li class="nav-item">
-          <a href="{{ route('nilaiekstra.index') }}" class="nav-link {{ request()->routeIs('nilaiekstra.index') ? 'active' : '' }}">
-            <i class="nav-icon fas fa-book-reader"></i>
-            <p>
-              Input Nilai Ekstrakulikuler
-            </p>
-          </a>
-        </li>
+          <li class="nav-item">
+            <a href="{{ route('nilaiekstra.index') }}" class="nav-link {{ request()->routeIs('nilaiekstra.index') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-book-reader"></i>
+              <p>
+                Input Nilai Ekstrakulikuler
+              </p>
+            </a>
+          </li>
 
-        <li class="nav-item has-treeview {{ request()->routeIs(['kirimnilaiakhir.index', 'nilaiterkirim.index', 'prosesdeskripsi.index']) ? 'menu-open' : '' }}">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-clipboard-check"></i>
-            <p>
-              Nilai Akhir Raport
-              <i class="fas fa-angle-left right"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview bg-secondary">
-            <li class="nav-item">
-              <a href="{{ route('kirimnilaiakhir.index') }}" class="nav-link {{ request()->routeIs('kirimnilaiakhir.index') ? 'active' : '' }}">
-                <i class="fas fa-paper-plane nav-icon"></i>
-                <p>Kirim Nilai Akhir</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ route('nilaiterkirim.index') }}" class="nav-link {{ request()->routeIs('nilaiterkirim.index') ? 'active' : '' }}">
-                <i class="fas fa-eye nav-icon"></i>
-                <p>Lihat Nilai Terkirim</p>
-              </a>
-            </li>
-          </ul>
-        </li>
+          <li class="nav-item has-treeview {{ request()->routeIs(['kirimnilaiakhir.index', 'nilaiterkirim.index', 'prosesdeskripsi.index']) ? 'menu-open' : '' }}">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-clipboard-check"></i>
+              <p>
+                Nilai Akhir Raport
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview bg-secondary">
+              <li class="nav-item">
+                <a href="{{ route('kirimnilaiakhir.index') }}" class="nav-link {{ request()->routeIs('kirimnilaiakhir.index') ? 'active' : '' }}">
+                  <i class="fas fa-paper-plane nav-icon"></i>
+                  <p>Kirim Nilai Akhir</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('nilaiterkirim.index') }}" class="nav-link {{ request()->routeIs('nilaiterkirim.index') ? 'active' : '' }}">
+                  <i class="fas fa-eye nav-icon"></i>
+                  <p>Lihat Nilai Terkirim</p>
+                </a>
+              </li>
+            </ul>
+          </li>
 
-        <li class="nav-item">
-          <a href="{{ route('prosesdeskripsi.index') }}" class="nav-link {{ request()->routeIs('prosesdeskripsi.index') ? 'active' : '' }}">
-            <i class="nav-icon fas fa-file-alt"></i>
-            <p>
-              Proses Deskripsi Siswa
-            </p>
-          </a>
-        </li>
+          <li class="nav-item">
+            <a href="{{ route('prosesdeskripsi.index') }}" class="nav-link {{ request()->routeIs('prosesdeskripsi.index') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-file-alt"></i>
+              <p>
+                Proses Deskripsi Siswa
+              </p>
+            </a>
+          </li>
 
         <!-- End Kurikulum 2013 -->
 

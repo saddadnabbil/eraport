@@ -128,7 +128,7 @@
         </li> 
 
         {{-- Kurikulum Merdeka --}}
-          <li class="nav-header">PENILAIAN KM</li>
+          <li class="nav-header">RAPORT KM</li>
           <li class="nav-item">
             <a href="{{ route('cp.index') }}" class="nav-link {{ request()->routeIs('cp.index') ? 'active' : '' }}">
               <i class="nav-icon fas fa-clipboard-list"></i>
@@ -137,15 +137,6 @@
               </p>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="#" class="nav-link ">
-              <i class="nav-icon fas fa-list-ol"></i>
-              <p>
-                Deskripsi Rapor
-              </p>
-            </a>
-          </li>
-
           <li class="nav-item has-treeview {{ request()->routeIs(['rencanaformatif.index', 'rencanasumatif.index']) ? 'menu-open' : '' }}">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-server"></i>

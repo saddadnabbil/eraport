@@ -17,7 +17,7 @@ class CreateNilaiFormatifsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('rencana_nilai_formatif_id')->unsigned();
             $table->unsignedBigInteger('anggota_kelas_id')->unsigned();
-            $table->integer('nilai');
+            $table->integer('nilai')->nullable();
             $table->timestamps();
 
             $table->foreign('rencana_nilai_formatif_id')->references('id')->on('rencana_nilai_formatifs');

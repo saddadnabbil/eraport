@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Admin\KM;
+namespace App\Http\Controllers\Guru\KM;
 
+use App\Guru;
 use App\Kelas;
 use App\Tapel;
+use App\NilaiSumatif;
 use App\Pembelajaran;
 use App\NilaiFormatif;
 use App\CapaianPembelajaran;
@@ -13,11 +15,11 @@ use App\RencanaNilaiFormatif;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\NilaiSumatif;
+use Illuminate\Support\Facades\Auth;
 
 class RencanaNilaiSumatifController extends Controller
 {
-    /**
+     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -27,16 +29,16 @@ class RencanaNilaiSumatifController extends Controller
         $title = 'Rencana Nilai Sumatif';
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
 
-        // $guru = Guru::where('user_id', Auth::user()->id)->first();
+        $guru = Guru::where('user_id', Auth::user()->id)->first();
         $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
 
-        $data_rencana_penilaian = Pembelajaran::where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
+        $data_rencana_penilaian = Pembelajaran::where('guru_id', $guru->id)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
         foreach ($data_rencana_penilaian as $penilaian) {
             $rencana_penilaian = RencanaNilaiSumatif::where('pembelajaran_id', $penilaian->id)->get();
             $penilaian->jumlah_rencana_penilaian = count($rencana_penilaian);
         }
 
-        return view('admin.km.rencanasumatif.index', compact('title', 'data_rencana_penilaian'));
+        return view('guru.km.rencanasumatif.index', compact('title', 'data_rencana_penilaian'));
     }
 
     /**
@@ -48,8 +50,9 @@ class RencanaNilaiSumatifController extends Controller
     {
         $title = 'Tambah Rencana Nilai Sumatif';
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $guru = Guru::where('user_id', Auth::user()->id)->first();
 
-        $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
+        $pembelajaran = Pembelajaran::where('guru_id', $guru->id)->findorfail($request->pembelajaran_id);
         $kelas = Kelas::findorfail($pembelajaran->kelas_id);
         $data_cp = CapaianPembelajaran::where([
             'semester' => $tapel->semester,
@@ -60,7 +63,7 @@ class RencanaNilaiSumatifController extends Controller
             return redirect(route('cp.index'))->with('toast_error', 'Belum ditemukan data capaian pembelajaran sumatif, silahkan tambahkan data CP.');
         } else {
             $jumlah_penilaian = $request->jumlah_penilaian;
-            return view('admin.km.rencanasumatif.create', compact('title', 'pembelajaran', 'jumlah_penilaian', 'data_cp'));
+            return view('guru.km.rencanasumatif.create', compact('title', 'pembelajaran', 'jumlah_penilaian', 'data_cp'));
         }
     }
 
@@ -72,6 +75,18 @@ class RencanaNilaiSumatifController extends Controller
      */
     public function store(Request $request)
     {
+        // Memeriksa setiap kode_penilaian untuk keunikan
+        foreach ($request->kode_penilaian as $kode) {
+            $count = RencanaNilaiFormatif::where('kode_penilaian', $kode)
+                                            ->where('pembelajaran_id', $request->pembelajaran_id)
+                                            ->count();
+
+            // Jika kode penilaian sudah ada, kembalikan pesan kesalahan
+            if ($count > 0) {
+                return back()->with('toast_error', 'Kode penilaian ' . $kode . ' sudah ada untuk pembelajaran ini.');
+            }
+        }
+
         try {
             for ($count_penilaian = 0; $count_penilaian < count($request->teknik_penilaian); $count_penilaian++) {
                 for ($count_cp = 0; $count_cp < count($request->capaian_pembelajaran_id[$count_penilaian]); $count_cp++) {
@@ -90,7 +105,7 @@ class RencanaNilaiSumatifController extends Controller
             }
 
             RencanaNilaiSumatif::insert($store_data_penilaian);
-            return redirect(route('rencanasumatif.index'))->with('toast_success', 'Rencana nilai sumatif berhasil disimpan.');
+            return redirect(route('guru.rencanasumatif.index'))->with('toast_success', 'Rencana nilai sumatif berhasil disimpan.');
         } catch (\Throwable $th) {
             return back()->with('toast_error', 'Pilih minimal 1 CP pada setiap kolom penilaian.');
         }
@@ -105,16 +120,18 @@ class RencanaNilaiSumatifController extends Controller
     public function show($id)
     {
         $title = 'Data Rencana Nilai Sumatif';
-        $pembelajaran = Pembelajaran::findorfail($id);
+        $guru = Guru::where('user_id', Auth::user()->id)->first();
+
+        $pembelajaran = Pembelajaran::where('guru_id', $guru->id)->findorfail($id);
         $data_rencana_penilaian = RencanaNilaiSumatif::where('pembelajaran_id', $id)->orderBy('kode_penilaian', 'ASC')->orderBy('capaian_pembelajaran_id', 'DESC')->get();
-        $data_rencana_penilaian_tambah = Pembelajaran::where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
+        $data_rencana_penilaian_tambah = Pembelajaran::where('guru_id', $guru->id)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
         
         foreach ($data_rencana_penilaian_tambah as $penilaian) {
             $rencana_penilaian = RencanaNilaiSumatif::where('pembelajaran_id', $penilaian->id)->groupBy('kode_penilaian')->get();
             $penilaian->jumlah_rencana_penilaian = count($rencana_penilaian);
         }
 
-        return view('admin.km.rencanasumatif.show', compact('title', 'pembelajaran', 'data_rencana_penilaian', 'data_rencana_penilaian_tambah'));
+        return view('guru.km.rencanasumatif.show', compact('title', 'pembelajaran', 'data_rencana_penilaian', 'data_rencana_penilaian_tambah'));
     }
 
     /**
@@ -127,8 +144,9 @@ class RencanaNilaiSumatifController extends Controller
     {
         $title = 'Edit Rencana Nilai Sumatif';
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $guru = Guru::where('user_id', Auth::user()->id)->first();
 
-        $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
+        $pembelajaran = Pembelajaran::where('guru_id', $guru->id)->findorfail($request->pembelajaran_id);
         $kelas = Kelas::findorfail($pembelajaran->kelas_id);
         $data_cp = CapaianPembelajaran::where([
             'mapel_id' => $pembelajaran->mapel_id,
@@ -137,7 +155,7 @@ class RencanaNilaiSumatifController extends Controller
         ])->orderBy('kode_cp', 'ASC')->get();
         $jumlah_penilaian = $request->jumlah_penilaian;
 
-        return view('admin.km.rencanasumatif.edit', compact('title', 'pembelajaran', 'jumlah_penilaian', 'data_cp'));
+        return view('guru.km.rencanasumatif.edit', compact('title', 'pembelajaran', 'jumlah_penilaian', 'data_cp'));
     }
 
 

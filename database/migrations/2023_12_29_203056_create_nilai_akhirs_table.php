@@ -19,7 +19,7 @@ class CreateNilaiAkhirsTable extends Migration
             $table->integer('nilai_akhir_formatif');
             $table->integer('nilai_akhir_sumatif');
             $table->integer('nilai_akhir_raport');
-            $table->integer('nilai_akhir_revisi')->nullable;
+            $table->integer('nilai_akhir_revisi')->nullable();
             $table->timestamps();
 
             $table->foreign('anggota_kelas_id')->references('id')->on('anggota_kelas');
