@@ -90,7 +90,7 @@
                             <button type="submit" class="btn btn-danger btn-sm mt-1" onclick="return confirm('Hapus {{$rencana_penilaian->kode_penilaian}} {{$title}} ?')">
                                 <i class="fas fa-trash-alt"></i>
                             </button>
-                            <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modal-edit{{$rencana_penilaian->id}}">
+                            <button type="button" class="btn btn-sm btn-warning mt-1" data-toggle="modal" data-target="#modal-edit{{$rencana_penilaian->id}}">
                               <i class="fas fa-pencil-alt"></i>
                             </button>
                         </form>

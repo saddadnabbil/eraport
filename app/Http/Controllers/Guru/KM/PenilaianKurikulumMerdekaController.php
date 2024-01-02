@@ -43,7 +43,7 @@ class PenilaianKurikulumMerdekaController extends Controller
             return redirect('guru/mapel')->with('toast_warning', 'Mohon isikan data mata pelajaran');
         } elseif (count($data_kelas) == 0) {
             return redirect('guru/kelas')->with('toast_warning', 'Mohon isikan data kelas');
-        } 
+        }
 
         return view('guru.km.penilaian.pilihkelas', compact('title', 'data_mapel', 'data_kelas', 'data_pembelajaran'));
     }
@@ -96,7 +96,7 @@ class PenilaianKurikulumMerdekaController extends Controller
             $rencana_penilaian_data_formatif = [];
 
             // Tambahkan data Rencana Nilai Sumatif ke $rencana_penilaian_data
-            foreach($data_rencana_penilaian_sumatif as $rencana_penilaian_sumatif) {
+            foreach ($data_rencana_penilaian_sumatif as $rencana_penilaian_sumatif) {
                 $teknik_penilaian = '';
 
                 if ($rencana_penilaian_sumatif->teknik_penilaian == 1) {
@@ -118,7 +118,7 @@ class PenilaianKurikulumMerdekaController extends Controller
             }
 
             // Tambahkan data Rencana Nilai Formatif ke $rencana_penilaian_data
-            foreach($data_rencana_penilaian_formatif as $rencana_penilaian_formatif) {
+            foreach ($data_rencana_penilaian_formatif as $rencana_penilaian_formatif) {
                 $teknik_penilaian = '';
 
                 switch ($rencana_penilaian_formatif->teknik_penilaian) {
@@ -151,12 +151,12 @@ class PenilaianKurikulumMerdekaController extends Controller
 
             foreach ($data_anggota_kelas as $anggota_kelas) {
                 $nilaiAkhirFormatif = 0;
-                $nilaiAkhirSumatif = 0; 
-                $nilaiAkhirRaport = 0;  
-                $nilaiAkhirRevisi= null;  
+                $nilaiAkhirSumatif = 0;
+                $nilaiAkhirRaport = 0;
+                $nilaiAkhirRevisi = null;
 
                 $nilaiAkhir = NilaiAkhir::where('anggota_kelas_id', $anggota_kelas->id)->first();
-                
+
                 if ($nilaiAkhir) {
                     $nilaiAkhirFormatif = $nilaiAkhir->nilai_akhir_formatif;
                     $nilaiAkhirSumatif = $nilaiAkhir->nilai_akhir_sumatif;
@@ -211,7 +211,7 @@ class PenilaianKurikulumMerdekaController extends Controller
                     }
                 }
             }
-        
+
             // Proses untuk Penilaian Formatif
             for ($count_siswa = 0; $count_siswa < count($request->anggota_kelas_id); $count_siswa++) {
                 for ($count_penilaian = 0; $count_penilaian < count($request->rencana_nilai_formatif_id); $count_penilaian++) {
@@ -236,53 +236,76 @@ class PenilaianKurikulumMerdekaController extends Controller
                 }
             }
 
-            if (!empty($request->anggota_kelas_id) && 
-                !empty($request->nilai_sumatif) && 
+
+            if (
+                !empty($request->anggota_kelas_id) &&
+                !empty($request->nilai_sumatif) &&
                 !empty($request->nilai_formatif) ||
-                !empty($request->nilai_revisi)) {
-                    for ($count_siswa = 0; $count_siswa < count($request->anggota_kelas_id); $count_siswa++) {
-                        $nilaiSumatif = $request->nilai_sumatif[$count_siswa]; // Ambil array nilai sumatif untuk siswa tertentu
-                        $nilaiFormatif = $request->nilai_formatif[$count_siswa]; // Ambil array nilai formatif untuk siswa tertentu
-                        
-                        // Hitung nilai akhir berdasarkan input formatif dan sumatif
-                        $bobotSumatif = 0.3;
-                        $bobotFormatif = 0.7;
-            
-                        $averageSumatif = count($nilaiSumatif) > 0 ? array_sum($nilaiSumatif) / count($nilaiSumatif) : 0;
-                        $averageFormatif = count($nilaiFormatif) > 0 ? array_sum($nilaiFormatif) / count($nilaiFormatif) : 0;
-            
-                        $nilaiAkhir = ($averageSumatif * $bobotSumatif) + ($averageFormatif * $bobotFormatif);
+                !empty($request->nilai_revisi)
+            ) {
 
-                        if (isset($request->nilai_revisi[$count_siswa])) {
-                            $nilaiRevisi = $request->nilai_revisi[$count_siswa];
-                        } else {
-                            $nilaiRevisi = null; // Atau nilai default lainnya sesuai kebutuhan Anda
+                for ($count_siswa = 0; $count_siswa < count($request->anggota_kelas_id); $count_siswa++) {
+                    $nilaiSumatif = $request->nilai_sumatif[$count_siswa] ?? [];
+                    $nilaiFormatif = $request->nilai_formatif[$count_siswa] ?? [];
+
+                    $totalBobotFormatif = is_array($request->bobot_rencana_nilai_formatif_id) ? array_sum($request->bobot_rencana_nilai_formatif_id) : 0;
+                    $totalBobotSumatif = is_array($request->bobot_rencana_nilai_sumatif_id) ? array_sum($request->bobot_rencana_nilai_sumatif_id) : 0;
+
+
+                    $averageSumatif = 0;
+                    $averageFormatif = 0;
+
+                    // Hitung nilai rata-rata berdasarkan bobot
+                    if ($totalBobotFormatif > 0) {
+                        foreach ($nilaiFormatif as $index => $nilai) {
+                            $averageFormatif += ($nilai * $request->bobot_rencana_nilai_formatif_id[$index] / $totalBobotFormatif);
                         }
-
-                        // Disimpan ke database, misalnya:
-                        $dataNilaiAkhir = [
-                            'anggota_kelas_id' => $request->anggota_kelas_id[$count_siswa],
-                            'nilai_akhir_formatif' => $averageFormatif,
-                            'nilai_akhir_sumatif' => $averageSumatif,
-                            'nilai_akhir_raport' => $nilaiAkhir,
-                            'nilai_akhir_revisi' => $nilaiRevisi,
-                            'created_at' => Carbon::now(),
-                            'updated_at' => Carbon::now(),
-                        ];
-                        
-                        // Simpan data ke dalam tabel nilai_akhirs atau tabel yang sesuai
-                        // Anda bisa menggunakan metode updateOrCreate atau metode lain sesuai kebutuhan
-                        // Contoh:
-                        NilaiAkhir::updateOrCreate(
-                            ['anggota_kelas_id' => $dataNilaiAkhir['anggota_kelas_id']],
-                            $dataNilaiAkhir
-                        );
                     }
+
+                    if ($totalBobotSumatif > 0) {
+                        foreach ($nilaiSumatif as $index => $nilai) {
+                            $averageSumatif += ($nilai * $request->bobot_rencana_nilai_sumatif_id[$index] / $totalBobotSumatif);
+                        }
+                    }
+
+                    // Hitung nilai akhir berdasarkan input formatif dan sumatif
+                    $bobotSumatif = 0.3;
+                    $bobotFormatif = 0.7;
+
+                    $averageSumatif = count($nilaiSumatif) > 0 ? array_sum($nilaiSumatif) / count($nilaiSumatif) : 0;
+                    $averageFormatif = count($nilaiFormatif) > 0 ? array_sum($nilaiFormatif) / count($nilaiFormatif) : 0;
+
+                    $nilaiAkhir = ($averageSumatif * $bobotSumatif) + ($averageFormatif * $bobotFormatif);
+
+                    if (isset($request->nilai_revisi[$count_siswa])) {
+                        $nilaiRevisi = $request->nilai_revisi[$count_siswa];
+                    } else {
+                        $nilaiRevisi = null; // Atau nilai default lainnya sesuai kebutuhan Anda
+                    }
+
+                    // Disimpan ke database, misalnya:
+                    $dataNilaiAkhir = [
+                        'anggota_kelas_id' => $request->anggota_kelas_id[$count_siswa],
+                        'nilai_akhir_formatif' => $averageFormatif,
+                        'nilai_akhir_sumatif' => $averageSumatif,
+                        'nilai_akhir_raport' => $nilaiAkhir,
+                        'nilai_akhir_revisi' => $nilaiRevisi,
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ];
+
+                    // Simpan data ke dalam tabel nilai_akhirs atau tabel yang sesuai
+                    // Anda bisa menggunakan metode updateOrCreate atau metode lain sesuai kebutuhan
+                    // Contoh:
+                    NilaiAkhir::updateOrCreate(
+                        ['anggota_kelas_id' => $dataNilaiAkhir['anggota_kelas_id']],
+                        $dataNilaiAkhir
+                    );
+                }
             }
-        
+
             return back()->with('toast_success', 'Data nilai pengetahuan berhasil disimpan.');
         }
-        
     }
 
     /**
