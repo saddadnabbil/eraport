@@ -40,7 +40,7 @@
           </a>
         </li>
 
-        <li class="nav-item has-treeview {{ request()->routeIs(['sekolah.index', 'guru.index', 'tapel.index', 'mapel.index', 'kelas.index', 'siswa.index', 'pembelajaran.index', 'ekstrakulikuler.index', 'tingkatan.index', 'jurusan.index', 'kkm.index', 'admin.silabus.index']) ? 'menu-open' : '' }}">
+        <li class="nav-item has-treeview {{ request()->routeIs(['sekolah.index', 'guru.index', 'tapel.index', 'mapel.index', 'kelas.index', 'siswa.index', 'pembelajaran.index', 'ekstrakulikuler.index', 'tingkatan.index', 'jurusan.index', 'admin.silabus.index']) ? 'menu-open' : '' }}">
           <a href="#" class="nav-link">
             <i class="nav-icon fas fa-server"></i>
             <p>
@@ -86,14 +86,6 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{ route('kkm.index') }}" class="nav-link {{ request()->routeIs('kkm.index') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-greater-than-equal"></i>
-                <p>
-                  Minimum Criteria
-                </p>
-              </a>
-            </li>
-            <li class="nav-item">
               <a href="{{ route('kelas.index') }}" class="nav-link {{ request()->routeIs('kelas.index') ? 'active' : '' }}">
                 <i class="fas fa-layer-group nav-icon"></i>
                 <p>Class & Homeroom</p>
@@ -129,6 +121,14 @@
 
         {{-- Kurikulum Merdeka --}}
           <li class="nav-header">RAPORT KM</li>
+          <li class="nav-item">
+            <a href="{{ route('kkm.index') }}" class="nav-link {{ request()->routeIs('kkm.index') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-greater-than-equal"></i>
+              <p>
+                Minimum Criteria
+              </p>
+            </a>
+          </li>
           <li class="nav-item">
             <a href="{{ route('cp.index') }}" class="nav-link {{ request()->routeIs('cp.index') ? 'active' : '' }}">
               <i class="nav-icon fas fa-clipboard-list"></i>
@@ -168,6 +168,30 @@
                 Penilaian
               </p>
             </a>
+          </li>
+
+          <li class="nav-item has-treeview {{ request()->routeIs(['kirimnilaiakhirkmadmin.index', 'nilaiterkirimkmadmin.index']) ? 'menu-open' : '' }}">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-clipboard-check"></i>
+              <p>
+                Nilai Akhir Raport
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview bg-secondary">
+              <li class="nav-item">
+                <a href="{{ route('kirimnilaiakhirkmadmin.index') }}" class="nav-link {{ request()->routeIs('kirimnilaiakhirkmadmin.index') ? 'active' : '' }}">
+                  <i class="fas fa-paper-plane nav-icon"></i>
+                  <p>Kirim Nilai Akhir</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('nilaiterkirimkmadmin.index') }}" class="nav-link {{ request()->routeIs('nilaiterkirimkmadmin.index') ? 'active' : '' }}">
+                  <i class="fas fa-eye nav-icon"></i>
+                  <p>Lihat Nilai Terkirim</p>
+                </a>
+              </li>
+            </ul>
           </li>
         {{-- End Kurikulum Merdeka --}}
 

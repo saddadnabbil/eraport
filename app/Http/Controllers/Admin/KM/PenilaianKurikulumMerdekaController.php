@@ -296,7 +296,7 @@ class PenilaianKurikulumMerdekaController extends Controller
                 }
             }
 
-            return back()->with('toast_success', 'Data nilai pengetahuan berhasil disimpan.');
+            return back()->with('toast_success', 'Data penilaian berhasil disimpan.');
         }
     }
 

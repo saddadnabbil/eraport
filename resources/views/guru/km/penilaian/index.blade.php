@@ -139,6 +139,7 @@
                                   <?php $i++; ?> <!-- Meningkatkan $i setelah setiap operasi -->
                               @endforeach
                               <td class="red nilai-proses" name="nilaiAkhirSumatif">{{ $nilaiAkhirSumatif }}</td>
+                              <input type="hidden" name="nilaiAkhirSumatif" id="nilaiAkhirSumatif" >
 
                               <td class="red nilai-proses" id="nilaiAkhirRaportDisplay">{{ $nilaiAkhirRaport }}</td>
                               <input type="hidden" name="nilaiAkhirRaport" id="nilaiAkhirRaportInput" >
@@ -156,7 +157,7 @@
 
                 <div class="card-footer clearfix">
                   <button type="submit" class="btn btn-primary float-right">Simpan</button>
-                  <a href="{{ route('penilaiankm.index') }}" class="btn btn-default float-right mr-2">Batal</a>
+                  <a href="{{ route('guru.penilaiankm.index') }}" class="btn btn-default float-right mr-2">Batal</a>
                 </div>
               </form>
           </div>
@@ -216,7 +217,7 @@ $(document).ready(function() {
         });
 
         var average = totalBobot > 0 ? sum / totalBobot : 0;
-        var averageFormatted = (average % 1 === 0) ? average.toFixed(0) : average.toFixed(1);
+        var averageFormatted = (average % 1 === 0) ? average.toFixed(0) : average.toFixed(0);
 
         row.find('td[name="nilaiAkhirFormatif"]').text(averageFormatted);
         row.find('[name="nilaiAkhirFormatif"]').val(averageFormatted);
@@ -243,7 +244,7 @@ $(document).ready(function() {
         });
 
         var average = totalBobot > 0 ? sum / totalBobot : 0;
-        var averageFormatted = (average % 1 === 0) ? average.toFixed(0) : average.toFixed(1);
+        var averageFormatted = (average % 1 === 0) ? average.toFixed(0) : average.toFixed(0);
 
         row.find('td[name="nilaiAkhirSumatif"]').text(averageFormatted);
         row.find('[name="nilaiAkhirSumatif"]').val(averageFormatted);
@@ -289,7 +290,7 @@ $(document).ready(function() {
         }
 
         // Menghilangkan angka desimal jika angka desimalnya adalah 0
-        var nilaiAkhirFormatted = (nilaiAkhir % 1 === 0) ? nilaiAkhir.toFixed(0) : nilaiAkhir.toFixed(1);
+        var nilaiAkhirFormatted = (nilaiAkhir % 1 === 0) ? nilaiAkhir.toFixed(0) : nilaiAkhir.toFixed(0);
 
         row.find('#nilaiAkhirRaportDisplay').text(nilaiAkhirFormatted);
         row.find('#nilaiAkhirRaportInput').val(nilaiAkhirFormatted);

@@ -33,6 +33,14 @@
         {{-- Kurikulum Merdeka --}}
           <li class="nav-header">RAPORT KM</li>
           <li class="nav-item">
+            <a href="{{ route('kkmguru.index') }}" class="nav-link {{ request()->routeIs('kkmguru.index') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-greater-than-equal"></i>
+              <p>
+                KKM Mapel
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="{{ route('guru.cp.index') }}" class="nav-link {{ request()->routeIs('guru.cp.index') ? 'active' : '' }}">
               <i class="nav-icon fas fa-clipboard-list"></i>
               <p>
@@ -72,6 +80,39 @@
               </p>
             </a>
           </li>
+
+          <li class="nav-item has-treeview {{ request()->routeIs(['kirimnilaiakhirkm.index', 'nilaiterkirimkm.index']) ? 'menu-open' : '' }}">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-clipboard-check"></i>
+              <p>
+                Nilai Akhir Raport
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview bg-secondary">
+              <li class="nav-item">
+                <a href="{{ route('kirimnilaiakhirkm.index') }}" class="nav-link {{ request()->routeIs('kirimnilaiakhirkm.index') ? 'active' : '' }}">
+                  <i class="fas fa-paper-plane nav-icon"></i>
+                  <p>Kirim Nilai Akhir</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('nilaiterkirimkm.index') }}" class="nav-link {{ request()->routeIs('nilaiterkirimkm.index') ? 'active' : '' }}">
+                  <i class="fas fa-eye nav-icon"></i>
+                  <p>Lihat Nilai Terkirim</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="{{ route('prosesdeskripsikm.index') }}" class="nav-link {{ request()->routeIs('prosesdeskripsikm.index') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-file-alt"></i>
+              <p>
+                Proses Deskripsi Siswa
+              </p>
+            </a>
+          </li>
+
         {{-- End Kurikulum Merdeka --}}
 
         <!-- Kurikulum 2013 -->

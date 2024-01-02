@@ -245,37 +245,14 @@ class PenilaianKurikulumMerdekaController extends Controller
             ) {
 
                 for ($count_siswa = 0; $count_siswa < count($request->anggota_kelas_id); $count_siswa++) {
-                    $nilaiSumatif = $request->nilai_sumatif[$count_siswa] ?? [];
-                    $nilaiFormatif = $request->nilai_formatif[$count_siswa] ?? [];
-
-                    $totalBobotFormatif = is_array($request->bobot_rencana_nilai_formatif_id) ? array_sum($request->bobot_rencana_nilai_formatif_id) : 0;
-                    $totalBobotSumatif = is_array($request->bobot_rencana_nilai_sumatif_id) ? array_sum($request->bobot_rencana_nilai_sumatif_id) : 0;
-
-
-                    $averageSumatif = 0;
-                    $averageFormatif = 0;
-
-                    // Hitung nilai rata-rata berdasarkan bobot
-                    if ($totalBobotFormatif > 0) {
-                        foreach ($nilaiFormatif as $index => $nilai) {
-                            $averageFormatif += ($nilai * $request->bobot_rencana_nilai_formatif_id[$index] / $totalBobotFormatif);
-                        }
-                    }
-
-                    if ($totalBobotSumatif > 0) {
-                        foreach ($nilaiSumatif as $index => $nilai) {
-                            $averageSumatif += ($nilai * $request->bobot_rencana_nilai_sumatif_id[$index] / $totalBobotSumatif);
-                        }
-                    }
+                    $nilaiAkhirSumatif = $request->nilaiAkhirSumatif;
+                    $nilaiAkhirFormatif = $request->nilaiAkhirFormatif;
 
                     // Hitung nilai akhir berdasarkan input formatif dan sumatif
                     $bobotSumatif = 0.3;
                     $bobotFormatif = 0.7;
 
-                    $averageSumatif = count($nilaiSumatif) > 0 ? array_sum($nilaiSumatif) / count($nilaiSumatif) : 0;
-                    $averageFormatif = count($nilaiFormatif) > 0 ? array_sum($nilaiFormatif) / count($nilaiFormatif) : 0;
-
-                    $nilaiAkhir = ($averageSumatif * $bobotSumatif) + ($averageFormatif * $bobotFormatif);
+                    $nilaiAkhir = ($nilaiAkhirSumatif * $bobotSumatif) + ($nilaiAkhirFormatif * $bobotFormatif);
 
                     if (isset($request->nilai_revisi[$count_siswa])) {
                         $nilaiRevisi = $request->nilai_revisi[$count_siswa];
@@ -286,8 +263,8 @@ class PenilaianKurikulumMerdekaController extends Controller
                     // Disimpan ke database, misalnya:
                     $dataNilaiAkhir = [
                         'anggota_kelas_id' => $request->anggota_kelas_id[$count_siswa],
-                        'nilai_akhir_formatif' => $averageFormatif,
-                        'nilai_akhir_sumatif' => $averageSumatif,
+                        'nilai_akhir_formatif' => $nilaiAkhirFormatif,
+                        'nilai_akhir_sumatif' => $nilaiAkhirSumatif,
                         'nilai_akhir_raport' => $nilaiAkhir,
                         'nilai_akhir_revisi' => $nilaiRevisi,
                         'created_at' => Carbon::now(),
@@ -304,7 +281,7 @@ class PenilaianKurikulumMerdekaController extends Controller
                 }
             }
 
-            return back()->with('toast_success', 'Data nilai pengetahuan berhasil disimpan.');
+            return back()->with('toast_success', 'Data penilaian berhasil disimpan.');
         }
     }
 
