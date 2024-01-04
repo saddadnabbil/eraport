@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePeniliaanKurikulumMerdekasTable extends Migration
+class CreateKmTglRaportsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,14 @@ class CreatePeniliaanKurikulumMerdekasTable extends Migration
      */
     public function up()
     {
-        Schema::create('peniliaan_kurikulum_merdekas', function (Blueprint $table) {
+        Schema::create('km_tgl_raports', function (Blueprint $table) {
             $table->id();
-            $table->integer('nilai_akhir');
-            $table->integer('nilai_revisi');
+            $table->unsignedBigInteger('tapel_id')->unique()->unsigned();
+            $table->string('tempat_penerbitan', 50);
+            $table->date('tanggal_pembagian');
             $table->timestamps();
+
+            $table->foreign('tapel_id')->references('id')->on('tapels');
         });
     }
 
@@ -28,6 +31,6 @@ class CreatePeniliaanKurikulumMerdekasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('peniliaan_kurikulum_merdekas');
+        Schema::dropIfExists('km_tgl_raports');
     }
 }

@@ -18,6 +18,7 @@ class CapaianPembelajaranController extends Controller
     {
         $title = 'Capaian Pembajaran';
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        
         $data_mapel = Mapel::where('tapel_id', $tapel->id)->orderBy('nama_mapel', 'ASC')->get();
         $id_mapel = Mapel::where('tapel_id', $tapel->id)->get('id');
 

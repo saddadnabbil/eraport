@@ -42,7 +42,7 @@ class StatusPenilaianController extends Controller
      */
     public function store(Request $request)
     {
-        $title = 'Hasil Pengelolaan Nilai';
+        $title = 'Status Penilaian';
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
         $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
 

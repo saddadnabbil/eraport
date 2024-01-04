@@ -43,27 +43,6 @@ Route::group(['middleware' => ['auth']], function () {
       // Pengumuman Controller
       Route::resource('pengumuman', 'Admin\PengumumanController')->only(['index', 'store', 'update']);
 
-      // Capaian Pembelajaran Controller
-      Route::delete('/cp/delete/{id}', 'Admin\KM\CapaianPembelajaranController@destroy')->name('cp.destroy');
-      Route::resource('cp', 'Admin\KM\CapaianPembelajaranController')->only(['index', 'store', 'update', 'create']);
-
-      // Rencana Nilai Formatif Controller
-      Route::resource('rencanaformatif', 'Admin\KM\RencanaNilaiFormatifController')->only(['index', 'create', 'store', 'show', 'edit', 'update', 'destroy']);
-
-      // Rencana Nilai Sumatif Controller
-      Route::resource('rencanasumatif', 'Admin\KM\RencanaNilaiSumatifController')->only(['index', 'create', 'store', 'show', 'edit', 'update', 'destroy']);
-
-      // Penilaian Kurikulum Merdeka Controller
-      Route::resource('penilaiankm', 'Admin\KM\PenilaianKurikulumMerdekaController')->only(['index', 'create', 'store', 'show', 'edit', 'update']);
-
-      Route::resource('nilaiterkirimkmadmin', 'Admin\KM\LihatNilaiTerkirimController',  [
-        'uses' => ['index', 'create']
-      ]);
-
-      Route::resource('kirimnilaiakhirkmadmin', 'Admin\KM\KirimNilaiAkhirController',  [
-        'uses' => ['index', 'create', 'store']
-      ]);
-
       // User Controller
       Route::get('user/export', 'Admin\UserController@export')->name('user.export');
       Route::resource('user', 'Admin\UserController')->only(['index', 'store', 'update']);
@@ -139,16 +118,15 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('getPembelajaranId/', 'AjaxController@getPembelajaranId')->name('get.pembelajaran.id');
 
       // Raport K13 Admin
-
       // Setting Raport K13
       Route::resource('mapping', 'Admin\K13\MapingMapelController',  [
         'uses' => ['index', 'store']
       ]);
-      Route::get('kkm/import', 'Admin\K13\KkmMapelController@format_import')->name('kkm.format_import');
-      Route::post('kkm/import', 'Admin\K13\KkmMapelController@import')->name('kkm.import');
-      Route::resource('kkm', 'Admin\K13\KkmMapelController',  [
-        'uses' => ['index', 'store', 'update', 'destroy']
-      ]);
+      // Route::get('kkm/import', 'Admin\K13\KkmMapelController@format_import')->name('kkm.format_import');
+      // Route::post('kkm/import', 'Admin\K13\KkmMapelController@import')->name('kkm.import');
+      // Route::resource('kkm', 'Admin\K13\KkmMapelController',  [
+      //   'uses' => ['index', 'store', 'update', 'destroy']
+      // ]);
 
       Route::resource('interval', 'Admin\K13\IntervalPredikatController',  [
         'uses' => ['index']
@@ -188,6 +166,63 @@ Route::group(['middleware' => ['auth']], function () {
         'uses' => ['index', 'store', 'show']
       ]);
       // End  Raport K13 Admin
+
+      // Start Raport KM
+      Route::delete('/cp/delete/{id}', 'Admin\KM\CapaianPembelajaranController@destroy')->name('cp.destroy');
+      Route::resource('cp', 'Admin\KM\CapaianPembelajaranController')->only(['index', 'store', 'update', 'create']);
+
+      Route::resource('rencanaformatif', 'Admin\KM\RencanaNilaiFormatifController')->only(['index', 'create', 'store', 'show', 'edit', 'update', 'destroy']);
+
+      Route::resource('rencanasumatif', 'Admin\KM\RencanaNilaiSumatifController')->only(['index', 'create', 'store', 'show', 'edit', 'update', 'destroy']);
+
+      Route::resource('penilaiankm', 'Admin\KM\PenilaianKurikulumMerdekaController')->only(['index', 'create', 'store', 'show', 'edit', 'update']);
+
+      Route::resource('nilaiterkirimkmadmin', 'Admin\KM\LihatNilaiTerkirimController',  [
+        'uses' => ['index', 'create']
+      ]);
+
+      Route::resource('mappingkm', 'Admin\KM\MapingMapelController',  [
+        'uses' => ['index', 'store']
+      ]);
+
+      Route::resource('tglraportkm', 'Admin\KM\TglRaportController',  [
+        'uses' => ['index', 'store', 'update', 'destroy']
+      ]);
+
+      Route::resource('kirimnilaiakhirkmadmin', 'Admin\KM\KirimNilaiAkhirController',  [
+        'uses' => ['index', 'create', 'store']
+      ]);
+
+      Route::resource('prosesdeskripsikmadmin', 'Admin\KM\ProsesDeskripsiSiswaController',  [
+        'uses' => ['index', 'create', 'store']
+      ]);
+
+      // Hasil Raport KM 
+      Route::resource('raportstatuspenilaiankm', 'Admin\KM\StatusPenilaianController',  [
+        'uses' => ['index', 'store']
+      ]);
+      Route::resource('pengelolaannilaikm', 'Admin\KM\PengelolaanNilaiController',  [
+        'uses' => ['index', 'store']
+      ]);
+      Route::resource('nilairaportkm', 'Admin\KM\NilaiRaportSemesterController',  [
+        'uses' => ['index', 'store']
+      ]);
+      Route::resource('adminlegerkm', 'Admin\KM\LegerNilaiSiswaController',  [
+        'uses' => ['index', 'store', 'show']
+      ]);
+      Route::resource('adminraportptskm', 'Admin\KM\CetakRaportPTSController',  [
+        'uses' => ['index', 'store', 'show']
+      ]);
+      Route::resource('adminraportsemesterkm', 'Admin\KM\CetakRaportSemesterController',  [
+        'uses' => ['index', 'store', 'show']
+      ]);
+
+      Route::get('kkmadmin/import', 'Admin\KM\KkmMapelController@format_import')->name('kkmadmin.format_import');
+      Route::post('kkmadmin/import', 'Admin\KM\KkmMapelController@import')->name('kkmadmin.import');
+      Route::resource('kkmadmin', 'Admin\KM\KkmMapelController',  [
+        'uses' => ['index', 'store', 'update', 'destroy']
+      ]);
+      // End Raport KM
     });
   });
   // End Route User Admin 
@@ -205,9 +240,9 @@ Route::group(['middleware' => ['auth']], function () {
       // Route Guru Mapel
       Route::group(['middleware' => 'checkAksesGuru:Guru Mapel'], function () {
 
-        Route::get('kkmguru/import', 'Guru\K13\KkmMapelController@format_import')->name('kkmguru.format_import');
-        Route::post('kkmguru/import', 'Guru\K13\KkmMapelController@import')->name('kkmguru.import');
-        Route::resource('kkmguru', 'Guru\K13\KkmMapelController',  [
+        Route::get('kkmguru/import', 'Guru\KM\KkmMapelController@format_import')->name('kkmguru.format_import');
+        Route::post('kkmguru/import', 'Guru\KM\KkmMapelController@import')->name('kkmguru.import');
+        Route::resource('kkmguru', 'Guru\KM\KkmMapelController',  [
           'uses' => ['index', 'store', 'update', 'destroy']
         ]);
 
@@ -392,6 +427,13 @@ Route::group(['middleware' => ['auth']], function () {
           'uses' => ['index', 'store', 'show']
         ]);
         Route::resource('raportsemester', 'Walikelas\K13\CetakRaportSemesterController',  [
+          'uses' => ['index', 'store', 'show']
+        ]);
+
+        Route::resource('raportptskm', 'Walikelas\KM\CetakRaportPTSController',  [
+          'uses' => ['index', 'store', 'show']
+        ]);
+        Route::resource('raportsemesterkm', 'Walikelas\KM\CetakRaportSemesterController',  [
           'uses' => ['index', 'store', 'show']
         ]);
         // End  Raport K13 Wali Kelas

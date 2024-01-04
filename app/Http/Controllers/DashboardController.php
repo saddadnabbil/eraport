@@ -2,39 +2,45 @@
 
 namespace App\Http\Controllers;
 
-use App\AnggotaEkstrakulikuler;
-use App\AnggotaKelas;
-use App\Ekstrakulikuler;
 use App\Guru;
-use App\K13DeskripsiNilaiSiswa;
-use App\K13KkmMapel;
-use App\K13NilaiAkhirRaport;
-use App\K13NilaiKeterampilan;
-use App\K13NilaiPengetahuan;
-use App\K13NilaiPtsPas;
-use App\K13NilaiSosial;
-use App\K13NilaiSpiritual;
-use App\K13RencanaBobotPenilaian;
-use App\K13RencanaNilaiKeterampilan;
-use App\K13RencanaNilaiPengetahuan;
-use App\K13RencanaNilaiSosial;
-use App\K13RencanaNilaiSpiritual;
 use App\Kelas;
-use App\KtspBobotPenilaian;
-use App\KtspDeskripsiNilaiSiswa;
-use App\KtspKkmMapel;
-use App\KtspNilaiAkhirRaport;
-use App\KtspNilaiTugas;
-use App\KtspNilaiUh;
-use App\KtspNilaiUtsUas;
-use App\Pembelajaran;
-use App\Pengumuman;
-use App\RiwayatLogin;
-use App\Sekolah;
 use App\Siswa;
 use App\Tapel;
+use App\Sekolah;
 use Carbon\Carbon;
+use App\KmKkmMapel;
+use App\Pengumuman;
+use App\K13KkmMapel;
+use App\KtspNilaiUh;
+use App\AnggotaKelas;
+use App\KtspKkmMapel;
+use App\NilaiSumatif;
+use App\Pembelajaran;
+use App\RiwayatLogin;
+use App\NilaiFormatif;
+use App\K13NilaiPtsPas;
+use App\K13NilaiSosial;
+use App\KtspNilaiTugas;
+use App\Ekstrakulikuler;
+use App\KtspNilaiUtsUas;
+use App\K13NilaiSpiritual;
+use App\KmNilaiAkhirRaport;
+use App\KtspBobotPenilaian;
+use App\K13NilaiAkhirRaport;
+use App\K13NilaiPengetahuan;
+use App\RencanaNilaiSumatif;
 use Illuminate\Http\Request;
+use App\K13NilaiKeterampilan;
+use App\KtspNilaiAkhirRaport;
+use App\RencanaNilaiFormatif;
+use App\K13RencanaNilaiSosial;
+use App\AnggotaEkstrakulikuler;
+use App\K13DeskripsiNilaiSiswa;
+use App\KtspDeskripsiNilaiSiswa;
+use App\K13RencanaBobotPenilaian;
+use App\K13RencanaNilaiSpiritual;
+use App\K13RencanaNilaiPengetahuan;
+use App\K13RencanaNilaiKeterampilan;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
@@ -85,43 +91,30 @@ class DashboardController extends Controller
                 $jumlah_ekstrakulikuler_diampu = Ekstrakulikuler::where('pembina_id', $guru->id)->count();
 
                 $data_capaian_penilaian = Pembelajaran::where('guru_id', $guru->id)->whereIn('kelas_id', $id_kelas)->where('status', 1)->get();
+                $data_capaian_penilaian_km = Pembelajaran::where('guru_id', $guru->id)->whereIn('kelas_id', $id_kelas)->where('status', 1)->get();
 
-                // Capaian Penilaian K13 
-                foreach ($data_capaian_penilaian as $penilaian) {
-                    $kkm = K13KkmMapel::where('mapel_id', $penilaian->mapel->id)->where('kelas_id', $penilaian->kelas_id)->first();
+                // Capaian Penilaian KM
+                foreach ($data_capaian_penilaian_km as $penilaian) {
+                    $kkm = KmKkmMapel::where('mapel_id', $penilaian->mapel->id)->where('kelas_id', $penilaian->kelas_id)->first();
 
-                    $rencana_pengetahuan = K13RencanaNilaiPengetahuan::where('pembelajaran_id', $penilaian->id)->groupBy('kode_penilaian')->get();
-                    $penilaian->jumlah_rencana_pengetahuan = count($rencana_pengetahuan);
+                    $rencana_sumatif = RencanaNilaiSumatif::where('pembelajaran_id', $penilaian->id)->groupBy('kode_penilaian')->get();
+                    $penilaian->jumlah_rencana_sumatif = count($rencana_sumatif);
 
-                    $rencana_keterampilan = K13RencanaNilaiKeterampilan::where('pembelajaran_id', $penilaian->id)->groupBy('kode_penilaian')->get();
-                    $penilaian->jumlah_rencana_keterampilan = count($rencana_keterampilan);
+                    $rencana_formatif = RencanaNilaiFormatif::where('pembelajaran_id', $penilaian->id)->groupBy('kode_penilaian')->get();
+                    $penilaian->jumlah_rencana_formatif = count($rencana_formatif);
 
-                    $rencana_spiritual = K13RencanaNilaiSpiritual::where('pembelajaran_id', $penilaian->id)->get();
-                    $penilaian->jumlah_rencana_spiritual = count($rencana_spiritual);
+                    $rencana_nilai_sumatif_id = RencanaNilaiSumatif::where('pembelajaran_id', $penilaian->id)->groupBy('kode_penilaian')->get('id');
+                    $sumatif_telah_dinilai = NilaiSumatif::whereIn('rencana_nilai_sumatif_id', $rencana_nilai_sumatif_id)->groupBy('rencana_nilai_sumatif_id')->get();
+                    $penilaian->jumlah_sumatif_telah_dinilai = count($sumatif_telah_dinilai);
 
-                    $rencana_sosial = K13RencanaNilaiSosial::where('pembelajaran_id', $penilaian->id)->get();
-                    $penilaian->jumlah_rencana_sosial = count($rencana_sosial);
-
-                    $id_rencana_nilai_pengetahuan = K13RencanaNilaiPengetahuan::where('pembelajaran_id', $penilaian->id)->groupBy('kode_penilaian')->get('id');
-                    $pengetahuan_telah_dinilai = K13NilaiPengetahuan::whereIn('k13_rencana_nilai_pengetahuan_id', $id_rencana_nilai_pengetahuan)->groupBy('k13_rencana_nilai_pengetahuan_id')->get();
-                    $penilaian->jumlah_pengetahuan_telah_dinilai = count($pengetahuan_telah_dinilai);
-
-                    $id_rencana_nilai_keterampilan = K13RencanaNilaiKeterampilan::where('pembelajaran_id', $penilaian->id)->groupBy('kode_penilaian')->get('id');
-                    $keterampilan_telah_dinilai = K13NilaiKeterampilan::whereIn('k13_rencana_nilai_keterampilan_id', $id_rencana_nilai_keterampilan)->groupBy('k13_rencana_nilai_keterampilan_id')->get();
-                    $penilaian->jumlah_keterampilan_telah_dinilai = count($keterampilan_telah_dinilai);
-
-                    $id_rencana_nilai_spiritual = K13RencanaNilaiSpiritual::where('pembelajaran_id', $penilaian->id)->get('id');
-                    $spiritual_telah_dinilai = K13NilaiSpiritual::whereIn('k13_rencana_nilai_spiritual_id', $id_rencana_nilai_spiritual)->groupBy('k13_rencana_nilai_spiritual_id')->get();
-                    $penilaian->jumlah_spiritual_telah_dinilai = count($spiritual_telah_dinilai);
-
-                    $id_rencana_nilai_sosial = K13RencanaNilaiSosial::where('pembelajaran_id', $penilaian->id)->get('id');
-                    $sosial_telah_dinilai = K13NilaiSosial::whereIn('k13_rencana_nilai_sosial_id', $id_rencana_nilai_sosial)->groupBy('k13_rencana_nilai_sosial_id')->get();
-                    $penilaian->jumlah_sosial_telah_dinilai = count($sosial_telah_dinilai);
+                    $rencana_nilai_formatif_id = RencanaNilaiFormatif::where('pembelajaran_id', $penilaian->id)->groupBy('kode_penilaian')->get('id');
+                    $formatif_telah_dinilai = NilaiFormatif::whereIn('rencana_nilai_formatif_id', $rencana_nilai_formatif_id)->groupBy('rencana_nilai_formatif_id')->get();
+                    $penilaian->jumlah_formatif_telah_dinilai = count($formatif_telah_dinilai);
 
                     $nilai_pts_pas = K13NilaiPtsPas::where('pembelajaran_id', $penilaian->id)->get();
                     $penilaian->nilai_pts_pas = count($nilai_pts_pas);
 
-                    $nilai_akhir_raport = K13NilaiAkhirRaport::where('pembelajaran_id', $penilaian->id)->get();
+                    $nilai_akhir_raport = KmNilaiAkhirRaport::where('pembelajaran_id', $penilaian->id)->get();
                     $penilaian->kirim_nilai_raport = count($nilai_akhir_raport);
 
                     $deskripsi_nilai_akhir = K13DeskripsiNilaiSiswa::where('pembelajaran_id', $penilaian->id)->get();
@@ -145,6 +138,64 @@ class DashboardController extends Controller
                     }
                 }
 
+                // Capaian Penilaian K13 
+                // foreach ($data_capaian_penilaian as $penilaian) {
+                //     $kkm = K13KkmMapel::where('mapel_id', $penilaian->mapel->id)->where('kelas_id', $penilaian->kelas_id)->first();
+
+                //     $rencana_pengetahuan = K13RencanaNilaiPengetahuan::where('pembelajaran_id', $penilaian->id)->groupBy('kode_penilaian')->get();
+                //     $penilaian->jumlah_rencana_pengetahuan = count($rencana_pengetahuan);
+
+                //     $rencana_keterampilan = K13RencanaNilaiKeterampilan::where('pembelajaran_id', $penilaian->id)->groupBy('kode_penilaian')->get();
+                //     $penilaian->jumlah_rencana_keterampilan = count($rencana_keterampilan);
+
+                //     $rencana_spiritual = K13RencanaNilaiSpiritual::where('pembelajaran_id', $penilaian->id)->get();
+                //     $penilaian->jumlah_rencana_spiritual = count($rencana_spiritual);
+
+                //     $rencana_sosial = K13RencanaNilaiSosial::where('pembelajaran_id', $penilaian->id)->get();
+                //     $penilaian->jumlah_rencana_sosial = count($rencana_sosial);
+
+                //     $id_rencana_nilai_pengetahuan = K13RencanaNilaiPengetahuan::where('pembelajaran_id', $penilaian->id)->groupBy('kode_penilaian')->get('id');
+                //     $pengetahuan_telah_dinilai = K13NilaiPengetahuan::whereIn('k13_rencana_nilai_pengetahuan_id', $id_rencana_nilai_pengetahuan)->groupBy('k13_rencana_nilai_pengetahuan_id')->get();
+                //     $penilaian->jumlah_pengetahuan_telah_dinilai = count($pengetahuan_telah_dinilai);
+
+                //     $id_rencana_nilai_keterampilan = K13RencanaNilaiKeterampilan::where('pembelajaran_id', $penilaian->id)->groupBy('kode_penilaian')->get('id');
+                //     $keterampilan_telah_dinilai = K13NilaiKeterampilan::whereIn('k13_rencana_nilai_keterampilan_id', $id_rencana_nilai_keterampilan)->groupBy('k13_rencana_nilai_keterampilan_id')->get();
+                //     $penilaian->jumlah_keterampilan_telah_dinilai = count($keterampilan_telah_dinilai);
+
+                //     $id_rencana_nilai_spiritual = K13RencanaNilaiSpiritual::where('pembelajaran_id', $penilaian->id)->get('id');
+                //     $spiritual_telah_dinilai = K13NilaiSpiritual::whereIn('k13_rencana_nilai_spiritual_id', $id_rencana_nilai_spiritual)->groupBy('k13_rencana_nilai_spiritual_id')->get();
+                //     $penilaian->jumlah_spiritual_telah_dinilai = count($spiritual_telah_dinilai);
+
+                //     $id_rencana_nilai_sosial = K13RencanaNilaiSosial::where('pembelajaran_id', $penilaian->id)->get('id');
+                //     $sosial_telah_dinilai = K13NilaiSosial::whereIn('k13_rencana_nilai_sosial_id', $id_rencana_nilai_sosial)->groupBy('k13_rencana_nilai_sosial_id')->get();
+                //     $penilaian->jumlah_sosial_telah_dinilai = count($sosial_telah_dinilai);
+
+                //     $nilai_pts_pas = K13NilaiPtsPas::where('pembelajaran_id', $penilaian->id)->get();
+                //     $penilaian->nilai_pts_pas = count($nilai_pts_pas);
+
+                //     $nilai_akhir_raport = K13NilaiAkhirRaport::where('pembelajaran_id', $penilaian->id)->get();
+                //     $penilaian->kirim_nilai_raport = count($nilai_akhir_raport);
+
+                //     $deskripsi_nilai_akhir = K13DeskripsiNilaiSiswa::where('pembelajaran_id', $penilaian->id)->get();
+                //     $penilaian->proses_deskripsi = count($deskripsi_nilai_akhir);
+
+                //     $bobot = K13RencanaBobotPenilaian::where('pembelajaran_id', $penilaian->id)->first();
+                //     if (is_null($bobot)) {
+                //         $penilaian->bobot_ph = null;
+                //         $penilaian->bobot_pts = null;
+                //         $penilaian->bobot_pas = null;
+                //     } else {
+                //         $penilaian->bobot_ph = $bobot->bobot_ph;
+                //         $penilaian->bobot_pts = $bobot->bobot_pts;
+                //         $penilaian->bobot_pas = $bobot->bobot_pas;
+                //     }
+
+                //     if (is_null($kkm)) {
+                //         $penilaian->kkm = null;
+                //     } else {
+                //         $penilaian->kkm = $kkm->kkm;
+                //     }
+                // }
 
                 return view('dashboard.guru', compact(
                     'title',
@@ -156,6 +207,7 @@ class DashboardController extends Controller
                     'jumlah_mapel_diampu',
                     'jumlah_siswa_diampu',
                     'jumlah_ekstrakulikuler_diampu',
+                    'data_capaian_penilaian_km',
                     'data_capaian_penilaian',
                 ));
             } elseif (session()->get('akses_sebagai') == 'Wali Kelas') {

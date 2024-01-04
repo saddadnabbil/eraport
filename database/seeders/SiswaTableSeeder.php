@@ -17,7 +17,7 @@ class SiswaTableSeeder extends Seeder
     {
         Siswa::create([
             'user_id' => 4,
-            'kelas_id' => 2,
+            'kelas_id' => 1,
             'tingkatan_id' => 1,
             'jenis_pendaftaran' => '1',
             'nis' => '1234567890',
@@ -78,7 +78,7 @@ class SiswaTableSeeder extends Seeder
 
         Siswa::create([
             'user_id' => 5,
-            'kelas_id' => 1,
+            'kelas_id' => 2,
             'tingkatan_id' => 1,
             'jenis_pendaftaran' => '1',
             'nis' => '1234567891',
@@ -139,7 +139,7 @@ class SiswaTableSeeder extends Seeder
 
         Siswa::create([
             'user_id' => 6,
-            'kelas_id' => 1,
+            'kelas_id' => 2,
             'tingkatan_id' => 1,
             'jenis_pendaftaran' => '1',
             'nis' => '0000000001',

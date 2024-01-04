@@ -23,6 +23,11 @@ class Mapel extends Model
         return $this->hasMany('App\Pembelajaran');
     }
 
+    public function km_mapping_mapel()
+    {
+        return $this->hasOne('App\KmMappingMapel');
+    }
+
     // Relasi K13 
     public function k13_mapping_mapel()
     {
@@ -31,7 +36,7 @@ class Mapel extends Model
 
     public function k13_kkm_mapel()
     {
-        return $this->hasOne('App\K13KkmMapel');
+        return $this->hasOne('App\KmKkmMapel');
     }
 
     public function k13_kd_mapel()
@@ -51,10 +56,10 @@ class Mapel extends Model
     }
 
     // Relasi Kurikulum Merdeka
-        // Relasi CapaianPembelajaran
-        public function capaian_pembelajaran()
-        {
-            return $this->hasMany('App\CapaianPembelajaran');
-        }
+    // Relasi CapaianPembelajaran
+    public function capaian_pembelajaran()
+    {
+        return $this->hasMany('App\CapaianPembelajaran');
+    }
     // End Relasi Kurikulum Merdeka
 }

@@ -99,7 +99,8 @@
       </div>
       <!-- /.row -->
 
-      <div class="row">
+
+      {{-- <div class="row">
         <div class="col-md-12">
           <div class="card">
             <div class="card-header">
@@ -311,8 +312,141 @@
             <!-- /.card-body -->
           </div>
         </div>
-      </div>
+      </div> --}}
 
+      {{-- Start Capaian Penilaian Kurikulum Merdeka --}}
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Capaian Proses Penilaian </h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+              </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered">
+                  <thead class="bg-success">
+                    <tr>
+                      <th rowspan="2" class="text-center" style="vertical-align: middle">No</th>
+                      <th rowspan="2" class="text-center" style="vertical-align: middle">Kelas</th>
+                      <th rowspan="2" class="text-center" style="vertical-align: middle">Mata Pelajaran</th>
+                      <th rowspan="2" class="text-center" style="width: 50px; vertical-align: middle">KKM</th>
+                      <th colspan="2" class="text-center" style="width: 200px;">Jumlah Perencanaan</th>
+                      <th colspan="2" class="text-center" style="width: 200px;">Jumlah Penilaian</th>
+                      <th colspan="2" class="text-center" style="width: 100px;">Status Nilai Raport</th>
+                    </tr>
+                    <tr>
+                      <th class="text-center" style="width: 50px; vertical-align: middle">Sumatif</th>
+                      <th class="text-center" style="width: 50px; vertical-align: middle">Formatif</th>
+
+                      <th class="text-center" style="width: 50px; vertical-align: middle">Sumatif</th>
+                      <th class="text-center" style="width: 50px; vertical-align: middle">Formatif</th>
+
+                      <th class="text-center" style="width: 100px; vertical-align: middle">Kirim Nilai</th>
+                      <th class="text-center" style="width: 100px; vertical-align: middle">Proses Deskripsi</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php $no = 0; ?>
+                    @foreach($data_capaian_penilaian_km as $penilaian)
+                    <?php $no++; ?>
+                    <tr>
+                      <td class="text-center">{{$no}}</td>
+                      <td class="text-center">{{$penilaian->kelas->nama_kelas}}</td>
+                      <td>{{$penilaian->mapel->nama_mapel}}</td>
+                      <td class="text-center">
+                        @if(is_null($penilaian->kkm))
+                        <span class="badge badge-danger">0</span>
+                        @else
+                        <span class="badge badge-success">{{$penilaian->kkm}}</span>
+                        @endif
+                      </td>
+                      <td class="text-center">
+                        @if($penilaian->jumlah_rencana_sumatif == 0)
+                        <b class="text-danger">
+                          {{$penilaian->jumlah_rencana_sumatif}}
+                        </b>
+                        @else
+                        <b class="text-success">
+                          {{$penilaian->jumlah_rencana_sumatif}}
+                        </b>
+                        @endif
+                      </td>
+                      <td class="text-center">
+                        @if($penilaian->jumlah_rencana_formatif == 0)
+                        <b class="text-danger">
+                          {{$penilaian->jumlah_rencana_formatif}}
+                        </b>
+                        @else
+                        <b class="text-success">
+                          {{$penilaian->jumlah_rencana_formatif}}
+                        </b>
+                        @endif
+                      </td>
+
+                      <td class="text-center">
+                        @if($penilaian->jumlah_sumatif_telah_dinilai == 0)
+                        <b class="text-danger">
+                          0
+                        </b>
+                        @elseif($penilaian->jumlah_sumatif_telah_dinilai == $penilaian->jumlah_rencana_sumatif)
+                        <b class="text-success">
+                          {{$penilaian->jumlah_sumatif_telah_dinilai}}
+                        </b>
+                        @else
+                        <b class="text-warning">
+                          {{$penilaian->jumlah_sumatif_telah_dinilai}}
+                        </b>
+                        @endif
+                      </td>
+
+                      <td class="text-center">
+                        @if($penilaian->jumlah_formatif_telah_dinilai == 0)
+                        <b class="text-danger">
+                          0
+                        </b>
+                        @elseif($penilaian->jumlah_formatif_telah_dinilai == $penilaian->jumlah_rencana_formatif)
+                        <b class="text-success">
+                          {{$penilaian->jumlah_formatif_telah_dinilai}}
+                        </b>
+                        @else
+                        <b class="text-warning">
+                          {{$penilaian->jumlah_formatif_telah_dinilai}}
+                        </b>
+                        @endif
+                      </td>
+
+                      @if($penilaian->kirim_nilai_raport == 0)
+                      <td><span class="badge badge-danger">Belum Kirim</span></td>
+                      @else
+                      <td><span class="badge badge-success">Sudah Kirim</span></td>
+                      @endif
+
+                      @if($penilaian->proses_deskripsi == 0)
+                      <td><span class="badge badge-danger">Belum Proses</span></td>
+                      @else
+                      <td><span class="badge badge-success">Sudah Proses</span></td>
+                      @endif
+
+                    </tr>
+                    @endforeach
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.table-responsive -->
+
+            </div>
+            <!-- /.card-body -->
+          </div>
+        </div>
+      </div>
+      {{-- End Capaian Penilaian Kurikulum Merdeka --}}
 
       <!-- Main row -->
       <div class="row">

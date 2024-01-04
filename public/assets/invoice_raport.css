@@ -137,3 +137,15 @@
 .invoice-box.rtl table tr td:nth-child(2) {
   text-align: left;
 }
+
+
+/* CUSTOM CSS RAPORT */
+.desc-kop-surat {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  text-align: center;
+  line-height: 1;
+  padding: 0 !important;
+  border-spacing: 0 !important;
+  margin: 0 !important;
+}

@@ -66,7 +66,7 @@
                     <table class="table table-bordered">
                       <thead class="bg-info">
                         <tr>
-                          <th rowspan="2" class="text-center">KKM</th>
+                          <th rowspan="2" class="text-center" style="vertical-align: middle">KKM</th>
                           <th colspan="4" class="text-center">Predikat</th>
                         </tr>
                         <tr>
@@ -104,9 +104,9 @@
                       <table class="table table-bordered table-hover table-striped">
                         <thead class="bg-info">
                           <tr>
-                            <th rowspan="2" class="text-center">No</th>
-                            <th rowspan="2" class="text-center">Nama Siswa</th>
-                            <th rowspan="2" class="text-center">KKM</th>
+                            <th rowspan="2" class="text-center" style="vertical-align: middle">No</th>
+                            <th rowspan="2" class="text-center" style="vertical-align: middle">Nama Siswa</th>
+                            <th rowspan="2" class="text-center" style="vertical-align: middle">KKM</th>
                             <th colspan="2" class="text-center">Sumatif</th>
                             <th colspan="2" class="text-center">Formatif</th>
                             <th colspan="2" class="text-center">Akhir</th>
@@ -223,7 +223,6 @@
 function sendFinalGrade() {
     Swal.fire({
         title: 'Kirim Nilai Akhir?',
-        text: 'Nilai akhir tidak dapat diubah.',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#d33',

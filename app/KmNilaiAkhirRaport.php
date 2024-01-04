@@ -32,8 +32,8 @@ class KmNilaiAkhirRaport extends Model
         return $this->belongsTo('App\AnggotaKelas');
     }
 
-    public function k13_deskripsi_nilai_siswa()
+    public function km_deskripsi_nilai_siswa()
     {
-        return $this->hasOne('App\K13DeskripsiNilaiSiswa');
+        return $this->hasOne('App\KmDeskripsiNilaiSiswa');
     }
 }

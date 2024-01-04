@@ -141,10 +141,10 @@
                               <td class="red nilai-proses" name="nilaiAkhirSumatif">{{ $nilaiAkhirSumatif }}</td>
                               <input type="hidden" name="nilaiAkhirSumatif" id="nilaiAkhirSumatif" >
 
-                              <td class="red nilai-proses" id="nilaiAkhirRaportDisplay">{{ $nilaiAkhirRaport }}</td>
+                              <td class="red nilai-proses" id="nilaiAkhirRaportDisplay">{{ $anggota_kelas->nilaiAkhirRaport }}</td>
                               <input type="hidden" name="nilaiAkhirRaport" id="nilaiAkhirRaportInput" >
                               <td>
-                                  <input type="number" class="form-control" name="nilai_revisi[]" min="0" max="100" oninvalid="this.setCustomValidity('Nilai harus berisi antara 0 s/d 100')" oninput="setCustomValidity('')" style="text-align: center;" value="{{$nilaiAkhirRevisi}}"> 
+                                  <input type="number" class="form-control" name="nilai_revisi[]" min="0" max="100" oninvalid="this.setCustomValidity('Nilai harus berisi antara 0 s/d 100')" oninput="setCustomValidity('')" style="text-align: center;" value="{{$anggota_kelas->nilaiAkhirRevisi}}"> 
                               </td>
                           </tr>
                       @endforeach

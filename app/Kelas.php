@@ -44,7 +44,7 @@ class Kelas extends Model
     // Relasi K13
     public function k13_kkm_mapel()
     {
-        return $this->hasOne('App\K13KkmMapel');
+        return $this->hasOne('App\KmKkmMapel');
     }
 
     // Relasi KTSP

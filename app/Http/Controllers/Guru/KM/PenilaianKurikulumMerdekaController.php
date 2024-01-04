@@ -167,7 +167,7 @@ class PenilaianKurikulumMerdekaController extends Controller
                 $anggota_kelas->nilaiAkhirFormatif = $nilaiAkhirFormatif;
                 $anggota_kelas->nilaiAkhirSumatif = $nilaiAkhirSumatif;
                 $anggota_kelas->nilaiAkhirRaport = $nilaiAkhirRaport;
-                $anggota_kelas->nilaiAkhirRaport = $nilaiAkhirRevisi;
+                $anggota_kelas->nilaiAkhirRevisi = $nilaiAkhirRevisi;
             }
 
             return view('guru.km.penilaian.index', compact('title', 'pembelajaran_id', 'data_pembelajaran', 'data_anggota_kelas', 'data_rencana_penilaian_sumatif', 'count_cp_sumatif', 'data_rencana_penilaian_formatif', 'count_cp_formatif', 'rencana_penilaian_data_formatif', 'rencana_penilaian_data_sumatif', 'nilaiAkhirFormatif', 'nilaiAkhirSumatif', 'nilaiAkhirRaport', 'nilaiAkhirRevisi'));

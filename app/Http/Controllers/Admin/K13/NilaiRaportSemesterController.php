@@ -65,5 +65,4 @@ class NilaiRaportSemesterController extends Controller
             }
         }
     }
-
 }

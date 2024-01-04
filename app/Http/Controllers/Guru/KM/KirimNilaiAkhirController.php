@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Guru\KM;
 use App\AnggotaKelas;
 use App\Guru;
 use App\Http\Controllers\Controller;
-use App\K13KkmMapel;
+use App\KmKkmMapel;
 use App\K13NilaiAkhirRaport;
 use App\K13NilaiKeterampilan;
 use App\K13NilaiPengetahuan;
@@ -65,7 +65,7 @@ class KirimNilaiAkhirController extends Controller
         } else {
             $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
 
-            $kkm = K13KkmMapel::where('mapel_id', $pembelajaran->mapel_id)->where('kelas_id', $pembelajaran->kelas_id)->first();
+            $kkm = KmKkmMapel::where('mapel_id', $pembelajaran->mapel_id)->where('kelas_id', $pembelajaran->kelas_id)->first();
 
             if (is_null($kkm)) {
                 return back()->with('toast_warning', 'KKM mata pelajaran belum ditentukan');
@@ -81,7 +81,7 @@ class KirimNilaiAkhirController extends Controller
                 $nilai_formatif = NilaiFormatif::whereIn('rencana_nilai_formatif_id', $rencana_nilai_formatif)->groupBy('rencana_nilai_formatif_id')->get();
 
                 if (count($rencana_nilai_sumatif) != count($nilai_sumatif) || count($rencana_nilai_formatif) != count($nilai_formatif)) {
-                    return back()->with('toast_warning', 'penilaian tidak sesuai dengan rencana penilaian');
+                    return back()->with('toast_warning', 'Belum ada data penilaian untuk ' . $pembelajaran->mapel->nama_mapel . ' ' . $pembelajaran->kelas->nama_kelas . '. Silahkan input penilaian!');
                 } else {
                     // Data Master
                     $title = 'Kirim Nilai Akhir';
@@ -97,24 +97,22 @@ class KirimNilaiAkhirController extends Controller
                     $kkm->predikat_b = round($kkm->kkm + $range, 0);
                     $kkm->predikat_a = round($kkm->kkm + ($range * 2), 0);
 
-                    // Data Nilai
+                    /// Data Nilai
                     $data_anggota_kelas = AnggotaKelas::where('kelas_id', $pembelajaran->kelas_id)->get();
                     foreach ($data_anggota_kelas as $anggota_kelas) {
 
                         $data_nilai_akhir = NilaiAkhir::where('anggota_kelas_id', $anggota_kelas->id)
-                            ->get();
+                            ->first();
 
-                        $nilai_akhir_pengetahuan = $data_nilai_akhir->avg('nilai_akhir_sumatif');
+                        $nilai_akhir_pengetahuan = $data_nilai_akhir->nilai_akhir_sumatif;
 
-                        $nilai_akhir_keterampilan = $data_nilai_akhir->avg('nilai_akhir_formatif');
+                        $nilai_akhir_keterampilan = $data_nilai_akhir->nilai_akhir_formatif;
 
-                        $nilai_akhir_raport = $data_nilai_akhir->avg('nilai_akhir_revisi');
-
+                        $nilai_akhir_raport  = $data_nilai_akhir->nilai_akhir_revisi;
 
                         if ($nilai_akhir_raport == null || $nilai_akhir_raport == 0) {
-                            $nilai_akhir_raport = $data_nilai_akhir->avg('nilai_akhir_raport');
+                            $nilai_akhir_raport = $data_nilai_akhir->nilai_akhir_raport;
                         }
-
 
                         $anggota_kelas->nilai_pengetahuan = round($nilai_akhir_pengetahuan, 0);
                         $anggota_kelas->nilai_keterampilan = round($nilai_akhir_keterampilan, 0);
