@@ -20,6 +20,8 @@ class SekolahTableSeeder extends Seeder
             'logo' => 'default.png',
             'kepala_sekolah' => 'SOEKARNO',
             'tapel_id' => 1,
+            'semester_id' => 1,
+            'term_id' => 1,
         ]);
     }
 }

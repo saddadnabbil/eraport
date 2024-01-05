@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Semester;
 use App\Tapel;
 use Illuminate\Database\Seeder;
 
-class TapelTableSeeder extends Seeder
+class SemesterTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,8 +15,12 @@ class TapelTableSeeder extends Seeder
      */
     public function run()
     {
-        Tapel::create([
-            'tahun_pelajaran' => '2023-2024',
+        Semester::create([
+            'semester' => 1,
+        ]);
+
+        Semester::create([
+            'semester' => 2,
         ]);
     }
 }

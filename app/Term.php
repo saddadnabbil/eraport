@@ -4,11 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Tapel extends Model
+class Term extends Model
 {
-    protected $table = 'tapels';
+    protected $table = 'terms';
     protected $fillable = [
-        'tahun_pelajaran',
+        'term'
     ];
 
     public function kelas()
