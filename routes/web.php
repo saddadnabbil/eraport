@@ -20,14 +20,14 @@ Route::get('/unauthorized', function () {
 });
 
 
-Route::get('/', 'AuthController@index')->name('login');
+Route::get('/', 'AuthController@index')->name('login.get');
 Route::post('/', 'AuthController@store')->name('login');
 Route::post('/settingtapel', 'AuthController@setting_tapel')->name('setting.tapel');
 
 Route::group(['middleware' => ['auth']], function () {
 
   Route::get('/logout', 'AuthController@logout')->name('logout');
-  Route::get('/password', 'AuthController@view_ganti_password')->name('gantipassword');
+  Route::get('/password', 'AuthController@view_ganti_password')->name('gantipassword.get');
   Route::post('/password', 'AuthController@ganti_password')->name('gantipassword');
 
   Route::get('/profile', 'ProfileUserController@index')->name('profile');
@@ -168,7 +168,7 @@ Route::group(['middleware' => ['auth']], function () {
       // End  Raport K13 Admin
 
       // Start Raport KM
-      Route::delete('/cp/delete/{id}', 'Admin\KM\CapaianPembelajaranController@destroy')->name('cp.destroy');
+      Route::delete('/cp/delete/{id}', 'Admin\KM\CapaianPembelajaranController@destroy')->name('admin.cp.destroy');
       Route::resource('cp', 'Admin\KM\CapaianPembelajaranController')->only(['index', 'store', 'update', 'create']);
 
       Route::resource('rencanaformatif', 'Admin\KM\RencanaNilaiFormatifController')->only(['index', 'create', 'store', 'show', 'edit', 'update', 'destroy']);

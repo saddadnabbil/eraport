@@ -203,7 +203,7 @@ function deleteData(id) {
       }).then((result) => {
     if (result.isConfirmed) {
         $.ajax({
-            url: "{{ route('guru.cp.destroy', ':id') }}".replace(':id', id),
+            url: "{{ route('cp.destroy.guru', ':id') }}".replace(':id', id),
             type: 'DELETE',
             data: {
                 _token: '{{ csrf_token() }}'
