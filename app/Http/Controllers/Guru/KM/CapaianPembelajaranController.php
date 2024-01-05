@@ -6,6 +6,7 @@ use App\Guru;
 use App\Kelas;
 use App\Mapel;
 use App\Tapel;
+use App\Sekolah;
 use App\Pembelajaran;
 use App\CapaianPembelajaran;
 use Illuminate\Http\Request;
@@ -64,9 +65,10 @@ class CapaianPembelajaranController extends Controller
         } else {
             $title = 'Tambah Capaian Pembelajaran';
             $tapel = Tapel::findorfail(session()->get('tapel_id'));
+            $semester = Sekolah::first()->semester_id;
             $guru = Guru::where('user_id', Auth::user()->id)->first();
 
-            $pembelajaran = Pembelajaran::where('guru_id', $guru->id)->findorfail($request->pembelajaran_id);    
+            $pembelajaran = Pembelajaran::where('guru_id', $guru->id)->findorfail($request->pembelajaran_id);
             $pembelajaran_id = $request->pembelajaran_id;
             $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
 
@@ -81,8 +83,19 @@ class CapaianPembelajaranController extends Controller
             }
 
 
-            return view('guru.km.cp.create', compact('title', 'mapel_id', 'tingkatan_id', 'tapel', 'existingData', 'data_pembelajaran', 'pembelajaran_id', 'pembelajaran'));
+            return view('guru.km.cp.create', compact('title', 'mapel_id', 'tingkatan_id', 'tapel', 'existingData', 'data_pembelajaran', 'pembelajaran_id', 'pembelajaran', 'semester'));
         }
+    }
+
+
+    // Fungsi untuk mengecek apakah CapaianPembelajaran dapat dihapus
+    private function isCapaianPembelajaranDeletable($capaian)
+    {
+        // Check if capaian_pembelajaran_id is used in either rencana_nilai_sumatif or rencana_nilai_formatif
+        $isUsedInRencanaNilai = $capaian->rencana_nilai_sumatif()->where('capaian_pembelajaran_id', $capaian->id)->exists()
+            || $capaian->rencana_nilai_formatif()->where('capaian_pembelajaran_id', $capaian->id)->exists();
+
+        return !$isUsedInRencanaNilai;
     }
 
     /**
@@ -110,8 +123,8 @@ class CapaianPembelajaranController extends Controller
             $errorMessage = $validator->messages()->all()[0] . ' Jika ingin edit, hapus fields kosong.';
             return back()->with('toast_error', $errorMessage)->withInput();
         } else {
-            $existingData = CapaianPembelajaran::whereIn('kode_cp', $request->kode_cp)->pluck('kode_cp')->toArray();
-            
+            $existingData = CapaianPembelajaran::where('pembelajaran_id', $request->pembelajaran_id)->whereIn('kode_cp', $request->kode_cp)->pluck('kode_cp')->toArray();
+
             for ($count = 0; $count < count($request->kode_cp); $count++) {
                 $data_cp = array(
                     'mapel_id'  => $request->mapel_id,
@@ -124,20 +137,14 @@ class CapaianPembelajaranController extends Controller
                     'created_at'  => Carbon::now(),
                     'updated_at'  => Carbon::now(),
                 );
-                
-                // Check if kode_cp already exists in the CapaianPembelajaran model
-                if(!in_array($request->kode_cp[$count], $existingData)){
-                    $store_data_cp[] = $data_cp;
-                }
-            }
-            
-            if(!empty($store_data_cp)){
-                CapaianPembelajaran::insert($store_data_cp);
-                return back()->with('toast_success', 'Capaian pembelajaran berhasil ditambahkan');
 
-            } else {
-                // Update existing data in the CapaianPembelajaran model
-                for ($count = 0; $count < count($request->kode_cp); $count++) {
+                // Check if kode_cp already exists in the CapaianPembelajaran model
+                if (!in_array($request->kode_cp[$count], $existingData)) {
+                    $store_data_cp[] = $data_cp;
+
+                    CapaianPembelajaran::insert($store_data_cp);
+                    return back()->with('toast_success', 'Capaian pembelajaran berhasil ditambahkan');
+                } elseif (in_array($request->kode_cp[$count], $existingData)) {
                     $data_cp = array(
                         'mapel_id'  => $request->mapel_id,
                         'tingkatan_id'  => $request->tingkatan_id,
@@ -147,23 +154,12 @@ class CapaianPembelajaranController extends Controller
                         'ringkasan_cp'  => $request->ringkasan_cp[$count],
                         'updated_at'  => Carbon::now(),
                     );
-                    
+
                     CapaianPembelajaran::where('kode_cp', $request->kode_cp[$count])->update($data_cp);
                     return back()->with('toast_success', 'Capaian pembelajaran berhasil diedit');
                 }
             }
-            
         }
-    }
-
-    // Fungsi untuk mengecek apakah CapaianPembelajaran dapat dihapus
-    private function isCapaianPembelajaranDeletable($capaian)
-    {
-        // Check if capaian_pembelajaran_id is used in either rencana_nilai_sumatif or rencana_nilai_formatif
-        $isUsedInRencanaNilai = $capaian->rencana_nilai_sumatif()->where('capaian_pembelajaran_id', $capaian->id)->exists()
-            || $capaian->rencana_nilai_formatif()->where('capaian_pembelajaran_id', $capaian->id)->exists();
-
-        return !$isUsedInRencanaNilai;
     }
 
     /**
@@ -179,7 +175,7 @@ class CapaianPembelajaranController extends Controller
         if (!$cp) {
             return response()->json(['status' => 'error', 'message' => 'Capaian Pembelajaran not found.'], 404);
         }
-    
+
         try {
             $cp->delete();
             return response()->json(['status' => 'success', 'message' => 'Capaian Pembelajaran deleted successfully.']);

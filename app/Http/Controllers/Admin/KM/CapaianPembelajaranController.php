@@ -98,10 +98,11 @@ class CapaianPembelajaranController extends Controller
         ]);
 
         if ($validator->fails()) {
-            $errorMessage = $validator->messages()->all()[0] . ' Jika ingin edit, hapus fields kosong.';
+            $errorMessage = $validator->messages()->all()[0];
             return back()->with('toast_error', $errorMessage)->withInput();
         } else {
             $existingData = CapaianPembelajaran::where('pembelajaran_id', $request->pembelajaran_id)->whereIn('kode_cp', $request->kode_cp)->pluck('kode_cp')->toArray();
+            $existingDatao = CapaianPembelajaran::whereNotIn('pembelajaran_id', $request->pembelajaran_id)->whereIn('kode_cp', $request->kode_cp)->pluck('kode_cp')->toArray();
 
             for ($count = 0; $count < count($request->kode_cp); $count++) {
                 $data_cp = array(
@@ -119,17 +120,10 @@ class CapaianPembelajaranController extends Controller
                 // Check if kode_cp already exists in the CapaianPembelajaran model
                 if (!in_array($request->kode_cp[$count], $existingData)) {
                     $store_data_cp[] = $data_cp;
-                } else {
-                    return back()->with('toast_error', 'Kode CP ' . $request->kode_cp[$count] . ' sudah ada');
-                }
-            }
 
-            if (!empty($store_data_cp)) {
-                CapaianPembelajaran::insert($store_data_cp);
-                return back()->with('toast_success', 'Capaian pembelajaran berhasil ditambahkan');
-            } else {
-                // Update existing data in the CapaianPembelajaran model
-                for ($count = 0; $count < count($request->kode_cp); $count++) {
+                    CapaianPembelajaran::insert($store_data_cp);
+                    return back()->with('toast_success', 'Capaian pembelajaran berhasil ditambahkan');
+                } elseif (in_array($request->kode_cp[$count], $existingData)) {
                     $data_cp = array(
                         'mapel_id'  => $request->mapel_id,
                         'tingkatan_id'  => $request->tingkatan_id,
@@ -142,6 +136,8 @@ class CapaianPembelajaranController extends Controller
 
                     CapaianPembelajaran::where('kode_cp', $request->kode_cp[$count])->update($data_cp);
                     return back()->with('toast_success', 'Capaian pembelajaran berhasil diedit');
+                } else {
+                    return back()->with('toast_error', 'Kode CP sudah ada');
                 }
             }
         }

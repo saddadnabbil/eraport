@@ -55,7 +55,7 @@
                 @csrf
                 <input type="hidden" name="mapel_id" value="{{$mapel_id}}">
                 <input type="hidden" name="tingkatan_id" value="{{$tingkatan_id}}">
-                <input type="hidden" name="semester" value="{{$tapel->semester}}">
+                <input type="hidden" name="semester" value="{{$semester}}">
                 <input type="hidden" name="pembelajaran_id" value="{{$pembelajaran_id}}">
 
                 <div class="table-responsive">
@@ -203,7 +203,7 @@ function deleteData(id) {
       }).then((result) => {
     if (result.isConfirmed) {
         $.ajax({
-            url: "{{ route('cp.destroy.guru', ':id') }}".replace(':id', id),
+            url: "{{ route('guru.cp.destroy', ':id') }}".replace(':id', id),
             type: 'DELETE',
             data: {
                 _token: '{{ csrf_token() }}'
