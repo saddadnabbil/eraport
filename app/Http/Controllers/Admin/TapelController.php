@@ -7,6 +7,8 @@ use App\Tapel;
 use App\Sekolah;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Semester;
+use App\Term;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
@@ -24,12 +26,16 @@ class TapelController extends Controller
     {
         $title = 'Data Tahun Pelajaran';
         $data_tapel = Tapel::orderBy('id', 'ASC')->get();
+        $data_semester = Semester::orderBy('id', 'ASC')->get();
+        $data_term = Term::orderBy('id', 'ASC')->get();
 
         // Ambil nilai tapel_id jika ada, jika tidak, setel menjadi null
         $sekolah = Sekolah::first();
-        $tapel_id = $sekolah ? $sekolah->tapel->tahun_pelajaran : null;
+        $tapel_id = $sekolah ? $sekolah->tapel_id : null;
+        $semester_id = $sekolah ? $sekolah->semester_id : null;
+        $term_id = $sekolah ? $sekolah->term_id_id : null;
 
-        return view('admin.tapel.index', compact('title', 'data_tapel', 'tapel_id', 'sekolah'));
+        return view('admin.tapel.index', compact('title', 'data_tapel', 'tapel_id', 'data_semester', 'semester_id', 'data_term', 'term_id', 'sekolah'));
     }
 
     /**
@@ -42,7 +48,6 @@ class TapelController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'tahun_pelajaran' => 'required|min:9|max:9',
-            'semester' => 'required',
         ]);
         if ($validator->fails()) {
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
@@ -61,7 +66,6 @@ class TapelController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'tahun_pelajaran' => 'required|min:9|max:9',
-            'semester' => 'required',
         ]);
         if ($validator->fails()) {
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
@@ -69,7 +73,6 @@ class TapelController extends Controller
             $tapel = Tapel::findorfail($id);
             $data_tapel = [
                 'tahun_pelajaran' => $request->tahun_pelajaran,
-                'semester' => $request->semester,
             ];
             $tapel->update($data_tapel);
             return back()->with('toast_success', 'Tahun Pelajaran berhasil diedit');
@@ -95,13 +98,17 @@ class TapelController extends Controller
         try {
             $validator = Validator::make($request->all(), [
                 'select_tapel_id' => 'required|exists:tapels,id', // Ensure that the selected ID exists in the tapels table
+                'select_semester_id' => 'required|exists:semesters,id', // Ensure that the selected ID exists in the semesters table
+                'select_term_id' => 'required|exists:terms,id', // Ensure that the selected ID exists in the terms table
             ]);
 
-            if ($validator->fails()) {
-                throw ValidationException::withMessages([
-                    'select_tapel_id' => $validator->messages()->first('select_tapel_id'),
-                ]);
-            }
+            // if ($validator->fails()) {
+            //     throw ValidationException::withMessages([
+            //         'select_tapel_id' => $validator->messages()->first('select_tapel_id'),
+            //         'select_semester_id' => $validator->messages()->first('select_semester_id'),
+            //         'select_term_id' => $validator->messages()->first('select_term_id'),
+            //     ]);
+            // }
 
             // Assuming you have a way to identify the specific Sekolah record, adjust the next line accordingly
             $sekolah = Sekolah::first(); // Change this line based on your logic to retrieve the Sekolah record
@@ -110,12 +117,20 @@ class TapelController extends Controller
                 throw new \Exception('Data Sekolah tidak ditemukan.');
             }
 
-            $sekolah->update(['tapel_id' => $request->select_tapel_id]);
+            $data = [
+                'tapel_id' => $request->select_tapel_id,
+                'semester_id' => $request->select_semester_id,
+                'term_id' => $request->select_term_id,
+            ];
+
+            $sekolah->update($data);
 
             // Setel sesi 'tapel_id' dengan nilai baru
             session(['tapel_id' => $request->select_tapel_id]);
+            session(['semester_id' => $request->select_semester_id]);
+            session(['term_id' => $request->select_term_id]);
 
-            return back()->with('success', 'Tahun Pelajaran berhasil diubah');
+            return back()->with('success', 'School Year updated successfully');
         } catch (\Exception $e) {
             return back()->with('toast_error', $e->getMessage())->withInput();
         }

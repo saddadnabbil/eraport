@@ -30,32 +30,52 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Select Tahun Pelajaran</h3>
+              <h3 class="card-title">Setting Of The School Year</h3>
 
             </div>
             <div class="card-body">
               <form action="{{ route('tapel.setAcademicYear') }}" method="POST">
                   @csrf
-                  <div class="form-group">
-                      <select class="custom-select" name="select_tapel_id">
-                        {{-- <option selected>{{ $tapel_id }}</option> --}}
-                        @foreach($data_tapel as $tapel)
-                            <option value="{{ $tapel->id }}" @if ($tapel->id == $sekolah->tapel_id) selected @endif>
-                              {{ $tapel->tahun_pelajaran }} -                         
-                              
-                              @if($tapel->semester == 1)
-                              Semester Ganjil
-                              @else
-                              Semester Genap
-                              @endif
-                            
+                  <div class="form-group row">
+                      <div class="col-4">
+                        <label for="select_tapel_id">Tahun Pelajaran</label>
+                        <select class="custom-select" name="select_tapel_id">
+                          {{-- <option selected>{{ $tapel_id }}</option> --}}
+                          @foreach($data_tapel as $tapel)
+                              <option value="{{ $tapel->id }}" @if ($tapel->id == $sekolah->tapel_id) selected @endif>
+                                {{ $tapel->tahun_pelajaran }}                   
+                              </option>
+                          @endforeach
+                        </select>
+                      </div>
+
+                      <div class="col-4">
+                        <label for="select_semester_id">Semester</label>
+                        <select class="custom-select" name="select_semester_id">
+                          @foreach($data_semester as $semester)
+                            <option value="{{ $semester->id }}" @if ($semester->id == $sekolah->semester_id) selected @endif>
+                              {{ $semester->semester }}                   
                             </option>
-                        @endforeach
-                      </select>
+                          @endforeach
+                        </select>
+                      </div>
+
+                      <div class="col-4">
+                        <label for="select_term_id">Term</label>
+                        <select class="custom-select" name="select_term_id">
+                              @foreach($data_term as $term)
+                                <option value="{{ $term->id }}" @if ($term->id == $sekolah->term_id) selected @endif>
+                                  {{ $term->term }}                   
+                                </option>
+                              @endforeach
+                        </select>
+                      </div>
                   </div>
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
               </form>
-          </div>
+            </div>
             </div>
           </div>        
         </div>
@@ -94,13 +114,6 @@
                           <input type="text" class="form-control" id="tahun_pelajaran" name="tahun_pelajaran" placeholder="Tahun Pelajaran" value="{{old('tahun_pelajaran')}}">
                         </div>
                       </div>
-                      <div class="form-group row">
-                        <label for="semester" class="col-sm-3 col-form-label">Semester</label>
-                        <div class="col-sm-9 pt-1">
-                          <label class="radio-inline mr-3"><input type="radio" name="semester" value="1" @if (old('semester')=='1' ) checked @endif required> Semester Ganjil</label>
-                          <label class="radio-inline mr-3"><input type="radio" name="semester" value="2" @if (old('semester')=='2' ) checked @endif required> Semester Genap</label>
-                        </div>
-                      </div>
                     </div>
                     <div class="modal-footer justify-content-end">
                       <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
@@ -120,7 +133,6 @@
                     <tr>
                       <th>No</th>
                       <th>Tahun Pelajaran</th>
-                      <th>Semester</th>
                       <th>Aksi</th>
                     </tr>
                   </thead>
@@ -131,13 +143,6 @@
                     <tr>
                       <td>{{$no}}</td>
                       <td>{{$tapel->tahun_pelajaran}}</td>
-                      <td>
-                        @if($tapel->semester == 1)
-                        Semester Ganjil
-                        @else
-                        Semester Genap
-                        @endif
-                      </td>
                       <td>
                         <form action="{{ route('tapel.destroy', $tapel->id) }}" method="POST">
                           @csrf
@@ -171,13 +176,6 @@
                               <label for="tahun_pelajaran" class="col-sm-3 col-form-label">Tahun Pelajaran</label>
                               <div class="col-sm-9">
                                 <input type="text" class="form-control" id="tahun_pelajaran" name="tahun_pelajaran" placeholder="Tahun Pelajaran" value="{{$tapel->tahun_pelajaran}}">
-                              </div>
-                            </div>
-                            <div class="form-group row">
-                              <label for="semester" class="col-sm-3 col-form-label">Semester</label>
-                              <div class="col-sm-9 pt-1">
-                                <label class="radio-inline mr-3"><input type="radio" name="semester"  value="1" @if ($tapel->semester=='1' ) checked @endif required> Semester Ganjil</label>
-                                <label class="radio-inline mr-3"><input type="radio" name="semester" value="2" @if ($tapel->semester=='2' ) checked @endif required> Semester Genap</label>
                               </div>
                             </div>
                           </div>

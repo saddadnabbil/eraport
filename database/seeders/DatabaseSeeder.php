@@ -1,6 +1,7 @@
 <?php
 
 use App\Kelas;
+use App\Semester;
 use App\AnggotaKelas;
 use App\KmNilaiAkhirRaport;
 use App\CapaianPembelajaran;
@@ -8,6 +9,7 @@ use App\KmDeskripsiNilaiSiswa;
 use Illuminate\Database\Seeder;
 use Database\Seeders\SilabusSeeder;
 use Database\Seeders\GuruTableSeeder;
+use Database\Seeders\TermTableSeeder;
 use Database\Seeders\AdminTableSeeder;
 use Database\Seeders\KelasTableSeeder;
 use Database\Seeders\MapelTableSeeder;
@@ -15,13 +17,16 @@ use Database\Seeders\SiswaTableSeeder;
 use Database\Seeders\TapelTableSeeder;
 use Database\Seeders\K13KkmTableSeeder;
 use Database\Seeders\JurusanTableSeeder;
+use Database\Seeders\SemesterTableSeeder;
 use Database\Seeders\TingkatanTableSeeder;
 use Database\Seeders\KmKkmMapelTableSeeder;
 use Database\Seeders\NilaiAkhirTableSeeder;
+use Database\Seeders\KmTglRaportTableSeeder;
 use Database\Seeders\AnggotaKelasTableSeeder;
 use Database\Seeders\NilaiSumatifTableSeeder;
 use Database\Seeders\PembelajaranTableSeeder;
 use Database\Seeders\NilaiFormatifTableSeeder;
+use Database\Seeders\KmMappingMapelTableSeeder;
 use UsersTableSeeder as GlobalUsersTableSeeder;
 use Database\Seeders\EkstrakulikulerTableSeeder;
 use Database\Seeders\KmNilaiAkhirRaportTableSeeder;
@@ -31,8 +36,6 @@ use Database\Seeders\RencanaNilaiSumatifTableSeeder;
 use Database\Seeders\RencanaNilaiFormatifTableSeeder;
 use Database\Seeders\KmDeskripsiNilaiSiswaTableSeeder;
 use Database\Seeders\AnggotaEkstrakulikulerTableSeeder;
-use Database\Seeders\KmMappingMapelTableSeeder;
-use Database\Seeders\KmTglRaportTableSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -48,6 +51,8 @@ class DatabaseSeeder extends Seeder
             TingkatanTableSeeder::class,
             JurusanTableSeeder::class,
             TapelTableSeeder::class,
+            SemesterTableSeeder::class,
+            TermTableSeeder::class,
             GlobalUsersTableSeeder::class,
             AdminTableSeeder::class,
             GuruTableSeeder::class,
