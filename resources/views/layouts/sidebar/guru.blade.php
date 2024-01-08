@@ -112,7 +112,6 @@
               </p>
             </a>
           </li>
-
         {{-- End Kurikulum Merdeka --}}
 
         <!-- Kurikulum 2013 -->

@@ -52,17 +52,17 @@
 
       <tr>
         @foreach($data_mapel_kelompok_a->sortBy('pembelajaran.mapel.km_mapping_mapel.nomor_urut') as $mapel_kelompok_a)
-        <td align="center" colspan="2" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>Peng</strong></td>
-        <td align="center" colspan="2" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>Ket</strong></td>
+        <td align="center" colspan="2" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>Sumatif</strong></td>
+        <td align="center" colspan="2" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>Formatif</strong></td>
         @endforeach
 
         @foreach($data_mapel_kelompok_b->sortBy('pembelajaran.mapel.km_mapping_mapel.nomor_urut') as $mapel_kelompok_b)
-        <td align="center" colspan="2" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>Peng</strong></td>
-        <td align="center" colspan="2" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>Ket</strong></td>
+        <td align="center" colspan="2" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>Sumatif</strong></td>
+        <td align="center" colspan="2" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>Formatif</strong></td>
         @endforeach
 
-        <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>Peng</strong></td>
-        <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>Ket</strong></td>
+        <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>Sumatif</strong></td>
+        <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>Formatif</strong></td>
 
         <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>S</strong></td>
         <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>I</strong></td>

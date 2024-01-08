@@ -17,36 +17,31 @@ class KmDeskripsiNilaiSiswaTableSeeder extends Seeder
         KmDeskripsiNilaiSiswa::create([
             'pembelajaran_id' => 1,
             'km_nilai_akhir_raport_id' => 1,
-            'deskripsi_sumatif' => 'Deskripsi Sumatif',
-            'deskripsi_formatif' => 'Deskripsi Formatif',
+            'deskripsi_raport' => 'Deskripsi Formatif, Deskripsi Formatif, Deskripsi Formatif',
         ]);
 
         KmDeskripsiNilaiSiswa::create([
             'pembelajaran_id' => 2,
             'km_nilai_akhir_raport_id' => 2,
-            'deskripsi_sumatif' => 'Deskripsi Sumatif',
-            'deskripsi_formatif' => 'Deskripsi Formatif',
+            'deskripsi_raport' => 'Deskripsi Formatif, Deskripsi Formatif, Deskripsi Formatif',
         ]);
 
         KmDeskripsiNilaiSiswa::create([
             'pembelajaran_id' => 3,
             'km_nilai_akhir_raport_id' => 3,
-            'deskripsi_sumatif' => 'Deskripsi Sumatif',
-            'deskripsi_formatif' => 'Deskripsi Formatif',
+            'deskripsi_raport' => 'Deskripsi Formatif, Deskripsi Formatif, Deskripsi Formatif',
         ]);
 
         KmDeskripsiNilaiSiswa::create([
             'pembelajaran_id' => 4,
             'km_nilai_akhir_raport_id' => 4,
-            'deskripsi_sumatif' => 'Deskripsi Sumatif',
-            'deskripsi_formatif' => 'Deskripsi Formatif',
+            'deskripsi_raport' => 'Deskripsi Formatif, Deskripsi Formatif, Deskripsi Formatif',
         ]);
 
         KmDeskripsiNilaiSiswa::create([
             'pembelajaran_id' => 4,
             'km_nilai_akhir_raport_id' => 5,
-            'deskripsi_sumatif' => 'Deskripsi Sumatif',
-            'deskripsi_formatif' => 'Deskripsi Formatif',
+            'deskripsi_raport' => 'Deskripsi Formatif, Deskripsi Formatif, Deskripsi Formatif',
         ]);
     }
 }

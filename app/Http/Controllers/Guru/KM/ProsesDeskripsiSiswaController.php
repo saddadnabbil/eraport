@@ -76,16 +76,16 @@ class ProsesDeskripsiSiswaController extends Controller
                     $rencana_nilai_sumatif_id = RencanaNilaiSumatif::where('pembelajaran_id', $pembelajaran->id)->get('id');
                     $nilai_sumatif_terbaik = NilaiSumatif::whereIn('rencana_nilai_sumatif_id', $rencana_nilai_sumatif_id)->where('anggota_kelas_id', $nilai_siswa->anggota_kelas_id)->orderBy('nilai', 'DESC')->first();
                     $rencana_nilai_sumatif_terbaik_id = RencanaNilaiSumatif::findorfail($nilai_sumatif_terbaik->rencana_nilai_sumatif_id);
-                    $cp_sumatif_terbaik = CapaianPembelajaran::findorfail($rencana_nilai_sumatif_terbaik_id->capaian_pembelajaran_id);
+                    // $cp_sumatif_terbaik = CapaianPembelajaran::findorfail($rencana_nilai_sumatif_terbaik_id->capaian_pembelajaran_id);
 
-                    $nilai_siswa->deskripsi_sumatif = $cp_sumatif_terbaik->ringkasan_cp;
+                    // $nilai_siswa->deskripsi_sumatif = $cp_sumatif_terbaik->ringkasan_cp;
 
                     $rencana_nilai_formatif_id = RencanaNilaiFormatif::where('pembelajaran_id', $pembelajaran->id)->get('id');
                     $nilai_formatif_terbaik = NilaiFormatif::whereIn('rencana_nilai_formatif_id', $rencana_nilai_formatif_id)->where('anggota_kelas_id', $nilai_siswa->anggota_kelas_id)->orderBy('nilai', 'DESC')->first();
                     $rencana_nilai_formatif_terbaik = RencanaNilaiFormatif::findorfail($nilai_formatif_terbaik->rencana_nilai_formatif_id);
-                    $cp_formatif_terbaik = CapaianPembelajaran::findorfail($rencana_nilai_formatif_terbaik->capaian_pembelajaran_id);
+                    // $cp_formatif_terbaik = CapaianPembelajaran::findorfail($rencana_nilai_formatif_terbaik->capaian_pembelajaran_id);
 
-                    $nilai_siswa->deskripsi_formatif = $cp_formatif_terbaik->ringkasan_cp;
+                    // $nilai_siswa->deskripsi_formatif = $cp_formatif_terbaik->ringkasan_cp;
 
                     $nilai_siswa->deskripsi_nilai_siswa = KmDeskripsiNilaiSiswa::where('pembelajaran_id', $pembelajaran->id)->where('km_nilai_akhir_raport_id', $nilai_siswa->id)->first();
                 }
@@ -109,8 +109,8 @@ class ProsesDeskripsiSiswaController extends Controller
                 $data_deskripsi = array(
                     'pembelajaran_id' => $request->pembelajaran_id,
                     'km_nilai_akhir_raport_id'  => $request->nilai_akhir_raport_id[$cound_siswa],
-                    'deskripsi_sumatif'  => $request->deskripsi_sumatif[$cound_siswa],
-                    'deskripsi_formatif'  => $request->deskripsi_formatif[$cound_siswa],
+                    'deskripsi_raport'  => $request->deskripsi_sumatif[$cound_siswa],
+                    // 'deskripsi_formatif'  => $request->deskripsi_formatif[$cound_siswa],
                     'created_at'  => Carbon::now(),
                     'updated_at'  => Carbon::now(),
                 );

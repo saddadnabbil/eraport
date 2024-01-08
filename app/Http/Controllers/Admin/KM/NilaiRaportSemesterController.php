@@ -11,6 +11,7 @@ use App\KmNilaiAkhirRaport;
 use App\K13NilaiAkhirRaport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Term;
 use Illuminate\Support\Facades\Validator;
 
 class NilaiRaportSemesterController extends Controller
@@ -23,14 +24,9 @@ class NilaiRaportSemesterController extends Controller
     public function index()
     {
         $title = 'Nilai Raport Semester';
-        // $tapel = Tapel::findorfail(session()->get('tapel_id'));
-
-        // $data_mapel = Mapel::where('tapel_id', $tapel->id)->get();
-        // $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
-
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $term = Term::findorfail(session()->get('term_id'));
 
-        // $guru = Guru::where('user_id', Auth::user()->id)->first();
         $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
         $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
 
@@ -46,8 +42,6 @@ class NilaiRaportSemesterController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            // 'mapel_id' => 'required',
-            // 'kelas_id' => 'required',
             'pembelajaran_id' => 'required',
         ]);
         if ($validator->fails()) {

@@ -6,6 +6,7 @@ use App\Kelas;
 use App\Mapel;
 use App\Tapel;
 use App\Sekolah;
+use App\Semester;
 use App\AnggotaKelas;
 use App\Pembelajaran;
 use App\KmMappingMapel;
@@ -40,6 +41,7 @@ class PengelolaanNilaiController extends Controller
         $title = 'Hasil Pengelolaan Nilai';
         $sekolah = Sekolah::first();
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $semester = Semester::findorfail(session()->get('semester_id'));
         $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
 
         $kelas = Kelas::findorfail($request->kelas_id);
@@ -48,7 +50,6 @@ class PengelolaanNilaiController extends Controller
 
         $data_id_mapel_kelompok_a = KmMappingMapel::whereIn('mapel_id', $data_id_mapel_semester_ini)->where('kelompok', 'A')->get('mapel_id');
         $data_id_mapel_kelompok_b = KmMappingMapel::whereIn('mapel_id', $data_id_mapel_semester_ini)->where('kelompok', 'B')->get('mapel_id');
-
 
         $data_anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
             ->orderBy('siswa.nama_lengkap', 'ASC')
@@ -65,7 +66,7 @@ class PengelolaanNilaiController extends Controller
             $anggota_kelas->data_nilai_kelompok_a = $data_nilai_kelompok_a;
             $anggota_kelas->data_nilai_kelompok_b = $data_nilai_kelompok_b;
         }
-        return view('admin.km.pengelolaannilai.index', compact('title', 'kelas', 'data_kelas', 'sekolah', 'data_anggota_kelas'));
+        return view('admin.km.pengelolaannilai.index', compact('title', 'kelas', 'data_kelas', 'sekolah', 'data_anggota_kelas', 'semester'));
     }
 
     /**
