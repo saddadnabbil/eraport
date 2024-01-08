@@ -16,7 +16,8 @@ class CreateRencanaNilaiSumatifsTable extends Migration
         Schema::create('rencana_nilai_sumatifs', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('pembelajaran_id')->unsigned();
-            $table->unsignedBigInteger('capaian_pembelajaran_id')->unsigned();
+            $table->unsignedBigInteger('term_id')->unsigned();
+            $table->unsignedBigInteger('capaian_pembelajaran_id')->unsigned()->nullable();
             $table->string('kode_penilaian');
             $table->enum('teknik_penilaian', ['1', '2', '3']);
             $table->integer('bobot_teknik_penilaian');
@@ -24,6 +25,7 @@ class CreateRencanaNilaiSumatifsTable extends Migration
 
             $table->foreign('pembelajaran_id')->references('id')->on('pembelajaran');
             $table->foreign('capaian_pembelajaran_id')->references('id')->on('capaian_pembelajarans');
+            $table->foreign('term_id')->references('id')->on('terms');
 
             // Teknik Penilaian
             // 1 = Tes Tulis

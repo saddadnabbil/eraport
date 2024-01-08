@@ -99,7 +99,6 @@
                         </tr>
                       @endforeach
                     @else
-                      <!-- Jika tidak ada data, tampilkan field kosong -->
                       <tr>
                         <td>
                           <input type="text" class="form-control" name="kode_cp[]" required oninvalid="this.setCustomValidity('data tidak boleh kosong')" oninput="setCustomValidity('')">

@@ -13,7 +13,7 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item "><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item "><a href="{{ route('rencanasumatif.index') }}">Rencana Nilai Pengetahuan</a></li>
+            <li class="breadcrumb-item "><a href="{{ route('rencanasumatif.index') }}">Rencana Nilai Keterampilan</a></li>
             <li class="breadcrumb-item active">{{$title}}</li>
           </ol>
         </div><!-- /.col -->
@@ -47,10 +47,7 @@
                   <div class="form-group row">
                     <label for="jumlah_penilaian" class="col-sm-2 col-form-label">Jumlah Penilaian</label>
                     <div class="col-sm-10">
-                      <select class="form-control select2" name="jumlah_penilaian" style="width: 100%;" required onchange="this.form.submit();">
-                        <option value="" disabled>-- Pilih Jumlah Penilaian --</option>
-                        @for ($i = 1; $i <= 20; $i++) <option value="{{$i}}" @if($i==$jumlah_penilaian) selected @endif>{{$i}}</option> @endfor
-                      </select>
+                      <input type="text" class="form-control " name="jumlah_penilaian" id="jumlah_penilaian" value="{{$jumlah_penilaian}}" style="width: 100%;" required onchange="this.form.submit();" disabled>
                     </div>
                   </div>
                 </form>
@@ -60,6 +57,7 @@
                 @csrf
 
                 <input type="hidden" name="pembelajaran_id" value="{{$pembelajaran->id}}">
+                <input type="hidden" name="term_id" value="{{$term->term}}">
                 <div class="table-responsive">
                   <table class="table table-bordered table-hover">
                     <thead class="bg-primary">
@@ -72,7 +70,7 @@
                       <tr class="bg-primary">
                         <td>Kelompok/Teknik Penilaian</td>
                         @for ($i = 1; $i <= $jumlah_penilaian; $i++) <td>
-                          <select class="form-control" name="teknik_penilaian[]" style="width: 100%;" required oninvalid="this.setCustomValidity('silakan pilih item dalam daftar')" oninput="setCustomValidity('')">
+                          <select class="form-control" name="teknik_penilaian[]" style="width: 100%;" required oninvalid="this.setCustomValidity('silakan pilih item dalam daftar')" oninput="setCustomValidity('')" >
                             <option value="">-- Teknik Penilaian --</option>
                             <option value="1">Tes Tulis</option>
                             <option value="2">Tes Lisan</option>
@@ -82,49 +80,29 @@
                           @endfor
                       </tr>
                       <tr class="bg-primary">
-                        <td>Bobot Teknik Penilaian</td>
-                        @for ($i = 1; $i <= $jumlah_penilaian; $i++) <td>
-                          <input type="number" class="form-control" name="bobot_teknik_penilaian[]" value="1" required oninvalid="this.setCustomValidity('data tidak boleh kosong')" oninput="setCustomValidity('')">
-                          </td>
-                          @endfor
-                      </tr>
-                      <tr class="bg-primary">
                         <td>Kode Penilaian</td>
                         @for ($i = 1; $i <= $jumlah_penilaian; $i++) <td>
-                          <input type="text" class="form-control" name="kode_penilaian[]" value="P{{$i}}" required oninvalid="this.setCustomValidity('data tidak boleh kosong')" oninput="setCustomValidity('')">
+                          <input type="text" class="form-control" name="kode_penilaian[]" value="S{{$i}}" required oninvalid="this.setCustomValidity('data tidak boleh kosong')" oninput="setCustomValidity('')">
                           </td>
                           @endfor
                       </tr>
-
                       <tr class="bg-primary">
-                        <th>Kompetensi Dasar</th>
+                        <td>Bobot Teknik Penilaian</td>
                         @for ($i = 1; $i <= $jumlah_penilaian; $i++) <td>
-                          </td>@endfor
-                      </tr>
-                      @foreach($data_cp as $cp)
-                      <tr>
-                        <td><small><b>{{$cp->kode_cp}}</b> {{$cp->ringkasan_cp}}</small></td>
-                        @for ($i = 0; $i < $jumlah_penilaian; $i++) <td class="text-center">
-                          <input type="radio" name="capaian_pembelajaran_id[{{$i}}][]" value="{{$cp->id}}" class="form-check-input mx-0">
+                          <input type="number" class="form-control" name="bobot_teknik_penilaian[]" value="75" required oninvalid="this.setCustomValidity('data tidak boleh kosong')" oninput="setCustomValidity('')">
                           </td>
                           @endfor
                       </tr>
-                      @endforeach
                     </tbody>
                   </table>
                 </div>
 
-                <div class="alert alert-warning alert-dismissible">
-                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                  <h5><i class="icon fas fa-exclamation-triangle"></i> Perhatian</h5>
-                  <p>Jika CP yang tampil tidak sesuai, silahkan cek dan lakukan mapping semester pada menu <a href="{{ route('cp.index') }}">Data Kompetensi Dasar</a></p>
-                </div>
-              </div>
+            </div>
 
-              <div class="card-footer clearfix">
-                <button type="submit" class="btn btn-primary float-right">Simpan</button>
-                <a href="{{ route('rencanasumatif.index') }}" class="btn btn-default float-right mr-2">Batal</a>
-              </div>
+            <div class="card-footer clearfix">
+              <button type="submit" class="btn btn-primary float-right">Simpan</button>
+              <a href="{{ route('rencanasumatif.index') }}" class="btn btn-default float-right mr-2">Batal</a>
+            </div>
             </form>
           </div>
           <!-- /.card -->

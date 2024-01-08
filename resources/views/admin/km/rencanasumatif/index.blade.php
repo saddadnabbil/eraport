@@ -61,95 +61,19 @@
                       </td>
                       <td>
                         @if($penilaian->jumlah_rencana_penilaian == 0)
-                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-tambah{{$penilaian->id}}">
-                          <i class="fas fa-plus"></i>
-                        </button>
+                          <form action="{{ route('rencanasumatif.create', $penilaian->id) }}" method="GET">
+                            @csrf
+                            <input type="hidden" name="pembelajaran_id" value="{{$penilaian->id}}">
+                            <input type="hidden" name="jumlah_penilaian" value="{{$penilaian->jumlah_rencana_penilaian == 0 ? 3 : $penilaian->jumlah_rencana_penilaian}}">
+
+                            <button type="submit" class="btn btn-sm btn-primary"><i class="{{ $penilaian->jumlah_rencana_penilaian == 0 ? 'fas fa-plus' : 'fas fa-pen' }}"></i></button>
+                          </form>
                         @else
-                        <a href="{{ route('rencanasumatif.show', $penilaian->id) }}" class="btn btn-sm btn-success"><i class="fas fa-eye"></i></a>
-                        <!-- <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modal-edit{{$penilaian->id}}">
-                          <i class="fas fa-pencil-alt"></i>
-                        </button> -->
+                          <a href="{{ route('rencanasumatif.show', $penilaian->id) }}" class="btn btn-sm btn-success"><i class="fas fa-eye"></i></a>
                         @endif
                       </td>
                     </tr>
 
-                    <!-- Modal tambah  -->
-                    <div class="modal fade" id="modal-tambah{{$penilaian->id}}">
-                      <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title">Tambah {{$title}}</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <div class="modal-body">
-                            <form action="{{ route('rencanasumatif.create') }}" method="GET">
-                              @csrf
-                              <div class="form-group row">
-                                <label for="pembelajaran_id" class="col-sm-3 col-form-label">Mata Pelajaran</label>
-                                <div class="col-sm-9">
-                                  <select class="form-control" name="pembelajaran_id" style="width: 100%;" aria-readonly="true">
-                                    <option value="{{$penilaian->id}}" selected>{{$penilaian->mapel->nama_mapel}} {{$penilaian->kelas->nama_kelas}}</option>
-                                  </select>
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label for="jumlah_penilaian" class="col-sm-3 col-form-label">Jumlah Penilaian</label>
-                                <div class="col-sm-9">
-                                  <select class="form-control select2" name="jumlah_penilaian" style="width: 100%;" required onchange="this.form.submit();">
-                                    <option value="">-- Pilih Jumlah Penilaian --</option>
-                                    @for ($i = 1; $i <= 20; $i++) <option value="{{$i}}">{{$i}}</option> @endfor
-                                  </select>
-                                </div>
-                              </div>
-                            </form>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- End Modal tambah -->
-
-                    <!-- Modal edit  -->
-                    <div class="modal fade" id="modal-edit{{$penilaian->id}}">
-                      <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title">Edit {{$title}}</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <div class="modal-body">
-                            <div class="alert alert-warning alert-dismissible">
-                              <h5><i class="icon fas fa-exclamation-triangle"></i> Perhatian</h5>
-                              <span>Proses edit perencanaan penilaian otomatis akan menghapus data perencanaan lama yang telah tersimpan di aplikasi.</span>
-                            </div>
-                            <form action="{{ route('rencanasumatif.edit', $penilaian->id) }}" method="GET">
-                              @csrf
-                              <div class="form-group row">
-                                <label for="pembelajaran_id" class="col-sm-3 col-form-label">Mata Pelajaran</label>
-                                <div class="col-sm-9">
-                                  <select class="form-control" name="pembelajaran_id" style="width: 100%;" aria-readonly="true">
-                                    <option value="{{$penilaian->id}}" selected>{{$penilaian->mapel->nama_mapel}} {{$penilaian->kelas->nama_kelas}}</option>
-                                  </select>
-                                </div>
-                              </div>
-                              <div class="form-group row">
-                                <label for="jumlah_penilaian" class="col-sm-3 col-form-label">Jumlah Penilaian</label>
-                                <div class="col-sm-9">
-                                  <select class="form-control select2" name="jumlah_penilaian" style="width: 100%;" required onchange="this.form.submit();">
-                                    <option value="">-- Pilih Jumlah Penilaian --</option>
-                                    @for ($i = 1; $i <= 20; $i++) <option value="{{$i}}">{{$i}}</option> @endfor
-                                  </select>
-                                </div>
-                              </div>
-                            </form>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- End Modal edit -->
                     @endforeach
                   </tbody>
                 </table>

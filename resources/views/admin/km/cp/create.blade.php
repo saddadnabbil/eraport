@@ -73,8 +73,6 @@
                       @foreach($existingData as $data)
                         <tr>
                           <td {!! $data->canDelete ? '' : 'data-toggle="popover" data-placement="right" title data-content="<b>Tidak Bisa Diedit.</b> <br> Sedang digunakan dalam salah satu penilaian"' !!}>
-                              <!-- Isi dari td di sini -->
-                            <input type="text" class="form-control" name="kode_cp[]" value="{{ $data->kode_cp }}" required oninvalid="this.setCustomValidity('data tidak boleh kosong')" oninput="setCustomValidity('')" {{ $data->canDelete ? '' : 'disabled' }}>
                           </td>
 
                           <td {!! $data->canDelete ? '' : 'data-toggle="popover" data-placement="right" title data-content="<b>Tidak Bisa Diedit.</b> <br> Sedang digunakan dalam salah satu penilaian"' !!}>
@@ -99,7 +97,6 @@
                         </tr>
                       @endforeach
                     @else
-                      <!-- Jika tidak ada data, tampilkan field kosong -->
                       <tr>
                         <td>
                           <input type="text" class="form-control" name="kode_cp[]" required oninvalid="this.setCustomValidity('data tidak boleh kosong')" oninput="setCustomValidity('')">

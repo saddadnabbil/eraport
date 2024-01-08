@@ -62,10 +62,8 @@
                     <tr>
                       <th class="text-center" style="width: 50px;">Sumatif</th>
                       <th class="text-center" style="width: 50px;">Formatif</th>
-
                       <th class="text-center" style="width: 50px;">Sumatif</th>
                       <th class="text-center" style="width: 50px;">Formatif</th>
-
                       <th class="text-center" style="width: 50px;">Kirim Nilai</th>
                       <th class="text-center" style="width: 50px;">Proses Deskripsi</th>
                     </tr>
@@ -114,7 +112,6 @@
                       @else
                       <td class="text-center bg-success"><i class="fas fa-check"></i></td>
                       @endif
-
                     </tr>
                     @endforeach
                   </tbody>

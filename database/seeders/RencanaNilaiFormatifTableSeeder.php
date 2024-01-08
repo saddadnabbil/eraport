@@ -16,7 +16,7 @@ class RencanaNilaiFormatifTableSeeder extends Seeder
     {
         RencanaNilaiFormatif::create([
             'pembelajaran_id' => 1,
-            'capaian_pembelajaran_id' => 1,
+            'term_id' => 1,
             'teknik_penilaian' => '1',
             'kode_penilaian' => 'P1',
             'bobot_teknik_penilaian' => 40
@@ -24,7 +24,7 @@ class RencanaNilaiFormatifTableSeeder extends Seeder
 
         RencanaNilaiFormatif::create([
             'pembelajaran_id' => 1,
-            'capaian_pembelajaran_id' => 1,
+            'term_id' => 1,
             'teknik_penilaian' => '2',
             'kode_penilaian' => 'P2',
             'bobot_teknik_penilaian' => 40
@@ -32,7 +32,7 @@ class RencanaNilaiFormatifTableSeeder extends Seeder
 
         RencanaNilaiFormatif::create([
             'pembelajaran_id' => 2,
-            'capaian_pembelajaran_id' => 2,
+            'term_id' => 1,
             'teknik_penilaian' => '1',
             'kode_penilaian' => 'P2',
             'bobot_teknik_penilaian' => 30
@@ -40,7 +40,7 @@ class RencanaNilaiFormatifTableSeeder extends Seeder
 
         RencanaNilaiFormatif::create([
             'pembelajaran_id' => 3,
-            'capaian_pembelajaran_id' => 3,
+            'term_id' => 1,
             'teknik_penilaian' => '1',
             'kode_penilaian' => 'P1',
             'bobot_teknik_penilaian' => 30
@@ -48,7 +48,7 @@ class RencanaNilaiFormatifTableSeeder extends Seeder
 
         RencanaNilaiFormatif::create([
             'pembelajaran_id' => 4,
-            'capaian_pembelajaran_id' => 4,
+            'term_id' => 1,
             'teknik_penilaian' => '1',
             'kode_penilaian' => 'P1',
             'bobot_teknik_penilaian' => 30

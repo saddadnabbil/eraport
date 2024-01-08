@@ -71,7 +71,7 @@
                         @foreach($rencana_penilaian_data_formatif as $rencana_penilaian_formatif)
                             <input type="hidden" name="rencana_nilai_formatif_id[]" value="{{$rencana_penilaian_formatif['id']}}">
                             <input type="hidden" name="bobot_rencana_nilai_formatif_id[]" value="{{$rencana_penilaian_formatif['bobot']}}">
-                            <th class="text-center" data-toggle="popover" data-placement="right" title data-content="<b>{{$rencana_penilaian_formatif['teknik_penilaian']}}<br> Bobot:{{$rencana_penilaian_formatif['bobot']}}</b><br>{{$rencana_penilaian_formatif['kode_cp']}}</b> {{$rencana_penilaian_formatif['ringkasan_cp']}}">
+                            <th class="text-center" data-toggle="popover" data-placement="right" title data-content="<b>{{$rencana_penilaian_formatif['teknik_penilaian']}}<br> Bobot:{{$rencana_penilaian_formatif['bobot']}}</b><br></b>">
                               (F) {{$rencana_penilaian_formatif['kode_penilaian']}}
                             </th>
                         @endforeach
@@ -80,7 +80,7 @@
                         @foreach($rencana_penilaian_data_sumatif as $rencana_penilaian_sumatif)
                             <input type="hidden" name="rencana_nilai_sumatif_id[]" value="{{$rencana_penilaian_sumatif['id']}}">
                             <input type="hidden" name="bobot_rencana_nilai_sumatif_id[]" value="{{$rencana_penilaian_sumatif['bobot']}}">
-                            <th class="text-center" data-toggle="popover" data-placement="right" title data-content="<b>{{$rencana_penilaian_sumatif['teknik_penilaian']}}<br> Bobot:{{$rencana_penilaian_sumatif['bobot']}}</b><br> <b>{{$rencana_penilaian_sumatif['kode_cp']}}</b> {{$rencana_penilaian_sumatif['ringkasan_cp']}}">
+                            <th class="text-center" data-toggle="popover" data-placement="right" title data-content="<b>{{$rencana_penilaian_sumatif['teknik_penilaian']}}<br> Bobot:{{$rencana_penilaian_sumatif['bobot']}}</b><br> <b></b> ">
                               (S) {{$rencana_penilaian_sumatif['kode_penilaian']}}
                             </th>
                         @endforeach
@@ -101,7 +101,7 @@
                               <td>{{$anggota_kelas->siswa->nama_lengkap}}</td>
                               <input type="hidden" name="anggota_kelas_id[]" value="{{$anggota_kelas->id}}">
 
-                              <?php $i = 0; ?> <!-- Inisialisasi $i di sini -->
+                              <?php $i = 0; ?>
                               @foreach($data_rencana_penilaian_formatif as $rencana_penilaian_formatif)
                                   @if ($rencana_penilaian_formatif->nilai_formatif->isEmpty())
                                       <td>
@@ -116,12 +116,12 @@
                                           @endif
                                       @endforeach
                                   @endif
-                                  <?php $i++; ?> <!-- Meningkatkan $i setelah setiap operasi -->
+                                  <?php $i++; ?>
                               @endforeach
                               <td class="red nilai-proses" name="nilaiAkhirFormatif">{{$nilaiAkhirFormatif}} </td>
                               <input type="hidden" name="nilaiAkhirFormatif" id="nilaiAkhirFormatif" >
 
-                              <?php $i = 0; ?> <!-- Mengatur ulang $i kembali ke 0 -->
+                              <?php $i = 0; ?> 
                               @foreach($data_rencana_penilaian_sumatif as $rencana_penilaian_sumatif)
                                   @if ($rencana_penilaian_sumatif->nilai_sumatif->isEmpty())
                                       <td>
@@ -136,7 +136,7 @@
                                           @endif
                                       @endforeach
                                   @endif
-                                  <?php $i++; ?> <!-- Meningkatkan $i setelah setiap operasi -->
+                                  <?php $i++; ?> 
                               @endforeach
                               <td class="red nilai-proses" name="nilaiAkhirSumatif">{{ $nilaiAkhirSumatif }}</td>
                               <input type="hidden" name="nilaiAkhirSumatif" id="nilaiAkhirSumatif" >

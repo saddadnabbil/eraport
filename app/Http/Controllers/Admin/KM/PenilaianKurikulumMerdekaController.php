@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use App\RencanaNilaiFormatif;
 use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
+use App\Term;
 use Illuminate\Support\Facades\Validator;
 
 class PenilaianKurikulumMerdekaController extends Controller
@@ -65,32 +66,27 @@ class PenilaianKurikulumMerdekaController extends Controller
             $pembelajaran_id = $request->pembelajaran_id;
 
             $tapel = Tapel::findorfail(session()->get('tapel_id'));
+            $term = Term::findorfail(session()->get('term_id'));
+
             $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
             $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
 
-            // Data Rencana Nilai Sumatif
-            // $data_rencana_penilaian_sumatif = RencanaNilaiSumatif::where('pembelajaran_id', $request->pembelajaran_id)->get();
-            $data_rencana_penilaian_sumatif = RencanaNilaiSumatif::with('nilai_sumatif')->where('pembelajaran_id', $request->pembelajaran_id)->get();
+            $data_rencana_penilaian_sumatif = RencanaNilaiSumatif::with('nilai_sumatif')->where('term_id', $term->term)->where('pembelajaran_id', $request->pembelajaran_id)->get();
             $count_cp_sumatif = count($data_rencana_penilaian_sumatif);
 
-            // dd($data_rencana_penilaian_sumatif);
-
-            // Data Rencana Nilai Formatif
-            // $data_rencana_penilaian_formatif = RencanaNilaiFormatif::where('pembelajaran_id', $request->pembelajaran_id)->get();
-            $data_rencana_penilaian_formatif = RencanaNilaiFormatif::with('nilai_formatif')->where('pembelajaran_id', $request->pembelajaran_id)->get();
+            $data_rencana_penilaian_formatif = RencanaNilaiFormatif::with('nilai_formatif')->where('term_id', $term->term)->where('pembelajaran_id', $request->pembelajaran_id)->get();
 
             $count_cp_formatif = count($data_rencana_penilaian_formatif);
 
-            if ($count_cp_sumatif == null) {
+            if ($count_cp_formatif == null) {
                 return redirect(route('rencanasumatif.index'))->with('toast_error', 'Belum ada rencana penilaian ' .  $pembelajaran->mapel->nama_mapel . ' ' . $pembelajaran->kelas->nama_kelas . ', silahkan tambah rencana nilai sumatif ' . $pembelajaran->mapel->nama_mapel . ' ' .  $pembelajaran->kelas->nama_kelas . ' terlebih dahulu!');
-            } elseif ($count_cp_formatif == null) {
+            } elseif ($count_cp_sumatif == null) {
                 return redirect(route('rencanaformatif.index'))->with('toast_error', 'Belum ada rencana penilaian ' .  $pembelajaran->mapel->nama_mapel . ' ' . $pembelajaran->kelas->nama_kelas . ', silahkan tambah rencana nilai formatif ' . $pembelajaran->mapel->nama_mapel . ' ' .  $pembelajaran->kelas->nama_kelas . ' terlebih dahulu!');
             }
 
             $rencana_penilaian_data_sumatif = [];
             $rencana_penilaian_data_formatif = [];
 
-            // Tambahkan data Rencana Nilai Sumatif ke $rencana_penilaian_data
             foreach ($data_rencana_penilaian_sumatif as $rencana_penilaian_sumatif) {
                 $teknik_penilaian = '';
 
@@ -104,15 +100,12 @@ class PenilaianKurikulumMerdekaController extends Controller
 
                 $rencana_penilaian_data_sumatif[] = [
                     'id' => $rencana_penilaian_sumatif->id,
-                    'kode_cp' => $rencana_penilaian_sumatif->capaian_pembelajaran->kode_cp,
                     'kode_penilaian' => $rencana_penilaian_sumatif->kode_penilaian,
-                    'ringkasan_cp' => $rencana_penilaian_sumatif->capaian_pembelajaran->ringkasan_cp,
                     'teknik_penilaian' => $teknik_penilaian,
                     'bobot' => $rencana_penilaian_sumatif->bobot_teknik_penilaian
                 ];
             }
 
-            // Tambahkan data Rencana Nilai Formatif ke $rencana_penilaian_data
             foreach ($data_rencana_penilaian_formatif as $rencana_penilaian_formatif) {
                 $teknik_penilaian = '';
 
@@ -136,9 +129,7 @@ class PenilaianKurikulumMerdekaController extends Controller
 
                 $rencana_penilaian_data_formatif[] = [
                     'id' => $rencana_penilaian_formatif->id,
-                    'kode_cp' => $rencana_penilaian_formatif->capaian_pembelajaran->kode_cp,
                     'kode_penilaian' => $rencana_penilaian_formatif->kode_penilaian,
-                    'ringkasan_cp' => $rencana_penilaian_formatif->capaian_pembelajaran->ringkasan_cp,
                     'teknik_penilaian' => $teknik_penilaian,
                     'bobot' => $rencana_penilaian_formatif->bobot_teknik_penilaian
                 ];
@@ -183,7 +174,6 @@ class PenilaianKurikulumMerdekaController extends Controller
             $data_penilaian_sumatif_siswa = array();
             $data_penilaian_formatif_siswa = array();
 
-            // Proses untuk Penilaian Sumatif
             for ($count_siswa = 0; $count_siswa < count($request->anggota_kelas_id); $count_siswa++) {
                 for ($count_penilaian = 0; $count_penilaian < count($request->rencana_nilai_sumatif_id); $count_penilaian++) {
                     if ($request->nilai_sumatif[$count_penilaian][$count_siswa] >= 0 && $request->nilai_sumatif[$count_penilaian][$count_siswa] <= 100) {
@@ -241,7 +231,6 @@ class PenilaianKurikulumMerdekaController extends Controller
                     $nilaiAkhirSumatif = $request->nilaiAkhirSumatif;
                     $nilaiAkhirFormatif = $request->nilaiAkhirFormatif;
 
-                    // Hitung nilai akhir berdasarkan input formatif dan sumatif
                     $bobotSumatif = 0.3;
                     $bobotFormatif = 0.7;
 
@@ -250,10 +239,9 @@ class PenilaianKurikulumMerdekaController extends Controller
                     if (isset($request->nilai_revisi[$count_siswa])) {
                         $nilaiRevisi = $request->nilai_revisi[$count_siswa];
                     } else {
-                        $nilaiRevisi = null; // Atau nilai default lainnya sesuai kebutuhan Anda
+                        $nilaiRevisi = null;
                     }
 
-                    // Disimpan ke database, misalnya:
                     $dataNilaiAkhir = [
                         'anggota_kelas_id' => $request->anggota_kelas_id[$count_siswa],
                         'nilai_akhir_formatif' => $nilaiAkhirFormatif,
@@ -264,9 +252,6 @@ class PenilaianKurikulumMerdekaController extends Controller
                         'updated_at' => Carbon::now(),
                     ];
 
-                    // Simpan data ke dalam tabel nilai_akhirs atau tabel yang sesuai
-                    // Anda bisa menggunakan metode updateOrCreate atau metode lain sesuai kebutuhan
-                    // Contoh:
                     NilaiAkhir::updateOrCreate(
                         ['anggota_kelas_id' => $dataNilaiAkhir['anggota_kelas_id']],
                         $dataNilaiAkhir

@@ -105,7 +105,6 @@
                         <label for="kelas_id" class="col-sm-3 col-form-label">Kelas</label>
                         <div class="col-sm-9">
                           <select class="form-control select2" name="kelas_id" style="width: 100%;" required>
-                            <!--  -->
                           </select>
                         </div>
                       </div>

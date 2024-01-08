@@ -59,22 +59,16 @@ class CapaianPembelajaranController extends Controller
             $tingkatan_id = $pembelajaran->kelas->tingkatan->id;
             $existingData = CapaianPembelajaran::where('pembelajaran_id', $pembelajaran_id)->get();
 
-            // dd($existingData);
-
-            // Menambah properti canDelete ke setiap item di $existingData
             foreach ($existingData as $data) {
                 $data->canDelete = $this->isCapaianPembelajaranDeletable($data);
             }
-
 
             return view('admin.km.cp.create', compact('title', 'mapel_id', 'tingkatan_id', 'tapel', 'existingData', 'data_pembelajaran', 'pembelajaran_id', 'pembelajaran', 'semester'));
         }
     }
 
-    // Fungsi untuk mengecek apakah CapaianPembelajaran dapat dihapus
     private function isCapaianPembelajaranDeletable($capaian)
     {
-        // Check if capaian_pembelajaran_id is used in either rencana_nilai_sumatif or rencana_nilai_formatif
         $isUsedInRencanaNilai = $capaian->rencana_nilai_sumatif()->where('capaian_pembelajaran_id', $capaian->id)->exists()
             || $capaian->rencana_nilai_formatif()->where('capaian_pembelajaran_id', $capaian->id)->exists();
 
@@ -98,51 +92,56 @@ class CapaianPembelajaranController extends Controller
         ]);
 
         if ($validator->fails()) {
-            $errorMessage = $validator->messages()->all()[0];
+            $errorMessage = $validator->messages()->all()[0] . ' Jika ingin edit, hapus fields kosong.';
             return back()->with('toast_error', $errorMessage)->withInput();
         } else {
-            $existingData = CapaianPembelajaran::where('pembelajaran_id', $request->pembelajaran_id)->whereIn('kode_cp', $request->kode_cp)->pluck('kode_cp')->toArray();
-            $existingDatao = CapaianPembelajaran::whereNotIn('pembelajaran_id', $request->pembelajaran_id)->whereIn('kode_cp', $request->kode_cp)->pluck('kode_cp')->toArray();
+            $store_data_cp = [];
 
             for ($count = 0; $count < count($request->kode_cp); $count++) {
-                $data_cp = array(
-                    'mapel_id'  => $request->mapel_id,
-                    'tingkatan_id'  => $request->tingkatan_id,
-                    'pembelajaran_id'  => $request->pembelajaran_id,
-                    'semester'  => $request->semester,
-                    'kode_cp'  => $request->kode_cp[$count],
-                    'capaian_pembelajaran'  => $request->capaian_pembelajaran[$count],
-                    'ringkasan_cp'  => $request->ringkasan_cp[$count],
-                    'created_at'  => Carbon::now(),
-                    'updated_at'  => Carbon::now(),
-                );
+                // Cari data berdasarkan kode_cp
+                $existingData = CapaianPembelajaran::where('kode_cp', $request->kode_cp[$count])->first();
 
-                // Check if kode_cp already exists in the CapaianPembelajaran model
-                if (!in_array($request->kode_cp[$count], $existingData)) {
-                    $store_data_cp[] = $data_cp;
+                if ($existingData) {
+                    if ($existingData->pembelajaran_id == $request->pembelajaran_id) {
+                        $data_cp = [
+                            'mapel_id'            => $request->mapel_id,
+                            'tingkatan_id'        => $request->tingkatan_id,
+                            'pembelajaran_id'     => $request->pembelajaran_id,
+                            'semester'            => $request->semester,
+                            'capaian_pembelajaran' => $request->capaian_pembelajaran[$count],
+                            'ringkasan_cp'        => $request->ringkasan_cp[$count],
+                            'updated_at'          => Carbon::now(),
+                        ];
 
-                    CapaianPembelajaran::insert($store_data_cp);
-                    return back()->with('toast_success', 'Capaian pembelajaran berhasil ditambahkan');
-                } elseif (in_array($request->kode_cp[$count], $existingData)) {
-                    $data_cp = array(
-                        'mapel_id'  => $request->mapel_id,
-                        'tingkatan_id'  => $request->tingkatan_id,
-                        'pembelajaran_id'  => $request->pembelajaran_id,
-                        'semester'  => $request->semester,
-                        'capaian_pembelajaran'  => $request->capaian_pembelajaran[$count],
-                        'ringkasan_cp'  => $request->ringkasan_cp[$count],
-                        'updated_at'  => Carbon::now(),
-                    );
-
-                    CapaianPembelajaran::where('kode_cp', $request->kode_cp[$count])->update($data_cp);
-                    return back()->with('toast_success', 'Capaian pembelajaran berhasil diedit');
+                        CapaianPembelajaran::where('kode_cp', $request->kode_cp[$count])
+                            ->update($data_cp);
+                    } else {
+                        return back()->with('toast_error', 'Data sudah tersedia di pembelajaran lain');
+                    }
                 } else {
-                    return back()->with('toast_error', 'Kode CP sudah ada');
+                    $data_cp = [
+                        'mapel_id'            => $request->mapel_id,
+                        'tingkatan_id'        => $request->tingkatan_id,
+                        'pembelajaran_id'     => $request->pembelajaran_id,
+                        'semester'            => $request->semester,
+                        'kode_cp'             => $request->kode_cp[$count],
+                        'capaian_pembelajaran' => $request->capaian_pembelajaran[$count],
+                        'ringkasan_cp'        => $request->ringkasan_cp[$count],
+                        'created_at'          => Carbon::now(),
+                        'updated_at'          => Carbon::now(),
+                    ];
+                    $store_data_cp[] = $data_cp;
                 }
+            }
+
+            if (!empty($store_data_cp)) {
+                CapaianPembelajaran::insert($store_data_cp);
+                return back()->with('toast_success', 'Capaian pembelajaran berhasil ditambahkan');
+            } else {
+                return back()->with('toast_success', 'Capaian pembelajaran berhasil diedit');
             }
         }
     }
-
 
     public function destroy($id)
     {

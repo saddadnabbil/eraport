@@ -9,7 +9,7 @@ class RencanaNilaiSumatif extends Model
 {
     use HasFactory;
 
-    protected $guarded = 'id';
+    protected $guarded = ['id'];
 
     public function pembelajaran()
     {
@@ -25,12 +25,12 @@ class RencanaNilaiSumatif extends Model
     {
         return $this->hasMany('App\NilaiSumatif');
     }
-    // public function nilai_sumatif()
-    // {
-    //     return $this->hasMany('App\NilaiSumatif', 'capaian_pembelajaran_id');
-    // }
 
-    // Check if CapaianPembelajaran is used in RencanaNilaiSumatif
+    public function anggota_kelas()
+    {
+        return $this->hasMany('App\AnggotaKelas');
+    }
+
     public function isCapaianPembelajaranUsed()
     {
         return $this->nilai_sumatif()->exists();
