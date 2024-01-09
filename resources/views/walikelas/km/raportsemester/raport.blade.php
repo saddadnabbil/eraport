@@ -274,9 +274,9 @@
           <td class="center">{{$nilai_kelompok_a->predikat_sumatif}}</td>
           <td class="description">
             <span>
-              {{-- @if ($nilai_kelompok_a->km_deskripsi_nilai_siswa->deskripsi_raport)
+              @if ($nilai_kelompok_a->km_deskripsi_nilai_siswa->deskripsi_raport)
                   {!! nl2br($nilai_kelompok_a->km_deskripsi_nilai_siswa->deskripsi_raport) !!}
-              @endif   --}}
+              @endif 
             </span>
           </td>
         </tr>
@@ -285,6 +285,7 @@
         <!-- Nilai B  -->
         <tr class="nilai">
           <td colspan="6"><strong>Kelompok B</strong></td>
+          
         </tr>
         <?php $no = 0; ?>
         @foreach($data_nilai_kelompok_b->sortBy('pembelajaran.mapel.km_mapping_mapel.nomor_urut') as $nilai_kelompok_b)
@@ -297,9 +298,9 @@
           <td class="center">{{$nilai_kelompok_b->predikat_sumatif}}</td>
           <td class="description">
             <span>
-              {{-- @if ($nilai_kelompok_b->km_deskripsi_nilai_siswa)
+              @if ($nilai_kelompok_b->km_deskripsi_nilai_siswa)
                   {!! nl2br($nilai_kelompok_b->km_deskripsi_nilai_siswa->deskripsi_raport) !!}
-              @endif --}}
+              @endif
             </span>
           </td>
         </tr>
