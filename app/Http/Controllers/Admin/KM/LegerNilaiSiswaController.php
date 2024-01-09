@@ -119,7 +119,7 @@ class LegerNilaiSiswaController extends Controller
     {
         $kelas = Kelas::findorfail($id);
         $tapel = $kelas->tapel;
-        $semester = $tapel->semester;
+        $semester = $tapel->semester->semester;
         $tahun_pelajaran = $tapel->tahun_pelajaran;
 
         $filename = 'Daftar Legger - ' . $kelas->nama_kelas . ' - Semester ' . $semester . ' (' . $tahun_pelajaran . ').xls';

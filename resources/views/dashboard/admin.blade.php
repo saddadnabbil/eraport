@@ -29,7 +29,7 @@
       <div class="callout callout-success">
         <h5>{{$sekolah->nama_sekolah}}</h5>
         <p>{{$tapel->tahun_pelajaran}} Academic Year 
-          @if($tapel->semester == 1)
+          @if($tapel->semester->semester == 1)
           Odd Semester
           @else
           Even Semester

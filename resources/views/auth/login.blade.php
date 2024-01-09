@@ -43,7 +43,7 @@
               @foreach($data_tapel as $tapel)
               <?php $no++; ?>
               <option value="{{$tapel->id}}" @if($no==1) selected @endif>{{$tapel->tahun_pelajaran}}
-                @if($tapel->semester == 1)
+                @if($tapel->semester->semester == 1)
                 Ganjil
                 @else
                 Genap

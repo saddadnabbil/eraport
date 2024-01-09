@@ -121,7 +121,7 @@
     </div>
   </div> --}}
 
-  <div id="kop-surat-1" style="display: block;" class="">
+  {{-- <div id="kop-surat-1" style="display: block;" class="">
     <table style="width: 100%;!important;table-layout: fixed;">
         <colgroup>
             <col style="width: 95px;">
@@ -202,17 +202,13 @@
               </tr>
           </tbody>
   </table>
-  <div class="page-break"></div>
+  <div class="page-break"></div> --}}
 
 
   <!-- Page 2 sumatif  -->
   <div class="invoice-box">
     <div class="header">
-
       <table>
-        <tr>
-          {{-- image logo --}}
-        </tr>
         <tr>
           <td style="width: 19%;">Nama Sekolah</td>
           <td style="width: 52%;">: {{$sekolah->nama_sekolah}}</td>
@@ -242,89 +238,6 @@
           <td style="width: 52%;">: {{$anggota_kelas->siswa->nis}} / {{$anggota_kelas->siswa->nisn}} </td>
         </tr>
       </table>
-      <div id="kop-surat-1" style="display: block;" class="">
-          <table style="width: 100%;!important;table-layout: fixed;">
-              <colgroup>
-                  <col style="width: 95px;">
-                  <col>
-                  <col style="width: 95px;">
-              </colgroup>
-              <tbody>
-                  <tr>
-                      <td rowspan="6">
-                          <div id="img-kiri">
-                              <img id="logo_kiri_pada_kop" src="https://storage.googleapis.com/rapor_merdeka_media_bucket/section/12/logo_tutwuri.png" alt="" height="95px" width="95px">
-                          </div>
-                      </td>
-                      <td class="desc-kop-surat" id="desc-kop-surat-1" style=" font-weight: bold; font-size:  18px; color:#000000; text-align: center;">PEMERINTAH PROVINSI SUMATERA UTARA</td>
-                      <td rowspan="6">
-                          <div id="img-kanan">
-                              <img id="logo_kanan_pada_kop" src="https://storage.googleapis.com/rapor_merdeka_media_bucket/section/12/DWAF.png" alt="" height="95px" width="95px">
-                          </div>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td class="desc-kop-surat" id="desc-kop-surat-2" style="  font-weight: bold; font-size:  18px; color:#000000; text-align: center;">D I N A S   P E N D I D I K A N</td>
-                  </tr>
-                  <tr>
-                      <td class="desc-kop-surat" id="desc-kop-surat-3" style="  font-weight: bold; font-size:  16px; color:#000000; text-align: center;">SMA NEGERI 1 LAHUSA</td>
-                  </tr>
-                  <tr>
-                      <td class="desc-kop-surat" id="desc-kop-surat-4" style=" font-size:  12px; color:#000000; text-align: center;">Alamat : Desa Hilindrasoniha Kecamatan Toma Kabupaten Nias Selatan Kode Pos: 22865</td>
-                  </tr>
-                  <tr>
-                      <td class="desc-kop-surat" id="desc-kop-surat-5" style=" font-size:  12px; color:#000000; text-align: center;">Email : sman2toma@gmail.com Akreditas : B</td>
-                  </tr>
-                  <tr>
-                      <td class="desc-kop-surat" id="desc-kop-surat-6" style=" font-size:  9px; color:#000000; text-align: center;"></td>
-                  </tr>
-              </tbody>
-          </table>
-          <hr id="garis-bawah-kop" style="background-color: black !important;color: black;height:1.0px;opacity:1;">
-      </div>
-      <table class="table-anak">
-          <tbody>
-              <tr>
-                  <td style="width:15%">Nama </td>
-                  <td style="width:5%">:</td>
-                  <td style="width:42%">Budi Sudiyatno</td>
-                  <td style="width:17%">Kelas</td>
-                  <td style="width:5%">:</td>
-                  <td style="width:15%">7 A</td>
-              </tr>
-              <tr>
-                  <td style="width:15%">NIS / NISN</td>
-                  <td style="width:5%">:</td>
-                  <td style="width:42%">0000001 / 000292192</td>
-                  <td style="width:17%">Fase</td>
-                      <td style="width:5%">:</td>
-                      <td style="width:20%">D</td>
-              </tr>
-              <tr>
-                  <td style="width:15%">Nama Sekolah</td>
-                  <td style="width:5%">:</td>
-                  <td style="width:42%">SMP MAJU JAYA</td>
-                  <td style="width:17%">Semester</td>
-                      <td style="width:5%">:</td>
-                      <td style="width:15%">2022/2023</td>
-                  
-                  
-              </tr>
-              <tr>
-                  <td style="width:15%">Alamat</td>
-                  <td style="width:5%">:</td>
-                  <td style="width:42%">Jl. Maju Tidak Gentar</td>
-                  <td style="width:17%">Tahun Pelajaran</td>
-                      <td style="width:5%">:</td>
-                      <td style="width:15%">2022</td>
-              </tr>
-              <tr>
-                  <td colspan="6">
-                      <hr style="opacity: 1;">
-                  </td>
-              </tr>
-          </tbody>
-      </table>
     </div>
 
     <div class="content">
@@ -342,7 +255,7 @@
         <tr class="heading">
           <td style="width: 6%;">Nilai</td>
           <td style="width: 7%;">Predikat</td>
-          <td>Deskripsi</td>
+          <td>Capaian Pembelajaran</td>
         </tr>
         <!-- Nilai A  -->
         <tr class="nilai">
@@ -359,7 +272,11 @@
           <td class="center">{{$nilai_kelompok_a->nilai_sumatif}}</td>
           <td class="center">{{$nilai_kelompok_a->predikat_sumatif}}</td>
           <td class="description">
-            <span>{!! nl2br($nilai_kelompok_a->km_deskripsi_nilai_siswa->deskripsi_sumatif) !!}</span>
+            <span>
+              {{-- @if ($nilai_kelompok_a->km_deskripsi_nilai_siswa->deskripsi_raport)
+                  {!! nl2br($nilai_kelompok_a->km_deskripsi_nilai_siswa->deskripsi_raport) !!}
+              @endif   --}}
+            </span>
           </td>
         </tr>
         @endforeach
@@ -378,7 +295,11 @@
           <td class="center">{{$nilai_kelompok_b->nilai_sumatif}}</td>
           <td class="center">{{$nilai_kelompok_b->predikat_sumatif}}</td>
           <td class="description">
-            <span>{!! nl2br($nilai_kelompok_b->km_deskripsi_nilai_siswa->deskripsi_sumatif) !!}</span>
+            <span>
+              {{-- @if ($nilai_kelompok_b->km_deskripsi_nilai_siswa)
+                  {!! nl2br($nilai_kelompok_b->km_deskripsi_nilai_siswa->deskripsi_raport) !!}
+              @endif --}}
+            </span>
           </td>
         </tr>
         @endforeach
@@ -461,7 +382,7 @@
           <td class="center">{{$nilai_kelompok_a->nilai_formatif}}</td>
           <td class="center">{{$nilai_kelompok_a->predikat_formatif}}</td>
           <td class="description">
-            <span>{!! nl2br($nilai_kelompok_a->km_deskripsi_nilai_siswa->deskripsi_formatif) !!}</span>
+            {{-- <span>{!! nl2br($nilai_kelompok_a->km_deskripsi_nilai_siswa->deskripsi_raport) !!}</span> --}}
           </td>
         </tr>
         @endforeach
@@ -480,7 +401,7 @@
           <td class="center">{{$nilai_kelompok_b->nilai_formatif}}</td>
           <td class="center">{{$nilai_kelompok_b->predikat_formatif}}</td>
           <td class="description">
-            <span>{!! nl2br($nilai_kelompok_b->km_deskripsi_nilai_siswa->deskripsi_formatif) !!}</span>
+            {{-- <span>{!! nl2br($nilai_kelompok_b->km_deskripsi_nilai_siswa->deskripsi_raport) !!}</span> --}}
           </td>
         </tr>
         @endforeach

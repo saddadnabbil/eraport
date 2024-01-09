@@ -51,6 +51,7 @@
                     <tbody>
                       <?php $no = 0; ?>
                       @foreach($data_anggota_kelas->sortBy('siswa.nama_lengkap') as $anggota_kelas)
+                      @dd($anggota_kelas)
                       <?php $no++; ?>
                       <tr>
                         <input type="hidden" name="anggota_kelas_id[]" value="{{$anggota_kelas->id}}">

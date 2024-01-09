@@ -53,7 +53,7 @@ class RencanaNilaiKeterampilanController extends Controller
             'mapel_id' => $pembelajaran->mapel_id,
             'tingkatan_id' => $kelas->tingkatan_id,
             'jenis_kompetensi' => 4,
-            'semester' => $tapel->semester,
+            'semester' => $tapel->semester->semester,
         ])->orderBy('kode_kd', 'ASC')->get();
 
         if (count($data_kd) == 0) {
@@ -125,7 +125,7 @@ class RencanaNilaiKeterampilanController extends Controller
             'mapel_id' => $pembelajaran->mapel_id,
             'tingkatan_id' => $kelas->tingkatan_id,
             'jenis_kompetensi' => 4,
-            'semester' => $tapel->semester,
+            'semester' => $tapel->semester->semester,
         ])->orderBy('kode_kd', 'ASC')->get();
         $jumlah_penilaian = $request->jumlah_penilaian;
 

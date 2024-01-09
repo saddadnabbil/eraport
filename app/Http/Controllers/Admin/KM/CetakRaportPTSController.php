@@ -11,6 +11,7 @@ use App\NilaiSumatif;
 use App\K13NilaiPtsPas;
 use App\K13RencanaNilaiKeterampilan;
 use App\Kelas;
+use App\KmDeskripsiNilaiSiswa;
 use App\Mapel;
 use App\Pembelajaran;
 use App\RencanaNilaiFormatif;
@@ -77,8 +78,11 @@ class CetakRaportPTSController extends Controller
         $data_pembelajaran_a = Pembelajaran::where('kelas_id', $anggota_kelas->kelas->id)->whereIn('mapel_id', $data_id_mapel_kelompok_a)->get();
         foreach ($data_pembelajaran_a as $pembelajaran_a) {
             $kkm = KmKkmMapel::where('mapel_id', $pembelajaran_a->mapel_id)->where('kelas_id', $anggota_kelas->kelas->id)->first();
+            $deskripsi = KmDeskripsiNilaiSiswa::where('pembelajaran_id', $pembelajaran_a->id)->where('anggota_kelas_id', $anggota_kelas->id)->first();
             if (is_null($kkm)) {
                 return back()->with('toast_warning', 'KKM mata pelajaran belum ditentukan');
+            } elseif (is_null($deskripsi)) {
+                return redirect(route('prosesdeskripsikm'))->with('toast_warning', 'Deskripsi nilai siswa belum ditentukan');
             }
 
             // Interval KKM
@@ -110,8 +114,11 @@ class CetakRaportPTSController extends Controller
         $data_pembelajaran_b = Pembelajaran::where('kelas_id', $anggota_kelas->kelas->id)->whereIn('mapel_id', $data_id_mapel_kelompok_b)->get();
         foreach ($data_pembelajaran_b as $pembelajaran_b) {
             $kkm = KmKkmMapel::where('mapel_id', $pembelajaran_b->mapel_id)->where('kelas_id', $anggota_kelas->kelas->id)->first();
+            $deskripsi = KmDeskripsiNilaiSiswa::where('pembelajaran_id', $pembelajaran_b->id)->where('anggota_kelas_id', $anggota_kelas->id)->first();
             if (is_null($kkm)) {
                 return back()->with('toast_warning', 'KKM mata pelajaran belum ditentukan');
+            } elseif (is_null($deskripsi)) {
+                return redirect(route('prosesdeskripsikm'))->with('toast_warning', 'Deskripsi nilai siswa belum ditentukan');
             }
 
             // Interval KKM

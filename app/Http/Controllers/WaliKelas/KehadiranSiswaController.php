@@ -24,12 +24,18 @@ class KehadiranSiswaController extends Controller
         $title = 'Input Kehadiran Siswa';
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
         $guru = Guru::where('user_id', Auth::user()->id)->first();
+
         $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)->where('guru_id', $guru->id)->get('id');
+
+        // dd($kelas);
         $data_anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
             ->orderBy('siswa.nama_lengkap', 'ASC')
             ->where('anggota_kelas.kelas_id', $id_kelas_diampu)
             ->where('siswa.status', 1)
             ->get();
+
+        dd($data_anggota_kelas);
+
         foreach ($data_anggota_kelas as $anggota) {
             $kehadiran = KehadiranSiswa::where('anggota_kelas_id', $anggota->id)->first();
             if (is_null($kehadiran)) {

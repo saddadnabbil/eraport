@@ -16,6 +16,7 @@ class TapelTableSeeder extends Seeder
     {
         Tapel::create([
             'tahun_pelajaran' => '2023-2024',
+            'semester_id' => 1
         ]);
     }
 }

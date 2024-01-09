@@ -26,6 +26,11 @@ class Semester extends Model
         return $this->hasMany('App\Ekstrakulikuler');
     }
 
+    public function tapel()
+    {
+        return $this->belongsTo('App\Tapel');
+    }
+
     public function km_tgl_raport()
     {
         return $this->hasOne('App\KmTglRaport');

@@ -135,7 +135,7 @@ class RencanaNilaiSumatifController extends Controller
         $data_cp = CapaianPembelajaran::where([
             'mapel_id' => $pembelajaran->mapel_id,
             'tingkatan_id' => $kelas->tingkatan_id,
-            'semester' => $tapel->semester,
+            'semester' => $tapel->semester->semester,
         ])->orderBy('kode_cp', 'ASC')->get();
         $jumlah_penilaian = $request->jumlah_penilaian;
 

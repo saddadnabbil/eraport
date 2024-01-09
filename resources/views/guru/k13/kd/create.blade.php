@@ -65,7 +65,7 @@
                 @csrf
                 <input type="hidden" name="mapel_id" value="{{$mapel_id}}">
                 <input type="hidden" name="tingkatan_id" value="{{$tingkatan_id}}">
-                <input type="hidden" name="semester" value="{{$tapel->semester}}">
+                <input type="hidden" name="semester" value="{{$tapel->semester->semester}}">
 
                 <div class="table-responsive">
                   <table class="table table-bordered table-hover">

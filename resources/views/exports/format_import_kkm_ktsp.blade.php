@@ -13,7 +13,7 @@
       <tr>
         <td colspan="6">
           <strong>FORMAT IMPORT KKM MATA PELAJARAN TAHUN PELAJARAN {{$tapel->tahun_pelajaran}}
-            @if($tapel->semester == 1)
+            @if($tapel->semester->semester == 1)
             GANJIL
             @else
             GENAP

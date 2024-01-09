@@ -53,7 +53,7 @@
                       <div class="form-group row">
                         <label for="tapel_id" class="col-sm-3 col-form-label">Tahun Pelajaran</label>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control" value="{{$tapel->tahun_pelajaran}} {{$tapel->semester}}" readonly>
+                          <input type="text" class="form-control" value="{{$tapel->tahun_pelajaran}} {{$tapel->semester->semester}}" readonly>
                           <input type="hidden" class="form-control" name="tapel_id" value="{{$tapel->id}}" readonly>
                         </div>
                       </div>

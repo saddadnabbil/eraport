@@ -111,12 +111,12 @@ class ProsesDeskripsiSiswaController extends Controller
                     'pembelajaran_id' => $request->pembelajaran_id,
                     'km_nilai_akhir_raport_id'  => $request->nilai_akhir_raport_id[$cound_siswa],
                     'deskripsi_raport'  => $request->deskripsi_raport[$cound_siswa],
-                    // 'deskripsi_formatif'  => $request->deskripsi_formatif[$cound_siswa],
                     'created_at'  => Carbon::now(),
                     'updated_at'  => Carbon::now(),
                 );
 
                 $cek_data = KmDeskripsiNilaiSiswa::where('pembelajaran_id', $request->pembelajaran_id)->where('km_nilai_akhir_raport_id', $request->nilai_akhir_raport_id[$cound_siswa])->first();
+
                 if (is_null($cek_data)) {
                     KmDeskripsiNilaiSiswa::insert($data_deskripsi);
                 } else {
