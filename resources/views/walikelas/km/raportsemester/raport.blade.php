@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8" />
   <title>{{$title}} | {{$anggota_kelas->siswa->nama_lengkap}} ({{$anggota_kelas->siswa->nis}})</title>
-  <link href="./assets/invoice_raport.css" rel="stylesheet">
+  <link href="./assets/eraport.css" rel="stylesheet">
 </head>
 
 <body>
@@ -122,92 +122,8 @@
     </div>
   </div> --}}
 
-  {{-- <div id="kop-surat-1" style="display: block;" class="">
-    <table style="width: 100%;!important;table-layout: fixed;">
-        <colgroup>
-            <col style="width: 95px;">
-            <col>
-            <col style="width: 95px;">
-        </colgroup>
-        <tbody>
-            <tr>
-                <td rowspan="6">
-                    <div id="img-kiri">
-                        <img id="logo_kiri_pada_kop" src="https://storage.googleapis.com/rapor_merdeka_media_bucket/section/12/logo_tutwuri.png" alt="" height="95px" width="95px">
-                    </div>
-                </td>
-                <td class="desc-kop-surat" id="desc-kop-surat-1" style=" font-weight: bold; font-size:  18px; color:#000000; text-align: center;">PEMERINTAH PROVINSI SUMATERA UTARA</td>
-                <td rowspan="6">
-                    <div id="img-kanan">
-                        <img id="logo_kanan_pada_kop" src="https://storage.googleapis.com/rapor_merdeka_media_bucket/section/12/DWAF.png" alt="" height="95px" width="95px">
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td class="desc-kop-surat" id="desc-kop-surat-2" style="  font-weight: bold; font-size:  18px; color:#000000; text-align: center;">D I N A S   P E N D I D I K A N</td>
-            </tr>
-            <tr>
-                <td class="desc-kop-surat" id="desc-kop-surat-3" style="  font-weight: bold; font-size:  16px; color:#000000; text-align: center;">SMA NEGERI 1 LAHUSA</td>
-            </tr>
-            <tr>
-                <td class="desc-kop-surat" id="desc-kop-surat-4" style=" font-size:  12px; color:#000000; text-align: center;">Alamat : Desa Hilindrasoniha Kecamatan Toma Kabupaten Nias Selatan Kode Pos: 22865</td>
-            </tr>
-            <tr>
-                <td class="desc-kop-surat" id="desc-kop-surat-5" style=" font-size:  12px; color:#000000; text-align: center;">Email : sman2toma@gmail.com Akreditas : B</td>
-            </tr>
-            <tr>
-                <td class="desc-kop-surat" id="desc-kop-surat-6" style=" font-size:  9px; color:#000000; text-align: center;"></td>
-            </tr>
-        </tbody>
-    </table>
-    <hr id="garis-bawah-kop" style="background-color: black !important;color: black;height:1.0px;opacity:1;">
-  </div>
-  <table class="table-anak">
-          <tbody>
-              <tr>
-                  <td style="width:15%">Nama </td>
-                  <td style="width:5%">:</td>
-                  <td style="width:42%">Budi Sudiyatno</td>
-                  <td style="width:17%">Kelas</td>
-                  <td style="width:5%">:</td>
-                  <td style="width:15%">7 A</td>
-              </tr>
-              <tr>
-                  <td style="width:15%">NIS / NISN</td>
-                  <td style="width:5%">:</td>
-                  <td style="width:42%">0000001 / 000292192</td>
-                  <td style="width:17%">Fase</td>
-                      <td style="width:5%">:</td>
-                      <td style="width:20%">D</td>
-              </tr>
-              <tr>
-                  <td style="width:15%">Nama Sekolah</td>
-                  <td style="width:5%">:</td>
-                  <td style="width:42%">SMP MAJU JAYA</td>
-                  <td style="width:17%">Semester</td>
-                      <td style="width:5%">:</td>
-                      <td style="width:15%">2022/2023</td>
-              </tr>
-              <tr>
-                  <td style="width:15%">Alamat</td>
-                  <td style="width:5%">:</td>
-                  <td style="width:42%">Jl. Maju Tidak Gentar</td>
-                  <td style="width:17%">Tahun Pelajaran</td>
-                      <td style="width:5%">:</td>
-                      <td style="width:15%">2022</td>
-              </tr>
-              <tr>
-                  <td colspan="6">
-                      <hr style="opacity: 1;">
-                  </td>
-              </tr>
-          </tbody>
-  </table>
-  <div class="page-break"></div> --}}
-
-
   <!-- Page 2 sumatif  -->
-  <div class="invoice-box">
+  {{-- <div class="invoice-box">
     <div class="header">
       <table>
         <tr>
@@ -384,7 +300,7 @@
           <td class="center">{{$nilai_kelompok_a->nilai_formatif}}</td>
           <td class="center">{{$nilai_kelompok_a->predikat_formatif}}</td>
           <td class="description">
-            {{-- <span>{!! nl2br($nilai_kelompok_a->km_deskripsi_nilai_siswa->deskripsi_raport) !!}</span> --}}
+            <span>{!! nl2br($nilai_kelompok_a->km_deskripsi_nilai_siswa->deskripsi_raport) !!}</span>
           </td>
         </tr>
         @endforeach
@@ -403,7 +319,7 @@
           <td class="center">{{$nilai_kelompok_b->nilai_formatif}}</td>
           <td class="center">{{$nilai_kelompok_b->predikat_formatif}}</td>
           <td class="description">
-            {{-- <span>{!! nl2br($nilai_kelompok_b->km_deskripsi_nilai_siswa->deskripsi_raport) !!}</span> --}}
+            <span>{!! nl2br($nilai_kelompok_b->km_deskripsi_nilai_siswa->deskripsi_raport) !!}</span>
           </td>
         </tr>
         @endforeach
@@ -726,7 +642,471 @@
     <div class="footer">
       <i>{{$anggota_kelas->kelas->nama_kelas}} | {{$anggota_kelas->siswa->nama_lengkap}} | {{$anggota_kelas->siswa->nis}}</i> <b style="float: right;"><i>Halaman 4</i></b>
     </div>
-  </div>
-</body>
+  </div> --}}
 
+      <table class="header-table" style="width: 100%; border-collapse: collapse">
+          <tr>
+              <td class="no-indent left-align">
+                  <img src="./assets/dist/img/logo.png" alt="" width="80px" height="80px">
+              </td>
+              
+              <td class="title-center">
+                  <h1 class="center-align pad-179 pad-5 no-indent">
+                      GLOBAL INDONESIA SCHOOL <br>
+                      FIRST SEMESTER PROGRESS REPORT <br> 
+                      2023 / 2024
+                  </h1>
+                  <p class="center-align pad-126 line-height-123">
+                      Address : Perumahan Emerald Lake, Jl. Raya Tasikardi, Pelamunan, Kramatwatu, Serang-Banten, 42161 <br> 
+                      Kabupaten Serang, Banten. Phone : 0254-7941564, 081-1143-5499
+                  </p>
+              </td>
+              
+              <td class="no-indent right-align">
+                  <img src="./assets/dist/img/tut-wuri-handayani.png" alt="" width="80px" height="80px">
+              </td>
+          </tr>
+      </table>
+
+      <!-- information name -->
+      <table class="information-container ml-5 pad-2-1">
+        <tr>
+          <td><h3>Name</h3></td>
+          <td><h3>: ALICIA ZALFA PRISMAWARSYAH</h3></td>
+          <td><h3>Class</h3></td>
+          <td><h3>: JHS-7A</h3></td>
+        </tr>
+        <tr>
+          <td><h3>NIS</h3></td>
+          <td><h3>: 232407041</h3></td>
+          <td><h3>NISN</h3></td>
+          <td><h3>: 0113099396</h3></td>
+        </tr>
+      </table>
+
+      <!-- Nilai raport -->
+      <table class="ml-5" style="border-collapse:collapse;margin-left:5.44pt" cellspacing="0">
+
+         <!-- Heading table -->
+         <tr style="height:14pt">
+            <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" bgcolor="#999999">
+               <p style="text-indent: 0pt;text-align: left;">
+                  <br />
+               </p>
+               <p class="s1" style="padding-left: 3pt;text-indent: 0pt;text-align: left;">No</p>
+               <p style="text-indent: 0pt;text-align: left;">
+                  <br />
+               </p>
+            </td>
+            <td style="width:181pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" bgcolor="#999999">
+               <p style="text-indent: 0pt;text-align: left;">
+                  <br />
+               </p>
+               <p class="s1" style="padding-left: 61pt;padding-right: 61pt;text-indent: 0pt;text-align: center;">Subject</p>
+            </td>
+            <td style="width:56pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" bgcolor="#999999">
+               <p class="s1" style="padding-top: 2pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">Minimum Passing Mark</p>
+            </td>
+            <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" bgcolor="#999999">
+               <p class="s1" style="padding-top: 2pt;padding-left: 13pt; padding-right: 13pt;text-align: center;">Nilai Akhir</p>
+            </td>
+
+            <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" bgcolor="#999999">
+               <p class="s1" style="padding-top: 6pt;text-align: center;">Predikat</p>
+            </td>
+            <td style="width:187pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" bgcolor="#999999">
+               <p class="s1" style="padding-top: 6pt;text-align: center;">Capaian Pembelajaran</p>
+            </td>
+         </tr>
+
+         {{-- Content Table --}}
+          <tr style="height:25pt">
+              <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s2" style="padding-top: 4pt;padding-right: 2pt;text-indent: 0pt;text-align: center;">1</p>
+              </td>
+              <td style="width:181pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s2" style="padding-top: 3pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">Religious and Ethical Education</p>
+                <p class="s3" style="padding-top: 2pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">Pendidikan Agama Budi Pekerti</p>
+              </td>
+              <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">75</p>
+              </td>
+              <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">75</p>
+              </td>
+              <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">A</p>
+              </td>
+              <td style="width:187px;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s2" style="padding-top: 4pt;padding-bottom: 7pt;padding-left: 4pt; padding-right: 3pt;text-indent: 0pt; line-height: 1.3;">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro assumenda soluta nostrum quam vero.</p>
+              </td>
+  
+          </tr>
+          <tr style="height:25pt">
+              <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s2" style="padding-top: 4pt;padding-right: 2pt;text-indent: 0pt;text-align: center;">2</p>
+              </td>
+              <td style="width:181pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s2" style="padding-top: 3pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">Religious and Ethical Education</p>
+                <p class="s3" style="padding-top: 2pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">Pendidikan Agama Budi Pekerti</p>
+              </td>
+              <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">75</p>
+              </td>
+              <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">75</p>
+              </td>
+              <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">A</p>
+              </td>
+              <td style="width:187px;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s2" style="padding-top: 4pt;padding-bottom: 7pt;padding-left: 4pt; padding-right: 3pt;text-indent: 0pt; line-height: 1.3;">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro assumenda soluta nostrum quam vero.</p>
+              </td>
+          </tr>
+          <tr style="height:25pt">
+              <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s2" style="padding-top: 4pt;padding-right: 2pt;text-indent: 0pt;text-align: center;">3</p>
+              </td>
+              <td style="width:181pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s2" style="padding-top: 3pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">Religious and Ethical Education</p>
+                <p class="s3" style="padding-top: 2pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">Pendidikan Agama Budi Pekerti</p>
+              </td>
+              <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">75</p>
+              </td>
+              <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">75</p>
+              </td>
+              <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">A</p>
+              </td>
+              <td style="width:187px;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s2" style="padding-top: 4pt;padding-bottom: 7pt;padding-left: 4pt; padding-right: 3pt;text-indent: 0pt; line-height: 1.3;">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro assumenda soluta nostrum quam vero.</p>
+              </td>
+          </tr>
+          <tr style="height:25pt">
+              <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s2" style="padding-top: 4pt;padding-right: 2pt;text-indent: 0pt;text-align: center;">4</p>
+              </td>
+              <td style="width:181pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s2" style="padding-top: 3pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">Religious and Ethical Education</p>
+                <p class="s3" style="padding-top: 2pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">Pendidikan Agama Budi Pekerti</p>
+              </td>
+              <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">75</p>
+              </td>
+              <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">75</p>
+              </td>
+              <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">A</p>
+              </td>
+              <td style="width:187px;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s2" style="padding-top: 4pt;padding-bottom: 7pt;padding-left: 4pt; padding-right: 3pt;text-indent: 0pt; line-height: 1.3;">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro assumenda soluta nostrum quam vero.</p>
+              </td>
+          </tr>
+          <tr style="height:25pt">
+              <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s2" style="padding-top: 4pt;padding-right: 2pt;text-indent: 0pt;text-align: center;">5</p>
+              </td>
+              <td style="width:181pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s2" style="padding-top: 3pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">Religious and Ethical Education</p>
+                <p class="s3" style="padding-top: 2pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">Pendidikan Agama Budi Pekerti</p>
+              </td>
+              <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">75</p>
+              </td>
+              <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">75</p>
+              </td>
+              <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">A</p>
+              </td>
+              <td style="width:187px;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s2" style="padding-top: 4pt;padding-bottom: 7pt;padding-left: 4pt; padding-right: 3pt;text-indent: 0pt; line-height: 1.3;">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro assumenda soluta nostrum quam vero.</p>
+              </td>
+          </tr>
+          <tr style="height:25pt">
+            <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+              <p class="s2" style="padding-top: 4pt;padding-right: 2pt;text-indent: 0pt;text-align: center;">7</p>
+            </td>
+            <td style="width:181pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+              <p class="s2" style="padding-top: 3pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">Religious and Ethical Education</p>
+              <p class="s3" style="padding-top: 2pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">Pendidikan Agama Budi Pekerti</p>
+            </td>
+            <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+              <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">75</p>
+            </td>
+            <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+              <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">75</p>
+            </td>
+            <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+              <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">A</p>
+            </td>
+            <td style="width:187px;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+              <p class="s2" style="padding-top: 4pt;padding-bottom: 7pt;padding-left: 4pt; padding-right: 3pt;text-indent: 0pt; line-height: 1.3;">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro assumenda soluta nostrum quam vero.</p>
+            </td>
+          </tr>
+      </table>
+
+      <p>         
+         <br />
+      </p>
+
+      <!-- Extracurricular -->
+      <table style="border-collapse:collapse;margin-left:5.44pt" cellspacing="0">
+         <tr style="height:14pt">
+            <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" bgcolor="#CCCCCC">
+               <p class="s1" style="padding-top: 1pt;padding-left: 2pt;padding-right: 1pt;text-indent: 0pt;text-align: center;">No</p>
+            </td>
+            <td style="width:181pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" bgcolor="#CCCCCC">
+               <p class="s1" style="padding-top: 1pt;padding-left: 61pt;padding-right: 61pt;text-indent: 0pt;text-align: center;">Extracurricular</p>
+            </td>
+            <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" bgcolor="#CCCCCC">
+               <p class="s1" style="padding-top: 1pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">Grade</p>
+            </td>
+            <td style="width:284pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" bgcolor="#CCCCCC">
+               <p class="s1" style="padding-top: 1pt;padding-left: 100pt;padding-right: 99pt;text-indent: 0pt;text-align: center;">Remarks</p>
+            </td>
+         </tr>
+         <tr style="height:12pt">
+            <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+               <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">1</p>
+            </td>
+            <td style="width:181pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+               <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">English</p>
+            </td>
+            <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+               <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">B</p>
+            </td>
+            <td style="width:284pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+               <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">GOOD</p>
+            </td>
+         </tr>
+         <tr style="height:12pt">
+            <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+               <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">2</p>
+            </td>
+            <td style="width:181pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+               <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">Pramuka</p>
+            </td>
+            <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+               <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">A</p>
+            </td>
+            <td style="width:284pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+               <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">VERY GOOD</p>
+            </td>
+         </tr>
+      </table>
+
+      <p>         
+         <br />
+      </p>
+
+      <!-- Achievement -->
+      <table style="border-collapse:collapse;margin-left:5.44pt" cellspacing="0">
+         <tr style="height:14pt">
+            <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" bgcolor="#CCCCCC">
+               <p class="s1" style="padding-top: 1pt;padding-left: 2pt;padding-right: 1pt;text-indent: 0pt;text-align: center;">No</p>
+            </td>
+            <td style="width:181pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" bgcolor="#CCCCCC">
+               <p class="s1" style="padding-top: 1pt;padding-left: 61pt;padding-right: 61pt;text-indent: 0pt;text-align: center;">Achievement</p>
+            </td>
+            <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" bgcolor="#CCCCCC">
+               <p class="s1" style="padding-top: 1pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">Level</p>
+            </td>
+            <td style="width:284pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" bgcolor="#CCCCCC">
+               <p class="s1" style="padding-top: 1pt;padding-left: 100pt;padding-right: 99pt;text-indent: 0pt;text-align: center;">Name of Competition</p>
+            </td>
+         </tr>
+         <tr style="height:12pt">
+            <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+               <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">-</p>
+            </td>
+            <td style="width:181pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+               <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">-</p>
+            </td>
+            <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+               <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">-</p>
+            </td>
+            <td style="width:284pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+               <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">-</p>
+            </td>
+         </tr>
+      </table>
+
+      <p>         
+         <br />
+      </p>
+
+      <!-- Container Table -->
+      <table class="container-table" style="margin-left: 7pt; width: 100%; border-collapse:collapse;">
+        <tr>
+            <!-- Absences Table -->
+            <td style="vertical-align: top;">
+              <table style="border-collapse:collapse; margin-left: -2px" cellspacing="0">
+                  <tr style="height:14pt">
+                    <td style="width:181pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" colspan="2" bgcolor="#CCCCCC">
+                        <p class="s1" style="padding-top: 1pt;padding-left: 79pt;padding-right: 79pt;text-indent: 0pt;text-align: center;">Absences</p>
+                    </td>
+                    <td style="width:50pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" bgcolor="#CCCCCC">
+                        <p class="s1" style="padding-top: 1pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">Days</p>
+                    </td>
+                  </tr>
+                   <tr style="height:12pt">
+                    <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                      <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">1</p>
+                   </td>
+                    <td style="width:165pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                        <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">Sick</p>
+                    </td>
+                    <td style="width:50pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                        <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">3</p>
+                    </td>
+                  </tr>
+                  <tr style="height:12pt">
+                    <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                        <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">2</p>
+                    </td>
+                    <td style="width:165pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                        <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">Permit</p>
+                    </td>
+                    <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                        <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">0</p>
+                    </td>
+                  </tr>
+                  <tr style="height:12pt">
+                    <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                        <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">3</p>
+                    </td>
+                    <td style="width:180pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                        <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">Without Permission</p>
+                    </td>
+                    <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                        <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">0</p>
+                    </td>
+                  </tr>
+                  <tr style="height:12pt">
+                    <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                        <p style="text-indent: 0pt;text-align: left;">
+                          <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;"><br></p>
+                        </p>
+                    </td>
+                    <td style="width:165pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                        <p style="text-indent: 0pt;text-align: left;">
+                          <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;"><br></p>
+                        </p>
+                    </td>
+                    <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                        <p style="text-indent: 0pt;text-align: left;">
+                          <br />
+                        </p>
+                    </td>
+                  </tr>
+              </table>
+            </td>
+            <!-- Grading Scale Table -->
+            <td style="vertical-align: top;">
+              <!-- Grading Scale -->
+              <table style="border-collapse:collapse; margin-left: 0pt; margin-right: 0" cellspacing="0">
+                  <tr style="height:14pt">
+                    <td style="width:245pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" colspan="3" bgcolor="#CCCCCC">
+                        <p class="s1" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">Grading Scale</p>
+                    </td>
+                  </tr>
+                  <tr style="height:12pt">
+                    <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                        <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">A</p>
+                    </td>
+                    <td style="width:60pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                        <p class="s5" style="padding-top: 1pt;ext-indent: 0pt;text-align: center;">80.00 - 100.00</p>
+                    </td>
+                    <td style="width:110pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                        <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">Very Good</p>
+                    </td>
+                  </tr>
+                  <tr style="height:12pt">
+                    <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                        <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">B</p>
+                    </td>
+                    <td style="width:85pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                        <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">70.00 - 79.99</p>
+                    </td>
+                    <td style="width:136pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                        <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">Good</p>
+                    </td>
+                  </tr>
+                  <tr style="height:12pt">
+                    <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                        <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">C</p>
+                    </td>
+                    <td style="width:85pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                        <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">60.00 - 69.99</p>
+                    </td>
+                    <td style="width:136pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                        <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">Fair</p>
+                    </td>
+                  </tr>
+                  <tr style="height:12pt">
+                    <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                        <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">D</p>
+                    </td>
+                    <td style="width:85pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                        <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">0.00 - 59.99</p>
+                    </td>
+                    <td style="width:136pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                        <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">Poor</p>
+                    </td>
+                  </tr>
+              </table>
+            </td>
+          </tr>
+      </table>
+
+      <p>         
+         <br />
+      </p>
+
+      <!-- Homeroom Teacher's Comments -->
+      <table style="border-collapse:collapse; margin-left: 5.44pt;" cellspacing="0">
+         <tr style="height:14pt">
+            <td style="width:722px;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" colspan="3" bgcolor="#CCCCCC">
+               <p class="s1" style="padding-top: 1pt;padding-left: 110pt;padding-right: 110pt;text-indent: 0pt;text-align: center;">Homeroom Teacher&#39;s Comments</p>
+            </td>
+         </tr>
+         <tr style="height:14pt">
+            <td style="width:278pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" colspan="3">
+               <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: left; padding-left: 2pt;">While Alicia is quiet in nature, encouraging him to engage more actively during lessons would be beneficial. His insights, when shared, could enrich the class discussions?</p>
+            </td>
+         </tr>
+      </table>
+
+      <p>         
+         <br />
+      </p>
+
+      <!-- Signature Table -->
+      <table class="signature" style="width: 100%;">
+        <!-- Top Section -->
+        <tr>
+           <!-- Parent's Section -->
+           <td style="width: 50%; text-align: center;">
+              <p class="s6" style="padding-top: 5pt; text-align: center;">Parent's / Guardian's Signature</p>
+              <p class="s7" style="padding-top: 48pt; text-align: center; border-bottom: 1px solid black; display: inline-block; max-width: 200px; width: 120px; margin: 0 auto; "></p>
+           </td>
+           <!-- Teacher's Section -->
+           <td style="width: 50%; text-align: center;">
+              <p class="s6" style="text-align: center;">Serang, January 09, 2024<br>Homeroom Teacher</p>
+              <p class="s7" style="padding-top: 35pt; text-align: center; border-bottom: 1px solid black; display: inline-block; width: auto;">RIKI FIRMANSYAH, A.MD.</p>
+           </td>
+        </tr>
+        <!-- Bottom Section -->
+        <tr>
+           <td colspan="2" style="text-align: center; margin-top: 10px;">
+              <p class="s6" style="padding-top: 6pt; text-align: center;">Principal's Signature</p>
+              <p class="s7" style="padding-top: 35pt; text-align: center; border-bottom: 1px solid black; display: inline-block; width: auto;">IVAN SENEVIRATNE, M.ED</p>
+           </td>
+        </tr>
+     </table>
+   </body>
 </html>
