@@ -944,23 +944,24 @@
         <tr>
             <!-- Absences Table -->
             <td style="vertical-align: top;">
+              <!-- Absences Scale -->
               <table style="border-collapse:collapse; margin-left: -2px" cellspacing="0">
                   <tr style="height:14pt">
-                    <td style="width:181pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" colspan="2" bgcolor="#CCCCCC">
-                        <p class="s1" style="padding-top: 1pt;padding-left: 79pt;padding-right: 79pt;text-indent: 0pt;text-align: center;">Absences</p>
+                    <td style="width:190pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" colspan="2" bgcolor="#CCCCCC">
+                        <p class="s1" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">Absences</p>
                     </td>
                     <td style="width:50pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" bgcolor="#CCCCCC">
-                        <p class="s1" style="padding-top: 1pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">Days</p>
+                        <p class="s1" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">Days</p>
                     </td>
                   </tr>
-                   <tr style="height:12pt">
+                  <tr style="height:12pt">
                     <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
                       <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">1</p>
                    </td>
-                    <td style="width:165pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                    <td style="width:178pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
                         <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">Sick</p>
                     </td>
-                    <td style="width:50pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                    <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
                         <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">3</p>
                     </td>
                   </tr>
@@ -968,7 +969,7 @@
                     <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
                         <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">2</p>
                     </td>
-                    <td style="width:165pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                    <td style="width:178pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
                         <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">Permit</p>
                     </td>
                     <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
@@ -979,7 +980,7 @@
                     <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
                         <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">3</p>
                     </td>
-                    <td style="width:180pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                    <td style="width:178pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
                         <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">Without Permission</p>
                     </td>
                     <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
@@ -992,14 +993,14 @@
                           <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;"><br></p>
                         </p>
                     </td>
-                    <td style="width:165pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                    <td style="width:178pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
                         <p style="text-indent: 0pt;text-align: left;">
                           <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;"><br></p>
                         </p>
                     </td>
                     <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
                         <p style="text-indent: 0pt;text-align: left;">
-                          <br />
+                          <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;"><br></p>
                         </p>
                     </td>
                   </tr>
@@ -1008,9 +1009,9 @@
             <!-- Grading Scale Table -->
             <td style="vertical-align: top;">
               <!-- Grading Scale -->
-              <table style="border-collapse:collapse; margin-left: 0pt; margin-right: 0" cellspacing="0">
+              <table style="border-collapse:collapse; margin-left: 0; padding-right: 10px" cellspacing="0">
                   <tr style="height:14pt">
-                    <td style="width:245pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" colspan="3" bgcolor="#CCCCCC">
+                    <td style="width:278pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" colspan="3" bgcolor="#CCCCCC">
                         <p class="s1" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">Grading Scale</p>
                     </td>
                   </tr>
@@ -1018,10 +1019,10 @@
                     <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
                         <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">A</p>
                     </td>
-                    <td style="width:60pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                    <td style="width:85pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
                         <p class="s5" style="padding-top: 1pt;ext-indent: 0pt;text-align: center;">80.00 - 100.00</p>
                     </td>
-                    <td style="width:110pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                    <td style="width:136pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
                         <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">Very Good</p>
                     </td>
                   </tr>
@@ -1047,7 +1048,7 @@
                         <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">Fair</p>
                     </td>
                   </tr>
-                  <tr style="height:12pt">
+                  <tr style="height:12pt"> 
                     <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
                         <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">D</p>
                     </td>
@@ -1091,20 +1092,20 @@
         <tr>
            <!-- Parent's Section -->
            <td style="width: 50%; text-align: center;">
-              <p class="s6" style="padding-top: 5pt; text-align: center;">Parent's / Guardian's Signature</p>
+              <p class="s6" style="padding-top: 10pt; text-align: center;">Parent's / Guardian's Signature</p>
               <p class="s7" style="padding-top: 48pt; text-align: center; border-bottom: 1px solid black; display: inline-block; max-width: 200px; width: 120px; margin: 0 auto; "></p>
            </td>
            <!-- Teacher's Section -->
            <td style="width: 50%; text-align: center;">
               <p class="s6" style="text-align: center;">Serang, January 09, 2024<br>Homeroom Teacher</p>
-              <p class="s7" style="padding-top: 35pt; text-align: center; border-bottom: 1px solid black; display: inline-block; width: auto;">RIKI FIRMANSYAH, A.MD.</p>
+              <p class="s7" style="padding-top: 37pt; text-align: center; border-bottom: 1px solid black; display: inline-block; width: auto;">RIKI FIRMANSYAH, A.MD.</p>
            </td>
         </tr>
         <!-- Bottom Section -->
         <tr>
-           <td colspan="2" style="text-align: center; margin-top: 10px;">
+           <td colspan="2" style="text-align: center; margin-top: 15px;">
               <p class="s6" style="padding-top: 6pt; text-align: center;">Principal's Signature</p>
-              <p class="s7" style="padding-top: 35pt; text-align: center; border-bottom: 1px solid black; display: inline-block; width: auto;">IVAN SENEVIRATNE, M.ED</p>
+              <p class="s7" style="padding-top: 37pt; text-align: center; border-bottom: 1px solid black; display: inline-block; width: auto;">IVAN SENEVIRATNE, M.ED</p>
            </td>
         </tr>
      </table>
