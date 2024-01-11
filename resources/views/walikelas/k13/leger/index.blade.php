@@ -148,17 +148,7 @@
                       @endif
 
                       @foreach($anggota_kelas->data_nilai_ekstrakulikuler as $nilai_ekstrakulikuler)
-                      @if($nilai_ekstrakulikuler->nilai == 1)
-                      <td class="text-center">Kurang</td>
-                      @elseif($nilai_ekstrakulikuler->nilai == 2)
-                      <td class="text-center">Cukup</td>
-                      @elseif($nilai_ekstrakulikuler->nilai == 3)
-                      <td class="text-center">Baik</td>
-                      @elseif($nilai_ekstrakulikuler->nilai == 4)
-                      <td class="text-center">Sangat Baik</td>
-                      @else
-                      <td class="text-center">-</td>
-                      @endif
+                        <td class="text-center">{{$nilai_ekstrakulikuler->nilai}}</td>
                       @endforeach
                     </tr>
                     @endforeach
