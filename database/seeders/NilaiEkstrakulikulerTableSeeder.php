@@ -14,15 +14,10 @@ class NilaiEkstrakulikulerTableSeeder extends Seeder
      */
     public function run()
     {
-        // 'ekstrakulikuler_id',
-        // 'anggota_ekstrakulikuler_id',
-        // 'nilai',
-        // 'deskripsi'
-
         NilaiEkstrakulikuler::create([
             'ekstrakulikuler_id' => 1,
             'anggota_ekstrakulikuler_id' => 1,
-            'nilai' => 90,
+            'nilai' => 'A',
             'deskripsi' => 'Sangat Baik'
         ]);
     }

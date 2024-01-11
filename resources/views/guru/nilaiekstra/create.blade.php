@@ -99,15 +99,15 @@
                             <td>
                               <select class="form-control" name="nilai[]" style="width: 100%;" required oninvalid="this.setCustomValidity('silakan pilih item dalam daftar')" oninput="setCustomValidity('')">
                                 @if(is_null($anggota_ekstrakulikuler->nilai))
-                                <option value="4">Sangat Baik</option>
-                                <option value="3" selected>Baik</option>
-                                <option value="2">Cukup</option>
-                                <option value="1">Kurang</option>
+                                <option value="A">A</option>
+                                <option value="B" selected>B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
                                 @else
-                                <option value="4" @if($anggota_ekstrakulikuler->nilai == 4) selected @endif>Sangat Baik</option>
-                                <option value="3" @if($anggota_ekstrakulikuler->nilai == 3) selected @endif>Baik</option>
-                                <option value="2" @if($anggota_ekstrakulikuler->nilai == 2) selected @endif>Cukup</option>
-                                <option value="1" @if($anggota_ekstrakulikuler->nilai == 1) selected @endif>Kurang</option>
+                                <option value="A" @if($anggota_ekstrakulikuler->nilai == 'A') selected @endif>A</option>
+                                <option value="B" @if($anggota_ekstrakulikuler->nilai == 'B') selected @endif>B</option>
+                                <option value="C" @if($anggota_ekstrakulikuler->nilai == 'C') selected @endif>C</option>
+                                <option value="D" @if($anggota_ekstrakulikuler->nilai == 'D') selected @endif>D</option>
                                 @endif
                               </select>
                             </td>

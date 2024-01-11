@@ -74,15 +74,7 @@
                       <td>{{$anggota_ekstra->ekstrakulikuler->pembina->nama_lengkap}}, {{$anggota_ekstra->ekstrakulikuler->pembina->gelar}}</td>
                       @if(!is_null($anggota_ekstra->nilai))
                       <td class="text-center">
-                        @if($anggota_ekstra->nilai->nilai == 4)
-                        Sangat Baik
-                        @elseif($anggota_ekstra->nilai->nilai == 3)
-                        Baik
-                        @elseif($anggota_ekstra->nilai->nilai == 2)
-                        Cukup
-                        @elseif($anggota_ekstra->nilai->nilai == 1)
-                        Kurang
-                        @endif
+                        {{$anggota_ekstra->nilai->nilai == 4}}
                       </td>
                       <td>{{$anggota_ekstra->nilai->deskripsi}}</td>
                       @else

@@ -17,7 +17,7 @@ class CreateNilaiEkstrakulikulersTable extends Migration
             $table->id();
             $table->unsignedBigInteger('ekstrakulikuler_id')->unsigned();
             $table->unsignedBigInteger('anggota_ekstrakulikuler_id')->unsigned();
-            $table->enum('nilai', ['4', '3', '2', '1']);
+            $table->enum('nilai', ['A', 'B', 'C', 'D']);
             $table->string('deskripsi', 200);
             $table->timestamps();
 
