@@ -131,7 +131,7 @@
                     <tr>
                       <td>{{$no}}</td>
                       <td>{{$kelas->tapel->tahun_pelajaran}}
-                        @if($kelas->tapel->semester == 1)
+                        @if($kelas->tapel->semester->semester == 1)
                         Ganjil
                         @else
                         Genap

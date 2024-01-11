@@ -36,7 +36,6 @@
                 </button>
               </div>
             </div>
-
             <!-- Modal tambah  -->
             <div class="modal fade" id="modal-tambah">
               <div class="modal-dialog modal-lg">
@@ -107,7 +106,7 @@
                     <tr>
                       <td>{{$no}}</td>
                       <td>{{$ekstrakulikuler->tapel->tahun_pelajaran}}
-                        @if($ekstrakulikuler->tapel->semester == 1)
+                        @if($ekstrakulikuler->tapel->semester->semester == 1)
                         Ganjil
                         @else
                         Genap

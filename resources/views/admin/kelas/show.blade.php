@@ -91,7 +91,7 @@
                                 <select class="form-control" name="pendaftaran" required>
                                   <option value="">-- Pilih Jenis Pendaftaran --</option>
                                   <option value="2">Pindahan</option>
-                                  @if($kelas->tapel->semester == 1)
+                                  @if($kelas->tapel->semester->semester == 1)
                                   <option value="1">Siswa Baru</option>
                                   <option value="3">Naik Kelas</option>
                                   <option value="5">Mengulang</option>

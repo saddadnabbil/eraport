@@ -407,7 +407,7 @@
                     <div class="col-sm-9 pt-1">
                       <select class="form-control select2" name="keluar_karena" style="width: 100%;" required>
                         <option value="">-- Pilih Jenis Keluar --</option>
-                        @if($siswa->kelas->tingkatan_id == $tingkatan_akhir && $siswa->kelas->tapel->semester == 2)
+                        @if($siswa->kelas->tingkatan_id == $tingkatan_akhir && $siswa->kelas->tapel->semester->semester == 2)
                           <option value="Lulus">Lulus</option>
                         @endif
                         <option value="Mutasi">Mutasi</option>

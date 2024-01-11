@@ -147,7 +147,7 @@
                       <td>{{$no}}</td>
                       <td>{{$kkm->mapel->nama_mapel}}</td>
                       <td>{{$kkm->kelas->tapel->tahun_pelajaran}}
-                        @if($kkm->kelas->tapel->semester == 1)
+                        @if($kkm->kelas->tapel->semester->semester == 1)
                         Ganjil
                         @else
                         Genap

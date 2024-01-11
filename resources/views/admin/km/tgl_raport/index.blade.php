@@ -99,7 +99,7 @@
                     <tr>
                       <td>{{$no}}</td>
                       <td>{{$tgl_raport->tapel->tahun_pelajaran}}
-                        @if($tgl_raport->tapel->semester == 1)
+                        @if($tgl_raport->tapel->semester->semester == 1)
                         Ganjil
                         @else
                         Genap
@@ -138,7 +138,7 @@
                               <div class="form-group row">
                                 <label for="tapel_id" class="col-sm-3 col-form-label">Tahun Pelajaran</label>
                                 <div class="col-sm-9">
-                                  <input type="text" class="form-control" id="tapel_id" value="{{$tgl_raport->tapel->tahun_pelajaran}} {{$tgl_raport->tapel->semester}}" readonly>
+                                  <input type="text" class="form-control" id="tapel_id" value="{{$tgl_raport->tapel->tahun_pelajaran}} {{$tgl_raport->tapel->semester->semester}}" readonly>
                                 </div>
                               </div>
                               <div class="form-group row">

@@ -42,7 +42,7 @@
                     <select class="form-control select2" name="kelas_id" style="width: 100%;" required onchange="this.form.submit();">
                       <option value="" disabled> -- Pilih Kelas --</option>
                       <option value="" selected>{{$kelas->nama_kelas}} ( {{$kelas->tapel->tahun_pelajaran}}
-                        @if($kelas->tapel->semester == 1)
+                        @if($kelas->tapel->semester->semester == 1)
                         Ganjil
                         @else
                         Genap

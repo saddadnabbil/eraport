@@ -31,7 +31,7 @@
           <div class="card">
             <div class="card-header">
               <h3 class="card-title"><i class="fas fa-users"></i> {{$title}} {{$ekstrakulikuler->nama_ekstrakulikuler}} {{$ekstrakulikuler->tapel->tahun_pelajaran}} Semester
-                @if($ekstrakulikuler->tapel->semester ==1)
+                @if($ekstrakulikuler->tapel->semester->semester ==1)
                 Ganjil
                 @else
                 Genap
@@ -63,7 +63,7 @@
                             <div class="callout callout-info">
                               <label>
                                 Ekstrakulikuler {{$ekstrakulikuler->nama_ekstrakulikuler}} {{$ekstrakulikuler->tapel->tahun_pelajaran}} Semester
-                                @if($ekstrakulikuler->tapel->semester ==1)
+                                @if($ekstrakulikuler->tapel->semester->semester ==1)
                                 Ganjil
                                 @else
                                 Genap
