@@ -28,7 +28,7 @@ class PenilaianKurikulumMerdekaController extends Controller
      */
     public function index()
     {
-        $title = 'Penilaian Kurikulum Merdeka';
+        $title = 'Penilaian Raport';
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
 
         $data_mapel = Mapel::where('tapel_id', $tapel->id)->orderBy('nama_mapel', 'ASC')->get();

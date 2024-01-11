@@ -113,6 +113,22 @@ Route::group(['middleware' => ['auth']], function () {
         'uses' => ['index', 'store']
       ]);
 
+      Route::resource('kehadiranadmin', 'Admin\KehadiranSiswaController',  [
+        'uses' => ['index', 'store', 'create']
+      ]);
+
+      Route::resource('prestasiadmin', 'Admin\PrestasiSiswaController',  [
+        'uses' => ['index', 'create', 'store', 'update', 'destroy']
+      ]);
+
+      Route::resource('catatanadmin', 'Admin\CatatanWaliKelasController',  [
+        'uses' => ['index', 'store', 'create']
+      ]);
+      Route::resource('kenaikanadmin', 'Admin\KenaikanKelasController',  [
+        'uses' => ['index', 'store', 'create']
+      ]);
+
+
       Route::get('getKelas/ajax/{id}', 'AjaxController@ajax_kelas');
       Route::get('getAllSilabus/ajax/{id}', 'AjaxController@getAllSilabus')->name('admin.get.all.silabus');
       Route::get('getPembelajaranId/', 'AjaxController@getPembelajaranId')->name('get.pembelajaran.id');

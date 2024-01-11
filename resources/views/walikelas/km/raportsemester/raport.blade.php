@@ -408,25 +408,25 @@
         @elseif(count($data_anggota_ekstrakulikuler) == 1)
         <?php $no = 0; ?>
         @foreach($data_anggota_ekstrakulikuler as $nilai_ekstra)
-        <?php $no++; ?>
-        <tr class="nilai">
-          <td class="center">{{$no}}</td>
-          <td>{{$nilai_ekstra->ekstrakulikuler->nama_ekstrakulikuler}}</td>
-          <td class="center">
-            @if($nilai_ekstra->nilai == 4)
-            Sangat Baik
-            @elseif($nilai_ekstra->nilai == 3)
-            Baik
-            @elseif($nilai_ekstra->nilai == 2)
-            Cukup
-            @elseif($nilai_ekstra->nilai == 1)
-            Kurang
-            @endif
-          </td>
-          <td class="description">
-            <span>{!! nl2br($nilai_ekstra->deskripsi) !!}</span>
-          </td>
-        </tr>
+          <?php $no++; ?>
+          <tr class="nilai">
+            <td class="center">{{$no}}</td>
+            <td>{{$nilai_ekstra->ekstrakulikuler->nama_ekstrakulikuler}}</td>
+            <td class="center">
+              @if($nilai_ekstra->nilai == 4)
+              Sangat Baik
+              @elseif($nilai_ekstra->nilai == 3)
+              Baik
+              @elseif($nilai_ekstra->nilai == 2)
+              Cukup
+              @elseif($nilai_ekstra->nilai == 1)
+              Kurang
+              @endif
+            </td>
+            <td class="description">
+              <span>{!! nl2br($nilai_ekstra->deskripsi) !!}</span>
+            </td>
+          </tr>
         @endforeach
         <tr class="nilai">
           <td class="center">2</td>
@@ -472,20 +472,20 @@
           <td colspan="2">Keterangan</td>
         </tr>
         @if(count($data_prestasi_siswa) == 0)
-        <tr class="nilai">
-          <td class="center">1</td>
-          <td></td>
-          <td colspan="2" class="description">
-            <span></span>
-          </td>
-        </tr>
-        <tr class="nilai">
-          <td class="center">2</td>
-          <td></td>
-          <td colspan="2" class="description">
-            <span></span>
-          </td>
-        </tr>
+          <tr class="nilai">
+            <td class="center">1</td>
+            <td></td>
+            <td colspan="2" class="description">
+              <span></span>
+            </td>
+          </tr>
+          <tr class="nilai">
+            <td class="center">2</td>
+            <td></td>
+            <td colspan="2" class="description">
+              <span></span>
+            </td>
+          </tr>
         @elseif(count($data_prestasi_siswa) == 1)
         <?php $no = 0; ?>
         @foreach($data_prestasi_siswa as $prestasi)
@@ -654,11 +654,10 @@
                   <h1 class="center-align pad-179 pad-5 no-indent">
                       GLOBAL INDONESIA SCHOOL <br>
                       FIRST SEMESTER PROGRESS REPORT <br> 
-                      2023 / 2024
+                      {{str_replace('-', ' / ', $anggota_kelas->kelas->tapel->tahun_pelajaran)}}
                   </h1>
-                  <p class="center-align pad-126 line-height-123">
-                      Address : Perumahan Emerald Lake, Jl. Raya Tasikardi, Pelamunan, Kramatwatu, Serang-Banten, 42161 <br> 
-                      Kabupaten Serang, Banten. Phone : 0254-7941564, 081-1143-5499
+                  <p class="center-align pad-126 line-height-123" style="padding: 0 60pt">
+                      Address : {{$sekolah->alamat}}
                   </p>
               </td>
               
@@ -672,15 +671,15 @@
       <table class="information-container ml-5 pad-2-1">
         <tr>
           <td><h3>Name</h3></td>
-          <td><h3>: ALICIA ZALFA PRISMAWARSYAH</h3></td>
+          <td><h3>: {{$anggota_kelas->siswa->nama_lengkap}}</h3></td>
           <td><h3>Class</h3></td>
-          <td><h3>: JHS-7A</h3></td>
+          <td><h3>: {{$anggota_kelas->kelas->nama_kelas}}</h3></td>
         </tr>
         <tr>
           <td><h3>NIS</h3></td>
-          <td><h3>: 232407041</h3></td>
+          <td><h3>: {{$anggota_kelas->siswa->nis}} </h3></td>
           <td><h3>NISN</h3></td>
-          <td><h3>: 0113099396</h3></td>
+          <td><h3>: {{$anggota_kelas->siswa->nisn}}</h3></td>
         </tr>
       </table>
 
@@ -712,141 +711,41 @@
             </td>
 
             <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" bgcolor="#999999">
-               <p class="s1" style="padding-top: 6pt;text-align: center;">Predikat</p>
+               <p class="s1" style="padding-top: 6pt;text-align: center;">Grade</p>
             </td>
             <td style="width:187pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" bgcolor="#999999">
                <p class="s1" style="padding-top: 6pt;text-align: center;">Capaian Pembelajaran</p>
             </td>
          </tr>
-
+         
          {{-- Content Table --}}
+         <?php $no = 0; ?>
+         @foreach($data_nilai->sortBy('pembelajaran.mapel.km_mapping_mapel.nomor_urut') as $nilai)
+         <?php $no++; ?>
           <tr style="height:25pt">
               <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s2" style="padding-top: 4pt;padding-right: 2pt;text-indent: 0pt;text-align: center;">1</p>
+                <p class="s2" style="padding-top: 4pt;padding-right: 2pt;text-indent: 0pt;text-align: center;">{{$no}}</p>
               </td>
               <td style="width:181pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s2" style="padding-top: 3pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">Religious and Ethical Education</p>
-                <p class="s3" style="padding-top: 2pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">Pendidikan Agama Budi Pekerti</p>
+                <p class="s2" style="padding-top: 3pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">{{$nilai->pembelajaran->mapel->nama_mapel}}</p>
+                <p class="s3" style="padding-top: 2pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">{{$nilai->pembelajaran->mapel->nama_mapel_indonesian}}</p>
               </td>
               <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">75</p>
+                <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">{{$nilai->kkm}}</p>
               </td>
               <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">75</p>
+                <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">{{$nilai->nilai_akhir_raport}}</p>
               </td>
               <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">A</p>
+                <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">{{$nilai->predikat_akhir_raport}}</p>
               </td>
               <td style="width:187px;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s2" style="padding-top: 4pt;padding-bottom: 7pt;padding-left: 4pt; padding-right: 3pt;text-indent: 0pt; line-height: 1.3;">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro assumenda soluta nostrum quam vero.</p>
+                <p class="s2" style="padding-top: 4pt;padding-bottom: 7pt;padding-left: 4pt; padding-right: 3pt;text-indent: 0pt; line-height: 1.3;">{!! nl2br($nilai->km_deskripsi_nilai_siswa->deskripsi_raport) !!}</p>
               </td>
   
           </tr>
-          <tr style="height:25pt">
-              <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s2" style="padding-top: 4pt;padding-right: 2pt;text-indent: 0pt;text-align: center;">2</p>
-              </td>
-              <td style="width:181pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s2" style="padding-top: 3pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">Religious and Ethical Education</p>
-                <p class="s3" style="padding-top: 2pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">Pendidikan Agama Budi Pekerti</p>
-              </td>
-              <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">75</p>
-              </td>
-              <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">75</p>
-              </td>
-              <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">A</p>
-              </td>
-              <td style="width:187px;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s2" style="padding-top: 4pt;padding-bottom: 7pt;padding-left: 4pt; padding-right: 3pt;text-indent: 0pt; line-height: 1.3;">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro assumenda soluta nostrum quam vero.</p>
-              </td>
-          </tr>
-          <tr style="height:25pt">
-              <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s2" style="padding-top: 4pt;padding-right: 2pt;text-indent: 0pt;text-align: center;">3</p>
-              </td>
-              <td style="width:181pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s2" style="padding-top: 3pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">Religious and Ethical Education</p>
-                <p class="s3" style="padding-top: 2pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">Pendidikan Agama Budi Pekerti</p>
-              </td>
-              <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">75</p>
-              </td>
-              <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">75</p>
-              </td>
-              <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">A</p>
-              </td>
-              <td style="width:187px;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s2" style="padding-top: 4pt;padding-bottom: 7pt;padding-left: 4pt; padding-right: 3pt;text-indent: 0pt; line-height: 1.3;">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro assumenda soluta nostrum quam vero.</p>
-              </td>
-          </tr>
-          <tr style="height:25pt">
-              <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s2" style="padding-top: 4pt;padding-right: 2pt;text-indent: 0pt;text-align: center;">4</p>
-              </td>
-              <td style="width:181pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s2" style="padding-top: 3pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">Religious and Ethical Education</p>
-                <p class="s3" style="padding-top: 2pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">Pendidikan Agama Budi Pekerti</p>
-              </td>
-              <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">75</p>
-              </td>
-              <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">75</p>
-              </td>
-              <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">A</p>
-              </td>
-              <td style="width:187px;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s2" style="padding-top: 4pt;padding-bottom: 7pt;padding-left: 4pt; padding-right: 3pt;text-indent: 0pt; line-height: 1.3;">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro assumenda soluta nostrum quam vero.</p>
-              </td>
-          </tr>
-          <tr style="height:25pt">
-              <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s2" style="padding-top: 4pt;padding-right: 2pt;text-indent: 0pt;text-align: center;">5</p>
-              </td>
-              <td style="width:181pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s2" style="padding-top: 3pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">Religious and Ethical Education</p>
-                <p class="s3" style="padding-top: 2pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">Pendidikan Agama Budi Pekerti</p>
-              </td>
-              <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">75</p>
-              </td>
-              <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">75</p>
-              </td>
-              <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">A</p>
-              </td>
-              <td style="width:187px;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s2" style="padding-top: 4pt;padding-bottom: 7pt;padding-left: 4pt; padding-right: 3pt;text-indent: 0pt; line-height: 1.3;">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro assumenda soluta nostrum quam vero.</p>
-              </td>
-          </tr>
-          <tr style="height:25pt">
-            <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-              <p class="s2" style="padding-top: 4pt;padding-right: 2pt;text-indent: 0pt;text-align: center;">7</p>
-            </td>
-            <td style="width:181pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-              <p class="s2" style="padding-top: 3pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">Religious and Ethical Education</p>
-              <p class="s3" style="padding-top: 2pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">Pendidikan Agama Budi Pekerti</p>
-            </td>
-            <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-              <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">75</p>
-            </td>
-            <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-              <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">75</p>
-            </td>
-            <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-              <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">A</p>
-            </td>
-            <td style="width:187px;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-              <p class="s2" style="padding-top: 4pt;padding-bottom: 7pt;padding-left: 4pt; padding-right: 3pt;text-indent: 0pt; line-height: 1.3;">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro assumenda soluta nostrum quam vero.</p>
-            </td>
-          </tr>
+          @endforeach
+
       </table>
 
       <p>         
@@ -855,7 +754,7 @@
 
       <!-- Extracurricular -->
       <table style="border-collapse:collapse;margin-left:5.44pt" cellspacing="0">
-         <tr style="height:14pt">
+          <tr style="height:14pt">
             <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" bgcolor="#CCCCCC">
                <p class="s1" style="padding-top: 1pt;padding-left: 2pt;padding-right: 1pt;text-indent: 0pt;text-align: center;">No</p>
             </td>
@@ -868,35 +767,42 @@
             <td style="width:284pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" bgcolor="#CCCCCC">
                <p class="s1" style="padding-top: 1pt;padding-left: 100pt;padding-right: 99pt;text-indent: 0pt;text-align: center;">Remarks</p>
             </td>
-         </tr>
-         <tr style="height:12pt">
+          </tr>
+          @if(count($data_anggota_ekstrakulikuler) == 0)
+          <tr style="height:12pt">
             <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-               <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">1</p>
+               <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;"><br></p>
             </td>
             <td style="width:181pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-               <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">English</p>
+               <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left;"><br></p>
             </td>
             <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-               <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">B</p>
+               <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;"><br></p>
             </td>
             <td style="width:284pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-               <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">GOOD</p>
+               <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left;"><br></p>
             </td>
-         </tr>
-         <tr style="height:12pt">
-            <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-               <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">2</p>
-            </td>
-            <td style="width:181pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-               <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">Pramuka</p>
-            </td>
-            <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-               <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">A</p>
-            </td>
-            <td style="width:284pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-               <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">VERY GOOD</p>
-            </td>
-         </tr>
+          </tr>
+          @else
+              <tr style="height:12pt">
+                  <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                    <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">{{$no}}</p>
+                  </td>
+                  <td style="width:181pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                    <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">{{$nilai_ekstra->ekstrakulikuler->nama_ekstrakulikuler}}</p>
+                  </td>
+                  <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                    <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">{{$nilai_ekstra->nilai}}</p>
+                  </td>
+                  <td style="width:284pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                    <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">{!! nl2br($nilai_ekstra->deskripsi) !!}</p>
+                  </td>
+              </tr>
+          {{-- @else
+            <?php $no = 0; ?>
+            @foreach($data_anggota_ekstrakulikuler as $nilai_ekstra)
+            <?php $no++; ?> --}}
+          @endif 
       </table>
 
       <p>         
@@ -907,32 +813,67 @@
       <table style="border-collapse:collapse;margin-left:5.44pt" cellspacing="0">
          <tr style="height:14pt">
             <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" bgcolor="#CCCCCC">
-               <p class="s1" style="padding-top: 1pt;padding-left: 2pt;padding-right: 1pt;text-indent: 0pt;text-align: center;">No</p>
+               <p class="s1" style="padding: 1pt 0;padding-left: 2pt;padding-right: 1pt;text-indent: 0pt;text-align: center;">No</p>
             </td>
             <td style="width:181pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" bgcolor="#CCCCCC">
-               <p class="s1" style="padding-top: 1pt;padding-left: 61pt;padding-right: 61pt;text-indent: 0pt;text-align: center;">Achievement</p>
+               <p class="s1" style="padding: 1pt 0;padding-left: 61pt;padding-right: 61pt;text-indent: 0pt;text-align: center;">Achievement</p>
             </td>
             <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" bgcolor="#CCCCCC">
-               <p class="s1" style="padding-top: 1pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">Level</p>
+               <p class="s1" style="padding: 1pt 0;padding-left: 1pt;text-indent: 0pt;text-align: center;">Level</p>
             </td>
             <td style="width:284pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" bgcolor="#CCCCCC">
-               <p class="s1" style="padding-top: 1pt;padding-left: 100pt;padding-right: 99pt;text-indent: 0pt;text-align: center;">Name of Competition</p>
+               <p class="s1" style="padding: 1pt 0;padding-left: 100pt;padding-right: 99pt;text-indent: 0pt;text-align: center;">Name of Competition</p>
             </td>
          </tr>
+         @if (count($data_prestasi_siswa) == 0)
          <tr style="height:12pt">
             <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-               <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">-</p>
+               <p class="s5" style="padding: 1pt 0;text-indent: 0pt;text-align: center;">-</p>
             </td>
             <td style="width:181pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-               <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">-</p>
+               <p class="s5" style="padding: 1pt 0;padding-left: 2pt;text-indent: 0pt;text-align: left;">-</p>
             </td>
             <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-               <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">-</p>
+               <p class="s5" style="padding: 1pt 0;text-indent: 0pt;text-align: center;">-</p>
             </td>
             <td style="width:284pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-               <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">-</p>
+               <p class="s5" style="padding: 1pt 0;padding-left: 2pt;text-indent: 0pt;text-align: left;">-</p>
             </td>
          </tr>
+         @else 
+          <?php $no = 0; ?>
+          @foreach($data_prestasi_siswa as $prestasi)
+          <?php $no++; ?>
+          <tr style="height:12pt">
+              <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">{{$no}}</p>
+              </td>
+              <td style="width:181pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">{{$prestasi->nama_prestasi}}</p></p>
+              </td>
+              <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">
+                  @if($prestasi->tingkat_prestasi == 1)
+                    Internations
+                  @elseif($prestasi->tingkat_prestasi == 2)
+                    National
+                  @elseif($prestasi->tingkat_prestasi == 3)
+                    Province
+                  @elseif($prestasi->tingkat_prestasi == 4)
+                    City
+                  @elseif($prestasi->tingkat_prestasi == 5)
+                    District
+                  @elseif($prestasi->tingkat_prestasi == 6)
+                    Inter School
+                  @endif
+                </p>
+              </td>
+              <td style="width:284pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">{!! nl2br($prestasi->deskripsi) !!}</p>
+              </td>
+          </tr>
+          @endforeach
+         @endif
       </table>
 
       <p>         
@@ -954,6 +895,7 @@
                         <p class="s1" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">Days</p>
                     </td>
                   </tr>
+                @if(!is_null($kehadiran_siswa))
                   <tr style="height:12pt">
                     <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
                       <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">1</p>
@@ -962,7 +904,58 @@
                         <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">Sick</p>
                     </td>
                     <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                        <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">{{$kehadiran_siswa->sakit}}</p>
+                    </td>
+                  </tr>
+                  <tr style="height:12pt">
+                    <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                        <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">2</p>
+                    </td>
+                    <td style="width:178pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                        <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">Permit</p>
+                    </td>
+                    <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                        <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">{{$kehadiran_siswa->izin}}</p>
+                    </td>
+                  </tr>
+                  <tr style="height:12pt">
+                    <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
                         <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">3</p>
+                    </td>
+                    <td style="width:178pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                        <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">Without Permission</p>
+                    </td>
+                    <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                        <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">{{$kehadiran_siswa->tanpa_keterangan}}</p>
+                    </td>
+                  </tr>
+                  <tr style="height:12pt">
+                    <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                        <p style="text-indent: 0pt;text-align: left;">
+                          <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;"><br></p>
+                        </p>
+                    </td>
+                    <td style="width:178pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                        <p style="text-indent: 0pt;text-align: left;">
+                          <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;"><br></p>
+                        </p>
+                    </td>
+                    <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                        <p style="text-indent: 0pt;text-align: left;">
+                          <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;"><br></p>
+                        </p>
+                    </td>
+                  </tr>
+                @else
+                  <tr style="height:12pt">
+                    <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                      <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">1</p>
+                  </td>
+                    <td style="width:178pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                        <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">Sick</p>
+                    </td>
+                    <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
+                        <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">0</p>
                     </td>
                   </tr>
                   <tr style="height:12pt">
@@ -1004,6 +997,7 @@
                         </p>
                     </td>
                   </tr>
+                @endif
               </table>
             </td>
             <!-- Grading Scale Table -->
@@ -1077,7 +1071,12 @@
          </tr>
          <tr style="height:14pt">
             <td style="width:278pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" colspan="3">
-               <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: left; padding-left: 2pt;">While Alicia is quiet in nature, encouraging him to engage more actively during lessons would be beneficial. His insights, when shared, could enrich the class discussions?</p>
+               <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: left; padding-left: 2pt;">           
+                @if(!is_null($catatan_wali_kelas))
+                  {{$catatan_wali_kelas->catatan}}
+                @else 
+                  -
+                @endif</p>
             </td>
          </tr>
       </table>
@@ -1097,15 +1096,18 @@
            </td>
            <!-- Teacher's Section -->
            <td style="width: 50%; text-align: center;">
-              <p class="s6" style="text-align: center;">Serang, January 09, 2024<br>Homeroom Teacher</p>
-              <p class="s7" style="padding-top: 37pt; text-align: center; border-bottom: 1px solid black; display: inline-block; width: auto;">RIKI FIRMANSYAH, A.MD.</p>
+              <p class="s6" style="text-align: center;">
+                {{-- Serang, January 09, 2024<br>Homeroom Teacher --}}
+                {{$anggota_kelas->kelas->tapel->km_tgl_raport->tempat_penerbitan}}, {{$anggota_kelas->kelas->tapel->km_tgl_raport->tanggal_pembagian->isoFormat('MMMM D, Y')}}<br>Homeroom Teacher
+              </p>
+              <p class="s7" style="padding-top: 37pt; text-align: center; border-bottom: 1px solid black; display: inline-block; width: auto;">{{$anggota_kelas->kelas->guru->nama_lengkap}}, {{$anggota_kelas->kelas->guru->gelar}}</p>
            </td>
         </tr>
         <!-- Bottom Section -->
         <tr>
            <td colspan="2" style="text-align: center; margin-top: 15px;">
               <p class="s6" style="padding-top: 6pt; text-align: center;">Principal's Signature</p>
-              <p class="s7" style="padding-top: 37pt; text-align: center; border-bottom: 1px solid black; display: inline-block; width: auto;">IVAN SENEVIRATNE, M.ED</p>
+              <p class="s7" style="padding-top: 37pt; text-align: center; border-bottom: 1px solid black; display: inline-block; width: auto;">{{$sekolah->kepala_sekolah}}</p>
            </td>
         </tr>
      </table>
