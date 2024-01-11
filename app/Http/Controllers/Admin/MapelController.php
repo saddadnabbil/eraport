@@ -38,6 +38,7 @@ class MapelController extends Controller
         $validator = Validator::make($request->all(), [
             'tapel_id' => 'required',
             'nama_mapel' => 'required|min:3|max:255',
+            'nama_mapel_indonesian' => 'required|min:3|max:255',
             'ringkasan_mapel' => 'required|min:2|max:50',
         ]);
         if ($validator->fails()) {
@@ -64,6 +65,7 @@ class MapelController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nama_mapel' => 'required|min:3|max:255',
+            'nama_mapel_indonesian' => 'required|min:3|max:255',
             'ringkasan_mapel' => 'required|min:2|max:50',
         ]);
         if ($validator->fails()) {
@@ -71,6 +73,7 @@ class MapelController extends Controller
         } else {
             $mapel = Mapel::findorfail($id);
             $data_mapel = [
+                'nama_mapel_indonesian' => 'required|min:3|max:255',
                 'ringkasan_mapel' => $request->ringkasan_mapel,
             ];
             $mapel->update($data_mapel);

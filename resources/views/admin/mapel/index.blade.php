@@ -98,6 +98,14 @@
                           <input type="text" class="form-control" id="nama_mapel" name="nama_mapel" placeholder="Nama Mata Pelajaran" value="{{old('nama_mapel')}}">
                         </div>
                       </div>
+
+                      <div class="form-group row">
+                        <label for="nama_mapel" class="col-sm-3 col-form-label">Nama Mata Pelajaran dalam Bahasa Indonesia</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" id="nama_mapel_indonesian" name="nama_mapel_indonesian" placeholder="Nama Mata Pelajaran" value="{{old('nama_mapel')}}">
+                        </div>
+                      </div>
+
                       <div class="form-group row">
                         <label for="ringkasan_mapel" class="col-sm-3 col-form-label">Ringkasan</label>
                         <div class="col-sm-9">
@@ -122,6 +130,7 @@
                     <tr>
                       <th>No</th>
                       <th>Mata Pelajaran</th>
+                      <th>Nama Mata Pelajaran dalam Bahasa Indonesia</th>
                       <th>Ringkas (Singkatan)</th>
                       <th>Aksi</th>
                     </tr>
@@ -133,6 +142,7 @@
                     <tr>
                       <td>{{$no}}</td>
                       <td>{{$mapel->nama_mapel}}</td>
+                      <td>{{$mapel->nama_mapel_indonesian}}</td>
                       <td>{{$mapel->ringkasan_mapel}}</td>
                       <td>
                         <form action="{{ route('mapel.destroy', $mapel->id) }}" method="POST">
@@ -168,6 +178,14 @@
                                   <input type="text" class="form-control" id="nama_mapel" name="nama_mapel" value="{{$mapel->nama_mapel}}" readonly>
                                 </div>
                               </div>
+
+                              <div class="form-group row">
+                                <label for="nama_mapel" class="col-sm-3 col-form-label">Nama Mata Pelajaran dalam Bahasa Indonesia</label>
+                                <div class="col-sm-9">
+                                  <input type="text" class="form-control" id="nama_mapel_indonesian" name="nama_mapel_indonesian" placeholder="Nama Mata Pelajaran" value="{{$mapel->nama_mapel_indonesian}}">
+                                </div>
+                              </div>
+
                               <div class="form-group row">
                                 <label for="ringkasan_mapel" class="col-sm-3 col-form-label">Ringkasan</label>
                                 <div class="col-sm-9">

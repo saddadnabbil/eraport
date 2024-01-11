@@ -17,6 +17,7 @@ class CreateMapelsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('tapel_id')->unsigned();
             $table->string('nama_mapel');
+            $table->string('nama_mapel_indonesian');
             $table->string('ringkasan_mapel', 50);
             $table->timestamps();
 

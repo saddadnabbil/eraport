@@ -10,6 +10,7 @@ class Mapel extends Model
     protected $fillable = [
         'tapel_id',
         'nama_mapel',
+        'nama_mapel_indonesian',
         'ringkasan_mapel'
     ];
 
