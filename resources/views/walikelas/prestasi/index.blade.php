@@ -63,12 +63,34 @@
                       </div>
 
                       <div class="form-group row">
+                        <label for="nama_prestasi" class="col-sm-3 col-form-label">Nama Prestasi</label>
+                        <div class="col-sm-9 pt-1">
+                          <input type="text" name="nama_prestasi" id="nama_prestasi" class="form-control" placeholder="Nama Prestasi" required>
+                        </div>
+                      </div>
+
+                      <div class="form-group row">
                         <label for="jenis_prestasi" class="col-sm-3 col-form-label">Jenis Prestasi</label>
                         <div class="col-sm-9 pt-1">
                           <label class="form-check-label mr-3"><input type="radio" name="jenis_prestasi" value="1" required> Akademik</label>
                           <label class="form-check-label mr-3"><input type="radio" name="jenis_prestasi" value="2" required> Non Akademik</label>
                         </div>
                       </div>
+
+                      <div class="form-group row">
+                        <label for="jenis_prestasi" class="col-sm-3 col-form-label">Tingkatan Prestasi</label>
+                        <div class="col-sm-9">
+                              <select class="form-control select2" id="tingkat_prestasi" name="tingkat_prestasi" required>
+                            <option value="">-- Pilih Tingkatan --</option>
+                            <option value="1">Internasional</option>
+                            <option value="2">Nasional</option>
+                            <option value="3">Provinsi</option>
+                            <option value="4">Kabupaten</option>
+                            <option value="5">Kecamatan</option>
+                          </select>
+                        </div>
+                      </div>
+
                       <div class="form-group row">
                         <label for="deskripsi" class="col-sm-3 col-form-label">Deskripsi</label>
                         <div class="col-sm-9">
@@ -91,14 +113,16 @@
                 <table id="example1" class="table table-valign-middle table-hover">
                   <thead>
                     <tr>
-                      <th style="width: 5%;">No</th>
-                      <th style="width: 5%;">NIS</th>
-                      <th style="width: 20%;">Nama Siswa</th>
-                      <th style="width: 5%;">L/P</th>
-                      <th style="width: 5%;">Kelas</th>
-                      <th style="width: 10%;">Jenis Prestasi</th>
+                      <th>No</th>
+                      <th>NIS</th>
+                      <th>Nama Siswa</th>
+                      <th>L/P</th>
+                      <th>Kelas</th>
+                      <th>Nama Prestasi</th>
+                      <th>Jenis Prestasi</th>
+                      <th>Tingkatan Prestasi</th>
                       <th>Deskripsi Prestasi</th>
-                      <th style="width: 6%;">Hapus</th>
+                      <th>Hapus</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -111,6 +135,7 @@
                       <td>{{$prestasi->anggota_kelas->siswa->nama_lengkap}}</td>
                       <td>{{$prestasi->anggota_kelas->siswa->jenis_kelamin}}</td>
                       <td>{{$prestasi->anggota_kelas->kelas->nama_kelas}}</td>
+                      <td>{{$prestasi->nama_prestasi}}</td>
                       <td>
                         @if($prestasi->jenis_prestasi == 1)
                         Akademik
@@ -118,17 +143,101 @@
                         Non Akademik
                         @endif
                       </td>
+                      <td>
+                        @if($prestasi->tingkat_prestasi == 1)
+                          Internasional
+                        @elseif($prestasi->tingkat_prestasi == 2)
+                          Nasional
+                        @elseif($prestasi->tingkat_prestasi == 3)
+                          Provinsi
+                        @elseif($prestasi->tingkat_prestasi == 4)
+                          Kabupaten
+                        @elseif($prestasi->tingkat_prestasi == 5)
+                          Kecamatan
+                        @endif
+                      </td>
                       <td>{{$prestasi->deskripsi}}</td>
                       <td class="text-center">
                         <form action="{{ route('prestasi.destroy', $prestasi->id) }}" method="POST">
                           @csrf
                           @method('DELETE')
+                          <button type="button" class="btn btn-warning btn-sm mt-1" data-toggle="modal" data-target="#modal-edit{{$prestasi->id}}">
+                            <i class="fas fa-pen"></i>
+                          </button>
                           <button type="submit" class="btn btn-danger btn-sm mt-1" onclick="return confirm('Hapus {{$title}} ?')">
                             <i class="fas fa-trash-alt"></i>
                           </button>
                         </form>
                       </td>
                     </tr>
+
+                    <!-- Modal Edit  -->
+                    <div class="modal fade" id="modal-edit{{$prestasi->id}}">
+                      <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title">Tambah {{$title}}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <form action="{{ route('prestasi.update', $prestasi->id) }}" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <div class="modal-body">
+                              <div class="form-group row">
+                                <label for="anggota_kelas_id" class="col-sm-3 col-form-label">Siswa</label>
+                                <div class="col-sm-9">
+                                  <input type="text" name="anggota_kelas_id" id="anggota_kelas_id" class="form-control" value="{{$prestasi->anggota_kelas->siswa->nama_lengkap}}" readonly>
+                                </div>
+                              </div>
+
+                              <div class="form-group row">
+                                <label for="nama_prestasi" class="col-sm-3 col-form-label">Nama Prestasi</label>
+                                <div class="col-sm-9 pt-1">
+                                  <input type="text" name="nama_prestasi" id="nama_prestasi" class="form-control" value="{{$prestasi->nama_prestasi}}" required>
+                                </div>
+                              </div>
+
+                              <div class="form-group row">
+                                <label for="jenis_prestasi" class="col-sm-3 col-form-label">Jenis Prestasi</label>
+                                <div class="col-sm-9 pt-1">
+                                  <label class="form-check-label mr-3"><input type="radio" name="jenis_prestasi" value="1" {{ $prestasi->jenis_prestasi == 1 ? 'checked' : ''}} required> Akademik</label>
+                                  <label class="form-check-label mr-3"><input type="radio" name="jenis_prestasi" value="2" {{ $prestasi->jenis_prestasi == 2 ? 'checked' : ''}} required> Non Akademik</label>
+                                </div>
+                              </div>
+
+                              <div class="form-group row">
+                                <label for="jenis_prestasi" class="col-sm-3 col-form-label">Tingkatan Prestasi</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control select2" id="tingkat_prestasi" name="tingkat_prestasi" required>
+                                    <option value="">-- Pilih Tingkatan --</option>
+                                    <option value="1" {{$prestasi->tingkat_prestasi == 1 ? 'selected' : ''}}>Internasional</option>
+                                    <option value="2" {{$prestasi->tingkat_prestasi == 2 ? 'selected' : ''}}>Nasional</option>
+                                    <option value="3" {{$prestasi->tingkat_prestasi == 3 ? 'selected' : ''}}>Provinsi</option>
+                                    <option value="4" {{$prestasi->tingkat_prestasi == 4 ? 'selected' : ''}}>Kabupaten</option>
+                                    <option value="5" {{$prestasi->tingkat_prestasi == 5 ? 'selected' : ''}}>Kecamatan</option>
+                                  </select>
+                                </div>
+                              </div>
+
+                              <div class="form-group row">
+                                <label for="deskripsi" class="col-sm-3 col-form-label">Deskripsi</label>
+                                <div class="col-sm-9">
+                                  <textarea class="form-control" name="deskripsi" placeholder="Deskripsi Prestasi" rows="3" minlength="20" maxlength="200" required oninvalid="this.setCustomValidity('Deskripsi harus berisi antara 20 s/d 100 karekter')" oninput="setCustomValidity('')">{{$prestasi->deskripsi}}</textarea>
+                                </div>
+                              </div>
+
+                            </div>
+                            <div class="modal-footer justify-content-end">
+                              <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                              <button type="submit" class="btn btn-primary">Simpan</button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End Modal Edit -->
                     @endforeach
                   </tbody>
                 </table>

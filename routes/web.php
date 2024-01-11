@@ -399,7 +399,7 @@ Route::group(['middleware' => ['auth']], function () {
           'uses' => ['index', 'store']
         ]);
         Route::resource('prestasi', 'Walikelas\PrestasiSiswaController',  [
-          'uses' => ['index', 'store', 'destroy']
+          'uses' => ['index', 'store', 'update', 'destroy']
         ]);
         Route::resource('catatan', 'Walikelas\CatatanWaliKelasController',  [
           'uses' => ['index', 'store']

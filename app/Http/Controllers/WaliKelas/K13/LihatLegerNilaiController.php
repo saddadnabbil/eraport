@@ -49,11 +49,11 @@ class LihatLegerNilaiController extends Controller
         $data_ekstrakulikuler = Ekstrakulikuler::where('tapel_id', $tapel->id)->get();
         $count_ekstrakulikuler = count($data_ekstrakulikuler);
 
-        $data_anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
-        ->orderBy('siswa.nama_lengkap', 'ASC')
-        ->where('anggota_kelas.kelas_id', $id_kelas_diampu)
-        ->where('siswa.status', 1)
-        ->get();
+        $id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('id');
+        $kelas_id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('kelas_id');
+
+        $data_anggota_kelas = AnggotaKelas::whereIn('id', $id_anggota_kelas)->whereIn('kelas_id', $kelas_id_anggota_kelas)->get();
+
         foreach ($data_anggota_kelas as $anggota_kelas) {
 
             $data_nilai_kelompok_a = K13NilaiAkhirRaport::whereIn('pembelajaran_id', $data_id_pembelajaran_a)->where('anggota_kelas_id', $anggota_kelas->id)->get();

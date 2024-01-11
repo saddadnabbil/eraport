@@ -3,6 +3,7 @@
 use App\Kelas;
 use App\Semester;
 use App\AnggotaKelas;
+use App\PrestasiSiswa;
 use App\K13NilaiPtsPas;
 use App\K13NilaiSosial;
 use App\K13NilaiSpiritual;
@@ -36,6 +37,7 @@ use Database\Seeders\NilaiSumatifTableSeeder;
 use Database\Seeders\PembelajaranTableSeeder;
 use Database\Seeders\K13ButirSikapTableSeeder;
 use Database\Seeders\NilaiFormatifTableSeeder;
+use Database\Seeders\PrestasiSiswaTableSeeder;
 use Database\Seeders\K13NilaiPtsPasTableSeeder;
 use Database\Seeders\K13NilaiSosialTableSeeder;
 use Database\Seeders\KmMappingMapelTableSeeder;
@@ -46,6 +48,7 @@ use Database\Seeders\K13NilaiSpiritualTableSeeder;
 use Database\Seeders\KmNilaiAkhirRaportTableSeeder;
 use SekolahTableSeeder as GlobalSekolahTableSeeder;
 use Database\Seeders\CapaianPembelajaranTableSeeder;
+use Database\Seeders\K13NilaiAkhirRaportTableSeeder;
 use Database\Seeders\K13NilaiPengetahuanTableSeeder;
 use Database\Seeders\RencanaNilaiSumatifTableSeeder;
 use Database\Seeders\K13NilaiKeterampilanTableSeeder;
@@ -55,7 +58,6 @@ use Database\Seeders\K13RencanaNilaiSosialTableSeeder;
 use Database\Seeders\KmDeskripsiNilaiSiswaTableSeeder;
 use Database\Seeders\AnggotaEkstrakulikulerTableSeeder;
 use Database\Seeders\K13DeskripsiNilaiSiswaTableSeeder;
-use Database\Seeders\K13NilaiAkhirRaportTableSeeder;
 use Database\Seeders\K13RencanaBobotPenilaianTableSeeder;
 use Database\Seeders\K13RencanaNilaiSpiritualTableSeeder;
 use Database\Seeders\K13RencanaNilaiPengetahuanTableSeeder;
@@ -83,6 +85,7 @@ class DatabaseSeeder extends Seeder
             KelasTableSeeder::class,
             SiswaTableSeeder::class,
             AnggotaKelasTableSeeder::class,
+            PrestasiSiswaTableSeeder::class,
             EkstrakulikulerTableSeeder::class,
             AnggotaEkstrakulikulerTableSeeder::class,
             MapelTableSeeder::class,

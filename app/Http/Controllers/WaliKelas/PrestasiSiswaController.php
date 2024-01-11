@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\WaliKelas;
 
-use App\AnggotaKelas;
 use App\Guru;
-use App\Http\Controllers\Controller;
 use App\Kelas;
-use App\PrestasiSiswa;
 use App\Tapel;
+use App\AnggotaKelas;
+use App\Pembelajaran;
+use App\PrestasiSiswa;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -24,15 +25,15 @@ class PrestasiSiswaController extends Controller
         $title = 'Data Prestasi Siswa';
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
         $guru = Guru::where('user_id', Auth::user()->id)->first();
+
         $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)->where('guru_id', $guru->id)->get('id');
+
         $id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('id');
+        $kelas_id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('kelas_id');
 
         $data_prestasi_siswa = PrestasiSiswa::whereIn('anggota_kelas_id', $id_anggota_kelas)->get();
-        $data_anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
-            ->orderBy('siswa.nama_lengkap', 'ASC')
-            ->where('anggota_kelas.kelas_id', $id_kelas_diampu)
-            ->where('siswa.status', 1)
-            ->get();
+
+        $data_anggota_kelas = AnggotaKelas::whereIn('id', $id_anggota_kelas)->whereIn('kelas_id', $kelas_id_anggota_kelas)->get();
 
         return view('walikelas.prestasi.index', compact('title', 'data_prestasi_siswa', 'data_anggota_kelas'));
     }
@@ -48,7 +49,9 @@ class PrestasiSiswaController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'anggota_kelas_id' => 'required',
+            'nama_prestasi' => 'required',
             'jenis_prestasi' => 'required',
+            'tingkat_prestasi' => 'required',
             'deskripsi' => 'required|min:20|max:200',
         ]);
         if ($validator->fails()) {
@@ -56,11 +59,35 @@ class PrestasiSiswaController extends Controller
         } else {
             $prestasi = new PrestasiSiswa([
                 'anggota_kelas_id' => $request->anggota_kelas_id,
+                'nama_prestasi' => $request->nama_prestasi,
                 'jenis_prestasi' => $request->jenis_prestasi,
+                'tingkat_prestasi' => $request->tingkat_prestasi,
                 'deskripsi' => $request->deskripsi,
             ]);
             $prestasi->save();
             return back()->with('toast_success', 'Prestasi siswa berhasil ditambahkan');
+        }
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'anggota_kelas_id' => 'required',
+            'nama_prestasi' => 'required',
+            'jenis_prestasi' => 'required',
+            'tingkat_prestasi' => 'required',
+            'deskripsi' => 'required|min:20|max:200',
+        ]);
+        if ($validator->fails()) {
+            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+        } else {
+            $prestasi = PrestasiSiswa::findorfail($id);
+            $prestasi->nama_prestasi = $request->nama_prestasi;
+            $prestasi->jenis_prestasi = $request->jenis_prestasi;
+            $prestasi->tingkat_prestasi = $request->tingkat_prestasi;
+            $prestasi->deskripsi = $request->deskripsi;
+            $prestasi->update();
+            return back()->with('toast_success', 'Prestasi siswa berhasil diubah');
         }
     }
 

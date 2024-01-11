@@ -28,18 +28,26 @@ class HasilPengelolaanNilaiController extends Controller
         $sekolah = Sekolah::first();
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
         $guru = Guru::where('user_id', Auth::user()->id)->first();
-        $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)->where('guru_id', $guru->id)->get('id');
 
         $data_id_mapel_semester_ini = Mapel::where('tapel_id', $tapel->id)->get('id');
         $data_id_mapel_kelompok_a = K13MappingMapel::whereIn('mapel_id', $data_id_mapel_semester_ini)->where('kelompok', 'A')->get('mapel_id');
         $data_id_mapel_kelompok_b = K13MappingMapel::whereIn('mapel_id', $data_id_mapel_semester_ini)->where('kelompok', 'B')->get('mapel_id');
 
 
-        $data_anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
-            ->orderBy('siswa.nama_lengkap', 'ASC')
-            ->where('anggota_kelas.kelas_id', $id_kelas_diampu)
-            ->where('siswa.status', 1)
-            ->get();
+        // $data_anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
+        //     ->orderBy('siswa.nama_lengkap', 'ASC')
+        //     ->where('anggota_kelas.kelas_id', $id_kelas_diampu)
+        //     ->where('siswa.status', 1)
+        //     ->get();
+
+        $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)->where('guru_id', $guru->id)->get('id');
+
+        $id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('id');
+        $kelas_id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('kelas_id');
+
+        $data_anggota_kelas = AnggotaKelas::whereIn('id', $id_anggota_kelas)->whereIn('kelas_id', $kelas_id_anggota_kelas)->get();
+
+
         foreach ($data_anggota_kelas as $anggota_kelas) {
             $data_id_pembelajaran_a = Pembelajaran::where('kelas_id', $anggota_kelas->kelas_id)->whereIn('mapel_id', $data_id_mapel_kelompok_a)->get('id');
             $data_id_pembelajaran_b = Pembelajaran::where('kelas_id', $anggota_kelas->kelas_id)->whereIn('mapel_id', $data_id_mapel_kelompok_b)->get('id');
@@ -52,5 +60,4 @@ class HasilPengelolaanNilaiController extends Controller
         }
         return view('walikelas.k13.hasilnilai.index', compact('title', 'sekolah', 'data_anggota_kelas'));
     }
-
 }

@@ -25,16 +25,19 @@ class KehadiranSiswaController extends Controller
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
         $guru = Guru::where('user_id', Auth::user()->id)->first();
 
+        // dd($kelas);
+        // $data_anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
+        //     ->orderBy('siswa.nama_lengkap', 'ASC')
+        //     ->where('anggota_kelas.kelas_id', $id_kelas_diampu)
+        //     ->where('siswa.status', 1)
+        //     ->get();
+
         $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)->where('guru_id', $guru->id)->get('id');
 
-        // dd($kelas);
-        $data_anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
-            ->orderBy('siswa.nama_lengkap', 'ASC')
-            ->where('anggota_kelas.kelas_id', $id_kelas_diampu)
-            ->where('siswa.status', 1)
-            ->get();
+        $id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('id');
+        $kelas_id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('kelas_id');
 
-        dd($data_anggota_kelas);
+        $data_anggota_kelas = AnggotaKelas::whereIn('id', $id_anggota_kelas)->whereIn('kelas_id', $kelas_id_anggota_kelas)->get();
 
         foreach ($data_anggota_kelas as $anggota) {
             $kehadiran = KehadiranSiswa::where('anggota_kelas_id', $anggota->id)->first();
