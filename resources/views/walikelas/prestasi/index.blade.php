@@ -82,11 +82,12 @@
                         <div class="col-sm-9">
                               <select class="form-control select2" id="tingkat_prestasi" name="tingkat_prestasi" required>
                             <option value="">-- Pilih Tingkatan --</option>
-                            <option value="1">Internasional</option>
-                            <option value="2">Nasional</option>
-                            <option value="3">Provinsi</option>
-                            <option value="4">Kabupaten</option>
-                            <option value="5">Kecamatan</option>
+                            <option value="1">Internations</option>
+                            <option value="2">National</option>
+                            <option value="3">Province</option>
+                            <option value="4">City</option>
+                            <option value="5">Disctrict</option>
+                            <option value="6">Inter School</option>
                           </select>
                         </div>
                       </div>
@@ -145,15 +146,17 @@
                       </td>
                       <td>
                         @if($prestasi->tingkat_prestasi == 1)
-                          Internasional
+                          Internations
                         @elseif($prestasi->tingkat_prestasi == 2)
-                          Nasional
+                          National
                         @elseif($prestasi->tingkat_prestasi == 3)
-                          Provinsi
+                          Province
                         @elseif($prestasi->tingkat_prestasi == 4)
-                          Kabupaten
+                          City
                         @elseif($prestasi->tingkat_prestasi == 5)
-                          Kecamatan
+                          District
+                        @elseif($prestasi->tingkat_prestasi == 6)
+                          Inter School
                         @endif
                       </td>
                       <td>{{$prestasi->deskripsi}}</td>
@@ -212,11 +215,12 @@
                                 <div class="col-sm-9">
                                     <select class="form-control select2" id="tingkat_prestasi" name="tingkat_prestasi" required>
                                     <option value="">-- Pilih Tingkatan --</option>
-                                    <option value="1" {{$prestasi->tingkat_prestasi == 1 ? 'selected' : ''}}>Internasional</option>
-                                    <option value="2" {{$prestasi->tingkat_prestasi == 2 ? 'selected' : ''}}>Nasional</option>
-                                    <option value="3" {{$prestasi->tingkat_prestasi == 3 ? 'selected' : ''}}>Provinsi</option>
-                                    <option value="4" {{$prestasi->tingkat_prestasi == 4 ? 'selected' : ''}}>Kabupaten</option>
-                                    <option value="5" {{$prestasi->tingkat_prestasi == 5 ? 'selected' : ''}}>Kecamatan</option>
+                                    <option value="1" {{$prestasi->tingkat_prestasi == 1 ? 'selected' : ''}}>Internations</option>
+                                    <option value="2" {{$prestasi->tingkat_prestasi == 2 ? 'selected' : ''}}>National</option>
+                                    <option value="3" {{$prestasi->tingkat_prestasi == 3 ? 'selected' : ''}}>Province</option>
+                                    <option value="4" {{$prestasi->tingkat_prestasi == 4 ? 'selected' : ''}}>City</option>
+                                    <option value="5" {{$prestasi->tingkat_prestasi == 5 ? 'selected' : ''}}>District</option>
+                                    <option value="6" {{$prestasi->tingkat_prestasi == 6 ? 'selected' : ''}}>Inter School</option>
                                   </select>
                                 </div>
                               </div>
