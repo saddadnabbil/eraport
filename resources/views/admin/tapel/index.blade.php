@@ -107,6 +107,7 @@
                   </div>
                   <form action="{{ route('tapel.store') }}" method="POST">
                     @csrf
+                    <input type="hidden" name="semester_id" value="{{ $semester_id }}">
                     <div class="modal-body">
                       <div class="form-group row">
                         <label for="tahun_pelajaran" class="col-sm-3 col-form-label">Tahun Pelajaran</label>

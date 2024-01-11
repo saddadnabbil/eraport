@@ -40,6 +40,18 @@
         <li class="nav-item">
           <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
         </li>
+
+        <div class="d-flex justify-content-center align-items-center">
+          <a href="{{Auth::user()->role == 1 ? route('tapel.index') : '#'}}" class="btn btn-primary btn-sm" style="line-height: 1">
+            @php
+              $tapel = App\Tapel::find(session()->get('tapel_id'));
+              $term = App\Term::find(session()->get('term_id'));
+            @endphp 
+             
+             School Year {{ str_replace('-', ' / ', $tapel->tahun_pelajaran) }} - Semester {{ session()->get('semester_id') }} - Term {{ $term->term }}
+          </a>
+        </div>
+        <!-- End of Flex container -->
       </ul>
 
       <!-- Right navbar links -->

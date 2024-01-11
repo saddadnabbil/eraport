@@ -54,7 +54,7 @@ class TapelController extends Controller
         } else {
             $tapel = new Tapel([
                 'tahun_pelajaran' => $request->tahun_pelajaran,
-                'semester' => $request->semester,
+                'semester_id' => $request->semester_id,
             ]);
             $tapel->save();
             Siswa::where('status', 1)->update(['kelas_id' => null]);
@@ -112,18 +112,24 @@ class TapelController extends Controller
 
             // Assuming you have a way to identify the specific Sekolah record, adjust the next line accordingly
             $sekolah = Sekolah::first(); // Change this line based on your logic to retrieve the Sekolah record
+            $tapel = Tapel::where('id', $request->select_tapel_id)->first(); // Change this line based on your logic to retrieve the Sekolah record
 
             if (!$sekolah) {
                 throw new \Exception('Data Sekolah tidak ditemukan.');
             }
 
-            $data = [
+            $data_sekolah = [
                 'tapel_id' => $request->select_tapel_id,
                 'semester_id' => $request->select_semester_id,
                 'term_id' => $request->select_term_id,
             ];
 
-            $sekolah->update($data);
+            $data_tapel = [
+                'semester_id' => $request->select_semester_id,
+            ];
+
+            $sekolah->update($data_sekolah);
+            $tapel->update($data_tapel);
 
             // Setel sesi 'tapel_id' dengan nilai baru
             session(['tapel_id' => $request->select_tapel_id]);

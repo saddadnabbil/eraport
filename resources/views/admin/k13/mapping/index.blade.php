@@ -42,7 +42,7 @@
                       <tr>
                         <th class="text-center">No</th>
                         <th class="text-center">Mata Pelajaran</th>
-                        <th class="text-center">Kelompok</th>
+                        {{-- <th class="text-center">Kelompok</th> --}}
                         <th class="text-center">No Urut Raport</th>
                       </tr>
                     </thead>
@@ -55,13 +55,13 @@
                         <td>{{$mapel->nama_mapel}}
                           <input type="hidden" name="mapel_id[]" value="{{$mapel->id}}">
                         </td>
-                        <td>
+                        {{-- <td>
                           <select class="form-control" name="kelompok[]" style="width: 100%;" required>
                             <option value="">-- Pilih Kelompok Mapel-- </option>
                             <option value="A" @if($mapel->kelompok == 'A') selected @endif>Kelompok A </option>
                             <option value="B" @if($mapel->kelompok == 'B') selected @endif>Kelompok B </option>
                           </select>
-                        </td>
+                        </td> --}}
                         <td>
                           <input type="number" class="form-control" name="nomor_urut[]" value="{{$mapel->nomor_urut}}" required>
                         </td>

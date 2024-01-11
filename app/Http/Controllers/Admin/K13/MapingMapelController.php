@@ -51,13 +51,13 @@ class MapingMapelController extends Controller
             if (is_null($mapel_mapping)) {
                 $mapping = new K13MappingMapel([
                     'mapel_id' => $request->mapel_id[$count],
-                    'kelompok' => $request->kelompok[$count],
+                    // 'kelompok' => $request->kelompok[$count],
                     'nomor_urut' => $request->nomor_urut[$count],
                 ]);
                 $mapping->save();
             } else {
                 $update_mapping = [
-                    'kelompok' => $request->kelompok[$count],
+                    // 'kelompok' => $request->kelompok[$count],
                     'nomor_urut' => $request->nomor_urut[$count],
                 ];
                 $mapel_mapping->update($update_mapping);

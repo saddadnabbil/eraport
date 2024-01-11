@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\WaliKelas;
+namespace App\Http\Controllers\Admin;
 
-use App\AnggotaKelas;
 use App\Guru;
-use App\Http\Controllers\Controller;
-use App\KehadiranSiswa;
 use App\Kelas;
 use App\Tapel;
 use Carbon\Carbon;
+use App\AnggotaKelas;
+use App\Pembelajaran;
+use App\KehadiranSiswa;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class KehadiranSiswaController extends Controller
@@ -21,11 +22,21 @@ class KehadiranSiswaController extends Controller
      */
     public function index()
     {
+
+        $title = 'Kehadiran Siswa';
+        $tapel = Tapel::findorfail(session()->get('tapel_id'));
+
+        $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
+
+        return view('admin.kehadiran.index', compact('title', 'data_kelas'));
+    }
+
+    public function create(Request $request)
+    {
         $title = 'Input Kehadiran Siswa';
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
-        $guru = Guru::where('user_id', Auth::user()->id)->first();
 
-        $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)->where('guru_id', $guru->id)->get('id');
+        $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)->where('id', $request->kelas_id)->get('id');
 
         $id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('id');
         $kelas_id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('kelas_id');
@@ -45,7 +56,7 @@ class KehadiranSiswaController extends Controller
             }
         }
 
-        return view('walikelas.kehadiran.index', compact('title', 'data_anggota_kelas'));
+        return view('admin.kehadiran.create', compact('title', 'data_anggota_kelas'));
     }
 
     /**
@@ -75,7 +86,7 @@ class KehadiranSiswaController extends Controller
                     $cek_data->update($data);
                 }
             }
-            return redirect('guru/kehadiran')->with('toast_success', 'Kehadiran siswa berhasil disimpan');
+            return redirect(route('kehadiranadmin.index'))->with('toast_success', 'Kehadiran siswa berhasil disimpan');
         }
     }
 }

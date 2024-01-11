@@ -121,31 +121,78 @@
 
         {{-- Kurikulum Merdeka --}}
           <li class="nav-header">RAPORT KM</li>
-          <li class="nav-item">
-            <a href="{{ route('kkmadmin.index') }}" class="nav-link {{ request()->routeIs('kkmadmin.*') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-greater-than-equal"></i>
-              <p>
-                Minimum Criteria
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{{ route('mappingkm.index') }}" class="nav-link {{ request()->routeIs('mappingkm.*') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-list-ol"></i>
-              <p>
-                Mapping Subject
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{{ route('cp.index') }}" class="nav-link {{ request()->routeIs('cp.*') ? 'active' : '' }}">
+
+          <li class="nav-item has-treeview {{ request()->routeIs(['tglraportkm.*', 'prosesdeskripsikmadmin.*', 'kkmadmin.*', 'mappingkm.*', 'kehadiranadmin.*', 'prestasiadmin.*', 'catatanadmin.*', 'kenaikanadmin.*']) ? 'menu-open' : '' }}">
+            <a href="#" class="nav-link">
               <i class="nav-icon fas fa-clipboard-list"></i>
               <p>
-                Capaian Kompetensi
+                Input Data
+                <i class="fas fa-angle-left right"></i>
               </p>
             </a>
+            <ul class="nav nav-treeview bg-secondary">
+              <li class="nav-item">
+                <a href="{{ route('kkmadmin.index') }}" class="nav-link {{ request()->routeIs('kkmadmin.*') ? 'active' : '' }}">
+                  <i class="nav-icon fas fa-greater-than-equal"></i>
+                  <p>
+                    Minimum Criteria
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('mappingkm.index') }}" class="nav-link {{ request()->routeIs('mappingkm.*') ? 'active' : '' }}">
+                  <i class="nav-icon fas fa-list-ol"></i>
+                  <p>
+                    Mapping Subject
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('kehadiranadmin.index') }}" class="nav-link {{ request()->routeIs('kehadiranadmin.*') ? 'active' : '' }}">
+                  <i class="fas fa-user-check nav-icon"></i>
+                  <p>Kehadiran Siswa</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('prestasiadmin.index') }}" class="nav-link {{ request()->routeIs('prestasiadmin.*') ? 'active' : '' }}">
+                  <i class="fas fa-trophy nav-icon"></i>
+                  <p>Prestasi Siswa</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('catatanadmin.index') }}" class="nav-link {{ request()->routeIs('catatanadmin.*') ? 'active' : '' }}">
+                  <i class="fas fa-edit nav-icon"></i>
+                  <p>Catatan Wali Kelas</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('prosesdeskripsikmadmin.index') }}" class="nav-link {{ request()->routeIs('prosesdeskripsikmadmin.*') ? 'active' : '' }}">
+                  <i class="nav-icon fas fa-file-alt"></i>
+                  <p>
+                    Proses Deskripsi Siswa
+                  </p>
+                </a>
+              </li>
+    
+              <li class="nav-item">
+                <a href="{{ route('tglraportkm.index') }}" class="nav-link {{ request()->routeIs('tglraportkm.*') ? 'active' : '' }}">
+                  <i class="nav-icon fas fa-calendar-week"></i>
+                  <p>
+                    Tanggal Raport
+                  </p>
+                </a>
+              </li>
+
+              <li class="nav-item">
+                <a href="{{ route('kenaikanadmin.index') }}" class="nav-link {{ request()->routeIs('kenaikanadmin.*') ? 'active' : '' }}">
+                  <i class="fas fa-layer-group nav-icon"></i>
+                  <p>Kenaikan Kelas</p>
+                </a>
+              </li> 
+            </ul>
           </li>
-          <li class="nav-item has-treeview {{ request()->routeIs(['rencanaformatif.*', 'rencanasumatif.*']) ? 'menu-open' : '' }}">
+
+          <li class="nav-item has-treeview {{ request()->routeIs(['cp.*', 'rencanaformatif.*', 'rencanasumatif.*']) ? 'menu-open' : '' }}">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-server"></i>
               <p>
@@ -154,6 +201,14 @@
               </p>
             </a>
             <ul class="nav nav-treeview bg-secondary">
+              <li class="nav-item">
+                <a href="{{ route('cp.index') }}" class="nav-link {{ request()->routeIs('cp.*') ? 'active' : '' }}">
+                  <i class="nav-icon fas fa-clipboard-list"></i>
+                  <p>
+                    Capaian Pembelajaran
+                  </p>
+                </a>
+              </li>
               <li class="nav-item">
                 <a href="{{ route('rencanaformatif.index') }}" class="nav-link {{ request()->routeIs('rencanaformatif.*') ? 'active' : '' }}">
                   <i class="fas fa-school nav-icon"></i>
@@ -173,7 +228,7 @@
             <a href="{{ route('penilaiankm.index') }}" class="nav-link {{ request()->routeIs('penilaiankm.*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-list-ol"></i>
               <p>
-                Penilaian
+                Input Penilaian
               </p>
             </a>
           </li>
@@ -182,7 +237,7 @@
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-clipboard-check"></i>
               <p>
-                Nilai Akhir Raport
+                Nilai Akhir
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
@@ -200,23 +255,6 @@
                 </a>
               </li>
             </ul>
-          </li>
-          <li class="nav-item">
-            <a href="{{ route('prosesdeskripsikmadmin.index') }}" class="nav-link {{ request()->routeIs('prosesdeskripsikmadmin.*') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-file-alt"></i>
-              <p>
-                Proses Deskripsi Siswa
-              </p>
-            </a>
-          </li>
-
-          <li class="nav-item">
-            <a href="{{ route('tglraportkm.index') }}" class="nav-link {{ request()->routeIs('tglraportkm.*') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-calendar-week"></i>
-              <p>
-                Input Tanggal Raport
-              </p>
-            </a>
           </li>
 
           {{-- Start Report Result KM --}}
