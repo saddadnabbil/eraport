@@ -7,6 +7,7 @@ use App\KmTglRaport;
 use App\K13TglRaport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Semester;
 use Illuminate\Support\Facades\Validator;
 
 class TglRaportController extends Controller
@@ -20,9 +21,10 @@ class TglRaportController extends Controller
     {
         $title = 'Tanggal Raport';
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $semester = Semester::findorfail($tapel->semester->semester);
         $data_tgl_raport = KmTglRaport::where('tapel_id', $tapel->id)->get();
 
-        return view('admin.km.tgl_raport.index', compact('title', 'tapel', 'data_tgl_raport'));
+        return view('admin.km.tgl_raport.index', compact('title', 'tapel', 'semester', 'data_tgl_raport'));
     }
 
 
@@ -35,15 +37,27 @@ class TglRaportController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'tapel_id' => 'required|unique:km_tgl_raports',
+            'tapel_id' => 'required|unique:km_tgl_raports,tapel_id',
+            'semester_id' => 'required|unique:km_tgl_raports,tapel_id',
             'tempat_penerbitan' => 'required|min:3|max:50',
             'tanggal_pembagian' => 'required',
         ]);
         if ($validator->fails()) {
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
         } else {
+
+            $tapel = Tapel::findorfail($request->tapel_id);
+            $semester = Semester::findorfail($request->semester_id);
+
+            $tglRaport = KmTglRaport::where('tapel_id', $tapel->id)->where('semester_id', $semester->id)->first();
+
+            if ($tglRaport) {
+                return back()->with('toast_error', 'Tgl raport sudah ada')->withInput();
+            }
+
             $tgl_raport = new KmTglRaport([
                 'tapel_id' => $request->tapel_id,
+                'semester_id' => $request->semester_id,
                 'tempat_penerbitan' => $request->tempat_penerbitan,
                 'tanggal_pembagian' => $request->tanggal_pembagian,
             ]);

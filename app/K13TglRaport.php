@@ -9,6 +9,7 @@ class K13TglRaport extends Model
     protected $table = 'k13_tgl_raport';
     protected $fillable = [
         'tapel_id',
+        'semester_id',
         'tempat_penerbitan',
         'tanggal_pembagian',
     ];
@@ -17,5 +18,10 @@ class K13TglRaport extends Model
     public function tapel()
     {
         return $this->belongsTo('App\Tapel');
+    }
+
+    public function semester()
+    {
+        return $this->belongsTo('App\Semester');
     }
 }

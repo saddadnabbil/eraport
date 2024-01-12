@@ -53,8 +53,9 @@
                       <div class="form-group row">
                         <label for="tapel_id" class="col-sm-3 col-form-label">Tahun Pelajaran</label>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control" value="{{$tapel->tahun_pelajaran}} {{$tapel->semester->semester}}" readonly>
+                          <input type="text" class="form-control" value="{{$tapel->tahun_pelajaran}} | Semester {{$tapel->semester->semester}}" readonly>
                           <input type="hidden" class="form-control" name="tapel_id" value="{{$tapel->id}}" readonly>
+                          <input type="hidden" class="form-control" name="semester_id" value="{{$semester->id}}" readonly>
                         </div>
                       </div>
                       <div class="form-group row">
@@ -139,6 +140,7 @@
                                 <label for="tapel_id" class="col-sm-3 col-form-label">Tahun Pelajaran</label>
                                 <div class="col-sm-9">
                                   <input type="text" class="form-control" id="tapel_id" value="{{$tgl_raport->tapel->tahun_pelajaran}} {{$tgl_raport->tapel->semester->semester}}" readonly>
+                                  <input type="hidden" class="form-control" name="semester_id" value="{{$tgl_raport->tapel->semester->semester}}" readonly>
                                 </div>
                               </div>
                               <div class="form-group row">
