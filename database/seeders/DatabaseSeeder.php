@@ -36,7 +36,7 @@ use Database\Seeders\K13TglRaportTableSeeder;
 use Database\Seeders\NilaiSumatifTableSeeder;
 use Database\Seeders\PembelajaranTableSeeder;
 use Database\Seeders\K13ButirSikapTableSeeder;
-use Database\Seeders\NilaiFormatifTableSeeder;
+use Database\Seeders\KmNilaiFormatifTableSeeder;
 use Database\Seeders\PrestasiSiswaTableSeeder;
 use Database\Seeders\K13NilaiPtsPasTableSeeder;
 use Database\Seeders\K13NilaiSosialTableSeeder;
@@ -62,6 +62,8 @@ use Database\Seeders\K13RencanaBobotPenilaianTableSeeder;
 use Database\Seeders\K13RencanaNilaiSpiritualTableSeeder;
 use Database\Seeders\K13RencanaNilaiPengetahuanTableSeeder;
 use Database\Seeders\K13RencanaNilaiKeterampilanTableSeeder;
+use Database\Seeders\KmNilaiAkhirTableSeeder;
+use Database\Seeders\KmNilaiSumatifTableSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -77,8 +79,8 @@ class DatabaseSeeder extends Seeder
             TingkatanTableSeeder::class,
             JurusanTableSeeder::class,
             SemesterTableSeeder::class,
-            TapelTableSeeder::class,
             TermTableSeeder::class,
+            TapelTableSeeder::class,
             GlobalUsersTableSeeder::class,
             AdminTableSeeder::class,
             GuruTableSeeder::class,
@@ -118,11 +120,11 @@ class DatabaseSeeder extends Seeder
             CapaianPembelajaranTableSeeder::class,
             RencanaNilaiSumatifTableSeeder::class,
             RencanaNilaiFormatifTableSeeder::class,
-            NilaiFormatifTableSeeder::class,
-            NilaiSumatifTableSeeder::class,
+            KmNilaiFormatifTableSeeder::class,
+            KmNilaiSumatifTableSeeder::class,
             KmNilaiAkhirRaportTableSeeder::class,
             KmDeskripsiNilaiSiswaTableSeeder::class,
-            NilaiAkhirTableSeeder::class,
+            KmNilaiAkhirTableSeeder::class,
             KmMappingMapelTableSeeder::class,
             KmTglRaportTableSeeder::class,
         ]);

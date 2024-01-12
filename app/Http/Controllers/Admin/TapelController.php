@@ -126,6 +126,7 @@ class TapelController extends Controller
 
             $data_tapel = [
                 'semester_id' => $request->select_semester_id,
+                'term_id' => $request->select_term_id,
             ];
 
             $sekolah->update($data_sekolah);

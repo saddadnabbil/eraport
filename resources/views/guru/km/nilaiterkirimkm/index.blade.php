@@ -37,6 +37,14 @@
                 <form action="{{ route('nilaiterkirimkm.create') }}" method="GET">
                   @csrf
                   <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Term</label>
+                    <div class="col-sm-10">
+                      <select class="form-control select2" name="term" style="width: 100%;" disabled>
+                        <option value="{{$term->id}}" selected>{{$term->term}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Mata Pelajaran</label>
                     <div class="col-sm-10">
                       <select class="form-control select2" name="pembelajaran_id" style="width: 100%;" required onchange="this.form.submit();">

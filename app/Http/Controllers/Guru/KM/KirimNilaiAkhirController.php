@@ -2,32 +2,34 @@
 
 namespace App\Http\Controllers\Guru\KM;
 
-use App\AnggotaKelas;
 use App\Guru;
-use App\Http\Controllers\Controller;
+use App\Term;
+use App\Kelas;
+use App\Tapel;
+use App\Semester;
+use Carbon\Carbon;
 use App\KmKkmMapel;
-use App\K13NilaiAkhirRaport;
-use App\K13NilaiKeterampilan;
-use App\K13NilaiPengetahuan;
+use App\NilaiAkhir;
+use App\AnggotaKelas;
+use App\NilaiSumatif;
+use App\Pembelajaran;
+use App\NilaiFormatif;
 use App\K13NilaiPtsPas;
 use App\K13NilaiSosial;
 use App\K13NilaiSpiritual;
-use App\K13RencanaBobotPenilaian;
-use App\K13RencanaNilaiKeterampilan;
-use App\K13RencanaNilaiPengetahuan;
-use App\K13RencanaNilaiSosial;
-use App\K13RencanaNilaiSpiritual;
-use App\Kelas;
 use App\KmNilaiAkhirRaport;
-use App\NilaiAkhir;
-use App\NilaiFormatif;
-use App\NilaiSumatif;
-use App\Pembelajaran;
-use App\RencanaNilaiFormatif;
+use App\K13NilaiAkhirRaport;
+use App\K13NilaiPengetahuan;
 use App\RencanaNilaiSumatif;
-use App\Tapel;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\K13NilaiKeterampilan;
+use App\RencanaNilaiFormatif;
+use App\K13RencanaNilaiSosial;
+use App\K13RencanaBobotPenilaian;
+use App\K13RencanaNilaiSpiritual;
+use App\K13RencanaNilaiPengetahuan;
+use App\Http\Controllers\Controller;
+use App\K13RencanaNilaiKeterampilan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -42,12 +44,15 @@ class KirimNilaiAkhirController extends Controller
     {
         $title = 'Kirim Nilai Akhir';
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $semester = Semester::findorfail($tapel->semester_id);
+        $term = Term::findorfail($tapel->term_id);
 
         $guru = Guru::where('user_id', Auth::user()->id)->first();
         $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
         $data_pembelajaran = Pembelajaran::where('guru_id', $guru->id)->whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
 
-        return view('guru.km.kirimnilaiakhirkm.index', compact('title', 'data_pembelajaran'));
+        return view('guru.km.kirimnilaiakhirkm.index', compact('title', 'data_pembelajaran', 'term', 'semester'));
     }
 
     /**
@@ -64,7 +69,9 @@ class KirimNilaiAkhirController extends Controller
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
         } else {
             $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
-
+            $tapel = Tapel::findorfail(session()->get('tapel_id'));
+            $semester = Semester::findorfail($tapel->semester_id);
+            $term = Term::findorfail($tapel->term_id);
             $kkm = KmKkmMapel::where('mapel_id', $pembelajaran->mapel_id)->where('kelas_id', $pembelajaran->kelas_id)->first();
 
             if (is_null($kkm)) {
@@ -118,7 +125,7 @@ class KirimNilaiAkhirController extends Controller
                         $anggota_kelas->nilai_keterampilan = round($nilai_akhir_keterampilan, 0);
                         $anggota_kelas->nilai_akhir_raport = round($nilai_akhir_raport, 0);
                     }
-                    return view('guru.km.kirimnilaiakhirkm.create', compact('title', 'data_pembelajaran', 'pembelajaran', 'kkm', 'data_anggota_kelas'));
+                    return view('guru.km.kirimnilaiakhirkm.create', compact('title', 'data_pembelajaran', 'pembelajaran', 'kkm', 'data_anggota_kelas', 'term', 'semester'));
                 }
             }
         }

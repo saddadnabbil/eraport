@@ -92,7 +92,9 @@
 
                               <td class="text-center">{{$nilai_siswa->nilai_sumatif}}</td>
                               <td>
-                              <textarea class="form-control" name="deskripsi_raport[]" rows="4" minlength="30" maxlength="200" required oninvalid="this.setCustomValidity('Deskripsi formatif harus berisi antara 30 s/d 200 karekter')" oninput="setCustomValidity('')">{{$nilai_siswa->deskripsi_nilai_siswa->deskripsi_raport}}</textarea>
+                              <textarea class="form-control" name="deskripsi_raport[]" rows="4" minlength="30" maxlength="200" required oninvalid="this.setCustomValidity('Deskripsi formatif harus berisi antara 30 s/d 200 karekter')" oninput="setCustomValidity('')" placeholder="Deskripsi">
+                                {{ !is_null($nilai_siswa->deskripsi_nilai_siswa) ? $nilai_siswa->deskripsi_nilai_siswa->deskripsi_raport ?? '' : '' }}
+                              </textarea>
                               </td>
 
                             </tr>

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin\KM;
 
 use App\Guru;
+use App\Term;
 use App\Kelas;
 use App\Tapel;
+use App\Semester;
 use App\KKkmMapel;
 use Carbon\Carbon;
 use App\KmKkmMapel;
@@ -43,12 +45,16 @@ class KirimNilaiAkhirController extends Controller
     {
         $title = 'Kirim Nilai Akhir';
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $semester = Semester::findorfail($tapel->semester_id);
+        $term = Term::findorfail($tapel->term_id);
+
+        $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
 
         // $guru = Guru::where('user_id', Auth::user()->id)->first();
         $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
         $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
 
-        return view('admin.km.kirimnilaiakhirkm.index', compact('title', 'data_pembelajaran'));
+        return view('admin.km.kirimnilaiakhirkm.index', compact('title', 'data_pembelajaran', 'semester', 'term', 'data_kelas'));
     }
 
     /**
@@ -64,6 +70,10 @@ class KirimNilaiAkhirController extends Controller
         if ($validator->fails()) {
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
         } else {
+            $tapel = Tapel::findorfail(session()->get('tapel_id'));
+            $semester = Semester::findorfail($tapel->semester_id);
+            $term = Term::findorfail($tapel->term_id);
+
             $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
 
             $kkm = KmKkmMapel::where('mapel_id', $pembelajaran->mapel_id)->where('kelas_id', $pembelajaran->kelas_id)->first();
@@ -102,24 +112,26 @@ class KirimNilaiAkhirController extends Controller
                     $data_anggota_kelas = AnggotaKelas::where('kelas_id', $pembelajaran->kelas_id)->get();
                     foreach ($data_anggota_kelas as $anggota_kelas) {
 
-                        $data_nilai_akhir = NilaiAkhir::where('anggota_kelas_id', $anggota_kelas->id)
-                            ->first();
+                        $data_nilai_akhir = NilaiAkhir::where('anggota_kelas_id', $anggota_kelas->id)->where('pembelajaran_id', $pembelajaran->id)->first();
 
-                        $nilai_akhir_pengetahuan = $data_nilai_akhir->nilai_akhir_sumatif;
-
-                        $nilai_akhir_keterampilan = $data_nilai_akhir->nilai_akhir_formatif;
-
-                        $nilai_akhir_raport  = $data_nilai_akhir->nilai_akhir_revisi;
-
-                        if ($nilai_akhir_raport == null || $nilai_akhir_raport == 0) {
-                            $nilai_akhir_raport = $data_nilai_akhir->nilai_akhir_raport;
+                        if (!is_null($data_nilai_akhir)) {
+                            $nilai_akhir_pengetahuan = $data_nilai_akhir->nilai_akhir_sumatif;
+                            $nilai_akhir_keterampilan = $data_nilai_akhir->nilai_akhir_formatif;
+                            $nilai_akhir_raport  = $data_nilai_akhir->nilai_akhir_revisi;
+                            if ($nilai_akhir_raport == null || $nilai_akhir_raport == 0) {
+                                $nilai_akhir_raport = $data_nilai_akhir->nilai_akhir_raport;
+                            }
+                        } else {
+                            $nilai_akhir_pengetahuan = 0;
+                            $nilai_akhir_keterampilan = 0;
+                            $nilai_akhir_raport = 0;
                         }
 
                         $anggota_kelas->nilai_pengetahuan = round($nilai_akhir_pengetahuan, 0);
                         $anggota_kelas->nilai_keterampilan = round($nilai_akhir_keterampilan, 0);
                         $anggota_kelas->nilai_akhir_raport = round($nilai_akhir_raport, 0);
                     }
-                    return view('admin.km.kirimnilaiakhirkm.create', compact('title', 'data_pembelajaran', 'pembelajaran', 'kkm', 'data_anggota_kelas'));
+                    return view('admin.km.kirimnilaiakhirkm.create', compact('title', 'data_pembelajaran', 'pembelajaran', 'kkm', 'data_anggota_kelas', 'term', 'semester'));
                 }
             }
         }
@@ -158,6 +170,6 @@ class KirimNilaiAkhirController extends Controller
                 $cek_nilai->update($data_nilai);
             }
         }
-        return redirect(route('kirimnilaiakhirkmadmin.index'))->with('toast_success', 'Nilai akhir raport berhasil dikirim');
+        return back()->with('toast_success', 'Nilai akhir raport berhasil dikirim');
     }
 }

@@ -10,11 +10,17 @@ class Tapel extends Model
     protected $fillable = [
         'tahun_pelajaran',
         'semester_id',
+        'term_id'
     ];
 
     public function semester()
     {
         return $this->belongsTo('App\Semester');
+    }
+
+    public function term()
+    {
+        return $this->belongsTo('App\Term');
     }
 
     public function kelas()

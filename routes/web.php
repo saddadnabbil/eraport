@@ -138,11 +138,11 @@ Route::group(['middleware' => ['auth']], function () {
       Route::resource('mapping', 'Admin\K13\MapingMapelController',  [
         'uses' => ['index', 'store']
       ]);
-      // Route::get('kkm/import', 'Admin\K13\KkmMapelController@format_import')->name('kkm.format_import');
-      // Route::post('kkm/import', 'Admin\K13\KkmMapelController@import')->name('kkm.import');
-      // Route::resource('kkm', 'Admin\K13\KkmMapelController',  [
-      //   'uses' => ['index', 'store', 'update', 'destroy']
-      // ]);
+      Route::get('kkm/import', 'Admin\K13\KkmMapelController@format_import')->name('kkm.format_import');
+      Route::post('kkm/import', 'Admin\K13\KkmMapelController@import')->name('kkm.import');
+      Route::resource('kkm', 'Admin\K13\KkmMapelController',  [
+        'uses' => ['index', 'store', 'update', 'destroy']
+      ]);
 
       Route::resource('interval', 'Admin\K13\IntervalPredikatController',  [
         'uses' => ['index']

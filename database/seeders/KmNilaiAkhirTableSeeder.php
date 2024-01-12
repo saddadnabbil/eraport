@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\NilaiAkhir;
 use Illuminate\Database\Seeder;
 
-class NilaiAkhirTableSeeder extends Seeder
+class KmNilaiAkhirTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,6 +15,7 @@ class NilaiAkhirTableSeeder extends Seeder
     public function run()
     {
         NilaiAkhir::create([
+            'pembelajaran_id' => 1,
             'anggota_kelas_id' => 1,
             'nilai_akhir_formatif' => 90,
             'nilai_akhir_sumatif' => 90,
@@ -23,14 +24,7 @@ class NilaiAkhirTableSeeder extends Seeder
         ]);
 
         NilaiAkhir::create([
-            'anggota_kelas_id' => 1,
-            'nilai_akhir_formatif' => 90,
-            'nilai_akhir_sumatif' => 50,
-            'nilai_akhir_raport' => 78,
-            'nilai_akhir_revisi' => null
-        ]);
-
-        NilaiAkhir::create([
+            'pembelajaran_id' => 2,
             'anggota_kelas_id' => 1,
             'nilai_akhir_formatif' => 90,
             'nilai_akhir_sumatif' => 90,
@@ -39,6 +33,7 @@ class NilaiAkhirTableSeeder extends Seeder
         ]);
 
         NilaiAkhir::create([
+            'pembelajaran_id' => 3,
             'anggota_kelas_id' => 1,
             'nilai_akhir_formatif' => 90,
             'nilai_akhir_sumatif' => 90,
@@ -47,6 +42,16 @@ class NilaiAkhirTableSeeder extends Seeder
         ]);
 
         NilaiAkhir::create([
+            'pembelajaran_id' => 4,
+            'anggota_kelas_id' => 1,
+            'nilai_akhir_formatif' => 90,
+            'nilai_akhir_sumatif' => 90,
+            'nilai_akhir_raport' => 90,
+            'nilai_akhir_revisi' => null
+        ]);
+
+        NilaiAkhir::create([
+            'pembelajaran_id' => 1,
             'anggota_kelas_id' => 1,
             'nilai_akhir_formatif' => 90,
             'nilai_akhir_sumatif' => 90,

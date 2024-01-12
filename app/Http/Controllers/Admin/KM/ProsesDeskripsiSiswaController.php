@@ -89,6 +89,12 @@ class ProsesDeskripsiSiswaController extends Controller
                     // $nilai_siswa->deskripsi_formatif = $cp_formatif_terbaik->ringkasan_cp;
 
                     $nilai_siswa->deskripsi_nilai_siswa = KmDeskripsiNilaiSiswa::where('pembelajaran_id', $pembelajaran->id)->where('km_nilai_akhir_raport_id', $nilai_siswa->id)->first();
+
+
+                    // if($nilai_siswa->deskripsi_nilai_siswa == null) 
+                    // {
+                    //     $nilai_siswa->deskripsi_nilai_siswa = 
+                    // }
                 }
             }
             return view('admin.km.prosesdeskripsi.create', compact('title', 'data_pembelajaran', 'pembelajaran', 'data_nilai_siswa'));

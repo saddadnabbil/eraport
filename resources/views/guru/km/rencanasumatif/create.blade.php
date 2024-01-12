@@ -89,7 +89,7 @@
                       <tr class="bg-primary">
                         <td>Bobot Teknik Penilaian</td>
                         @for ($i = 1; $i <= $jumlah_penilaian; $i++) <td>
-                          <input type="number" class="form-control" name="bobot_teknik_penilaian[]" value="75" required oninvalid="this.setCustomValidity('data tidak boleh kosong')" oninput="setCustomValidity('')">
+                          <input type="number" class="form-control" name="bobot_teknik_penilaian[]" value="30" required oninvalid="this.setCustomValidity('data tidak boleh kosong')" oninput="setCustomValidity('')">
                           </td>
                           @endfor
                       </tr>

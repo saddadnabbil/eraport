@@ -37,6 +37,14 @@
                 <form action="{{ route('nilaiterkirimkmadmin.create') }}" method="GET">
                   @csrf
                   <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Term</label>
+                    <div class="col-sm-10">
+                      <select class="form-control select2" name="term" style="width: 100%;" disabled>
+                        <option value="{{$term->id}}" selected>{{$term->term}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Mata Pelajaran</label>
                     <div class="col-sm-10">
                       <select class="form-control select2" name="pembelajaran_id" style="width: 100%;" required onchange="this.form.submit();">
@@ -47,6 +55,17 @@
                       </select>
                     </div>
                   </div>
+                  {{-- <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Kelas</label>
+                    <div class="col-sm-10">
+                      <select class="form-control select2" name="kelas_id" style="width: 100%;" required onchange="this.form.submit();">
+                        <option value="">-- Pilih Kelas --</option>
+                        @foreach($data_kelas as $kelas)
+                        <option value="{{$kelas->id}}">{{$kelas->nama_kelas}}</option>
+                        @endforeach
+                      </select>
+                    </div>
+                  </div> --}}
                 </form>
               </div>
             </div>

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateNilaiAkhirsTable extends Migration
+class CreateKmNilaiAkhirsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateNilaiAkhirsTable extends Migration
      */
     public function up()
     {
-        Schema::create('nilai_akhirs', function (Blueprint $table) {
+        Schema::create('km_nilai_akhirs', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('anggota_kelas_id')->unsigned();
+            $table->unsignedBigInteger('pembelajaran_id')->unsigned();
             $table->integer('nilai_akhir_formatif');
             $table->integer('nilai_akhir_sumatif');
             $table->integer('nilai_akhir_raport');
@@ -23,6 +24,7 @@ class CreateNilaiAkhirsTable extends Migration
             $table->timestamps();
 
             $table->foreign('anggota_kelas_id')->references('id')->on('anggota_kelas');
+            $table->foreign('pembelajaran_id')->references('id')->on('pembelajaran');
         });
     }
 
@@ -33,6 +35,6 @@ class CreateNilaiAkhirsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('nilai_akhirs');
+        Schema::dropIfExists('km_nilai_akhirs');
     }
 }

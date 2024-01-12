@@ -2,23 +2,29 @@
 
 namespace App\Http\Controllers\Admin\KM;
 
-use App\AnggotaKelas;
-use App\Http\Controllers\Controller;
-use App\KmKkmMapel;
-use App\KmMappingMapel;
-use App\NilaiFormatif;
-use App\NilaiSumatif;
-use App\K13NilaiPtsPas;
-use App\K13RencanaNilaiKeterampilan;
-use App\Kelas;
-use App\KmDeskripsiNilaiSiswa;
-use App\Mapel;
-use App\Pembelajaran;
-use App\RencanaNilaiFormatif;
-use App\RencanaNilaiSumatif;
-use App\Sekolah;
-use Illuminate\Http\Request;
 use PDF;
+use App\Kelas;
+use App\Mapel;
+use App\Sekolah;
+use App\KmKkmMapel;
+use App\AnggotaKelas;
+use App\NilaiSumatif;
+use App\Pembelajaran;
+use App\NilaiFormatif;
+use App\K13NilaiPtsPas;
+use App\KehadiranSiswa;
+use App\KmMappingMapel;
+use App\Ekstrakulikuler;
+use App\CatatanWaliKelas;
+use App\KmNilaiAkhirRaport;
+use App\RencanaNilaiSumatif;
+use Illuminate\Http\Request;
+use App\NilaiEkstrakulikuler;
+use App\RencanaNilaiFormatif;
+use App\KmDeskripsiNilaiSiswa;
+use App\AnggotaEkstrakulikuler;
+use App\Http\Controllers\Controller;
+use App\K13RencanaNilaiKeterampilan;
 
 class CetakRaportPTSController extends Controller
 {
@@ -73,17 +79,36 @@ class CetakRaportPTSController extends Controller
         $data_id_mapel_kelompok_a = KmMappingMapel::whereIn('mapel_id', $data_id_mapel_semester_ini)->where('kelompok', 'A')->get('mapel_id');
         $data_id_mapel_kelompok_b = KmMappingMapel::whereIn('mapel_id', $data_id_mapel_semester_ini)->where('kelompok', 'B')->get('mapel_id');
 
+        $data_id_pembelajaran = Pembelajaran::where('kelas_id', $anggota_kelas->kelas_id)->get('id');
+        $data_nilai = KmNilaiAkhirRaport::whereIn('pembelajaran_id', $data_id_pembelajaran)->where('anggota_kelas_id', $anggota_kelas->id)->get();
+
+        $data_id_ekstrakulikuler = Ekstrakulikuler::where('tapel_id', session()->get('tapel_id'))->get('id');
+
+        $data_anggota_ekstrakulikuler = AnggotaEkstrakulikuler::whereIn('ekstrakulikuler_id', $data_id_ekstrakulikuler)->where('anggota_kelas_id', $anggota_kelas->id)->get();
+        foreach ($data_anggota_ekstrakulikuler as $anggota_ekstrakulikuler) {
+            $cek_nilai_ekstra = NilaiEkstrakulikuler::where('anggota_ekstrakulikuler_id', $anggota_ekstrakulikuler->id)->first();
+            if (is_null($cek_nilai_ekstra)) {
+                $anggota_ekstrakulikuler->nilai = null;
+                $anggota_ekstrakulikuler->deskripsi = null;
+            } else {
+                $anggota_ekstrakulikuler->nilai = $cek_nilai_ekstra->nilai;
+                $anggota_ekstrakulikuler->deskripsi = $cek_nilai_ekstra->deskripsi;
+            }
+        }
+        $kehadiran_siswa = KehadiranSiswa::where('anggota_kelas_id', $anggota_kelas->id)->first();
+        $catatan_wali_kelas = CatatanWaliKelas::where('anggota_kelas_id', $anggota_kelas->id)->first();
 
         // Data Nilai Kelompok A
         $data_pembelajaran_a = Pembelajaran::where('kelas_id', $anggota_kelas->kelas->id)->whereIn('mapel_id', $data_id_mapel_kelompok_a)->get();
         foreach ($data_pembelajaran_a as $pembelajaran_a) {
             $kkm = KmKkmMapel::where('mapel_id', $pembelajaran_a->mapel_id)->where('kelas_id', $anggota_kelas->kelas->id)->first();
-            $deskripsi = KmDeskripsiNilaiSiswa::where('pembelajaran_id', $pembelajaran_a->id)->where('anggota_kelas_id', $anggota_kelas->id)->first();
+            // $deskripsi = KmDeskripsiNilaiSiswa::where('pembelajaran_id', $pembelajaran_a->id)->where('anggota_kelas_id', $anggota_kelas->id)->first();
             if (is_null($kkm)) {
                 return back()->with('toast_warning', 'KKM mata pelajaran belum ditentukan');
-            } elseif (is_null($deskripsi)) {
-                return redirect(route('prosesdeskripsikm'))->with('toast_warning', 'Deskripsi nilai siswa belum ditentukan');
             }
+            // elseif (is_null($deskripsi)) {
+            //     return redirect(route('prosesdeskripsikm'))->with('toast_warning', 'Deskripsi nilai siswa belum ditentukan');
+            // }
 
             // Interval KKM
             $range = (100 - $kkm->kkm) / 3;
@@ -114,12 +139,13 @@ class CetakRaportPTSController extends Controller
         $data_pembelajaran_b = Pembelajaran::where('kelas_id', $anggota_kelas->kelas->id)->whereIn('mapel_id', $data_id_mapel_kelompok_b)->get();
         foreach ($data_pembelajaran_b as $pembelajaran_b) {
             $kkm = KmKkmMapel::where('mapel_id', $pembelajaran_b->mapel_id)->where('kelas_id', $anggota_kelas->kelas->id)->first();
-            $deskripsi = KmDeskripsiNilaiSiswa::where('pembelajaran_id', $pembelajaran_b->id)->where('anggota_kelas_id', $anggota_kelas->id)->first();
+            // $deskripsi = KmDeskripsiNilaiSiswa::where('pembelajaran_id', $pembelajaran_b->id)->where('anggota_kelas_id', $anggota_kelas->id)->first();
             if (is_null($kkm)) {
                 return back()->with('toast_warning', 'KKM mata pelajaran belum ditentukan');
-            } elseif (is_null($deskripsi)) {
-                return redirect(route('prosesdeskripsikm'))->with('toast_warning', 'Deskripsi nilai siswa belum ditentukan');
             }
+            // elseif (is_null($deskripsi)) {
+            //     return redirect(route('prosesdeskripsikm'))->with('toast_warning', 'Deskripsi nilai siswa belum ditentukan');
+            // }
 
             // Interval KKM
             $range = (100 - $kkm->kkm) / 3;
@@ -146,7 +172,7 @@ class CetakRaportPTSController extends Controller
             // }
         }
 
-        $raport = PDF::loadview('walikelas.km.raportpts.raport', compact('title', 'sekolah', 'anggota_kelas', 'data_pembelajaran_a', 'data_pembelajaran_b'))->setPaper($request->paper_size, $request->orientation);
+        $raport = PDF::loadview('walikelas.km.raportpts.raport', compact('title', 'sekolah', 'anggota_kelas', 'data_pembelajaran_a', 'data_pembelajaran_b', 'data_nilai', 'data_anggota_ekstrakulikuler', 'kehadiran_siswa', 'catatan_wali_kelas'))->setPaper($request->paper_size, $request->orientation);
         return $raport->stream('RAPORT PTS ' . $anggota_kelas->siswa->nama_lengkap . ' (' . $anggota_kelas->kelas->nama_kelas . ').pdf');
     }
 }

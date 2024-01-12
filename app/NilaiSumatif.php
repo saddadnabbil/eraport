@@ -9,6 +9,7 @@ class NilaiSumatif extends Model
 {
     use HasFactory;
 
+    protected $table = 'km_nilai_sumatifs';
     protected $guarded = ['id'];
 
     public function rencana_nilai_sumatif()

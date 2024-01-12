@@ -31,5 +31,11 @@ class K13KkmTableSeeder extends Seeder
             'kelas_id' => 1,
             'kkm' => 75
         ]);
+
+        K13KkmMapel::create([
+            'mapel_id' => 3,
+            'kelas_id' => 1,
+            'kkm' => 75
+        ]);
     }
 }

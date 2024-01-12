@@ -52,7 +52,7 @@
 
               <form action="{{ route('penilaiankm.store') }}" method="POST">
                 @csrf
-
+                <input type="hidden" name="pembelajaran_id" value="{{$pembelajaran_id}}">
                 <div class="table-responsive">
                   <table class="table table-bordered table-hover">
                     <thead class="bg-primary">
@@ -127,12 +127,12 @@
                                       <td>
                                           <input type="number" class="form-control nilai_sumatif_input" data-bobot="{{$rencana_penilaian_sumatif->bobot_teknik_penilaian}}" name="nilai_sumatif[{{$i}}][]" min="0" max="100" oninvalid="this.setCustomValidity('Nilai harus berisi antara 0 s/d 100')" oninput="setCustomValidity('')" style="text-align: center;" > 
                                       </td>
-                                  @else
+                                  @elseif($rencana_penilaian_sumatif->nilai_sumatif != null)
                                       @foreach($rencana_penilaian_sumatif->nilai_sumatif as $nilai_sumatif)
                                           @if ($nilai_sumatif->anggota_kelas_id == $anggota_kelas->id)
-                                          <td>
-                                              <input type="number" class="form-control nilai_sumatif_input" data-bobot="{{$rencana_penilaian_sumatif->bobot_teknik_penilaian}}" name="nilai_sumatif[{{$i}}][]" min="0" max="100" oninvalid="this.setCustomValidity('Nilai harus berisi antara 0 s/d 100')" oninput="setCustomValidity('')" style="text-align: center;" value="{{$nilai_sumatif->nilai}}"> 
-                                          </td>
+                                            <td>
+                                                <input type="number" class="form-control nilai_sumatif_input" data-bobot="{{$rencana_penilaian_sumatif->bobot_teknik_penilaian}}" name="nilai_sumatif[{{$i}}][]" min="0" max="100" oninvalid="this.setCustomValidity('Nilai harus berisi antara 0 s/d 100')" oninput="setCustomValidity('')" style="text-align: center;" value="{{$nilai_sumatif->nilai}}"> 
+                                            </td>
                                           @endif
                                       @endforeach
                                   @endif

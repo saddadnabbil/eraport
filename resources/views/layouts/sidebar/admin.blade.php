@@ -122,7 +122,7 @@
         {{-- Kurikulum Merdeka --}}
           <li class="nav-header">RAPORT KM</li>
 
-          <li class="nav-item has-treeview {{ request()->routeIs(['tglraportkm.*', 'prosesdeskripsikmadmin.*', 'kkmadmin.*', 'mappingkm.*', 'kehadiranadmin.*', 'prestasiadmin.*', 'catatanadmin.*', 'kenaikanadmin.*']) ? 'menu-open' : '' }}">
+          <li class="nav-item has-treeview {{ request()->routeIs(['tglraportkm.*', 'kkmadmin.*', 'mappingkm.*', 'kehadiranadmin.*', 'prestasiadmin.*', 'catatanadmin.*', 'kenaikanadmin.*']) ? 'menu-open' : '' }}">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-clipboard-list"></i>
               <p>
@@ -165,15 +165,6 @@
                   <p>Catatan Wali Kelas</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="{{ route('prosesdeskripsikmadmin.index') }}" class="nav-link {{ request()->routeIs('prosesdeskripsikmadmin.*') ? 'active' : '' }}">
-                  <i class="nav-icon fas fa-file-alt"></i>
-                  <p>
-                    Proses Deskripsi Siswa
-                  </p>
-                </a>
-              </li>
-    
               <li class="nav-item">
                 <a href="{{ route('tglraportkm.index') }}" class="nav-link {{ request()->routeIs('tglraportkm.*') ? 'active' : '' }}">
                   <i class="nav-icon fas fa-calendar-week"></i>
@@ -229,6 +220,15 @@
               <i class="nav-icon fas fa-list-ol"></i>
               <p>
                 Input Penilaian
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{ route('prosesdeskripsikmadmin.index') }}" class="nav-link {{ request()->routeIs('prosesdeskripsikmadmin.*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-file-alt"></i>
+              <p>
+                Proses Deskripsi Siswa
               </p>
             </a>
           </li>
@@ -307,7 +307,7 @@
             </a>
           </li>
 
-          <li class="nav-item has-treeview {{ request()->routeIs(['adminraportpts.*', 'adminraportsemesterkm.*']) ? 'menu-open' : '' }}">
+          <li class="nav-item has-treeview {{ request()->routeIs(['adminraportptskm.*', 'adminraportsemesterkm.*']) ? 'menu-open' : '' }}">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-print"></i>
               <p>
@@ -335,6 +335,14 @@
 
         <!-- Kurikulum -->
           <li class="nav-header">SETTING REPORT</li>
+          <li class="nav-item">
+            <a href="{{ route('kkm.index') }}" class="nav-link {{ request()->routeIs('kkm.*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-greater-than-equal"></i>
+              <p>
+                Minimum Criteria
+              </p>
+            </a>
+          </li>
           <li class="nav-item">
             <a href="{{ route('mapping.index') }}" class="nav-link {{ request()->routeIs('mapping.*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-list-ol"></i>

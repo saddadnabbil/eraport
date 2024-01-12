@@ -9,6 +9,7 @@ class NilaiFormatif extends Model
 {
     use HasFactory;
 
+    protected $table = 'km_nilai_formatifs';
     protected $guarded = ['id'];
 
     public function rencana_nilai_formatif()

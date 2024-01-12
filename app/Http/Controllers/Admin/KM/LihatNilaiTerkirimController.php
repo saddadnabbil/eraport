@@ -3,13 +3,15 @@
 namespace App\Http\Controllers\Admin\KM;
 
 use App\Guru;
-use App\Http\Controllers\Controller;
-use App\K13NilaiAkhirRaport;
+use App\Term;
 use App\Kelas;
-use App\KmNilaiAkhirRaport;
-use App\Pembelajaran;
 use App\Tapel;
+use App\Semester;
+use App\Pembelajaran;
+use App\KmNilaiAkhirRaport;
+use App\K13NilaiAkhirRaport;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -24,12 +26,16 @@ class LihatNilaiTerkirimController extends Controller
     {
         $title = 'Lihat Nilai Akhir Terkirim';
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $semester = Semester::findorfail($tapel->semester_id);
+        $term = Term::findorfail($tapel->term_id);
+
+        $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
 
         // $guru = Guru::where('user_id', Auth::user()->id)->first();
         $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
         $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
 
-        return view('admin.km.nilaiterkirimkm.index', compact('title', 'data_pembelajaran'));
+        return view('admin.km.nilaiterkirimkm.index', compact('title', 'data_pembelajaran', 'term', 'semester', 'data_kelas'));
     }
 
     /**
@@ -48,6 +54,8 @@ class LihatNilaiTerkirimController extends Controller
             // Data Master
             $title = 'Lihat Nilai Akhir Terkirim';
             $tapel = Tapel::findorfail(session()->get('tapel_id'));
+            $semester = Semester::findorfail($tapel->semester_id);
+            $term = Term::findorfail($tapel->term_id);
 
             // $guru = Guru::where('user_id', Auth::user()->id)->first();
             $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
@@ -56,7 +64,7 @@ class LihatNilaiTerkirimController extends Controller
             $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
             $data_nilai_terkirim = KmNilaiAkhirRaport::where('pembelajaran_id', $request->pembelajaran_id)->get();
 
-            return view('admin.km.nilaiterkirimkm.create', compact('title', 'data_pembelajaran', 'pembelajaran', 'data_nilai_terkirim'));
+            return view('admin.km.nilaiterkirimkm.create', compact('title', 'data_pembelajaran', 'pembelajaran', 'data_nilai_terkirim', 'term', 'semester'));
         }
     }
 }

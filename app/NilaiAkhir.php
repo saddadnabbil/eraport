@@ -9,6 +9,7 @@ class NilaiAkhir extends Model
 {
     use HasFactory;
 
+    protected $table = 'km_nilai_akhirs';
     protected $guarded = ['id'];
 
     public function anggota_kelas()

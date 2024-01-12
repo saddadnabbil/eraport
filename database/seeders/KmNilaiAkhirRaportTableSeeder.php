@@ -18,11 +18,11 @@ class KmNilaiAkhirRaportTableSeeder extends Seeder
             'pembelajaran_id' => 1,
             'anggota_kelas_id' => 1,
             'kkm' => 75,
-            'nilai_sumatif' => 50,
+            'nilai_sumatif' => 90,
             'predikat_sumatif' => 'A',
             'nilai_formatif' => 90,
             'predikat_formatif' => 'A',
-            'nilai_akhir_raport' => 78,
+            'nilai_akhir_raport' => 90,
             'predikat_akhir_raport' => 'B',
         ]);
 

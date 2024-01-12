@@ -78,10 +78,10 @@ class PenilaianKurikulumMerdekaController extends Controller
 
             $count_cp_formatif = count($data_rencana_penilaian_formatif);
 
-            if ($count_cp_formatif == null) {
-                return redirect(route('rencanasumatif.index'))->with('toast_error', 'Belum ada rencana penilaian ' .  $pembelajaran->mapel->nama_mapel . ' ' . $pembelajaran->kelas->nama_kelas . ', silahkan tambah rencana nilai sumatif ' . $pembelajaran->mapel->nama_mapel . ' ' .  $pembelajaran->kelas->nama_kelas . ' terlebih dahulu!');
-            } elseif ($count_cp_sumatif == null) {
-                return redirect(route('rencanaformatif.index'))->with('toast_error', 'Belum ada rencana penilaian ' .  $pembelajaran->mapel->nama_mapel . ' ' . $pembelajaran->kelas->nama_kelas . ', silahkan tambah rencana nilai formatif ' . $pembelajaran->mapel->nama_mapel . ' ' .  $pembelajaran->kelas->nama_kelas . ' terlebih dahulu!');
+            if ($count_cp_sumatif == null) {
+                return redirect(route('rencanasumatif.index'))->with('toast_error', 'Belum ada rencana penilaian sumatif ' .  $pembelajaran->mapel->nama_mapel . ' ' . $pembelajaran->kelas->nama_kelas . ', silahkan tambah rencana nilai sumatif ' . $pembelajaran->mapel->nama_mapel . ' ' .  $pembelajaran->kelas->nama_kelas . ' terlebih dahulu!');
+            } elseif ($count_cp_formatif == null) {
+                return redirect(route('rencanaformatif.index'))->with('toast_error', 'Belum ada rencana penilaian formatif ' .  $pembelajaran->mapel->nama_mapel . ' ' . $pembelajaran->kelas->nama_kelas . ', silahkan tambah rencana nilai formatif ' . $pembelajaran->mapel->nama_mapel . ' ' .  $pembelajaran->kelas->nama_kelas . ' terlebih dahulu!');
             }
 
             $rencana_penilaian_data_sumatif = [];
@@ -244,6 +244,7 @@ class PenilaianKurikulumMerdekaController extends Controller
 
                     $dataNilaiAkhir = [
                         'anggota_kelas_id' => $request->anggota_kelas_id[$count_siswa],
+                        'pembelajaran_id' => $request->pembelajaran_id[$count_siswa],
                         'nilai_akhir_formatif' => $nilaiAkhirFormatif,
                         'nilai_akhir_sumatif' => $nilaiAkhirSumatif,
                         'nilai_akhir_raport' => $nilaiAkhir,
@@ -253,7 +254,10 @@ class PenilaianKurikulumMerdekaController extends Controller
                     ];
 
                     NilaiAkhir::updateOrCreate(
-                        ['anggota_kelas_id' => $dataNilaiAkhir['anggota_kelas_id']],
+                        [
+                            'anggota_kelas_id' => $dataNilaiAkhir['anggota_kelas_id'],
+                            'pembelajaran_id' => $dataNilaiAkhir['pembelajaran_id']
+                        ],
                         $dataNilaiAkhir
                     );
                 }
