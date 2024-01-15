@@ -13,7 +13,7 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item "><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item "><a href="{{ route('rencanaformatif.index') }}">Rencana Nilai Keterampilan</a></li>
+            <li class="breadcrumb-item "><a href="{{ route('rencanaformatif.index') }}">Rencana Nilai Formatif</a></li>
             <li class="breadcrumb-item active">{{$title}}</li>
           </ol>
         </div><!-- /.col -->

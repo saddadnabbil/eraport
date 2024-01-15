@@ -219,16 +219,16 @@
             <a href="{{ route('penilaiankm.index') }}" class="nav-link {{ request()->routeIs('penilaiankm.*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-list-ol"></i>
               <p>
-                Input Penilaian
+                Penilaian
               </p>
             </a>
           </li>
 
           <li class="nav-item">
-            <a href="{{ route('prosesdeskripsikmadmin.index') }}" class="nav-link {{ request()->routeIs('prosesdeskripsikmadmin.*') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-file-alt"></i>
+            <a href="{{ route('nilaiekstraadmin.index') }}" class="nav-link {{ request()->routeIs('nilaiekstraadmin.*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-book-reader"></i>
               <p>
-                Proses Deskripsi Siswa
+                Nilai Ekstrakulikuler
               </p>
             </a>
           </li>
@@ -255,6 +255,15 @@
                 </a>
               </li>
             </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{ route('prosesdeskripsikm.index') }}" class="nav-link {{ request()->routeIs('prosesdeskripsikm.*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-file-alt"></i>
+              <p>
+                Proses Deskripsi Siswa
+              </p>
+            </a>
           </li>
 
           {{-- Start Report Result KM --}}
@@ -333,8 +342,8 @@
           {{-- End Report Result KM --}}
         {{-- End Kurikulum Merdeka --}}
 
-        <!-- Kurikulum -->
-          <li class="nav-header">SETTING REPORT</li>
+        {{-- Kurikulum --}}
+          {{-- <li class="nav-header">SETTING REPORT</li>
           <li class="nav-item">
             <a href="{{ route('kkm.index') }}" class="nav-link {{ request()->routeIs('kkm.*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-greater-than-equal"></i>
@@ -465,7 +474,7 @@
                 </a>
               </li>
             </ul>
-          </li>
+          </li> --}}
           {{-- End Report Result K13 --}}
          
 

@@ -33,12 +33,6 @@ class KmKkmMapelTableSeeder extends Seeder
         ]);
 
         KmKkmMapel::create([
-            'mapel_id' => 2,
-            'kelas_id' => 1,
-            'kkm' => 75
-        ]);
-
-        KmKkmMapel::create([
             'mapel_id' => 3,
             'kelas_id' => 1,
             'kkm' => 75

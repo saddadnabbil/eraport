@@ -108,6 +108,7 @@
                   <form action="{{ route('tapel.store') }}" method="POST">
                     @csrf
                     <input type="hidden" name="semester_id" value="{{ $semester_id }}">
+                    <input type="hidden" name="term_id" value="{{ $term_id }}">
                     <div class="modal-body">
                       <div class="form-group row">
                         <label for="tahun_pelajaran" class="col-sm-3 col-form-label">Tahun Pelajaran</label>
@@ -141,13 +142,15 @@
                     <?php $no = 0; ?>
                     @foreach($data_tapel as $tapel)
                     <?php $no++; ?>
-                    <tr>
+                    <tr style="{{$tapel->id == $tapel_id ? 'background-color:#d9edf7;' : ''}}">
                       <td>{{$no}}</td>
                       <td>{{$tapel->tahun_pelajaran}}</td>
                       <td>
                         <form action="{{ route('tapel.destroy', $tapel->id) }}" method="POST">
                           @csrf
                           @method('DELETE')
+                          <input type="hidden" name="semester_id" value="{{ $semester_id }}">
+                          <input type="hidden" name="term_id" value="{{ $term_id }}">
                           <button type="button" class="btn btn-warning btn-sm mt-1" data-toggle="modal" data-target="#modal-edit{{$tapel->id}}">
                             <i class="fas fa-pencil-alt"></i>
                           </button>

@@ -31,7 +31,93 @@
         </li>
 
         {{-- Kurikulum Merdeka --}}
-          <li class="nav-header">RAPORT KM</li>
+        <li class="nav-header">RAPORT KM</li>
+          <li class="nav-item has-treeview {{ request()->routeIs(['guru.cp.*', 'guru.rencanaformatif.*', 'guru.rencanasumatif.*']) ? 'menu-open' : '' }}">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-server"></i>
+              <p>
+                Rencana Penilaian
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview bg-secondary">
+              <li class="nav-item">
+                <a href="{{ route('guru.cp.index') }}" class="nav-link {{ request()->routeIs('guru.cp.*') ? 'active' : '' }}">
+                  <i class="nav-icon fas fa-clipboard-list"></i>
+                  <p>
+                    Capaian Pembelajaran
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('guru.rencanaformatif.index') }}" class="nav-link {{ request()->routeIs('guru.rencanaformatif.*') ? 'active' : '' }}">
+                  <i class="fas fa-school nav-icon"></i>
+                  <p>Formatif</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('guru.rencanasumatif.index') }}" class="nav-link {{ request()->routeIs('guru.rencanasumatif.*') ? 'active' : '' }}">
+                  <i class="fas fa-school nav-icon"></i>
+                  <p>Sumatif</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{ route('guru.penilaiankm.index') }}" class="nav-link {{ request()->routeIs('guru.penilaiankm.*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-list-ol"></i>
+              <p>
+                Penilaian
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{ route('nilaiekstra.index') }}" class="nav-link {{ request()->routeIs('nilaiekstra.*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-book-reader"></i>
+              <p>
+                Nilai Ekstrakulikuler
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item has-treeview {{ request()->routeIs(['kirimnilaiakhirkm.*', 'nilaiterkirimkm.*']) ? 'menu-open' : '' }}">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-clipboard-check"></i>
+              <p>
+                Nilai Akhir
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview bg-secondary">
+              <li class="nav-item">
+                <a href="{{ route('kirimnilaiakhirkm.index') }}" class="nav-link {{ request()->routeIs('kirimnilaiakhir.*') ? 'active' : '' }}">
+                  <i class="fas fa-paper-plane nav-icon"></i>
+                  <p>Kirim Nilai Akhir</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('nilaiterkirimkm.index') }}" class="nav-link {{ request()->routeIs('nilaiterkirimkm.*') ? 'active' : '' }}">
+                  <i class="fas fa-eye nav-icon"></i>
+                  <p>Lihat Nilai Terkirim</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{ route('prosesdeskripsikmadmin.index') }}" class="nav-link {{ request()->routeIs('prosesdeskripsikmadmin.*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-file-alt"></i>
+              <p>
+                Proses Deskripsi Siswa
+              </p>
+            </a>
+          </li>
+        {{-- End Kurikulum Merdeka --}}
+
+        {{-- Kurikulum Merdeka old--}}
+          {{-- <li class="nav-header">RAPORT KM</li>
           <li class="nav-item">
             <a href="{{ route('kkmguru.index') }}" class="nav-link {{ request()->routeIs('kkmguru.*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-greater-than-equal"></i>
@@ -111,11 +197,11 @@
                 Proses Deskripsi Siswa
               </p>
             </a>
-          </li>
+          </li> --}}
         {{-- End Kurikulum Merdeka --}}
 
         <!-- Kurikulum 2013 -->
-          <li class="nav-header">RAPORT K-2013</li>
+          {{-- <li class="nav-header">RAPORT K-2013</li>
           <li class="nav-item">
             <a href="{{ route('kdk13.index') }}" class="nav-link {{ request()->routeIs('kdk13.*') ? 'active' : '' }} {{ request()->routeIs('kdk13.*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-clipboard-list"></i>
@@ -248,8 +334,7 @@
                 Proses Deskripsi Siswa
               </p>
             </a>
-          </li>
-
+          </li> --}}
         <!-- End Kurikulum 2013 -->
 
         <li class="nav-item bg-danger mt-2">

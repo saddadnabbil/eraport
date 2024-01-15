@@ -76,11 +76,47 @@ class CetakRaportPTSController extends Controller
         $anggota_kelas = AnggotaKelas::findorfail($id);
 
         $data_id_mapel_semester_ini = Mapel::where('tapel_id', session()->get('tapel_id'))->get('id');
-        $data_id_mapel_kelompok_a = KmMappingMapel::whereIn('mapel_id', $data_id_mapel_semester_ini)->where('kelompok', 'A')->get('mapel_id');
-        $data_id_mapel_kelompok_b = KmMappingMapel::whereIn('mapel_id', $data_id_mapel_semester_ini)->where('kelompok', 'B')->get('mapel_id');
 
         $data_id_pembelajaran = Pembelajaran::where('kelas_id', $anggota_kelas->kelas_id)->get('id');
         $data_nilai = KmNilaiAkhirRaport::whereIn('pembelajaran_id', $data_id_pembelajaran)->where('anggota_kelas_id', $anggota_kelas->id)->get();
+
+        $data_nilai_term_1 = KmNilaiAkhirRaport::where('term_id', 1)->whereIn('pembelajaran_id', $data_id_pembelajaran)->where('anggota_kelas_id', $anggota_kelas->id)->get();
+
+        $nilai_akhir_term_1 = [];
+        foreach ($data_nilai_term_1 as $nilai_term_1) {
+            $nilai_akhir_term_1[] = [
+                'term' => $nilai_term_1->term_id,
+                'pembelajaran_id' => $nilai_term_1->pembelajaran_id,
+                'nilai_akhir_raport' => $nilai_term_1->nilai_akhir_raport,
+                'nama_mapel' => $nilai_term_1->pembelajaran->mapel->nama_mapel,
+                'nama_mapel_indonesian' => $nilai_term_1->pembelajaran->mapel->nama_mapel_indonesian,
+                'kkm' => $nilai_term_1->kkm,
+                'deskripsi_nilai' => $nilai_term_1->km_deskripsi_nilai_siswa
+            ];
+        }
+
+        $nilai_akhir_total = [];
+
+        foreach ($nilai_akhir_term_1 as $nilai) {
+            $pembelajaran_id = $nilai['pembelajaran_id'];
+            if (!isset($nilai_akhir_total[$pembelajaran_id])) {
+                $nilai_akhir_total[$pembelajaran_id] = ['nilai' => 0, 'predikat' => '', 'nama_mapel' => ''];
+            }
+            $nilai_akhir_total[$pembelajaran_id]['nilai'] += $nilai['nilai_akhir_raport'];
+            $nilai_akhir_total[$pembelajaran_id]['nama_mapel'] = $nilai['nama_mapel'];
+            $nilai_akhir_total[$pembelajaran_id]['nama_mapel_indonesian'] = $nilai['nama_mapel_indonesian'];
+            $nilai_akhir_total[$pembelajaran_id]['kkm'] = $nilai['kkm'];
+            $nilai_akhir_total[$pembelajaran_id]['deskripsi_nilai'] = $nilai['deskripsi_nilai'];
+            $nilai_akhir_total[$pembelajaran_id]['term'] = $nilai['term'];
+        }
+
+        // Nilai Akhir
+        // Membagi hasil jumlah nilai dengan 2 dan menambahkan predikat
+        $nilai_akhir_total = array_map(function ($data) {
+            $data['predikat'] = ($data['nilai'] > 90) ? 'A' : 'B'; // Sesuaikan logika predikat
+
+            return $data;
+        }, $nilai_akhir_total);
 
         $data_id_ekstrakulikuler = Ekstrakulikuler::where('tapel_id', session()->get('tapel_id'))->get('id');
 
@@ -98,81 +134,7 @@ class CetakRaportPTSController extends Controller
         $kehadiran_siswa = KehadiranSiswa::where('anggota_kelas_id', $anggota_kelas->id)->first();
         $catatan_wali_kelas = CatatanWaliKelas::where('anggota_kelas_id', $anggota_kelas->id)->first();
 
-        // Data Nilai Kelompok A
-        $data_pembelajaran_a = Pembelajaran::where('kelas_id', $anggota_kelas->kelas->id)->whereIn('mapel_id', $data_id_mapel_kelompok_a)->get();
-        foreach ($data_pembelajaran_a as $pembelajaran_a) {
-            $kkm = KmKkmMapel::where('mapel_id', $pembelajaran_a->mapel_id)->where('kelas_id', $anggota_kelas->kelas->id)->first();
-            // $deskripsi = KmDeskripsiNilaiSiswa::where('pembelajaran_id', $pembelajaran_a->id)->where('anggota_kelas_id', $anggota_kelas->id)->first();
-            if (is_null($kkm)) {
-                return back()->with('toast_warning', 'KKM mata pelajaran belum ditentukan');
-            }
-            // elseif (is_null($deskripsi)) {
-            //     return redirect(route('prosesdeskripsikm'))->with('toast_warning', 'Deskripsi nilai siswa belum ditentukan');
-            // }
-
-            // Interval KKM
-            $range = (100 - $kkm->kkm) / 3;
-            $pembelajaran_a->kkm = round($kkm->kkm, 0);
-            $pembelajaran_a->predikat_c = round($kkm->kkm, 0);
-            $pembelajaran_a->predikat_b = round($kkm->kkm + $range, 0);
-            $pembelajaran_a->predikat_a = round($kkm->kkm + ($range * 2), 0);
-
-            $data_id_rencana_sumatif = RencanaNilaiSumatif::where('pembelajaran_id', $pembelajaran_a->id)->get('id');
-            $rt_nilai_sumatif = NilaiSumatif::where('anggota_kelas_id', $anggota_kelas->id)->whereIn('rencana_nilai_sumatif_id', $data_id_rencana_sumatif)->avg('nilai');
-
-            $pembelajaran_a->rt_nilai_sumatif = round($rt_nilai_sumatif, 0);
-
-            $data_id_rencana_formatif = RencanaNilaiFormatif::where('pembelajaran_id', $pembelajaran_a->id)->get('id');
-            $rt_nilai_formatif = NilaiFormatif::where('anggota_kelas_id', $anggota_kelas->id)->whereIn('rencana_nilai_formatif_id', $data_id_rencana_formatif)->avg('nilai');
-
-            $pembelajaran_a->rt_nilai_formatif = round($rt_nilai_formatif, 0);
-
-            // $nilai_pts = K13NilaiPtsPas::where('pembelajaran_id', $pembelajaran_a->id)->where('anggota_kelas_id', $anggota_kelas->id)->first();
-            // if (is_null($nilai_pts)) {
-            //     $pembelajaran_a->nilai_pts = 0;
-            // } else {
-            //     $pembelajaran_a->nilai_pts = $nilai_pts->nilai_pts;
-            // }
-        }
-
-        // Data Nilai Kelompok B
-        $data_pembelajaran_b = Pembelajaran::where('kelas_id', $anggota_kelas->kelas->id)->whereIn('mapel_id', $data_id_mapel_kelompok_b)->get();
-        foreach ($data_pembelajaran_b as $pembelajaran_b) {
-            $kkm = KmKkmMapel::where('mapel_id', $pembelajaran_b->mapel_id)->where('kelas_id', $anggota_kelas->kelas->id)->first();
-            // $deskripsi = KmDeskripsiNilaiSiswa::where('pembelajaran_id', $pembelajaran_b->id)->where('anggota_kelas_id', $anggota_kelas->id)->first();
-            if (is_null($kkm)) {
-                return back()->with('toast_warning', 'KKM mata pelajaran belum ditentukan');
-            }
-            // elseif (is_null($deskripsi)) {
-            //     return redirect(route('prosesdeskripsikm'))->with('toast_warning', 'Deskripsi nilai siswa belum ditentukan');
-            // }
-
-            // Interval KKM
-            $range = (100 - $kkm->kkm) / 3;
-            $pembelajaran_b->kkm = round($kkm->kkm, 0);
-            $pembelajaran_b->predikat_c = round($kkm->kkm, 0);
-            $pembelajaran_b->predikat_b = round($kkm->kkm + $range, 0);
-            $pembelajaran_b->predikat_a = round($kkm->kkm + ($range * 2), 0);
-
-            $data_id_rencana_sumatif = RencanaNilaiSumatif::where('pembelajaran_id', $pembelajaran_b->id)->get('id');
-            $rt_nilai_sumatif = NilaiSumatif::where('anggota_kelas_id', $anggota_kelas->id)->whereIn('rencana_nilai_sumatif_id', $data_id_rencana_sumatif)->avg('nilai');
-
-            $pembelajaran_b->rt_nilai_sumatif = round($rt_nilai_sumatif, 0);
-
-            $data_id_rencana_formatif = RencanaNilaiFormatif::where('pembelajaran_id', $pembelajaran_b->id)->get('id');
-            $rt_nilai_formatif = NilaiFormatif::where('anggota_kelas_id', $anggota_kelas->id)->whereIn('rencana_nilai_formatif_id', $data_id_rencana_formatif)->avg('nilai');
-
-            $pembelajaran_b->rt_nilai_formatif = round($rt_nilai_formatif, 0);
-
-            // $nilai_pts = K13NilaiPtsPas::where('pembelajaran_id', $pembelajaran_b->id)->where('anggota_kelas_id', $anggota_kelas->id)->first();
-            // if (is_null($nilai_pts)) {
-            //     $pembelajaran_b->nilai_pts = 0;
-            // } else {
-            //     $pembelajaran_b->nilai_pts = $nilai_pts->nilai_pts;
-            // }
-        }
-
-        $raport = PDF::loadview('walikelas.km.raportpts.raport', compact('title', 'sekolah', 'anggota_kelas', 'data_pembelajaran_a', 'data_pembelajaran_b', 'data_nilai', 'data_anggota_ekstrakulikuler', 'kehadiran_siswa', 'catatan_wali_kelas'))->setPaper($request->paper_size, $request->orientation);
+        $raport = PDF::loadview('walikelas.km.raportpts.raport', compact('title', 'sekolah', 'anggota_kelas', 'data_nilai', 'data_anggota_ekstrakulikuler', 'kehadiran_siswa', 'catatan_wali_kelas', 'nilai_akhir_total'))->setPaper($request->paper_size, $request->orientation);
         return $raport->stream('RAPORT PTS ' . $anggota_kelas->siswa->nama_lengkap . ' (' . $anggota_kelas->kelas->nama_kelas . ').pdf');
     }
 }

@@ -53,9 +53,11 @@
                       <div class="form-group row">
                         <label for="tapel_id" class="col-sm-3 col-form-label">Tahun Pelajaran</label>
                         <div class="col-sm-9">
-                          <input type="text" class="form-control" value="{{$tapel->tahun_pelajaran}} | Semester {{$tapel->semester->semester}}" readonly>
-                          <input type="hidden" class="form-control" name="tapel_id" value="{{$tapel->id}}" readonly>
-                          <input type="hidden" class="form-control" name="semester_id" value="{{$semester->id}}" readonly>
+                          <select class="form-control select2" name="tapel_id" id="tapel_id">
+                            @foreach ($data_tapel as $x)
+                                <option value="{{ $x->id }}" data-tapel="{{ $x->id }}" data-semester="{{ $x->semester->id }}">{{ $x->tahun_pelajaran }} | Semester {{ $x->semester->semester }}</option>
+                            @endforeach
+                        </select>
                         </div>
                       </div>
                       <div class="form-group row">

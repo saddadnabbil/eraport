@@ -29,11 +29,10 @@ class TapelController extends Controller
         $data_semester = Semester::orderBy('id', 'ASC')->get();
         $data_term = Term::orderBy('id', 'ASC')->get();
 
-        // Ambil nilai tapel_id jika ada, jika tidak, setel menjadi null
         $sekolah = Sekolah::first();
         $tapel_id = $sekolah ? $sekolah->tapel_id : null;
         $semester_id = $sekolah ? $sekolah->semester_id : null;
-        $term_id = $sekolah ? $sekolah->term_id_id : null;
+        $term_id = $sekolah ? $sekolah->term_id : null;
 
         return view('admin.tapel.index', compact('title', 'data_tapel', 'tapel_id', 'data_semester', 'semester_id', 'data_term', 'term_id', 'sekolah'));
     }
@@ -48,13 +47,22 @@ class TapelController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'tahun_pelajaran' => 'required|min:9|max:9',
+            'term_id' => 'required',
+            'semester_id' => 'required',
         ]);
         if ($validator->fails()) {
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
         } else {
+            // Cek apakah tapel ini sudah ada
+            $tapel = Tapel::where('tahun_pelajaran', $request->tahun_pelajaran)->first();
+            if ($tapel) {
+                return back()->with('toast_error', 'Tahun Pelajaran sudah ada');
+            }
+
             $tapel = new Tapel([
                 'tahun_pelajaran' => $request->tahun_pelajaran,
                 'semester_id' => $request->semester_id,
+                'term_id' => $request->term_id,
             ]);
             $tapel->save();
             Siswa::where('status', 1)->update(['kelas_id' => null]);
@@ -70,6 +78,12 @@ class TapelController extends Controller
         if ($validator->fails()) {
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
         } else {
+            // Cek apakah tapel ini sudah ada
+            $tapel = Tapel::where('id', '!=', $id)->where('tahun_pelajaran', $request->tahun_pelajaran)->first();
+            if ($tapel) {
+                return back()->with('toast_error', 'Tahun Pelajaran sudah ada');
+            }
+
             $tapel = Tapel::findorfail($id);
             $data_tapel = [
                 'tahun_pelajaran' => $request->tahun_pelajaran,

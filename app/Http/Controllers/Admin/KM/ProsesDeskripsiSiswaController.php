@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\KM;
 
 use App\Guru;
+use App\Term;
 use App\Kelas;
 use App\Tapel;
 use Carbon\Carbon;
@@ -62,28 +63,29 @@ class ProsesDeskripsiSiswaController extends Controller
             // Data Master
             $title = 'Input Deskripsi Nilai Siswa';
             $tapel = Tapel::findorfail(session()->get('tapel_id'));
+            $term = Term::findorfail($tapel->term_id);
 
             // $guru = Guru::where('user_id', Auth::user()->id)->first();
             $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
             $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
 
             $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
-            $data_nilai_siswa = KmNilaiAkhirRaport::where('pembelajaran_id', $pembelajaran->id)->get();
+            $data_nilai_siswa = KmNilaiAkhirRaport::where('pembelajaran_id', $pembelajaran->id)->where('term_id', $term->id)->get();
 
             if ($data_nilai_siswa->count() == 0) {
                 return redirect(route('prosesdeskripsikmadmin.index'))->with('toast_error', 'Belum ada data penilaian untuk ' . $pembelajaran->mapel->nama_mapel . ' ' . $pembelajaran->kelas->nama_kelas . '. Silahkan input penilaian!');
             } else {
                 foreach ($data_nilai_siswa as $nilai_siswa) {
-                    $rencana_nilai_sumatif_id = RencanaNilaiSumatif::where('pembelajaran_id', $pembelajaran->id)->get('id');
-                    $nilai_sumatif_terbaik = NilaiSumatif::whereIn('rencana_nilai_sumatif_id', $rencana_nilai_sumatif_id)->where('anggota_kelas_id', $nilai_siswa->anggota_kelas_id)->orderBy('nilai', 'DESC')->first();
-                    $rencana_nilai_sumatif_terbaik_id = RencanaNilaiSumatif::findorfail($nilai_sumatif_terbaik->rencana_nilai_sumatif_id);
+                    // $rencana_nilai_sumatif_id = RencanaNilaiSumatif::where('pembelajaran_id', $pembelajaran->id)->get('id');
+                    // $nilai_sumatif_terbaik = NilaiSumatif::whereIn('rencana_nilai_sumatif_id', $rencana_nilai_sumatif_id)->where('anggota_kelas_id', $nilai_siswa->anggota_kelas_id)->orderBy('nilai', 'DESC')->first();
+                    // $rencana_nilai_sumatif_terbaik_id = RencanaNilaiSumatif::findorfail($nilai_sumatif_terbaik->rencana_nilai_sumatif_id);
                     // $cp_sumatif_terbaik = CapaianPembelajaran::findorfail($rencana_nilai_sumatif_terbaik_id->capaian_pembelajaran_id);
 
                     // $nilai_siswa->deskripsi_sumatif = $cp_sumatif_terbaik->ringkasan_cp;
 
-                    $rencana_nilai_formatif_id = RencanaNilaiFormatif::where('pembelajaran_id', $pembelajaran->id)->get('id');
-                    $nilai_formatif_terbaik = NilaiFormatif::whereIn('rencana_nilai_formatif_id', $rencana_nilai_formatif_id)->where('anggota_kelas_id', $nilai_siswa->anggota_kelas_id)->orderBy('nilai', 'DESC')->first();
-                    $rencana_nilai_formatif_terbaik = RencanaNilaiFormatif::findorfail($nilai_formatif_terbaik->rencana_nilai_formatif_id);
+                    // $rencana_nilai_formatif_id = RencanaNilaiFormatif::where('pembelajaran_id', $pembelajaran->id)->get('id');
+                    // $nilai_formatif_terbaik = NilaiFormatif::whereIn('rencana_nilai_formatif_id', $rencana_nilai_formatif_id)->where('anggota_kelas_id', $nilai_siswa->anggota_kelas_id)->orderBy('nilai', 'DESC')->first();
+                    // $rencana_nilai_formatif_terbaik = RencanaNilaiFormatif::findorfail($nilai_formatif_terbaik->rencana_nilai_formatif_id);
                     // $cp_formatif_terbaik = CapaianPembelajaran::findorfail($rencana_nilai_formatif_terbaik->capaian_pembelajaran_id);
 
                     // $nilai_siswa->deskripsi_formatif = $cp_formatif_terbaik->ringkasan_cp;
@@ -97,7 +99,7 @@ class ProsesDeskripsiSiswaController extends Controller
                     // }
                 }
             }
-            return view('admin.km.prosesdeskripsi.create', compact('title', 'data_pembelajaran', 'pembelajaran', 'data_nilai_siswa'));
+            return view('admin.km.prosesdeskripsi.create', compact('title', 'data_pembelajaran', 'pembelajaran', 'data_nilai_siswa', 'term'));
         }
     }
 
@@ -116,6 +118,7 @@ class ProsesDeskripsiSiswaController extends Controller
                 $data_deskripsi = array(
                     'pembelajaran_id' => $request->pembelajaran_id,
                     'km_nilai_akhir_raport_id'  => $request->nilai_akhir_raport_id[$cound_siswa],
+                    'term_id'  => $request->term_id,
                     'deskripsi_raport'  => $request->deskripsi_raport[$cound_siswa],
                     'created_at'  => Carbon::now(),
                     'updated_at'  => Carbon::now(),

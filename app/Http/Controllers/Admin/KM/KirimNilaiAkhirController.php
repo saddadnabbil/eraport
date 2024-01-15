@@ -79,7 +79,7 @@ class KirimNilaiAkhirController extends Controller
             $kkm = KmKkmMapel::where('mapel_id', $pembelajaran->mapel_id)->where('kelas_id', $pembelajaran->kelas_id)->first();
 
             if (is_null($kkm)) {
-                return back()->with('toast_warning', 'KKM mata pelajaran belum ditentukan');
+                return back()->with('toast_error', 'Belum ada data penilaian untuk ' . $pembelajaran->mapel->nama_mapel . ' ' . $pembelajaran->kelas->nama_kelas . '. Silahkan input penilaian!');
             }
 
             $rencana_nilai_sumatif = RencanaNilaiSumatif::where('pembelajaran_id', $pembelajaran->id)->get('id');
@@ -112,7 +112,7 @@ class KirimNilaiAkhirController extends Controller
                     $data_anggota_kelas = AnggotaKelas::where('kelas_id', $pembelajaran->kelas_id)->get();
                     foreach ($data_anggota_kelas as $anggota_kelas) {
 
-                        $data_nilai_akhir = NilaiAkhir::where('anggota_kelas_id', $anggota_kelas->id)->where('pembelajaran_id', $pembelajaran->id)->first();
+                        $data_nilai_akhir = NilaiAkhir::where('anggota_kelas_id', $anggota_kelas->id)->where('pembelajaran_id', $pembelajaran->id)->where('term_id', $term->id)->first();
 
                         if (!is_null($data_nilai_akhir)) {
                             $nilai_akhir_pengetahuan = $data_nilai_akhir->nilai_akhir_sumatif;
@@ -125,6 +125,8 @@ class KirimNilaiAkhirController extends Controller
                             $nilai_akhir_pengetahuan = 0;
                             $nilai_akhir_keterampilan = 0;
                             $nilai_akhir_raport = 0;
+
+                            return redirect(route('penilaiankm.index'))->with('toast_error', 'Belum ada data penilaian untuk ' . $pembelajaran->mapel->nama_mapel . ' ' . $pembelajaran->kelas->nama_kelas . '. Silahkan input penilaian!');
                         }
 
                         $anggota_kelas->nilai_pengetahuan = round($nilai_akhir_pengetahuan, 0);
@@ -148,6 +150,7 @@ class KirimNilaiAkhirController extends Controller
         for ($cound_siswa = 0; $cound_siswa < count($request->anggota_kelas_id); $cound_siswa++) {
             $data_nilai = array(
                 'pembelajaran_id' => $request->pembelajaran_id,
+                'term_id'  => $request->term_id,
                 'kkm' => $request->kkm,
                 'anggota_kelas_id'  => $request->anggota_kelas_id[$cound_siswa],
                 'nilai_sumatif'  => ltrim($request->nilai_pengetahuan[$cound_siswa]),
@@ -161,7 +164,7 @@ class KirimNilaiAkhirController extends Controller
             );
 
             $cek_nilai = KmNilaiAkhirRaport::where('pembelajaran_id', $request->pembelajaran_id)
-                ->where('anggota_kelas_id', $request->anggota_kelas_id[$cound_siswa])
+                ->where('anggota_kelas_id', $request->anggota_kelas_id[$cound_siswa])->where('term_id', $request->term_id)
                 ->first();
 
             if (is_null($cek_nilai)) {

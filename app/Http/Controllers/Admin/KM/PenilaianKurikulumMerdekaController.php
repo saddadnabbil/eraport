@@ -156,7 +156,7 @@ class PenilaianKurikulumMerdekaController extends Controller
                 $anggota_kelas->nilaiAkhirRevisi = $nilaiAkhirRevisi;
             }
 
-            return view('admin.km.penilaian.index', compact('title', 'pembelajaran_id', 'data_pembelajaran', 'data_anggota_kelas', 'data_rencana_penilaian_sumatif', 'count_cp_sumatif', 'data_rencana_penilaian_formatif', 'count_cp_formatif', 'rencana_penilaian_data_formatif', 'rencana_penilaian_data_sumatif', 'nilaiAkhirFormatif', 'nilaiAkhirSumatif', 'nilaiAkhirRaport', 'nilaiAkhirRevisi'));
+            return view('admin.km.penilaian.index', compact('title', 'pembelajaran_id', 'data_pembelajaran', 'data_anggota_kelas', 'data_rencana_penilaian_sumatif', 'count_cp_sumatif', 'data_rencana_penilaian_formatif', 'count_cp_formatif', 'rencana_penilaian_data_formatif', 'rencana_penilaian_data_sumatif', 'nilaiAkhirFormatif', 'nilaiAkhirSumatif', 'nilaiAkhirRaport', 'nilaiAkhirRevisi', 'term'));
         }
     }
 
@@ -245,6 +245,7 @@ class PenilaianKurikulumMerdekaController extends Controller
                     $dataNilaiAkhir = [
                         'anggota_kelas_id' => $request->anggota_kelas_id[$count_siswa],
                         'pembelajaran_id' => $request->pembelajaran_id[$count_siswa],
+                        'term_id' => $request->term_id[$count_siswa],
                         'nilai_akhir_formatif' => $nilaiAkhirFormatif,
                         'nilai_akhir_sumatif' => $nilaiAkhirSumatif,
                         'nilai_akhir_raport' => $nilaiAkhir,
@@ -256,7 +257,8 @@ class PenilaianKurikulumMerdekaController extends Controller
                     NilaiAkhir::updateOrCreate(
                         [
                             'anggota_kelas_id' => $dataNilaiAkhir['anggota_kelas_id'],
-                            'pembelajaran_id' => $dataNilaiAkhir['pembelajaran_id']
+                            'pembelajaran_id' => $dataNilaiAkhir['pembelajaran_id'],
+                            'term_id' => $dataNilaiAkhir['term_id'],
                         ],
                         $dataNilaiAkhir
                     );

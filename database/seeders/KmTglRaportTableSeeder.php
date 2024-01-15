@@ -16,7 +16,7 @@ class KmTglRaportTableSeeder extends Seeder
     {
         KmTglRaport::create([
             'tapel_id' => 1,
-            'tempat_penerbitan' => 'Kelas',
+            'tempat_penerbitan' => 'Serang',
             'tanggal_pembagian' => now(),
         ]);
     }

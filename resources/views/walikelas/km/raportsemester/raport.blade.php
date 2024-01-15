@@ -93,28 +93,28 @@
         
         {{-- Content Table --}}
         <?php $no = 0; ?>
-        @foreach($data_nilai->sortBy('pembelajaran.mapel.km_mapping_mapel.nomor_urut') as $nilai)
+        @foreach($nilai_akhir_total as $nilai)
           <?php $no++; ?>
           <tr style="height:25pt">
               <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
                 <p class="s2" style="padding-top: 4pt;padding-right: 2pt;text-indent: 0pt;text-align: center;">{{$no}}</p>
               </td>
               <td style="width:181pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s2" style="padding-top: 3pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">{{$nilai->pembelajaran->mapel->nama_mapel}}</p>
-                <p class="s3" style="padding-top: 2pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">{{$nilai->pembelajaran->mapel->nama_mapel_indonesian}}</p>
+                <p class="s2" style="padding-top: 3pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">{{$nilai['nama_mapel']}}</p>
+                <p class="s3" style="padding-top: 2pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">{{$nilai['nama_mapel_indonesian']}}</p>
               </td>
               <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">{{$nilai->kkm}}</p>
+                <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">{{$nilai['kkm']}}</p>
               </td>
               <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">{{$nilai->nilai_akhir_raport}}</p>
+                  <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">{{$nilai['nilai']}}</p>
               </td>
               <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">{{$nilai->predikat_akhir_raport}}</p>
+                <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">{{$nilai['predikat']}}</p>
               </td>
               <td style="width:187px;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
                 <p class="s2" style="padding-top: 4pt;padding-bottom: 7pt;padding-left: 4pt; padding-right: 3pt;text-indent: 0pt; line-height: 1.3;">{!! 
-                  !is_null($nilai->km_deskripsi_nilai_siswa) ? nl2br($nilai->km_deskripsi_nilai_siswa->deskripsi_raport) : '' !!}
+                  !is_null($nilai['deskripsi_nilai']) ? nl2br($nilai['deskripsi_nilai']->deskripsi_raport) : '' !!}
                 </p>
               </td>
   

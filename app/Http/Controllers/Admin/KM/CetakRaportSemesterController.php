@@ -75,25 +75,76 @@ class CetakRaportSemesterController extends Controller
             return $kelengkapan_raport->stream('KELENGKAPAN RAPORT ' . $anggota_kelas->siswa->nama_lengkap . ' (' . $anggota_kelas->kelas->nama_kelas . ').pdf');
         } elseif ($request->data_type == 2) {
             $title = 'Raport Semester';
-            $deskripsi_sikap = K13DeskripsiSikapSiswa::where('anggota_kelas_id', $anggota_kelas->id)->first();
-
             $data_id_mapel_semester_ini = Mapel::where('tapel_id', session()->get('tapel_id'))->get('id');
 
             $data_id_pembelajaran = Pembelajaran::where('kelas_id', $anggota_kelas->kelas_id)->get('id');
 
-            $data_id_mapel_kelompok_a = KmMappingMapel::whereIn('mapel_id', $data_id_mapel_semester_ini)->where('kelompok', 'A')->get('mapel_id');
-            $data_id_mapel_kelompok_b = KmMappingMapel::whereIn('mapel_id', $data_id_mapel_semester_ini)->where('kelompok', 'B')->get('mapel_id');
+            $data_nilai_term_1 = KmNilaiAkhirRaport::where('term_id', 1)->whereIn('pembelajaran_id', $data_id_pembelajaran)->where('anggota_kelas_id', $anggota_kelas->id)->get();
+            $data_nilai_term_2 = KmNilaiAkhirRaport::where('term_id', 2)->whereIn('pembelajaran_id', $data_id_pembelajaran)->where('anggota_kelas_id', $anggota_kelas->id)->get();
 
-            $data_id_pembelajaran_a = Pembelajaran::where('kelas_id', $anggota_kelas->kelas_id)->whereIn('mapel_id', $data_id_mapel_kelompok_a)->get('id');
-            $data_id_pembelajaran_b = Pembelajaran::where('kelas_id', $anggota_kelas->kelas_id)->whereIn('mapel_id', $data_id_mapel_kelompok_b)->get('id');
+            $nilai_akhir_term_1 = [];
+            foreach ($data_nilai_term_1 as $nilai_term_1) {
+                $nilai_akhir_term_1[] = [
+                    'pembelajaran_id' => $nilai_term_1->pembelajaran_id,
+                    'nilai_akhir_raport' => $nilai_term_1->nilai_akhir_raport,
+                    'nama_mapel' => $nilai_term_1->pembelajaran->mapel->nama_mapel,
+                    'nama_mapel_indonesian' => $nilai_term_1->pembelajaran->mapel->nama_mapel_indonesian,
+                    'kkm' => $nilai_term_1->kkm,
+                    'deskripsi_nilai' => $nilai_term_1->km_deskripsi_nilai_siswa
+                ];
+            }
 
-            $data_nilai_kelompok_a = KmNilaiAkhirRaport::whereIn('pembelajaran_id', $data_id_pembelajaran_a)->where('anggota_kelas_id', $anggota_kelas->id)->get();
-            $data_nilai_kelompok_b = KmNilaiAkhirRaport::whereIn('pembelajaran_id', $data_id_pembelajaran_b)->where('anggota_kelas_id', $anggota_kelas->id)->get();
+            $nilai_akhir_term_2 = [];
+            foreach ($data_nilai_term_2 as $nilai_term_2) {
+                $nilai_akhir_term_2[] = [
+                    'pembelajaran_id' => $nilai_term_2->pembelajaran_id,
+                    'nilai_akhir_raport' => $nilai_term_2->nilai_akhir_raport,
+                    'nama_mapel' => $nilai_term_2->pembelajaran->mapel->nama_mapel,
+                    'nama_mapel_indonesian' => $nilai_term_2->pembelajaran->mapel->nama_mapel_indonesian,
+                    'kkm' => $nilai_term_2->kkm,
+                    'deskripsi_nilai' => $nilai_term_2->km_deskripsi_nilai_siswa
+                ];
+            }
+
+            $nilai_akhir_total = [];
+
+            foreach ($nilai_akhir_term_1 as $nilai) {
+                $pembelajaran_id = $nilai['pembelajaran_id'];
+                if (!isset($nilai_akhir_total[$pembelajaran_id])) {
+                    $nilai_akhir_total[$pembelajaran_id] = ['nilai' => 0, 'predikat' => '', 'nama_mapel' => ''];
+                }
+                $nilai_akhir_total[$pembelajaran_id]['nilai'] += $nilai['nilai_akhir_raport'];
+                $nilai_akhir_total[$pembelajaran_id]['nama_mapel'] = $nilai['nama_mapel'];
+                $nilai_akhir_total[$pembelajaran_id]['nama_mapel_indonesian'] = $nilai['nama_mapel_indonesian'];
+                $nilai_akhir_total[$pembelajaran_id]['kkm'] = $nilai['kkm'];
+                $nilai_akhir_total[$pembelajaran_id]['deskripsi_nilai'] = $nilai['deskripsi_nilai'];
+            }
+
+            foreach ($nilai_akhir_term_2 as $nilai) {
+                $pembelajaran_id = $nilai['pembelajaran_id'];
+                if (!isset($nilai_akhir_total[$pembelajaran_id])) {
+                    $nilai_akhir_total[$pembelajaran_id] = ['nilai' => 0, 'predikat' => '', 'nama_mapel' => ''];
+                }
+                $nilai_akhir_total[$pembelajaran_id]['nilai'] += $nilai['nilai_akhir_raport'];
+                $nilai_akhir_total[$pembelajaran_id]['nama_mapel'] = $nilai['nama_mapel'];
+                $nilai_akhir_total[$pembelajaran_id]['nama_mapel_indonesian'] = $nilai['nama_mapel_indonesian'];
+                $nilai_akhir_total[$pembelajaran_id]['kkm'] = $nilai['kkm'];
+                $nilai_akhir_total[$pembelajaran_id]['deskripsi_nilai'] = $nilai['deskripsi_nilai'];
+            }
+
+            // Nilai Akhir
+            // Membagi hasil jumlah nilai dengan 2 dan menambahkan predikat
+            $nilai_akhir_total = array_map(function ($data) {
+                $data['nilai'] /= 2;
+                $data['predikat'] = ($data['nilai'] > 90) ? 'A' : 'B'; // Sesuaikan logika predikat
+
+                return $data;
+            }, $nilai_akhir_total);
+
 
             $data_nilai = KmNilaiAkhirRaport::whereIn('pembelajaran_id', $data_id_pembelajaran)->where('anggota_kelas_id', $anggota_kelas->id)->get();
 
             $data_id_ekstrakulikuler = Ekstrakulikuler::where('tapel_id', session()->get('tapel_id'))->get('id');
-
             $data_anggota_ekstrakulikuler = AnggotaEkstrakulikuler::whereIn('ekstrakulikuler_id', $data_id_ekstrakulikuler)->where('anggota_kelas_id', $anggota_kelas->id)->get();
             foreach ($data_anggota_ekstrakulikuler as $anggota_ekstrakulikuler) {
                 $cek_nilai_ekstra = NilaiEkstrakulikuler::where('anggota_ekstrakulikuler_id', $anggota_ekstrakulikuler->id)->first();
@@ -114,7 +165,7 @@ class CetakRaportSemesterController extends Controller
             if (is_null($cek_tanggal_raport)) {
                 return back()->with('toast_warning', 'Tanggal raport belum disetting oleh admin');
             } else {
-                $raport = PDF::loadview('walikelas.km.raportsemester.raport', compact('title', 'sekolah', 'anggota_kelas', 'deskripsi_sikap', 'data_nilai_kelompok_a', 'data_nilai_kelompok_b', 'data_anggota_ekstrakulikuler', 'data_prestasi_siswa', 'kehadiran_siswa', 'catatan_wali_kelas', 'data_nilai'))->setPaper($request->paper_size, $request->orientation);
+                $raport = PDF::loadview('walikelas.km.raportsemester.raport', compact('title', 'sekolah', 'anggota_kelas',  'data_anggota_ekstrakulikuler', 'data_prestasi_siswa', 'kehadiran_siswa', 'catatan_wali_kelas', 'data_nilai', 'nilai_akhir_total'))->setPaper($request->paper_size, $request->orientation);
                 return $raport->stream('RAPORT ' . $anggota_kelas->siswa->nama_lengkap . ' (' . $anggota_kelas->kelas->nama_kelas . ').pdf');
             }
         }

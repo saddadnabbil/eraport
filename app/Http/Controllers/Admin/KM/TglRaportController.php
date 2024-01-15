@@ -22,9 +22,10 @@ class TglRaportController extends Controller
         $title = 'Tanggal Raport';
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
         $semester = Semester::findorfail($tapel->semester->semester);
-        $data_tgl_raport = KmTglRaport::where('tapel_id', $tapel->id)->get();
+        $data_tgl_raport = KmTglRaport::orderBy('id', 'ASC')->get();
+        $data_tapel = Tapel::orderBy('id', 'ASC')->get();
 
-        return view('admin.km.tgl_raport.index', compact('title', 'tapel', 'semester', 'data_tgl_raport'));
+        return view('admin.km.tgl_raport.index', compact('title', 'tapel', 'semester', 'data_tgl_raport', 'data_tapel'));
     }
 
 
@@ -37,31 +38,29 @@ class TglRaportController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'tapel_id' => 'required|unique:km_tgl_raports,tapel_id',
-            'semester_id' => 'required|unique:km_tgl_raports,tapel_id',
+            'tapel_id' => 'required',
             'tempat_penerbitan' => 'required|min:3|max:50',
             'tanggal_pembagian' => 'required',
         ]);
         if ($validator->fails()) {
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
         } else {
-
             $tapel = Tapel::findorfail($request->tapel_id);
-            $semester = Semester::findorfail($request->semester_id);
 
-            $tglRaport = KmTglRaport::where('tapel_id', $tapel->id)->where('semester_id', $semester->id)->first();
+            $tglRaport = KmTglRaport::where('tapel_id', $tapel->id)->first();
 
             if ($tglRaport) {
-                return back()->with('toast_error', 'Tgl raport sudah ada')->withInput();
+                return back()->with('toast_error', 'Tahun Pelajaran raport sudah ada')->withInput();
             }
 
             $tgl_raport = new KmTglRaport([
-                'tapel_id' => $request->tapel_id,
-                'semester_id' => $request->semester_id,
+                'tapel_id' => $tapel->id,
                 'tempat_penerbitan' => $request->tempat_penerbitan,
                 'tanggal_pembagian' => $request->tanggal_pembagian,
             ]);
+
             $tgl_raport->save();
+
             return back()->with('toast_success', 'Tanggal raport berhasil ditambahkan');
         }
     }

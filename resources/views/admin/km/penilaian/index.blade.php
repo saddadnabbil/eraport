@@ -53,6 +53,7 @@
               <form action="{{ route('penilaiankm.store') }}" method="POST">
                 @csrf
                 <input type="hidden" name="pembelajaran_id" value="{{$pembelajaran_id}}">
+                <input type="hidden" name="term_id" value="{{$term->id}}">
                 <div class="table-responsive">
                   <table class="table table-bordered table-hover">
                     <thead class="bg-primary">

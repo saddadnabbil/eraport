@@ -2,29 +2,30 @@
 
 namespace App\Http\Controllers\Admin\KM;
 
-use App\Http\Controllers\Controller;
-use App\K13DeskripsiNilaiSiswa;
-use App\K13NilaiAkhirRaport;
-use App\K13NilaiKeterampilan;
-use App\K13NilaiPengetahuan;
+use App\Term;
+use App\Kelas;
+use App\Tapel;
+use App\NilaiSumatif;
+use App\Pembelajaran;
+use App\NilaiFormatif;
 use App\K13NilaiPtsPas;
 use App\K13NilaiSosial;
 use App\K13NilaiSpiritual;
-use App\K13RencanaBobotPenilaian;
-use App\K13RencanaNilaiKeterampilan;
-use App\K13RencanaNilaiPengetahuan;
-use App\K13RencanaNilaiSosial;
-use App\K13RencanaNilaiSpiritual;
-use App\Kelas;
-use App\KmDeskripsiNilaiSiswa;
 use App\KmNilaiAkhirRaport;
-use App\NilaiFormatif;
-use App\NilaiSumatif;
-use App\Pembelajaran;
-use App\RencanaNilaiFormatif;
+use App\K13NilaiAkhirRaport;
+use App\K13NilaiPengetahuan;
 use App\RencanaNilaiSumatif;
-use App\Tapel;
 use Illuminate\Http\Request;
+use App\K13NilaiKeterampilan;
+use App\RencanaNilaiFormatif;
+use App\K13RencanaNilaiSosial;
+use App\KmDeskripsiNilaiSiswa;
+use App\K13DeskripsiNilaiSiswa;
+use App\K13RencanaBobotPenilaian;
+use App\K13RencanaNilaiSpiritual;
+use App\K13RencanaNilaiPengetahuan;
+use App\Http\Controllers\Controller;
+use App\K13RencanaNilaiKeterampilan;
 
 class StatusPenilaianController extends Controller
 {
@@ -50,6 +51,7 @@ class StatusPenilaianController extends Controller
     {
         $title = 'Status Penilaian';
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $term = Term::findorfail($tapel->term_id);
         $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
 
         $kelas = Kelas::findorfail($request->kelas_id);
@@ -57,7 +59,7 @@ class StatusPenilaianController extends Controller
         $data_pembelajaran_kelas = Pembelajaran::where('kelas_id', $kelas->id)->where('status', 1)->get();
         foreach ($data_pembelajaran_kelas as $pembelajaran) {
 
-            $rencana_pengetahuan = RencanaNilaiSumatif::where('pembelajaran_id', $pembelajaran->id)->first();
+            $rencana_pengetahuan = RencanaNilaiSumatif::where('pembelajaran_id', $pembelajaran->id)->where('term_id', $term->id)->first();
             if (is_null($rencana_pengetahuan)) {
                 $pembelajaran->rencana_pengetahuan = 0;
                 $pembelajaran->nilai_pengetahuan = 0;
@@ -71,7 +73,7 @@ class StatusPenilaianController extends Controller
                 }
             }
 
-            $rencana_keterampilan = RencanaNilaiFormatif::where('pembelajaran_id', $pembelajaran->id)->first();
+            $rencana_keterampilan = RencanaNilaiFormatif::where('pembelajaran_id', $pembelajaran->id)->where('term_id', $term->id)->first();
             if (is_null($rencana_keterampilan)) {
                 $pembelajaran->rencana_keterampilan = 0;
                 $pembelajaran->nilai_keterampilan = 0;
@@ -85,14 +87,14 @@ class StatusPenilaianController extends Controller
                 }
             }
 
-            $nilai_akhir = KmNilaiAkhirRaport::where('pembelajaran_id', $pembelajaran->id)->first();
+            $nilai_akhir = KmNilaiAkhirRaport::where('pembelajaran_id', $pembelajaran->id)->where('term_id', $term->id)->first();
             if (is_null($nilai_akhir)) {
                 $pembelajaran->nilai_akhir = 0;
             } else {
                 $pembelajaran->nilai_akhir = 1;
             }
 
-            $deskripsi = KmDeskripsiNilaiSiswa::where('pembelajaran_id', $pembelajaran->id)->first();
+            $deskripsi = KmDeskripsiNilaiSiswa::where('pembelajaran_id', $pembelajaran->id)->where('term_id', $term->id)->first();
             if (is_null($deskripsi)) {
                 $pembelajaran->deskripsi = 0;
             } else {

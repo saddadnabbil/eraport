@@ -233,6 +233,11 @@ Route::group(['middleware' => ['auth']], function () {
         'uses' => ['index', 'store', 'show']
       ]);
 
+      Route::get('getKelas/ekstra/{id}', 'AjaxController@ajax_kelas_ekstra');
+      Route::resource('nilaiekstraadmin', 'Admin\NilaiEkstrakulikulerController',  [
+        'uses' => ['index', 'create', 'store']
+      ]);
+
       Route::get('kkmadmin/import', 'Admin\KM\KkmMapelController@format_import')->name('kkmadmin.format_import');
       Route::post('kkmadmin/import', 'Admin\KM\KkmMapelController@import')->name('kkmadmin.import');
       Route::resource('kkmadmin', 'Admin\KM\KkmMapelController',  [

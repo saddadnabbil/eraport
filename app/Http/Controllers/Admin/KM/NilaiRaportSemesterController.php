@@ -48,7 +48,8 @@ class NilaiRaportSemesterController extends Controller
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
         } else {
             $title = 'Nilai Raport Semester';
-
+            $tapel = Tapel::findorfail(session()->get('tapel_id'));
+            $term = Term::findorfail($tapel->term_id);
             $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
             $pembelajaran_id = $request->pembelajaran_id;
 
@@ -71,7 +72,11 @@ class NilaiRaportSemesterController extends Controller
                     ->get();
 
                 foreach ($data_anggota_kelas as $anggota_kelas) {
-                    $anggota_kelas->nilai_raport = KmNilaiAkhirRaport::where('pembelajaran_id', $pembelajaran->id)->where('anggota_kelas_id', $anggota_kelas->id)->first();
+                    $anggota_kelas->nilai_raport = KmNilaiAkhirRaport::where('pembelajaran_id', $pembelajaran->id)->where('anggota_kelas_id', $anggota_kelas->id)->where('term_id', $term->id)->first();
+
+                    if (is_null($anggota_kelas->nilai_raport)) {
+                        return redirect(route('penilaiankm.index'))->with('toast_error', 'Data raport kelas ' . $anggota_kelas->kelas->nama_kelas . ' tidak ditemukan');
+                    }
                 }
 
                 return view('admin.km.nilairaport.index', compact('title', 'data_mapel', 'data_kelas', 'data_pembelajaran', 'data_anggota_kelas', 'pembelajaran_id'));

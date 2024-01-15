@@ -106,6 +106,7 @@
                 </div>
                 <form action="{{ route('kirimnilaiakhirkmadmin.store') }}" method="POST">
                   @csrf
+                  <input type="hidden" name="term_id" value="{{$term->id}}">
                   <div class="card-body">
                     <div class="table-responsive">
                       <table class="table table-bordered table-hover table-striped">

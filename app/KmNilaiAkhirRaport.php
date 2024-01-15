@@ -13,6 +13,7 @@ class KmNilaiAkhirRaport extends Model
     protected $fillable = [
         'pembelajaran_id',
         'anggota_kelas_id',
+        'term_id',
         'kkm',
         'nilai_sumatif',
         'predikat_sumatif',

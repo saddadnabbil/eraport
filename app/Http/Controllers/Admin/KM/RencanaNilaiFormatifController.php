@@ -51,7 +51,7 @@ class RencanaNilaiFormatifController extends Controller
         $title = 'Data Rencana Nilai Formatif';
         $term = Term::findorfail(session()->get('term_id'));
         $pembelajaran = Pembelajaran::findorfail($id);
-        $data_rencana_penilaian = RencanaNilaiFormatif::where('pembelajaran_id', $id)->orderBy('kode_penilaian', 'ASC')->get();
+        $data_rencana_penilaian = RencanaNilaiFormatif::where('term_id', $term->id)->where('pembelajaran_id', $id)->orderBy('kode_penilaian', 'ASC')->get();
         $data_rencana_penilaian_tambah = Pembelajaran::where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
 
         foreach ($data_rencana_penilaian_tambah as $penilaian) {

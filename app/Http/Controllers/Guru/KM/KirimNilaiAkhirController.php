@@ -108,8 +108,7 @@ class KirimNilaiAkhirController extends Controller
                     $data_anggota_kelas = AnggotaKelas::where('kelas_id', $pembelajaran->kelas_id)->get();
                     foreach ($data_anggota_kelas as $anggota_kelas) {
 
-                        $data_nilai_akhir = NilaiAkhir::where('anggota_kelas_id', $anggota_kelas->id)
-                            ->first();
+                        $data_nilai_akhir = NilaiAkhir::where('anggota_kelas_id', $anggota_kelas->id)->where('term_id', $term->id)->first();
 
                         $nilai_akhir_pengetahuan = $data_nilai_akhir->nilai_akhir_sumatif;
 
@@ -143,6 +142,7 @@ class KirimNilaiAkhirController extends Controller
             $data_nilai = array(
                 'pembelajaran_id' => $request->pembelajaran_id,
                 'kkm' => $request->kkm,
+                'term_id' => $request->term_id,
                 'anggota_kelas_id'  => $request->anggota_kelas_id[$cound_siswa],
                 'nilai_sumatif'  => ltrim($request->nilai_pengetahuan[$cound_siswa]),
                 'predikat_sumatif'  => $request->predikat_pengetahuan[$cound_siswa],

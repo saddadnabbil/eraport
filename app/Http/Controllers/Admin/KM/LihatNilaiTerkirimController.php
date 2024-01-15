@@ -62,7 +62,11 @@ class LihatNilaiTerkirimController extends Controller
             $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
 
             $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
-            $data_nilai_terkirim = KmNilaiAkhirRaport::where('pembelajaran_id', $request->pembelajaran_id)->get();
+            $data_nilai_terkirim = KmNilaiAkhirRaport::where('pembelajaran_id', $request->pembelajaran_id)->where('term_id', $term->id)->get();
+
+            if (count($data_nilai_terkirim) == 0) {
+                return redirect(route('penilaiankm.index'))->with('toast_error', 'Belum ada data penilaian untuk ' . $pembelajaran->mapel->nama_mapel . ' ' . $pembelajaran->kelas->nama_kelas . '. Silahkan input penilaian!');
+            }
 
             return view('admin.km.nilaiterkirimkm.create', compact('title', 'data_pembelajaran', 'pembelajaran', 'data_nilai_terkirim', 'term', 'semester'));
         }

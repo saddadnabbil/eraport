@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\KM;
 
+use App\Term;
 use App\Kelas;
 use App\Mapel;
 use App\Tapel;
@@ -41,6 +42,7 @@ class PengelolaanNilaiController extends Controller
         $title = 'Hasil Pengelolaan Nilai';
         $sekolah = Sekolah::first();
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $term = Term::findorfail($tapel->term_id);
         $semester = Semester::findorfail(session()->get('semester_id'));
         $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
 
@@ -56,12 +58,17 @@ class PengelolaanNilaiController extends Controller
             ->where('anggota_kelas.kelas_id', $kelas->id)
             ->where('siswa.status', 1)
             ->get();
+
         foreach ($data_anggota_kelas as $anggota_kelas) {
             $data_id_pembelajaran_a = Pembelajaran::where('kelas_id', $anggota_kelas->kelas_id)->whereIn('mapel_id', $data_id_mapel_kelompok_a)->get('id');
             $data_id_pembelajaran_b = Pembelajaran::where('kelas_id', $anggota_kelas->kelas_id)->whereIn('mapel_id', $data_id_mapel_kelompok_b)->get('id');
 
-            $data_nilai_kelompok_a = KmNilaiAkhirRaport::whereIn('pembelajaran_id', $data_id_pembelajaran_a)->get();
-            $data_nilai_kelompok_b = KmNilaiAkhirRaport::whereIn('pembelajaran_id', $data_id_pembelajaran_b)->get();
+            $data_nilai_kelompok_a = KmNilaiAkhirRaport::whereIn('pembelajaran_id', $data_id_pembelajaran_a)->where('term_id', $term->id)->get();
+            $data_nilai_kelompok_b = KmNilaiAkhirRaport::whereIn('pembelajaran_id', $data_id_pembelajaran_b)->where('term_id', $term->id)->get();
+
+            if ($data_nilai_kelompok_a->count() == 0 && $data_nilai_kelompok_b->count() == 0) {
+                return redirect(route('penilaiankm.index'))->with('toast_error', 'Belum ada data penilaian. Silahkan input penilaian!');
+            }
 
             $anggota_kelas->data_nilai_kelompok_a = $data_nilai_kelompok_a;
             $anggota_kelas->data_nilai_kelompok_b = $data_nilai_kelompok_b;

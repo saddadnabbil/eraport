@@ -14,6 +14,7 @@ class RencanaNilaiFormatifTableSeeder extends Seeder
      */
     public function run()
     {
+        // term 1
         // Pembelajaran 1
         RencanaNilaiFormatif::create([
             'pembelajaran_id' => 1,
@@ -22,7 +23,6 @@ class RencanaNilaiFormatifTableSeeder extends Seeder
             'kode_penilaian' => 'F1',
             'bobot_teknik_penilaian' => 40
         ]);
-
         RencanaNilaiFormatif::create([
             'pembelajaran_id' => 1,
             'term_id' => 1,
@@ -30,7 +30,6 @@ class RencanaNilaiFormatifTableSeeder extends Seeder
             'kode_penilaian' => 'F2',
             'bobot_teknik_penilaian' => 30
         ]);
-
         RencanaNilaiFormatif::create([
             'pembelajaran_id' => 1,
             'term_id' => 1,
@@ -103,6 +102,99 @@ class RencanaNilaiFormatifTableSeeder extends Seeder
         RencanaNilaiFormatif::create([
             'pembelajaran_id' => 4,
             'term_id' => 1,
+            'teknik_penilaian' => '3',
+            'kode_penilaian' => 'F3',
+            'bobot_teknik_penilaian' => 30
+        ]);
+
+        // term 2
+        // Pembelajaran 1
+        RencanaNilaiFormatif::create([
+            'pembelajaran_id' => 1,
+            'term_id' => 2,
+            'teknik_penilaian' => '1',
+            'kode_penilaian' => 'F1',
+            'bobot_teknik_penilaian' => 40
+        ]);
+        RencanaNilaiFormatif::create([
+            'pembelajaran_id' => 1,
+            'term_id' => 2,
+            'teknik_penilaian' => '2',
+            'kode_penilaian' => 'F2',
+            'bobot_teknik_penilaian' => 30
+        ]);
+        RencanaNilaiFormatif::create([
+            'pembelajaran_id' => 1,
+            'term_id' => 2,
+            'teknik_penilaian' => '3',
+            'kode_penilaian' => 'F3',
+            'bobot_teknik_penilaian' => 30
+        ]);
+
+        // Pembelajaran 2
+        RencanaNilaiFormatif::create([
+            'pembelajaran_id' => 2,
+            'term_id' => 2,
+            'teknik_penilaian' => '1',
+            'kode_penilaian' => 'F1',
+            'bobot_teknik_penilaian' => 30
+        ]);
+        RencanaNilaiFormatif::create([
+            'pembelajaran_id' => 2,
+            'term_id' => 2,
+            'teknik_penilaian' => '2',
+            'kode_penilaian' => 'F2',
+            'bobot_teknik_penilaian' => 30
+        ]);
+        RencanaNilaiFormatif::create([
+            'pembelajaran_id' => 2,
+            'term_id' => 2,
+            'teknik_penilaian' => '3',
+            'kode_penilaian' => 'F3',
+            'bobot_teknik_penilaian' => 30
+        ]);
+
+        // Pembelajaran 3
+        RencanaNilaiFormatif::create([
+            'pembelajaran_id' => 3,
+            'term_id' => 2,
+            'teknik_penilaian' => '1',
+            'kode_penilaian' => 'F1',
+            'bobot_teknik_penilaian' => 30
+        ]);
+        RencanaNilaiFormatif::create([
+            'pembelajaran_id' => 3,
+            'term_id' => 2,
+            'teknik_penilaian' => '2',
+            'kode_penilaian' => 'F2',
+            'bobot_teknik_penilaian' => 30
+        ]);
+        RencanaNilaiFormatif::create([
+            'pembelajaran_id' => 3,
+            'term_id' => 2,
+            'teknik_penilaian' => '3',
+            'kode_penilaian' => 'F3',
+            'bobot_teknik_penilaian' => 30
+        ]);
+
+        // Pembelajaran 4
+        RencanaNilaiFormatif::create([
+            'pembelajaran_id' => 4,
+            'term_id' => 2,
+            'teknik_penilaian' => '1',
+            'kode_penilaian' => 'F1',
+            'bobot_teknik_penilaian' => 30
+        ]);
+        RencanaNilaiFormatif::create([
+            'pembelajaran_id' => 4,
+            'term_id' => 2,
+            'teknik_penilaian' => '2',
+            'kode_penilaian' => 'F2',
+            'bobot_teknik_penilaian' => 30
+        ]);
+        RencanaNilaiFormatif::create([
+            'pembelajaran_id' => 4,
+            'term_id' => 2,
             'teknik_penilaian' => '3',
             'kode_penilaian' => 'F3',
             'bobot_teknik_penilaian' => 30
