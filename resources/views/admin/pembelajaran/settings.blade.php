@@ -51,7 +51,7 @@
                       @foreach($data_kelas as $d_kelas)
                       @if($d_kelas->id <> $kelas->id)
                         <option value="{{$d_kelas->id}}">{{$d_kelas->nama_kelas}} ( {{$d_kelas->tapel->tahun_pelajaran}}
-                          @if($d_kelas->tapel->semester == 1)
+                          @if($d_kelas->tapel->semester->semester == 1)
                           Ganjil
                           @else
                           Genap
@@ -79,7 +79,7 @@
                       @foreach($data_pembelajaran_kelas as $pembelajaran)
                       <tr>
                         <td>{{$pembelajaran->kelas->nama_kelas}} ( {{$d_kelas->tapel->tahun_pelajaran}}
-                          @if($d_kelas->tapel->semester == 1)
+                          @if($d_kelas->tapel->semester->semester == 1)
                           Ganjil
                           @else
                           Genap
@@ -115,7 +115,7 @@
                       @foreach($data_mapel as $mapel)
                       <tr>
                         <td>{{$kelas->nama_kelas}} ( {{$d_kelas->tapel->tahun_pelajaran}}
-                          @if($d_kelas->tapel->semester == 1)
+                          @if($d_kelas->tapel->semester->semester == 1)
                           Ganjil
                           @else
                           Genap

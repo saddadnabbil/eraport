@@ -33,6 +33,7 @@ class RencanaNilaiFormatifController extends Controller
 
         $data_rencana_penilaian = Pembelajaran::where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
         foreach ($data_rencana_penilaian as $penilaian) {
+            dd($penilaian->kelas->tingkatan);
             $rencana_penilaian = RencanaNilaiFormatif::where('term_id', $term->id)->where('pembelajaran_id', $penilaian->id)->get();
             $penilaian->jumlah_rencana_penilaian = count($rencana_penilaian);
         }

@@ -11,6 +11,7 @@ class Pembelajaran extends Model
         'kelas_id',
         'mapel_id',
         'guru_id',
+        'term_id',
         'status'
     ];
 
@@ -29,13 +30,18 @@ class Pembelajaran extends Model
         return $this->belongsTo('App\Guru');
     }
 
+    public function tingkatan()
+    {
+        return $this->belongsTo('App\Tingkatan');
+    }
+
     // Relasi Kurikulum Merdeka
     public function capaian_pembelajaran()
     {
         return $this->hasMany('App\CapaianPembelajaran');
     }
 
-    public function rencana_nilai_formatif() 
+    public function rencana_nilai_formatif()
     {
         return $this->hasMany('App\RencanaNilaiFormatif');
     }

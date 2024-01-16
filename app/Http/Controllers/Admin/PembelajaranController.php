@@ -9,6 +9,7 @@ use App\Kelas;
 use App\Mapel;
 use App\Pembelajaran;
 use App\Tapel;
+use App\Term;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Excel;
@@ -23,6 +24,7 @@ class PembelajaranController extends Controller
     public function index()
     {
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $term = Term::findorfail($tapel->term_id);
         $data_mapel = Mapel::where('tapel_id', $tapel->id)->orderBy('nama_mapel', 'ASC')->get();
         $data_kelas = Kelas::where('tapel_id', $tapel->id)->orderBy('tingkatan_id', 'ASC')->get();
 
@@ -42,6 +44,7 @@ class PembelajaranController extends Controller
     {
         $title = 'Setting Pembelajaran';
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $term = Term::findorfail($tapel->term_id);
         $kelas = Kelas::findorfail($request->kelas_id);
         $data_kelas = Kelas::where('tapel_id', $tapel->id)->orderBy('tingkatan_id', 'ASC')->get();
 
@@ -49,7 +52,7 @@ class PembelajaranController extends Controller
         $mapel_id_pembelajaran_kelas = Pembelajaran::where('kelas_id', $request->kelas_id)->get('mapel_id');
         $data_mapel = Mapel::whereNotIn('id', $mapel_id_pembelajaran_kelas)->get();
         $data_guru = Guru::orderBy('nama_lengkap', 'ASC')->get();
-        return view('admin.pembelajaran.settings', compact('title', 'tapel', 'kelas', 'data_kelas', 'data_pembelajaran_kelas', 'data_mapel', 'data_guru'));
+        return view('admin.pembelajaran.settings', compact('title', 'tapel', 'kelas', 'data_kelas', 'data_pembelajaran_kelas', 'data_mapel', 'data_guru', 'term'));
     }
 
 
@@ -77,6 +80,7 @@ class PembelajaranController extends Controller
                         'kelas_id'  => $request->kelas_id[$count],
                         'mapel_id'  => $request->mapel_id[$count],
                         'guru_id'  => $request->guru_id[$count],
+                        'term_id'  => $request->term_id[$count],
                         'status'  => $request->status[$count],
                         'created_at'  => Carbon::now(),
                         'updated_at'  => Carbon::now(),
@@ -91,6 +95,7 @@ class PembelajaranController extends Controller
                     'kelas_id'  => $request->kelas_id[$count],
                     'mapel_id'  => $request->mapel_id[$count],
                     'guru_id'  => $request->guru_id[$count],
+                    'term_id'  => $request->term_id[$count],
                     'status'  => $request->status[$count],
                     'created_at'  => Carbon::now(),
                     'updated_at'  => Carbon::now(),
