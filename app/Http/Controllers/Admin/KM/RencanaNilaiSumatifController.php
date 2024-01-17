@@ -50,8 +50,10 @@ class RencanaNilaiSumatifController extends Controller
     public function show($id)
     {
         $title = 'Data Rencana Nilai Sumatif';
-        $term = Term::findorfail(session()->get('term_id'));
+
         $pembelajaran = Pembelajaran::findorfail($id);
+        $term = Term::findorfail($pembelajaran->kelas->tingkatan->term_id);
+
         $data_rencana_penilaian = RencanaNilaiSumatif::where('term_id', $term->id)->where('pembelajaran_id', $id)->orderBy('kode_penilaian', 'ASC')->get();
         $data_rencana_penilaian_tambah = Pembelajaran::where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
 
@@ -73,14 +75,21 @@ class RencanaNilaiSumatifController extends Controller
         $title = 'Tambah Rencana Nilai Sumatif';
         $semester = Semester::findorfail(session()->get('semester_id'));
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
-        $term = Term::findorfail(session()->get('term_id'));
 
         $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
+        $term = Term::findorfail($pembelajaran->kelas->tingkatan->term_id);
+
         $kelas = Kelas::findorfail($pembelajaran->kelas_id);
         $data_cp = CapaianPembelajaran::where([
             'semester' => $semester->semester,
             'pembelajaran_id' => $pembelajaran->id,
         ])->orderBy('kode_cp', 'ASC')->get();
+
+        $data_rencana_penilaian = RencanaNilaiSumatif::where('pembelajaran_id', $pembelajaran->id)->where('term_id', $term->id)->get();
+
+        if (count($data_rencana_penilaian) >= 3) {
+            return redirect(route('rencanasumatif.index'))->with('toast_error', 'Data sudah tersedia');
+        }
 
         $jumlah_penilaian = $request->jumlah_penilaian;
         return view('admin.km.rencanasumatif.create', compact('title', 'pembelajaran', 'jumlah_penilaian', 'data_cp', 'term'));
