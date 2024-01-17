@@ -45,6 +45,7 @@
           <a href="{{Auth::user()->role == 1 ? route('tapel.index') : '#'}}" class="btn btn-primary btn-sm" style="line-height: 1">
             @php
               $tapel = App\Tapel::find(session()->get('tapel_id'));
+              $term = App\Term::find($tapel->term_id);
 
               $pg = App\Tingkatan::where('id', 1)->first();
               $kg = App\Tingkatan::where('id', 2)->first();
@@ -53,7 +54,7 @@
               $shs = App\Tingkatan::where('id', 5)->first();
             @endphp 
              
-             School Year {{ str_replace('-', ' / ', $tapel->tahun_pelajaran) }} - (Semester Playgroup {{$pg->semester_id . '-' . $pg->term_id}}) - (Semester Primary {{$ps->semester_id . '-' . $ps->term_id}}) - (Semester Junior High {{$jhs->semester_id . '-' . $jhs->term_id}}) - (Semester Senior High {{$shs->semester_id . '-' . $shs->term_id}})
+             School Year {{ str_replace('-', ' / ', $tapel->tahun_pelajaran) }} - (Semester Playgroup {{$pg->semester_id . '-' . $pg->term_id}}) - (Semester Primary {{$ps->semester_id . '-' . $ps->term_id}}) - (Semester Junior High {{$jhs->semester_id . '-' . $jhs->term_id}}) - (Semester Senior High {{$shs->semester_id . '-' . $shs->term_id}}) - Term {{$term->id }}
           </a>
         </div>
         <!-- End of Flex container -->
