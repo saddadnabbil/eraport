@@ -41,7 +41,7 @@ Route::group(['middleware' => ['auth']], function () {
       Route::resource('profileadmin', 'Admin\ProfileController')->only(['update']);
 
       // Pengumuman Controller
-      Route::resource('pengumuman', 'Admin\PengumumanController')->only(['index', 'store', 'update']);
+      Route::resource('pengumuman', 'Admin\PengumumanController')->only(['index', 'store', 'update', 'destroy']);
 
       // User Controller
       Route::get('user/export', 'Admin\UserController@export')->name('user.export');
