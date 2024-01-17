@@ -33,7 +33,6 @@ class RencanaNilaiFormatifController extends Controller
         $data_rencana_penilaian = Pembelajaran::where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
         foreach ($data_rencana_penilaian as $penilaian) {
             $term = Term::findorfail($penilaian->kelas->tingkatan->term_id);
-            dd($term->id);
             $rencana_penilaian = RencanaNilaiFormatif::where('term_id', $term->id)->where('pembelajaran_id', $penilaian->id)->get();
             $penilaian->jumlah_rencana_penilaian = count($rencana_penilaian);
         }
@@ -50,8 +49,8 @@ class RencanaNilaiFormatifController extends Controller
     public function show($id)
     {
         $title = 'Data Rencana Nilai Formatif';
-        $term = Term::findorfail(session()->get('term_id'));
         $pembelajaran = Pembelajaran::findorfail($id);
+        $term = Term::findorfail($pembelajaran->kelas->tingkatan->term_id);
         $data_rencana_penilaian = RencanaNilaiFormatif::where('term_id', $term->id)->where('pembelajaran_id', $id)->orderBy('kode_penilaian', 'ASC')->get();
         $data_rencana_penilaian_tambah = Pembelajaran::where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
 
@@ -72,9 +71,10 @@ class RencanaNilaiFormatifController extends Controller
         $title = 'Tambah Rencana Nilai Formatif';
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
         $semester = Semester::findorfail(session()->get('semester_id'));
-        $term = Term::findorfail(session()->get('term_id'));
 
         $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
+        $term = Term::findorfail($pembelajaran->kelas->tingkatan->term_id);
+
         $kelas = Kelas::findorfail($pembelajaran->kelas_id);
         $data_cp = CapaianPembelajaran::where([
             'semester' => $semester->semester,

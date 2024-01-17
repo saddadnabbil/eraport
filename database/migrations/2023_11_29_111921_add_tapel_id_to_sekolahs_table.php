@@ -15,12 +15,8 @@ class AddTapelIdToSekolahsTable extends Migration
     {
         Schema::table('sekolah', function (Blueprint $table) {
             $table->unsignedBigInteger('tapel_id');
-            $table->unsignedBigInteger('semester_id');
-            $table->unsignedBigInteger('term_id');
 
             $table->foreign('tapel_id')->references('id')->on('tapels');
-            $table->foreign('semester_id')->references('id')->on('semesters');
-            $table->foreign('term_id')->references('id')->on('terms');
         });
     }
 

@@ -64,53 +64,53 @@ class KmNilaiSumatifTableSeeder extends Seeder
             'nilai' => 90
         ]);
 
-        // term 2
-        NilaiSumatif::create([
-            'rencana_nilai_sumatif_id' => 10,
-            'anggota_kelas_id' => 1,
-            'nilai' => 90
-        ]);
-        NilaiSumatif::create([
-            'rencana_nilai_sumatif_id' => 11,
-            'anggota_kelas_id' => 1,
-            'nilai' => 90
-        ]);
-        NilaiSumatif::create([
-            'rencana_nilai_sumatif_id' => 12,
-            'anggota_kelas_id' => 1,
-            'nilai' => 90
-        ]);
+        // // term 2
+        // NilaiSumatif::create([
+        //     'rencana_nilai_sumatif_id' => 10,
+        //     'anggota_kelas_id' => 1,
+        //     'nilai' => 90
+        // ]);
+        // NilaiSumatif::create([
+        //     'rencana_nilai_sumatif_id' => 11,
+        //     'anggota_kelas_id' => 1,
+        //     'nilai' => 90
+        // ]);
+        // NilaiSumatif::create([
+        //     'rencana_nilai_sumatif_id' => 12,
+        //     'anggota_kelas_id' => 1,
+        //     'nilai' => 90
+        // ]);
 
-        NilaiSumatif::create([
-            'rencana_nilai_sumatif_id' => 13,
-            'anggota_kelas_id' => 1,
-            'nilai' => 90
-        ]);
-        NilaiSumatif::create([
-            'rencana_nilai_sumatif_id' => 14,
-            'anggota_kelas_id' => 1,
-            'nilai' => 90
-        ]);
-        NilaiSumatif::create([
-            'rencana_nilai_sumatif_id' => 15,
-            'anggota_kelas_id' => 1,
-            'nilai' => 90
-        ]);
+        // NilaiSumatif::create([
+        //     'rencana_nilai_sumatif_id' => 13,
+        //     'anggota_kelas_id' => 1,
+        //     'nilai' => 90
+        // ]);
+        // NilaiSumatif::create([
+        //     'rencana_nilai_sumatif_id' => 14,
+        //     'anggota_kelas_id' => 1,
+        //     'nilai' => 90
+        // ]);
+        // NilaiSumatif::create([
+        //     'rencana_nilai_sumatif_id' => 15,
+        //     'anggota_kelas_id' => 1,
+        //     'nilai' => 90
+        // ]);
 
-        NilaiSumatif::create([
-            'rencana_nilai_sumatif_id' => 16,
-            'anggota_kelas_id' => 1,
-            'nilai' => 90
-        ]);
-        NilaiSumatif::create([
-            'rencana_nilai_sumatif_id' => 17,
-            'anggota_kelas_id' => 1,
-            'nilai' => 90
-        ]);
-        NilaiSumatif::create([
-            'rencana_nilai_sumatif_id' => 18,
-            'anggota_kelas_id' => 1,
-            'nilai' => 90
-        ]);
+        // NilaiSumatif::create([
+        //     'rencana_nilai_sumatif_id' => 16,
+        //     'anggota_kelas_id' => 1,
+        //     'nilai' => 90
+        // ]);
+        // NilaiSumatif::create([
+        //     'rencana_nilai_sumatif_id' => 17,
+        //     'anggota_kelas_id' => 1,
+        //     'nilai' => 90
+        // ]);
+        // NilaiSumatif::create([
+        //     'rencana_nilai_sumatif_id' => 18,
+        //     'anggota_kelas_id' => 1,
+        //     'nilai' => 90
+        // ]);
     }
 }
