@@ -51,8 +51,6 @@
                   </div>
                   <form action="{{ route('tingkatan.store') }}" method="POST">
                     @csrf
-                    <input type="hidden" name="term_id" value="{{ $term->id }}">
-                    <input type="hidden" name="semester_id" value="{{ $semester->id }}">
                     <div class="modal-body">
                       <div class="form-group row">
                         <label for="tahun_pelajaran" class="col-sm-3 col-form-label">Nama Tingkatan</label>
@@ -60,6 +58,24 @@
                           <input type="text" class="form-control" id="nama_tingkatan" name="nama_tingkatan" placeholder="Nama Tingkatan" value="{{old('nama_tingkatan')}}">
                         </div>
                       </div>
+                      <div class="form-group row">
+                         <label for="term_id" class="col-sm-3 col-form-label">Term</label>
+                         <div class="col-sm-9">
+                           <select class="form-control select2" name="term_id" id="term_id">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                           </select>
+                         </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="semester_id" class="col-sm-3 col-form-label">Semester</label>
+                        <div class="col-sm-9">
+                          <select class="form-control select2" name="semester_id" id="semester_id">
+                           <option value="1">1</option>
+                           <option value="2">2</option>
+                          </select>
+                        </div>
+                     </div>
                     </div>
                     <div class="modal-footer justify-content-end">
                       <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>

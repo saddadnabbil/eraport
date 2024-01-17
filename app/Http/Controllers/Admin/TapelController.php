@@ -175,8 +175,6 @@ class TapelController extends Controller
 
             // Setel sesi 'tapel_id' dengan nilai baru
             session(['tapel_id' => $request->select_tapel_id]);
-            session(['semester_id' => $request->select_semester_id]);
-            session(['term_id' => $request->select_term_id]);
 
             return back()->with('success', 'School Year updated successfully');
         } catch (\Exception $e) {

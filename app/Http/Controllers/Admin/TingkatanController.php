@@ -15,12 +15,10 @@ class TingkatanController extends Controller
     {
         $title = 'Data Tingkatan';
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
-        $term = Term::findorfail($tapel->term_id);
-        $semester = Semester::findorfail($tapel->semester_id);
 
         $data_tingkatan = Tingkatan::orderBy('id', 'DESC')->get();
 
-        return view('admin.tingkatan.index', compact('title', 'data_tingkatan', 'tapel', 'term', 'semester'));
+        return view('admin.tingkatan.index', compact('title', 'data_tingkatan', 'tapel'));
     }
 
     public function create()

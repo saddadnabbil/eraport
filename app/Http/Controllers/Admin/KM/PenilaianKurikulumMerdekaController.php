@@ -66,7 +66,7 @@ class PenilaianKurikulumMerdekaController extends Controller
             $pembelajaran_id = $request->pembelajaran_id;
 
             $tapel = Tapel::findorfail(session()->get('tapel_id'));
-            $term = Term::findorfail(session()->get('term_id'));
+            $term = Term::findorfail($pembelajaran->kelas->tingkatan->term_id);
 
             $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
             $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
