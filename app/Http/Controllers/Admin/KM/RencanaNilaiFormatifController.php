@@ -134,23 +134,6 @@ class RencanaNilaiFormatifController extends Controller
      * @param  \App\RencanaNilaiFormatif  $rencanaNilaiFormatif
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, $id)
-    {
-        $title = 'Edit Rencana Nilai Formatif';
-        $tapel = Tapel::findorfail(session()->get('tapel_id'));
-
-        $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
-        $kelas = Kelas::findorfail($pembelajaran->kelas_id);
-        $data_cp = CapaianPembelajaran::where([
-            'mapel_id' => $pembelajaran->mapel_id,
-            'tingkatan_id' => $kelas->tingkatan_id,
-            'semester' => $tapel->semester->semester,
-        ])->orderBy('kode_cp', 'ASC')->get();
-        $jumlah_penilaian = $request->jumlah_penilaian;
-
-        return view('admin.km.rencanaformatif.edit', compact('title', 'pembelajaran', 'jumlah_penilaian', 'data_cp'));
-    }
-
 
     public function update(Request $request, $id)
     {

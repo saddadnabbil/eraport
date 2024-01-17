@@ -29,7 +29,7 @@
       <div class="callout callout-success">
         <h5>{{$sekolah->nama_sekolah}}</h5>
         <p>Tahun Pelajaran {{$tapel->tahun_pelajaran}}
-          @if($tapel->semester->semester == 1)
+          @if($tapel->semester_id == 1)
           Semester Ganjil
           @else
           Semester Genap

@@ -65,7 +65,7 @@
         <td><h3>: 
           {{$anggota_kelas->siswa->nis}} </h3></td>
         <td><h3>Semester</h3></td>
-        <td><h3>: {{ $anggota_kelas->kelas->tapel->semester->semester }} / Mid {{ $anggota_kelas->kelas->tapel->term->term }} </h3></td>
+        <td><h3>: {{ $anggota_kelas->kelas->tingkatan-semester_id }} / Mid {{ $anggota_kelas->kelas->tingkatan->term_id }} </h3></td>
       </tr>
     </table>
 
@@ -516,7 +516,7 @@
           <td style="width: 52%;">: {{$sekolah->alamat}}</td>
           <td style="width: 16%;">Semester</td>
           <td style="width: 13%;">:
-            @if($anggota_kelas->kelas->tapel->semester->semester == 1)
+            @if($anggota_kelas->kelas->tapel->semester_id == 1)
             1 (Ganjil)
             @else
             2 (Genap)
@@ -541,7 +541,7 @@
         <strong>
           LAPORAN HASIL <br>
           PENILAIAN TENGAH SEMESTER
-          @if($anggota_kelas->kelas->tapel->semester->semester == 1)
+          @if($anggota_kelas->kelas->tapel->semester_id == 1)
           GANJIL
           @else
           GENAP

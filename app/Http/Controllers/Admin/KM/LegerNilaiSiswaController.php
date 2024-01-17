@@ -44,8 +44,8 @@ class LegerNilaiSiswaController extends Controller
     {
         $title = 'Leger Nilai Siswa';
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
-        $term = Term::findorfail(session()->get('term_id'));
         $kelas = Kelas::findorfail($request->kelas_id);
+        $term = Term::findorfail($kelas->tingkatan->term_id);
         $data_kelas = Kelas::where('tapel_id', session()->get('tapel_id'))->get();
 
         $data_id_mapel_semester_ini = Mapel::where('tapel_id', $tapel->id)->get('id');
@@ -121,7 +121,7 @@ class LegerNilaiSiswaController extends Controller
     {
         $kelas = Kelas::findorfail($id);
         $tapel = $kelas->tapel;
-        $semester = $tapel->semester->semester;
+        $semester = $tapel->semester_id;
         $tahun_pelajaran = $tapel->tahun_pelajaran;
 
         $filename = 'Daftar Legger - ' . $kelas->nama_kelas . ' - Semester ' . $semester . ' (' . $tahun_pelajaran . ').xls';

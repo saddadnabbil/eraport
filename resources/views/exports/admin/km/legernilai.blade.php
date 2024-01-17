@@ -17,7 +17,7 @@
         <td colspan="9"><strong>{{$sekolah->nama_sekolah}}</strong></td>
       </tr>
       <tr>
-        <td colspan="9"><strong>TAHUN PELAJARAN {{$kelas->tapel->tahun_pelajaran}} SEMESTER {{$kelas->tapel->semester}}</strong></td>
+        <td colspan="9"><strong>TAHUN PELAJARAN {{$kelas->tapel->tahun_pelajaran}} SEMESTER {{$kelas->tapel->semester_id}}</strong></td>
       </tr>
       <tr>
         <td colspan="9">Waktu download : {{$time_download}}</td>

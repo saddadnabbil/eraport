@@ -60,7 +60,7 @@
                             <option value="">-- Pilih Kelas --</option>
                             @foreach($data_kelas as $kelas)
                             <option value="{{$kelas->id}}">{{$kelas->nama_kelas}} ( {{$kelas->tapel->tahun_pelajaran}}
-                              @if($kelas->tapel->semester->semester == 1)
+                              @if($kelas->tapel->semester_id == 1)
                               Ganjil
                               @else
                               Genap
@@ -96,7 +96,7 @@
                     <tr>
                       <td>{{$no}}</td>
                       <td>{{$pembelajaran->kelas->tapel->tahun_pelajaran}}
-                        @if($pembelajaran->kelas->tapel->semester->semester == 1)
+                        @if($pembelajaran->kelas->tapel->semester_id == 1)
                         Ganjil
                         @else
                         Genap

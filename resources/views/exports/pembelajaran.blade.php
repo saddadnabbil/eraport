@@ -37,7 +37,7 @@
       <tr>
         <td align="center" style="border: 1px solid #000000;">{{ $no }}</td>
         <td align="center" style="border: 1px solid #000000;">{{$pembelajaran->kelas->tapel->tahun_pelajaran}}
-          @if($pembelajaran->kelas->tapel->semester->semester == 1)
+          @if($pembelajaran->kelas->tapel->semester_id == 1)
           Ganjil
           @else
           Genap

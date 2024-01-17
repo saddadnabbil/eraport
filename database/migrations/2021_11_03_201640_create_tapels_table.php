@@ -16,7 +16,12 @@ class CreateTapelsTable extends Migration
         Schema::create('tapels', function (Blueprint $table) {
             $table->id();
             $table->string('tahun_pelajaran', 9);
+            $table->unsignedBigInteger('semester_id')->unsigned();
+            $table->unsignedBigInteger('term_id')->unsigned();
             $table->timestamps();
+
+            $table->foreign('semester_id')->references('id')->on('semesters');
+            $table->foreign('term_id')->references('id')->on('terms');
         });
     }
 

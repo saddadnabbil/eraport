@@ -39,7 +39,7 @@
                     {{ $kelas->tingkatan->nama_tingkatan }} - {{ ucwords(strtolower($kelas->jurusan->nama_jurusan)) }} Jurusan -
                 @endif
                 {{$kelas->tapel->tahun_pelajaran}} Semester
-                @if($kelas->tapel->semester->semester ==1)
+                @if($kelas->tapel->semester_id ==1)
                 Ganjil
                 @else
                 Genap
@@ -71,7 +71,7 @@
                             <div class="callout callout-info">
                               <label>
                                 {{$kelas->nama_kelas}} {{$kelas->tapel->tahun_pelajaran}} Semester
-                                @if($kelas->tapel->semester->semester ==1)
+                                @if($kelas->tapel->semester_id ==1)
                                 Ganjil
                                 @else
                                 Genap
@@ -91,7 +91,7 @@
                                 <select class="form-control" name="pendaftaran" required>
                                   <option value="">-- Pilih Jenis Pendaftaran --</option>
                                   <option value="2">Pindahan</option>
-                                  @if($kelas->tapel->semester->semester == 1)
+                                  @if($kelas->tapel->semester_id == 1)
                                   <option value="1">Siswa Baru</option>
                                   <option value="3">Naik Kelas</option>
                                   <option value="5">Mengulang</option>

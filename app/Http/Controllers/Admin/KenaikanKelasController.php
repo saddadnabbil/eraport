@@ -7,6 +7,7 @@ use App\Guru;
 use App\Http\Controllers\Controller;
 use App\Kelas;
 use App\KenaikanKelas;
+use App\Semester;
 use App\Tapel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -35,7 +36,11 @@ class KenaikanKelasController extends Controller
         $title = 'Kenaikan Kelas';
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
 
-        if ($tapel->semester->semester == 2) {
+        $kelas = Kelas::findorfail($request->kelas_id);
+        $semester = Semester::findorfail($kelas->tingkatan->semester_id);
+
+
+        if ($semester->id == 2) {
             $guru = Guru::where('user_id', Auth::user()->id)->first();
             $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)->where('id', $request->kelas_id)->get('id');
 

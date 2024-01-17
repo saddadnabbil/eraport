@@ -33,7 +33,7 @@ class RencanaNilaiSumatifController extends Controller
 
         $data_rencana_penilaian = Pembelajaran::where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
         foreach ($data_rencana_penilaian as $penilaian) {
-            $term = Term::findorfail($penilaian->kelas->tingkatan->term->term);
+            $term = Term::findorfail($penilaian->kelas->tingkatan->term_id);
             $rencana_penilaian = RencanaNilaiSumatif::where('term_id', $term->id)->where('pembelajaran_id', $penilaian->id)->get();
             $penilaian->jumlah_rencana_penilaian = count($rencana_penilaian);
         }
@@ -128,29 +128,6 @@ class RencanaNilaiSumatifController extends Controller
         }
         return redirect(route('rencanasumatif.index'))->with('toast_success', 'Rencana nilai Formatif berhasil disimpan.');
     }
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\RencanaNilaiSumatif  $rencanaNilaiSumatif
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Request $request, $id)
-    {
-        $title = 'Edit Rencana Nilai Sumatif';
-        $tapel = Tapel::findorfail(session()->get('tapel_id'));
-
-        $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
-        $kelas = Kelas::findorfail($pembelajaran->kelas_id);
-        $data_cp = CapaianPembelajaran::where([
-            'mapel_id' => $pembelajaran->mapel_id,
-            'tingkatan_id' => $kelas->tingkatan_id,
-            'semester' => $tapel->semester->semester,
-        ])->orderBy('kode_cp', 'ASC')->get();
-        $jumlah_penilaian = $request->jumlah_penilaian;
-
-        return view('admin.km.rencanasumatif.edit', compact('title', 'pembelajaran', 'jumlah_penilaian', 'data_cp'));
-    }
-
 
     public function update(Request $request, $id)
     {

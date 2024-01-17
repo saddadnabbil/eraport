@@ -20,7 +20,7 @@
                 <h1 class="center-align pad-179 pad-5 no-indent">
                     GLOBAL INDONESIA SCHOOL <br>
                     
-                    @if($anggota_kelas->kelas->tapel->semester->semester == 1)
+                    @if($anggota_kelas->kelas->tapel->semester_id == 1)
                     FIRST
                     @else
                     SECOND
@@ -509,7 +509,7 @@
             <td style="width: 16%;">Semester</td>
             <td style="width: 13%;">:
             
-              @if($anggota_kelas->kelas->tapel->semester->semester == 1)
+              @if($anggota_kelas->kelas->tapel->semester_id == 1)
               1 (Ganjil)
               @else
               2 (Genap)
@@ -622,7 +622,7 @@
             <td style="width: 52%;">: {{$sekolah->alamat}}</td>
             <td style="width: 16%;">Semester</td>
             <td style="width: 13%;">:
-              @if($anggota_kelas->kelas->tapel->semester->semester == 1)
+              @if($anggota_kelas->kelas->tapel->semester_id == 1)
               1 (Ganjil)
               @else
               2 (Genap)
@@ -737,7 +737,7 @@
             <td style="width: 52%;">: {{$sekolah->alamat}}</td>
             <td style="width: 16%;">Semester</td>
             <td style="width: 13%;">:
-              @if($anggota_kelas->kelas->tapel->semester->semester == 1)
+              @if($anggota_kelas->kelas->tapel->semester_id == 1)
               1 (Ganjil)
               @else
               2 (Genap)
@@ -839,7 +839,7 @@
             <td style="width: 52%;">: {{$sekolah->alamat}}</td>
             <td style="width: 16%;">Semester</td>
             <td style="width: 13%;">:
-              @if($anggota_kelas->kelas->tapel->semester->semester == 1)
+              @if($anggota_kelas->kelas->tapel->semester_id == 1)
               1 (Ganjil)
               @else
               2 (Genap)
@@ -1068,7 +1068,7 @@
           <!-- End Tanggapan ORANG TUA/WALI -->
 
           <!-- Keputusan -->
-          @if($anggota_kelas->kelas->tapel->semester->semester == 2)
+          @if($anggota_kelas->kelas->tapel->semester_id == 2)
           <tr>
             <td colspan="4" style="height: 25px; padding-top: 5px"><strong>H. KEPUTUSAN</strong></td>
           </tr>

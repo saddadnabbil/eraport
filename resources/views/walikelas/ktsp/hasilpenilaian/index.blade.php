@@ -80,7 +80,7 @@
                                   <div class="col-sm-2"><strong>Alamat</strong></div>
                                   <div class="col-sm-6"><strong>: {{$sekolah->alamat}}</strong></div>
                                   <div class="col-sm-2"><strong>Semester</strong></div>
-                                  <div class="col-sm-2"><strong>: {{$anggota_kelas->kelas->tapel->semester->semester}}</strong></div>
+                                  <div class="col-sm-2"><strong>: {{$anggota_kelas->kelas->tapel->semester_id}}</strong></div>
                                 </div>
                                 <div class="row">
                                   <div class="col-sm-2"><strong>Nama</strong></div>

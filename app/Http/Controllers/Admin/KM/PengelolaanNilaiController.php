@@ -42,11 +42,12 @@ class PengelolaanNilaiController extends Controller
         $title = 'Hasil Pengelolaan Nilai';
         $sekolah = Sekolah::first();
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
-        $term = Term::findorfail($tapel->term_id);
-        $semester = Semester::findorfail(session()->get('semester_id'));
         $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
 
         $kelas = Kelas::findorfail($request->kelas_id);
+
+        $term = Term::findorfail($kelas->tingkatan->term_id);
+        $semester = Semester::findorfail($kelas->tingkatan->semester_id);
 
         $data_id_mapel_semester_ini = Mapel::where('tapel_id', $tapel->id)->get('id');
 

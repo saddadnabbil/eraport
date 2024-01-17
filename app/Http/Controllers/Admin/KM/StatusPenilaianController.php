@@ -51,14 +51,13 @@ class StatusPenilaianController extends Controller
     {
         $title = 'Status Penilaian';
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
-        $term = Term::findorfail($tapel->term_id);
         $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
 
         $kelas = Kelas::findorfail($request->kelas_id);
 
         $data_pembelajaran_kelas = Pembelajaran::where('kelas_id', $kelas->id)->where('status', 1)->get();
         foreach ($data_pembelajaran_kelas as $pembelajaran) {
-
+            $term = Term::findorfail($pembelajaran->kelas->tingkatan->term_id);
             $rencana_pengetahuan = RencanaNilaiSumatif::where('pembelajaran_id', $pembelajaran->id)->where('term_id', $term->id)->first();
             if (is_null($rencana_pengetahuan)) {
                 $pembelajaran->rencana_pengetahuan = 0;

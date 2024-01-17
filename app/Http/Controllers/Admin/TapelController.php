@@ -150,13 +150,13 @@ class TapelController extends Controller
                 'term_id' => $request->select_term_playgroup_id,
             ];
             $pg->update($data_tingkatan_pg_kg);
+            $kg->update($data_tingkatan_pg_kg);
 
             // PS
             $data_tingkatan_ps = [
                 'term_id' => $request->select_term_primaryschool_id,
                 'semester_id' => $request->select_semester_primaryschool_id,
             ];
-            $kg->update($data_tingkatan_pg_kg);
             $ps->update($data_tingkatan_ps);
 
             // JHS
@@ -173,8 +173,45 @@ class TapelController extends Controller
             ];
             $shs->update($data_tingkatan_shs);
 
-            // Setel sesi 'tapel_id' dengan nilai baru
+            $data_term_1 = Tingkatan::whereHas('term', function ($query) {
+                $query->where('term_id', 1);
+            })->pluck('id');
+
+            $data_term_2 = Tingkatan::whereHas('term', function ($query) {
+                $query->where('term_id', 2);
+            })->pluck('id');
+
+            $data_term_semester_1 = Tingkatan::whereHas('term', function ($query) {
+                $query->where('semester_id', 1);
+            })->pluck('id');
+
+            $data_term_semester_2 = Tingkatan::whereHas('term', function ($query) {
+                $query->where('semester_id', 2);
+            })->pluck('id');
+
+            if ($data_term_1->count() === count($data_term_1) && $data_term_1->count() > 3) {
+                $tapel->update([
+                    'term_id' => 1,
+                ]);
+            } elseif ($data_term_2->count() === count($data_term_2) && $data_term_2->count() > 3) {
+                $tapel->update([
+                    'term_id' => 2,
+                ]);
+            }
+
+            if ($data_term_semester_1->count() === count($data_term_semester_1)  && $data_term_semester_1->count() >= 3) {
+                $tapel->update([
+                    'semester_id' => 1,
+                ]);
+            } elseif ($data_term_semester_2->count() === count($data_term_semester_2) && $data_term_semester_2->count() >= 3) {
+                $tapel->update([
+                    'semester_id' => 2,
+                ]);
+            }
+
             session(['tapel_id' => $request->select_tapel_id]);
+            session(['semester_id' => $tapel->semester_id]);
+            session(['term_id' => $tapel->term_id]);
 
             return back()->with('success', 'School Year updated successfully');
         } catch (\Exception $e) {

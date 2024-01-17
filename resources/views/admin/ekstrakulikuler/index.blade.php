@@ -52,7 +52,7 @@
                       <div class="form-group row">
                         <label for="tahun_pelajaran" class="col-sm-3 col-form-label">Tahun Pelajaran</label>
                         <div class="col-sm-9">
-                          @if($tapel->semester->semester == 1)
+                          @if($tapel->semester_id == 1)
                           <input type="text" name="tahun_pelajaran" class="form-control" value="{{$tapel->tahun_pelajaran}} Semester Ganjil" readonly>
                           @else
                           <input type="text" name="tahun_pelajaran" class="form-control" value="{{$tapel->tahun_pelajaran}} Semester Genap" readonly>
@@ -106,7 +106,7 @@
                     <tr>
                       <td>{{$no}}</td>
                       <td>{{$ekstrakulikuler->tapel->tahun_pelajaran}}
-                        @if($ekstrakulikuler->tapel->semester->semester == 1)
+                        @if($ekstrakulikuler->tapel->semester_id == 1)
                         Ganjil
                         @else
                         Genap
