@@ -49,8 +49,8 @@ class NilaiRaportSemesterController extends Controller
         } else {
             $title = 'Nilai Raport Semester';
             $tapel = Tapel::findorfail(session()->get('tapel_id'));
-            $term = Term::findorfail($tapel->term_id);
             $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
+            $term = Term::findorfail($pembelajaran->kelas->tingkatan->term_id);
             $pembelajaran_id = $request->pembelajaran_id;
 
             $data_kelas = Kelas::findorfail($pembelajaran->kelas_id);
