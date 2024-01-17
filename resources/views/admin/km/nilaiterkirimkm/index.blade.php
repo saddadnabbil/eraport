@@ -40,7 +40,9 @@
                     <label class="col-sm-2 col-form-label">Term</label>
                     <div class="col-sm-10">
                       <select class="form-control select2" name="term" style="width: 100%;" disabled>
-                        <option value="{{$term->id}}" selected>{{$term->term}}</option>
+                      @foreach($data_pembelajaran as $pembelajaran)
+                        <option value="{{$pembelajaran->kelas->tingkatan->term_id}}" selected>{{$pembelajaran->kelas->tingkatan->term_id}}</option>
+                      @endforeach
                       </select>
                     </div>
                   </div>

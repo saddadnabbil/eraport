@@ -258,7 +258,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="{{ route('prosesdeskripsikm.index') }}" class="nav-link {{ request()->routeIs('prosesdeskripsikm.*') ? 'active' : '' }}">
+            <a href="{{ route('prosesdeskripsikmadmin.index') }}" class="nav-link {{ request()->routeIs('prosesdeskripsikmadmin.*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-file-alt"></i>
               <p>
                 Proses Deskripsi Siswa

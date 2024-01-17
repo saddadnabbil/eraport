@@ -26,8 +26,6 @@ class LihatNilaiTerkirimController extends Controller
     {
         $title = 'Lihat Nilai Akhir Terkirim';
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
-        $semester = Semester::findorfail($tapel->semester_id);
-        $term = Term::findorfail($tapel->term_id);
 
         $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
 
@@ -35,7 +33,7 @@ class LihatNilaiTerkirimController extends Controller
         $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
         $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
 
-        return view('admin.km.nilaiterkirimkm.index', compact('title', 'data_pembelajaran', 'term', 'semester', 'data_kelas'));
+        return view('admin.km.nilaiterkirimkm.index', compact('title', 'data_pembelajaran', 'data_kelas'));
     }
 
     /**
@@ -54,21 +52,21 @@ class LihatNilaiTerkirimController extends Controller
             // Data Master
             $title = 'Lihat Nilai Akhir Terkirim';
             $tapel = Tapel::findorfail(session()->get('tapel_id'));
-            $semester = Semester::findorfail($tapel->semester_id);
-            $term = Term::findorfail($tapel->term_id);
 
             // $guru = Guru::where('user_id', Auth::user()->id)->first();
             $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
             $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
 
             $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
+            $term = Term::findorfail($pembelajaran->kelas->tingkatan->term_id);
+
             $data_nilai_terkirim = KmNilaiAkhirRaport::where('pembelajaran_id', $request->pembelajaran_id)->where('term_id', $term->id)->get();
 
             if (count($data_nilai_terkirim) == 0) {
                 return redirect(route('penilaiankm.index'))->with('toast_error', 'Belum ada data penilaian untuk ' . $pembelajaran->mapel->nama_mapel . ' ' . $pembelajaran->kelas->nama_kelas . '. Silahkan input penilaian!');
             }
 
-            return view('admin.km.nilaiterkirimkm.create', compact('title', 'data_pembelajaran', 'pembelajaran', 'data_nilai_terkirim', 'term', 'semester'));
+            return view('admin.km.nilaiterkirimkm.create', compact('title', 'data_pembelajaran', 'pembelajaran', 'data_nilai_terkirim', 'term'));
         }
     }
 }
