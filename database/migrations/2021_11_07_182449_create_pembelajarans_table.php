@@ -18,14 +18,12 @@ class CreatePembelajaransTable extends Migration
             $table->unsignedBigInteger('kelas_id')->unsigned();
             $table->unsignedBigInteger('mapel_id')->unsigned();
             $table->unsignedBigInteger('guru_id')->nullable()->unsigned();
-            $table->unsignedBigInteger('term_id')->unsigned();
             $table->boolean('status');
             $table->timestamps();
 
             $table->foreign('kelas_id')->references('id')->on('kelas');
             $table->foreign('mapel_id')->references('id')->on('mapel');
             $table->foreign('guru_id')->references('id')->on('guru');
-            $table->foreign('term_id')->references('id')->on('terms');
         });
     }
 

@@ -24,7 +24,9 @@ class TingkatanTableSeeder extends Seeder
 
         foreach ($nama_tingkatan as $nama) {
             Tingkatan::create([
-                'nama_tingkatan' => $nama
+                'nama_tingkatan' => $nama,
+                'term_id' => 1,
+                'semester_id' => 1
             ]);
         }
     }

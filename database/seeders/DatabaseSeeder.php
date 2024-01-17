@@ -76,11 +76,11 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             // Master Data Seeder
-            TingkatanTableSeeder::class,
             JurusanTableSeeder::class,
             SemesterTableSeeder::class,
             TermTableSeeder::class,
             TapelTableSeeder::class,
+            TingkatanTableSeeder::class,
             GlobalUsersTableSeeder::class,
             AdminTableSeeder::class,
             GuruTableSeeder::class,

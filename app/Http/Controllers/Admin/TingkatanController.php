@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Term;
+use App\Tapel;
+use App\Semester;
 use App\Tingkatan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -11,10 +14,13 @@ class TingkatanController extends Controller
     public function index()
     {
         $title = 'Data Tingkatan';
+        $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $term = Term::findorfail($tapel->term_id);
+        $semester = Semester::findorfail($tapel->semester_id);
 
         $data_tingkatan = Tingkatan::orderBy('id', 'DESC')->get();
 
-        return view('admin.tingkatan.index', compact('title', 'data_tingkatan'));
+        return view('admin.tingkatan.index', compact('title', 'data_tingkatan', 'tapel', 'term', 'semester'));
     }
 
     public function create()
@@ -26,6 +32,8 @@ class TingkatanController extends Controller
     {
         $request->validate([
             'nama_tingkatan' => 'required|string|max:255',
+            'term_id' => 'required|exists:terms,id',
+            'semester_id' => 'required|exists:semesters,id',
         ]);
 
         Tingkatan::create($request->all());

@@ -18,7 +18,6 @@ class PembelajaranTableSeeder extends Seeder
             'kelas_id' => 1,
             'mapel_id' => 1,
             'guru_id' => 1,
-            'term_id' => 1,
             'status' => true
         ]);
 
@@ -26,7 +25,6 @@ class PembelajaranTableSeeder extends Seeder
             'kelas_id' => 1,
             'mapel_id' => 2,
             'guru_id' => 1,
-            'term_id' => 1,
             'status' => true
         ]);
 
@@ -34,7 +32,6 @@ class PembelajaranTableSeeder extends Seeder
             'kelas_id' => 1,
             'mapel_id' => 3,
             'guru_id' => 1,
-            'term_id' => 1,
             'status' => true
         ]);
 
@@ -42,7 +39,6 @@ class PembelajaranTableSeeder extends Seeder
             'kelas_id' => 2,
             'mapel_id' => 1,
             'guru_id' => 2,
-            'term_id' => 1,
             'status' => true
         ]);
     }

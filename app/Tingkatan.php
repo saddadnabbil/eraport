@@ -14,6 +14,8 @@ class Tingkatan extends Model
 
     protected $fillable = [
         'nama_tingkatan',
+        'term_id',
+        'semester_id'
     ];
 
     public function Kelas()
@@ -24,6 +26,16 @@ class Tingkatan extends Model
     public function Siswa()
     {
         return $this->hasMany(Siswa::class);
+    }
+
+    public function semester()
+    {
+        return $this->belongsTo(Semester::class);
+    }
+
+    public function term()
+    {
+        return $this->belongsTo(Term::class);
     }
 
     public function K13KdMapel()

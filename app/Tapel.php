@@ -9,8 +9,6 @@ class Tapel extends Model
     protected $table = 'tapels';
     protected $fillable = [
         'tahun_pelajaran',
-        'semester_id',
-        'term_id'
     ];
 
     public function semester()

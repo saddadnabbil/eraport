@@ -45,10 +45,13 @@
           <a href="{{Auth::user()->role == 1 ? route('tapel.index') : '#'}}" class="btn btn-primary btn-sm" style="line-height: 1">
             @php
               $tapel = App\Tapel::find(session()->get('tapel_id'));
-              $term = App\Term::find(session()->get('term_id'));
+
+              $ps = App\Tingkatan::where('id', 3)->first();
+              $jhs = App\Tingkatan::where('id', 4)->first();
+              $shs = App\Tingkatan::where('id', 5)->first();
             @endphp 
              
-             School Year {{ str_replace('-', ' / ', $tapel->tahun_pelajaran) }} - Semester {{ session()->get('semester_id') }} - Term {{ $term->term }}
+             School Year {{ str_replace('-', ' / ', $tapel->tahun_pelajaran) }} - (Semester Primary {{$ps->semester_id . '-' . $ps->term_id}}) - (Semester Junior High {{$jhs->semester_id . '-' . $jhs->term_id}}) - (Semester Senior High {{$shs->semester_id . '-' . $shs->term_id}})
           </a>
         </div>
         <!-- End of Flex container -->

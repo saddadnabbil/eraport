@@ -23,8 +23,6 @@ class SekolahTableSeeder extends Seeder
             'email' => 'admin@gis.com',
             'kepala_sekolah' => 'IVAN SENEVIRATNE, M.ED',
             'tapel_id' => 1,
-            'semester_id' => 1,
-            'term_id' => 1,
         ]);
     }
 }

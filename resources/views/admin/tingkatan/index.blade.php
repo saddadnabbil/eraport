@@ -51,6 +51,8 @@
                   </div>
                   <form action="{{ route('tingkatan.store') }}" method="POST">
                     @csrf
+                    <input type="hidden" name="term_id" value="{{ $term->id }}">
+                    <input type="hidden" name="semester_id" value="{{ $semester->id }}">
                     <div class="modal-body">
                       <div class="form-group row">
                         <label for="tahun_pelajaran" class="col-sm-3 col-form-label">Nama Tingkatan</label>
@@ -114,6 +116,8 @@
                             <form action="{{ route('tingkatan.update', $tingkatan->id) }}" method="POST">
                             @csrf
                             @method('PUT')
+                            <input type="hidden" name="term_id" value="{{ $tingkatan->term_id }}">
+                            <input type="hidden" name="semester_id" value="{{ $tingkatan->semester_id }}">
                             <div class="modal-body">
                                 <div class="form-group row">
                                 <label for="tahun_pelajaran" class="col-sm-3 col-form-label">Nama Tingkatan</label>

@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Term;
 use App\Siswa;
 use App\Tapel;
 use App\Sekolah;
+use App\Semester;
+use App\Tingkatan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Semester;
-use App\Term;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
@@ -28,13 +29,14 @@ class TapelController extends Controller
         $data_tapel = Tapel::orderBy('id', 'ASC')->get();
         $data_semester = Semester::orderBy('id', 'ASC')->get();
         $data_term = Term::orderBy('id', 'ASC')->get();
+        $data_tingkatan = Tingkatan::orderBy('id', 'ASC')->get();
 
         $sekolah = Sekolah::first();
         $tapel_id = $sekolah ? $sekolah->tapel_id : null;
         $semester_id = $sekolah ? $sekolah->semester_id : null;
         $term_id = $sekolah ? $sekolah->term_id : null;
 
-        return view('admin.tapel.index', compact('title', 'data_tapel', 'tapel_id', 'data_semester', 'semester_id', 'data_term', 'term_id', 'sekolah'));
+        return view('admin.tapel.index', compact('title', 'data_tapel', 'tapel_id', 'data_semester', 'semester_id', 'data_term', 'term_id', 'sekolah', 'data_tingkatan'));
     }
 
     /**
@@ -47,8 +49,6 @@ class TapelController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'tahun_pelajaran' => 'required|min:9|max:9',
-            'term_id' => 'required',
-            'semester_id' => 'required',
         ]);
         if ($validator->fails()) {
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
@@ -61,8 +61,6 @@ class TapelController extends Controller
 
             $tapel = new Tapel([
                 'tahun_pelajaran' => $request->tahun_pelajaran,
-                'semester_id' => $request->semester_id,
-                'term_id' => $request->term_id,
             ]);
             $tapel->save();
             Siswa::where('status', 1)->update(['kelas_id' => null]);
@@ -111,22 +109,32 @@ class TapelController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'select_tapel_id' => 'required|exists:tapels,id', // Ensure that the selected ID exists in the tapels table
-                'select_semester_id' => 'required|exists:semesters,id', // Ensure that the selected ID exists in the semesters table
-                'select_term_id' => 'required|exists:terms,id', // Ensure that the selected ID exists in the terms table
+                'select_tapel_id' => 'required|exists:tapels,id',
+
+                'select_semester_playgroup_id' => 'required|exists:semesters,id',
+                'select_term_playgroup_id' => 'required|exists:terms,id',
+
+                'select_semester_kindergarten_id' => 'required|exists:semesters,id',
+                'select_term_kindergarten_id' => 'required|exists:terms,id',
+
+                'select_semester_primaryschool_id' => 'required|exists:semesters,id',
+                'select_term_primaryschool_id' => 'required|exists:terms,id',
+
+                'select_semester_juniorhighschool_id' => 'required|exists:semesters,id',
+                'select_term_juniorhighschool_id' => 'required|exists:terms,id',
+
+                'select_semester_seniorhighschool_id' => 'required|exists:semesters,id',
+                'select_term_seniorhighschool_id' => 'required|exists:terms,id',
             ]);
 
-            // if ($validator->fails()) {
-            //     throw ValidationException::withMessages([
-            //         'select_tapel_id' => $validator->messages()->first('select_tapel_id'),
-            //         'select_semester_id' => $validator->messages()->first('select_semester_id'),
-            //         'select_term_id' => $validator->messages()->first('select_term_id'),
-            //     ]);
-            // }
+            $sekolah = Sekolah::first();
+            $tapel = Tapel::where('id', $request->select_tapel_id)->first();
 
-            // Assuming you have a way to identify the specific Sekolah record, adjust the next line accordingly
-            $sekolah = Sekolah::first(); // Change this line based on your logic to retrieve the Sekolah record
-            $tapel = Tapel::where('id', $request->select_tapel_id)->first(); // Change this line based on your logic to retrieve the Sekolah record
+            $pg = Tingkatan::where('id', '1')->first();
+            $kg = Tingkatan::where('id', '2')->first();
+            $ps = Tingkatan::where('id', '3')->first();
+            $jhs = Tingkatan::where('id', '4')->first();
+            $shs = Tingkatan::where('id', '5')->first();
 
             if (!$sekolah) {
                 throw new \Exception('Data Sekolah tidak ditemukan.');
@@ -134,17 +142,36 @@ class TapelController extends Controller
 
             $data_sekolah = [
                 'tapel_id' => $request->select_tapel_id,
-                'semester_id' => $request->select_semester_id,
-                'term_id' => $request->select_term_id,
             ];
-
-            $data_tapel = [
-                'semester_id' => $request->select_semester_id,
-                'term_id' => $request->select_term_id,
-            ];
-
             $sekolah->update($data_sekolah);
-            $tapel->update($data_tapel);
+
+            // PG dan KG
+            $data_tingkatan_pg_kg = [
+                'term_id' => $request->select_term_playgroup_id,
+            ];
+            $pg->update($data_tingkatan_pg_kg);
+
+            // PS
+            $data_tingkatan_ps = [
+                'term_id' => $request->select_term_primaryschool_id,
+                'semester_id' => $request->select_semester_primaryschool_id,
+            ];
+            $kg->update($data_tingkatan_pg_kg);
+            $ps->update($data_tingkatan_ps);
+
+            // JHS
+            $data_tingkatan_jhs = [
+                'term_id' => $request->select_term_juniorhighschool_id,
+                'semester_id' => $request->select_semester_juniorhighschool_id,
+            ];
+            $jhs->update($data_tingkatan_jhs);
+
+            // SHS
+            $data_tingkatan_shs = [
+                'term_id' => $request->select_term_seniorhighschool_id,
+                'semester_id' => $request->select_semester_seniorhighschool_id,
+            ];
+            $shs->update($data_tingkatan_shs);
 
             // Setel sesi 'tapel_id' dengan nilai baru
             session(['tapel_id' => $request->select_tapel_id]);

@@ -11,7 +11,6 @@ class Pembelajaran extends Model
         'kelas_id',
         'mapel_id',
         'guru_id',
-        'term_id',
         'status'
     ];
 
