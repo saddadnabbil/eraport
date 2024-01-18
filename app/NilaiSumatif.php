@@ -14,7 +14,7 @@ class NilaiSumatif extends Model
 
     public function rencana_nilai_sumatif()
     {
-        return $this->belongsTo('App\K13RencanaNilaiPengetahuan');
+        return $this->belongsTo('App\RencanaNilaiSumatif');
     }
 
     public function anggota_kelas()

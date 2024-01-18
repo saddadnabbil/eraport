@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Guru;
+use App\Term;
 use App\Kelas;
 use App\Siswa;
 use App\Tapel;
@@ -98,27 +99,29 @@ class DashboardController extends Controller
                 foreach ($data_capaian_penilaian_km as $penilaian) {
                     $kkm = KmKkmMapel::where('mapel_id', $penilaian->mapel->id)->where('kelas_id', $penilaian->kelas_id)->first();
 
-                    $rencana_sumatif = RencanaNilaiSumatif::where('pembelajaran_id', $penilaian->id)->groupBy('kode_penilaian')->get();
+                    $term = Term::findorfail($penilaian->kelas->tingkatan->term_id);
+
+                    $rencana_sumatif = RencanaNilaiSumatif::where('term_id', $term->id)->where('pembelajaran_id', $penilaian->id)->groupBy('kode_penilaian')->get();
                     $penilaian->jumlah_rencana_sumatif = count($rencana_sumatif);
 
-                    $rencana_formatif = RencanaNilaiFormatif::where('pembelajaran_id', $penilaian->id)->groupBy('kode_penilaian')->get();
+                    $rencana_formatif = RencanaNilaiFormatif::where('term_id', $term->id)->where('pembelajaran_id', $penilaian->id)->groupBy('kode_penilaian')->get();
                     $penilaian->jumlah_rencana_formatif = count($rencana_formatif);
 
-                    $rencana_nilai_sumatif_id = RencanaNilaiSumatif::where('pembelajaran_id', $penilaian->id)->groupBy('kode_penilaian')->get('id');
+                    $rencana_nilai_sumatif_id = RencanaNilaiSumatif::where('term_id', $term->id)->where('pembelajaran_id', $penilaian->id)->groupBy('kode_penilaian')->get('id');
                     $sumatif_telah_dinilai = NilaiSumatif::whereIn('rencana_nilai_sumatif_id', $rencana_nilai_sumatif_id)->groupBy('rencana_nilai_sumatif_id')->get();
                     $penilaian->jumlah_sumatif_telah_dinilai = count($sumatif_telah_dinilai);
 
-                    $rencana_nilai_formatif_id = RencanaNilaiFormatif::where('pembelajaran_id', $penilaian->id)->groupBy('kode_penilaian')->get('id');
+                    $rencana_nilai_formatif_id = RencanaNilaiFormatif::where('term_id', $term->id)->where('pembelajaran_id', $penilaian->id)->groupBy('kode_penilaian')->get('id');
                     $formatif_telah_dinilai = NilaiFormatif::whereIn('rencana_nilai_formatif_id', $rencana_nilai_formatif_id)->groupBy('rencana_nilai_formatif_id')->get();
                     $penilaian->jumlah_formatif_telah_dinilai = count($formatif_telah_dinilai);
 
                     $nilai_pts_pas = K13NilaiPtsPas::where('pembelajaran_id', $penilaian->id)->get();
                     $penilaian->nilai_pts_pas = count($nilai_pts_pas);
 
-                    $nilai_akhir_raport = KmNilaiAkhirRaport::where('pembelajaran_id', $penilaian->id)->get();
+                    $nilai_akhir_raport = KmNilaiAkhirRaport::where('term_id', $term->id)->where('pembelajaran_id', $penilaian->id)->get();
                     $penilaian->kirim_nilai_raport = count($nilai_akhir_raport);
 
-                    $deskripsi_nilai_akhir = KmDeskripsiNilaiSiswa::where('pembelajaran_id', $penilaian->id)->get();
+                    $deskripsi_nilai_akhir = KmDeskripsiNilaiSiswa::where('term_id', $term->id)->where('pembelajaran_id', $penilaian->id)->get();
                     $penilaian->proses_deskripsi = count($deskripsi_nilai_akhir);
 
                     $bobot = K13RencanaBobotPenilaian::where('pembelajaran_id', $penilaian->id)->first();
@@ -139,7 +142,7 @@ class DashboardController extends Controller
                     }
                 }
 
-                // Capaian Penilaian K13 
+                // Capaian Penilaian K13
                 // foreach ($data_capaian_penilaian as $penilaian) {
                 //     $kkm = K13KkmMapel::where('mapel_id', $penilaian->mapel->id)->where('kelas_id', $penilaian->kelas_id)->first();
 
