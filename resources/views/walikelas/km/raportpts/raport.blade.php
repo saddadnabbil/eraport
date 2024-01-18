@@ -65,7 +65,7 @@
         <td><h3>: 
           {{$anggota_kelas->siswa->nis}} </h3></td>
         <td><h3>Semester</h3></td>
-        <td><h3>: {{ $anggota_kelas->kelas->tingkatan-semester_id }} / Mid {{ $anggota_kelas->kelas->tingkatan->term_id }} </h3></td>
+        <td><h3>: {{ $anggota_kelas->kelas->tingkatan->semester_id }} / Mid {{ $anggota_kelas->kelas->tingkatan->term_id }} </h3></td>
       </tr>
     </table>
 

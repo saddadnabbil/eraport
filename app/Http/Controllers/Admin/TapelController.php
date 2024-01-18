@@ -189,11 +189,11 @@ class TapelController extends Controller
                 $query->where('semester_id', 2);
             })->pluck('id');
 
-            if ($data_term_1->count() === count($data_term_1) && $data_term_1->count() > 3) {
+            if ($data_term_1->count() === count($data_term_1) && $data_term_1->count() >= 3) {
                 $tapel->update([
                     'term_id' => 1,
                 ]);
-            } elseif ($data_term_2->count() === count($data_term_2) && $data_term_2->count() > 3) {
+            } elseif ($data_term_2->count() === count($data_term_2) && $data_term_2->count() >= 3) {
                 $tapel->update([
                     'term_id' => 2,
                 ]);

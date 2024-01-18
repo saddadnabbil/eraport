@@ -52,11 +52,11 @@
                     <div class="modal-body">
                       <div class="form-group">
                         <label>Judul Pengumuman</label>
-                        <input type="text" class="form-control" name="judul" required>
+                        <input type="text" class="form-control" name="judul" value="{{ old('judul') }}" required>
                       </div>
                       <div class="form-group">
                         <label>Isi Pengumuman</label>
-                        <textarea class="textarea" name="isi" style="width: 100%; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 5px;" required></textarea>
+                        <textarea class="textarea" name="isi" style="width: 100%; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 5px;" required>{{ old('isi') }}</textarea>
                       </div>
                     </div>
                     <div class="modal-footer justify-content-end">
