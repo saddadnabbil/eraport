@@ -3,6 +3,12 @@
 Aplikasi ini dibangun dengan framework laravel 7.0 dan DBMS MySQL dengan menggunakan template dari admin LTE.
 Cocok digunakan pada lembaga Jenjang SLTP Sederajat atau PKBM yang memiliki mata pelajaran muatan lokal yang banyak sehingga tidak dapat menggunakan aplikasi E raport dari Dinas Pendidikan.
 
+### Instalasi
+1. git pull
+2. ⁠composer dump-autoload
+3. ⁠php artisan optimize
+4. ⁠php artisan migrate:fresh —seed
+
 ### Adapun fitur dari Aplikasi E Raport ini secara global antara lain :
 
 1. Multi user (Admin, Guru, Wali Kelas, Siswa).
