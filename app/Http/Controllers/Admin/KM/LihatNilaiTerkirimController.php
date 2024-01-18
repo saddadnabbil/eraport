@@ -25,7 +25,7 @@ class LihatNilaiTerkirimController extends Controller
     public function index()
     {
         $title = 'Lihat Nilai Akhir Terkirim';
-        $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $tapel = Tapel::where('status', 1)->first();
 
         $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
 
@@ -51,7 +51,7 @@ class LihatNilaiTerkirimController extends Controller
         } else {
             // Data Master
             $title = 'Lihat Nilai Akhir Terkirim';
-            $tapel = Tapel::findorfail(session()->get('tapel_id'));
+            $tapel = Tapel::where('status', 1)->first();
 
             // $guru = Guru::where('user_id', Auth::user()->id)->first();
             $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');

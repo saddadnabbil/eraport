@@ -53,7 +53,7 @@ class AjaxController extends Controller
 
     public function ajax_kelas_silabus($id)
     {
-        $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $tapel = Tapel::where('status', 1)->first();
         $guru = Guru::where('user_id', Auth::user()->id)->first();
         $id_kelas = Kelas::where('tapel_id', $tapel->id)
             ->where('guru_id', $guru->id)

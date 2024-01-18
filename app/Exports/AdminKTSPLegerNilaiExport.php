@@ -31,7 +31,7 @@ class AdminKTSPLegerNilaiExport implements FromView, ShouldAutoSize
         $time_download = date('Y-m-d H:i:s');
 
         $sekolah = Sekolah::first();
-        $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $tapel = Tapel::where('status', 1)->first();
         $kelas = Kelas::findorfail($this->id);
 
         $data_id_mapel_semester_ini = Mapel::where('tapel_id', $tapel->id)->get('id');

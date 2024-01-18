@@ -29,7 +29,7 @@ class RencanaNilaiSumatifController extends Controller
     public function index()
     {
         $title = 'Rencana Nilai Sumatif';
-        $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $tapel = Tapel::where('status', 1)->first();
         $guru = Guru::where('user_id', Auth::user()->id)->first();
 
         $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
@@ -76,15 +76,14 @@ class RencanaNilaiSumatifController extends Controller
     public function create(Request $request)
     {
         $title = 'Tambah Rencana Nilai Sumatif';
-        $semester = Semester::findorfail(session()->get('semester_id'));
-        $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $tapel = Tapel::where('status', 1)->first();
 
         $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
         $term = Term::findorfail($pembelajaran->kelas->tingkatan->term_id);
 
         $kelas = Kelas::findorfail($pembelajaran->kelas_id);
         $data_cp = CapaianPembelajaran::where([
-            'semester' => $semester->semester,
+            'semester' => $pembelajaran->kelas->tingkatan->semester_id,
             'pembelajaran_id' => $pembelajaran->id,
         ])->orderBy('kode_cp', 'ASC')->get();
 

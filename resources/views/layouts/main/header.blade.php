@@ -44,7 +44,7 @@
         <div class="d-flex justify-content-center align-items-center">
           <a href="{{Auth::user()->role == 1 ? route('tapel.index') : '#'}}" class="btn btn-primary btn-sm" style="line-height: 1">
             @php
-              $tapel = App\Tapel::find(session()->get('tapel_id'));
+              $tapel = App\Tapel::where('status', 1)->first();
               // dd($tapel);
               $term = App\Term::find($tapel->term_id);
 

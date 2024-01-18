@@ -22,7 +22,7 @@ class PembelajaranController extends Controller
      */
     public function index()
     {
-        $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $tapel = Tapel::where('status', 1)->first();
         $data_mapel = Mapel::where('tapel_id', $tapel->id)->orderBy('nama_mapel', 'ASC')->get();
         $data_kelas = Kelas::where('tapel_id', $tapel->id)->orderBy('tingkatan_id', 'ASC')->get();
 
@@ -41,7 +41,7 @@ class PembelajaranController extends Controller
     public function settings(Request $request)
     {
         $title = 'Setting Pembelajaran';
-        $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $tapel = Tapel::where('status', 1)->first();
         $kelas = Kelas::findorfail($request->kelas_id);
         $data_kelas = Kelas::where('tapel_id', $tapel->id)->orderBy('tingkatan_id', 'ASC')->get();
 

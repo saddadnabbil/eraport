@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\AnggotaKelas;
 use App\Http\Controllers\Controller;
 use App\Kelas;
+use App\Tapel;
 use Illuminate\Http\Request;
 
 class RekapKehadiranSiswaController extends Controller
@@ -17,7 +18,8 @@ class RekapKehadiranSiswaController extends Controller
     public function index()
     {
         $title = 'Rekap Kehadiran Siswa';
-        $data_kelas = Kelas::where('tapel_id', session()->get('tapel_id'))->get();
+        $tapel = Tapel::where('status', 1)->first();
+        $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
         return view('admin.rekapkehadiran.pilihkelas', compact('title', 'data_kelas'));
     }
 
@@ -31,7 +33,8 @@ class RekapKehadiranSiswaController extends Controller
     public function store(Request $request)
     {
         $title = 'Rekap Kehadiran Siswa';
-        $data_kelas = Kelas::where('tapel_id', session()->get('tapel_id'))->get();
+        $tapel = Tapel::where('status', 1)->first();
+        $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
         $kelas = Kelas::findorfail($request->kelas_id);
         $data_anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
             ->orderBy('siswa.nama_lengkap', 'ASC')
@@ -41,5 +44,4 @@ class RekapKehadiranSiswaController extends Controller
 
         return view('admin.rekapkehadiran.index', compact('title', 'kelas', 'data_kelas', 'data_anggota_kelas'));
     }
-
 }

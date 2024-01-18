@@ -22,7 +22,7 @@ class KenaikanKelasController extends Controller
     public function index()
     {
         $title = 'Kenaikan Kelas';
-        $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $tapel = Tapel::where('status', 1)->first();
 
         if ($tapel->semester->semester == 2) {
             $guru = Guru::where('user_id', Auth::user()->id)->first();

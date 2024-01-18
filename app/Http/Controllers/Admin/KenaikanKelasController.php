@@ -24,7 +24,7 @@ class KenaikanKelasController extends Controller
     {
 
         $title = 'Kehadiran Siswa';
-        $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $tapel = Tapel::where('status', 1)->first();
 
         $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
 
@@ -34,7 +34,7 @@ class KenaikanKelasController extends Controller
     public function create(Request $request)
     {
         $title = 'Kenaikan Kelas';
-        $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $tapel = Tapel::where('status', 1)->first();
 
         $kelas = Kelas::findorfail($request->kelas_id);
         $semester = Semester::findorfail($kelas->tingkatan->semester_id);

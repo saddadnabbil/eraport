@@ -31,7 +31,7 @@ class KirimNilaiAkhirController extends Controller
     public function index()
     {
         $title = 'Kirim Nilai Akhir';
-        $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $tapel = Tapel::where('status', 1)->first();
         $guru = Guru::where('user_id', Auth::user()->id)->first();
 
         $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
@@ -55,7 +55,7 @@ class KirimNilaiAkhirController extends Controller
         if ($validator->fails()) {
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
         } else {
-            $tapel = Tapel::findorfail(session()->get('tapel_id'));
+            $tapel = Tapel::where('status', 1)->first();
 
             $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
             $term = Term::findorfail($pembelajaran->kelas->tingkatan->term_id);
@@ -80,7 +80,7 @@ class KirimNilaiAkhirController extends Controller
                 } else {
                     // Data Master
                     $title = 'Kirim Nilai Akhir';
-                    $tapel = Tapel::findorfail(session()->get('tapel_id'));
+                    $tapel = Tapel::where('status', 1)->first();
 
                     $guru = Guru::where('user_id', Auth::user()->id)->first();
                     $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');

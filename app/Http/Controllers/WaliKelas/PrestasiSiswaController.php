@@ -23,7 +23,7 @@ class PrestasiSiswaController extends Controller
     public function index()
     {
         $title = 'Data Prestasi Siswa';
-        $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $tapel = Tapel::where('status', 1)->first();
         $guru = Guru::where('user_id', Auth::user()->id)->first();
 
         $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)->where('guru_id', $guru->id)->get('id');

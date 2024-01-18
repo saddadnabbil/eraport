@@ -24,7 +24,7 @@ class KelasController extends Controller
      */
     public function index()
     {
-        $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $tapel = Tapel::where('status', 1)->first();
         $data_mapel = Mapel::where('tapel_id', $tapel->id)->get();
 
         if (count($data_mapel) == 0) {
@@ -79,7 +79,7 @@ class KelasController extends Controller
         if ($validator->fails()) {
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
         } else {
-            $tapel = Tapel::findorfail(session()->get('tapel_id'));
+            $tapel = Tapel::where('status', 1)->first();
             $kelas = new Kelas([
                 'tingkatan_id' => $request->tingkatan_id,
                 'jurusan_id' => $request->jurusan_id,

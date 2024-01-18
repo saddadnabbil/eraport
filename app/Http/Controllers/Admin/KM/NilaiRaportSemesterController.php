@@ -24,7 +24,7 @@ class NilaiRaportSemesterController extends Controller
     public function index()
     {
         $title = 'Nilai Raport Semester';
-        $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $tapel = Tapel::where('status', 1)->first();
         $term = Term::findorfail(session()->get('term_id'));
 
         $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
@@ -48,7 +48,7 @@ class NilaiRaportSemesterController extends Controller
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
         } else {
             $title = 'Nilai Raport Semester';
-            $tapel = Tapel::findorfail(session()->get('tapel_id'));
+            $tapel = Tapel::where('status', 1)->first();
             $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
             $term = Term::findorfail($pembelajaran->kelas->tingkatan->term_id);
             $pembelajaran_id = $request->pembelajaran_id;

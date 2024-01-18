@@ -20,7 +20,7 @@ class CapaianPembelajaranController extends Controller
     public function index()
     {
         $title = 'Capaian Pembajaran';
-        $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $tapel = Tapel::where('status', 1)->first();
         $guru = Guru::where('user_id', Auth::user()->id)->first();
 
         $data_mapel = Mapel::where('tapel_id', $tapel->id)->orderBy('nama_mapel', 'ASC')->get();
@@ -52,7 +52,7 @@ class CapaianPembelajaranController extends Controller
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
         } else {
             $title = 'Tambah Capaian Pembelajaran';
-            $tapel = Tapel::findorfail(session()->get('tapel_id'));
+            $tapel = Tapel::where('status', 1)->first();
             $semester = Sekolah::first()->semester_id;
             $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
             $pembelajaran_id = $request->pembelajaran_id;

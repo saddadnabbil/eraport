@@ -27,7 +27,7 @@ class SiswaController extends Controller
     public function index()
     {
         $title = 'Data Siswa';
-        $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $tapel = Tapel::where('status', 1)->first();
         $jumlah_kelas = Kelas::where('tapel_id', $tapel->id)->count();
 
         if ($jumlah_kelas == 0) {
@@ -64,7 +64,7 @@ class SiswaController extends Controller
     {
         $siswa = Siswa::findorfail($id);
         $title = 'Detail Siswa';
-        $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $tapel = Tapel::where('status', 1)->first();
 
         $tingkatan_terendah = Kelas::where('tapel_id', $tapel->id)->min('tingkatan_id');
         $tingkatan_akhir = Kelas::where('tapel_id', $tapel->id)->max('tingkatan_id');

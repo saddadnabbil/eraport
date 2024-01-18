@@ -26,7 +26,7 @@ class WaliKelasKTSPLegerNilaiExport implements FromView, ShouldAutoSize
         $time_download = date('Y-m-d H:i:s');
 
         $sekolah = Sekolah::first();
-        $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $tapel = Tapel::where('status', 1)->first();
         $guru = Guru::where('user_id', Auth::user()->id)->first();
         $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)->where('guru_id', $guru->id)->get('id');
 

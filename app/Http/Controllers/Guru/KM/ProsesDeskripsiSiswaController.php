@@ -37,7 +37,7 @@ class ProsesDeskripsiSiswaController extends Controller
     public function index()
     {
         $title = 'Deskripsi Nilai Siswa';
-        $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $tapel = Tapel::where('status', 1)->first();
         $guru = Guru::where('user_id', Auth::user()->id)->first();
 
         $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
@@ -62,7 +62,7 @@ class ProsesDeskripsiSiswaController extends Controller
 
             // Data Master
             $title = 'Input Deskripsi Nilai Siswa';
-            $tapel = Tapel::findorfail(session()->get('tapel_id'));
+            $tapel = Tapel::where('status', 1)->first();
 
             $guru = Guru::where('user_id', Auth::user()->id)->first();
             $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');

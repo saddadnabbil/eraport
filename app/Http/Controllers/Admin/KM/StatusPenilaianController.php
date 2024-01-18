@@ -37,7 +37,8 @@ class StatusPenilaianController extends Controller
     public function index()
     {
         $title = 'Status Penilaian';
-        $data_kelas = Kelas::where('tapel_id', session()->get('tapel_id'))->get();
+        $tapel = Tapel::where('status', 1)->first();
+        $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
         return view('admin.km.statuspenilaian.pilihkelas', compact('title', 'data_kelas'));
     }
 
@@ -50,7 +51,7 @@ class StatusPenilaianController extends Controller
     public function store(Request $request)
     {
         $title = 'Status Penilaian';
-        $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $tapel = Tapel::where('status', 1)->first();
         $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
 
         $kelas = Kelas::findorfail($request->kelas_id);

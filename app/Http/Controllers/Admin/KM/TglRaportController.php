@@ -20,7 +20,7 @@ class TglRaportController extends Controller
     public function index()
     {
         $title = 'Tanggal Raport';
-        $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $tapel = Tapel::where('status', 1)->first();
         $semester = Semester::findorfail($tapel->semester_id);
         $data_tgl_raport = KmTglRaport::orderBy('id', 'ASC')->get();
         $data_tapel = Tapel::orderBy('id', 'ASC')->get();

@@ -25,7 +25,7 @@ class KkmMapelController extends Controller
     public function index()
     {
         $title = 'KKM Mata Pelajaran';
-        $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $tapel = Tapel::where('status', 1)->first();
         // $guru = Guru::where('user_id', Auth::user()->id)->first();
 
         $data_mapel = Mapel::where('tapel_id', $tapel->id)->orderBy('nama_mapel', 'ASC')->get();

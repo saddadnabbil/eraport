@@ -24,9 +24,9 @@ class SilabusController extends Controller
     public function index()
     {
         $title = 'Silabus';
-        $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $tapel = Tapel::where('status', 1)->first();
 
-        $id_kelas = Kelas::where('tapel_id', session()->get('tapel_id'))->get('id');
+        $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
 
         $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
 

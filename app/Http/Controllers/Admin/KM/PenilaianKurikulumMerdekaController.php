@@ -29,7 +29,7 @@ class PenilaianKurikulumMerdekaController extends Controller
     public function index()
     {
         $title = 'Penilaian Raport';
-        $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $tapel = Tapel::where('status', 1)->first();
 
         $data_mapel = Mapel::where('tapel_id', $tapel->id)->orderBy('nama_mapel', 'ASC')->get();
 
@@ -65,7 +65,7 @@ class PenilaianKurikulumMerdekaController extends Controller
             $data_anggota_kelas = AnggotaKelas::where('kelas_id', $pembelajaran->kelas_id)->get();
             $pembelajaran_id = $request->pembelajaran_id;
 
-            $tapel = Tapel::findorfail(session()->get('tapel_id'));
+            $tapel = Tapel::where('status', 1)->first();
             $term = Term::findorfail($pembelajaran->kelas->tingkatan->term_id);
 
             $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');

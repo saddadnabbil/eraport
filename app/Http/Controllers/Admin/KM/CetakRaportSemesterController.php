@@ -2,24 +2,25 @@
 
 namespace App\Http\Controllers\Admin\KM;
 
-use App\AnggotaEkstrakulikuler;
-use App\AnggotaKelas;
-use App\CatatanWaliKelas;
-use App\Ekstrakulikuler;
-use App\Http\Controllers\Controller;
-use App\K13DeskripsiSikapSiswa;
-use App\KmMappingMapel;
-use App\KmNilaiAkhirRaport;
-use App\KmTglRaport;
-use App\KehadiranSiswa;
+use PDF;
 use App\Kelas;
 use App\Mapel;
-use App\NilaiEkstrakulikuler;
+use App\Tapel;
+use App\Sekolah;
+use App\KmTglRaport;
+use App\AnggotaKelas;
 use App\Pembelajaran;
 use App\PrestasiSiswa;
-use App\Sekolah;
+use App\KehadiranSiswa;
+use App\KmMappingMapel;
+use App\Ekstrakulikuler;
+use App\CatatanWaliKelas;
+use App\KmNilaiAkhirRaport;
 use Illuminate\Http\Request;
-use PDF;
+use App\NilaiEkstrakulikuler;
+use App\AnggotaEkstrakulikuler;
+use App\K13DeskripsiSikapSiswa;
+use App\Http\Controllers\Controller;
 
 class CetakRaportSemesterController extends Controller
 {
@@ -31,7 +32,8 @@ class CetakRaportSemesterController extends Controller
     public function index()
     {
         $title = 'Cetak Raport Semester';
-        $data_kelas = Kelas::where('tapel_id', session()->get('tapel_id'))->get();
+        $tapel = Tapel::where('status', 1)->first();
+        $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
         return view('admin.km.raportsemester.setpaper', compact('title', 'data_kelas'));
     }
 
@@ -45,7 +47,8 @@ class CetakRaportSemesterController extends Controller
     {
         $title = 'Cetak Raport Semester';
         $kelas = Kelas::findorfail($request->kelas_id);
-        $data_kelas = Kelas::where('tapel_id', session()->get('tapel_id'))->get();
+        $tapel = Tapel::where('status', 1)->first();
+        $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
         $data_anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
             ->orderBy('siswa.nama_lengkap', 'ASC')
             ->where('anggota_kelas.kelas_id', $kelas->id)
@@ -68,6 +71,7 @@ class CetakRaportSemesterController extends Controller
     {
         $sekolah = Sekolah::first();
         $anggota_kelas = AnggotaKelas::findorfail($id);
+        $tapel = Tapel::where('status', 1)->first();
 
         if ($request->data_type == 1) {
             $title = 'Kelengkapan Raport';
@@ -75,7 +79,7 @@ class CetakRaportSemesterController extends Controller
             return $kelengkapan_raport->stream('KELENGKAPAN RAPORT ' . $anggota_kelas->siswa->nama_lengkap . ' (' . $anggota_kelas->kelas->nama_kelas . ').pdf');
         } elseif ($request->data_type == 2) {
             $title = 'Raport Semester';
-            $data_id_mapel_semester_ini = Mapel::where('tapel_id', session()->get('tapel_id'))->get('id');
+            $data_id_mapel_semester_ini = Mapel::where('tapel_id', $tapel->id)->get('id');
 
             $data_id_pembelajaran = Pembelajaran::where('kelas_id', $anggota_kelas->kelas_id)->get('id');
 
@@ -144,7 +148,7 @@ class CetakRaportSemesterController extends Controller
 
             $data_nilai = KmNilaiAkhirRaport::whereIn('pembelajaran_id', $data_id_pembelajaran)->where('anggota_kelas_id', $anggota_kelas->id)->get();
 
-            $data_id_ekstrakulikuler = Ekstrakulikuler::where('tapel_id', session()->get('tapel_id'))->get('id');
+            $data_id_ekstrakulikuler = Ekstrakulikuler::where('tapel_id', $tapel->id)->get('id');
             $data_anggota_ekstrakulikuler = AnggotaEkstrakulikuler::whereIn('ekstrakulikuler_id', $data_id_ekstrakulikuler)->where('anggota_kelas_id', $anggota_kelas->id)->get();
             foreach ($data_anggota_ekstrakulikuler as $anggota_ekstrakulikuler) {
                 $cek_nilai_ekstra = NilaiEkstrakulikuler::where('anggota_ekstrakulikuler_id', $anggota_ekstrakulikuler->id)->first();
@@ -161,7 +165,7 @@ class CetakRaportSemesterController extends Controller
             $kehadiran_siswa = KehadiranSiswa::where('anggota_kelas_id', $anggota_kelas->id)->first();
             $catatan_wali_kelas = CatatanWaliKelas::where('anggota_kelas_id', $anggota_kelas->id)->first();
 
-            $cek_tanggal_raport = KmTglRaport::where('tapel_id', session()->get('tapel_id'))->first();
+            $cek_tanggal_raport = KmTglRaport::where('tapel_id', $tapel->id)->first();
             if (is_null($cek_tanggal_raport)) {
                 return back()->with('toast_warning', 'Tanggal raport belum disetting oleh admin');
             } else {

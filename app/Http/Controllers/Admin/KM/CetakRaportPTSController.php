@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\KM;
 use PDF;
 use App\Kelas;
 use App\Mapel;
+use App\Tapel;
 use App\Sekolah;
 use App\KmKkmMapel;
 use App\AnggotaKelas;
@@ -36,7 +37,8 @@ class CetakRaportPTSController extends Controller
     public function index()
     {
         $title = 'Raport Tengah Semester';
-        $data_kelas = Kelas::where('tapel_id', session()->get('tapel_id'))->get();
+        $tapel = Tapel::where('status', 1)->first();
+        $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
         return view('admin.km.raportpts.setpaper', compact('title', 'data_kelas'));
     }
 
@@ -50,7 +52,8 @@ class CetakRaportPTSController extends Controller
     {
         $title = 'Raport Tengah Semester';
         $kelas = Kelas::findorfail($request->kelas_id);
-        $data_kelas = Kelas::where('tapel_id', session()->get('tapel_id'))->get();
+        $tapel = Tapel::where('status', 1)->first();
+        $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
         $data_anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
             ->orderBy('siswa.nama_lengkap', 'ASC')
             ->where('anggota_kelas.kelas_id', $kelas->id)
@@ -74,8 +77,9 @@ class CetakRaportPTSController extends Controller
         $title = 'Raport PTS';
         $sekolah = Sekolah::first();
         $anggota_kelas = AnggotaKelas::findorfail($id);
+        $tapel = Tapel::where('status', 1)->first();
 
-        $data_id_mapel_semester_ini = Mapel::where('tapel_id', session()->get('tapel_id'))->get('id');
+        $data_id_mapel_semester_ini = Mapel::where('tapel_id', $tapel->id)->get('id');
 
         $data_id_pembelajaran = Pembelajaran::where('kelas_id', $anggota_kelas->kelas_id)->get('id');
         $data_nilai = KmNilaiAkhirRaport::whereIn('pembelajaran_id', $data_id_pembelajaran)->where('anggota_kelas_id', $anggota_kelas->id)->get();
@@ -118,7 +122,7 @@ class CetakRaportPTSController extends Controller
             return $data;
         }, $nilai_akhir_total);
 
-        $data_id_ekstrakulikuler = Ekstrakulikuler::where('tapel_id', session()->get('tapel_id'))->get('id');
+        $data_id_ekstrakulikuler = Ekstrakulikuler::where('tapel_id', $tapel->id)->get('id');
 
         $data_anggota_ekstrakulikuler = AnggotaEkstrakulikuler::whereIn('ekstrakulikuler_id', $data_id_ekstrakulikuler)->where('anggota_kelas_id', $anggota_kelas->id)->get();
         foreach ($data_anggota_ekstrakulikuler as $anggota_ekstrakulikuler) {

@@ -14,7 +14,7 @@ class TingkatanController extends Controller
     public function index()
     {
         $title = 'Data Tingkatan';
-        $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $tapel = Tapel::where('status', 1)->first();
 
         $data_tingkatan = Tingkatan::orderBy('id', 'DESC')->get();
 

@@ -23,7 +23,7 @@ class CatatanWaliKelasController extends Controller
     {
 
         $title = 'Catatan Wali Kelas';
-        $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $tapel = Tapel::where('status', 1)->first();
 
         $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
 
@@ -33,7 +33,7 @@ class CatatanWaliKelasController extends Controller
     public function create(Request $request)
     {
         $title = 'Input Catatan Wali Kelas';
-        $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $tapel = Tapel::where('status', 1)->first();
 
         $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)->where('id', $request->kelas_id)->get('id');
 

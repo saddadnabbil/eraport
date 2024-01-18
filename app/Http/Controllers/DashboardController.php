@@ -55,7 +55,7 @@ class DashboardController extends Controller
     {
         $title = 'Dashboard';
         $sekolah = Sekolah::first();
-        $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $tapel = Tapel::where('status', 1)->first();
         $data_pengumuman = Pengumuman::all();
         $data_riwayat_login = RiwayatLogin::where('user_id', '!=', Auth::user()->id)->where('updated_at', '>=', Carbon::today())->orderBy('status_login', 'DESC')->orderBy('updated_at', 'DESC')->get();
 

@@ -23,14 +23,14 @@ class EkstrakulikulerController extends Controller
     public function index()
     {
         $title = 'Data Ekstrakulikuler';
-        $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $tapel = Tapel::where('status', 1)->first();
         $data_ekstrakulikuler = Ekstrakulikuler::where('tapel_id', $tapel->id)->orderBy('nama_ekstrakulikuler', 'ASC')->get();
         foreach ($data_ekstrakulikuler as $ekstrakulikuler) {
-                $anggota_ekstrakulikuler = AnggotaEkstrakulikuler::join('siswa', 'anggota_ekstrakulikuler.anggota_kelas_id', '=', 'siswa.id')
+            $anggota_ekstrakulikuler = AnggotaEkstrakulikuler::join('siswa', 'anggota_ekstrakulikuler.anggota_kelas_id', '=', 'siswa.id')
                 ->where('anggota_ekstrakulikuler.ekstrakulikuler_id', $ekstrakulikuler->id)
                 ->where('siswa.status', 1)
                 ->get();
-        
+
             $jumlah_anggota = $anggota_ekstrakulikuler->count();
             $ekstrakulikuler->jumlah_anggota = $jumlah_anggota;
             $ekstrakulikuler->anggota = $anggota_ekstrakulikuler;
@@ -55,7 +55,7 @@ class EkstrakulikulerController extends Controller
         if ($validator->fails()) {
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
         } else {
-            $tapel = Tapel::findorfail(session()->get('tapel_id'));
+            $tapel = Tapel::where('status', 1)->first();
             $ekstrakulikuler = new Ekstrakulikuler([
                 'tapel_id' => $tapel->id,
                 'nama_ekstrakulikuler' => $request->nama_ekstrakulikuler,
@@ -81,9 +81,9 @@ class EkstrakulikulerController extends Controller
         $title = 'Anggota Ekstrakulikuler';
         $ekstrakulikuler = Ekstrakulikuler::findorfail($id);
         $anggota_ekstrakulikuler = AnggotaEkstrakulikuler::join('siswa', 'anggota_ekstrakulikuler.anggota_kelas_id', '=', 'siswa.id')
-        ->where('anggota_ekstrakulikuler.ekstrakulikuler_id', $ekstrakulikuler->id)
-        ->where('siswa.status', 1)
-        ->get();
+            ->where('anggota_ekstrakulikuler.ekstrakulikuler_id', $ekstrakulikuler->id)
+            ->where('siswa.status', 1)
+            ->get();
 
         $id_anggota_ekstrakulikuler = AnggotaEkstrakulikuler::where('ekstrakulikuler_id', $id)->get('anggota_kelas_id');
         $siswa_belum_masuk_ekstrakulikuler = AnggotaKelas::whereNotIn('id', $id_anggota_ekstrakulikuler)->get();
