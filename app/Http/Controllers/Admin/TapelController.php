@@ -131,6 +131,7 @@ class TapelController extends Controller
 
             $sekolah = Sekolah::first();
             $tapel = Tapel::where('id', $request->select_tapel_id)->first();
+            $tapelLama = Tapel::where('status', 1)->first();
 
             $pg = Tingkatan::where('id', '1')->first();
             $kg = Tingkatan::where('id', '2')->first();
@@ -142,10 +143,6 @@ class TapelController extends Controller
                 throw new \Exception('Data Sekolah tidak ditemukan.');
             }
 
-            $data_sekolah = [
-                'tapel_id' => $request->select_tapel_id,
-            ];
-            $sekolah->update($data_sekolah);
 
             // PG dan KG
             $data_tingkatan_pg_kg = [
@@ -210,6 +207,21 @@ class TapelController extends Controller
                     'semester_id' => 2,
                 ]);
             }
+
+            if ($tapelLama) {
+                $tapelLama->update([
+                    'status' => 0,
+                ]);
+            }
+
+            $tapel->update([
+                'status' => 1,
+            ]);
+
+            $data_sekolah = [
+                'tapel_id' => $request->select_tapel_id,
+            ];
+            $sekolah->update($data_sekolah);
 
             session(['tapel_id' => $request->select_tapel_id]);
             session(['semester_id' => $tapel->semester_id]);

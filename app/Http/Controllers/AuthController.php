@@ -85,16 +85,14 @@ class AuthController extends Controller
                     $cek_riwayat->update(['status_login' => true]);
                 }
 
-                $tapel_id = Sekolah::first()->tapel_id;
-                $semester_id = Sekolah::first()->semester_id;
-                $term_id = Sekolah::first()->term_id;
+                $tapel = Tapel::where('status', 1)->first();
 
                 session([
                     // 'kurikulum' => $request->kurikulum,
                     // 'tapel_id' => $request->tahun_pelajaran,
-                    'tapel_id' => $tapel_id,
-                    'semester_id' => $semester_id,
-                    'term_id' => $term_id,
+                    'tapel_id' => $tapel->id,
+                    'semester_id' => $tapel->semester_id,
+                    'term_id' => $tapel->term_id,
                 ]);
 
                 $guru = Guru::where('user_id', Auth::id())->first();

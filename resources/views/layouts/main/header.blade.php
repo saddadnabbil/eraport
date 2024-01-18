@@ -45,6 +45,7 @@
           <a href="{{Auth::user()->role == 1 ? route('tapel.index') : '#'}}" class="btn btn-primary btn-sm" style="line-height: 1">
             @php
               $tapel = App\Tapel::find(session()->get('tapel_id'));
+              // dd($tapel);
               $term = App\Term::find($tapel->term_id);
 
               $pg = App\Tingkatan::where('id', 1)->first();

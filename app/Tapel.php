@@ -10,7 +10,8 @@ class Tapel extends Model
     protected $fillable = [
         'tahun_pelajaran',
         'semester_id',
-        'term_id'
+        'term_id',
+        'status'
     ];
 
     public function semester()

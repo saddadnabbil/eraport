@@ -18,6 +18,7 @@ class CreateTapelsTable extends Migration
             $table->string('tahun_pelajaran', 9);
             $table->unsignedBigInteger('semester_id')->unsigned();
             $table->unsignedBigInteger('term_id')->unsigned();
+            $table->boolean('status')->default(0);
             $table->timestamps();
 
             $table->foreign('semester_id')->references('id')->on('semesters');
