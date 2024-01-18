@@ -61,6 +61,8 @@ class TapelController extends Controller
 
             $tapel = new Tapel([
                 'tahun_pelajaran' => $request->tahun_pelajaran,
+                'semester_id' => 1,
+                'term_id' => 1,
             ]);
             $tapel->save();
             Siswa::where('status', 1)->update(['kelas_id' => null]);
