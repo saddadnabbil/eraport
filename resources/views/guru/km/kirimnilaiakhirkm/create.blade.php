@@ -37,6 +37,14 @@
                 <form action="{{ route('kirimnilaiakhirkm.create') }}" method="GET">
                   @csrf
                   <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Term</label>
+                    <div class="col-sm-10">
+                      <select class="form-control select2" name="term" style="width: 100%;" disabled>
+                        <option value="{{$term->id}}" selected>{{$term->term}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Mata Pelajaran</label>
                     <div class="col-sm-10">
                       <select class="form-control select2" name="pembelajaran_id" style="width: 100%;" required onchange="this.form.submit();">
@@ -92,13 +100,13 @@
               </div>
 
               <!-- Nilai -->
-
               <div class="card">
                 <div class="card-header bg-primary">
                   <h3 class="card-title"><i class="fas fa-file-invoice"></i> Nilai Raport</h3>
                 </div>
                 <form action="{{ route('kirimnilaiakhirkm.store') }}" method="POST">
                   @csrf
+                  <input type="hidden" name="term_id" value="{{$term->id}}">
                   <div class="card-body">
                     <div class="table-responsive">
                       <table class="table table-bordered table-hover table-striped">
@@ -198,7 +206,7 @@
                     </div>
                   </div>
                   <div class="card-footer clearfix">
-                    <button type="submit" class="btn btn-primary float-right" onclick=" event.preventDefault(); sendFinalGrade();">Kirim Nilai Akhir</button>
+                    <button type="submit" class="btn btn-primary float-right kirim-nilai-akhir" onclick=" event.preventDefault(); sendFinalGrade();">Kirim Nilai Akhir</button>
                     <a href="{{ route('kirimnilaiakhirkm.index') }}" class="btn btn-default float-right mr-2">Batal</a>
                   </div>
                 </form>
@@ -231,8 +239,8 @@ function sendFinalGrade() {
         cancelButtonText: 'Batal',
     }).then((result) => {
         if (result.isConfirmed) {
-              document.querySelector('.btn-primary').removeAttribute('onclick'); 
-              document.querySelector('.btn-primary').click(); 
+              document.querySelector('.kirim-nilai-akhir').removeAttribute('onclick'); 
+              document.querySelector('.kirim-nilai-akhir').click(); 
         } else if (result.dismiss === Swal.DismissReason.cancel) {
             Swal.fire('Batal', 'Anda membatalkan pengiriman nilai akhir.', 'error');
         }

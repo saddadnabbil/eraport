@@ -17,11 +17,6 @@ use Illuminate\Support\Facades\Validator;
 
 class CapaianPembelajaranController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $title = 'Capaian Pembajaran';
@@ -48,29 +43,21 @@ class CapaianPembelajaranController extends Controller
         return view('guru.km.cp.pilihkelas', compact('title', 'data_mapel', 'data_kelas', 'data_cp', 'data_pembelajaran'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'pembelajaran_id' => 'required',
         ]);
-
         if ($validator->fails()) {
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
         } else {
             $title = 'Tambah Capaian Pembelajaran';
             $tapel = Tapel::findorfail(session()->get('tapel_id'));
             $semester = Sekolah::first()->semester_id;
-            $guru = Guru::where('user_id', Auth::user()->id)->first();
-
-            $pembelajaran = Pembelajaran::where('guru_id', $guru->id)->findorfail($request->pembelajaran_id);
+            $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
             $pembelajaran_id = $request->pembelajaran_id;
             $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
-
+            $guru = Guru::where('user_id', Auth::user()->id)->first();
             $data_pembelajaran = Pembelajaran::where('guru_id', $guru->id)->whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
             $mapel_id = $pembelajaran->mapel->id;
             $tingkatan_id = $pembelajaran->kelas->tingkatan->id;
@@ -80,11 +67,9 @@ class CapaianPembelajaranController extends Controller
                 $data->canDelete = $this->isCapaianPembelajaranDeletable($data);
             }
 
-
             return view('guru.km.cp.create', compact('title', 'mapel_id', 'tingkatan_id', 'tapel', 'existingData', 'data_pembelajaran', 'pembelajaran_id', 'pembelajaran', 'semester'));
         }
     }
-
 
     private function isCapaianPembelajaranDeletable($capaian)
     {
@@ -94,12 +79,7 @@ class CapaianPembelajaranController extends Controller
         return !$isUsedInRencanaNilai;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -122,6 +102,7 @@ class CapaianPembelajaranController extends Controller
             $store_data_cp = [];
 
             for ($count = 0; $count < count($request->kode_cp); $count++) {
+                // Cari data berdasarkan kode_cp
                 $existingData = CapaianPembelajaran::where('kode_cp', $request->kode_cp[$count])->first();
 
                 if ($existingData) {
@@ -153,7 +134,6 @@ class CapaianPembelajaranController extends Controller
                         'created_at'          => Carbon::now(),
                         'updated_at'          => Carbon::now(),
                     ];
-
                     $store_data_cp[] = $data_cp;
                 }
             }
@@ -166,12 +146,7 @@ class CapaianPembelajaranController extends Controller
             }
         }
     }
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy($id)
     {
         $cp = CapaianPembelajaran::find($id);

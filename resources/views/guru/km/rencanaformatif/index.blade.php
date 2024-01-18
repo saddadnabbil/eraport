@@ -61,16 +61,16 @@
                       </td>
                       <td>
                         @if($penilaian->jumlah_rencana_penilaian == 0)
-                          <form action="{{ route('guru.rencanaformatif.create', $penilaian->id) }}" method="GET">
-                            @csrf
-                            <input type="hidden" name="pembelajaran_id" value="{{$penilaian->id}}">
-                            <input type="hidden" name="jumlah_penilaian" value="{{$penilaian->jumlah_rencana_penilaian == 0 ? 3 : $penilaian->jumlah_rencana_penilaian}}">
+                        
+                        <form action="{{ route('guru.rencanaformatif.create', $penilaian->id) }}" method="GET">
+                          @csrf
+                          <input type="hidden" name="pembelajaran_id" value="{{$penilaian->id}}">
+                          <input type="hidden" name="jumlah_penilaian" value="{{$penilaian->jumlah_rencana_penilaian == 0 ? 3 : $penilaian->jumlah_rencana_penilaian}}">
 
-                            <button type="submit" class="btn btn-sm btn-primary"><i class="{{ $penilaian->jumlah_rencana_penilaian == 0 ? 'fas fa-plus' : 'fas fa-pen' }}"></i></button>
-                          </form>
+                          <button type="submit" class="btn btn-sm btn-primary"><i class="{{ $penilaian->jumlah_rencana_penilaian == 0 ? 'fas fa-plus' : 'fas fa-pen' }}"></i></button>
+                        </form>
                         @else
                           <a href="{{ route('guru.rencanaformatif.show', $penilaian->id) }}" class="btn btn-sm btn-success"><i class="fas fa-eye"></i></a>
-
                         @endif
                       </td>
                     </tr>

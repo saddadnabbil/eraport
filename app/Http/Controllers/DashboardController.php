@@ -34,6 +34,7 @@ use App\K13NilaiKeterampilan;
 use App\KtspNilaiAkhirRaport;
 use App\RencanaNilaiFormatif;
 use App\K13RencanaNilaiSosial;
+use App\KmDeskripsiNilaiSiswa;
 use App\AnggotaEkstrakulikuler;
 use App\K13DeskripsiNilaiSiswa;
 use App\KtspDeskripsiNilaiSiswa;
@@ -117,7 +118,7 @@ class DashboardController extends Controller
                     $nilai_akhir_raport = KmNilaiAkhirRaport::where('pembelajaran_id', $penilaian->id)->get();
                     $penilaian->kirim_nilai_raport = count($nilai_akhir_raport);
 
-                    $deskripsi_nilai_akhir = K13DeskripsiNilaiSiswa::where('pembelajaran_id', $penilaian->id)->get();
+                    $deskripsi_nilai_akhir = KmDeskripsiNilaiSiswa::where('pembelajaran_id', $penilaian->id)->get();
                     $penilaian->proses_deskripsi = count($deskripsi_nilai_akhir);
 
                     $bobot = K13RencanaBobotPenilaian::where('pembelajaran_id', $penilaian->id)->first();

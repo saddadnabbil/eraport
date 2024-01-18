@@ -13,7 +13,7 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item "><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item "><a href="{{ route('guru.rencanaformatif.index') }}">Rencana Nilai Keterampilan</a></li>
+            <li class="breadcrumb-item "><a href="{{ route('guru.rencanaformatif.index') }}">Rencana Nilai Formatif</a></li>
             <li class="breadcrumb-item active">{{$title}}</li>
           </ol>
         </div><!-- /.col -->
@@ -42,7 +42,7 @@
                   </div>
                 </div>
               </div>
-              
+
               <div class="table-responsive">
                 <table class="table table-bordered table-striped">
                   <thead class="bg-primary">
@@ -65,7 +65,6 @@
                         <?php $no++; ?>
                         <tr>
                           <td class="text-center">{{$no}}</td>
-                          {{-- <td><b>{{$rencana_penilaian->capaian_pembelajaran->kode_cp}}</b> {{$rencana_penilaian->capaian_pembelajaran->ringkasan_cp}}</td> --}}
                           <td class="text-center">{{$rencana_penilaian->kode_penilaian}}</td>
                           <td class="text-center">{{$rencana_penilaian->bobot_teknik_penilaian}}</td>
                           <td class="text-center">
@@ -82,57 +81,13 @@
                             @endif
                           </td>
                           <td class="text-center">
-                            {{-- <form action="{{ route('guru.rencanaformatif.destroy', $rencana_penilaian->id) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm mt-1" onclick="return confirm('Hapus {{$rencana_penilaian->kode_penilaian}} {{$title}} ?')">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button> --}}
-                                <button type="button" class="btn btn-sm btn-warning mt-1" data-toggle="modal" data-target="#modal-edit{{$rencana_penilaian->id}}">
-                                  <i class="fas fa-pencil-alt"></i>
-                                </button>
-                            {{-- </form> --}}
+                            <button type="button" class="btn btn-sm btn-warning mt-1" data-toggle="modal" data-target="#modal-edit{{$rencana_penilaian->id}}">
+                              <i class="fas fa-pencil-alt"></i>
+                            </button>
                           </td>
                         </tr>
 
                         @foreach($data_rencana_penilaian_tambah as $penilaian)
-                        <!-- Modal tambah  -->
-                          <div class="modal fade" id="modal-tambah">
-                            <div class="modal-dialog modal-lg">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                  <h5 class="modal-title">Tambah {{$title}}</h5>
-                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                  </button>
-                                </div>
-                                <div class="modal-body">
-                                  <form action="{{ route('guru.rencanaformatif.create') }}" method="GET">
-                                    @csrf
-                                    <div class="form-group row">
-                                      <label for="pembelajaran_id" class="col-sm-3 col-form-label">Mata Pelajaran</label>
-                                      <div class="col-sm-9">
-                                        <select class="form-control" name="pembelajaran_id" style="width: 100%;" aria-readonly="true">
-                                          <option value="{{$penilaian->id}}" selected>{{$penilaian->mapel->nama_mapel}} {{$penilaian->kelas->nama_kelas}}</option>
-                                        </select>
-                                      </div>
-                                    </div>
-                                    <div class="form-group row">
-                                      <label for="jumlah_penilaian" class="col-sm-3 col-form-label">Jumlah Penilaian</label>
-                                      <div class="col-sm-9">
-                                        <select class="form-control select2" name="jumlah_penilaian" style="width: 100%;" required onchange="this.form.submit();">
-                                          <option value="">-- Pilih Jumlah Penilaian --</option>
-                                          @for ($i = 1; $i <= 20; $i++) <option value="{{$i}}">{{$i}}</option> @endfor
-                                        </select>
-                                      </div>
-                                    </div>
-                                  </form>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        <!-- End Modal tambah -->
-
                         <!-- Modal edit  -->
                           <div class="modal fade" id="modal-edit{{$rencana_penilaian->id}}">
                             <div class="modal-dialog modal-lg">
@@ -185,7 +140,6 @@
                           </div>
                         <!-- End Modal edit -->
                         @endforeach
-
                       @endforeach
                     @endif
                   </tbody>

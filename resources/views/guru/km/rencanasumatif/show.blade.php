@@ -13,7 +13,7 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item "><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item "><a href="{{ route('guru.rencanasumatif.index') }}">Rencana Nilai Pengetahuan</a></li>
+            <li class="breadcrumb-item "><a href="{{ route('guru.rencanasumatif.index') }}">Rencana Nilai Sumatif</a></li>
             <li class="breadcrumb-item active">{{$title}}</li>
           </ol>
         </div><!-- /.col -->
@@ -55,36 +55,37 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <?php $no = 0; ?>
+                    
                     @if(empty(count($data_rencana_penilaian)))
                         <tr>
                             <td class="text-center" colspan="5">Data tidak tersedia</td>
                         </tr>
                     @else
+                      <?php $no = 0; ?>
                       @foreach($data_rencana_penilaian as $rencana_penilaian)
-                        <?php $no++; ?>
-                        <tr>
-                          <td class="text-center">{{$no}}</td>
-                          <td class="text-center">{{$rencana_penilaian->kode_penilaian}}</td>
-                          <td class="text-center">{{$rencana_penilaian->bobot_teknik_penilaian}}</td>
-                          <td class="text-center">
-                            @if($rencana_penilaian->teknik_penilaian == 1)
-                            Tes Tulis
-                            @elseif($rencana_penilaian->teknik_penilaian == 2)
-                            Tes Lisan
-                            @elseif($rencana_penilaian->teknik_penilaian == 3)
-                            Penugasan
-                            @endif
-                          </td>
-                          <td class="text-center">
-                            <button type="button" class="btn btn-sm btn-warning mt-1" data-toggle="modal" data-target="#modal-edit{{$rencana_penilaian->id}}">
-                              <i class="fas fa-pencil-alt"></i>
-                            </button>
-                          </td>
-                        </tr>
+                      <?php $no++; ?>
+                      <tr>
+                        <td class="text-center">{{$no}}</td>
+                        <td class="text-center">{{$rencana_penilaian->kode_penilaian}}</td>
+                        <td class="text-center">{{$rencana_penilaian->bobot_teknik_penilaian}}</td>
+                        <td class="text-center">
+                          @if($rencana_penilaian->teknik_penilaian == 1)
+                          Tes Tulis
+                          @elseif($rencana_penilaian->teknik_penilaian == 2)
+                          Tes Lisan
+                          @elseif($rencana_penilaian->teknik_penilaian == 3)
+                          Penugasan
+                          @endif
+                        </td>
+                        <td class="text-center">
+                          <button type="button" class="btn btn-sm btn-warning mt-1" data-toggle="modal" data-target="#modal-edit{{$rencana_penilaian->id}}">
+                            <i class="fas fa-pencil-alt"></i>
+                          </button>
+                        </td>
+                      </tr>
 
-                        @foreach($data_rencana_penilaian_tambah as $penilaian)
-                          <!-- Modal edit  -->
+                      @foreach($data_rencana_penilaian_tambah as $penilaian)
+                        <!-- Modal edit  -->
                           <div class="modal fade" id="modal-edit{{$rencana_penilaian->id}}">
                             <div class="modal-dialog modal-lg">
                               <div class="modal-content">
@@ -131,8 +132,8 @@
                               </div>
                             </div>
                           </div>
-                          <!-- End Modal edit -->
-                        @endforeach
+                        <!-- End Modal edit -->
+                      @endforeach
 
                       @endforeach
                     @endif

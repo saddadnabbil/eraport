@@ -70,7 +70,6 @@
                           </form>
                         @else
                           <a href="{{ route('guru.rencanasumatif.show', $penilaian->id) }}" class="btn btn-sm btn-success"><i class="fas fa-eye"></i></a>
-
                         @endif
                       </td>
                     </tr>

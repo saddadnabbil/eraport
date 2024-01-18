@@ -1,9 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Guru\KM;
+namespace App\Http\Controllers\Admin\KM;
 
-use App\Guru;
-use App\Term;
 use App\Kelas;
 use App\Mapel;
 use App\Tapel;
@@ -18,7 +16,7 @@ use Illuminate\Http\Request;
 use App\RencanaNilaiFormatif;
 use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
+use App\Term;
 use Illuminate\Support\Facades\Validator;
 
 class PenilaianKurikulumMerdekaController extends Controller
@@ -32,22 +30,21 @@ class PenilaianKurikulumMerdekaController extends Controller
     {
         $title = 'Penilaian Raport';
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
-        $guru = Guru::where('user_id', Auth::user()->id)->first();
 
         $data_mapel = Mapel::where('tapel_id', $tapel->id)->orderBy('nama_mapel', 'ASC')->get();
 
         $data_kelas = Kelas::where('tapel_id', $tapel->id)->groupBy('tingkatan_id')->orderBy('tingkatan_id', 'ASC')->get();
         $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
 
-        $data_pembelajaran = Pembelajaran::where('guru_id', $guru->id)->whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
+        $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
 
         if (count($data_mapel) == 0) {
-            return redirect('guru/mapel')->with('toast_warning', 'Mohon isikan data mata pelajaran');
+            return redirect('admin/mapel')->with('toast_warning', 'Mohon isikan data mata pelajaran');
         } elseif (count($data_kelas) == 0) {
-            return redirect('guru/kelas')->with('toast_warning', 'Mohon isikan data kelas');
+            return redirect('admin/kelas')->with('toast_warning', 'Mohon isikan data kelas');
         }
 
-        return view('guru.km.penilaian.pilihkelas', compact('title', 'data_mapel', 'data_kelas', 'data_pembelajaran'));
+        return view('admin.km.penilaian.pilihkelas', compact('title', 'data_mapel', 'data_kelas', 'data_pembelajaran'));
     }
 
     /**
@@ -70,10 +67,9 @@ class PenilaianKurikulumMerdekaController extends Controller
 
             $tapel = Tapel::findorfail(session()->get('tapel_id'));
             $term = Term::findorfail($pembelajaran->kelas->tingkatan->term_id);
-            $guru = Guru::where('user_id', Auth::user()->id)->first();
 
             $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
-            $data_pembelajaran = Pembelajaran::where('guru_id', $guru->id)->whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
+            $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
 
             $data_rencana_penilaian_sumatif = RencanaNilaiSumatif::with('nilai_sumatif')->where('term_id', $term->term)->where('pembelajaran_id', $request->pembelajaran_id)->get();
             $count_cp_sumatif = count($data_rencana_penilaian_sumatif);
@@ -83,9 +79,9 @@ class PenilaianKurikulumMerdekaController extends Controller
             $count_cp_formatif = count($data_rencana_penilaian_formatif);
 
             if ($count_cp_sumatif == null) {
-                return redirect(route('guru.rencanasumatif.index'))->with('toast_error', 'Belum ada rencana penilaian sumatif ' .  $pembelajaran->mapel->nama_mapel . ' ' . $pembelajaran->kelas->nama_kelas . ', silahkan tambah rencana nilai sumatif ' . $pembelajaran->mapel->nama_mapel . ' ' .  $pembelajaran->kelas->nama_kelas . ' terlebih dahulu!');
+                return redirect(route('rencanasumatif.index'))->with('toast_error', 'Belum ada rencana penilaian sumatif ' .  $pembelajaran->mapel->nama_mapel . ' ' . $pembelajaran->kelas->nama_kelas . ', silahkan tambah rencana nilai sumatif ' . $pembelajaran->mapel->nama_mapel . ' ' .  $pembelajaran->kelas->nama_kelas . ' terlebih dahulu!');
             } elseif ($count_cp_formatif == null) {
-                return redirect(route('guru.rencanaformatif.index'))->with('toast_error', 'Belum ada rencana penilaian formatif ' .  $pembelajaran->mapel->nama_mapel . ' ' . $pembelajaran->kelas->nama_kelas . ', silahkan tambah rencana nilai formatif ' . $pembelajaran->mapel->nama_mapel . ' ' .  $pembelajaran->kelas->nama_kelas . ' terlebih dahulu!');
+                return redirect(route('rencanaformatif.index'))->with('toast_error', 'Belum ada rencana penilaian formatif ' .  $pembelajaran->mapel->nama_mapel . ' ' . $pembelajaran->kelas->nama_kelas . ', silahkan tambah rencana nilai formatif ' . $pembelajaran->mapel->nama_mapel . ' ' .  $pembelajaran->kelas->nama_kelas . ' terlebih dahulu!');
             }
 
             $rencana_penilaian_data_sumatif = [];
@@ -160,7 +156,7 @@ class PenilaianKurikulumMerdekaController extends Controller
                 $anggota_kelas->nilaiAkhirRevisi = $nilaiAkhirRevisi;
             }
 
-            return view('guru.km.penilaian.index', compact('title', 'pembelajaran_id', 'data_pembelajaran', 'data_anggota_kelas', 'data_rencana_penilaian_sumatif', 'count_cp_sumatif', 'data_rencana_penilaian_formatif', 'count_cp_formatif', 'rencana_penilaian_data_formatif', 'rencana_penilaian_data_sumatif', 'nilaiAkhirFormatif', 'nilaiAkhirSumatif', 'nilaiAkhirRaport', 'nilaiAkhirRevisi', 'term'));
+            return view('admin.km.penilaian.index', compact('title', 'pembelajaran_id', 'data_pembelajaran', 'data_anggota_kelas', 'data_rencana_penilaian_sumatif', 'count_cp_sumatif', 'data_rencana_penilaian_formatif', 'count_cp_formatif', 'rencana_penilaian_data_formatif', 'rencana_penilaian_data_sumatif', 'nilaiAkhirFormatif', 'nilaiAkhirSumatif', 'nilaiAkhirRaport', 'nilaiAkhirRevisi', 'term'));
         }
     }
 

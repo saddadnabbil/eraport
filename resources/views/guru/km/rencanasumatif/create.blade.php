@@ -13,7 +13,7 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item "><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item "><a href="{{ route('guru.rencanasumatif.index') }}">Rencana Nilai Pengetahuan</a></li>
+            <li class="breadcrumb-item "><a href="{{ route('guru.rencanasumatif.index') }}">Rencana Nilai Keterampilan</a></li>
             <li class="breadcrumb-item active">{{$title}}</li>
           </ol>
         </div><!-- /.col -->
@@ -70,11 +70,11 @@
                       <tr class="bg-primary">
                         <td>Kelompok/Teknik Penilaian</td>
                         @for ($i = 1; $i <= $jumlah_penilaian; $i++) <td>
-                          <select class="form-control" name="teknik_penilaian[]" style="width: 100%;" required oninvalid="this.setCustomValidity('silakan pilih item dalam daftar')" oninput="setCustomValidity('')">
+                          <select class="form-control" name="teknik_penilaian[]" style="width: 100%;" required oninvalid="this.setCustomValidity('silakan pilih item dalam daftar')" oninput="setCustomValidity('')" >
                             <option value="">-- Teknik Penilaian --</option>
-                            <option value="1" @if ($i == 1) selected @endif>Tes Tulis</option>
-                            <option value="2" @if ($i == 2) selected @endif>Tes Lisan</option>
-                            <option value="3" @if ($i == 3) selected @endif>Penugasan</option>
+                            <option value="1">Tes Tulis</option>
+                            <option value="2">Tes Lisan</option>
+                            <option value="3">Penugasan</option>
                           </select>
                           </td>
                           @endfor
@@ -97,12 +97,12 @@
                   </table>
                 </div>
 
-              </div>
+            </div>
 
-              <div class="card-footer clearfix">
-                <button type="submit" class="btn btn-primary float-right">Simpan</button>
-                <a href="{{ route('guru.rencanasumatif.index') }}" class="btn btn-default float-right mr-2">Batal</a>
-              </div>
+            <div class="card-footer clearfix">
+              <button type="submit" class="btn btn-primary float-right">Simpan</button>
+              <a href="{{ route('guru.rencanasumatif.index') }}" class="btn btn-default float-right mr-2">Batal</a>
+            </div>
             </form>
           </div>
           <!-- /.card -->

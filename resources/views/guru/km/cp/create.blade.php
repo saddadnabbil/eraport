@@ -13,7 +13,7 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item "><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item "><a href="{{ route('kd.index') }}">Data Capaian Pembelajaran</a></li>
+            <li class="breadcrumb-item "><a href="{{ route('guru.cp.index') }}">Data Capaian Pembelajaran</a></li>
             <li class="breadcrumb-item active">{{$title}}</li>
           </ol>
         </div><!-- /.col -->
@@ -35,7 +35,7 @@
 
             <div class="card-body">
               <div class="callout callout-info">
-                <form action="{{ route('guru.cp.create') }}" method="GET">
+                <form action="{{ route('cp.create') }}" method="GET">
                   @csrf
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Kelas</label>
@@ -51,7 +51,7 @@
                 </form>
               </div>
 
-              <form id="dynamic_form" action="{{ route('guru.cp.store') }}" method="POST">
+              <form id="dynamic_form" action="{{ route('cp.store') }}" method="POST">
                 @csrf
                 <input type="hidden" name="mapel_id" value="{{$mapel_id}}">
                 <input type="hidden" name="tingkatan_id" value="{{$tingkatan_id}}">
@@ -73,7 +73,6 @@
                       @foreach($existingData as $data)
                         <tr>
                           <td {!! $data->canDelete ? '' : 'data-toggle="popover" data-placement="right" title data-content="<b>Tidak Bisa Diedit.</b> <br> Sedang digunakan dalam salah satu penilaian"' !!}>
-                              <!-- Isi dari td di sini -->
                             <input type="text" class="form-control" name="kode_cp[]" value="{{ $data->kode_cp }}" required oninvalid="this.setCustomValidity('data tidak boleh kosong')" oninput="setCustomValidity('')" {{ $data->canDelete ? '' : 'disabled' }}>
                           </td>
 
@@ -202,7 +201,7 @@ function deleteData(id) {
       }).then((result) => {
     if (result.isConfirmed) {
         $.ajax({
-            url: "{{ route('guru.cp.destroy', ':id') }}".replace(':id', id),
+            url: "{{ route('admin.cp.destroy', ':id') }}".replace(':id', id),
             type: 'DELETE',
             data: {
                 _token: '{{ csrf_token() }}'

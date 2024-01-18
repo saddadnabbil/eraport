@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Guru\KM;
+namespace App\Http\Controllers\Admin\KM;
 
 use App\Guru;
 use App\Term;
@@ -9,6 +9,7 @@ use App\Tapel;
 use App\Semester;
 use App\Pembelajaran;
 use App\KmNilaiAkhirRaport;
+use App\K13NilaiAkhirRaport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -28,11 +29,11 @@ class LihatNilaiTerkirimController extends Controller
 
         $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
 
-        $guru = Guru::where('user_id', Auth::user()->id)->first();
+        // $guru = Guru::where('user_id', Auth::user()->id)->first();
         $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
-        $data_pembelajaran = Pembelajaran::where('guru_id', $guru->id)->whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
+        $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
 
-        return view('guru.km.nilaiterkirimkm.index', compact('title', 'data_pembelajaran', 'data_kelas'));
+        return view('admin.km.nilaiterkirimkm.index', compact('title', 'data_pembelajaran', 'data_kelas'));
     }
 
     /**
@@ -52,9 +53,9 @@ class LihatNilaiTerkirimController extends Controller
             $title = 'Lihat Nilai Akhir Terkirim';
             $tapel = Tapel::findorfail(session()->get('tapel_id'));
 
-            $guru = Guru::where('user_id', Auth::user()->id)->first();
+            // $guru = Guru::where('user_id', Auth::user()->id)->first();
             $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
-            $data_pembelajaran = Pembelajaran::where('guru_id', $guru->id)->whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
+            $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
 
             $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
             $term = Term::findorfail($pembelajaran->kelas->tingkatan->term_id);
@@ -62,10 +63,10 @@ class LihatNilaiTerkirimController extends Controller
             $data_nilai_terkirim = KmNilaiAkhirRaport::where('pembelajaran_id', $request->pembelajaran_id)->where('term_id', $term->id)->get();
 
             if (count($data_nilai_terkirim) == 0) {
-                return redirect(route('guru.penilaiankm.index'))->with('toast_error', 'Belum ada data penilaian untuk ' . $pembelajaran->mapel->nama_mapel . ' ' . $pembelajaran->kelas->nama_kelas . '. Silahkan input penilaian!');
+                return redirect(route('penilaiankm.index'))->with('toast_error', 'Belum ada data penilaian untuk ' . $pembelajaran->mapel->nama_mapel . ' ' . $pembelajaran->kelas->nama_kelas . '. Silahkan input penilaian!');
             }
 
-            return view('guru.km.nilaiterkirimkm.create', compact('title', 'data_pembelajaran', 'pembelajaran', 'data_nilai_terkirim', 'term'));
+            return view('admin.km.nilaiterkirimkm.create', compact('title', 'data_pembelajaran', 'pembelajaran', 'data_nilai_terkirim', 'term'));
         }
     }
 }

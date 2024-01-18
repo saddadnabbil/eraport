@@ -70,13 +70,13 @@
                       <tr class="bg-primary">
                         <td>Kelompok/Teknik Penilaian</td>
                         @for ($i = 1; $i <= $jumlah_penilaian; $i++) <td>
-                          <select class="form-control" name="teknik_penilaian[]" style="width: 100%;" required oninvalid="this.setCustomValidity('silakan pilih item dalam daftar')" oninput="setCustomValidity('')">
+                          <select class="form-control" name="teknik_penilaian[]" style="width: 100%;" required oninvalid="this.setCustomValidity('silakan pilih item dalam daftar')" oninput="setCustomValidity('')" >
                             <option value="">-- Teknik Penilaian --</option>
-                            <option value="1"  @if ($i == 1) selected @endif>Praktik</option>
-                            <option value="2"  @if ($i == 2) selected @endif>Projek</option>
-                            <option value="3"  @if ($i == 3) selected @endif>Produk</option>
-                            <option value="4"  @if ($i == 4) selected @endif>Teknik 1</option>
-                            <option value="5"  @if ($i == 5) selected @endif>Teknik 2</option>
+                            <option value="1" @if ($i == 1) selected @endif>Praktik</option>
+                            <option value="2" @if ($i == 2) selected @endif>Projek</option>
+                            <option value="3" @if ($i == 3) selected @endif>Produk</option>
+                            <option value="4" @if ($i == 4) selected @endif>Teknik 1</option>
+                            <option value="5" @if ($i == 5) selected @endif>Teknik 2</option>
                           </select>
                           </td>
                           @endfor
@@ -102,7 +102,7 @@
 
             <div class="card-footer clearfix">
               <button type="submit" class="btn btn-primary float-right">Simpan</button>
-              <a href="{{ route('rencanaformatif.index') }}" class="btn btn-default float-right mr-2">Batal</a>
+              <a href="{{ route('guru.rencanaformatif.index') }}" class="btn btn-default float-right mr-2">Batal</a>
             </div>
             </form>
           </div>

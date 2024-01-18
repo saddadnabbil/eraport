@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Guru\KM;
+namespace App\Http\Controllers\Admin\KM;
 
 use App\Guru;
 use App\Term;
@@ -36,14 +36,13 @@ class ProsesDeskripsiSiswaController extends Controller
      */
     public function index()
     {
-        $title = 'Deskripsi Nilai Siswa';
+        $title = 'Input Deskripsi Nilai Siswa';
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
-        $guru = Guru::where('user_id', Auth::user()->id)->first();
 
         $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
-        $data_pembelajaran = Pembelajaran::where('guru_id', $guru->id)->whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
+        $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
 
-        return view('guru.km.prosesdeskripsi.index', compact('title', 'data_pembelajaran'));
+        return view('admin.km.prosesdeskripsi.index', compact('title', 'data_pembelajaran'));
     }
 
     /**
@@ -64,9 +63,9 @@ class ProsesDeskripsiSiswaController extends Controller
             $title = 'Input Deskripsi Nilai Siswa';
             $tapel = Tapel::findorfail(session()->get('tapel_id'));
 
-            $guru = Guru::where('user_id', Auth::user()->id)->first();
+            // $guru = Guru::where('user_id', Auth::user()->id)->first();
             $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
-            $data_pembelajaran = Pembelajaran::where('guru_id', $guru->id)->whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
+            $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
 
             $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
             $term = Term::findorfail($pembelajaran->kelas->tingkatan->term_id);
@@ -74,7 +73,7 @@ class ProsesDeskripsiSiswaController extends Controller
             $data_nilai_siswa = KmNilaiAkhirRaport::where('pembelajaran_id', $pembelajaran->id)->where('term_id', $term->id)->get();
 
             if ($data_nilai_siswa->count() == 0) {
-                return redirect(route('guru.penilaiankm.index'))->with('toast_error', 'Belum ada data penilaian untuk ' . $pembelajaran->mapel->nama_mapel . ' ' . $pembelajaran->kelas->nama_kelas . '. Silahkan input penilaian!');
+                return redirect(route('prosesdeskripsikmadmin.index'))->with('toast_error', 'Belum ada data penilaian untuk ' . $pembelajaran->mapel->nama_mapel . ' ' . $pembelajaran->kelas->nama_kelas . '. Silahkan input penilaian!');
             } else {
                 foreach ($data_nilai_siswa as $nilai_siswa) {
                     // $rencana_nilai_sumatif_id = RencanaNilaiSumatif::where('pembelajaran_id', $pembelajaran->id)->get('id');
@@ -100,7 +99,7 @@ class ProsesDeskripsiSiswaController extends Controller
                     // }
                 }
             }
-            return view('guru.km.prosesdeskripsi.create', compact('title', 'data_pembelajaran', 'pembelajaran', 'data_nilai_siswa', 'term'));
+            return view('admin.km.prosesdeskripsi.create', compact('title', 'data_pembelajaran', 'pembelajaran', 'data_nilai_siswa', 'term'));
         }
     }
 
@@ -133,7 +132,7 @@ class ProsesDeskripsiSiswaController extends Controller
                     $cek_data->update($data_deskripsi);
                 }
             }
-            return redirect(route('prosesdeskripsikm.index'))->with('toast_success', 'Deskripsi nilai siswa berhasil disimpan');
+            return redirect(route('prosesdeskripsikmadmin.index'))->with('toast_success', 'Deskripsi nilai siswa berhasil disimpan');
         }
     }
 }

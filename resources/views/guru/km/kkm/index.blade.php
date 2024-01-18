@@ -97,7 +97,7 @@
                           <select class="form-control select2" name="mapel_id" style="width: 100%;" required>
                             <option value="">-- Pilih Mata Pelajaran -- </option>
                             @foreach($data_mapel as $mapel)
-                            <option value="{{$mapel->id}}"> {{$mapel->nama_mapel}}</option>
+                                <option value="{{$mapel->id}}"> {{$mapel->nama_mapel}}</option>
                             @endforeach
                           </select> </div>
                       </div>
@@ -142,6 +142,7 @@
                   <tbody>
                     <?php $no = 0; ?>
                     @foreach($data_kkm as $kkm)
+                    @foreach($kkm as $kkm)
                     <?php $no++; ?>
                     <tr>
                       <td>{{$no}}</td>
@@ -212,6 +213,7 @@
                     </div>
                     <!-- End Modal edit -->
 
+                    @endforeach
                     @endforeach
                   </tbody>
                 </table>

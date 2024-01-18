@@ -16,6 +16,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Validator;
 
 class RencanaNilaiFormatifController extends Controller
 {
@@ -28,13 +29,13 @@ class RencanaNilaiFormatifController extends Controller
     {
         $title = 'Rencana Nilai Formatif';
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
-        $term = Term::findorfail(session()->get('term_id'));
-
         $guru = Guru::where('user_id', Auth::user()->id)->first();
+
         $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
 
         $data_rencana_penilaian = Pembelajaran::where('guru_id', $guru->id)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
         foreach ($data_rencana_penilaian as $penilaian) {
+            $term = Term::findorfail($penilaian->kelas->tingkatan->term_id);
             $rencana_penilaian = RencanaNilaiFormatif::where('term_id', $term->id)->where('pembelajaran_id', $penilaian->id)->get();
             $penilaian->jumlah_rencana_penilaian = count($rencana_penilaian);
         }
@@ -51,9 +52,9 @@ class RencanaNilaiFormatifController extends Controller
     public function show($id)
     {
         $title = 'Data Rencana Nilai Formatif';
-        $term = Term::findorfail(session()->get('term_id'));
         $pembelajaran = Pembelajaran::findorfail($id);
-        $data_rencana_penilaian = RencanaNilaiFormatif::where('pembelajaran_id', $id)->orderBy('kode_penilaian', 'ASC')->get();
+        $term = Term::findorfail($pembelajaran->kelas->tingkatan->term_id);
+        $data_rencana_penilaian = RencanaNilaiFormatif::where('term_id', $term->id)->where('pembelajaran_id', $id)->orderBy('kode_penilaian', 'ASC')->get();
         $data_rencana_penilaian_tambah = Pembelajaran::where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
 
         foreach ($data_rencana_penilaian_tambah as $penilaian) {
@@ -73,9 +74,10 @@ class RencanaNilaiFormatifController extends Controller
         $title = 'Tambah Rencana Nilai Formatif';
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
         $semester = Semester::findorfail(session()->get('semester_id'));
-        $term = Term::findorfail(session()->get('term_id'));
 
         $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
+        $term = Term::findorfail($pembelajaran->kelas->tingkatan->term_id);
+
         $kelas = Kelas::findorfail($pembelajaran->kelas_id);
         $data_cp = CapaianPembelajaran::where([
             'semester' => $semester->semester,
@@ -83,6 +85,10 @@ class RencanaNilaiFormatifController extends Controller
         ])->orderBy('kode_cp', 'ASC')->get();
 
         $data_rencana_penilaian = RencanaNilaiFormatif::where('pembelajaran_id', $pembelajaran->id)->where('term_id', $term->id)->get();
+
+        if (count($data_rencana_penilaian) >= 3) {
+            return redirect(route('rencanaformatif.index'))->with('toast_error', 'Data sudah tersedia');
+        }
 
         $jumlah_penilaian = $request->jumlah_penilaian;
         return view('guru.km.rencanaformatif.create', compact('title', 'pembelajaran', 'jumlah_penilaian', 'data_cp', 'data_rencana_penilaian', 'term'));
@@ -94,7 +100,6 @@ class RencanaNilaiFormatifController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-
     public function store(Request $request)
     {
         $data_penilaian_permapel = [];
@@ -123,40 +128,16 @@ class RencanaNilaiFormatifController extends Controller
             $data_penilaian_permapel[] = $data_penilaian;
         }
 
-        return redirect(route('guru.rencanaformatif.index'))->with('toast_success', 'Rencana nilai Formatif berhasil disimpan.');
+        return redirect(route('rencanaformatif.index'))->with('toast_success', 'Rencana nilai Formatif berhasil disimpan.');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\RencanaNilaiFormatif  $rencanaNilaiFormatif
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, $id)
-    {
-        $title = 'Edit Rencana Nilai Formatif';
-        $tapel = Tapel::findorfail(session()->get('tapel_id'));
-        $guru = Guru::where('user_id', Auth::user()->id)->first();
 
-        $pembelajaran = Pembelajaran::where('guru_id', $guru->id)->findorfail($request->pembelajaran_id);
-        $kelas = Kelas::findorfail($pembelajaran->kelas_id);
-        $data_cp = CapaianPembelajaran::where([
-            'mapel_id' => $pembelajaran->mapel_id,
-            'tingkatan_id' => $kelas->tingkatan_id,
-            'semester' => $tapel->semester->semester,
-        ])->orderBy('kode_cp', 'ASC')->get();
-        $jumlah_penilaian = $request->jumlah_penilaian;
-
-        return view('guru.km.rencanaformatif.edit', compact('title', 'pembelajaran', 'jumlah_penilaian', 'data_cp'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         // Validasi input
@@ -183,32 +164,6 @@ class RencanaNilaiFormatifController extends Controller
             return back()->with('toast_success', 'Data berhasil diperbarui.');
         } catch (\Throwable $th) {
             return back()->with('toast_error', 'Terjadi kesalahan saat memperbarui data.');
-        }
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        DB::beginTransaction();
-
-        try {
-            NilaiFormatif::where('rencana_nilai_formatif_id', $id)->delete();
-
-            $rencanaPenilaian = RencanaNilaiFormatif::find($id);
-            $rencanaPenilaian->delete();
-
-            DB::commit();
-
-            return redirect()->back()->with('success', 'Rencana Nilai Formatif deleted successfully.');
-        } catch (\Exception $e) {
-            DB::rollback();
-
-            return redirect()->back()->with('error', 'Failed to delete Rencana Nilai Formatif.');
         }
     }
 }

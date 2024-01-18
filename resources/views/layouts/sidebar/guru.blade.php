@@ -32,6 +32,14 @@
 
         {{-- Kurikulum Merdeka --}}
         <li class="nav-header">RAPORT KM</li>
+          <li class="nav-item">
+            <a href="{{ route('kkmguru.index') }}" class="nav-link {{ request()->routeIs('kkmguru.*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-greater-than-equal"></i>
+              <p>
+                Minimum Criteria
+              </p>
+            </a>
+          </li>
           <li class="nav-item has-treeview {{ request()->routeIs(['guru.cp.*', 'guru.rencanaformatif.*', 'guru.rencanasumatif.*']) ? 'menu-open' : '' }}">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-server"></i>
@@ -107,7 +115,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="{{ route('prosesdeskripsikmadmin.index') }}" class="nav-link {{ request()->routeIs('prosesdeskripsikmadmin.*') ? 'active' : '' }}">
+            <a href="{{ route('prosesdeskripsikm.index') }}" class="nav-link {{ request()->routeIs('prosesdeskripsikm.*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-file-alt"></i>
               <p>
                 Proses Deskripsi Siswa

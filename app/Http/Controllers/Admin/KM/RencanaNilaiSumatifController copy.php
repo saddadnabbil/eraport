@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Guru\KM;
+namespace App\Http\Controllers\Admin\KM;
 
-use App\Guru;
 use App\Term;
 use App\Kelas;
 use App\Tapel;
@@ -17,7 +16,6 @@ use App\RencanaNilaiFormatif;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 
 class RencanaNilaiSumatifController extends Controller
 {
@@ -30,18 +28,17 @@ class RencanaNilaiSumatifController extends Controller
     {
         $title = 'Rencana Nilai Sumatif';
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
-        $guru = Guru::where('user_id', Auth::user()->id)->first();
 
         $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
 
-        $data_rencana_penilaian = Pembelajaran::where('guru_id', $guru->id)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
+        $data_rencana_penilaian = Pembelajaran::where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
         foreach ($data_rencana_penilaian as $penilaian) {
             $term = Term::findorfail($penilaian->kelas->tingkatan->term_id);
             $rencana_penilaian = RencanaNilaiSumatif::where('term_id', $term->id)->where('pembelajaran_id', $penilaian->id)->get();
             $penilaian->jumlah_rencana_penilaian = count($rencana_penilaian);
         }
 
-        return view('guru.km.rencanasumatif.index', compact('title', 'data_rencana_penilaian'));
+        return view('admin.km.rencanasumatif.index', compact('title', 'data_rencana_penilaian'));
     }
 
     /**
@@ -65,7 +62,7 @@ class RencanaNilaiSumatifController extends Controller
             $penilaian->jumlah_rencana_penilaian = count($rencana_penilaian);
         }
 
-        return view('guru.km.rencanasumatif.show', compact('title', 'pembelajaran', 'data_rencana_penilaian', 'data_rencana_penilaian_tambah'));
+        return view('admin.km.rencanasumatif.show', compact('title', 'pembelajaran', 'data_rencana_penilaian', 'data_rencana_penilaian_tambah'));
     }
 
     /**
@@ -95,7 +92,7 @@ class RencanaNilaiSumatifController extends Controller
         }
 
         $jumlah_penilaian = $request->jumlah_penilaian;
-        return view('guru.km.rencanasumatif.create', compact('title', 'pembelajaran', 'jumlah_penilaian', 'data_cp', 'term'));
+        return view('admin.km.rencanasumatif.create', compact('title', 'pembelajaran', 'jumlah_penilaian', 'data_cp', 'term'));
     }
 
     /**
@@ -157,6 +154,33 @@ class RencanaNilaiSumatifController extends Controller
             return back()->with('toast_success', 'Data berhasil diperbarui.');
         } catch (\Throwable $th) {
             return back()->with('toast_error', 'Terjadi kesalahan saat memperbarui data.');
+        }
+    }
+
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\RencanaNilaiSumatif  $rencanaNilaiSumatif
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        DB::beginTransaction();
+
+        try {
+            NilaiSumatif::where('rencana_nilai_sumatif_id', $id)->delete();
+
+            $rencanaPenilaian = RencanaNilaiSumatif::find($id);
+            $rencanaPenilaian->delete();
+
+            DB::commit();
+
+            return redirect()->back()->with('success', 'Rencana Nilai Sumatif deleted successfully.');
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return redirect()->back()->with('error', 'Failed to delete Rencana Nilai Sumatif.');
         }
     }
 }

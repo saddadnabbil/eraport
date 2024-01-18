@@ -13,6 +13,7 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item "><a href="{{ route('dashboard') }}">Dashboard</a></li>
+            <li class="breadcrumb-item "><a href="{{ route('guru.penilaiankm.index') }}">Penilaian Raport</a></li>
             <li class="breadcrumb-item active">{{$title}}</li>
           </ol>
         </div><!-- /.col -->
@@ -52,7 +53,8 @@
 
               <form action="{{ route('guru.penilaiankm.store') }}" method="POST">
                 @csrf
-
+                <input type="hidden" name="pembelajaran_id" value="{{$pembelajaran_id}}">
+                <input type="hidden" name="term_id" value="{{$term->id}}">
                 <div class="table-responsive">
                   <table class="table table-bordered table-hover">
                     <thead class="bg-primary">
@@ -71,7 +73,7 @@
                         @foreach($rencana_penilaian_data_formatif as $rencana_penilaian_formatif)
                             <input type="hidden" name="rencana_nilai_formatif_id[]" value="{{$rencana_penilaian_formatif['id']}}">
                             <input type="hidden" name="bobot_rencana_nilai_formatif_id[]" value="{{$rencana_penilaian_formatif['bobot']}}">
-                            <th class="text-center" data-toggle="popover" data-placement="right" title data-content="<b>{{$rencana_penilaian_formatif['teknik_penilaian']}}<br> Bobot:{{$rencana_penilaian_formatif['bobot']}}</b><br></b> ">
+                            <th class="text-center" data-toggle="popover" data-placement="right" title data-content="<b>{{$rencana_penilaian_formatif['teknik_penilaian']}}<br> Bobot:{{$rencana_penilaian_formatif['bobot']}}</b><br></b>">
                               (F) {{$rencana_penilaian_formatif['kode_penilaian']}}
                             </th>
                         @endforeach
@@ -101,7 +103,7 @@
                               <td>{{$anggota_kelas->siswa->nama_lengkap}}</td>
                               <input type="hidden" name="anggota_kelas_id[]" value="{{$anggota_kelas->id}}">
 
-                              <?php $i = 0; ?> 
+                              <?php $i = 0; ?>
                               @foreach($data_rencana_penilaian_formatif as $rencana_penilaian_formatif)
                                   @if ($rencana_penilaian_formatif->nilai_formatif->isEmpty())
                                       <td>
@@ -116,23 +118,23 @@
                                           @endif
                                       @endforeach
                                   @endif
-                                  <?php $i++; ?> 
+                                  <?php $i++; ?>
                               @endforeach
                               <td class="red nilai-proses" name="nilaiAkhirFormatif">{{$nilaiAkhirFormatif}} </td>
                               <input type="hidden" name="nilaiAkhirFormatif" id="nilaiAkhirFormatif" >
 
-                              <?php $i = 0; ?>
+                              <?php $i = 0; ?> 
                               @foreach($data_rencana_penilaian_sumatif as $rencana_penilaian_sumatif)
                                   @if ($rencana_penilaian_sumatif->nilai_sumatif->isEmpty())
                                       <td>
                                           <input type="number" class="form-control nilai_sumatif_input" data-bobot="{{$rencana_penilaian_sumatif->bobot_teknik_penilaian}}" name="nilai_sumatif[{{$i}}][]" min="0" max="100" oninvalid="this.setCustomValidity('Nilai harus berisi antara 0 s/d 100')" oninput="setCustomValidity('')" style="text-align: center;" > 
                                       </td>
-                                  @else
+                                  @elseif($rencana_penilaian_sumatif->nilai_sumatif != null)
                                       @foreach($rencana_penilaian_sumatif->nilai_sumatif as $nilai_sumatif)
                                           @if ($nilai_sumatif->anggota_kelas_id == $anggota_kelas->id)
-                                          <td>
-                                              <input type="number" class="form-control nilai_sumatif_input" data-bobot="{{$rencana_penilaian_sumatif->bobot_teknik_penilaian}}" name="nilai_sumatif[{{$i}}][]" min="0" max="100" oninvalid="this.setCustomValidity('Nilai harus berisi antara 0 s/d 100')" oninput="setCustomValidity('')" style="text-align: center;" value="{{$nilai_sumatif->nilai}}"> 
-                                          </td>
+                                            <td>
+                                                <input type="number" class="form-control nilai_sumatif_input" data-bobot="{{$rencana_penilaian_sumatif->bobot_teknik_penilaian}}" name="nilai_sumatif[{{$i}}][]" min="0" max="100" oninvalid="this.setCustomValidity('Nilai harus berisi antara 0 s/d 100')" oninput="setCustomValidity('')" style="text-align: center;" value="{{$nilai_sumatif->nilai}}"> 
+                                            </td>
                                           @endif
                                       @endforeach
                                   @endif
@@ -188,6 +190,16 @@ $(function() {
 });
 
 $(document).ready(function() {
+    // Menghitung nilai akhir untuk setiap baris yang ada saat halaman dimuat
+    $('tbody tr').each(function() {
+        var row = $(this);
+        updateNilaiAkhirFormatif(row);
+        updateNilaiAkhirSumatif(row);
+        updateNilaiAkhirRaport(row);
+    });
+});
+
+$(document).ready(function() {
     $('tbody tr').each(function() {
         var row = $(this);
         updateNilaiAkhirFormatif(row);
@@ -196,7 +208,7 @@ $(document).ready(function() {
     });
 
     $('.nilai_formatif_input').on('input', function() {
-        var row = $(this).closest('tr'); 
+        var row = $(this).closest('tr');  // Ambil baris terdekat
         updateNilaiAkhirFormatif(row);
     });
 
@@ -224,10 +236,11 @@ $(document).ready(function() {
     }
 
     $('.nilai_sumatif_input').on('input', function() {
-        var row = $(this).closest('tr'); 
+        var row = $(this).closest('tr');  // Ambil baris terdekat
         updateNilaiAkhirSumatif(row);
     });
 
+    // Fungsi untuk menghitung nilai akhir sumatif berdasarkan bobot
     function updateNilaiAkhirSumatif(row) {
         var sum = 0;
         var totalBobot = 0;
@@ -250,7 +263,7 @@ $(document).ready(function() {
     }
 
     $('.nilai_sumatif_input, .nilai_formatif_input').on('input', function() {
-        var row = $(this).closest('tr'); 
+        var row = $(this).closest('tr');  // Ambil baris terdekat
         updateNilaiAkhirRaport(row);
     });
 
@@ -278,6 +291,7 @@ $(document).ready(function() {
         var bobotSumatif = 0.3;
         var bobotFormatif = 0.7;
 
+        // Pastikan semua variabel memiliki nilai yang valid sebelum melakukan operasi matematika
         if (sumSumatif !== null && countSumatif !== 0 && bobotSumatif !== null &&
             sumFormatif !== null && countFormatif !== 0 && bobotFormatif !== null) {
 
@@ -287,6 +301,7 @@ $(document).ready(function() {
             var nilaiAkhir = 0;
         }
 
+        // Menghilangkan angka desimal jika angka desimalnya adalah 0
         var nilaiAkhirFormatted = (nilaiAkhir % 1 === 0) ? nilaiAkhir.toFixed(0) : nilaiAkhir.toFixed(0);
 
         row.find('#nilaiAkhirRaportDisplay').text(nilaiAkhirFormatted);
@@ -294,13 +309,7 @@ $(document).ready(function() {
     }
 });
 
-$(document).ready(function() {
-    $('tbody tr').each(function() {
-        var row = $(this);
-        updateNilaiAkhirFormatif(row);
-        updateNilaiAkhirSumatif(row);
-        updateNilaiAkhirRaport(row);
-    });
-});
+
+
 
 </script>

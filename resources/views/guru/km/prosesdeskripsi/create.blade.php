@@ -13,6 +13,7 @@
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item "><a href="{{ route('dashboard') }}">Dashboard</a></li>
+            <li class="breadcrumb-item "><a href="{{ route('prosesdeskripsikm.index') }}">Deskripsi Nilai Siswa</a></li>
             <li class="breadcrumb-item active">{{$title}}</li>
           </ol>
         </div><!-- /.col -->
@@ -59,6 +60,7 @@
                 </div>
                 <form action="{{ route('prosesdeskripsikm.store') }}" method="POST">
                   @csrf
+                  <input type="hidden" name="term_id" value="{{$term->id}}">
                   <div class="card-body">
                     <div class="table-responsive">
                       <table class="table table-bordered table-striped">
@@ -66,12 +68,12 @@
                           <tr>
                             <th rowspan="2" class="text-center" style="width: 75px; vertical-align: middle">No</th>
                             <th rowspan="2" class="text-center" style="vertical-align: middle">Nama Siswa</th>
-                            <th colspan="2" class="text-center">Nilai Sumatif</th>
-                            <th colspan="2" class="text-center">Nilai Formatif</th>
+                            <th class="text-center">Nilai Sumatif</th>
+                            <th class="text-center">Nilai Formatif</th>
+                            <th class="text-center align-middle">Capaian Pembelajaran</th>
                           </tr>
                           <tr>
                             <th class="text-center" style="width: 50px;">Nilai</th>
-                            <th class="text-center">Deskripsi</th>
                             <th class="text-center" style="width: 50px;">Nilai</th>
                             <th class="text-center">Deskripsi</th>
                           </tr>
@@ -81,32 +83,21 @@
 
                           <?php $no = 0; ?>
                           @forelse($data_nilai_siswa->sortBy('anggota_kelas.siswa.nama_lengkap') as $nilai_siswa)
-                          <?php $no++; ?>
-                          <input type="hidden" name="nilai_akhir_raport_id[]" value="{{$nilai_siswa->id}}">
-                          <tr>
-                            <td class="text-center">{{$no}}</td>
-                            <td>{{$nilai_siswa->anggota_kelas->siswa->nama_lengkap}}</td>
+                            <?php $no++; ?>
+                            <input type="hidden" name="nilai_akhir_raport_id[]" value="{{$nilai_siswa->id}}">
+                            <tr>
+                              <td class="text-center">{{$no}}</td>
+                              <td>{{$nilai_siswa->anggota_kelas->siswa->nama_lengkap}}</td>
 
-                            <td class="text-center">{{$nilai_siswa->nilai_formatif}}</td>
-                            <td>
-                              <textarea class="form-control" name="deskripsi_sumatif[]" rows="4" minlength="30" maxlength="200" required oninvalid="this.setCustomValidity('Deskripsi sumatif harus berisi antara 30 s/d 200 karekter')" oninput="setCustomValidity('')">{{ $nilai_siswa->deskripsi_nilai_siswa->deskripsi_sumatif ?? 
-                                ($nilai_siswa->predikat_sumatif == 'D' ? 'Memiliki penguasaan sumatif kurang baik, terutama ' . $nilai_siswa->deskripsi_sumatif : 
-                                 ($nilai_siswa->predikat_sumatif == 'C' ? 'Memiliki penguasaan sumatif cukup baik, terutama ' . $nilai_siswa->deskripsi_sumatif : 
-                                  ($nilai_siswa->predikat_sumatif == 'B' ? 'Memiliki penguasaan sumatif baik, terutama dalam ' . $nilai_siswa->deskripsi_sumatif : 
-                                   'Memiliki penguasaan sumatif sangat baik, terutama dalam ' . $nilai_siswa->deskripsi_sumatif))) }}</textarea>
-                            </td>
+                              <td class="text-center">{{$nilai_siswa->nilai_formatif}}</td>
 
-                            <td class="text-center">{{$nilai_siswa->nilai_formatif}}</td>
-                            <td>
-                              <textarea class="form-control" name="deskripsi_formatif[]" rows="4" minlength="30" maxlength="200" required oninvalid="this.setCustomValidity('Deskripsi formatif harus berisi antara 30 s/d 200 karekter')" oninput="setCustomValidity('')">{{ $nilai_siswa->deskripsi_nilai_siswa->deskripsi_formatif ?? 
-                                ($nilai_siswa->predikat_formatif == 'D' ? 'Memiliki penguasaan formatif kurang baik, terutama ' . $nilai_siswa->deskripsi_formatif : 
-                                 ($nilai_siswa->predikat_formatif == 'C' ? 'Memiliki penguasaan formatif cukup baik, terutama ' . $nilai_siswa->deskripsi_formatif : 
-                                  ($nilai_siswa->predikat_formatif == 'B' ? 'Memiliki penguasaan formatif baik, terutama dalam ' . $nilai_siswa->deskripsi_formatif : 
-                                   'Memiliki penguasaan formatif sangat baik, terutama dalam ' . $nilai_siswa->deskripsi_formatif))) }}
-                              </textarea>
-                            </td>
 
-                          </tr>
+                              <td class="text-center">{{$nilai_siswa->nilai_sumatif}}</td>
+                              <td>
+                              <textarea class="form-control" name="deskripsi_raport[]" rows="4" minlength="30" maxlength="200" required oninvalid="this.setCustomValidity('Deskripsi harus berisi antara 30 s/d 200 karekter')" oninput="setCustomValidity('')">{{ !is_null($nilai_siswa->deskripsi_nilai_siswa) ?$nilai_siswa->deskripsi_nilai_siswa->deskripsi_raport ?? '' : '' }}</textarea>
+                              </td>
+
+                            </tr>
                           @empty
                             <tr>
                                 <td colspan="6" class="text-center">Data tidak tersedia</td>
