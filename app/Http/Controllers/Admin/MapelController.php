@@ -47,6 +47,7 @@ class MapelController extends Controller
             $mapel = new Mapel([
                 'tapel_id' => $request->tapel_id,
                 'nama_mapel' => $request->nama_mapel,
+                'nama_mapel_indonesian' => $request->nama_mapel_indonesian,
                 'ringkasan_mapel' => $request->ringkasan_mapel,
             ]);
             $mapel->save();
@@ -73,7 +74,7 @@ class MapelController extends Controller
         } else {
             $mapel = Mapel::findorfail($id);
             $data_mapel = [
-                'nama_mapel_indonesian' => 'required|min:3|max:255',
+                'nama_mapel_indonesian' => $request->nama_mapel_indonesian,
                 'ringkasan_mapel' => $request->ringkasan_mapel,
             ];
             $mapel->update($data_mapel);
