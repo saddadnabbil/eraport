@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Guru;
 use App\Term;
-use App\KmDeskripsiNilaiSiswa;
 use App\Kelas;
 use App\Siswa;
 use App\Tapel;
