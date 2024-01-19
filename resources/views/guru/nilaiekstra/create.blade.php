@@ -112,7 +112,7 @@
                               </select>
                             </td>
                             <td>
-                              <textarea class="form-control" name="deskripsi[]" rows="2" minlength="30" maxlength="200" required oninvalid="this.setCustomValidity('Deskripsi harus berisi antara 20 s/d 100 karekter')" oninput="setCustomValidity('')">{{$anggota_ekstrakulikuler->deskripsi}}</textarea>
+                              <textarea class="form-control" id="deskripsiNilai" name="deskripsi[]" rows="2" minlength="30" maxlength="200" required oninvalid="this.setCustomValidity('Deskripsi harus berisi antara 20 s/d 100 karakter')" oninput="setCustomValidity('')" readonly>{{$anggota_ekstrakulikuler->deskripsi}}</textarea>
                             </td>
                           </tr>
                           @endforeach
@@ -172,4 +172,22 @@
       }
     });
   });
+
+  $(document).ready(function() {
+        $('select[name="nilai[]"]').on('change', function() {
+            var selectedValue = $(this).val();
+            var deskripsi = $('#deskripsiNilai');
+            if (selectedValue === 'A') {
+                deskripsi.val('Very Good');
+            } else if (selectedValue === 'B') {
+                deskripsi.val('Good');
+            } else if (selectedValue === 'C') {
+                deskripsi.val('Fair');
+            } else if (selectedValue === 'D') {
+                deskripsi.val('Poor');
+            } else {
+                deskripsi.val('');
+            }
+        }).trigger('change');
+    });
 </script>
