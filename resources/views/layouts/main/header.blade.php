@@ -41,8 +41,8 @@
           <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
         </li>
 
-        <div class="d-flex justify-content-center align-items-center">
-          <a href="{{Auth::user()->role == 1 ? route('tapel.index') : '#'}}" class="btn btn-primary btn-sm" style="line-height: 1">
+        <div class="d-none d-lg-flex align-items-center mr-4">
+          <a href="{{Auth::user()->role == 1 ? route('tapel.index') : '#'}}" class="btn btn-primary btn-sm text-left" style="line-height: 1">
             @php
               $tapel = App\Tapel::where('status', 1)->first();
               // dd($tapel);
@@ -55,7 +55,7 @@
               $shs = App\Tingkatan::where('id', 5)->first();
             @endphp 
              
-             School Year {{ str_replace('-', ' / ', $tapel->tahun_pelajaran) }} - (Semester Playgroup {{$pg->semester_id . '-' . $pg->term_id}}) - (Semester Primary {{$ps->semester_id . '-' . $ps->term_id}}) - (Semester Junior High {{$jhs->semester_id . '-' . $jhs->term_id}}) - (Semester Senior High {{$shs->semester_id . '-' . $shs->term_id}}) - Term {{$term->id }}
+             School Year {{ str_replace('-', ' / ', $tapel->tahun_pelajaran) }} - (Semester PG {{$pg->semester_id . '-' . $pg->term_id}}) - (Semester PS {{$ps->semester_id . '-' . $ps->term_id}}) - (Semester JHS {{$jhs->semester_id . '-' . $jhs->term_id}}) - (Semester SHS {{$shs->semester_id . '-' . $shs->term_id}}) - Term {{$term->id }}
           </a>
         </div>
         <!-- End of Flex container -->
