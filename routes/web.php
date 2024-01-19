@@ -464,9 +464,8 @@ Route::group(['middleware' => ['auth']], function () {
           'uses' => ['index']
         ]);
 
-        Route::get('leger/export', 'Walikelas\KM\LegerNilaiSiswaController@export')->name('leger.export');
         Route::resource('leger', 'Walikelas\KM\LegerNilaiSiswaController',  [
-          'uses' => ['index']
+          'uses' => ['index', 'show']
         ]);
 
         Route::resource('raportptskm', 'Walikelas\KM\CetakRaportPTSController',  [

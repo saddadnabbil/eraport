@@ -31,7 +31,7 @@
             <div class="card-header">
               <h3 class="card-title"><i class="fas fa-table"></i> {{$title}}</h3>
               <div class="card-tools">
-                <a href="{{ route('leger.export') }}" class="btn btn-tool btn-sm" onclick="return confirm('Download {{$title}} ?')">
+                <a href="{{ route('leger.show', $kelas->id) }}" class="btn btn-tool btn-sm" onclick="return confirm('Download {{$title}} ?')">
                   <i class="fas fa-download"></i>
                 </a>
               </div>
