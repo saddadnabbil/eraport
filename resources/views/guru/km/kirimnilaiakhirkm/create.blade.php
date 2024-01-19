@@ -88,10 +88,17 @@
                         <tr>
                           <td class="text-center">{{$kkm->kkm}}</td>
                           <td class="text-center">
-                            < {{$kkm->predikat_c}}</td> <td class="text-center">{{$kkm->predikat_c}}
-                              <= nilai < {{$kkm->predikat_b}}</td> <td class="text-center">{{$kkm->predikat_b}}
-                                <= nilai < {{$kkm->predikat_a}}</td> <td class="text-center">>= {{$kkm->predikat_a}}
-                          </td>
+                            < {{$kkm->predikat_d}}
+                        </td>
+                        <td class="text-center">
+                          {{$kkm->predikat_d}} <= nilai < {{$kkm->predikat_c}}
+                        </td>
+                        <td class="text-center">
+                          {{$kkm->predikat_c}} <= nilai < {{$kkm->predikat_b}}
+                        </td>
+                        <td class="text-center">
+                          {{$kkm->predikat_b}} <= nilai <= {{$kkm->predikat_a}}
+                        </td>
                         </tr>
                       </tbody>
                     </table>
@@ -147,57 +154,57 @@
                             <input type="hidden" name="nilai_pengetahuan[]" value="{{$anggota_kelas->nilai_pengetahuan}}">
 
                             <td class="text-center">
-                              @if($anggota_kelas->nilai_pengetahuan < $kkm->predikat_c )
-                                D
-                                <input type="hidden" name="predikat_pengetahuan[]" value="D">
-                                @elseif($anggota_kelas->nilai_pengetahuan >= $kkm->predikat_c && $anggota_kelas->nilai_pengetahuan < $kkm->predikat_b)
+                              @if($anggota_kelas->nilai_pengetahuan < $kkm->predikat_d )
+                              D
+                              <input type="hidden" name="predikat_pengetahuan[]" value="D">
+                              @elseif($anggota_kelas->nilai_pengetahuan >= $kkm->predikat_d && $anggota_kelas->nilai_pengetahuan < $kkm->predikat_c)
                                   C
                                   <input type="hidden" name="predikat_pengetahuan[]" value="C">
-                                  @elseif($anggota_kelas->nilai_pengetahuan >= $kkm->predikat_b && $anggota_kelas->nilai_pengetahuan < $kkm->predikat_a)
-                                    B
-                                    <input type="hidden" name="predikat_pengetahuan[]" value="B">
-                                    @elseif($anggota_kelas->nilai_pengetahuan >= $kkm->predikat_a)
-                                    A
-                                    <input type="hidden" name="predikat_pengetahuan[]" value="A">
-                                    @endif
+                              @elseif($anggota_kelas->nilai_pengetahuan >= $kkm->predikat_c && $anggota_kelas->nilai_pengetahuan < $kkm->predikat_b)
+                                  B
+                                  <input type="hidden" name="predikat_pengetahuan[]" value="B">
+                              @elseif($anggota_kelas->nilai_pengetahuan >= $kkm->predikat_b && $anggota_kelas->nilai_pengetahuan <= $kkm->predikat_a)
+                                  A
+                                  <input type="hidden" name="predikat_pengetahuan[]" value="A">
+                              @endif
                             </td>
 
                             <td class="text-center">{{$anggota_kelas->nilai_keterampilan}}</td>
                             <input type="hidden" name="nilai_keterampilan[]" value="{{$anggota_kelas->nilai_keterampilan}}">
 
                             <td class="text-center">
-                              @if($anggota_kelas->nilai_keterampilan < $kkm->predikat_c )
-                                D
-                                <input type="hidden" name="predikat_keterampilan[]" value="D">
-                                @elseif($anggota_kelas->nilai_keterampilan >= $kkm->predikat_c && $anggota_kelas->nilai_keterampilan < $kkm->predikat_b)
+                              @if($anggota_kelas->nilai_keterampilan < $kkm->predikat_d )
+                              D
+                              <input type="hidden" name="predikat_keterampilan[]" value="D">
+                              @elseif($anggota_kelas->nilai_keterampilan >= $kkm->predikat_d && $anggota_kelas->nilai_keterampilan < $kkm->predikat_c)
                                   C
                                   <input type="hidden" name="predikat_keterampilan[]" value="C">
-                                  @elseif($anggota_kelas->nilai_keterampilan >= $kkm->predikat_b && $anggota_kelas->nilai_keterampilan < $kkm->predikat_a)
-                                    B
-                                    <input type="hidden" name="predikat_keterampilan[]" value="B">
-                                    @elseif($anggota_kelas->nilai_keterampilan >= $kkm->predikat_a)
-                                    A
-                                    <input type="hidden" name="predikat_keterampilan[]" value="A">
-                                    @endif
+                              @elseif($anggota_kelas->nilai_keterampilan >= $kkm->predikat_c && $anggota_kelas->nilai_keterampilan < $kkm->predikat_b)
+                                  B
+                                  <input type="hidden" name="predikat_keterampilan[]" value="B">
+                              @elseif($anggota_kelas->nilai_keterampilan >= $kkm->predikat_b && $anggota_kelas->nilai_keterampilan <= $kkm->predikat_a)
+                                  A
+                                  <input type="hidden" name="predikat_keterampilan[]" value="A">
+                              @endif
                             </td>
 
                             <td class="text-center">{{$anggota_kelas->nilai_akhir_raport}}</td>
                             <input type="hidden" name="nilai_akhir_raport[]" value="{{$anggota_kelas->nilai_akhir_raport}}">
 
                             <td class="text-center">
-                              @if($anggota_kelas->nilai_akhir_raport < $kkm->predikat_c )
-                                D
-                                <input type="hidden" name="predikat_akhir_raport[]" value="D">
-                                @elseif($anggota_kelas->nilai_akhir_raport >= $kkm->predikat_c && $anggota_kelas->nilai_akhir_raport < $kkm->predikat_b)
+                              @if($anggota_kelas->nilai_akhir_raport < $kkm->predikat_d )
+                              D
+                              <input type="hidden" name="predikat_akhir_raport[]" value="D">
+                              @elseif($anggota_kelas->nilai_akhir_raport >= $kkm->predikat_d && $anggota_kelas->nilai_akhir_raport < $kkm->predikat_c)
                                   C
                                   <input type="hidden" name="predikat_akhir_raport[]" value="C">
-                                  @elseif($anggota_kelas->nilai_akhir_raport >= $kkm->predikat_b && $anggota_kelas->nilai_akhir_raport < $kkm->predikat_a)
-                                    B
-                                    <input type="hidden" name="predikat_akhir_raport[]" value="B">
-                                    @elseif($anggota_kelas->nilai_akhir_raport >= $kkm->predikat_a)
-                                    A
-                                    <input type="hidden" name="predikat_akhir_raport[]" value="A">
-                                    @endif
+                              @elseif($anggota_kelas->nilai_akhir_raport >= $kkm->predikat_c && $anggota_kelas->nilai_akhir_raport < $kkm->predikat_b)
+                                  B
+                                  <input type="hidden" name="predikat_akhir_raport[]" value="B">
+                              @elseif($anggota_kelas->nilai_akhir_raport >= $kkm->predikat_b && $anggota_kelas->nilai_akhir_raport <= $kkm->predikat_a)
+                                  A
+                                  <input type="hidden" name="predikat_akhir_raport[]" value="A">
+                              @endif
                             </td>
                           </tr>
                           @endforeach

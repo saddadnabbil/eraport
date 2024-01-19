@@ -100,10 +100,10 @@ class KirimNilaiAkhirController extends Controller
                     $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
 
                     // Interval KKM
-                    $range = (100 - $kkm->kkm) / 3;
-                    $kkm->predikat_c = round($kkm->kkm, 0);
-                    $kkm->predikat_b = round($kkm->kkm + $range, 0);
-                    $kkm->predikat_a = round($kkm->kkm + ($range * 2), 0);
+                    $kkm->predikat_d =  60.00;
+                    $kkm->predikat_c =  70.00;
+                    $kkm->predikat_b =  80.00;
+                    $kkm->predikat_a =  100.00;
 
                     // Data Nilai
                     $data_anggota_kelas = AnggotaKelas::where('kelas_id', $pembelajaran->kelas_id)->get();
