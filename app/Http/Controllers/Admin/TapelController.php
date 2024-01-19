@@ -208,15 +208,15 @@ class TapelController extends Controller
                 ]);
             }
 
-            if ($tapelLama) {
-                $tapelLama->update([
-                    'status' => 0,
-                ]);
+            if ($tapelLama->id == $request->select_tapel_id) {
+                $tapelLama->update(['status' => 1]);
+            } else {
+                $tapelLama->update(['status' => 0]);
             }
 
             $tapel->update([
                 'status' => 1,
-            ]);
+            ]); 
 
             $data_sekolah = [
                 'tapel_id' => $request->select_tapel_id,
