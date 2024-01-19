@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Admin\KM;
+namespace App\Http\Controllers\WaliKelas\KM;
 
 use PDF;
+use App\Guru;
 use App\Kelas;
 use App\Mapel;
 use App\Tapel;
@@ -26,6 +27,7 @@ use App\KmDeskripsiNilaiSiswa;
 use App\AnggotaEkstrakulikuler;
 use App\Http\Controllers\Controller;
 use App\K13RencanaNilaiKeterampilan;
+use Illuminate\Support\Facades\Auth;
 
 class CetakRaportPTSController extends Controller
 {
@@ -37,9 +39,7 @@ class CetakRaportPTSController extends Controller
     public function index()
     {
         $title = 'Raport Tengah Semester';
-        $tapel = Tapel::where('status', 1)->first();
-        $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
-        return view('admin.km.raportpts.setpaper', compact('title', 'data_kelas'));
+        return view('walikelas.km.raportpts.setpaper', compact('title'));
     }
 
     /**
@@ -51,19 +51,19 @@ class CetakRaportPTSController extends Controller
     public function store(Request $request)
     {
         $title = 'Raport Tengah Semester';
-        $kelas = Kelas::findorfail($request->kelas_id);
         $tapel = Tapel::where('status', 1)->first();
-        $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
-        $data_anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
-            ->orderBy('siswa.nama_lengkap', 'ASC')
-            ->where('anggota_kelas.kelas_id', $kelas->id)
-            ->where('siswa.status', 1)
-            ->get();
+
+        $guru = Guru::where('user_id', Auth::user()->id)->first();
+        $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)->where('guru_id', $guru->id)->get('id');
+        $id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('id');
+        $kelas_id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('kelas_id');
+
+        $data_anggota_kelas = AnggotaKelas::whereIn('id', $id_anggota_kelas)->whereIn('kelas_id', $kelas_id_anggota_kelas)->get();
 
         $paper_size = $request->paper_size;
         $orientation = $request->orientation;
 
-        return view('admin.km.raportpts.index', compact('title', 'kelas', 'data_kelas', 'data_anggota_kelas', 'paper_size', 'orientation'));
+        return view('walikelas.km.raportpts.index', compact('title', 'data_anggota_kelas', 'paper_size', 'orientation'));
     }
 
     /**
@@ -113,6 +113,12 @@ class CetakRaportPTSController extends Controller
             $nilai_akhir_total[$pembelajaran_id]['deskripsi_nilai'] = $nilai['deskripsi_nilai'];
             $nilai_akhir_total[$pembelajaran_id]['term'] = $nilai['term'];
         }
+
+        // Interval KKM                     
+        // $kkm->predikat_d =  60.00;
+        // $kkm->predikat_c =  70.00;
+        // $kkm->predikat_b =  80.00;
+        // $kkm->predikat_a =  100.00;
 
         // Nilai Akhir
         // Membagi hasil jumlah nilai dengan 2 dan menambahkan predikat

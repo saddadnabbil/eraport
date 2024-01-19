@@ -430,19 +430,19 @@ Route::group(['middleware' => ['auth']], function () {
         ]);
 
         // Raport K13 Wali Kelas
-        Route::resource('prosesdeskripsisikap', 'Walikelas\K13\ProsesDeskripsiSikapController',  [
-          'uses' => ['index', 'store']
-        ]);
-        Route::resource('statusnilaiguru', 'Walikelas\K13\StatusPenilaianGuruController',  [
-          'uses' => ['index']
-        ]);
-        Route::resource('hasilnilai', 'Walikelas\K13\HasilPengelolaanNilaiController',  [
-          'uses' => ['index']
-        ]);
-        Route::get('leger/export', 'Walikelas\K13\LihatLegerNilaiController@export')->name('leger.export');
-        Route::resource('leger', 'Walikelas\K13\LihatLegerNilaiController',  [
-          'uses' => ['index']
-        ]);
+        // Route::resource('prosesdeskripsisikap', 'Walikelas\K13\ProsesDeskripsiSikapController',  [
+        //   'uses' => ['index', 'store']
+        // ]);
+        // Route::resource('statusnilaiguru', 'Walikelas\K13\StatusPenilaianGuruController',  [
+        //   'uses' => ['index']
+        // ]);
+        // Route::resource('hasilnilai', 'Walikelas\K13\HasilPengelolaanNilaiController',  [
+        //   'uses' => ['index']
+        // ]);
+        // Route::get('leger/export', 'Walikelas\K13\LihatLegerNilaiController@export')->name('leger.export');
+        // Route::resource('leger', 'Walikelas\K13\LihatLegerNilaiController',  [
+        //   'uses' => ['index']
+        // ]);
 
         Route::resource('raportpts', 'Walikelas\K13\CetakRaportPTSController',  [
           'uses' => ['index', 'store', 'show']
@@ -450,14 +450,33 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('raportsemester', 'Walikelas\K13\CetakRaportSemesterController',  [
           'uses' => ['index', 'store', 'show']
         ]);
+        // End  Raport K13 Wali Kelas
+
+
+        // Raport KM Wali Kelas
+        Route::resource('prosesdeskripsisikap', 'Walikelas\K13\ProsesDeskripsiSikapController',  [
+          'uses' => ['index', 'store']
+        ]);
+        Route::resource('statusnilaiguru', 'Walikelas\KM\StatusPenilaianController',  [
+          'uses' => ['index']
+        ]);
+        Route::resource('hasilnilai', 'Walikelas\KM\PengelolaanNilaiController',  [
+          'uses' => ['index']
+        ]);
+
+        Route::get('leger/export', 'Walikelas\KM\LegerNilaiSiswaController@export')->name('leger.export');
+        Route::resource('leger', 'Walikelas\KM\LegerNilaiSiswaController',  [
+          'uses' => ['index']
+        ]);
 
         Route::resource('raportptskm', 'Walikelas\KM\CetakRaportPTSController',  [
           'uses' => ['index', 'store', 'show']
         ]);
+
         Route::resource('raportsemesterkm', 'Walikelas\KM\CetakRaportSemesterController',  [
           'uses' => ['index', 'store', 'show']
         ]);
-        // End  Raport K13 Wali Kelas
+        // End  Raport KM Wali Kelas
       });
       // End Route Wali Kelas
     });

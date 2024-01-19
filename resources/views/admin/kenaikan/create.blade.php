@@ -1,5 +1,5 @@
 @include('layouts.main.header')
-@include('layouts.sidebar.walikelas')
+@include('layouts.sidebar.admin')
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">

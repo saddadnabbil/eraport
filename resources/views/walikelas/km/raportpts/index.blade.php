@@ -40,6 +40,7 @@
                     <label class="col-sm-2 col-form-label">Ukuran Kertas</label>
                     <div class="col-sm-4">
                       <select class="form-control" name="paper_size" style="width: 100%;" required onchange="this.form.submit();">
+                        <option value="" disabled>-- Pilih Ukuran Kertas --</option>
                         <option value="A4" @if($paper_size=='A4' ) selected @endif>A4 (21 cm x 29,7 cm)</option>
                         <option value="Folio" @if($paper_size=='Folio' ) selected @endif>Folio (21,59 cm x 33 cm)</option>
                       </select>
@@ -47,6 +48,7 @@
                     <label class="col-sm-2 col-form-label">Orientasi</label>
                     <div class="col-sm-4">
                       <select class="form-control" name="orientation" style="width: 100%;" required onchange="this.form.submit();">
+                        <option value="" disabled>-- Pilih Orientasi --</option>
                         <option value="potrait" @if($orientation=='potrait' ) selected @endif>Potrait</option>
                         <option value="landscape" @if($orientation=='landscape' ) selected @endif>Landscape</option>
                       </select>
@@ -63,7 +65,6 @@
                       <th class="text-center" style="width: 5%;">NIS</th>
                       <th class="text-center">Nama Siswa</th>
                       <th class="text-center" style="width: 5%;">L/P</th>
-                      <th class="text-center" style="width: 5%;">Kelas</th>
                       <th class="text-center" style="width: 15%;">Raport Tengah Semester</th>
                     </tr>
                   </thead>
@@ -77,7 +78,6 @@
                       <td class="text-center">{{$anggota_kelas->siswa->nis}}</td>
                       <td>{{$anggota_kelas->siswa->nama_lengkap}}</td>
                       <td class="text-center">{{$anggota_kelas->siswa->jenis_kelamin}}</td>
-                      <td class="text-center">{{$anggota_kelas->kelas->nama_kelas}}</td>
                       <td class="text-center">
                         <form action="{{ route('raportptskm.show', $anggota_kelas->id) }}" target="_black" method="GET">
                           @csrf

@@ -34,14 +34,13 @@
 
             <div class="card-body">
               <div class="callout callout-info">
-                <form action="{{ route('raportsemesterkm.store') }}" method="POST">
+                <form action="{{ route('raportsemester.store') }}" method="POST">
                   @csrf
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Ukuran Kertas</label>
                     <div class="col-sm-4">
                       <select class="form-control" name="paper_size" style="width: 100%;" required>
-                        <option value="" disabled>-- Pilih Ukuran Kertas --</option>
-                        <option value="A4" selected>A4 (21 cm x 29,7 cm)</option>
+                        <option value="A4">A4 (21 cm x 29,7 cm)</option>
                         <option value="Folio">Folio (21,59 cm x 33 cm)</option>
                       </select>
                     </div>

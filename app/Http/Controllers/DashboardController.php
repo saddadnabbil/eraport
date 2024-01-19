@@ -221,7 +221,7 @@ class DashboardController extends Controller
 
                 $id_pembelajaran_kelas = Pembelajaran::whereIn('kelas_id', $id_kelas_diampu)->where('status', 1)->get('id');
                 $jumlah_kirim_nilai = count(K13NilaiAkhirRaport::whereIn('pembelajaran_id', $id_pembelajaran_kelas)->groupBy('pembelajaran_id')->get());
-                $jumlah_proses_deskripsi = count(K13DeskripsiNilaiSiswa::whereIn('pembelajaran_id', $id_pembelajaran_kelas)->groupBy('pembelajaran_id')->get());
+                $jumlah_proses_deskripsi = count(KmDeskripsiNilaiSiswa::whereIn('pembelajaran_id', $id_pembelajaran_kelas)->groupBy('pembelajaran_id')->get());
 
 
                 // Dashboard Wali Kelas
@@ -234,6 +234,7 @@ class DashboardController extends Controller
                     'jumlah_anggota_kelas',
                     'jumlah_kirim_nilai',
                     'jumlah_proses_deskripsi',
+                    'id_kelas_diampu',
                 ));
             }
         } elseif (Auth::user()->role == 3) {

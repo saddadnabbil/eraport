@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Admin\KM;
+namespace App\Http\Controllers\WaliKelas\KM;
 
 use PDF;
+use App\Guru;
 use App\Kelas;
 use App\Mapel;
 use App\Tapel;
@@ -21,6 +22,7 @@ use App\NilaiEkstrakulikuler;
 use App\AnggotaEkstrakulikuler;
 use App\K13DeskripsiSikapSiswa;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class CetakRaportSemesterController extends Controller
 {
@@ -32,9 +34,7 @@ class CetakRaportSemesterController extends Controller
     public function index()
     {
         $title = 'Cetak Raport Semester';
-        $tapel = Tapel::where('status', 1)->first();
-        $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
-        return view('admin.km.raportsemester.setpaper', compact('title', 'data_kelas'));
+        return view('walikelas.km.raportsemester.setpaper', compact('title'));
     }
 
     /**
@@ -46,19 +46,19 @@ class CetakRaportSemesterController extends Controller
     public function store(Request $request)
     {
         $title = 'Cetak Raport Semester';
-        $kelas = Kelas::findorfail($request->kelas_id);
         $tapel = Tapel::where('status', 1)->first();
-        $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
-        $data_anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
-            ->orderBy('siswa.nama_lengkap', 'ASC')
-            ->where('anggota_kelas.kelas_id', $kelas->id)
-            ->where('siswa.status', 1)
-            ->get();
+
+        $guru = Guru::where('user_id', Auth::user()->id)->first();
+        $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)->where('guru_id', $guru->id)->get('id');
+        $id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('id');
+        $kelas_id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('kelas_id');
+
+        $data_anggota_kelas = AnggotaKelas::whereIn('id', $id_anggota_kelas)->whereIn('kelas_id', $kelas_id_anggota_kelas)->get();
 
         $paper_size = $request->paper_size;
         $orientation = $request->orientation;
 
-        return view('admin.km.raportsemester.index', compact('title', 'kelas', 'data_kelas', 'data_anggota_kelas', 'paper_size', 'orientation'));
+        return view('walikelas.km.raportsemester.index', compact('title', 'data_anggota_kelas', 'paper_size', 'orientation'));
     }
 
     /**

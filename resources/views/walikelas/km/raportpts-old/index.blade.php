@@ -34,7 +34,7 @@
 
             <div class="card-body">
               <div class="callout callout-info">
-                <form action="{{ route('raportsemesterkm.store') }}" method="POST">
+                <form action="{{ route('raportptskm.store') }}" method="POST">
                   @csrf
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Ukuran Kertas</label>
@@ -61,10 +61,10 @@
                     <tr>
                       <th class="text-center" style="width: 5%;">No</th>
                       <th class="text-center" style="width: 5%;">NIS</th>
-                      <th class="text-center" style="width: 50%;">Nama Siswa</th>
+                      <th class="text-center">Nama Siswa</th>
                       <th class="text-center" style="width: 5%;">L/P</th>
-                      <th class="text-center" style="width: 15%;">Kelengkapan Raport</th>
-                      <th class="text-center" style="width: 15%;">Raport</th>
+                      <th class="text-center" style="width: 5%;">Kelas</th>
+                      <th class="text-center" style="width: 15%;">Raport Tengah Semester</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -77,25 +77,14 @@
                       <td class="text-center">{{$anggota_kelas->siswa->nis}}</td>
                       <td>{{$anggota_kelas->siswa->nama_lengkap}}</td>
                       <td class="text-center">{{$anggota_kelas->siswa->jenis_kelamin}}</td>
+                      <td class="text-center">{{$anggota_kelas->kelas->nama_kelas}}</td>
                       <td class="text-center">
-                        <form action="{{ route('raportsemesterkm.show', $anggota_kelas->id) }}" target="_black" method="GET">
+                        <form action="{{ route('raportptskm.show', $anggota_kelas->id) }}" target="_black" method="GET">
                           @csrf
-                          <input type="hidden" name="data_type" value="1">
-                          <input type="hidden" name="paper_size" value="{{$paper_size}}">
-                          <input type="hidden" name="orientation" value="{{$orientation}}">
-                          <button type="submit" class="btn btn-danger btn-sm">
-                            <i class="fas fa-print"></i> Cetak Data
-                          </button>
-                        </form>
-                      </td>
-                      <td class="text-center">
-                        <form action="{{ route('raportsemesterkm.show', $anggota_kelas->id) }}" target="_black" method="GET">
-                          @csrf
-                          <input type="hidden" name="data_type" value="2">
                           <input type="hidden" name="paper_size" value="{{$paper_size}}">
                           <input type="hidden" name="orientation" value="{{$orientation}}">
                           <button type="submit" class="btn btn-primary btn-sm">
-                            <i class="fas fa-print"></i> Cetak Raport
+                            <i class="fas fa-print"></i> Raport PTS
                           </button>
                         </form>
                       </td>
