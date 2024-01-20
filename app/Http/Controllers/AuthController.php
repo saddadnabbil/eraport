@@ -69,11 +69,8 @@ class AuthController extends Controller
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
         } else {
             $user_login = User::where('username', $request->username)->first();
-            if (!Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
-                return back()->with('toast_error', 'password salah.');
-            } elseif ($user_login->status == false) {
-                return back()->with('toast_error', 'User ' . $user_login->username . ' telah dinonaktifkan');
-            } else {
+            if (Auth::attempt(['username' => $request->username, 'password' => $request->password], $request->remember)) {
+                // Login successful
                 $cek_riwayat = RiwayatLogin::where('user_id', Auth::id())->first();
                 if (is_null($cek_riwayat)) {
                     $riwayat_login = new RiwayatLogin([
@@ -84,9 +81,9 @@ class AuthController extends Controller
                 } else {
                     $cek_riwayat->update(['status_login' => true]);
                 }
-
+            
                 $tapel = Tapel::where('status', 1)->first();
-
+            
                 session([
                     // 'kurikulum' => $request->kurikulum,
                     // 'tapel_id' => $request->tahun_pelajaran,
@@ -94,12 +91,12 @@ class AuthController extends Controller
                     'semester_id' => $tapel->semester_id,
                     'term_id' => $tapel->term_id,
                 ]);
-
+            
                 $guru = Guru::where('user_id', Auth::id())->first();
-
+            
                 if ($guru) {
                     $cek_wali_kelas = Kelas::where('guru_id', $guru->id)->first();
-
+            
                     if (Auth::user()->role == 2) {
                         if ($cek_wali_kelas == null) {
                             session([
@@ -115,10 +112,13 @@ class AuthController extends Controller
                     }
                 }
 
-
-
                 return redirect('/dashboard')->with('toast_success', 'Login berhasil');
+            } else {
+                return back()->with('toast_error', 'password salah.');
             }
+
+            //     return redirect('/dashboard')->with('toast_success', 'Login berhasil');
+            // }
         }
     }
 

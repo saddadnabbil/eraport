@@ -29,31 +29,8 @@
               </div>
             </div>
           </div>
-          {{-- <div class="mb-3">
-            <select class="form-control" name="kurikulum" style="width: 100%;">
-              <option value="">-- Pilih Kurikulum Sekolah -- </option>
-              <option value="2013">Kurikulum 2013 </option>
-              <option value="2006">Kurikulum 2006 (KTSP) </option>
-            </select>
-          </div> --}}
-          {{-- <div class="mb-1">
-            <select class="form-control" name="tahun_pelajaran" style="width: 100%;">
-              <option value="" disabled>-- Pilih Tahun Pelajaran -- </option>
-              <?php $no = 0; ?>
-              @foreach($data_tapel as $tapel)
-              <?php $no++; ?>
-              <option value="{{$tapel->id}}" @if($no==1) selected @endif>{{$tapel->tahun_pelajaran}}
-                @if($tapel->semester_id == 1)
-                Ganjil
-                @else
-                Genap
-                @endif
-              </option>
-              @endforeach
-            </select>
-          </div> --}}
           <div class="form-check mt-2 mb-2">
-            <input type="checkbox" class="form-check-input" id="exampleCheck2">
+            <input type="checkbox"  name="remember" class="form-check-input" id="exampleCheck2">
             <label class="form-check-label" for="exampleCheck2">Remember me</label>
           </div>
           <div class="row mb-2">
