@@ -55,31 +55,41 @@
                   <thead class="bg-info">
                     <tr>
                       <th class="text-center" rowspan="2" style="width: 5%;">No</th>
-                      <th class="text-center" rowspan="2" style="width: 25%;">Nama Ekstrakulikuler</th>
-                      <th class="text-center" rowspan="2" style="width: 20%;">Pembina</th>
-                      <th class="text-center" colspan="2" style="width: 50%;">Nilai Ekstrakulikuler</th>
+                      <th class="text-center" rowspan="2" style="width: 28%;">Mata Pelajaran</th>
+                      <th class="text-center" rowspan="2" style="width: 7%;">KKM</th>
+                      <th class="text-center" colspan="2" style="width: 15%;">Sumatif</th>
+                      <th class="text-center" colspan="2" style="width: 15%;">Formatif</th>
                     </tr>
                     <tr>
-                      <th class="text-center" style="width: 10%;">Nilai</th>
-                      <th class="text-center" style="width: 40%;">Deskripsi</th>
+                      <th class="text-center" style="width: 7%;">Nilai</th>
+                      <th class="text-center" style="width: 8%;">Predikat</th>
+                      <th class="text-center" style="width: 7%;">Nilai</th>
+                      <th class="text-center" style="width: 8%;">Predikat</th>
                     </tr>
                   </thead>
                   <tbody>
                     <?php $no = 0; ?>
-                    @foreach($data_anggota_ekstra->sortBy('ekstrakulikuler.nama_ekstrakulikuler') as $anggota_ekstra)
+                    @foreach($data_pembelajaran->sortBy('mapel.nama_mapel') as $pembelajaran)
                     <?php $no++; ?>
                     <tr>
                       <td class="text-center">{{$no}}</td>
-                      <td>{{$anggota_ekstra->ekstrakulikuler->nama_ekstrakulikuler}}</td>
-                      <td>{{$anggota_ekstra->ekstrakulikuler->pembina->nama_lengkap}}, {{$anggota_ekstra->ekstrakulikuler->pembina->gelar}}</td>
-                      @if(!is_null($anggota_ekstra->nilai))
-                      <td class="text-center">
-                        {{$anggota_ekstra->nilai->nilai}}
-                      </td>
-                      <td>{{$anggota_ekstra->nilai->deskripsi}}</td>
+                      <td>{{$pembelajaran->mapel->nama_mapel}}</td>
+                      @if(!is_null($pembelajaran->nilai))
+                      <td class="text-center">{{$pembelajaran->nilai->kkm}}</td>
+                      <td class="text-center">{{$pembelajaran->nilai->nilai_sumatif}}</td>
+                      <td class="text-center">{{$pembelajaran->nilai->predikat_sumatif}}</td>
+                      <td class="text-center">{{$pembelajaran->nilai->nilai_formatif}}</td>
+                      <td class="text-center">{{$pembelajaran->nilai->predikat_formatif}}</td>
                       @else
                       <td class="text-center"></td>
-                      <td></td>
+                      <td class="text-center"></td>
+                      <td class="text-center"></td>
+                      <td class="text-center"></td>
+                      <td class="text-center"></td>
+                      <td class="text-center"></td>
+                      <td class="text-center"></td>
+                      <td class="text-center"></td>
+                      <td class="text-center"></td>
                       @endif
                     </tr>
                     @endforeach

@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Siswa;
 
-use App\AnggotaEkstrakulikuler;
+use App\Kelas;
+use App\Siswa;
+use App\Tapel;
 use App\AnggotaKelas;
 use App\Ekstrakulikuler;
-use App\Http\Controllers\Controller;
-use App\Kelas;
-use App\NilaiEkstrakulikuler;
-use App\Siswa;
 use Illuminate\Http\Request;
+use App\NilaiEkstrakulikuler;
+use App\AnggotaEkstrakulikuler;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class EkstrakulikulerController extends Controller
@@ -23,9 +24,10 @@ class EkstrakulikulerController extends Controller
     {
         $title = 'Ekstrakulikuler Siswa';
         $siswa = Siswa::where('user_id', Auth::user()->id)->first();
+        $tapel = Tapel::where('status', 1)->first();
 
-        $data_id_kelas = Kelas::where('tapel_id', session()->get('tapel_id'))->get('id');
-        $data_id_ekstrakulikuler = Ekstrakulikuler::where('tapel_id', session()->get('tapel_id'))->get('id');
+        $data_id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
+        $data_id_ekstrakulikuler = Ekstrakulikuler::where('tapel_id', $tapel->id)->get('id');
 
         $anggota_kelas = AnggotaKelas::whereIn('kelas_id', $data_id_kelas)->where('siswa_id', $siswa->id)->first();
         if (is_null($anggota_kelas)) {

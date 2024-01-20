@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Siswa\KTSP;
 
-use App\AnggotaKelas;
-use App\Http\Controllers\Controller;
 use App\Kelas;
-use App\KtspNilaiAkhirRaport;
-use App\Pembelajaran;
 use App\Siswa;
+use App\Tapel;
+use App\AnggotaKelas;
+use App\Pembelajaran;
 use Illuminate\Http\Request;
+use App\KtspNilaiAkhirRaport;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class NilaiAkhirSemesterController extends Controller
@@ -22,8 +23,9 @@ class NilaiAkhirSemesterController extends Controller
     {
         $title = 'Nilai Akhir Semester';
         $siswa = Siswa::where('user_id', Auth::user()->id)->first();
+        $tapel = Tapel::where('status', 1)->first();
 
-        $data_id_kelas = Kelas::where('tapel_id', session()->get('tapel_id'))->get('id');
+        $data_id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
         $anggota_kelas = AnggotaKelas::whereIn('kelas_id', $data_id_kelas)->where('siswa_id', $siswa->id)->first();
         if (is_null($anggota_kelas)) {
             return back()->with('toast_warning', 'Anda belum masuk ke anggota kelas');

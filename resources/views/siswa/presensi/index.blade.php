@@ -65,10 +65,17 @@
                   </thead>
                   <tbody>
                     <tr>
-                      @if(is_null($kehadiran))
-                      <td class="text-center text-danger" colspan="4">Data belum diinput</td>
+                      @if(is_null($kehadiran) && !is_null($anggota_kelas))
+                      <td class="text-center">
+                        {{$anggota_kelas->kelas->nama_kelas}} 
+                      </td>
+                      <td class="text-center">-</td>
+                      <td class="text-center">-</td>
+                      <td class="text-center">-</td>
                       @else
-                      <td class="text-center">{{$kehadiran->anggota_kelas->kelas->nama_kelas}} {{$kehadiran->anggota_kelas->kelas->tapel->tahun_pelajaran}}
+                      <td class="text-center">
+                        @dd($kehadiran)
+                        {{$anggota_kelas->kelas->nama_kelas}} {{$kehadiran->anggota_kelas->kelas->tapel->tahun_pelajaran}}
                         @if($kehadiran->anggota_kelas->kelas->tapel->semester == 1)
                         Ganjil
                         @else

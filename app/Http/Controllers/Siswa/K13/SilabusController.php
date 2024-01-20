@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Siswa\K13;
 
 use App\Kelas;
 use App\Siswa;
+use App\Tapel;
 use App\Silabus;
 use App\AnggotaKelas;
 use App\Pembelajaran;
@@ -18,8 +19,9 @@ class SilabusController extends Controller
     {
         $title = 'Silabus';
         $siswa = Siswa::where('user_id', Auth::user()->id)->first();
+        $tapel = Tapel::where('status', 1)->first();
 
-        $data_id_kelas = Kelas::where('tapel_id', session()->get('tapel_id'))->get('id');
+        $data_id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
         $anggota_kelas = AnggotaKelas::whereIn('kelas_id', $data_id_kelas)->where('siswa_id', $siswa->id)->first();
 
         if (is_null($anggota_kelas)) {

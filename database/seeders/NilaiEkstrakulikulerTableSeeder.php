@@ -18,7 +18,7 @@ class NilaiEkstrakulikulerTableSeeder extends Seeder
             'ekstrakulikuler_id' => 1,
             'anggota_ekstrakulikuler_id' => 1,
             'nilai' => 'A',
-            'deskripsi' => 'Sangat Baik'
+            'deskripsi' => 'Very Good'
         ]);
     }
 }
