@@ -70,22 +70,22 @@
                   <tbody>
                     <?php $no = 0; ?>
                     @foreach($data_anggota_kelas->sortBy('siswa.nama_lengkap') as $anggota_kelas)
-                    <?php $no++; ?>
-                    <tr>
-                      <td class="text-center">{{$no}}</td>
-                      <td class="text-center">{{$anggota_kelas->siswa->nis}}</td>
-                      <td>{{$anggota_kelas->siswa->nama_lengkap}}</td>
-                      <td class="text-center">{{$anggota_kelas->siswa->jenis_kelamin}}</td>
-                      @if(!is_null($anggota_kelas->kehadiran_siswa))
-                      <td class="text-center">{{$anggota_kelas->kehadiran_siswa->sakit}}</td>
-                      <td class="text-center">{{$anggota_kelas->kehadiran_siswa->izin}}</td>
-                      <td class="text-center">{{$anggota_kelas->kehadiran_siswa->tanpa_keterangan}}</td>
-                      @else
-                      <td class="text-center"></td>
-                      <td class="text-center"></td>
-                      <td class="text-center"></td>
-                      @endif
-                    </tr>
+                      <?php $no++; ?>
+                      <tr>
+                        <td class="text-center">{{$no}}</td>
+                        <td class="text-center">{{$anggota_kelas->siswa->nis}}</td>
+                        <td>{{$anggota_kelas->siswa->nama_lengkap}}</td>
+                        <td class="text-center">{{$anggota_kelas->siswa->jenis_kelamin}}</td>
+                        @if(!is_null($anggota_kelas->kehadiran_siswa))
+                        <td class="text-center">{{$anggota_kelas->kehadiran_siswa->sakit}}</td>
+                        <td class="text-center">{{$anggota_kelas->kehadiran_siswa->izin}}</td>
+                        <td class="text-center">{{$anggota_kelas->kehadiran_siswa->tanpa_keterangan}}</td>
+                        @else
+                        <td class="text-center">-</td>
+                        <td class="text-center">-</td>
+                        <td class="text-center">-</td>
+                        @endif
+                      </tr>
                     @endforeach
                   </tbody>
                 </table>
