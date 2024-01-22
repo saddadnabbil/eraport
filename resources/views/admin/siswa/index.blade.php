@@ -169,56 +169,84 @@
                   <form action="{{ route('siswa.store') }}" method="POST">
                     @csrf
                     <div class="modal-body">
-                      <div class="form-group row">
-                        <label for="nama_lengkap" class="col-sm-3 col-form-label">Nama Siswa</label>
-                        <div class="col-sm-9">
-                          <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap" placeholder="Nama Siswa" value="{{old('nama_lengkap')}}">
+                      {{-- A. Personal Information --}}
+                      <div>
+                        <h6><b>A. Personal Information</b></h6>
+                        
+                        <div class="form-group row">
+                          <label for="nis" class="col-sm-3 col-form-label">NIS</label>
+                          <div class="col-sm-3">
+                            <input type="number" class="form-control" id="nis" name="nis" placeholder="NIS" value="{{old('nis')}}">
+                          </div>
+                          <label for="nisn" class="col-sm-2 col-form-label">NISN <small><i>(Opsional)</i></small></label>
+                          <div class="col-sm-4">
+                            <input type="number" class="form-control" id="nisn" name="nisn" placeholder="NISN" value="{{old('nisn')}}">
+                          </div>
                         </div>
-                      </div>
-                      <div class="form-group row">
-                        <label for="jenis_kelamin" class="col-sm-3 col-form-label">Jenis Kelamin</label>
-                        <div class="col-sm-9 pt-1">
-                          <label class="form-check-label mr-3"><input type="radio" name="jenis_kelamin" value="Male" @if (old('jenis_kelamin')=='Male' ) checked @endif required> Male</label>
-                          <label class="form-check-label mr-3"><input type="radio" name="jenis_kelamin" value="Female" @if (old('jenis_kelamin')=='Female' ) checked @endif required> Female</label>
+                        
+                        <div class="form-group row">
+                          <label for="nama_lengkap" class="col-sm-3 col-form-label">Nama Siswa</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap" placeholder="Nama Siswa" value="{{old('nama_lengkap')}}">
+                          </div>
                         </div>
-                      </div>
-                      <div class="form-group row">
-                        <label for="nama_wali" class="col-sm-3 col-form-label">Jenis Pendaftaran</label>
-                        <div class="col-sm-3 pt-1">
-                          <label class="form-check-label mr-3"><input type="radio" name="jenis_pendaftaran" onchange='CheckPendaftaran(this.value);' value="1" @if (old('jenis_pendaftaran')=='1' ) checked @endif required> Siswa Baru</label>
-                          <label class="form-check-label mr-3"><input type="radio" name="jenis_pendaftaran" onchange='CheckPendaftaran(this.value);' value="2" @if (old('jenis_pendaftaran')=='2' ) checked @endif required> Pindahan</label>
+                        {{-- nama panggilan --}}
+                        <div class="form-group row">
+                          <label for="nama_panggilan" class="col-sm-3 col-form-label">Nama Panggilan</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control" id="nama_panggilan" name="nama_panggilan" placeholder="Nama Panggilan" value="{{old('nama_panggilan')}}">
+                          </div>
                         </div>
-                        <label for="kelas_id" class="col-sm-2 col-form-label">Kelas</label>
-                        <div class="col-sm-4">
-                          <select class="form-control" id="kelas" required>
-                            <option value="">-- Pilih Kelas --</option>
-                            <option value="" disabled>Silahkan pilih jenis pendaftaran</option>
-                          </select>
-                          <select class="form-control" id="kelas_bawah" style='display:none;'>
-                            <option value="">-- Pilih Kelas --</option>
-                            @foreach($data_kelas_terendah as $kelas_rendah)
-                            <option value="{{$kelas_rendah->id}}">{{$kelas_rendah->nama_kelas}}</option>
-                            @endforeach
-                          </select>
 
-                          <select class="form-control" id="kelas_all" style='display:none;'>
-                            <option value="">-- Pilih Kelas --</option>
-                            @foreach($data_kelas_all as $kelas_all)
-                            <option value="{{$kelas_all->id}}">{{$kelas_all->nama_kelas}}</option>
-                            @endforeach
-                          </select>
+                        <div class="form-group row">
+                          <label for="nama_wali" class="col-sm-3 col-form-label">Jenis Pendaftaran</label>
+                          <div class="col-sm-3 pt-1">
+                            <label class="form-check-label mr-3"><input type="radio" name="jenis_pendaftaran" onchange='CheckPendaftaran(this.value);' value="1" @if (old('jenis_pendaftaran')=='1' ) checked @endif required> Siswa Baru</label>
+                            <label class="form-check-label mr-3"><input type="radio" name="jenis_pendaftaran" onchange='CheckPendaftaran(this.value);' value="2" @if (old('jenis_pendaftaran')=='2' ) checked @endif required> Pindahan</label>
+                          </div>
+                          <label for="kelas_id" class="col-sm-2 col-form-label">Kelas</label>
+                          <div class="col-sm-4">
+                            <select class="form-control" id="kelas" required>
+                              <option value="">-- Pilih Kelas --</option>
+                              <option value="" disabled>Silahkan pilih jenis pendaftaran</option>
+                            </select>
+                            <select class="form-control" id="kelas_bawah" style='display:none;'>
+                              <option value="">-- Pilih Kelas --</option>
+                              @foreach($data_kelas_terendah as $kelas_rendah)
+                              <option value="{{$kelas_rendah->id}}">{{$kelas_rendah->nama_kelas}}</option>
+                              @endforeach
+                            </select>
+  
+                            <select class="form-control" id="kelas_all" style='display:none;'>
+                              <option value="">-- Pilih Kelas --</option>
+                              @foreach($data_kelas_all as $kelas_all)
+                              <option value="{{$kelas_all->id}}">{{$kelas_all->nama_kelas}}</option>
+                              @endforeach
+                            </select>
+                          </div>
+                        </div>
+                        <div class="form-group row">
+                          <label for="jenis_kelamin" class="col-sm-3 col-form-label">Jenis Kelamin</label>
+                          <div class="col-sm-3 pt-1">
+                            <label class="form-check-label mr-3"><input type="radio" name="jenis_kelamin" value="Male" @if (old('jenis_kelamin')=='Male' ) checked @endif required> Male</label>
+                            <label class="form-check-label mr-3"><input type="radio" name="jenis_kelamin" value="Female" @if (old('jenis_kelamin')=='Female' ) checked @endif required> Female</label>
+                          </div>
+                          {{-- bloodtype --}}
+                          <label for="bloodtype" class="col-sm-2 col-form-label">Gol. Darah</label>
+                          <div class="col-sm-4">
+                            <select class="form-control" name="bloodtype" required>
+                              <option value="">-- Pilih Gol. Darah --</option>
+                              <option value="A">A</option>
+                              <option value="B">B</option>
+                              <option value="AB">AB</option>
+                              <option value="O">O</option>
+                            </select>
+                          </div>
                         </div>
                       </div>
-                      <div class="form-group row">
-                        <label for="nis" class="col-sm-3 col-form-label">NIS</label>
-                        <div class="col-sm-3">
-                          <input type="number" class="form-control" id="nis" name="nis" placeholder="NIS" value="{{old('nis')}}">
-                        </div>
-                        <label for="nisn" class="col-sm-2 col-form-label">NISN <small><i>(Opsional)</i></small></label>
-                        <div class="col-sm-4">
-                          <input type="number" class="form-control" id="nisn" name="nisn" placeholder="NISN" value="{{old('nisn')}}">
-                        </div>
-                      </div>
+                     
+
+                      
                       <div class="form-group row">
                         <label for="tempat_lahir" class="col-sm-3 col-form-label">Tempat Lahir</label>
                         <div class="col-sm-3">
