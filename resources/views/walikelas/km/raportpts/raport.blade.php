@@ -4,10 +4,235 @@
 <head>
   <meta charset="utf-8" />
   <title>{{$title}} | {{$anggota_kelas->siswa->nama_lengkap}} ({{$anggota_kelas->siswa->nis}})</title>
-  {{-- <link href="./assets/invoice_raport.css" rel="stylesheet"> --}}
-  <link rel="icon" type="image/png" sizes="16x16" href="{{asset('assets/dist/img/logo.png')}}">
-  <link href="./assets/eraport.css" rel="stylesheet">
+  <link rel="icon" type="image/png" href="./assets/dist/img/logo.png">
 </head>
+
+<style>
+  /* main */
+  body {
+      padding: 30px;
+  }
+
+  * {
+      margin: 0;
+      padding: 0;
+      text-indent: 0; 
+  }
+
+  h1, .h2, h3, .s1{
+      color: black;
+      font-family: Arial, sans-serif;
+      font-style: normal;
+      font-weight: bold;
+      text-decoration: none;
+  }
+
+  h1 {
+      font-size: 11pt;
+  }
+
+  .h2 {
+      font-size: 10pt;
+  }
+
+  p {
+      color: black;
+      font-family: Arial, sans-serif;
+      font-style: normal;
+      text-decoration: none;
+      font-size: 6pt;
+      margin: 0;
+  }
+
+  h3, .s1, .s2, .s4, .s6, .s7 {
+      font-size: 8pt;
+  }
+
+  .s3 {
+      color: black;
+      font-family: Arial, sans-serif;
+      font-style: italic;
+      font-weight: normal;
+      text-decoration: none;
+      font-size: 6pt;
+  }
+
+  .s5 {
+      font-size: 7pt;
+  }
+
+  table, tbody {
+      vertical-align: top;
+      overflow: visible;
+  }
+
+
+  .center-align {
+      text-align: center;
+  }
+  .left-align {
+      text-align: left;
+  }
+  .right-align {
+      text-align: right;
+  }
+  .no-indent {
+      text-indent: 0pt;
+  }
+  .ml-5 {
+      margin-left: 5.44pt;
+  }
+  .pad-179 {
+      padding: 0 20pt;
+  }
+  .pad-5 {
+      padding-top: 5pt;
+  }
+  .pad-2-1 {
+      padding-top: 2pt;
+      padding-bottom: 1pt;
+  }
+  .line-height-123 {
+      line-height: 123%;
+  }
+
+  .information-container {
+      width: 100%;
+      border-collapse: collapse; 
+  }
+
+  /* table  */
+  /* 1 */
+  .border-collapse {
+      border-collapse:collapse;
+  }
+
+  .h-14 {
+      height:14pt;
+  }
+
+  .cell-style {
+      border-top-style: solid;
+      border-top-width: 1pt;
+      border-left-style: solid;
+      border-left-width: 1pt;
+      border-bottom-style: solid;
+      border-bottom-width: 1pt;
+      border-right-style: solid;
+      border-right-width: 1pt;
+  }
+
+  .w-17 {
+      width: 17pt;
+  }
+
+  .bg-grey {
+      background-color: #999999;
+  }
+  .s1 {
+      text-indent: 0pt;
+  }
+
+  .left-text {
+      text-align: left;
+  }
+
+  .pt-2 {
+      padding-top: 2pt;
+  }
+
+  .pt-3 {
+      padding-top: 3pt;
+  }
+
+  .pt-7 {
+      padding-top: 7pt;
+  }
+
+  .pl-75 {
+      padding-left: 75pt;
+  }
+
+  /* 2 */
+
+  h-25 {
+      height: 25pt;
+  }
+
+  p.s2 {
+      text-indent: 0pt;
+  }
+
+  p.s3 {
+      text-indent: 0pt;
+  }
+
+  p.s2-right {
+      text-align: right;
+      padding-right: 2pt;
+  }
+
+  p.s2-left {
+      text-align: left;
+      padding-left: 2pt;
+  }
+
+  p.s2-center {
+      text-align: center;
+      padding-left: 1pt;
+  }
+
+  p.status-good {
+      text-align: center;
+      padding-left: 1pt;
+  }
+
+  /* .bottom-table {
+      display: flex;
+  } */
+
+  .signature-top {
+      display: flex;
+      justify-content: space-between;
+  }
+
+  .teacher {
+      text-align: center;
+  }
+
+  .signature-top {
+      display: flex;
+      justify-content: space-between;
+  }
+
+  .parent {
+      text-align: left;
+  }
+
+  .teacher {
+      text-align: right;
+  }
+
+  .signature-bottom {
+      margin-top: 10px; 
+      text-align: center;
+  }
+
+  .signature-bottom .s7 {
+      display: inline-block; 
+      max-width: 200px; 
+      border-bottom: 1px solid black;
+      text-align: center;
+      margin: 0 auto;
+  }
+
+  @media print {
+      td {
+          -webkit-print-color-adjust: exact; 
+          print-color-adjust: exact; 
+      }
+  }
+</style>
 
 <body>
   <div class="raport">
