@@ -106,7 +106,15 @@ class KirimNilaiAkhirController extends Controller
                     $kkm->predikat_a =  100.00;
 
                     // Data Nilai
-                    $data_anggota_kelas = AnggotaKelas::where('kelas_id', $pembelajaran->kelas_id)->get();
+                    $data_anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
+                        ->where('anggota_kelas.kelas_id', $pembelajaran->kelas_id)
+                        ->where('siswa.status', 1)
+                        ->get();
+
+                    if(count($data_anggota_kelas) == 0){
+                        return redirect(route('guru.penilaiankm.index'))->with('toast_error', 'Data anggota kelas tidak ditemukan');
+                    }
+
                     foreach ($data_anggota_kelas as $anggota_kelas) {
 
                         $data_nilai_akhir = NilaiAkhir::where('anggota_kelas_id', $anggota_kelas->id)->where('pembelajaran_id', $pembelajaran->id)->where('term_id', $term->id)->first();

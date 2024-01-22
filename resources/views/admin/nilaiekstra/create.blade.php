@@ -87,35 +87,41 @@
                           <input type="hidden" name="ekstrakulikuler_id" value="{{$ekstrakulikuler->id}}">
 
                           <?php $no = 0; ?>
-                          @foreach($data_anggota_ekstrakulikuler->sortBy('anggota_kelas.siswa.nama_lengkap') as $anggota_ekstrakulikuler)
-                          <?php $no++; ?>
-                          <input type="hidden" name="anggota_ekstrakulikuler_id[]" value="{{$anggota_ekstrakulikuler->id}}">
-                          <tr>
-                            <td class="text-center">{{$no}}</td>
-                            <td>{{$anggota_ekstrakulikuler->anggota_kelas->siswa->nama_lengkap}}</td>
-                            <td class="text-center">{{$anggota_ekstrakulikuler->anggota_kelas->siswa->jenis_kelamin}}</td>
-                            <td class="text-center">{{$anggota_ekstrakulikuler->anggota_kelas->kelas->nama_kelas}}</td>
-                            <td class="text-center">{{$anggota_ekstrakulikuler->ekstrakulikuler->nama_ekstrakulikuler}}</td>
-                            <td>
-                              <select class="form-control" name="nilai[]" style="width: 100%;" required oninvalid="this.setCustomValidity('silakan pilih item dalam daftar')" oninput="setCustomValidity('')">
-                                @if(is_null($anggota_ekstrakulikuler->nilai))
-                                <option value="A">A</option>
-                                <option value="B" selected>B</option>
-                                <option value="C">C</option>
-                                <option value="D">D</option>
-                                @else
-                                <option value="A" @if($anggota_ekstrakulikuler->nilai == 'A') selected @endif>A</option>
-                                <option value="B" @if($anggota_ekstrakulikuler->nilai == 'B') selected @endif>B</option>
-                                <option value="C" @if($anggota_ekstrakulikuler->nilai == 'C') selected @endif>C</option>
-                                <option value="D" @if($anggota_ekstrakulikuler->nilai == 'D') selected @endif>D</option>
-                                @endif
-                              </select>
-                            </td>
-                            <td>
-                              <textarea class="form-control" id="deskripsiNilai" name="deskripsi[]" rows="2" minlength="30" maxlength="200" required oninvalid="this.setCustomValidity('Deskripsi harus berisi antara 20 s/d 100 karakter')" oninput="setCustomValidity('')" readonly>{{$anggota_ekstrakulikuler->deskripsi}}</textarea>
-                          </td>
-                          </tr>
-                          @endforeach
+                          @if (!$data_anggota_ekstrakulikuler->isEmpty())
+                            @foreach($data_anggota_ekstrakulikuler->sortBy('anggota_kelas.siswa.nama_lengkap') as $anggota_ekstrakulikuler)
+                              <?php $no++; ?>
+                              <input type="hidden" name="anggota_ekstrakulikuler_id[]" value="{{$anggota_ekstrakulikuler->id}}">
+                              <tr>
+                                <td class="text-center">{{$no}}</td>
+                                <td>{{$anggota_ekstrakulikuler->anggota_kelas->siswa->nama_lengkap}}</td>
+                                <td class="text-center">{{$anggota_ekstrakulikuler->anggota_kelas->siswa->jenis_kelamin}}</td>
+                                <td class="text-center">{{$anggota_ekstrakulikuler->anggota_kelas->kelas->nama_kelas}}</td>
+                                <td class="text-center">{{$anggota_ekstrakulikuler->ekstrakulikuler->nama_ekstrakulikuler}}</td>
+                                <td>
+                                  <select class="form-control" name="nilai[]" style="width: 100%;" required oninvalid="this.setCustomValidity('silakan pilih item dalam daftar')" oninput="setCustomValidity('')">
+                                    @if(is_null($anggota_ekstrakulikuler->nilai))
+                                    <option value="A">A</option>
+                                    <option value="B" selected>B</option>
+                                    <option value="C">C</option>
+                                    <option value="D">D</option>
+                                    @else
+                                    <option value="A" @if($anggota_ekstrakulikuler->nilai == 'A') selected @endif>A</option>
+                                    <option value="B" @if($anggota_ekstrakulikuler->nilai == 'B') selected @endif>B</option>
+                                    <option value="C" @if($anggota_ekstrakulikuler->nilai == 'C') selected @endif>C</option>
+                                    <option value="D" @if($anggota_ekstrakulikuler->nilai == 'D') selected @endif>D</option>
+                                    @endif
+                                  </select>
+                                </td>
+                                <td>
+                                  <textarea class="form-control" id="deskripsiNilai" name="deskripsi[]" rows="2" minlength="30" maxlength="200" required oninvalid="this.setCustomValidity('Deskripsi harus berisi antara 20 s/d 100 karakter')" oninput="setCustomValidity('')" readonly>{{$anggota_ekstrakulikuler->deskripsi}}</textarea>
+                              </td>
+                              </tr>
+                            @endforeach
+                          @else
+                            <tr>
+                              <td class="text-center" colspan="12">Data tidak tersedia.</td>
+                            </tr>
+                          @endif
                         </tbody>
                       </table>
                     </div>

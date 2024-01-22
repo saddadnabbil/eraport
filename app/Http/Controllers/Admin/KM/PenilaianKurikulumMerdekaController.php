@@ -62,7 +62,10 @@ class PenilaianKurikulumMerdekaController extends Controller
         } else {
             $title = 'Input Nilai Kurikulum Merdeka';
             $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
-            $data_anggota_kelas = AnggotaKelas::where('kelas_id', $pembelajaran->kelas_id)->get();
+            $data_anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
+                ->where('anggota_kelas.kelas_id', $pembelajaran->kelas_id)
+                ->where('siswa.status', 1)
+                ->get();
             $pembelajaran_id = $request->pembelajaran_id;
 
             $tapel = Tapel::where('status', 1)->first();
@@ -135,25 +138,32 @@ class PenilaianKurikulumMerdekaController extends Controller
                 ];
             }
 
-            foreach ($data_anggota_kelas as $anggota_kelas) {
+            if ($data_anggota_kelas->isEmpty()) {
                 $nilaiAkhirFormatif = 0;
                 $nilaiAkhirSumatif = 0;
                 $nilaiAkhirRaport = 0;
                 $nilaiAkhirRevisi = null;
-
-                $nilaiAkhir = NilaiAkhir::where('anggota_kelas_id', $anggota_kelas->id)->first();
-
-                if ($nilaiAkhir) {
-                    $nilaiAkhirFormatif = $nilaiAkhir->nilai_akhir_formatif;
-                    $nilaiAkhirSumatif = $nilaiAkhir->nilai_akhir_sumatif;
-                    $nilaiAkhirRaport = $nilaiAkhir->nilai_akhir_raport;
-                    $nilaiAkhirRevisi = $nilaiAkhir->nilai_akhir_revisi;
+            } else {
+                foreach ($data_anggota_kelas as $anggota_kelas) {
+                    $nilaiAkhirFormatif = 0;
+                    $nilaiAkhirSumatif = 0;
+                    $nilaiAkhirRaport = 0;
+                    $nilaiAkhirRevisi = null;
+    
+                    $nilaiAkhir = NilaiAkhir::where('anggota_kelas_id', $anggota_kelas->id)->first();
+    
+                    if ($nilaiAkhir) {
+                        $nilaiAkhirFormatif = $nilaiAkhir->nilai_akhir_formatif;
+                        $nilaiAkhirSumatif = $nilaiAkhir->nilai_akhir_sumatif;
+                        $nilaiAkhirRaport = $nilaiAkhir->nilai_akhir_raport;
+                        $nilaiAkhirRevisi = $nilaiAkhir->nilai_akhir_revisi;
+                    }
+    
+                    $anggota_kelas->nilaiAkhirFormatif = $nilaiAkhirFormatif;
+                    $anggota_kelas->nilaiAkhirSumatif = $nilaiAkhirSumatif;
+                    $anggota_kelas->nilaiAkhirRaport = $nilaiAkhirRaport;
+                    $anggota_kelas->nilaiAkhirRevisi = $nilaiAkhirRevisi;
                 }
-
-                $anggota_kelas->nilaiAkhirFormatif = $nilaiAkhirFormatif;
-                $anggota_kelas->nilaiAkhirSumatif = $nilaiAkhirSumatif;
-                $anggota_kelas->nilaiAkhirRaport = $nilaiAkhirRaport;
-                $anggota_kelas->nilaiAkhirRevisi = $nilaiAkhirRevisi;
             }
 
             return view('admin.km.penilaian.index', compact('title', 'pembelajaran_id', 'data_pembelajaran', 'data_anggota_kelas', 'data_rencana_penilaian_sumatif', 'count_cp_sumatif', 'data_rencana_penilaian_formatif', 'count_cp_formatif', 'rencana_penilaian_data_formatif', 'rencana_penilaian_data_sumatif', 'nilaiAkhirFormatif', 'nilaiAkhirSumatif', 'nilaiAkhirRaport', 'nilaiAkhirRevisi', 'term'));

@@ -50,26 +50,32 @@
                     </thead>
                     <tbody>
                       <?php $no = 0; ?>
-                      @foreach($data_anggota_kelas->sortBy('siswa.nama_lengkap') as $anggota_kelas)
-                      <?php $no++; ?>
-                      <tr>
-                        <input type="hidden" name="anggota_kelas_id[]" value="{{$anggota_kelas->id}}">
-                        <td class="text-center">{{$no}}</td>
-                        <td class="text-center">{{$anggota_kelas->siswa->nis}}</td>
-                        <td>{{$anggota_kelas->siswa->nama_lengkap}}</td>
-                        <td class="text-center">{{$anggota_kelas->siswa->jenis_kelamin}}</td>
-                        <td class="text-center">{{$anggota_kelas->kelas->nama_kelas}}</td>
-                        <td>
-                          <input type="number" class="form-control" name="sakit[]" value="{{$anggota_kelas->sakit}}" required oninvalid="this.setCustomValidity('Isian tidak boleh kosong')" oninput="setCustomValidity('')">
-                        </td>
-                        <td>
-                          <input type="number" class="form-control" name="izin[]" value="{{$anggota_kelas->izin}}" required oninvalid="this.setCustomValidity('Isian tidak boleh kosong')" oninput="setCustomValidity('')">
-                        </td>
-                        <td>
-                          <input type="number" class="form-control" name="tanpa_keterangan[]" value="{{$anggota_kelas->tanpa_keterangan}}" required oninvalid="this.setCustomValidity('Isian tidak boleh kosong')" oninput="setCustomValidity('')">
-                        </td>
-                      </tr>
-                      @endforeach
+                      @if (!$data_anggota_kelas->isEmpty())
+                        @foreach($data_anggota_kelas->sortBy('siswa.nama_lengkap') as $anggota_kelas)
+                          <?php $no++; ?>
+                          <tr>
+                            <input type="hidden" name="anggota_kelas_id[]" value="{{$anggota_kelas->id}}">
+                            <td class="text-center">{{$no}}</td>
+                            <td class="text-center">{{$anggota_kelas->siswa->nis}}</td>
+                            <td>{{$anggota_kelas->siswa->nama_lengkap}}</td>
+                            <td class="text-center">{{$anggota_kelas->siswa->jenis_kelamin}}</td>
+                            <td class="text-center">{{$anggota_kelas->kelas->nama_kelas}}</td>
+                            <td>
+                              <input type="number" class="form-control" name="sakit[]" value="{{$anggota_kelas->sakit}}" required oninvalid="this.setCustomValidity('Isian tidak boleh kosong')" oninput="setCustomValidity('')">
+                            </td>
+                            <td>
+                              <input type="number" class="form-control" name="izin[]" value="{{$anggota_kelas->izin}}" required oninvalid="this.setCustomValidity('Isian tidak boleh kosong')" oninput="setCustomValidity('')">
+                            </td>
+                            <td>
+                              <input type="number" class="form-control" name="tanpa_keterangan[]" value="{{$anggota_kelas->tanpa_keterangan}}" required oninvalid="this.setCustomValidity('Isian tidak boleh kosong')" oninput="setCustomValidity('')">
+                            </td>
+                          </tr>
+                        @endforeach
+                      @else 
+                        <tr>
+                          <td class="text-center" colspan="12">Data tidak tersedia.</td>
+                        </tr>
+                      @endif
                     </tbody>
                   </table>
                 </div>

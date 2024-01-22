@@ -66,42 +66,48 @@
                   </thead>
                   <tbody>
                     <?php $no = 0; ?>
-                    @foreach($data_anggota_kelas->sortBy('siswa.nama_lengkap') as $anggota_kelas)
-                    <?php $no++; ?>
-                    <tr>
-                      <td class="text-center">{{$no}}</td>
-                      <td class="text-center">{{$anggota_kelas->siswa->nis}}</td>
-                      <td>{{$anggota_kelas->siswa->nama_lengkap}}</td>
-                      <td class="text-center">{{$anggota_kelas->kelas->nama_kelas}}</td>
+                    @if(!$data_anggota_kelas->isEmpty())
+                      @foreach($data_anggota_kelas->sortBy('siswa.nama_lengkap') as $anggota_kelas)
+                      <?php $no++; ?>
+                      <tr>
+                        <td class="text-center">{{$no}}</td>
+                        <td class="text-center">{{$anggota_kelas->siswa->nis}}</td>
+                        <td>{{$anggota_kelas->siswa->nama_lengkap}}</td>
+                        <td class="text-center">{{$anggota_kelas->kelas->nama_kelas}}</td>
 
-                      <td class="text-center">{{$anggota_kelas->rata_rata_sumatif}}</td>
-                      <td class="text-center">{{$anggota_kelas->rata_rata_formatif}}</td>
+                        <td class="text-center">{{$anggota_kelas->rata_rata_sumatif}}</td>
+                        <td class="text-center">{{$anggota_kelas->rata_rata_formatif}}</td>
 
-                      @if(!is_null($anggota_kelas->kehadiran_siswa))
-                        <td class="text-center">{{$anggota_kelas->kehadiran_siswa->sakit}}</td>
-                        <td class="text-center">{{$anggota_kelas->kehadiran_siswa->izin}}</td>
-                        <td class="text-center">{{$anggota_kelas->kehadiran_siswa->tanpa_keterangan}}</td>
-                      @else
-                        <td class="text-center">-</td>
-                        <td class="text-center">-</td>
-                        <td class="text-center">-</td>
-                      @endif
-
-                      @foreach($anggota_kelas->data_nilai_ekstrakulikuler as $nilai_ekstrakulikuler)
-                        @if($nilai_ekstrakulikuler->nilai == 1)
-                          <td class="text-center">Kurang</td>
-                        @elseif($nilai_ekstrakulikuler->nilai == 2)
-                          <td class="text-center">Cukup</td>
-                        @elseif($nilai_ekstrakulikuler->nilai == 3)
-                          <td class="text-center">Baik</td>
-                        @elseif($nilai_ekstrakulikuler->nilai == 4)
-                          <td class="text-center">Sangat Baik</td>
+                        @if(!is_null($anggota_kelas->kehadiran_siswa))
+                          <td class="text-center">{{$anggota_kelas->kehadiran_siswa->sakit}}</td>
+                          <td class="text-center">{{$anggota_kelas->kehadiran_siswa->izin}}</td>
+                          <td class="text-center">{{$anggota_kelas->kehadiran_siswa->tanpa_keterangan}}</td>
                         @else
                           <td class="text-center">-</td>
+                          <td class="text-center">-</td>
+                          <td class="text-center">-</td>
                         @endif
+
+                        @foreach($anggota_kelas->data_nilai_ekstrakulikuler as $nilai_ekstrakulikuler)
+                          @if($nilai_ekstrakulikuler->nilai == 1)
+                            <td class="text-center">Kurang</td>
+                          @elseif($nilai_ekstrakulikuler->nilai == 2)
+                            <td class="text-center">Cukup</td>
+                          @elseif($nilai_ekstrakulikuler->nilai == 3)
+                            <td class="text-center">Baik</td>
+                          @elseif($nilai_ekstrakulikuler->nilai == 4)
+                            <td class="text-center">Sangat Baik</td>
+                          @else
+                            <td class="text-center">-</td>
+                          @endif
+                        @endforeach
+                      </tr>
                       @endforeach
-                    </tr>
-                    @endforeach
+                    @else
+                      <tr>
+                        <td class="text-center" colspan="12">Data tidak tersedia.</td>
+                      </tr>
+                    @endif
                   </tbody>
                 </table>
               </div>

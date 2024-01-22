@@ -57,7 +57,11 @@ class NilaiEkstrakulikulerController extends Controller
             $kelas = Kelas::findorfail($request->kelas_id);
 
             $id_all_anggota_ekstra = AnggotaEkstrakulikuler::where('ekstrakulikuler_id', $ekstrakulikuler->id)->get('anggota_kelas_id');
-            $id_anggota_kelas_dipilih = AnggotaKelas::where('kelas_id', $request->kelas_id)->whereIn('id', $id_all_anggota_ekstra)->get('id');
+            $id_anggota_kelas_dipilih = AnggotaKelas::join('siswa', 'siswa.id', '=', 'anggota_kelas.siswa_id')
+                ->where('anggota_kelas.kelas_id', $request->kelas_id)
+                ->whereIn('anggota_kelas.id', $id_all_anggota_ekstra)
+                ->where('siswa.status', 'di siswa')
+                ->get('anggota_kelas.id');
 
             $id_kelas = AnggotaKelas::whereIn('id', $id_all_anggota_ekstra)->get('kelas_id');
             $data_kelas = Kelas::whereIn('id', $id_kelas)->get();

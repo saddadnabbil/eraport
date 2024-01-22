@@ -24,18 +24,17 @@ class CatatanWaliKelasController extends Controller
         $title = 'Input Catatan Wali Kelas';
         $tapel = Tapel::where('status', 1)->first();
         $guru = Guru::where('user_id', Auth::user()->id)->first();
-        // $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)->where('guru_id', $guru->id)->get('id');
-        // $data_anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
-        // ->orderBy('siswa.nama_lengkap', 'ASC')
-        // ->where('anggota_kelas.kelas_id', $id_kelas_diampu)
-        // ->where('siswa.status', 1)
-        // ->get();
+
         $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)->where('guru_id', $guru->id)->get('id');
 
         $id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('id');
         $kelas_id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('kelas_id');
 
-        $data_anggota_kelas = AnggotaKelas::whereIn('id', $id_anggota_kelas)->whereIn('kelas_id', $kelas_id_anggota_kelas)->get();
+        $data_anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
+            ->whereIn('anggota_kelas.id', $id_anggota_kelas)
+            ->whereIn('anggota_kelas.kelas_id', $kelas_id_anggota_kelas)
+            ->where('siswa.status', 1)
+            ->get();
 
         foreach ($data_anggota_kelas as $anggota) {
             $cek_data = CatatanWaliKelas::where('anggota_kelas_id', $anggota->id)->first();

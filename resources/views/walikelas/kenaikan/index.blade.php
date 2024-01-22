@@ -48,34 +48,40 @@
                     </thead>
                     <tbody>
                       <?php $no = 0; ?>
-                      @foreach($data_anggota_kelas->sortBy('siswa.nama_lengkap') as $anggota_kelas)
-                      <?php $no++; ?>
-                      <tr>
-                        <input type="hidden" name="anggota_kelas_id[]" value="{{$anggota_kelas->id}}">
-                        <td class="text-center">{{$no}}</td>
-                        <td class="text-center">{{$anggota_kelas->siswa->nis}}</td>
-                        <td>{{$anggota_kelas->siswa->nama_lengkap}}</td>
-                        <td class="text-center">{{$anggota_kelas->siswa->jenis_kelamin}}</td>
-                        <td class="text-center">{{$anggota_kelas->kelas->nama_kelas}}</td>
-                        <td>
-                          <select class="form-control select2" name="keputusan[]" style="width: 100%;" required>
-                            <option value="" @if($anggota_kelas->keputusan == null) selected @endif>-- Pilih Keputusan --</option>
-                            @if($anggota_kelas->kelas->tingkatan_id != $tingkatan_akhir)
-                            <option value="1" @if($anggota_kelas->keputusan == 1) selected @endif>Naik Kelas</option>
-                            <option value="2" @if($anggota_kelas->keputusan == 2) selected @endif>Tinggal Dikelas</option>
-                            @else
-                            <option value="3" @if($anggota_kelas->keputusan == 3) selected @endif>Lulus</option>
-                            <option value="4" @if($anggota_kelas->keputusan == 4) selected @endif>Tidak Lulus</option>
-                            @endif
-                          </select>
-                        </td>
-                        @if($anggota_kelas->kelas->tingkatan_id != $tingkatan_akhir)
-                        <td>
-                          <input type="text" class="form-control" name="kelas_tujuan[]" placeholder="Kelas Tujuan" value="{{$anggota_kelas->kelas_tujuan}}" required>
-                        </td>
-                        @endif
-                      </tr>
-                      @endforeach
+                      @if(!$data_anggota_kelas->isEmpty())
+                        @foreach($data_anggota_kelas->sortBy('siswa.nama_lengkap') as $anggota_kelas)
+                        <?php $no++; ?>
+                        <tr>
+                          <input type="hidden" name="anggota_kelas_id[]" value="{{$anggota_kelas->id}}">
+                          <td class="text-center">{{$no}}</td>
+                          <td class="text-center">{{$anggota_kelas->siswa->nis}}</td>
+                          <td>{{$anggota_kelas->siswa->nama_lengkap}}</td>
+                          <td class="text-center">{{$anggota_kelas->siswa->jenis_kelamin}}</td>
+                          <td class="text-center">{{$anggota_kelas->kelas->nama_kelas}}</td>
+                          <td>
+                            <select class="form-control select2" name="keputusan[]" style="width: 100%;" required>
+                              <option value="" @if($anggota_kelas->keputusan == null) selected @endif>-- Pilih Keputusan --</option>
+                              @if($anggota_kelas->kelas->tingkatan_id != $tingkatan_akhir)
+                              <option value="1" @if($anggota_kelas->keputusan == 1) selected @endif>Naik Kelas</option>
+                              <option value="2" @if($anggota_kelas->keputusan == 2) selected @endif>Tinggal Dikelas</option>
+                              @else
+                              <option value="3" @if($anggota_kelas->keputusan == 3) selected @endif>Lulus</option>
+                              <option value="4" @if($anggota_kelas->keputusan == 4) selected @endif>Tidak Lulus</option>
+                              @endif
+                            </select>
+                          </td>
+                          @if($anggota_kelas->kelas->tingkatan_id != $tingkatan_akhir)
+                          <td>
+                            <input type="text" class="form-control" name="kelas_tujuan[]" placeholder="Kelas Tujuan" value="{{$anggota_kelas->kelas_tujuan}}" required>
+                          </td>
+                          @endif
+                        </tr>
+                        @endforeach
+                      @else
+                        <tr>
+                          <td class="text-center" colspan="12">Data tidak tersedia.</td>
+                        </tr>
+                      @endif
                     </tbody>
                   </table>
                 </div>

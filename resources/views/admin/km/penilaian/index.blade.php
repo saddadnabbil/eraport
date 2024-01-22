@@ -94,62 +94,66 @@
                     </thead>
                     <tbody>
                       <?php $no = 0; ?>
-                      <?php $no = 0; ?> 
-                      @foreach($data_anggota_kelas->sortBy('siswa.nama_lengkap') as $anggota_kelas)
-                          <?php $no++; ?>
-                          <tr>
-                              <td class="text-center">{{$no}}</td>
-                              <td>{{$anggota_kelas->siswa->nama_lengkap}}</td>
-                              <input type="hidden" name="anggota_kelas_id[]" value="{{$anggota_kelas->id}}">
+                      @if (!$data_anggota_kelas->isEmpty())
+                        @foreach($data_anggota_kelas->sortBy('siswa.nama_lengkap') as $anggota_kelas)
+                            <?php $no++; ?>
+                            <tr>
+                                <td class="text-center">{{$no}}</td>
+                                <td>{{$anggota_kelas->siswa->nama_lengkap}}</td>
+                                <input type="hidden" name="anggota_kelas_id[]" value="{{$anggota_kelas->id}}">
 
-                              <?php $i = 0; ?>
-                              @foreach($data_rencana_penilaian_formatif as $rencana_penilaian_formatif)
-                                  @if ($rencana_penilaian_formatif->nilai_formatif->isEmpty())
-                                      <td>
-                                          <input type="number" class="form-control nilai_formatif_input" data-bobot="{{$rencana_penilaian_formatif->bobot_teknik_penilaian}}" name="nilai_formatif[{{$i}}][]" min="0" max="100" oninvalid="this.setCustomValidity('Nilai harus berisi antara 0 s/d 100')" oninput="setCustomValidity('')" style="text-align: center;" > 
-                                      </td>
-                                  @else
-                                      @foreach($rencana_penilaian_formatif->nilai_formatif as $nilai_formatif)
-                                          @if ($nilai_formatif->anggota_kelas_id == $anggota_kelas->id)
-                                          <td>
-                                              <input type="number" class="form-control nilai_formatif_input" data-bobot="{{$rencana_penilaian_formatif->bobot_teknik_penilaian}}" name="nilai_formatif[{{$i}}][]" min="0" max="100" oninvalid="this.setCustomValidity('Nilai harus berisi antara 0 s/d 100')" oninput="setCustomValidity('')" style="text-align: center;" value="{{$nilai_formatif->nilai}}"> 
-                                          </td>
-                                          @endif
-                                      @endforeach
-                                  @endif
-                                  <?php $i++; ?>
-                              @endforeach
-                              <td class="red nilai-proses" name="nilaiAkhirFormatif">{{$nilaiAkhirFormatif}} </td>
-                              <input type="hidden" name="nilaiAkhirFormatif" id="nilaiAkhirFormatif" >
-
-                              <?php $i = 0; ?> 
-                              @foreach($data_rencana_penilaian_sumatif as $rencana_penilaian_sumatif)
-                                  @if ($rencana_penilaian_sumatif->nilai_sumatif->isEmpty())
-                                      <td>
-                                          <input type="number" class="form-control nilai_sumatif_input" data-bobot="{{$rencana_penilaian_sumatif->bobot_teknik_penilaian}}" name="nilai_sumatif[{{$i}}][]" min="0" max="100" oninvalid="this.setCustomValidity('Nilai harus berisi antara 0 s/d 100')" oninput="setCustomValidity('')" style="text-align: center;" > 
-                                      </td>
-                                  @elseif($rencana_penilaian_sumatif->nilai_sumatif != null)
-                                      @foreach($rencana_penilaian_sumatif->nilai_sumatif as $nilai_sumatif)
-                                          @if ($nilai_sumatif->anggota_kelas_id == $anggota_kelas->id)
+                                <?php $i = 0; ?>
+                                @foreach($data_rencana_penilaian_formatif as $rencana_penilaian_formatif)
+                                    @if ($rencana_penilaian_formatif->nilai_formatif->isEmpty())
+                                        <td>
+                                            <input type="number" class="form-control nilai_formatif_input" data-bobot="{{$rencana_penilaian_formatif->bobot_teknik_penilaian}}" name="nilai_formatif[{{$i}}][]" min="0" max="100" oninvalid="this.setCustomValidity('Nilai harus berisi antara 0 s/d 100')" oninput="setCustomValidity('')" style="text-align: center;" > 
+                                        </td>
+                                    @else
+                                        @foreach($rencana_penilaian_formatif->nilai_formatif as $nilai_formatif)
+                                            @if ($nilai_formatif->anggota_kelas_id == $anggota_kelas->id)
                                             <td>
-                                                <input type="number" class="form-control nilai_sumatif_input" data-bobot="{{$rencana_penilaian_sumatif->bobot_teknik_penilaian}}" name="nilai_sumatif[{{$i}}][]" min="0" max="100" oninvalid="this.setCustomValidity('Nilai harus berisi antara 0 s/d 100')" oninput="setCustomValidity('')" style="text-align: center;" value="{{$nilai_sumatif->nilai}}"> 
+                                                <input type="number" class="form-control nilai_formatif_input" data-bobot="{{$rencana_penilaian_formatif->bobot_teknik_penilaian}}" name="nilai_formatif[{{$i}}][]" min="0" max="100" oninvalid="this.setCustomValidity('Nilai harus berisi antara 0 s/d 100')" oninput="setCustomValidity('')" style="text-align: center;" value="{{$nilai_formatif->nilai}}"> 
                                             </td>
-                                          @endif
-                                      @endforeach
-                                  @endif
-                                  <?php $i++; ?> 
-                              @endforeach
-                              <td class="red nilai-proses" name="nilaiAkhirSumatif">{{ $nilaiAkhirSumatif }}</td>
-                              <input type="hidden" name="nilaiAkhirSumatif" id="nilaiAkhirSumatif" >
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                    <?php $i++; ?>
+                                @endforeach
+                                <td class="red nilai-proses" name="nilaiAkhirFormatif">{{$nilaiAkhirFormatif}} </td>
+                                <input type="hidden" name="nilaiAkhirFormatif" id="nilaiAkhirFormatif" >
 
-                              <td class="red nilai-proses" id="nilaiAkhirRaportDisplay">{{ $anggota_kelas->nilaiAkhirRaport }}</td>
-                              <input type="hidden" name="nilaiAkhirRaport" id="nilaiAkhirRaportInput" >
-                              <td>
-                                  <input type="number" class="form-control" name="nilai_revisi[]" min="0" max="100" oninvalid="this.setCustomValidity('Nilai harus berisi antara 0 s/d 100')" oninput="setCustomValidity('')" style="text-align: center;" value="{{$anggota_kelas->nilaiAkhirRevisi}}"> 
-                              </td>
-                          </tr>
-                      @endforeach
+                                <?php $i = 0; ?> 
+                                @foreach($data_rencana_penilaian_sumatif as $rencana_penilaian_sumatif)
+                                    @if ($rencana_penilaian_sumatif->nilai_sumatif->isEmpty())
+                                        <td>
+                                            <input type="number" class="form-control nilai_sumatif_input" data-bobot="{{$rencana_penilaian_sumatif->bobot_teknik_penilaian}}" name="nilai_sumatif[{{$i}}][]" min="0" max="100" oninvalid="this.setCustomValidity('Nilai harus berisi antara 0 s/d 100')" oninput="setCustomValidity('')" style="text-align: center;" > 
+                                        </td>
+                                    @elseif($rencana_penilaian_sumatif->nilai_sumatif != null)
+                                        @foreach($rencana_penilaian_sumatif->nilai_sumatif as $nilai_sumatif)
+                                            @if ($nilai_sumatif->anggota_kelas_id == $anggota_kelas->id)
+                                              <td>
+                                                  <input type="number" class="form-control nilai_sumatif_input" data-bobot="{{$rencana_penilaian_sumatif->bobot_teknik_penilaian}}" name="nilai_sumatif[{{$i}}][]" min="0" max="100" oninvalid="this.setCustomValidity('Nilai harus berisi antara 0 s/d 100')" oninput="setCustomValidity('')" style="text-align: center;" value="{{$nilai_sumatif->nilai}}"> 
+                                              </td>
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                    <?php $i++; ?> 
+                                @endforeach
+                                <td class="red nilai-proses" name="nilaiAkhirSumatif">{{ $nilaiAkhirSumatif }}</td>
+                                <input type="hidden" name="nilaiAkhirSumatif" id="nilaiAkhirSumatif" >
 
+                                <td class="red nilai-proses" id="nilaiAkhirRaportDisplay">{{ $anggota_kelas->nilaiAkhirRaport }}</td>
+                                <input type="hidden" name="nilaiAkhirRaport" id="nilaiAkhirRaportInput" >
+                                <td>
+                                    <input type="number" class="form-control" name="nilai_revisi[]" min="0" max="100" oninvalid="this.setCustomValidity('Nilai harus berisi antara 0 s/d 100')" oninput="setCustomValidity('')" style="text-align: center;" value="{{$anggota_kelas->nilaiAkhirRevisi}}"> 
+                                </td>
+                            </tr>
+                        @endforeach
+                      @else
+                        <tr>
+                          <td class="text-center" colspan="12">Data tidak tersedia.</td>
+                        </tr>
+                      @endif
                     </tbody>
                   </table>
                 </div>
