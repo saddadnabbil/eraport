@@ -26,8 +26,6 @@ class CreateSiswasTable extends Migration
             $table->string('nama_lengkap', 100);
             $table->string('nama_panggilan', 100);
             $table->string('nik', 16)->unique();
-            $table->string('email')->unique();
-            $table->string('nomor_hp', 13)->unique()->nullable();
             $table->enum('jenis_kelamin', ['Male', 'Female']);
             $table->enum('blood_type', ['A', 'B', 'AB', 'O'])->nullable();
             $table->enum('agama', ['1', '2', '3', '4', '5', '6', '7']);
@@ -42,26 +40,49 @@ class CreateSiswasTable extends Migration
             $table->string('kota');
             $table->unsignedInteger('kode_pos');
             $table->unsignedInteger('jarak_rumah_ke_sekolah');
-            $table->enum('status_dalam_keluarga', ['1', '2', '3']);
-            $table->enum('tinggal_bersama', ['Parents', 'Others'])->nullable;
+            $table->string('email')->unique();
+            $table->string('email_parent')->unique();
+            $table->string('nomor_hp', 13)->unique()->nullable();
+            $table->enum('tinggal_bersama', ['Parents', 'Others'])->nullable();
             $table->string('transportasi')->nullable();
 
-            // parent information
-            $table->string('nama_ayah', 100);
-            $table->string('nama_ibu', 100);
-            $table->string('nama_wali', 100)->nullable();
+            //// parent information
+            // parent information father
             $table->string('nik_ayah', 16);
-            $table->string('nik_ibu', 16);
-            $table->string('nik_wali', 16)->nullable();
-            $table->string('email_ayah', 100)->nullable();
-            $table->string('email_ibu', 100)->nullable();
-            $table->string('email_wali', 100)->nullable();
+            $table->string('nama_ayah', 100);
+            $table->string('tempat_lahir_ayah', 100)->nullable();
+            $table->string('tanggal_lahir_ayah', 10)->nullable();
+            $table->string('alamat_ayah', 100)->nullable();
             $table->string('nomor_hp_ayah', 13)->nullable();
-            $table->string('nomor_hp_ibu', 13)->nullable();
-            $table->string('nomor_hp_wali', 13)->nullable();
+            $table->enum('agama_ayah', ['1', '2', '3', '4', '5', '6', '7'])->nullable();
+            $table->string('kota_ayah', 100)->nullable();
+            $table->string('pendidikan_terakhir_ayah', 25)->nullable();
             $table->string('pekerjaan_ayah', 100)->nullable();
+            $table->string('penghasil_ayah', 100)->nullable();
+            // parent information mother
+            $table->string('nik_ibu', 16);
+            $table->string('nama_ibu', 100);
+            $table->string('tempat_lahir_ibu', 100)->nullable();
+            $table->string('tanggal_lahir_ibu', 10)->nullable();
+            $table->string('alamat_ibu', 100)->nullable();
+            $table->string('nomor_hp_ibu', 13)->nullable();
+            $table->enum('agama_ibu', ['1', '2', '3', '4', '5', '6', '7'])->nullable();
+            $table->string('kota_ibu', 100)->nullable();
+            $table->string('pendidikan_terakhir_ibu', 25)->nullable();
             $table->string('pekerjaan_ibu', 100)->nullable();
+            $table->string('penghasil_ibu', 100)->nullable();
+            // parent information guardian
+            $table->string('nik_wali', 16);
+            $table->string('nama_wali', 100);
+            $table->string('tempat_lahir_wali', 100)->nullable();
+            $table->string('tanggal_lahir_wali', 10)->nullable();
+            $table->string('alamat_wali', 100)->nullable();
+            $table->string('nomor_hp_wali', 13)->nullable();
+            $table->enum('agama_wali', ['1', '2', '3', '4', '5', '6', '7'])->nullable();
+            $table->string('kota_wali', 100)->nullable();
+            $table->string('pendidikan_terakhir_wali', 25)->nullable();
             $table->string('pekerjaan_wali', 100)->nullable();
+            $table->string('penghasil_wali', 100)->nullable();
 
             // student medical condition information
             $table->unsignedInteger('tinggi_badan')->nullable();
