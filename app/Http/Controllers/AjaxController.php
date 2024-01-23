@@ -11,6 +11,7 @@ use App\Pembelajaran;
 use Illuminate\Http\Request;
 use App\AnggotaEkstrakulikuler;
 use App\Http\Controllers\Controller;
+use App\Jurusan;
 use App\Silabus;
 use Illuminate\Support\Facades\Auth;
 
@@ -23,11 +24,26 @@ class AjaxController extends Controller
         foreach ($data_kelas as $kelas) {
             $kls = Kelas::findorfail($kelas->kelas_id);
             $kelas->tingkatan_id = $kls->tingkatan->nama_tingkatan;
+            $kelas->jurusan_id = $kls->jurusan->id;
             $kelas->nama_kelas = $kls->nama_kelas;
         }
         // dd($data_kelas);
         return json_encode($data_kelas, true);
     }
+
+    public function ajax_kelas_by_tingkatan_id($id)
+    {
+        $tapel = Tapel::where('status', 1)->first();
+        $data_kelas = Kelas::where('tingkatan_id', $id)->where('tapel_id', $tapel->id)->get();
+        foreach ($data_kelas as $kelas) {
+            $data_jurusan = Jurusan::where('id', $kelas->jurusan_id)->get();
+        }
+
+
+        return json_encode(['data' => $data_kelas, 'data_jurusan' => $data_jurusan], true);
+    }
+
+
 
     public function ajax_kelas_ekstra($id)
     {

@@ -27,3 +27,7 @@ th.red {
     color: #000000;
     text-align: center;
 }
+
+img #pas_photo_preview {
+    max-width:180px;
+  }

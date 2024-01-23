@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Siswa extends Model
 {
     use HasFactory;
-    
+
     protected $table = 'siswa';
 
     protected $guarded = ['id'];
@@ -25,7 +25,7 @@ class Siswa extends Model
         return $this->belongsTo('App\Kelas');
     }
 
-    public function tingakatan()
+    public function tingkatan()
     {
         return $this->belongsTo('App\Tingkat');
     }

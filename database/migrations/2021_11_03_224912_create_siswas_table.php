@@ -19,6 +19,7 @@ class CreateSiswasTable extends Migration
             $table->unsignedBigInteger('user_id')->unique()->unsigned();
             $table->unsignedBigInteger('kelas_id')->unsigned()->nullable();
             $table->unsignedBigInteger('tingkatan_id')->unsigned()->nullable();
+            $table->unsignedBigInteger('jurusan_id')->unsigned()->nullable();
             $table->enum('jenis_pendaftaran', ['1', '2']);
 
             $table->string('nis', 10)->unique();
@@ -31,18 +32,19 @@ class CreateSiswasTable extends Migration
             $table->enum('agama', ['1', '2', '3', '4', '5', '6', '7']);
             $table->string('tempat_lahir', 50);
             $table->date('tanggal_lahir');
-            $table->string('anak_ke', 2);
-            $table->string('jml_saudara_kandung', 2);
-            $table->string('warga_negara', 2);
+            $table->string('anak_ke', 2)->nullable();
+            $table->string('jml_saudara_kandung', 2)->nullable();
+            $table->string('warga_negara', 2)->nullable();
+            $table->string('pas_photo')->nullable();
 
             // domicile information
             $table->string('alamat');
             $table->string('kota');
             $table->unsignedInteger('kode_pos');
-            $table->unsignedInteger('jarak_rumah_ke_sekolah');
-            $table->string('email')->unique();
-            $table->string('email_parent')->unique();
-            $table->string('nomor_hp', 13)->unique()->nullable();
+            $table->unsignedInteger('jarak_rumah_ke_sekolah')->nullable();
+            $table->string('email');
+            $table->string('email_parent')->nullable();
+            $table->string('nomor_hp', 13)->unique();
             $table->enum('tinggal_bersama', ['Parents', 'Others'])->nullable();
             $table->string('transportasi')->nullable();
 

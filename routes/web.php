@@ -130,6 +130,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 
       Route::get('getKelas/ajax/{id}', 'AjaxController@ajax_kelas');
+      Route::get('getKelasByTingkatan/ajax/{id}', 'AjaxController@ajax_kelas_by_tingkatan_id');
       Route::get('getAllSilabus/ajax/{id}', 'AjaxController@getAllSilabus')->name('admin.get.all.silabus');
       Route::get('getPembelajaranId/', 'AjaxController@getPembelajaranId')->name('get.pembelajaran.id');
 

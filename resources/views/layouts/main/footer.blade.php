@@ -56,7 +56,7 @@
   });
 </script>
 
-<script type="text/javascript">
+{{-- <script type="text/javascript">
   function CheckPendaftaran(val) {
     var element = document.getElementById('kelas');
     var element1 = document.getElementById('kelas_bawah');
@@ -84,7 +84,7 @@
 
 
   }
-</script>
+</script> --}}
 
 <!-- PAGE SCRIPTS -->
 <!-- <script src="/assets/dist/js/pages/dashboard2.js"></script> -->

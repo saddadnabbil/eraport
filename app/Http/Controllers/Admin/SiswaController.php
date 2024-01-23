@@ -14,6 +14,7 @@ use App\Imports\SiswaImport;
 use Illuminate\Http\Request;
 use App\AnggotaEkstrakulikuler;
 use App\Http\Controllers\Controller;
+use App\Tingkatan;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 
@@ -50,13 +51,15 @@ class SiswaController extends Controller
                 ->where('tingkatan_id', '5')
                 ->count();
 
+            $data_tingkatan = Tingkatan::orderBy('id', 'ASC')->get();
+
             $tingkatan_terendah = Kelas::where('tapel_id', $tapel->id)->min('tingkatan_id');
             $tingkatan_akhir = Kelas::where('tapel_id', $tapel->id)->max('tingkatan_id');
             $data_kelas_terendah = Kelas::where('tapel_id', $tapel->id)->where('tingkatan_id', $tingkatan_terendah)->orderBy('tingkatan_id', 'ASC')->get();
             $data_kelas_all = Kelas::where('tapel_id', $tapel->id)->orderBy('tingkatan_id', 'ASC')->get();
             // $data_siswa = Siswa::where('status', 1)->orderBy('nis', 'ASC')->get();
             $data_siswa = Siswa::orderBy('kelas_id', 'DESC')->orderBy('status', 'DESC')->get();
-            return view('admin.siswa.index', compact('title', 'data_kelas_all', 'data_kelas_terendah', 'data_siswa', 'tingkatan_akhir', 'jumlah_kelas', 'jumlah_kelas_play_group', 'jumlah_kelas_kinder_garten', 'jumlah_kelas_primary_school', 'jumlah_kelas_junior_high_school', 'jumlah_kelas_senior_high_school'));
+            return view('admin.siswa.index', compact('title', 'data_kelas_all', 'data_kelas_terendah', 'data_siswa', 'tingkatan_akhir', 'jumlah_kelas', 'jumlah_kelas_play_group', 'jumlah_kelas_kinder_garten', 'jumlah_kelas_primary_school', 'jumlah_kelas_junior_high_school', 'jumlah_kelas_senior_high_school', 'data_tingkatan'));
         }
     }
 
@@ -65,13 +68,14 @@ class SiswaController extends Controller
         $siswa = Siswa::findorfail($id);
         $title = 'Detail Siswa';
         $tapel = Tapel::where('status', 1)->first();
+        $data_tingkatan = Tingkatan::orderBy('id', 'ASC')->get();
 
         $tingkatan_terendah = Kelas::where('tapel_id', $tapel->id)->min('tingkatan_id');
         $tingkatan_akhir = Kelas::where('tapel_id', $tapel->id)->max('tingkatan_id');
         $data_kelas_terendah = Kelas::where('tapel_id', $tapel->id)->where('tingkatan_id', $tingkatan_terendah)->orderBy('tingkatan_id', 'ASC')->get();
         $data_kelas_all = Kelas::where('tapel_id', $tapel->id)->orderBy('tingkatan_id', 'ASC')->get();
 
-        return view('admin.siswa.show', compact('title', 'siswa', 'tingkatan_akhir', 'data_kelas_all', 'data_kelas_terendah'));
+        return view('admin.siswa.show', compact('title', 'siswa', 'tingkatan_akhir', 'data_kelas_all', 'data_kelas_terendah', 'data_tingkatan'));
     }
 
     /**
@@ -86,18 +90,17 @@ class SiswaController extends Controller
             $request->all(),
             [
                 'nama_lengkap' => 'required|min:3|max:100',
-                'jenis_kelamin' => 'required',
-                'jenis_pendaftaran' => 'required',
-                'kelas_id' => 'required',
+                'jenis_kelamin' => 'required|in:Male,Female',
+                'jenis_pendaftaran' => 'required|in:1,2',
+                'kelas_id' => 'required|exists:kelas,id',
                 'nis' => 'required|numeric|digits_between:1,10|unique:siswa',
                 'nisn' => 'nullable|numeric|digits:10|unique:siswa',
                 'tempat_lahir' => 'required|min:3|max:50',
-                'tanggal_lahir' => 'required',
-                'agama' => 'required',
-                'anak_ke' => 'required|numeric|digits_between:1,2',
-                'status_dalam_keluarga' => 'required',
+                'tanggal_lahir' => 'required|date',
+                'agama' => 'required|in:1,2,3,4,5,6,7',
                 'alamat' => 'required|min:3|max:255',
                 'nomor_hp' => 'nullable|numeric|digits_between:11,13|unique:siswa',
+                'pas_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Adjust the allowed file types and size as needed
 
                 'nama_ayah' => 'required|min:3|max:100',
                 'nama_ibu' => 'required|min:3|max:100',
@@ -124,28 +127,105 @@ class SiswaController extends Controller
 
             $siswa = new Siswa([
                 'user_id' => $user->id,
+                'tingkatan_id' => $request->kelas_id,
+                'jurusan_id' => $request->kelas_id,
                 'kelas_id' => $request->kelas_id,
                 'jenis_pendaftaran' => $request->jenis_pendaftaran,
+
+                // information student
+                'nik' => $request->nik,
                 'nis' => $request->nis,
                 'nisn' => $request->nisn,
                 'nama_lengkap' => strtoupper($request->nama_lengkap),
+                'nama_panggilan' => $request->nama_panggilan,
+                'nik' => $request->nik,
+                'jenis_kelamin' => $request->jenis_kelamin,
+                'blood_type' => $request->blood_type,
+                'agama' => $request->agama,
                 'tempat_lahir' => $request->tempat_lahir,
                 'tanggal_lahir' => $request->tanggal_lahir,
-                'jenis_kelamin' => $request->jenis_kelamin,
-                'agama' => $request->agama,
-                'status_dalam_keluarga' => $request->status_dalam_keluarga,
                 'anak_ke' => $request->anak_ke,
+                'jml_saudara_kandung' => $request->jml_saudara_kandung,
+                'warga_negara' => $request->warga_negara,
+                'pas_photo' => $request->pas_photo,
+
+                // student medical condition information
+                'tinggi_badan' => $request->tinggi_badan,
+                'berat_badan' => $request->berat_badan,
+                'spesial_treatment' => $request->spesial_treatment,
+                'note_kesehatan' => $request->note_kesehatan,
+                'file_document_kesehatan' => $request->file_document_kesehatan,
+                'file_list_pertanyaan' => $request->file_list_pertanyaan,
+
+                // previously formal school
+                'tanggal_masuk_sekolah_lama' => $request->tanggal_masuk_sekolah_lama,
+                'tanggal_keluar_sekolah_lama' => $request->tanggal_keluar_sekolah_lama,
+                'nama_sekolah_lama' => $request->nama_sekolah_lama,
+                'alamat_lama' => $request->alamat_lama,
+                'no_sttb' => $request->no_sttb,
+                'nem' => $request->nem,
+                'file_dokument_sekolah_lama' => $request->file_dokument_sekolah_lama,
+
+                // domicile information
                 'alamat' => $request->alamat,
+                'kota' => $request->kota,
+                'kode_pos' => $request->kode_pos,
+                'jarak_rumah_ke_sekolah' => $request->jarak_rumah_ke_sekolah,
+                'email' => $request->email,
+                'email_parent' => $request->email_parent,
                 'nomor_hp' => $request->nomor_hp,
+                'tinggal_bersama' => $request->tinggal_bersama,
+                'transportasi' => $request->transportasi,
+
+                // parent information father
+                'nik_ayah' => $request->nik_ayah,
                 'nama_ayah' => $request->nama_ayah,
-                'nama_ibu' => $request->nama_ibu,
+                'tempat_lahir_ayah' => $request->tempat_lahir_ayah,
+                'tanggal_lahir_ayah' => $request->tanggal_lahir_ayah,
+                'alamat_ayah' => $request->alamat_ayah,
+                'nomor_hp_ayah' => $request->nomor_hp_ayah,
+                'agama_ayah' => $request->agama_ayah,
+                'kota_ayah' => $request->kota_ayah,
+                'pendidikan_terakhir_ayah' => $request->pendidikan_terakhir_ayah,
                 'pekerjaan_ayah' => $request->pekerjaan_ayah,
+                'penghasil_ayah' => $request->penghasil_ayah,
+
+                // parent information mother
+                'nik_ibu' => $request->nik_ibu,
+                'nama_ibu' => $request->nama_ibu,
+                'tempat_lahir_ibu' => $request->tempat_lahir_ibu,
+                'tanggal_lahir_ibu' => $request->tanggal_lahir_ibu,
+                'alamat_ibu' => $request->alamat_ibu,
+                'nomor_hp_ibu' => $request->nomor_hp_ibu,
+                'agama_ibu' => $request->agama_ibu,
+                'kota_ibu' => $request->kota_ibu,
+                'pendidikan_terakhir_ibu' => $request->pendidikan_terakhir_ibu,
                 'pekerjaan_ibu' => $request->pekerjaan_ibu,
+                'penghasil_ibu' => $request->penghasil_ibu,
+
+                // parent information guardian
+                'nik_wali' => $request->nik_wali,
                 'nama_wali' => $request->nama_wali,
+                'tempat_lahir_wali' => $request->tempat_lahir_wali,
+                'tanggal_lahir_wali' => $request->tanggal_lahir_wali,
+                'alamat_wali' => $request->alamat_wali,
+                'nomor_hp_wali' => $request->nomor_hp_wali,
+                'agama_wali' => $request->agama_wali,
+                'kota_wali' => $request->kota_wali,
+                'pendidikan_terakhir_wali' => $request->pendidikan_terakhir_wali,
                 'pekerjaan_wali' => $request->pekerjaan_wali,
+                'penghasil_wali' => $request->penghasil_wali,
+
                 'avatar' => 'default.png',
                 'status' => 1,
             ]);
+
+            if ($request->hasFile('pas_photo')) {
+                $file = $request->file('pas_photo');
+                $path = $file->store('siswa', 'public'); // Adjust the storage path as needed
+                $siswa->pas_photo = $path;
+            }
+
             $siswa->save();
 
             $anggota_kelas = new AnggotaKelas([
@@ -169,51 +249,144 @@ class SiswaController extends Controller
     public function update(Request $request, $id)
     {
         $siswa = Siswa::findorfail($id);
-        $validator = Validator::make($request->all(), [
-            'kelas_id' => 'nullable',
-            'nama_lengkap' => 'required|min:3|max:100',
-            'jenis_kelamin' => 'required',
-            'nis' => 'required|numeric|digits_between:1,10|unique:siswa,nis,' . $siswa->id,
-            'nisn' => 'nullable|numeric|digits:10|unique:siswa,nisn,' . $siswa->id,
-            'tempat_lahir' => 'required|min:3|max:50',
-            'tanggal_lahir' => 'required',
-            'agama' => 'required',
-            'anak_ke' => 'required|numeric|digits_between:1,2',
-            'status_dalam_keluarga' => 'required',
-            'alamat' => 'required|min:3|max:255',
-            'nomor_hp' => 'nullable|numeric|digits_between:11,13|unique:siswa,nomor_hp,' . $siswa->id,
-            'nama_ayah' => 'required|min:3|max:100',
-            'nama_ibu' => 'required|min:3|max:100',
-            'pekerjaan_ayah' => 'required|min:3|max:100',
-            'pekerjaan_ibu' => 'required|min:3|max:100',
-            'nama_wali' => 'nullable|min:3|max:100',
-            'pekerjaan_wali' => 'nullable|min:3|max:100',
-        ]);
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'username' => 'nullable|min:3|max:100|unique:user,username,' . ($siswa->user->id ?? '') . ',id',
+                'password' => 'nullable|min:8|max:255',
+
+                'nama_lengkap' => 'required|min:3|max:100',
+                'jenis_kelamin' => 'required|in:Male,Female',
+                'jenis_pendaftaran' => 'required|in:1,2',
+                'kelas_id' => 'required|exists:kelas,id',
+                'nis' => 'required',
+                'nisn' => 'nullable|numeric|digits:10|unique:siswa,nisn,' . $siswa->id,
+                'tempat_lahir' => 'required|min:3|max:50',
+                'tanggal_lahir' => 'required|date',
+                'agama' => 'required|in:1,2,3,4,5,6,7',
+                'alamat' => 'required|min:3|max:255',
+                'nomor_hp' => 'nullable|numeric',
+                'pas_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Adjust the allowed file types and size as needed
+
+                'nama_ayah' => 'required|min:3|max:100',
+                'nama_ibu' => 'required|min:3|max:100',
+                'pekerjaan_ayah' => 'required|min:3|max:100',
+                'pekerjaan_ibu' => 'required|min:3|max:100',
+                'nama_wali' => 'nullable|min:3|max:100',
+                'pekerjaan_wali' => 'nullable|min:3|max:100',
+            ]
+        );
         if ($validator->fails()) {
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
         } else {
+            $password_baru = bcrypt($request->password_baru);
+            $password_lama = bcrypt($request->password_lama);
+
+            if ($password_baru != $siswa->user->password && $request->password_baru != null || $request->username != null) {
+                if ($password_lama != $siswa->user->password && $request->password_lama != null) {
+                    return back()->with('toast_error', 'Password lama tidak sesuai');
+                } else {
+                    $user = User::findOrFail($siswa->user_id);
+
+                    $user->password = $password_baru;
+                    $user->username = $request->username;
+                    $user->save();
+                }
+            }
+
             $data_siswa = [
+                'tingkatan_id' => $request->kelas_id,
+                'jurusan_id' => $request->kelas_id,
                 'kelas_id' => $request->kelas_id,
+                'jenis_pendaftaran' => $request->jenis_pendaftaran,
+
+                // information student
+                'nik' => $request->nik,
                 'nis' => $request->nis,
                 'nisn' => $request->nisn,
                 'nama_lengkap' => strtoupper($request->nama_lengkap),
+                'nama_panggilan' => $request->nama_panggilan,
+                'nik' => $request->nik,
+                'jenis_kelamin' => $request->jenis_kelamin,
+                'blood_type' => $request->blood_type,
+                'agama' => $request->agama,
                 'tempat_lahir' => $request->tempat_lahir,
                 'tanggal_lahir' => $request->tanggal_lahir,
-                'jenis_kelamin' => $request->jenis_kelamin,
-                'agama' => $request->agama,
-                'status_dalam_keluarga' => $request->status_dalam_keluarga,
                 'anak_ke' => $request->anak_ke,
+                'jml_saudara_kandung' => $request->jml_saudara_kandung,
+                'warga_negara' => $request->warga_negara,
+                'pas_photo' => $request->pas_photo,
+
+                // student medical condition information
+                'tinggi_badan' => $request->tinggi_badan,
+                'berat_badan' => $request->berat_badan,
+                'spesial_treatment' => $request->spesial_treatment,
+                'note_kesehatan' => $request->note_kesehatan,
+                'file_document_kesehatan' => $request->file_document_kesehatan,
+                'file_list_pertanyaan' => $request->file_list_pertanyaan,
+
+                // previously formal school
+                'tanggal_masuk_sekolah_lama' => strtotime($request->tanggal_masuk_sekolah_lama),
+                'tanggal_keluar_sekolah_lama' => strtotime($request->tanggal_keluar_sekolah_lama),
+                'nama_sekolah_lama' => $request->nama_sekolah_lama,
+                'alamat_lama' => $request->alamat_lama,
+                'no_sttb' => $request->no_sttb,
+                'nem' => $request->nem,
+                'file_dokument_sekolah_lama' => $request->file_dokument_sekolah_lama,
+
+                // domicile information
                 'alamat' => $request->alamat,
+                'kota' => $request->kota,
+                'kode_pos' => $request->kode_pos,
+                'jarak_rumah_ke_sekolah' => $request->jarak_rumah_ke_sekolah,
+                'email' => $request->email,
+                'email_parent' => $request->email_parent,
                 'nomor_hp' => $request->nomor_hp,
+                'tinggal_bersama' => $request->tinggal_bersama,
+                'transportasi' => $request->transportasi,
+
+                // parent information father
+                'nik_ayah' => $request->nik_ayah,
                 'nama_ayah' => $request->nama_ayah,
-                'nama_ibu' => $request->nama_ibu,
+                'tempat_lahir_ayah' => $request->tempat_lahir_ayah,
+                'tanggal_lahir_ayah' => $request->tanggal_lahir_ayah,
+                'alamat_ayah' => $request->alamat_ayah,
+                'nomor_hp_ayah' => $request->nomor_hp_ayah,
+                'agama_ayah' => $request->agama_ayah,
+                'kota_ayah' => $request->kota_ayah,
+                'pendidikan_terakhir_ayah' => $request->pendidikan_terakhir_ayah,
                 'pekerjaan_ayah' => $request->pekerjaan_ayah,
+                'penghasil_ayah' => $request->penghasil_ayah,
+
+                // parent information mother
+                'nik_ibu' => $request->nik_ibu,
+                'nama_ibu' => $request->nama_ibu,
+                'tempat_lahir_ibu' => $request->tempat_lahir_ibu,
+                'tanggal_lahir_ibu' => $request->tanggal_lahir_ibu,
+                'alamat_ibu' => $request->alamat_ibu,
+                'nomor_hp_ibu' => $request->nomor_hp_ibu,
+                'agama_ibu' => $request->agama_ibu,
+                'kota_ibu' => $request->kota_ibu,
+                'pendidikan_terakhir_ibu' => $request->pendidikan_terakhir_ibu,
                 'pekerjaan_ibu' => $request->pekerjaan_ibu,
+                'penghasil_ibu' => $request->penghasil_ibu,
+
+                // parent information guardian
+                'nik_wali' => $request->nik_wali,
                 'nama_wali' => $request->nama_wali,
-                'pekerjaan_wali' => $request->pekerjaan_wali
+                'tempat_lahir_wali' => $request->tempat_lahir_wali,
+                'tanggal_lahir_wali' => $request->tanggal_lahir_wali,
+                'alamat_wali' => $request->alamat_wali,
+                'nomor_hp_wali' => $request->nomor_hp_wali,
+                'agama_wali' => $request->agama_wali,
+                'kota_wali' => $request->kota_wali,
+                'pendidikan_terakhir_wali' => $request->pendidikan_terakhir_wali,
+                'pekerjaan_wali' => $request->pekerjaan_wali,
+                'penghasil_wali' => $request->penghasil_wali,
+
+                'avatar' => 'default.png',
+                'status' => 1,
             ];
-
-
 
             if ($request->kelas_id != $siswa->kelas->id) {
                 $anggota_kelas = new AnggotaKelas([
