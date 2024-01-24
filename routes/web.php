@@ -73,7 +73,7 @@ Route::group(['middleware' => ['auth']], function () {
         'destroy' => 'admin.silabus.destroy'
       ]);
       Route::delete('/silabus/{id}/destroy/{fileType}', 'Admin\SilabusController@destroyFile')->name('admin.silabus.destroyFile');
-      Route::get('/pdf/{filename}', 'Admin\PdfController@viewSilabusPDF')->name('admin.silabus.pdf.view');
+      Route::get('/silabus/pdf/{filename}', 'Admin\PdfController@viewSilabusPDF')->name('admin.silabus.pdf.view');
 
       Route::post('tapel/set', 'Admin\TapelController@setAcademicYear')->name('tapel.setAcademicYear');
 
@@ -90,6 +90,8 @@ Route::group(['middleware' => ['auth']], function () {
       Route::resource('siswa', 'Admin\SiswaController',  [
         'uses' => ['index', 'store', 'update', 'destroy']
       ]);
+      Route::get('/pdf/{filename}', 'Admin\PdfController@viewDocumentSiswaPDF')->name('document.siswa.pdf.view');
+
       Route::get('mapel/import', 'Admin\MapelController@format_import')->name('mapel.format_import');
       Route::post('mapel/import', 'Admin\MapelController@import')->name('mapel.import');
       Route::resource('mapel', 'Admin\MapelController',  [

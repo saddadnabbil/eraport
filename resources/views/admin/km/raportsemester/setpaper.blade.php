@@ -37,24 +37,6 @@
                 <form action="{{ route('adminraportsemesterkm.store') }}" method="POST">
                   @csrf
                   <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Ukuran Kertas</label>
-                    <div class="col-sm-4">
-                      <select class="form-control" name="paper_size" style="width: 100%;" required>
-                        <option value="" disabled>-- Pilih Ukuran Kertas --</option>
-                        <option value="A4" selected>A4 (21 cm x 29,7 cm)</option>
-                        <option value="Folio">Folio (21,59 cm x 33 cm)</option>
-                      </select>
-                    </div>
-                    <label class="col-sm-2 col-form-label">Orientasi</label>
-                    <div class="col-sm-4">
-                      <select class="form-control" name="orientation" style="width: 100%;" required>
-                        <option value="" disabled>-- Pilih Orientasi --</option>
-                        <option value="potrait" selected>Potrait</option>
-                        <option value="landscape">Landscape</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Kelas</label>
                     <div class="col-sm-10">
                       <select class="form-control select2" name="kelas_id" style="width: 100%;" required onchange="this.form.submit();">
@@ -64,6 +46,22 @@
                         @endforeach
                       </select>
                     </div>
+                   {{--  <label class="col-sm-2 col-form-label">Ukuran Kertas</label>
+                    <div class="col-sm-4">
+                      <select class="form-control" name="paper_size" style="width: 100%;" required>
+                        <option value="" disabled>-- Pilih Ukuran Kertas --</option>
+                        <option value="A4" selected>A4 (21 cm x 29,7 cm)</option>
+                        <option value="Folio">Folio (21,59 cm x 33 cm)</option>
+                      </select>
+                    </div> --}}
+                    {{-- <label class="col-sm-2 col-form-label">Orientasi</label>
+                    <div class="col-sm-4">
+                      <select class="form-control" name="orientation" style="width: 100%;" required>
+                        <option value="" disabled>-- Pilih Orientasi --</option>
+                        <option value="potrait" selected>Potrait</option>
+                        <option value="landscape">Landscape</option>
+                      </select>
+                    </div> --}}
                   </div>
                 </form>
               </div>

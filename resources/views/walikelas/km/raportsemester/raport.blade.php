@@ -229,6 +229,25 @@
         margin: 0 auto; /* Mengatur margin otomatis untuk mengatur posisi tengah */
     }
 
+    .watermarked {
+      position: relative;
+    }
+
+    .watermarked:after {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      background-image: url("{{ public_path().'/assets/dist/img/logo-with-text.png' }}");
+      background-size: 75%;
+      background-position: center center;
+      background-repeat: no-repeat;
+      opacity: 0.1;
+    }
+
     @media print {
         td {
             -webkit-print-color-adjust: exact; /* For Chrome */
@@ -238,7 +257,7 @@
   </style>
 
   <body>
-    <div class="raport">
+    <div class="raport watermarked">
       <table class="header-table" style="width: 100%; border-collapse: collapse">
         <tr>
             <td class="no-indent left-align">
@@ -259,7 +278,7 @@
                     {{str_replace('-', ' / ', $anggota_kelas->kelas->tapel->tahun_pelajaran)}}
                 </h1>
                 <p class="center-align pad-126 line-height-123" style="padding: 0 60pt">
-                    Address : {{$sekolah->alamat}}
+                    Address : {{$sekolah->alamat}} Phone: {{$sekolah->nomor_telpon}}
                 </p>
             </td>
             

@@ -36,7 +36,7 @@
               <div class="callout callout-info">
                 <form action="{{ route('adminraportsemesterkm.store') }}" method="POST">
                   @csrf
-                  <div class="form-group row">
+                  {{-- <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Ukuran Kertas</label>
                     <div class="col-sm-4">
                       <select class="form-control" name="paper_size" style="width: 100%;" required onchange="this.form.submit();">
@@ -51,7 +51,7 @@
                         <option value="landscape" @if($orientation=='landscape' ) selected @endif>Landscape</option>
                       </select>
                     </div>
-                  </div>
+                  </div> --}}
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Kelas</label>
                     <div class="col-sm-10">

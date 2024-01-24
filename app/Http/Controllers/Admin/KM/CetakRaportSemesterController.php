@@ -56,7 +56,7 @@ class CetakRaportSemesterController extends Controller
             ->get();
 
         $paper_size = $request->paper_size;
-        $orientation = $request->orientation;
+        $orientation = 'potrait';
 
         return view('admin.km.raportsemester.index', compact('title', 'kelas', 'data_kelas', 'data_anggota_kelas', 'paper_size', 'orientation'));
     }
@@ -75,7 +75,7 @@ class CetakRaportSemesterController extends Controller
 
         if ($request->data_type == 1) {
             $title = 'Kelengkapan Raport';
-            $kelengkapan_raport = PDF::loadview('walikelas.k13.raportsemester.kelengkapanraport', compact('title', 'sekolah', 'anggota_kelas'))->setPaper($request->paper_size, $request->orientation);
+            $kelengkapan_raport = PDF::loadview('walikelas.km.raportsemester.kelengkapanraport', compact('title', 'sekolah', 'anggota_kelas'))->setPaper($request->paper_size, $request->orientation);
             return $kelengkapan_raport->stream('KELENGKAPAN RAPORT ' . $anggota_kelas->siswa->nama_lengkap . ' (' . $anggota_kelas->kelas->nama_kelas . ').pdf');
         } elseif ($request->data_type == 2) {
             $title = 'Raport Semester';

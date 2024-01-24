@@ -7,6 +7,7 @@ use App\User;
 use App\Kelas;
 use App\Siswa;
 use App\Tapel;
+use App\Tingkatan;
 use App\SiswaKeluar;
 use App\AnggotaKelas;
 use App\Exports\SiswaExport;
@@ -14,7 +15,7 @@ use App\Imports\SiswaImport;
 use Illuminate\Http\Request;
 use App\AnggotaEkstrakulikuler;
 use App\Http\Controllers\Controller;
-use App\Tingkatan;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 
@@ -222,8 +223,26 @@ class SiswaController extends Controller
 
             if ($request->hasFile('pas_photo')) {
                 $file = $request->file('pas_photo');
-                $path = $file->store('siswa', 'public'); // Adjust the storage path as needed
+                $path = $file->store('pas_photo_siswa', 'public'); // Adjust the storage path as needed
                 $siswa->pas_photo = $path;
+            }
+
+            if ($request->hasFile('file_document_kesehatan')) {
+                $file = $request->file('file_document_kesehatan');
+                $path = $file->store('documents_siswa', 'public'); // Adjust the storage path as needed
+                $siswa->file_document_kesehatan = $path;
+            }
+
+            if ($request->hasFile('file_list_pertanyaan')) {
+                $file = $request->file('file_list_pertanyaan');
+                $path = $file->store('documents_siswa', 'public'); // Adjust the storage path as needed
+                $siswa->file_list_pertanyaan = $path;
+            }
+
+            if ($request->hasFile('file_dokument_sekolah_lama')) {
+                $file = $request->file('file_dokument_sekolah_lama');
+                $path = $file->store('documents_siswa', 'public'); // Adjust the storage path as needed
+                $siswa->file_dokument_sekolah_lama = $path;
             }
 
             $siswa->save();
@@ -326,8 +345,8 @@ class SiswaController extends Controller
                 'file_list_pertanyaan' => $request->file_list_pertanyaan,
 
                 // previously formal school
-                'tanggal_masuk_sekolah_lama' => strtotime($request->tanggal_masuk_sekolah_lama),
-                'tanggal_keluar_sekolah_lama' => strtotime($request->tanggal_keluar_sekolah_lama),
+                'tanggal_masuk_sekolah_lama' => $request->tanggal_masuk_sekolah_lama,
+                'tanggal_keluar_sekolah_lama' => $request->tanggal_keluar_sekolah_lama,
                 'nama_sekolah_lama' => $request->nama_sekolah_lama,
                 'alamat_lama' => $request->alamat_lama,
                 'no_sttb' => $request->no_sttb,
@@ -388,19 +407,39 @@ class SiswaController extends Controller
                 'status' => 1,
             ];
 
-            if ($request->kelas_id != $siswa->kelas->id) {
-                $anggota_kelas = new AnggotaKelas([
-                    'siswa_id' => $siswa->id,
-                    'kelas_id' => $request->kelas_id,
-                    'pendaftaran' => $request->jenis_pendaftaran,
-                ]);
-                $anggota_kelas->save();
-            }
+            // Define the file fields and their corresponding subdirectories
+            $fileFields = [
+                'pas_photo' => 'pas_photo_siswa',
+                'file_document_kesehatan' => 'documents_siswa',
+                'file_list_pertanyaan' => 'documents_siswa',
+                'file_dokument_sekolah_lama' => 'documents_siswa',
+            ];
 
+            // Handle file uploads using a loop
+            foreach ($fileFields as $field => $subdirectory) {
+                $data_siswa[$field] = $this->handleFileUpload($request, $siswa, $field, $subdirectory);
+            }
             $siswa->update($data_siswa);
 
             return back()->with('toast_success', 'Siswa berhasil diedit');
         }
+    }
+
+    // Function to handle file uploads
+    private function handleFileUpload($request, $model, $fileField, $subdirectory)
+    {
+        if ($request->hasFile($fileField)) {
+            // Delete the old file
+            if ($model->$fileField) {
+                Storage::disk('public')->delete($model->$fileField);
+            }
+
+            // Store the new file
+            $file = $request->file($fileField);
+            return $file->store($subdirectory, 'public'); // Adjust the storage path as needed
+        }
+
+        return $model->$fileField; // Return the existing file path if no new file is uploaded
     }
 
     /**

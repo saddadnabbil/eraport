@@ -10,16 +10,10 @@
   <style>
     /* main */
     body {
-        padding: 40px;
+        padding: 30px;
     }
 
-    * {
-        margin: 0;
-        padding: 0;
-        text-indent: 0; 
-    }
-
-    h1, h2, h3, h4, h5 .title {
+    h1, h2, h3, h4, h5 {
         color: black;
         font-family: Arial, sans-serif;
         font-style: normal;
@@ -28,13 +22,11 @@
     }
 
     h1 {
-      font-family: Arial, sans-serif;
-      font-size: 16pt;
+        font-size: 14pt;
     }
 
     h5 {
-      font-family: Arial, sans-serif;
-      font-size: 13pt;
+        font-size: 12pt;
     }
 
     p {
@@ -42,32 +34,13 @@
         font-family: Arial, sans-serif;
         font-style: normal;
         text-decoration: none;
-        font-size: 11pt;
+        font-size: 10pt;
         margin: 0;
     }
 
     table, tbody {
         vertical-align: top;
         overflow: visible;
-    }
-
-    .watermarked {
-      position: relative;
-    }
-
-    .watermarked:after {
-      content: "";
-      display: block;
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      top: 0px;
-      left: 0px;
-      background-image: url("{{ public_path().'/assets/dist/img/logo-with-text.png' }}");
-      background-size: 75%;
-      background-position: center center;
-      background-repeat: no-repeat;
-      opacity: 0.1;
     }
 
     @media print {
@@ -79,58 +52,57 @@
   </style>
 
   <body>
-    <!-- Page 1 Cover -->
-    <div class="cover">
-        <table style="width: 100%; border-collapse: collapse;" class="watermarked">
+    <div class="raport">
+        <table style="width: 100%; border-collapse: collapse;">
             <!-- Header Table -->
             <table class="header-table" style="width: 100%; border-collapse: collapse;">
                 <tr>
                     <td style="text-align: left; vertical-align: middle;">
-                        <img src="{{ public_path().'/assets/dist/img/tut-wuri-handayani.png' }}" alt="" width="80px" height="80px">
+                        <img src="tut-wuri-handayani.png" alt="" width="80px" height="80px">
                     </td>
                     
                     <td style="text-align: center; vertical-align: middle;">
                         <h1>
                             GLOBAL INDONESIA SCHOOL <br>
-                            <span style="font-weight: normal; font-size: 15pt; padding-top: 7px;">
+                            <span style="font-weight: normal; font-size: 13pt; padding-top: 7px;">
                                 DINAS PENDIDIKAN KABUPATEN SERANG 
                             </span>
                         </h1>
                     </td>
         
                     <td style="text-align: right; vertical-align: middle;">
-                        <img src="./assets/dist/img/logo.png" alt="" width="80px" height="80px">
+                        <img src="logo.png" alt="" width="80px" height="80px">
                     </td>
                 </tr>
             </table>
         
             <!-- Body Table -->
-            <table class="body-table" style="width: 100%; border-collapse: collapse; margin-top: 65pt;">
+            <table class="body-table" style="width: 100%; border-collapse: collapse; margin-top: 50pt;">
                 <tr>
                     <td style="text-align: center; vertical-align: middle;">
-                        <h1 style="font-size: 22pt; ">
+                        <h1 style="font-size: 18pt; ">
                             STUDENT REPORT CARD <br>
                         </h1>
                     </td>
                 </tr>
                 <tr class="name">
                     <tr >
-                        <td style="text-align: center; vertical-align: middle; padding-top: 65pt">
-                            <h5 class="title" style="font-weight: noromal;"> 
+                        <td style="text-align: center; vertical-align: middle; padding-top: 40pt">
+                            <h5 style="font-weight: 500;"> 
                             Student Name
                             </h5>
                         </td>
                     </tr>
                     <tr>
                         <td style="text-align: center; vertical-align: middle; padding-top: 10pt">
-                            <p style="font-weight: noromal;">{{ strtoupper($anggota_kelas->siswa->nama_lengkap) }}</p>
+                            <p style="font-weight: 400;">Saddad Nabbil</p>
                         </td>
                     </tr>
                 </tr>
                 <tr class="nis">
                     <tr >
                         <td style="text-align: center; vertical-align: middle; padding-top: 20pt">
-                            <h5 class="title"  style="font-weight: normal;"> 
+                            <h5 style="font-weight: 500;"> 
                             Student Identity Number
                             </h5>
                         </td>
@@ -142,14 +114,14 @@
                     </tr>
                     <tr>
                         <td style="text-align: center; vertical-align: middle; padding-top: 10pt">
-                            <p style="font-weight: 400;">{{ $anggota_kelas->siswa->nis }}</p>
+                            <p style="font-weight: 400;">123123123</p>
                         </td>
                     </tr>
                 </tr>
                 <tr class="nisn">
                     <tr >
                         <td style="text-align: center; vertical-align: middle; padding-top: 20pt">
-                            <h5 class="title"  style="font-weight: normal;"> 
+                            <h5 style="font-weight: 500;"> 
                             National Student Identity Number
                             </h5>
                         </td>
@@ -161,16 +133,16 @@
                     </tr>
                     <tr>
                         <td style="text-align: center; vertical-align: middle; padding-top: 10pt">
-                            <p style="font-weight: 400;">{{ $anggota_kelas->siswa->nisn }}</p>
+                            <p style="font-weight: 400;">123123123</p>
                         </td>
                     </tr>
                 </tr>
                 <tr class="identity">
                     <tr >
                         <td style="text-align: center; vertical-align: middle; padding-top: 20pt">
-                            <h3  class="title" style="font-weight: normal;"> 
-                              National School Identity Number
-                            </h3>
+                            <h5 style="font-weight: 500;"> 
+                            National School Identity Number
+                            </h5>
                         </td>
                     </tr>
                     <tr>
@@ -180,32 +152,32 @@
                     </tr>
                     <tr>
                         <td style="text-align: center; vertical-align: middle; padding-top: 10pt">
-                            <p style="font-weight: 400;">{{ $sekolah->npsn }}</p>
+                            <p style="font-weight: 400;">123123123</p>
                         </td>
                     </tr>
                 </tr>
             </table>
         
             <!-- Footer Table -->
-            <table class="footer-table" style="border-collapse: collapse; margin-top: 40pt; position: fixed; bottom: 25%; left: 0%;">
+            <table class="footer-table" style="margin-top: 40pt; position: fixed;">
                 <tr >
                     <td style="text-align: center; vertical-align: middle; padding-top: 20pt">
-                        <h5 style="font-weight: normal;"> 
+                        <h5 style="font-weight: 500;"> 
                             Address
                         </h5>
                     </td>
                 </tr>
                 <tr >
-                    <td style="text-align: center; vertical-align: middle; padding-top: 4pt">
-                        <p style="font-weight: 400; line-height: 1.3; padding: 0 200px"> 
-                          {{ $sekolah->alamat }}
+                    <td style="text-align: center; vertical-align: middle;">
+                        <p style="font-weight: 400; line-height: 1.5;"> 
+                            Perumahan Emerald Lake, Jl. Raya Tasikardi <br>Pelamunan, Kramatwatu, Serang-Banten, 42161<br>
+                            Telp. (021) - 50106770
                         </p>
                     </td>
                 </tr>
             </table>
-        </table>  
+        </table>
+        
     </div>
-    <div class="page-break"></div>
-
   </body>
 </html>

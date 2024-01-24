@@ -53,7 +53,7 @@ class CreateSiswasTable extends Migration
             $table->string('nik_ayah', 16);
             $table->string('nama_ayah', 100);
             $table->string('tempat_lahir_ayah', 100)->nullable();
-            $table->string('tanggal_lahir_ayah', 10)->nullable();
+            $table->date('tanggal_lahir_ayah', 10)->nullable();
             $table->string('alamat_ayah', 100)->nullable();
             $table->string('nomor_hp_ayah', 13)->nullable();
             $table->enum('agama_ayah', ['1', '2', '3', '4', '5', '6', '7'])->nullable();
@@ -65,7 +65,7 @@ class CreateSiswasTable extends Migration
             $table->string('nik_ibu', 16);
             $table->string('nama_ibu', 100);
             $table->string('tempat_lahir_ibu', 100)->nullable();
-            $table->string('tanggal_lahir_ibu', 10)->nullable();
+            $table->date('tanggal_lahir_ibu', 10)->nullable();
             $table->string('alamat_ibu', 100)->nullable();
             $table->string('nomor_hp_ibu', 13)->nullable();
             $table->enum('agama_ibu', ['1', '2', '3', '4', '5', '6', '7'])->nullable();
@@ -77,7 +77,7 @@ class CreateSiswasTable extends Migration
             $table->string('nik_wali', 16);
             $table->string('nama_wali', 100);
             $table->string('tempat_lahir_wali', 100)->nullable();
-            $table->string('tanggal_lahir_wali', 10)->nullable();
+            $table->date('tanggal_lahir_wali', 10)->nullable();
             $table->string('alamat_wali', 100)->nullable();
             $table->string('nomor_hp_wali', 13)->nullable();
             $table->enum('agama_wali', ['1', '2', '3', '4', '5', '6', '7'])->nullable();
@@ -95,8 +95,8 @@ class CreateSiswasTable extends Migration
             $table->string('file_list_pertanyaan')->nullable();
 
             // previeously formal school
-            $table->string('tanggal_masuk_sekolah_lama', 100)->nullable();
-            $table->string('tanggal_keluar_sekolah_lama', 100)->nullable();
+            $table->date('tanggal_masuk_sekolah_lama', 100)->nullable();
+            $table->date('tanggal_keluar_sekolah_lama', 100)->nullable();
             $table->string('nama_sekolah_lama', 100)->nullable();
             $table->string('alamat_lama', 100)->nullable();
             $table->string('no_sttb')->nullable();

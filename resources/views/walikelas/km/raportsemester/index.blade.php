@@ -44,14 +44,14 @@
                         <option value="Folio" @if($paper_size=='Folio' ) selected @endif>Folio (21,59 cm x 33 cm)</option>
                       </select>
                     </div>
-                    <label class="col-sm-2 col-form-label">Orientasi</label>
+                    {{-- <label class="col-sm-2 col-form-label">Orientasi</label>
                     <div class="col-sm-4">
                       <select class="form-control" name="orientation" style="width: 100%;" required onchange="this.form.submit();">
                         <option value="potrait" @if($orientation=='potrait' ) selected @endif>Potrait</option>
                         <option value="landscape" @if($orientation=='landscape' ) selected @endif>Landscape</option>
                       </select>
                     </div>
-                  </div>
+                  </div> --}}
                 </form>
               </div>
 

@@ -116,22 +116,22 @@
                     </div>
                     
                     <div class="form-group row">
-                      <label for="nama_lengkap" class="col-sm-3 col-form-label">Nama Siswa</label>
+                      <label class="col-sm-3 col-form-label">Nama Siswa</label>
                       <div class="col-sm-9">
-                        <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap" placeholder="" value="{{ $siswa->nama_lengkap }}" disabled>
+                        <input type="text" class="form-control" placeholder="" value="{{ $siswa->nama_lengkap }}" disabled>
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="nama_panggilan" class="col-sm-3 col-form-label">Nama Panggilan</label>
+                      <label class="col-sm-3 col-form-label">Nama Panggilan</label>
                       <div class="col-sm-9">
-                        <input type="text" class="form-control" id="nama_panggilan" name="nama_panggilan" placeholder="" value="{{ $siswa->nama_panggilan }}" disabled>
+                        <input type="text" class="form-control" placeholder="" value="{{ $siswa->nama_panggilan }}" disabled>
                       </div>
                     </div>
 
                     <div class="form-group row">
                       <label class=" col-sm-3 col-form-label ">Tingkatan</label>
                       <div class="col-sm-3">
-                        <select class="form-control" id="kelas" name="tingkatan_id" required disabled>
+                        <select class="form-control" required disabled>
                           <option value=""></option>
                           @foreach ($data_tingkatan as $tingkatan)
                             <option value="{{$tingkatan->id}}" @if ($tingkatan->id == $siswa->tingkatan_id) selected @endif>{{$tingkatan->nama_tingkatan}}</option>
@@ -140,7 +140,7 @@
                       </div>
                       <label class="col-sm-2 col-form-label ">Kelas</label>
                       <div class="col-sm-4">
-                        <select class="form-control" id="kelas_id" name="kelas_id" required disabled>
+                        <select class="form-control"  required disabled>
                           <option value=""></option>
                           <option value="{{$siswa->kelas->id}}" selected>{{ $siswa->kelas->nama_kelas }}</option>
                         </select>
@@ -150,12 +150,12 @@
                     <div class="form-group row">
                       <label for="nama_wali" class="col-sm-3 col-form-label ">Jenis Pendaftaran</label>
                       <div class="col-sm-3 pt-1">
-                        <label class="form-check-label mr-3"><input type="radio" name="jenis_pendaftaran" onchange='CheckPendaftaran(this.value);' value="1" @if ($siswa->jenis_pendaftaran=='1' ) checked @endif required disabled> Siswa Baru</label>
-                        <label class="form-check-label mr-3"><input type="radio" name="jenis_pendaftaran" onchange='CheckPendaftaran(this.value);' value="2" @if ($siswa->jenis_pendaftaran=='2' ) checked @endif required disabled> Pindahan</label>
+                        <label class="form-check-label mr-3"><input type="radio" onchange='CheckPendaftaran(this.value);' value="1" @if ($siswa->jenis_pendaftaran=='1' ) checked @endif required disabled> Siswa Baru</label>
+                        <label class="form-check-label mr-3"><input type="radio" onchange='CheckPendaftaran(this.value);' value="2" @if ($siswa->jenis_pendaftaran=='2' ) checked @endif required disabled> Pindahan</label>
                       </div>
                       <label class="col-sm-2 col-form-label required">Jurusan</label>
                       <div class="col-sm-4">
-                        <select class="form-control" id="jurusan_id" name="jurusan_id" required disabled>
+                        <select class="form-control" required disabled>
                           <option value=""></option>
                           <option value="{{$siswa->kelas->jurusan->id}}" selected>{{ $siswa->kelas->jurusan->nama_jurusan }}</option>
                         </select>
@@ -164,8 +164,8 @@
                     <div class="form-group row">
                       <label for="jenis_kelamin" class="col-sm-3 col-form-label">Jenis Kelamin</label>
                       <div class="col-sm-3 pt-1">
-                        <label class="form-check-label mr-3"><input type="radio" name="jenis_kelamin" value="Male" @if ( $siswa->jenis_kelamin =='Male' ) checked @endif required disabled> Male</label>
-                        <label class="form-check-label mr-3"><input type="radio" name="jenis_kelamin" value="Female" @if ( $siswa->jenis_kelamin=='Female' ) checked @endif required disabled> Female</label>
+                        <label class="form-check-label mr-3"><input type="radio" value="Male" @if ( $siswa->jenis_kelamin =='Male' ) checked @endif required disabled> Male</label>
+                        <label class="form-check-label mr-3"><input type="radio" value="Female" @if ( $siswa->jenis_kelamin=='Female' ) checked @endif required disabled> Female</label>
                       </div>
                       <label for="bloodtype" class="col-sm-2 col-form-label">Gol. Darah</label>
                       <div class="col-sm-4">
@@ -181,18 +181,18 @@
                     <div class="form-group row">
                       <label for="tempat_lahir" class="col-sm-3 col-form-label">Tempat Lahir</label>
                       <div class="col-sm-3">
-                        <input type="text" class="form-control" id="tempat_lahir" name="tempat_lahir" value="{{$siswa->tempat_lahir}}" disabled>
+                        <input type="text" class="form-control" value="{{$siswa->tempat_lahir}}" disabled>
                       </div>
                       <label for="tanggal_lahir" class="col-sm-2 col-form-label">Tanggal Lahir</label>
                       <div class="col-sm-4">
-                        <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir" value="{{ $siswa->tanggal_lahir }} " disabled>
+                        <input type="date" class="form-control" value="{{ $siswa->tanggal_lahir ? \Carbon\Carbon::parse($siswa->tanggal_lahir)->format('Y-m-d') : '' }}" disabled>
                       </div>
                     </div>
 
                     <div class="form-group row">
                       <label for="agama" class="col-sm-3 col-form-label">Agama</label>
                       <div class="col-sm-3">
-                        <select class="form-control" name="agama" required disabled>
+                        <select class="form-control" required disabled>
                           <option value=""></option>
                           <option value="1" @if ( $siswa->agama =='1' ) selected @endif>Islam</option>
                           <option value="2" @if ( $siswa->agama =='2' ) selected @endif>Protestan</option>
@@ -205,7 +205,7 @@
                       </div>
                       <label for="anak_ke" class="col-sm-2 col-form-label">Anak Ke</label>
                       <div class="col-sm-4">
-                        <input type="number" class="form-control" id="anak_ke" name="anak_ke" value="{{$siswa->anak_ke}}" disabled>
+                        <input type="number" class="form-control"  value="{{$siswa->anak_ke}}" disabled>
                       </div>
                     </div>
                   </div>
@@ -216,41 +216,41 @@
                     <div class="form-group row">
                       <label for="alamat" class="col-sm-3 col-form-label">Alamat</label>
                       <div class="col-sm-9">
-                        <textarea class="form-control" id="alamat" name="alamat" placeholder="" disabled>{{ $siswa->alamat }}</textarea>
+                        <textarea class="form-control" placeholder="" disabled>{{ $siswa->alamat }}</textarea>
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="kota" class="col-sm-3 col-form-label">Kota</label>
                       <div class="col-sm-4">
-                        <input type="text" class="form-control" id="kota" name="kota" placeholder="" value=" {{ $siswa->kota }}" disabled>
+                        <input type="text" class="form-control" placeholder="" value="{{ $siswa->kota }}" disabled>
                       </div>
                       <label for="kode_pos" class="col-sm-2 col-form-label">Kode Pos</label>
                       <div class="col-sm-3">
-                        <input type="number" class="form-control" id="kode_pos" name="kode_pos" placeholder="" value="{{ $siswa->kode_pos }}" disabled>
+                        <input type="number" class="form-control" placeholder="" value="{{ $siswa->kode_pos }}" disabled>
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="jarak_rumah_ke_sekolah" class="col-sm-3 col-form-label">Jarak Rumah ke Sekolah (km)</label>
                       <div class="col-sm-9">
-                        <input type="number" name="jarak_rumah_ke_sekolah" id="jarak_rumah_ke_sekolah" placeholder="" class="form-control" value="{{ $siswa->jarak_rumah_ke_sekolah }}" disabled>
+                        <input type="number" placeholder="" class="form-control" value="{{ $siswa->jarak_rumah_ke_sekolah }}" disabled>
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="email" class="col-sm-3 col-form-label">Email</label>
                       <div class="col-sm-9">
-                        <input type="email" class="form-control" id="email" name="email" placeholder="" value="{{ $siswa->email }}" disabled>
+                        <input type="email" class="form-control"  placeholder="" value="{{ $siswa->email }}" disabled>
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="email_parent" class="col-sm-3 col-form-label">Email Parent</label>
                       <div class="col-sm-9">
-                        <input type="email" class="form-control" id="email_parent" name="email_parent" placeholder="" value="{{ $siswa->email_parent }}" disabled>
+                        <input type="email" class="form-control" placeholder="" value="{{ $siswa->email_parent }}" disabled>
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="nomor_hp" class="col-sm-3 col-form-label">Nomor HP</label>
                       <div class="col-sm-9">
-                        <input type="number" class="form-control" id="nomor_hp" name="nomor_hp" placeholder="" value="{{ $siswa->nomor_hp }}" disabled>
+                        <input type="number" class="form-control" placeholder="" value="{{ $siswa->nomor_hp }}" disabled>
                       </div>
                     </div>
                     <div class="form-group row">
@@ -264,7 +264,7 @@
                       </div>
                       <label for="transportasi" class="col-sm-2 col-form-label">Transportasi</label>
                       <div class="col-sm-3">
-                        <input type="text" class="form-control" id="transportasi" name="transportasi" placeholder="" value="{{old('transportasi')}}" disabled>
+                        <input type="text" class="form-control"  placeholder="" value="{{old('transportasi')}}" disabled>
                       </div>
                     </div>
                   </div>   
@@ -274,47 +274,49 @@
                     <h6 class="mt-2"><b>C. Student Medical Condition</b></h6>
 
                     <div class="form-group row">
-                      <label for="tinggi_badan" class="col-sm-3 col-form-label">Tinggi Badan</label>
+                      <label class="col-sm-3 col-form-label">Tinggi Badan</label>
                       <div class="col-sm-4">
-                        <input type="number" class="form-control" id="tinggi_badan" name="tinggi_badan" placeholder="" value="{{ $siswa->tinggi_badan }}" disabled>
+                        <input type="number" class="form-control" placeholder="" value="{{ $siswa->tinggi_badan }}" disabled>
                       </div>
-                      <label for="berat_badan" class="col-sm-2 col-form-label">Berat Badan</label>
+                      <label  class="col-sm-2 col-form-label">Berat Badan</label>
                       <div class="col-sm-3">
-                        <input type="number" class="form-control" id="berat_badan" name="berat_badan" placeholder="" value="{{ $siswa->berat_badan }}" disabled>
+                        <input type="number" class="form-control" placeholder="" value="{{ $siswa->berat_badan }}" disabled>
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="spesial_treatment" class="col-sm-3 col-form-label">Spesial Treatment</label>
+                      <label class="col-sm-3 col-form-label">Spesial Treatment</label>
                       <div class="col-sm-9">
-                        <input type="text" class="form-control" id="spesial_treatment" name="spesial_treatment" placeholder="" value="{{ $siswa->spesial_treatment }}" disabled>
+                        <input type="text" class="form-control" placeholder="" value="{{ $siswa->spesial_treatment }}" disabled>
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="note_kesehatan" class="col-sm-3 col-form-label">Note Kesehatan</label>
+                      <label class="col-sm-3 col-form-label">Note Kesehatan</label>
                       <div class="col-sm-9">
-                        <input type="text" class="form-control" id="note_kesehatan" name="note_kesehatan" placeholder="" value="{{ $siswa->note_kesehatan }}" disabled>
+                        <input type="text" class="form-control" placeholder="" value="{{ $siswa->note_kesehatan }}" disabled>
                       </div>
                     </div>
 
                     <div class="form-group row">
-                      <label for="file_document_kesehatan" class="col-sm-3 col-form-label">File Document Kesehatan</label>
+                      <label  class="col-sm-3 col-form-label">File Document Kesehatan</label>
                       <div class="col-sm-9 custom-file">
                         <div class="input-group">
-                            <div class="custom-file">
-                                <input type="file" name="file_document_kesehatan" class="custom-file-input" id="file_document_kesehatan" disabled>
-                                <label class="custom-file-label" for="file_document_kesehatan">Choose file</label>
-                            </div>
+                          <div class="custom-file">
+                            @if (isset($siswa->file_document_kesehatan))
+                              <a href="/storage/{{ $siswa->file_document_kesehatan }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; Dokument Kesehatan</a>
+                            @endif
+                          </div>
                         </div>
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="file_list_pertanyaan" class="col-sm-3 col-form-label">File List Pertanyaan</label>
+                      <label class="col-sm-3 col-form-label">File List Pertanyaan</label>
                       <div class="col-sm-9 custom-file">
                         <div class="input-group">
-                            <div class="custom-file">
-                                <input type="file" name="file_list_pertanyaan" class="custom-file-input" id="file_list_pertanyaan" disabled>
-                                <label class="custom-file-label" for="file_list_pertanyaan">Choose file</label>
-                            </div>
+                          <div class="custom-file">
+                            @if (isset($siswa->file_list_pertanyaan))
+                              <a href="/storage/{{ $siswa->file_list_pertanyaan }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; Dokument List Pertanyaan</a>
+                            @endif
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -324,45 +326,44 @@
                   <div class="mt-3 p-2" >
                     <h6 class="mt-2"><b>D. Previously Formal School</b></h6>
                     <div class="form-group row">
-                      <label for="tanggal_masuk_sekolah_lama" class="col-sm-3 col-form-label">Tgl. Masuk Sekolah</label>
+                      <label class="col-sm-3 col-form-label">Tgl. Masuk Sekolah</label>
                       <div class="col-sm-4">
-                        <input type="date" class="form-control" id="tanggal_masuk_sekolah_lama" name="tanggal_masuk_sekolah_lama" placeholder="" value=" {{ $siswa->tanggal_masuk_sekolah_lama }}" disabled>
+                        <input type="date" class="form-control"  placeholder="" value="{{ $siswa->tanggal_masuk_sekolah_lama ? \Carbon\Carbon::parse($siswa->tanggal_masuk_sekolah_lama)->format('Y-m-d') : '' }}" disabled>
                       </div>
-                      <label for="tanggal_keluar_sekolah_lama" class="col-sm-2 col-form-label">Tgl. Keluar Sekolah</label>
+                      <label  class="col-sm-2 col-form-label">Tgl. Keluar Sekolah</label>
                       <div class="col-sm-3">
-                        <input type="date" class="form-control" id="tanggal_keluar_sekolah_lama" name="tanggal_keluar_sekolah_lama" placeholder="" value="{{ $siswa->tanggal_keluar_sekolah_lama }}" disabled>
+                        <input type="date" class="form-control" placeholder="" value="{{ $siswa->tanggal_keluar_sekolah_lama ? \Carbon\Carbon::parse($siswa->tanggal_keluar_sekolah_lama)->format('Y-m-d') : '' }}" disabled>
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="nama_sekolah_lama" class="col-sm-3 col-form-label">Nama Sekolah</label>
                       <div class="col-sm-9">
-                        <input type="text" class="form-control" id="nama_sekolah_lama" name="nama_sekolah_lama" placeholder="" value="{{ $siswa->nama_sekolah_lama }}" disabled>
+                        <input type="text" class="form-control" placeholder="" value="{{ $siswa->nama_sekolah_lama }}" disabled>
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="alamat_lama" class="col-sm-3 col-form-label">Alamat Sekolah</label>
                       <div class="col-sm-9">
-                        <input type="text" class="form-control" id="alamat_lama" name="alamat_lama" placeholder="" value="{{ $siswa->alamat_lama }}" disabled>
+                        <input type="text" class="form-control" placeholder="" value="{{ $siswa->alamat_lama }}" disabled>
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="no_sttb" class="col-sm-3 col-form-label">No. STTB</label>
                       <div class="col-sm-3">
-                        <input type="text" class="form-control" id="no_sttb" name="no_sttb" placeholder="" value="{{ $siswa->no_sttb }}" disabled>
+                        <input type="text" class="form-control" placeholder="" value="{{ $siswa->no_sttb }}" disabled>
                       </div>
                       <label for="nem" class="col-sm-3 col-form-label">NEM</label>
                       <div class="col-sm-3">
-                        <input type="number" class="form-control" id="nem" name="nem" placeholder="" value="{{ $siswa->nem }}" disabled>
+                        <input type="number" class="form-control" placeholder="" value="{{ $siswa->nem }}" disabled>
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="file_dokument_sekolah_lama" class="col-sm-3 col-form-label">File Dokument Sekolah Lama</label>
                       <div class="col-sm-9 custom-file">
                         <div class="input-group">
-                            {{-- <div class="custom-file">
-                                <input type="file" name="file_dokument_sekolah_lama" class="custom-file-input" id="file_dokument_sekolah_lama">
-                                <label class="custom-file-label" for="file_dokument_sekolah_lama">Choose file</label>
-                            </div> --}}
+                            @if (isset($siswa->file_dokument_sekolah_lama))
+                              <a href="/storage/{{ $siswa->file_dokument_sekolah_lama }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; Dokument Sekolah Lama</a>
+                            @endif
                         </div>
                       </div>
                     </div>
@@ -373,43 +374,43 @@
                   <div class="border-bottom p-2">
                     <h6 class="mt-2"><b>A. Father</b></h6>
                     <div class="form-group row">
-                      <label for="nik_ayah" class="col-sm-3 col-form-label">NIK</label>
+                      <label class="col-sm-3 col-form-label">NIK</label>
                       <div class="col-sm-9">
-                        <input type="text" class="form-control" id="nik_ayah" name="nik_ayah" placeholder="NIK" value="{{ $siswa->nik_ayah }}" disabled>
+                        <input type="text" class="form-control"  placeholder="NIK" value="{{ $siswa->nik_ayah }}" disabled>
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="nama_ayah" class="col-sm-3 col-form-label">Nama</label>
                       <div class="col-sm-9">
-                        <input type="text" class="form-control" id="nama_ayah" name="nama_ayah" placeholder="Nama" value="{{ $siswa->nama_ayah }}" disabled>
+                        <input type="text" class="form-control" placeholder="Nama" value="{{ $siswa->nama_ayah }}" disabled>
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="tempat_lahir_ayah" class="col-sm-3 col-form-label">Tempat Lahir</label>
+                      <label class="col-sm-3 col-form-label">Tempat Lahir</label>
                       <div class="col-sm-3">
-                        <input type="text" class="form-control" id="tempat_lahir_ayah" name="tempat_lahir_ayah" placeholder="Tempat Lahir" value="{{ $siswa->tempat_lahir_ayah }}" disabled>
+                        <input type="text" class="form-control" placeholder="Tempat Lahir" value="{{ $siswa->tempat_lahir_ayah }}" disabled>
                       </div>
-                      <label for="tanggal_lahir_ayah" class="col-sm-3 col-form-label">Tanggal Lahir</label>
+                      <label class="col-sm-3 col-form-label">Tanggal Lahir</label>
                       <div class="col-sm-3">
-                        <input type="date" class="form-control" id="tanggal_lahir_ayah" name="tanggal_lahir_ayah" placeholder="Tanggal Lahir" value="{{ $siswa->tanggal_lahir_ayah }}" disabled>
+                        <input type="date" class="form-control" placeholder="Tanggal Lahir" value="{{ $siswa->tanggal_lahir_ayah ? \Carbon\Carbon::parse($siswa->tanggal_lahir_ayah)->format('Y-m-d') : '' }}" disabled>
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="alamat_ayah" class="col-sm-3 col-form-label">Alamat</label>
+                      <label class="col-sm-3 col-form-label">Alamat</label>
                       <div class="col-sm-9">
-                        <textarea class="form-control" id="alamat_ayah" name="alamat_ayah" placeholder="Alamat" disabled>{{ $siswa->alamat_ayah }}</textarea>
+                        <textarea class="form-control" placeholder="Alamat" disabled>{{ $siswa->alamat_ayah }}</textarea>
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="nomor_hp_ayah" class="col-sm-3 col-form-label">Nomor HP</label>
+                      <label class="col-sm-3 col-form-label">Nomor HP</label>
                       <div class="col-sm-9">
-                        <input type="text" class="form-control" id="nomor_hp_ayah" name="nomor_hp_ayah" placeholder="Nomor HP" value="{{ $siswa->nomor_hp_ayah }}" disabled>
+                        <input type="text" class="form-control" placeholder="Nomor HP" value="{{ $siswa->nomor_hp_ayah }}" disabled>
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="agama_ayah" class="col-sm-3 col-form-label">Agama</label>
+                      <label class="col-sm-3 col-form-label">Agama</label>
                       <div class="col-sm-9">
-                        <select class="form-control" id="agama_ayah" name="agama_ayah" disabled>
+                        <select class="form-control" disabled>
                           <option selected>-- Pilih Agama --</option>
                           <option value="1" @if($siswa->agama_ayah == 1) selected @endif>Islam</option>
                           <option value="2" @if($siswa->agama_ayah == 2) selected @endif>Kristen</option>
@@ -424,23 +425,23 @@
                     <div class="form-group row">
                       <label for="kota_ayah" class="col-sm-3 col-form-label">Kota</label>
                       <div class="col-sm-3">
-                        <input type="text" class="form-control" id="kota_ayah" name="kota_ayah" placeholder="Kota" value="{{ $siswa->kota_ayah }}" disabled>
+                        <input type="text" class="form-control" placeholder="Kota" value="{{ $siswa->kota_ayah }}" disabled>
                       </div>
                       <label for="pendidikan_terakhir_ayah" class="col-sm-3 col-form-label">Pendidikan Terakhir</label>
                       <div class="col-sm-3">
-                        <input type="text" class="form-control" id="pendidikan_terakhir_ayah" name="pendidikan_terakhir_ayah" placeholder="Pendidikan Terakhir" value="{{ $siswa->pendidikan_terakhir_ayah }}" disabled>
+                        <input type="text" class="form-control" placeholder="Pendidikan Terakhir" value="{{ $siswa->pendidikan_terakhir_ayah }}" disabled>
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="pekerjaan_ayah" class="col-sm-3 col-form-label">Pekerjaan</label>
                       <div class="col-sm-9">
-                        <input type="text" class="form-control" id="pekerjaan_ayah" name="pekerjaan_ayah" placeholder="Pekerjaan" value="{{ $siswa->pekerjaan_ayah }}" disabled>
+                        <input type="text" class="form-control" placeholder="Pekerjaan" value="{{ $siswa->pekerjaan_ayah }}" disabled>
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="penghasilan_ayah" class="col-sm-3 col-form-label">Penghasilan</label>
                       <div class="col-sm-9">
-                        <input type="text" class="form-control" id="penghasilan_ayah" name="penghasilan_ayah" placeholder="Penghasilan" value="{{ $siswa->penggayaran_ayah }}" disabled>
+                        <input type="text" class="form-control" placeholder="Penghasilan" value="{{ $siswa->penggayaran_ayah }}" disabled>
                       </div>
                     </div>
                   </div>
@@ -452,41 +453,41 @@
                     <div class="form-group row">
                       <label for="nik_ibu" class="col-sm-3 col-form-label">NIK</label>
                       <div class="col-sm-9">
-                        <input type="text" class="form-control" id="nik_ibu" name="nik_ibu" placeholder="NIK" value="{{ $siswa->nik_ibu }}" disabled>
+                        <input type="text" class="form-control" placeholder="NIK" value="{{ $siswa->nik_ibu }}" disabled>
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="nama_ayah" class="col-sm-3 col-form-label">Nama</label>
                       <div class="col-sm-9">
-                        <input type="text" class="form-control" id="nama_ibu" name="nama_ibu" placeholder="Nama" value="{{ $siswa->nama_ibu }}" disabled>
+                        <input type="text" class="form-control" placeholder="Nama" value="{{ $siswa->nama_ibu }}" disabled>
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="tempat_lahir_ibu" class="col-sm-3 col-form-label">Tempat Lahir</label>
+                      <label class="col-sm-3 col-form-label">Tempat Lahir</label>
                       <div class="col-sm-3">
-                        <input type="text" class="form-control" id="tempat_lahir_ibu" name="tempat_lahir_ibu" placeholder="Tempat Lahir" value="{{ $siswa->tempat_lahir_ibu }}" disabled>
+                        <input type="text" class="form-control" placeholder="Tempat Lahir" value="{{ $siswa->tempat_lahir_ibu }}" disabled>
                       </div>
-                      <label for="tanggal_lahir_ibu" class="col-sm-3 col-form-label">Tanggal Lahir</label>
+                      <label class="col-sm-3 col-form-label">Tanggal Lahir</label>
                       <div class="col-sm-3">
-                        <input type="date" class="form-control" id="tanggal_lahir_ibu" name="tanggal_lahir_ibu" placeholder="Tanggal Lahir" value="{{ $siswa->tanggal_lahir_ibu }}" disabled>
+                        <input type="date" class="form-control" placeholder="Tanggal Lahir" value="{{ $siswa->tanggal_lahir_ibu ? \Carbon\Carbon::parse($siswa->tanggal_lahir_ibu)->format('Y-m-d') : '' }}" disabled>
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="alamat_ibu" class="col-sm-3 col-form-label">Alamat</label>
+                      <label class="col-sm-3 col-form-label">Alamat</label>
                       <div class="col-sm-9">
-                        <textarea class="form-control" id="alamat_ibu" name="alamat_ibu" placeholder="Alamat" disabled>{{ $siswa->alamat_ibu }}</textarea>
+                        <textarea class="form-control" placeholder="Alamat" disabled>{{ $siswa->alamat_ibu }}</textarea>
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="nomor_hp_ibu" class="col-sm-3 col-form-label">Nomor HP</label>
+                      <label class="col-sm-3 col-form-label">Nomor HP</label>
                       <div class="col-sm-9">
-                        <input type="text" class="form-control" id="nomor_hp_ibu" name="nomor_hp_ibu" placeholder="Nomor HP" value="{{ $siswa->nomor_hp_ibu }}" disabled>
+                        <input type="text" class="form-control" placeholder="Nomor HP" value="{{ $siswa->nomor_hp_ibu }}" disabled>
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="agama_ibu" class="col-sm-3 col-form-label">Agama</label>
+                      <label class="col-sm-3 col-form-label">Agama</label>
                       <div class="col-sm-9">
-                        <select class="form-control" id="agama_ibu" name="agama_ibu" disabled>
+                        <select class="form-control" disabled>
                           <option selected>-- Pilih Agama --</option>
                           <option value="1" @if ( $siswa->agama_ibu =='1' ) selected @endif>Islam</option>
                           <option value="2" @if ( $siswa->agama_ibu =='2' ) selected @endif>Kristen</option>
@@ -499,25 +500,25 @@
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="kota_ibu" class="col-sm-3 col-form-label">Kota</label>
+                      <label class="col-sm-3 col-form-label">Kota</label>
                       <div class="col-sm-3">
-                        <input type="text" class="form-control" id="kota_ibu" name="kota_ibu" placeholder="Kota" value="{{ $siswa->kota_ibu }}" disabled>
+                        <input type="text" class="form-control" placeholder="Kota" value="{{ $siswa->kota_ibu }}" disabled>
                       </div>
-                      <label for="pendidikan_terakhir_ibu" class="col-sm-3 col-form-label">Pendidikan Terakhir</label>
+                      <label class="col-sm-3 col-form-label">Pendidikan Terakhir</label>
                       <div class="col-sm-3">
-                        <input type="text" class="form-control" id="pendidikan_terakhir_ibu" name="pendidikan_terakhir_ibu" placeholder="Pendidikan Terakhir" value="{{ $siswa->pendidikan_terakhir_ibu }}" disabled>
+                        <input type="text" class="form-control" placeholder="Pendidikan Terakhir" value="{{ $siswa->pendidikan_terakhir_ibu }}" disabled>
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="pekerjaan_ibu" class="col-sm-3 col-form-label">Pekerjaan</label>
+                      <label class="col-sm-3 col-form-label">Pekerjaan</label>
                       <div class="col-sm-9">
-                        <input type="text" class="form-control" id="pekerjaan_ibu" name="pekerjaan_ibu" placeholder="Pekerjaan Ayah" value="{{ $siswa->pekerjaan_ibu }}" disabled>
+                        <input type="text" class="form-control" placeholder="Pekerjaan Ayah" value="{{ $siswa->pekerjaan_ibu }}" disabled>
                       </div>
                     </div>
                     <div class="form-group row">
                       <label for="penghasilan_ibu" class="col-sm-3 col-form-label">Penghasilan</label>
                       <div class="col-sm-9">
-                        <input type="text" class="form-control" id="penghasilan_ibu" name="penghasilan_ibu" placeholder="Penghasilan" value="{{ $siswa->penghasilan_ibu }}" disabled>
+                        <input type="text" class="form-control" placeholder="Penghasilan" value="{{ $siswa->penghasilan_ibu }}" disabled>
                       </div>
                     </div>
                   </div>
@@ -527,43 +528,43 @@
                   <div class="border-bottom p-2">
                     <h6 class="mt-2"><b>A. Guardian</b></h6>
                     <div class="form-group row">
-                      <label for="nik_wali" class="col-sm-3 col-form-label">NIK</label>
+                      <label class="col-sm-3 col-form-label">NIK</label>
                       <div class="col-sm-9">
-                        <input type="text" class="form-control" id="nik_wali" name="nik_wali" placeholder="NIK" value="{{ $siswa->nik_wali }}" disabled>
+                        <input type="text" class="form-control"  placeholder="NIK" value="{{ $siswa->nik_wali }}" disabled>
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="nama_wali" class="col-sm-3 col-form-label">Nama</label>
+                      <label  class="col-sm-3 col-form-label">Nama</label>
                       <div class="col-sm-9">
-                        <input type="text" class="form-control" id="nama_wali" name="nama_wali" placeholder="Nama" value="{{ $siswa->nama_wali }}" disabled>
+                        <input type="text" class="form-control" placeholder="Nama" value="{{ $siswa->nama_wali }}" disabled>
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="tempat_lahir_wali" class="col-sm-3 col-form-label">Tempat Lahir</label>
+                      <label class="col-sm-3 col-form-label">Tempat Lahir</label>
                       <div class="col-sm-3">
-                        <input type="text" class="form-control" id="tempat_lahir_wali" name="tempat_lahir_wali" placeholder="Tempat Lahir" value="{{ $siswa->tempat_lahir_wali }}" disabled>
+                        <input type="text" class="form-control"  placeholder="Tempat Lahir" value="{{ $siswa->tempat_lahir_wali }}" disabled>
                       </div>
-                      <label for="tanggal_lahir_wali" class="col-sm-3 col-form-label">Tanggal Lahir</label>
+                      <label class="col-sm-3 col-form-label">Tanggal Lahir</label>
                       <div class="col-sm-3">
-                        <input type="date" class="form-control" id="tanggal_lahir_wali" name="tanggal_lahir_wali" placeholder="Tanggal Lahir" value="{{  date('d-m-Y', strtotime($siswa->tanggal_lahir_wali));  }}" disabled>
+                        <input type="date" class="form-control" placeholder="Tanggal Lahir" value="{{  date('d-m-Y', strtotime($siswa->tanggal_lahir_wali));  }}" disabled>
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="alamat_wali" class="col-sm-3 col-form-label">Alamat</label>
+                      <label class="col-sm-3 col-form-label">Alamat</label>
                       <div class="col-sm-9">
-                        <textarea class="form-control" id="alamat_wali" name="alamat_wali" placeholder="Alamat" disabled>{{ $siswa->alamat_wali }}</textarea>
+                        <textarea class="form-control" placeholder="Alamat" disabled>{{ $siswa->alamat_wali }}</textarea>
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="nomor_hp_wali" class="col-sm-3 col-form-label">Nomor HP</label>
+                      <label  class="col-sm-3 col-form-label">Nomor HP</label>
                       <div class="col-sm-9">
-                        <input type="text" class="form-control" id="nomor_hp_wali" name="nomor_hp_wali" placeholder="Nomor HP" value="{{ $siswa->nomor_hp_wali }}" disabled>
+                        <input type="text" class="form-control" placeholder="Nomor HP" value="{{ $siswa->nomor_hp_wali }}" disabled>
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="agama_wali" class="col-sm-3 col-form-label">Agama</label>
+                      <label class="col-sm-3 col-form-label">Agama</label>
                       <div class="col-sm-9">
-                        <select class="form-control" id="agama_wali" name="agama_wali" disabled>
+                        <select class="form-control" disabled>
                           <option selected>-- Pilih Agama --</option>
                           <option value="1" @if ( $siswa->agama_wali =='1' ) selected @endif>Islam</option>
                           <option value="2" @if ( $siswa->agama_wali =='2' ) selected @endif>Kristen</option>
@@ -576,25 +577,25 @@
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="kota_wali" class="col-sm-3 col-form-label">Kota</label>
+                      <label class="col-sm-3 col-form-label">Kota</label>
                       <div class="col-sm-3">
-                        <input type="text" class="form-control" id="kota_wali" name="kota_wali" placeholder="Kota" value="{{ $siswa->kota_wali }}" disabled>
+                        <input type="text" class="form-control" placeholder="Kota" value="{{ $siswa->kota_wali }}" disabled>
                       </div>
-                      <label for="pendidikan_terakhir_wali" class="col-sm-3 col-form-label">Pendidikan Terakhir</label>
+                      <label class="col-sm-3 col-form-label">Pendidikan Terakhir</label>
                       <div class="col-sm-3">
-                        <input type="text" class="form-control" id="pendidikan_terakhir_wali" name="pendidikan_terakhir_wali" placeholder="Pendidikan Terakhir" value="{{ $siswa->pendidikan_terakhir_wali }}" disabled>
+                        <input type="text" class="form-control"  placeholder="Pendidikan Terakhir" value="{{ $siswa->pendidikan_terakhir_wali }}" disabled>
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="pekerjaan_wali" class="col-sm-3 col-form-label">Pekerjaan</label>
+                      <label  class="col-sm-3 col-form-label">Pekerjaan</label>
                       <div class="col-sm-9">
-                        <input type="text" class="form-control" id="pekerjaan_wali" name="pekerjaan_wali" placeholder="Pekerjaan" value="{{ $siswa->pekerjaan_wali }}" disabled>
+                        <input type="text" class="form-control"  placeholder="Pekerjaan" value="{{ $siswa->pekerjaan_wali }}" disabled>
                       </div>
                     </div>
                     <div class="form-group row">
-                      <label for="penghasilan_wali" class="col-sm-3 col-form-label">Penghasilan</label>
+                      <label class="col-sm-3 col-form-label">Penghasilan</label>
                       <div class="col-sm-9">
-                        <input type="text" class="form-control" id="penghasilan_wali" name="penghasilan_wali" placeholder="Penghasilan" value="{{ $siswa->penghasilan_wali }}" disabled>
+                        <input type="text" class="form-control" placeholder="Penghasilan" value="{{ $siswa->penghasilan_wali }}" disabled>
                       </div>
                     </div>
                   </div>
@@ -631,7 +632,7 @@
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <form action="{{ route('siswa.update', $siswa->id) }}" method="POST">
+              <form action="{{ route('siswa.update', $siswa->id) }}" method="POST" enctype="multipart/form-data">
                 {{ method_field('PATCH') }}
                 @csrf
                 <div class="modal-body">
@@ -756,9 +757,10 @@
                           <div class="col-sm-3">
                             <input type="text" class="form-control" id="tempat_lahir" name="tempat_lahir" placeholder="Tempat Lahir" value="{{$siswa->tempat_lahir}} " required>
                           </div>
-                          <label for="tanggal_lahir" class="col-sm-2 col-form-label required">Tanggal Lahir</label>
+                          <label for="tanggal_lahir_edit" class="col-sm-2 col-form-label required">Tanggal Lahir</label>
                           <div class="col-sm-4">
-                            <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir" value="{{ $siswa->tanggal_lahir }}" required>
+                            <input type="date" class="form-control" id="tanggal_lahir_edit" name="tanggal_lahir" value="{{ $siswa->tanggal_lahir ? \Carbon\Carbon::parse($siswa->tanggal_lahir)->format('Y-m-d') : '' }}"
+                            " required>
                           </div>
                         </div>
 
@@ -781,6 +783,21 @@
                             <input type="number" class="form-control" id="anak_ke" name="anak_ke" value="{{$siswa->anak_ke}}">
                           </div>
                         </div>
+
+                        <div class="form-group row">
+                          <label for="pas_photo" class="col-sm-3 col-form-label required">Pas Photo</label>
+                          <div class="col-sm-4 custom-file">
+                            <div class="input-group">
+                                <div class="custom-file">
+                                    <input type="file" name="pas_photo" class="custom-file-input" id="pas_photo" onchange="readURL(this);" >
+                                    <label class="custom-file-label" for="pas_photo">{{substr(basename($siswa->pas_photo), 0, 20) }}</label>
+                                </div>
+                            </div>
+                          </div>
+                          <div class="col-sm-5">
+                            <img src="{{ $siswa->pas_photo ? asset('storage/'.$siswa->pas_photo) : asset('assets/dist/img/3x4.png') }}" alt="" id="pas_photo_preview" width="105px" height="144px">
+                          </div>
+                        </div>
                       </div>
 
                       {{-- B. Domicile Information --}}
@@ -795,7 +812,7 @@
                         <div class="form-group row">
                           <label for="kota" class="col-sm-3 col-form-label">Kota</label>
                           <div class="col-sm-4">
-                            <input type="text" class="form-control" id="kota" name="kota" placeholder="Kota" value=" {{ $siswa->kota }}">
+                            <input type="text" class="form-control" id="kota" name="kota" placeholder="Kota" value="{{ $siswa->kota }}">
                           </div>
                           <label for="kode_pos" class="col-sm-2 col-form-label">Kode Pos</label>
                           <div class="col-sm-3">
@@ -875,7 +892,7 @@
                             <div class="input-group">
                                 <div class="custom-file">
                                     <input type="file" name="file_document_kesehatan" class="custom-file-input" id="file_document_kesehatan">
-                                    <label class="custom-file-label" for="file_document_kesehatan">Choose file</label>
+                                    <label class="custom-file-label" for="file_document_kesehatan">{{ basename($siswa->file_document_kesehatan) }}</label>
                                 </div>
                             </div>
                           </div>
@@ -886,7 +903,7 @@
                             <div class="input-group">
                                 <div class="custom-file">
                                     <input type="file" name="file_list_pertanyaan" class="custom-file-input" id="file_list_pertanyaan">
-                                    <label class="custom-file-label" for="file_list_pertanyaan">Choose file</label>
+                                    <label class="custom-file-label" for="file_list_pertanyaan">{{ basename($siswa->file_list_pertanyaan) }}</label>
                                 </div>
                             </div>
                           </div>
@@ -899,11 +916,11 @@
                         <div class="form-group row">
                           <label for="tanggal_masuk_sekolah_lama" class="col-sm-3 col-form-label">Tgl. Masuk Sekolah</label>
                           <div class="col-sm-4">
-                            <input type="date" class="form-control" id="tanggal_masuk_sekolah_lama" name="tanggal_masuk_sekolah_lama" placeholder="Tgl. Masuk Sekolah" value="{{ $siswa->tanggal_masuk_sekolah_lama }}">
+                            <input type="date" class="form-control" id="tanggal_masuk_sekolah_lama" name="tanggal_masuk_sekolah_lama" value="{{  $siswa->tanggal_masuk_sekolah_lama ? \Carbon\Carbon::parse($siswa->tanggal_masuk_sekolah_lama)->format('Y-m-d') : '' }}">
                           </div>
                           <label for="tanggal_keluar_sekolah_lama" class="col-sm-2 col-form-label">Tgl. Keluar Sekolah</label>
                           <div class="col-sm-3">
-                            <input type="date" class="form-control" id="tanggal_keluar_sekolah_lama" name="tanggal_keluar_sekolah_lama" placeholder="Tgl. Keluar Sekolah" value=" {{ $siswa->tanggal_keluar_sekolah_lama }}">
+                            <input type="date" class="form-control" id="tanggal_keluar_sekolah_lama" name="tanggal_keluar_sekolah_lama" value="{{ $siswa->tanggal_keluar_sekolah_lama ? \Carbon\Carbon::parse($siswa->tanggal_keluar_sekolah_lama)->format('Y-m-d') : '' }}">
                           </div>
                         </div>
                         <div class="form-group row">
@@ -934,7 +951,7 @@
                             <div class="input-group">
                                 <div class="custom-file">
                                     <input type="file" name="file_dokument_sekolah_lama" class="custom-file-input" id="file_dokument_sekolah_lama">
-                                    <label class="custom-file-label" for="file_dokument_sekolah_lama">Choose file</label>
+                                    <label class="custom-file-label" for="file_dokument_sekolah_lama"> {{ basename($siswa->file_dokument_sekolah_lama) }}</label>
                                 </div>
                             </div>
                           </div>
@@ -964,7 +981,7 @@
                           </div>
                           <label for="tanggal_lahir_ayah" class="col-sm-3 col-form-label">Tanggal Lahir</label>
                           <div class="col-sm-3">
-                            <input type="date" class="form-control" id="tanggal_lahir_ayah" name="tanggal_lahir_ayah" placeholder="Tanggal Lahir" value="{{ $siswa->tanggal_lahir_ayah }}">
+                            <input type="date" class="form-control" id="tanggal_lahir_ayah" name="tanggal_lahir_ayah" placeholder="Tanggal Lahir" value="{{ $siswa->tanggal_lahir_ayah ? \Carbon\Carbon::parse($siswa->tanggal_lahir_ayah)->format('Y-m-d') : '' }}">
                           </div>
                         </div>
                         <div class="form-group row">
@@ -1041,7 +1058,7 @@
                           </div>
                           <label for="tanggal_lahir_ibu" class="col-sm-3 col-form-label">Tanggal Lahir</label>
                           <div class="col-sm-3">
-                            <input type="date" class="form-control" id="tanggal_lahir_ibu" name="tanggal_lahir_ibu" placeholder="Tanggal Lahir" value="{{ $siswa->tanggal_lahir_ibu }}">
+                            <input type="date" class="form-control" id="tanggal_lahir_ibu" name="tanggal_lahir_ibu" placeholder="Tanggal Lahir" value="{{ $siswa->tanggal_lahir_ibu ? \Carbon\Carbon::parse($siswa->tanggal_lahir_ibu)->format('Y-m-d') : '' }}">
                           </div>
                         </div>
                         <div class="form-group row">
@@ -1118,7 +1135,7 @@
                           </div>
                           <label for="tanggal_lahir_wali" class="col-sm-3 col-form-label">Tanggal Lahir</label>
                           <div class="col-sm-3">
-                            <input type="date" class="form-control" id="tanggal_lahir_wali" name="tanggal_lahir_wali" placeholder="Tanggal Lahir" value="{{ $siswa->tanggal_lahir_wali }}">
+                            <input type="date" class="form-control" id="tanggal_lahir_wali" name="tanggal_lahir_wali" placeholder="Tanggal Lahir" value="{{ $siswa->tanggal_lahir_wali ? \Carbon\Carbon::parse($siswa->tanggal_lahir_wali)->format('Y-m-d') : '' }}">
                           </div>
                         </div>
                         <div class="form-group row">
@@ -1368,7 +1385,7 @@
                   <div class="form-group row">
                     <label for="tanggal_keluar" class="col-sm-3 col-form-label">Tanggal Keluar Sekolah</label>
                     <div class="col-sm-9">
-                      <input type="date" class="form-control" id="tanggal_keluar" name="tanggal_keluar">
+                      <input type="date" class="form-control" id="tanggal_keluar" name="tanggal_keluar" value="{{ $siswa->tanggal_keluar ? \Carbon\Carbon::parse($siswa->tanggal_keluar)->format('Y-m-d') : '' }}">
                     </div>
                   </div>
 
