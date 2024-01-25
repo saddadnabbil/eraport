@@ -741,7 +741,7 @@
           <td style="width: 52%;">: {{$sekolah->alamat}}</td>
           <td style="width: 16%;">Semester</td>
           <td style="width: 13%;">:
-            @if($anggota_kelas->kelas->tapel->semester_id == 1)
+            @if($anggota_kelas->kelas->tingkatan->semester_id == 1)
             1 (Ganjil)
             @else
             2 (Genap)
@@ -766,7 +766,7 @@
         <strong>
           LAPORAN HASIL <br>
           PENILAIAN TENGAH SEMESTER
-          @if($anggota_kelas->kelas->tapel->semester_id == 1)
+          @if($anggota_kelas->kelas->tingkatan->semester_id == 1)
           GANJIL
           @else
           GENAP

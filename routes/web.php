@@ -472,11 +472,11 @@ Route::group(['middleware' => ['auth']], function () {
         ]);
 
         Route::resource('raportptskm', 'Walikelas\KM\CetakRaportPTSController',  [
-          'uses' => ['index', 'store', 'show']
+          'uses' => ['index', 'show']
         ]);
 
         Route::resource('raportsemesterkm', 'Walikelas\KM\CetakRaportSemesterController',  [
-          'uses' => ['index', 'store', 'show']
+          'uses' => ['index', 'show']
         ]);
         // End  Raport KM Wali Kelas
       });

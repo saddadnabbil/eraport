@@ -8,25 +8,17 @@ use App\Kelas;
 use App\Mapel;
 use App\Tapel;
 use App\Sekolah;
-use App\KmKkmMapel;
 use App\AnggotaKelas;
-use App\NilaiSumatif;
 use App\Pembelajaran;
-use App\NilaiFormatif;
-use App\K13NilaiPtsPas;
 use App\KehadiranSiswa;
-use App\KmMappingMapel;
 use App\Ekstrakulikuler;
 use App\CatatanWaliKelas;
 use App\KmNilaiAkhirRaport;
-use App\RencanaNilaiSumatif;
 use Illuminate\Http\Request;
 use App\NilaiEkstrakulikuler;
-use App\RencanaNilaiFormatif;
-use App\KmDeskripsiNilaiSiswa;
 use App\AnggotaEkstrakulikuler;
 use App\Http\Controllers\Controller;
-use App\K13RencanaNilaiKeterampilan;
+use App\Semester;
 use Illuminate\Support\Facades\Auth;
 
 class CetakRaportPTSController extends Controller
@@ -39,19 +31,21 @@ class CetakRaportPTSController extends Controller
     public function index()
     {
         $title = 'Raport Tengah Semester';
-        return view('walikelas.km.raportpts.setpaper', compact('title'));
+        $tapel = Tapel::where('status', 1)->first();
+
+        return view('walikelas.km.raportpts.setpaper', compact('title', 'tapel'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Display a listing of the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $title = 'Raport Tengah Semester';
         $tapel = Tapel::where('status', 1)->first();
+        $semester = Semester::findorfail($request->semester_id);
 
         $guru = Guru::where('user_id', Auth::user()->id)->first();
         $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)->where('guru_id', $guru->id)->get('id');
@@ -64,10 +58,10 @@ class CetakRaportPTSController extends Controller
             ->where('siswa.status', 1)
             ->get();
 
-        $paper_size = $request->paper_size;
-        $orientation = $request->orientation;
+        $paper_size = 'A4';
+        $orientation = 'potrait';
 
-        return view('walikelas.km.raportpts.index', compact('title', 'data_anggota_kelas', 'paper_size', 'orientation'));
+        return view('walikelas.km.raportpts.index', compact('title', 'data_anggota_kelas', 'paper_size', 'orientation', 'tapel', 'semester'));
     }
 
     /**
@@ -118,16 +112,9 @@ class CetakRaportPTSController extends Controller
             $nilai_akhir_total[$pembelajaran_id]['term'] = $nilai['term'];
         }
 
-        // Interval KKM                     
-        // $kkm->predikat_d =  60.00;
-        // $kkm->predikat_c =  70.00;
-        // $kkm->predikat_b =  80.00;
-        // $kkm->predikat_a =  100.00;
-
         // Nilai Akhir
         // Membagi hasil jumlah nilai dengan 2 dan menambahkan predikat
         $nilai_akhir_total = array_map(function ($data) {
-            // Interval KKM
             $kkm = [
                 'predikat_d' => 60.00,
                 'predikat_c' => 70.00,

@@ -3,7 +3,7 @@
 
   <head>
     <meta charset="utf-8" />
-    <title></title>
+    <title>{{$title}} | {{$anggota_kelas->siswa->nama_lengkap}} ({{$anggota_kelas->siswa->nis}})</title>
     <link rel="icon" type="image/png" href="logo.png">
   </head>
 
@@ -73,7 +73,7 @@
       top: 0px;
       left: 0px;
       background-image: url("{{ public_path().'/assets/dist/img/logo-with-text.png' }}");
-      background-size: 75%;
+      background-size: 60%;
       background-position: center center;
       background-repeat: no-repeat;
       opacity: 0.1;
@@ -105,7 +105,7 @@
 
   <body>
     <!-- Page 1 Cover -->
-    {{-- <div class="cover">
+    <div class="cover" style="padding-right: 10pt">
         <table style="width: 100%; border-collapse: collapse;" class="watermarked">
             <!-- Header Table -->
             <table class="header-table" style="width: 100%; border-collapse: collapse;">
@@ -230,9 +230,9 @@
             </table>
         </table>  
     </div>
-    <div class="page-break"></div> --}}
+    <div class="page-break"></div>
 
-    <div class="identitas">
+    <div class="identitas" style="padding-right: 10pt">
         <table style="width: 100%; border-collapse: collapse;" class="watermarked">
             <!-- Header Table -->
             <table class="header-table" style="width: 100%; border-collapse: collapse;">
@@ -241,7 +241,7 @@
                         <img src="./assets/dist/img/logo.png" alt="" width="75px" height="75px">
                     </td>
                     
-                    <td style="text-align: left; vertical-align: middle; width: 60%">
+                    <td style="text-align: left; vertical-align: middle; width: 57%">
                         <h1 style="font-size: 16pt">
                             GLOBAL INDONESIA SCHOOL
                         </h1>

@@ -18,8 +18,8 @@ class SiswaTableSeeder extends Seeder
         Siswa::create([
             'user_id' => 4,
             'kelas_id' => 1,
-            'tingkatan_id' => 1,
-            'jurusan_id' => 3,
+            'tingkatan_id' => 5,
+            'jurusan_id' => 1,
             'jenis_pendaftaran' => '1',
             'tahun_masuk' => '2022',
             'semester_masuk' => '1',
@@ -91,8 +91,8 @@ class SiswaTableSeeder extends Seeder
         Siswa::create([
             'user_id' => 5,
             'kelas_id' => 2,
-            'tingkatan_id' => 1,
-            'jurusan_id' => 3,
+            'tingkatan_id' => 5,
+            'jurusan_id' => 1,
             'jenis_pendaftaran' => '1',
             'tahun_masuk' => '2022',
             'semester_masuk' => '1',
@@ -162,8 +162,8 @@ class SiswaTableSeeder extends Seeder
         Siswa::create([
             'user_id' => 6,
             'kelas_id' => 2,
-            'jurusan_id' => 3,
-            'tingkatan_id' => 1,
+            'jurusan_id' => 1,
+            'tingkatan_id' => 5,
             'tahun_masuk' => '2022',
             'semester_masuk' => '1',
             'kelas_masuk' => 'PA1',
@@ -204,6 +204,9 @@ class SiswaTableSeeder extends Seeder
             'pekerjaan_ayah' => 'Engineer',
             'pekerjaan_ibu' => 'Teacher',
             'pekerjaan_wali' => 'Doctor',
+            'alamat_ayah' => 'Jl. ABC No. 123',
+            'alamat_ibu' => 'Jl. ABC No. 123',
+            'alamat_wali' => 'Jl. ABC No. 123',
 
             'tinggi_badan' => 170,
             'berat_badan' => 60,

@@ -55,7 +55,7 @@
               $shs = App\Tingkatan::where('id', 5)->first();
             @endphp 
              
-             School Year {{ str_replace('-', ' / ', $tapel->tahun_pelajaran) }} - (Semester PG {{$pg->semester_id . '-' . $pg->term_id}}) - (Semester PS {{$ps->semester_id . '-' . $ps->term_id}}) - (Semester JHS {{$jhs->semester_id . '-' . $jhs->term_id}}) - (Semester SHS {{$shs->semester_id . '-' . $shs->term_id}}) - Term {{$term->id }}
+             School Year {{ str_replace('-', ' / ', $tapel->tahun_pelajaran) }} - (Semester PS {{$ps->semester_id . '-' . $ps->term_id}}) - (Semester JHS {{$jhs->semester_id . '-' . $jhs->term_id}}) - (Semester SHS {{$shs->semester_id . '-' . $shs->term_id}}) - Term {{$term->id }}
           </a>
         </div>
         <!-- End of Flex container -->

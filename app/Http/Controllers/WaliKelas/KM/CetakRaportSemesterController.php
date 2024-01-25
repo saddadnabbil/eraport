@@ -8,19 +8,18 @@ use App\Kelas;
 use App\Mapel;
 use App\Tapel;
 use App\Sekolah;
+use App\Semester;
 use App\KmTglRaport;
 use App\AnggotaKelas;
 use App\Pembelajaran;
 use App\PrestasiSiswa;
 use App\KehadiranSiswa;
-use App\KmMappingMapel;
 use App\Ekstrakulikuler;
 use App\CatatanWaliKelas;
 use App\KmNilaiAkhirRaport;
 use Illuminate\Http\Request;
 use App\NilaiEkstrakulikuler;
 use App\AnggotaEkstrakulikuler;
-use App\K13DeskripsiSikapSiswa;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
@@ -34,19 +33,22 @@ class CetakRaportSemesterController extends Controller
     public function index()
     {
         $title = 'Cetak Raport Semester';
-        return view('walikelas.km.raportsemester.setpaper', compact('title'));
+        $tapel = Tapel::where('status', 1)->first();
+
+        return view('walikelas.km.raportsemester.setpaper', compact('title', 'tapel'));
     }
 
+
     /**
-     * Store a newly created resource in storage.
+     * Display a listing of the resource.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $title = 'Cetak Raport Semester';
         $tapel = Tapel::where('status', 1)->first();
+        $semester = Semester::findorfail($request->semester_id);
 
         $guru = Guru::where('user_id', Auth::user()->id)->first();
         $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)->where('guru_id', $guru->id)->get('id');
@@ -58,11 +60,11 @@ class CetakRaportSemesterController extends Controller
             ->whereIn('anggota_kelas.kelas_id', $kelas_id_anggota_kelas)
             ->where('siswa.status', 1)
             ->get();
-            
-        $paper_size = $request->paper_size;
-        $orientation = $request->orientation;
 
-        return view('walikelas.km.raportsemester.index', compact('title', 'data_anggota_kelas', 'paper_size', 'orientation'));
+        $paper_size = 'A4';
+        $orientation = 'potrait';
+
+        return view('walikelas.km.raportsemester.index', compact('title', 'data_anggota_kelas', 'paper_size', 'orientation', 'tapel', 'semester'));
     }
 
     /**
@@ -76,10 +78,11 @@ class CetakRaportSemesterController extends Controller
         $sekolah = Sekolah::first();
         $anggota_kelas = AnggotaKelas::findorfail($id);
         $tapel = Tapel::where('status', 1)->first();
+        $semester = Semester::findorfail($request->semester_id);
 
         if ($request->data_type == 1) {
             $title = 'Kelengkapan Raport';
-            $kelengkapan_raport = PDF::loadview('walikelas.k13.raportsemester.kelengkapanraport', compact('title', 'sekolah', 'anggota_kelas'))->setPaper($request->paper_size, $request->orientation);
+            $kelengkapan_raport = PDF::loadview('walikelas.km.raportsemester.kelengkapanraport', compact('title', 'sekolah', 'anggota_kelas', 'semester'))->setPaper($request->paper_size, $request->orientation);
             return $kelengkapan_raport->stream('KELENGKAPAN RAPORT ' . $anggota_kelas->siswa->nama_lengkap . ' (' . $anggota_kelas->kelas->nama_kelas . ').pdf');
         } elseif ($request->data_type == 2) {
             $title = 'Raport Semester';
@@ -164,7 +167,6 @@ class CetakRaportSemesterController extends Controller
                 return $data;
             }, $nilai_akhir_total);
 
-
             $data_nilai = KmNilaiAkhirRaport::whereIn('pembelajaran_id', $data_id_pembelajaran)->where('anggota_kelas_id', $anggota_kelas->id)->get();
 
             $data_id_ekstrakulikuler = Ekstrakulikuler::where('tapel_id', $tapel->id)->get('id');
@@ -188,7 +190,7 @@ class CetakRaportSemesterController extends Controller
             if (is_null($cek_tanggal_raport)) {
                 return back()->with('toast_warning', 'Tanggal raport belum disetting oleh admin');
             } else {
-                $raport = PDF::loadview('walikelas.km.raportsemester.raport', compact('title', 'sekolah', 'anggota_kelas',  'data_anggota_ekstrakulikuler', 'data_prestasi_siswa', 'kehadiran_siswa', 'catatan_wali_kelas', 'data_nilai', 'nilai_akhir_total'))->setPaper($request->paper_size, $request->orientation);
+                $raport = PDF::loadview('walikelas.km.raportsemester.raport', compact('title', 'sekolah', 'anggota_kelas',  'data_anggota_ekstrakulikuler', 'data_prestasi_siswa', 'kehadiran_siswa', 'catatan_wali_kelas', 'data_nilai', 'nilai_akhir_total', 'semester'))->setPaper($request->paper_size, $request->orientation);
                 return $raport->stream('RAPORT ' . $anggota_kelas->siswa->nama_lengkap . ' (' . $anggota_kelas->kelas->nama_kelas . ').pdf');
             }
         }

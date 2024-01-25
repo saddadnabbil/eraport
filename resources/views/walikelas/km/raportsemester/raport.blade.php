@@ -267,14 +267,13 @@
             <td class="title-center">
                 <h1 class="center-align pad-179 pad-5 no-indent">
                     GLOBAL INDONESIA SCHOOL <br>
-                    
-                    @if($anggota_kelas->kelas->tapel->semester_id == 1)
-                    FIRST
+                    @if($semester->id == 1)
+                    FIRST SEMESTER PROGRESS REPORT
                     @else
-                    SECOND
+                    YEAR END REPORT
                     @endif
                      
-                    SEMESTER PROGRESS REPORT <br> 
+                     <br> 
                     {{str_replace('-', ' / ', $anggota_kelas->kelas->tapel->tahun_pelajaran)}}
                 </h1>
                 <p class="center-align pad-126 line-height-123" style="padding: 0 60pt">

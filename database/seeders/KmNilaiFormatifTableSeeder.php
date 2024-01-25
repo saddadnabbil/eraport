@@ -63,53 +63,53 @@ class KmNilaiFormatifTableSeeder extends Seeder
             'nilai' => 90
         ]);
 
-        // // term 2
-        // NilaiFormatif::create([
-        //     'rencana_nilai_formatif_id' => 10,
-        //     'anggota_kelas_id' => 1,
-        //     'nilai' => 90
-        // ]);
-        // NilaiFormatif::create([
-        //     'rencana_nilai_formatif_id' => 11,
-        //     'anggota_kelas_id' => 1,
-        //     'nilai' => 90
-        // ]);
-        // NilaiFormatif::create([
-        //     'rencana_nilai_formatif_id' => 12,
-        //     'anggota_kelas_id' => 1,
-        //     'nilai' => 90
-        // ]);
+        // term 2
+        NilaiFormatif::create([
+            'rencana_nilai_formatif_id' => 10,
+            'anggota_kelas_id' => 1,
+            'nilai' => 90
+        ]);
+        NilaiFormatif::create([
+            'rencana_nilai_formatif_id' => 11,
+            'anggota_kelas_id' => 1,
+            'nilai' => 90
+        ]);
+        NilaiFormatif::create([
+            'rencana_nilai_formatif_id' => 12,
+            'anggota_kelas_id' => 1,
+            'nilai' => 90
+        ]);
 
-        // NilaiFormatif::create([
-        //     'rencana_nilai_formatif_id' => 13,
-        //     'anggota_kelas_id' => 1,
-        //     'nilai' => 90
-        // ]);
-        // NilaiFormatif::create([
-        //     'rencana_nilai_formatif_id' => 14,
-        //     'anggota_kelas_id' => 1,
-        //     'nilai' => 90
-        // ]);
-        // NilaiFormatif::create([
-        //     'rencana_nilai_formatif_id' => 15,
-        //     'anggota_kelas_id' => 1,
-        //     'nilai' => 90
-        // ]);
+        NilaiFormatif::create([
+            'rencana_nilai_formatif_id' => 13,
+            'anggota_kelas_id' => 1,
+            'nilai' => 90
+        ]);
+        NilaiFormatif::create([
+            'rencana_nilai_formatif_id' => 14,
+            'anggota_kelas_id' => 1,
+            'nilai' => 90
+        ]);
+        NilaiFormatif::create([
+            'rencana_nilai_formatif_id' => 15,
+            'anggota_kelas_id' => 1,
+            'nilai' => 90
+        ]);
 
-        // NilaiFormatif::create([
-        //     'rencana_nilai_formatif_id' => 16,
-        //     'anggota_kelas_id' => 1,
-        //     'nilai' => 90
-        // ]);
-        // NilaiFormatif::create([
-        //     'rencana_nilai_formatif_id' => 17,
-        //     'anggota_kelas_id' => 1,
-        //     'nilai' => 90
-        // ]);
-        // NilaiFormatif::create([
-        //     'rencana_nilai_formatif_id' => 18,
-        //     'anggota_kelas_id' => 1,
-        //     'nilai' => 90
-        // ]);
+        NilaiFormatif::create([
+            'rencana_nilai_formatif_id' => 16,
+            'anggota_kelas_id' => 1,
+            'nilai' => 90
+        ]);
+        NilaiFormatif::create([
+            'rencana_nilai_formatif_id' => 17,
+            'anggota_kelas_id' => 1,
+            'nilai' => 90
+        ]);
+        NilaiFormatif::create([
+            'rencana_nilai_formatif_id' => 18,
+            'anggota_kelas_id' => 1,
+            'nilai' => 90
+        ]);
     }
 }

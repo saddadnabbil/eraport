@@ -12,15 +12,11 @@ use App\Pembelajaran;
 use App\KmMappingMapel;
 use App\Ekstrakulikuler;
 use App\KmNilaiAkhirRaport;
-use Illuminate\Http\Request;
 use App\NilaiEkstrakulikuler;
 use App\AnggotaEkstrakulikuler;
-use App\K13DeskripsiSikapSiswa;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\AdminKMLegerNilaiExport;
-use App\Exports\AdminK13LegerNilaiExport;
 use App\Exports\WaliKelasLegerNilaiExport;
 
 class LegerNilaiSiswaController extends Controller
@@ -67,7 +63,7 @@ class LegerNilaiSiswaController extends Controller
             ->whereIn('anggota_kelas.kelas_id', $kelas_id_anggota_kelas)
             ->where('siswa.status', 1)
             ->get();
-            
+
         foreach ($data_anggota_kelas as $anggota_kelas) {
 
             $data_nilai_kelompok_a = KmNilaiAkhirRaport::whereIn('pembelajaran_id', $data_id_pembelajaran_a)->where('term_id', $term->id)->where('anggota_kelas_id', $anggota_kelas->id)->get();

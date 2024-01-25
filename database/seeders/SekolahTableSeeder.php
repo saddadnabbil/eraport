@@ -16,8 +16,7 @@ class SekolahTableSeeder extends Seeder
             'nama_sekolah' => 'Global Indonesia School',
             'npsn' => '0000000000',
             'kode_pos' => '62001',
-            'alamat' => 'Perumahan Emerald Lake, Jl. Raya Tasikardi, Pelamunan, Kramatwatu, Serang-Banten, 42161
-            Kabupaten Serang, Banten. Phone : 0254-7941564, 081-1143-5499',
+            'alamat' => 'Perumahan Emerald Lake, Jl. Raya Tasikardi, Pelamunan, Kramatwatu, Serang-Banten, 42161 Kabupaten Serang, Banten.',
             'logo' => 'default.png',
             'nomor_telpon' => '0254-7941564',
             'email' => 'admin@gis.com',

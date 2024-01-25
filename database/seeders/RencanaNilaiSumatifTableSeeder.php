@@ -116,105 +116,105 @@ class RencanaNilaiSumatifTableSeeder extends Seeder
             'bobot_teknik_penilaian' => 30
         ]);
 
-        // // term 2
-        // // Pembelajaran 1
-        // RencanaNilaiSumatif::create([
-        //     'pembelajaran_id' => 1,
-        //     'term_id' => 2,
-        //     'kode_penilaian' => 'S1',
-        //     'teknik_penilaian' => '1',
-        //     'bobot_teknik_penilaian' => 40
-        // ]);
+        // term 2
+        // Pembelajaran 1
+        RencanaNilaiSumatif::create([
+            'pembelajaran_id' => 1,
+            'term_id' => 2,
+            'kode_penilaian' => 'S1',
+            'teknik_penilaian' => '1',
+            'bobot_teknik_penilaian' => 40
+        ]);
 
-        // RencanaNilaiSumatif::create([
-        //     'pembelajaran_id' => 1,
-        //     'term_id' => 2,
-        //     'kode_penilaian' => 'S2',
-        //     'teknik_penilaian' => '2',
-        //     'bobot_teknik_penilaian' => 30
-        // ]);
+        RencanaNilaiSumatif::create([
+            'pembelajaran_id' => 1,
+            'term_id' => 2,
+            'kode_penilaian' => 'S2',
+            'teknik_penilaian' => '2',
+            'bobot_teknik_penilaian' => 30
+        ]);
 
-        // RencanaNilaiSumatif::create([
-        //     'pembelajaran_id' => 1,
-        //     'term_id' => 2,
-        //     'kode_penilaian' => 'S3',
-        //     'teknik_penilaian' => '3',
-        //     'bobot_teknik_penilaian' => 30
-        // ]);
+        RencanaNilaiSumatif::create([
+            'pembelajaran_id' => 1,
+            'term_id' => 2,
+            'kode_penilaian' => 'S3',
+            'teknik_penilaian' => '3',
+            'bobot_teknik_penilaian' => 30
+        ]);
 
-        // // Pembelajaran 2
-        // RencanaNilaiSumatif::create([
-        //     'pembelajaran_id' => 2,
-        //     'term_id' => 2,
-        //     'kode_penilaian' => 'S1',
-        //     'teknik_penilaian' => '2',
-        //     'bobot_teknik_penilaian' => 30
-        // ]);
+        // Pembelajaran 2
+        RencanaNilaiSumatif::create([
+            'pembelajaran_id' => 2,
+            'term_id' => 2,
+            'kode_penilaian' => 'S1',
+            'teknik_penilaian' => '2',
+            'bobot_teknik_penilaian' => 30
+        ]);
 
-        // RencanaNilaiSumatif::create([
-        //     'pembelajaran_id' => 2,
-        //     'term_id' => 2,
-        //     'kode_penilaian' => 'S2',
-        //     'teknik_penilaian' => '2',
-        //     'bobot_teknik_penilaian' => 30
-        // ]);
+        RencanaNilaiSumatif::create([
+            'pembelajaran_id' => 2,
+            'term_id' => 2,
+            'kode_penilaian' => 'S2',
+            'teknik_penilaian' => '2',
+            'bobot_teknik_penilaian' => 30
+        ]);
 
-        // RencanaNilaiSumatif::create([
-        //     'pembelajaran_id' => 2,
-        //     'term_id' => 2,
-        //     'kode_penilaian' => 'S3',
-        //     'teknik_penilaian' => '3',
-        //     'bobot_teknik_penilaian' => 30
-        // ]);
+        RencanaNilaiSumatif::create([
+            'pembelajaran_id' => 2,
+            'term_id' => 2,
+            'kode_penilaian' => 'S3',
+            'teknik_penilaian' => '3',
+            'bobot_teknik_penilaian' => 30
+        ]);
 
-        // // Pembelajaran 3
-        // RencanaNilaiSumatif::create([
-        //     'pembelajaran_id' => 3,
-        //     'term_id' => 2,
-        //     'kode_penilaian' => 'P1',
-        //     'teknik_penilaian' => '1',
-        //     'bobot_teknik_penilaian' => 30
-        // ]);
+        // Pembelajaran 3
+        RencanaNilaiSumatif::create([
+            'pembelajaran_id' => 3,
+            'term_id' => 2,
+            'kode_penilaian' => 'P1',
+            'teknik_penilaian' => '1',
+            'bobot_teknik_penilaian' => 30
+        ]);
 
-        // RencanaNilaiSumatif::create([
-        //     'pembelajaran_id' => 3,
-        //     'term_id' => 2,
-        //     'kode_penilaian' => 'S2',
-        //     'teknik_penilaian' => '2',
-        //     'bobot_teknik_penilaian' => 30
-        // ]);
+        RencanaNilaiSumatif::create([
+            'pembelajaran_id' => 3,
+            'term_id' => 2,
+            'kode_penilaian' => 'S2',
+            'teknik_penilaian' => '2',
+            'bobot_teknik_penilaian' => 30
+        ]);
 
-        // RencanaNilaiSumatif::create([
-        //     'pembelajaran_id' => 3,
-        //     'term_id' => 2,
-        //     'kode_penilaian' => 'S3',
-        //     'teknik_penilaian' => '3',
-        //     'bobot_teknik_penilaian' => 30
-        // ]);
+        RencanaNilaiSumatif::create([
+            'pembelajaran_id' => 3,
+            'term_id' => 2,
+            'kode_penilaian' => 'S3',
+            'teknik_penilaian' => '3',
+            'bobot_teknik_penilaian' => 30
+        ]);
 
-        // // Pembelajaran 4
-        // RencanaNilaiSumatif::create([
-        //     'pembelajaran_id' => 4,
-        //     'term_id' => 2,
-        //     'kode_penilaian' => 'S1',
-        //     'teknik_penilaian' => '2',
-        //     'bobot_teknik_penilaian' => 30
-        // ]);
+        // Pembelajaran 4
+        RencanaNilaiSumatif::create([
+            'pembelajaran_id' => 4,
+            'term_id' => 2,
+            'kode_penilaian' => 'S1',
+            'teknik_penilaian' => '2',
+            'bobot_teknik_penilaian' => 30
+        ]);
 
-        // RencanaNilaiSumatif::create([
-        //     'pembelajaran_id' => 4,
-        //     'term_id' => 2,
-        //     'kode_penilaian' => 'S2',
-        //     'teknik_penilaian' => '2',
-        //     'bobot_teknik_penilaian' => 30
-        // ]);
+        RencanaNilaiSumatif::create([
+            'pembelajaran_id' => 4,
+            'term_id' => 2,
+            'kode_penilaian' => 'S2',
+            'teknik_penilaian' => '2',
+            'bobot_teknik_penilaian' => 30
+        ]);
 
-        // RencanaNilaiSumatif::create([
-        //     'pembelajaran_id' => 4,
-        //     'term_id' => 2,
-        //     'kode_penilaian' => 'S3',
-        //     'teknik_penilaian' => '3',
-        //     'bobot_teknik_penilaian' => 30
-        // ]);
+        RencanaNilaiSumatif::create([
+            'pembelajaran_id' => 4,
+            'term_id' => 2,
+            'kode_penilaian' => 'S3',
+            'teknik_penilaian' => '3',
+            'bobot_teknik_penilaian' => 30
+        ]);
     }
 }

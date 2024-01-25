@@ -7,25 +7,17 @@ use App\Kelas;
 use App\Mapel;
 use App\Tapel;
 use App\Sekolah;
-use App\KmKkmMapel;
+use App\Semester;
 use App\AnggotaKelas;
-use App\NilaiSumatif;
 use App\Pembelajaran;
-use App\NilaiFormatif;
-use App\K13NilaiPtsPas;
 use App\KehadiranSiswa;
-use App\KmMappingMapel;
 use App\Ekstrakulikuler;
 use App\CatatanWaliKelas;
 use App\KmNilaiAkhirRaport;
-use App\RencanaNilaiSumatif;
 use Illuminate\Http\Request;
 use App\NilaiEkstrakulikuler;
-use App\RencanaNilaiFormatif;
-use App\KmDeskripsiNilaiSiswa;
 use App\AnggotaEkstrakulikuler;
 use App\Http\Controllers\Controller;
-use App\K13RencanaNilaiKeterampilan;
 
 class CetakRaportPTSController extends Controller
 {
@@ -39,7 +31,7 @@ class CetakRaportPTSController extends Controller
         $title = 'Raport Tengah Semester';
         $tapel = Tapel::where('status', 1)->first();
         $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
-        return view('admin.km.raportpts.setpaper', compact('title', 'data_kelas'));
+        return view('admin.km.raportpts.setpaper', compact('title', 'data_kelas', 'tapel'));
     }
 
     /**
@@ -53,6 +45,8 @@ class CetakRaportPTSController extends Controller
         $title = 'Raport Tengah Semester';
         $kelas = Kelas::findorfail($request->kelas_id);
         $tapel = Tapel::where('status', 1)->first();
+        $semester = Semester::findorfail($request->semester_id);
+
         $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
         $data_anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
             ->orderBy('siswa.nama_lengkap', 'ASC')
@@ -60,10 +54,10 @@ class CetakRaportPTSController extends Controller
             ->where('siswa.status', 1)
             ->get();
 
-        $paper_size = $request->paper_size;
-        $orientation = $request->orientation;
+        $paper_size = 'A4';
+        $orientation = 'potrait';
 
-        return view('admin.km.raportpts.index', compact('title', 'kelas', 'data_kelas', 'data_anggota_kelas', 'paper_size', 'orientation'));
+        return view('admin.km.raportpts.index', compact('title', 'kelas', 'data_kelas', 'data_anggota_kelas', 'paper_size', 'orientation', 'semester'));
     }
 
     /**

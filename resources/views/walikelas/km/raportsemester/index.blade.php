@@ -37,21 +37,16 @@
                 <form action="{{ route('raportsemesterkm.store') }}" method="POST">
                   @csrf
                   <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Ukuran Kertas</label>
-                    <div class="col-sm-4">
-                      <select class="form-control" name="paper_size" style="width: 100%;" required onchange="this.form.submit();">
-                        <option value="A4" @if($paper_size=='A4' ) selected @endif>A4 (21 cm x 29,7 cm)</option>
-                        <option value="Folio" @if($paper_size=='Folio' ) selected @endif>Folio (21,59 cm x 33 cm)</option>
+                    <label class="col-sm-3 col-form-label">Semester</label>
+                    <div class="col-sm-9">
+                      <select class="form-control" name="semester_id" style="width: 100%;" required >
+                          <option value="1" @if( $tapel->semester_id  == '1' ) selected @endif>1</option>
+                          <option value="2" @if( $tapel->semester_id  == '2' ) selected @endif>2</option>
                       </select>
                     </div>
-                    {{-- <label class="col-sm-2 col-form-label">Orientasi</label>
-                    <div class="col-sm-4">
-                      <select class="form-control" name="orientation" style="width: 100%;" required onchange="this.form.submit();">
-                        <option value="potrait" @if($orientation=='potrait' ) selected @endif>Potrait</option>
-                        <option value="landscape" @if($orientation=='landscape' ) selected @endif>Landscape</option>
-                      </select>
-                    </div>
-                  </div> --}}
+                  </div>
+                  <input type="hidden" name="paper_size" value="{{ $paper_size }}">
+                  <input type="hidden" name="orientation" value="{{ $orientation }}">
                 </form>
               </div>
 
@@ -84,6 +79,7 @@
                             <input type="hidden" name="data_type" value="1">
                             <input type="hidden" name="paper_size" value="{{$paper_size}}">
                             <input type="hidden" name="orientation" value="{{$orientation}}">
+                            <input type="hidden" name="semester_id" value="{{$semester->id}}">
                             <button type="submit" class="btn btn-danger btn-sm">
                               <i class="fas fa-print"></i> Cetak Data
                             </button>
@@ -95,6 +91,7 @@
                             <input type="hidden" name="data_type" value="2">
                             <input type="hidden" name="paper_size" value="{{$paper_size}}">
                             <input type="hidden" name="orientation" value="{{$orientation}}">
+                            <input type="hidden" name="semester_id" value="{{$semester->id}}">
                             <button type="submit" class="btn btn-primary btn-sm">
                               <i class="fas fa-print"></i> Cetak Raport
                             </button>

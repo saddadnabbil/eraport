@@ -6,8 +6,6 @@ use App\Guru;
 use App\Term;
 use App\Kelas;
 use App\Tapel;
-use App\Semester;
-use App\KKkmMapel;
 use Carbon\Carbon;
 use App\KmKkmMapel;
 use App\NilaiAkhir;
@@ -15,23 +13,11 @@ use App\AnggotaKelas;
 use App\NilaiSumatif;
 use App\Pembelajaran;
 use App\NilaiFormatif;
-use App\K13NilaiPtsPas;
-use App\K13NilaiSosial;
-use App\K13NilaiSpiritual;
 use App\KmNilaiAkhirRaport;
-use App\K13NilaiAkhirRaport;
-use App\K13NilaiPengetahuan;
 use App\RencanaNilaiSumatif;
 use Illuminate\Http\Request;
-use App\K13NilaiKeterampilan;
 use App\RencanaNilaiFormatif;
-use App\K13RencanaNilaiSosial;
-use App\K13RencanaBobotPenilaian;
-use App\K13RencanaNilaiSpiritual;
-use App\K13RencanaNilaiPengetahuan;
 use App\Http\Controllers\Controller;
-use App\K13RencanaNilaiKeterampilan;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class KirimNilaiAkhirController extends Controller
@@ -48,7 +34,6 @@ class KirimNilaiAkhirController extends Controller
 
         $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
 
-        // $guru = Guru::where('user_id', Auth::user()->id)->first();
         $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
         $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
 
@@ -72,6 +57,7 @@ class KirimNilaiAkhirController extends Controller
 
             $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
             $term = Term::findorfail($pembelajaran->kelas->tingkatan->term_id);
+            $semester = Term::findorfail($pembelajaran->kelas->tingkatan->semester_id);
 
             $kkm = KmKkmMapel::where('mapel_id', $pembelajaran->mapel_id)->where('kelas_id', $pembelajaran->kelas_id)->first();
 
@@ -111,7 +97,7 @@ class KirimNilaiAkhirController extends Controller
                         ->where('siswa.status', 1)
                         ->get();
 
-                    if(count($data_anggota_kelas) == 0){
+                    if (count($data_anggota_kelas) == 0) {
                         return redirect(route('guru.penilaiankm.index'))->with('toast_error', 'Data anggota kelas tidak ditemukan');
                     }
 
@@ -138,7 +124,7 @@ class KirimNilaiAkhirController extends Controller
                         $anggota_kelas->nilai_keterampilan = round($nilai_akhir_keterampilan, 0);
                         $anggota_kelas->nilai_akhir_raport = round($nilai_akhir_raport, 0);
                     }
-                    return view('admin.km.kirimnilaiakhirkm.create', compact('title', 'data_pembelajaran', 'pembelajaran', 'kkm', 'data_anggota_kelas', 'term'));
+                    return view('admin.km.kirimnilaiakhirkm.create', compact('title', 'data_pembelajaran', 'pembelajaran', 'kkm', 'data_anggota_kelas', 'term', 'semester'));
                 }
             }
         }
@@ -156,6 +142,7 @@ class KirimNilaiAkhirController extends Controller
             $data_nilai = array(
                 'pembelajaran_id' => $request->pembelajaran_id,
                 'term_id'  => $request->term_id,
+                'semester_id'  => $request->semester_id,
                 'kkm' => $request->kkm,
                 'anggota_kelas_id'  => $request->anggota_kelas_id[$cound_siswa],
                 'nilai_sumatif'  => ltrim($request->nilai_pengetahuan[$cound_siswa]),
