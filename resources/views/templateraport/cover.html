@@ -10,10 +10,16 @@
   <style>
     /* main */
     body {
-        padding: 30px;
+        padding: 40px;
     }
 
-    h1, h2, h3, h4, h5 {
+    * {
+        margin: 0;
+        padding: 0;
+        text-indent: 0; 
+    }
+
+    h1, h2, h3, h4, h5 .title {
         color: black;
         font-family: Arial, sans-serif;
         font-style: normal;
@@ -22,11 +28,13 @@
     }
 
     h1 {
-        font-size: 14pt;
+      font-family: Arial, sans-serif;
+      font-size: 16pt;
     }
 
     h5 {
-        font-size: 12pt;
+      font-family: Arial, sans-serif;
+      font-size: 13pt;
     }
 
     p {
@@ -34,13 +42,32 @@
         font-family: Arial, sans-serif;
         font-style: normal;
         text-decoration: none;
-        font-size: 10pt;
+        font-size: 11pt;
         margin: 0;
     }
 
     table, tbody {
         vertical-align: top;
         overflow: visible;
+    }
+
+    .watermarked {
+      position: relative;
+    }
+
+    .watermarked:after {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      background-image: url("{{ public_path().'/assets/dist/img/logo-with-text.png' }}");
+      background-size: 75%;
+      background-position: center center;
+      background-repeat: no-repeat;
+      opacity: 0.1;
     }
 
     @media print {
@@ -52,131 +79,35 @@
   </style>
 
   <body>
-    <div class="raport">
-        <table style="width: 100%; border-collapse: collapse;">
-            <!-- Header Table -->
-            <table class="header-table" style="width: 100%; border-collapse: collapse;">
-                <tr>
-                    <td style="text-align: left; vertical-align: middle;">
-                        <img src="tut-wuri-handayani.png" alt="" width="80px" height="80px">
-                    </td>
-                    
-                    <td style="text-align: center; vertical-align: middle;">
-                        <h1>
-                            GLOBAL INDONESIA SCHOOL <br>
-                            <span style="font-weight: normal; font-size: 13pt; padding-top: 7px;">
-                                DINAS PENDIDIKAN KABUPATEN SERANG 
-                            </span>
-                        </h1>
-                    </td>
-        
-                    <td style="text-align: right; vertical-align: middle;">
-                        <img src="logo.png" alt="" width="80px" height="80px">
-                    </td>
-                </tr>
-            </table>
-        
-            <!-- Body Table -->
-            <table class="body-table" style="width: 100%; border-collapse: collapse; margin-top: 50pt;">
-                <tr>
-                    <td style="text-align: center; vertical-align: middle;">
-                        <h1 style="font-size: 18pt; ">
-                            STUDENT REPORT CARD <br>
-                        </h1>
-                    </td>
-                </tr>
-                <tr class="name">
-                    <tr >
-                        <td style="text-align: center; vertical-align: middle; padding-top: 40pt">
-                            <h5 style="font-weight: 500;"> 
-                            Student Name
-                            </h5>
-                        </td>
-                    </tr>
+        <div class="identitas">
+            <table style="width: 100%; border-collapse: collapse;" class="watermarked">
+                <!-- Header Table -->
+                <table class="header-table" style="width: 100%; border-collapse: collapse;">
                     <tr>
-                        <td style="text-align: center; vertical-align: middle; padding-top: 10pt">
-                            <p style="font-weight: 400;">Saddad Nabbil</p>
+                        <td style="text-align: left; vertical-align: middle; width: 8%;">
+                            <img src="logo.png" alt="" width="80px" height="80px">
                         </td>
-                    </tr>
-                </tr>
-                <tr class="nis">
-                    <tr >
-                        <td style="text-align: center; vertical-align: middle; padding-top: 20pt">
-                            <h5 style="font-weight: 500;"> 
-                            Student Identity Number
-                            </h5>
+                        
+                        <td style="text-align: left; vertical-align: middle;">
+                            <h1>
+                                GLOBAL INDONESIA SCHOOL
+                            </h1>
                         </td>
+    
                     </tr>
-                    <tr>
-                        <td style="text-align: center; vertical-align: middle; padding-top: 4pt">
-                            <p style="font-weight: 400; font-size: 9pt;"><i>( NIS )</i></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: center; vertical-align: middle; padding-top: 10pt">
-                            <p style="font-weight: 400;">123123123</p>
-                        </td>
-                    </tr>
-                </tr>
-                <tr class="nisn">
-                    <tr >
-                        <td style="text-align: center; vertical-align: middle; padding-top: 20pt">
-                            <h5 style="font-weight: 500;"> 
-                            National Student Identity Number
-                            </h5>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: center; vertical-align: middle; padding-top: 4pt">
-                            <p style="font-weight: 400; font-size: 9pt;"><i>( NISN )</i></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: center; vertical-align: middle; padding-top: 10pt">
-                            <p style="font-weight: 400;">123123123</p>
-                        </td>
-                    </tr>
-                </tr>
-                <tr class="identity">
-                    <tr >
-                        <td style="text-align: center; vertical-align: middle; padding-top: 20pt">
-                            <h5 style="font-weight: 500;"> 
-                            National School Identity Number
-                            </h5>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: center; vertical-align: middle; padding-top: 4pt">
-                            <p style="font-weight: 400; font-size: 9pt;"><i>( NPSN )</i></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: center; vertical-align: middle; padding-top: 10pt">
-                            <p style="font-weight: 400;">123123123</p>
-                        </td>
-                    </tr>
-                </tr>
-            </table>
-        
-            <!-- Footer Table -->
-            <table class="footer-table" style="margin-top: 40pt; position: fixed;">
-                <tr >
-                    <td style="text-align: center; vertical-align: middle; padding-top: 20pt">
-                        <h5 style="font-weight: 500;"> 
-                            Address
-                        </h5>
-                    </td>
-                </tr>
-                <tr >
-                    <td style="text-align: center; vertical-align: middle;">
-                        <p style="font-weight: 400; line-height: 1.5;"> 
-                            Perumahan Emerald Lake, Jl. Raya Tasikardi <br>Pelamunan, Kramatwatu, Serang-Banten, 42161<br>
-                            Telp. (021) - 50106770
-                        </p>
-                    </td>
-                </tr>
-            </table>
-        </table>
+                </table>
+            
+                <!-- Body Table -->
+                <table class="body-table" style="width: 100%; border-collapse: collapse; margin-top: 65pt;">
+
+                </table>
+            
+                <!-- Footer Table -->
+                <table class="footer-table" style="border-collapse: collapse; margin-top: 40pt; position: fixed; bottom: 25%; left: 0%;">
+                </table>
+            </table>  
+        </div>
+        <div class="page-break"></div>
         
     </div>
   </body>

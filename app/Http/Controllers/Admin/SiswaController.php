@@ -93,7 +93,11 @@ class SiswaController extends Controller
                 'nama_lengkap' => 'required|min:3|max:100',
                 'jenis_kelamin' => 'required|in:Male,Female',
                 'jenis_pendaftaran' => 'required|in:1,2',
+                'jenis_pendaftaran' => 'required|in:1,2',
+                'semester_masuk' => 'required',
+
                 'kelas_id' => 'required|exists:kelas,id',
+                'nik' => 'unique:siswa',
                 'nis' => 'required|numeric|digits_between:1,10|unique:siswa',
                 'nisn' => 'nullable|numeric|digits:10|unique:siswa',
                 'tempat_lahir' => 'required|min:3|max:50',
@@ -126,12 +130,18 @@ class SiswaController extends Controller
                 return back()->with('toast_error', 'Username telah digunakan');
             }
 
+            $nama_kelas = Kelas::findorfail($request->kelas_id)->get('nama_kelas');
+
             $siswa = new Siswa([
                 'user_id' => $user->id,
                 'tingkatan_id' => $request->kelas_id,
                 'jurusan_id' => $request->kelas_id,
                 'kelas_id' => $request->kelas_id,
                 'jenis_pendaftaran' => $request->jenis_pendaftaran,
+
+                'tahun_masuk' => $request->tahun_masuk,
+                'semester_masuk' => $request->semester_masuk,
+                'kelas_masuk' => $nama_kelas,
 
                 // information student
                 'nik' => $request->nik,
@@ -162,7 +172,7 @@ class SiswaController extends Controller
                 'tanggal_masuk_sekolah_lama' => $request->tanggal_masuk_sekolah_lama,
                 'tanggal_keluar_sekolah_lama' => $request->tanggal_keluar_sekolah_lama,
                 'nama_sekolah_lama' => $request->nama_sekolah_lama,
-                'alamat_lama' => $request->alamat_lama,
+                'alamat_sekolah_lama' => $request->alamat_sekolah_lama,
                 'no_sttb' => $request->no_sttb,
                 'nem' => $request->nem,
                 'file_dokument_sekolah_lama' => $request->file_dokument_sekolah_lama,
@@ -277,7 +287,13 @@ class SiswaController extends Controller
                 'nama_lengkap' => 'required|min:3|max:100',
                 'jenis_kelamin' => 'required|in:Male,Female',
                 'jenis_pendaftaran' => 'required|in:1,2',
+
+                'semester_masuk' => 'required',
+                'tahun_masuk' => 'required',
+                'kelas_masuk' => 'required',
+
                 'kelas_id' => 'required|exists:kelas,id',
+                'nik' => 'unique:siswa,nik,' . $siswa->id,
                 'nis' => 'required',
                 'nisn' => 'nullable|numeric|digits:10|unique:siswa,nisn,' . $siswa->id,
                 'tempat_lahir' => 'required|min:3|max:50',
@@ -318,6 +334,9 @@ class SiswaController extends Controller
                 'jurusan_id' => $request->kelas_id,
                 'kelas_id' => $request->kelas_id,
                 'jenis_pendaftaran' => $request->jenis_pendaftaran,
+                'tahun_masuk' => $request->tahun_masuk,
+                'semester_masuk' => $request->semester_masuk,
+                'kelas_masuk' => $request->kelas_masuk,
 
                 // information student
                 'nik' => $request->nik,
@@ -348,7 +367,10 @@ class SiswaController extends Controller
                 'tanggal_masuk_sekolah_lama' => $request->tanggal_masuk_sekolah_lama,
                 'tanggal_keluar_sekolah_lama' => $request->tanggal_keluar_sekolah_lama,
                 'nama_sekolah_lama' => $request->nama_sekolah_lama,
-                'alamat_lama' => $request->alamat_lama,
+                'alamat_sekolah_lama' => $request->alamat_sekolah_lama,
+                'prestasi_sekolah_lama' => $request->prestasi_sekolah_lama,
+                'tahun_prestasi_sekolah_lama' => $request->tahun_prestasi_sekolah_lama,
+                'sertifikat_number_sekolah_lama' => $request->sertifikat_number_sekolah_lama,
                 'no_sttb' => $request->no_sttb,
                 'nem' => $request->nem,
                 'file_dokument_sekolah_lama' => $request->file_dokument_sekolah_lama,

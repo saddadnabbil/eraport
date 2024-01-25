@@ -200,7 +200,7 @@
                                 </div>
                               </div>
                               <div class="form-group row">
-                                <label for="nik_ibu" class="col-sm-3 col-form-label required">NIK</label>
+                                <label for="nik" class="col-sm-3 col-form-label required">NIK</label>
                                 <div class="col-sm-9">
                                   <input type="text" class="form-control" id="nik" name="nik" placeholder="NIK" value="{{old('nik')}}" required>
                                 </div>
@@ -247,6 +247,18 @@
                                   </select>
                                 </div>
                               </div>
+
+                              <div class="form-group row">
+                                <label for="tahun_masuk" class="col-sm-3 col-form-label required">Tahun Masuk</label>
+                                <div class="col-sm-4">
+                                  <input type="text" name="tahun_masuk" id="tahun_masuk" class="form-control" value="old('tahun_masuk')">
+                                </div>
+                                <label for="semester_masuk" class="col-sm-2 col-form-label required">Semester Masuk</label>
+                                <div class="col-sm-4">
+                                  <input type="text" name="semester_masuk" id="semester_masuk" class="form-control" value="old('semester_masuk')">
+                                </div>
+                              </div>
+
                               <div class="form-group row">
                                 <label for="jenis_kelamin" class="col-sm-3 col-form-label required">Jenis Kelamin</label>
                                 <div class="col-sm-3 pt-1">

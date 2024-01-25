@@ -21,6 +21,9 @@ class CreateSiswasTable extends Migration
             $table->unsignedBigInteger('tingkatan_id')->unsigned()->nullable();
             $table->unsignedBigInteger('jurusan_id')->unsigned()->nullable();
             $table->enum('jenis_pendaftaran', ['1', '2']);
+            $table->string('tahun_masuk');
+            $table->string('semester_masuk');
+            $table->string('kelas_masuk');
 
             $table->string('nis', 10)->unique();
             $table->string('nisn', 10)->unique()->nullable();
@@ -98,7 +101,10 @@ class CreateSiswasTable extends Migration
             $table->date('tanggal_masuk_sekolah_lama', 100)->nullable();
             $table->date('tanggal_keluar_sekolah_lama', 100)->nullable();
             $table->string('nama_sekolah_lama', 100)->nullable();
-            $table->string('alamat_lama', 100)->nullable();
+            $table->string('prestasi_sekolah_lama', 100)->nullable();
+            $table->string('tahun_prestasi_sekolah_lama', 100)->nullable();
+            $table->string('sertifikat_number_sekolah_lama', 100)->nullable();
+            $table->string('alamat_sekolah_lama', 100)->nullable();
             $table->string('no_sttb')->nullable();
             $table->unsignedInteger('nem')->nullable();
             $table->string('file_dokument_sekolah_lama')->nullable();
