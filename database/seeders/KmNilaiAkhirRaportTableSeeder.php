@@ -14,11 +14,85 @@ class KmNilaiAkhirRaportTableSeeder extends Seeder
      */
     public function run()
     {
+        // semester1 term1
         KmNilaiAkhirRaport::create([
             'pembelajaran_id' => 1,
             'anggota_kelas_id' => 1,
             'semester_id' => 1,
             'term_id' => 1,
+            'kkm' => 75,
+            'nilai_sumatif' => 10,
+            'predikat_sumatif' => 'A',
+            'nilai_formatif' => 10,
+            'predikat_formatif' => 'D',
+            'nilai_akhir_raport' => 10,
+            'predikat_akhir_raport' => 'B',
+        ]);
+
+        KmNilaiAkhirRaport::create([
+            'pembelajaran_id' => 2,
+            'anggota_kelas_id' => 1,
+            'semester_id' => 1,
+            'term_id' => 1,
+            'kkm' => 75,
+            'nilai_sumatif' => 10,
+            'predikat_sumatif' => 'A',
+            'nilai_formatif' => 10,
+            'predikat_formatif' => 'A',
+            'nilai_akhir_raport' => 10,
+            'predikat_akhir_raport' => 'A',
+        ]);
+
+        KmNilaiAkhirRaport::create([
+            'pembelajaran_id' => 3,
+            'anggota_kelas_id' => 1,
+            'semester_id' => 1,
+            'term_id' => 1,
+            'kkm' => 75,
+            'nilai_sumatif' => 10,
+            'predikat_sumatif' => 'A',
+            'nilai_formatif' => 10,
+            'predikat_formatif' => 'A',
+            'nilai_akhir_raport' => 10,
+            'predikat_akhir_raport' => 'A',
+        ]);
+
+        KmNilaiAkhirRaport::create([
+            'pembelajaran_id' => 4,
+            'anggota_kelas_id' => 2,
+            'semester_id' => 1,
+            'term_id' => 1,
+            'kkm' => 75,
+            'nilai_sumatif' => 10,
+            'predikat_sumatif' => 'A',
+            'nilai_formatif' => 10,
+            'predikat_formatif' => 'A',
+            'nilai_akhir_raport' => 10,
+            'predikat_akhir_raport' => 'A',
+        ]);
+
+        KmNilaiAkhirRaport::create([
+            'pembelajaran_id' => 4,
+            'anggota_kelas_id' => 3,
+            'semester_id' => 1,
+            'term_id' => 1,
+            'kkm' => 75,
+            'nilai_sumatif' => 10,
+            'predikat_sumatif' => 'A',
+            'nilai_formatif' => 10,
+            'predikat_formatif' => 'A',
+            'nilai_akhir_raport' => 10,
+            'predikat_akhir_raport' => 'A',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        // semester 1 term 2
+        KmNilaiAkhirRaport::create([
+            'pembelajaran_id' => 1,
+            'anggota_kelas_id' => 1,
+            'semester_id' => 1,
+            'term_id' => 2,
             'kkm' => 75,
             'nilai_sumatif' => 90,
             'predikat_sumatif' => 'A',
@@ -32,7 +106,7 @@ class KmNilaiAkhirRaportTableSeeder extends Seeder
             'pembelajaran_id' => 2,
             'anggota_kelas_id' => 1,
             'semester_id' => 1,
-            'term_id' => 1,
+            'term_id' => 2,
             'kkm' => 75,
             'nilai_sumatif' => 90,
             'predikat_sumatif' => 'A',
@@ -46,7 +120,7 @@ class KmNilaiAkhirRaportTableSeeder extends Seeder
             'pembelajaran_id' => 3,
             'anggota_kelas_id' => 1,
             'semester_id' => 1,
-            'term_id' => 1,
+            'term_id' => 2,
             'kkm' => 75,
             'nilai_sumatif' => 90,
             'predikat_sumatif' => 'A',
@@ -60,7 +134,7 @@ class KmNilaiAkhirRaportTableSeeder extends Seeder
             'pembelajaran_id' => 4,
             'anggota_kelas_id' => 2,
             'semester_id' => 1,
-            'term_id' => 1,
+            'term_id' => 2,
             'kkm' => 75,
             'nilai_sumatif' => 90,
             'predikat_sumatif' => 'A',
@@ -74,6 +148,79 @@ class KmNilaiAkhirRaportTableSeeder extends Seeder
             'pembelajaran_id' => 4,
             'anggota_kelas_id' => 3,
             'semester_id' => 1,
+            'term_id' => 2,
+            'kkm' => 75,
+            'nilai_sumatif' => 90,
+            'predikat_sumatif' => 'A',
+            'nilai_formatif' => 90,
+            'predikat_formatif' => 'A',
+            'nilai_akhir_raport' => 90,
+            'predikat_akhir_raport' => 'A',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        // semester1 term1
+        KmNilaiAkhirRaport::create([
+            'pembelajaran_id' => 1,
+            'anggota_kelas_id' => 1,
+            'semester_id' => 2,
+            'term_id' => 1,
+            'kkm' => 75,
+            'nilai_sumatif' => 90,
+            'predikat_sumatif' => 'A',
+            'nilai_formatif' => 90,
+            'predikat_formatif' => 'D',
+            'nilai_akhir_raport' => 90,
+            'predikat_akhir_raport' => 'B',
+        ]);
+
+        KmNilaiAkhirRaport::create([
+            'pembelajaran_id' => 2,
+            'anggota_kelas_id' => 1,
+            'semester_id' => 2,
+            'term_id' => 1,
+            'kkm' => 75,
+            'nilai_sumatif' => 90,
+            'predikat_sumatif' => 'A',
+            'nilai_formatif' => 90,
+            'predikat_formatif' => 'A',
+            'nilai_akhir_raport' => 90,
+            'predikat_akhir_raport' => 'A',
+        ]);
+
+        KmNilaiAkhirRaport::create([
+            'pembelajaran_id' => 3,
+            'anggota_kelas_id' => 1,
+            'semester_id' => 2,
+            'term_id' => 1,
+            'kkm' => 75,
+            'nilai_sumatif' => 90,
+            'predikat_sumatif' => 'A',
+            'nilai_formatif' => 90,
+            'predikat_formatif' => 'A',
+            'nilai_akhir_raport' => 90,
+            'predikat_akhir_raport' => 'A',
+        ]);
+
+        KmNilaiAkhirRaport::create([
+            'pembelajaran_id' => 4,
+            'anggota_kelas_id' => 2,
+            'semester_id' => 2,
+            'term_id' => 1,
+            'kkm' => 75,
+            'nilai_sumatif' => 90,
+            'predikat_sumatif' => 'A',
+            'nilai_formatif' => 90,
+            'predikat_formatif' => 'A',
+            'nilai_akhir_raport' => 90,
+            'predikat_akhir_raport' => 'A',
+        ]);
+
+        KmNilaiAkhirRaport::create([
+            'pembelajaran_id' => 4,
+            'anggota_kelas_id' => 3,
+            'semester_id' => 2,
             'term_id' => 1,
             'kkm' => 75,
             'nilai_sumatif' => 90,
@@ -86,11 +233,11 @@ class KmNilaiAkhirRaportTableSeeder extends Seeder
             'updated_at' => now(),
         ]);
 
-        // term 2
+        // semester 2 term 2
         KmNilaiAkhirRaport::create([
             'pembelajaran_id' => 1,
             'anggota_kelas_id' => 1,
-            'semester_id' => 1,
+            'semester_id' => 2,
             'term_id' => 2,
             'kkm' => 75,
             'nilai_sumatif' => 90,
@@ -104,7 +251,7 @@ class KmNilaiAkhirRaportTableSeeder extends Seeder
         KmNilaiAkhirRaport::create([
             'pembelajaran_id' => 2,
             'anggota_kelas_id' => 1,
-            'semester_id' => 1,
+            'semester_id' => 2,
             'term_id' => 2,
             'kkm' => 75,
             'nilai_sumatif' => 90,
@@ -118,7 +265,7 @@ class KmNilaiAkhirRaportTableSeeder extends Seeder
         KmNilaiAkhirRaport::create([
             'pembelajaran_id' => 3,
             'anggota_kelas_id' => 1,
-            'semester_id' => 1,
+            'semester_id' => 2,
             'term_id' => 2,
             'kkm' => 75,
             'nilai_sumatif' => 90,
@@ -132,7 +279,7 @@ class KmNilaiAkhirRaportTableSeeder extends Seeder
         KmNilaiAkhirRaport::create([
             'pembelajaran_id' => 4,
             'anggota_kelas_id' => 2,
-            'semester_id' => 1,
+            'semester_id' => 2,
             'term_id' => 2,
             'kkm' => 75,
             'nilai_sumatif' => 90,
@@ -146,7 +293,7 @@ class KmNilaiAkhirRaportTableSeeder extends Seeder
         KmNilaiAkhirRaport::create([
             'pembelajaran_id' => 4,
             'anggota_kelas_id' => 3,
-            'semester_id' => 1,
+            'semester_id' => 2,
             'term_id' => 2,
             'kkm' => 75,
             'nilai_sumatif' => 90,

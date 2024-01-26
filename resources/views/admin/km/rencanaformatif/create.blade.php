@@ -58,6 +58,7 @@
 
                 <input type="hidden" name="pembelajaran_id" value="{{$pembelajaran->id}}">
                 <input type="hidden" name="term_id" value="{{$term->term}}">
+                <input type="hidden" name="semester_id" value="{{$semester->id}}">
                 <div class="table-responsive">
                   <table class="table table-bordered table-hover">
                     <thead class="bg-primary">

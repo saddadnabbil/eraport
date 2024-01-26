@@ -17,6 +17,7 @@ class CreateKmNilaiAkhirsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('pembelajaran_id')->unsigned();
             $table->unsignedBigInteger('anggota_kelas_id')->unsigned();
+            $table->unsignedBigInteger('semester_id')->unsigned();
             $table->unsignedBigInteger('term_id')->unsigned();
             $table->integer('nilai_akhir_formatif');
             $table->integer('nilai_akhir_sumatif');
@@ -26,6 +27,7 @@ class CreateKmNilaiAkhirsTable extends Migration
 
             $table->foreign('anggota_kelas_id')->references('id')->on('anggota_kelas');
             $table->foreign('pembelajaran_id')->references('id')->on('pembelajaran');
+            $table->foreign('semester_id')->references('id')->on('semesters');
             $table->foreign('term_id')->references('id')->on('terms');
         });
     }

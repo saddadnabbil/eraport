@@ -33,7 +33,7 @@
                 @if ($siswa->pas_photo == null)
                 <img class="profile-user-img" src="/assets/dist/img/avatar/{{$siswa->avatar}}" alt="Avatar" style="border: none">
                 @else
-                <img class="mb-2" src="/storage/{{$siswa->pas_photo}}" alt="pas_photo" width="105px" height="144px">
+                <img class="mb-2" src="{{ asset('storage/'.$siswa->pas_photo) }}" alt="{{$siswa->pas_photo}}" alt="pas_photo" width="105px" height="144px">
                 @endif
               </div>
 

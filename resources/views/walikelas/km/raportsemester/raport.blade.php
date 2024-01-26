@@ -340,7 +340,7 @@
         
         {{-- Content Table --}}
         <?php $no = 0; ?>
-        @foreach($nilai_akhir_total as $nilai)
+        @foreach($data_nilai_akhir_total as $nilai)
           <?php $no++; ?>
           <tr style="height:25pt">
               <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
@@ -354,7 +354,7 @@
                 <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">{{$nilai['kkm']}}</p>
               </td>
               <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                  <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">{{$nilai['nilai']}}</p>
+                  <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">{{$semester->id == 1 ? $nilai['nilai_akhir_semester_1'] : $nilai['nilai_akhir_total'] }}</p>
               </td>
               <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
                 <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">{{$nilai['predikat']}}</p>

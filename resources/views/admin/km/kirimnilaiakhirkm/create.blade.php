@@ -40,7 +40,7 @@
                     <label class="col-sm-2 col-form-label">Semester</label>
                     <div class="col-sm-4">
                       <select class="form-control select2" name="semester_id" style="width: 100%;" disabled>
-                        <option value="{{$semester->id}}" selected>{{$semester->term}}</option>
+                        <option value="{{$semester->id}}" selected>{{$semester->id}}</option>
                       </select>
                     </div>
                     <label class="col-sm-2 col-form-label">Term</label>
@@ -120,6 +120,7 @@
                 <form action="{{ route('kirimnilaiakhirkmadmin.store') }}" method="POST">
                   @csrf
                   <input type="hidden" name="term_id" value="{{$term->id}}">
+                  <input type="hidden" name="semester_id" value="{{$semester->id}}">
                   <div class="card-body">
                     <div class="table-responsive">
                       <table class="table table-bordered table-hover table-striped">

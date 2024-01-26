@@ -65,8 +65,8 @@ class KirimNilaiAkhirController extends Controller
                 return back()->with('toast_error', 'Belum ada data penilaian untuk ' . $pembelajaran->mapel->nama_mapel . ' ' . $pembelajaran->kelas->nama_kelas . '. Silahkan input penilaian!');
             }
 
-            $rencana_nilai_sumatif = RencanaNilaiSumatif::where('pembelajaran_id', $pembelajaran->id)->get('id');
-            $rencana_nilai_formatif = RencanaNilaiFormatif::where('pembelajaran_id', $pembelajaran->id)->get('id');
+            $rencana_nilai_sumatif = RencanaNilaiSumatif::where('pembelajaran_id', $pembelajaran->id)->where('term_id', $term->id)->where('semester_id', $semester->id)->get('id');
+            $rencana_nilai_formatif = RencanaNilaiFormatif::where('pembelajaran_id', $pembelajaran->id)->where('term_id', $term->id)->where('semester_id', $semester->id)->get('id');
 
             if (count($rencana_nilai_sumatif) == 0 || count($rencana_nilai_formatif) == 0) {
                 return back()->with('toast_warning', 'Data rencana penilaian tidak ditemukan');
@@ -156,7 +156,7 @@ class KirimNilaiAkhirController extends Controller
             );
 
             $cek_nilai = KmNilaiAkhirRaport::where('pembelajaran_id', $request->pembelajaran_id)
-                ->where('anggota_kelas_id', $request->anggota_kelas_id[$cound_siswa])->where('term_id', $request->term_id)
+                ->where('anggota_kelas_id', $request->anggota_kelas_id[$cound_siswa])->where('term_id', $request->term_id)->where('semester_id', $request->semester_id)
                 ->first();
 
             if (is_null($cek_nilai)) {

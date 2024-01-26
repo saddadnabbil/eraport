@@ -33,7 +33,8 @@ class RencanaNilaiFormatifController extends Controller
         $data_rencana_penilaian = Pembelajaran::where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
         foreach ($data_rencana_penilaian as $penilaian) {
             $term = Term::findorfail($penilaian->kelas->tingkatan->term_id);
-            $rencana_penilaian = RencanaNilaiFormatif::where('term_id', $term->id)->where('pembelajaran_id', $penilaian->id)->get();
+            $semester = Term::findorfail($penilaian->kelas->tingkatan->semester_id);
+            $rencana_penilaian = RencanaNilaiFormatif::where('term_id', $term->id)->where('semester_id', $semester->id)->where('pembelajaran_id', $penilaian->id)->get();
             $penilaian->jumlah_rencana_penilaian = count($rencana_penilaian);
         }
 
@@ -51,7 +52,8 @@ class RencanaNilaiFormatifController extends Controller
         $title = 'Data Rencana Nilai Formatif';
         $pembelajaran = Pembelajaran::findorfail($id);
         $term = Term::findorfail($pembelajaran->kelas->tingkatan->term_id);
-        $data_rencana_penilaian = RencanaNilaiFormatif::where('term_id', $term->id)->where('pembelajaran_id', $id)->orderBy('kode_penilaian', 'ASC')->get();
+        $semester = Term::findorfail($pembelajaran->kelas->tingkatan->semester_id);
+        $data_rencana_penilaian = RencanaNilaiFormatif::where('term_id', $term->id)->where('semester_id', $semester->id)->where('pembelajaran_id', $id)->orderBy('kode_penilaian', 'ASC')->get();
         $data_rencana_penilaian_tambah = Pembelajaran::where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
 
         foreach ($data_rencana_penilaian_tambah as $penilaian) {
@@ -73,6 +75,7 @@ class RencanaNilaiFormatifController extends Controller
 
         $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
         $term = Term::findorfail($pembelajaran->kelas->tingkatan->term_id);
+        $semester = Term::findorfail($pembelajaran->kelas->tingkatan->semester_id);
 
         $kelas = Kelas::findorfail($pembelajaran->kelas_id);
         $data_cp = CapaianPembelajaran::where([
@@ -80,14 +83,14 @@ class RencanaNilaiFormatifController extends Controller
             'pembelajaran_id' => $pembelajaran->id,
         ])->orderBy('kode_cp', 'ASC')->get();
 
-        $data_rencana_penilaian = RencanaNilaiFormatif::where('pembelajaran_id', $pembelajaran->id)->where('term_id', $term->id)->get();
+        $data_rencana_penilaian = RencanaNilaiFormatif::where('pembelajaran_id', $pembelajaran->id)->where('term_id', $term->id)->where('semester_id', $semester->id)->get();
 
         if (count($data_rencana_penilaian) >= 3) {
             return redirect(route('rencanaformatif.index'))->with('toast_error', 'Data sudah tersedia');
         }
 
         $jumlah_penilaian = $request->jumlah_penilaian;
-        return view('admin.km.rencanaformatif.create', compact('title', 'pembelajaran', 'jumlah_penilaian', 'data_cp', 'data_rencana_penilaian', 'term'));
+        return view('admin.km.rencanaformatif.create', compact('title', 'pembelajaran', 'jumlah_penilaian', 'data_cp', 'data_rencana_penilaian', 'term', 'semester'));
     }
 
     /**
@@ -103,6 +106,7 @@ class RencanaNilaiFormatifController extends Controller
         foreach ($request->teknik_penilaian as $count_penilaian => $value) {
             $data_penilaian = [
                 'pembelajaran_id' => $request->pembelajaran_id,
+                'semester_id' => $request->semester_id,
                 'term_id' => $request->term_id,
                 'kode_penilaian' => $request->kode_penilaian[$count_penilaian],
                 'teknik_penilaian' => $request->teknik_penilaian[$count_penilaian],
@@ -114,6 +118,7 @@ class RencanaNilaiFormatifController extends Controller
             // Kriteria untuk mencari atau membuat data
             $criteria = [
                 'pembelajaran_id' => $request->pembelajaran_id,
+                'semester_id' => $request->semester_id,
                 'term_id' => $request->term_id,
                 'kode_penilaian' => $request->kode_penilaian[$count_penilaian],
                 // Anda bisa menambahkan kriteria lain sesuai kebutuhan

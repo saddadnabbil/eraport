@@ -57,6 +57,7 @@
                 @csrf
 
                 <input type="hidden" name="pembelajaran_id" value="{{$pembelajaran->id}}">
+                <input type="hidden" name="semester_id" value="{{$semester->id}}">
                 <input type="hidden" name="term_id" value="{{$term->term}}">
                 <div class="table-responsive">
                   <table class="table table-bordered table-hover">
