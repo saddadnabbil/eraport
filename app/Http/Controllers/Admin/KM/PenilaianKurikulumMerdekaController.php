@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use App\RencanaNilaiFormatif;
 use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
+use App\Semester;
 use App\Term;
 use Illuminate\Support\Facades\Validator;
 
@@ -70,7 +71,7 @@ class PenilaianKurikulumMerdekaController extends Controller
 
             $tapel = Tapel::where('status', 1)->first();
             $term = Term::findorfail($pembelajaran->kelas->tingkatan->term_id);
-            $semester = Term::findorfail($pembelajaran->kelas->tingkatan->semester_id);
+            $semester = Semester::findorfail($pembelajaran->kelas->tingkatan->semester_id);
 
             $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
             $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
@@ -150,16 +151,16 @@ class PenilaianKurikulumMerdekaController extends Controller
                     $nilaiAkhirSumatif = 0;
                     $nilaiAkhirRaport = 0;
                     $nilaiAkhirRevisi = null;
-    
+
                     $nilaiAkhir = NilaiAkhir::where('anggota_kelas_id', $anggota_kelas->id)->where('term_id', $term->term)->where('semester_id', $semester->id)->first();
-    
+
                     if ($nilaiAkhir) {
                         $nilaiAkhirFormatif = $nilaiAkhir->nilai_akhir_formatif;
                         $nilaiAkhirSumatif = $nilaiAkhir->nilai_akhir_sumatif;
                         $nilaiAkhirRaport = $nilaiAkhir->nilai_akhir_raport;
                         $nilaiAkhirRevisi = $nilaiAkhir->nilai_akhir_revisi;
                     }
-    
+
                     $anggota_kelas->nilaiAkhirFormatif = $nilaiAkhirFormatif;
                     $anggota_kelas->nilaiAkhirSumatif = $nilaiAkhirSumatif;
                     $anggota_kelas->nilaiAkhirRaport = $nilaiAkhirRaport;
@@ -280,50 +281,5 @@ class PenilaianKurikulumMerdekaController extends Controller
 
             return back()->with('toast_success', 'Data penilaian berhasil disimpan.');
         }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

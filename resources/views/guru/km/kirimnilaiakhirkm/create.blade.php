@@ -37,9 +37,15 @@
                 <form action="{{ route('kirimnilaiakhirkm.create') }}" method="GET">
                   @csrf
                   <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Semester</label>
+                    <div class="col-sm-4">
+                      <select class="form-control select2" name="semester_id" style="width: 100%;" disabled>
+                        <option value="{{$semester->id}}" selected>{{$semester->id}}</option>
+                      </select>
+                    </div>
                     <label class="col-sm-2 col-form-label">Term</label>
-                    <div class="col-sm-10">
-                      <select class="form-control select2" name="term" style="width: 100%;" disabled>
+                    <div class="col-sm-4">
+                      <select class="form-control select2" name="term_id" style="width: 100%;" disabled>
                         <option value="{{$term->id}}" selected>{{$term->term}}</option>
                       </select>
                     </div>
@@ -114,6 +120,7 @@
                 <form action="{{ route('kirimnilaiakhirkm.store') }}" method="POST">
                   @csrf
                   <input type="hidden" name="term_id" value="{{$term->id}}">
+                  <input type="hidden" name="semester_id" value="{{$semester->id}}">
                   <div class="card-body">
                     <div class="table-responsive">
                       <table class="table table-bordered table-hover table-striped">

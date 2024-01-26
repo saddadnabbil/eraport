@@ -56,6 +56,18 @@
               </a>
             </li>
             <li class="nav-item">
+              <a href="{{ route('tapel.index') }}" class="nav-link {{ request()->routeIs('tapel.*') ? 'active' : '' }}">
+                <i class="fas fa-calendar-week nav-icon"></i>
+                <p>Academic Year</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{ route('siswa.index') }}" class="nav-link {{ request()->routeIs('siswa.*') ? 'active' : '' }}">
+                <i class="fas fa-users nav-icon"></i>
+                <p>Students</p>
+              </a>
+            </li>
+            <li class="nav-item">
               <a href="{{ route('guru.index') }}" class="nav-link {{ request()->routeIs('guru.*') ? 'active' : '' }}">
                 <i class="fas fa-user-tie nav-icon"></i>
                 <p>Teachers</p>
@@ -74,12 +86,6 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{ route('tapel.index') }}" class="nav-link {{ request()->routeIs('tapel.*') ? 'active' : '' }}">
-                <i class="fas fa-calendar-week nav-icon"></i>
-                <p>Academic Year</p>
-              </a>
-            </li>
-            <li class="nav-item">
               <a href="{{ route('mapel.index') }}" class="nav-link {{ request()->routeIs('mapel.*') ? 'active' : '' }}">
                 <i class="fas fa-book nav-icon"></i>
                 <p>Subjects</p>
@@ -89,12 +95,6 @@
               <a href="{{ route('kelas.index') }}" class="nav-link {{ request()->routeIs('kelas.*') ? 'active' : '' }}">
                 <i class="fas fa-layer-group nav-icon"></i>
                 <p>Class & Homeroom</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ route('siswa.index') }}" class="nav-link {{ request()->routeIs('siswa.*') ? 'active' : '' }}">
-                <i class="fas fa-users nav-icon"></i>
-                <p>Students</p>
               </a>
             </li>
             <li class="nav-item">
@@ -115,7 +115,6 @@
                 <p>Syllabus</p>
               </a>
             </li>
-
           </ul>
         </li> 
 

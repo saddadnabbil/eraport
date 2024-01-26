@@ -45,7 +45,7 @@ class CetakRaportPTSController extends Controller
     {
         $title = 'Raport Tengah Semester';
         $tapel = Tapel::where('status', 1)->first();
-        $semester = Semester::findorfail($request->semester_id);
+        $semester = Semester::findorfail($request->term_id);
 
         $guru = Guru::where('user_id', Auth::user()->id)->first();
         $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)->where('guru_id', $guru->id)->get('id');
@@ -58,10 +58,12 @@ class CetakRaportPTSController extends Controller
             ->where('siswa.status', 1)
             ->get();
 
+        $kelas = Kelas::findorfail($id_kelas_diampu);
+
         $paper_size = 'A4';
         $orientation = 'potrait';
 
-        return view('walikelas.km.raportpts.index', compact('title', 'data_anggota_kelas', 'paper_size', 'orientation', 'tapel', 'semester'));
+        return view('walikelas.km.raportpts.index', compact('title', 'data_anggota_kelas', 'paper_size', 'orientation', 'tapel', 'semester', 'kelas'));
     }
 
     /**

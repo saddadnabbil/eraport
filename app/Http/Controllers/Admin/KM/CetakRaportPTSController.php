@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use App\NilaiEkstrakulikuler;
 use App\AnggotaEkstrakulikuler;
 use App\Http\Controllers\Controller;
+use App\Term;
 
 class CetakRaportPTSController extends Controller
 {
@@ -72,11 +73,13 @@ class CetakRaportPTSController extends Controller
         $sekolah = Sekolah::first();
         $anggota_kelas = AnggotaKelas::findorfail($id);
         $tapel = Tapel::where('status', 1)->first();
+        $semester = Semester::findorfail($request->semester_id);
+        $term = Term::findorfail($request->term_id);
 
         $data_id_mapel_semester_ini = Mapel::where('tapel_id', $tapel->id)->get('id');
 
         $data_id_pembelajaran = Pembelajaran::where('kelas_id', $anggota_kelas->kelas_id)->get('id');
-        $data_nilai = KmNilaiAkhirRaport::whereIn('pembelajaran_id', $data_id_pembelajaran)->where('anggota_kelas_id', $anggota_kelas->id)->get();
+        $data_nilai = KmNilaiAkhirRaport::where('term_id', $term->id)->where('semester_id', $semester->id)->whereIn('pembelajaran_id', $data_id_pembelajaran)->where('anggota_kelas_id', $anggota_kelas->id)->get();
 
         $data_nilai_term_1 = KmNilaiAkhirRaport::where('term_id', 1)->whereIn('pembelajaran_id', $data_id_pembelajaran)->where('anggota_kelas_id', $anggota_kelas->id)->get();
 

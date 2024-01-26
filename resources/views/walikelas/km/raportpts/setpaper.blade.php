@@ -38,9 +38,17 @@
                 <form action="{{ route('raportptskm.store') }}" method="POST">
                   @csrf
                   <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Semester</label>
-                    <div class="col-sm-9">
-                      <select class="form-control" name="semester_id" style="width: 100%;" required onchange="this.form.submit()">
+                    <label class="col-sm-2 col-form-label">Term</label>
+                    <div class="col-sm-4">
+                      <select class="form-control" name="term_id" style="width: 100%;" required onchange="this.form.submit()">
+                          <option value="">-- Pilih Term --</option>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                      </select>
+                    </div>
+                    <label class="col-sm-2 col-form-label">Semester</label>
+                    <div class="col-sm-4">
+                      <select class="form-control" name="semester_id" style="width: 100%;" required>
                           <option value="">-- Pilih Semester --</option>
                           <option value="1">1</option>
                           <option value="2">2</option>

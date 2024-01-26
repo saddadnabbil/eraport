@@ -184,13 +184,13 @@
             var selectedValue = $(this).val();
             var deskripsi = $('#deskripsiNilai');
             if (selectedValue === 'A') {
-                deskripsi.val('Very Good');
+                deskripsi.val('Excellent');
             } else if (selectedValue === 'B') {
                 deskripsi.val('Good');
             } else if (selectedValue === 'C') {
                 deskripsi.val('Fair');
             } else if (selectedValue === 'D') {
-                deskripsi.val('Poor');
+                deskripsi.val('Need Improvement');
             } else {
                 deskripsi.val('');
             }

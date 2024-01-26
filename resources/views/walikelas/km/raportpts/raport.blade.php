@@ -290,7 +290,7 @@
         <td><h3>: 
           {{$anggota_kelas->siswa->nis}} </h3></td>
         <td><h3>Semester</h3></td>
-        <td><h3>: {{ $anggota_kelas->kelas->tingkatan->semester_id }} / Mid {{ $anggota_kelas->kelas->tingkatan->term_id }} </h3></td>
+        <td><h3>: {{ $semester->id }} / Mid {{ $anggota_kelas->kelas->tingkatan->term_id }} </h3></td>
       </tr>
     </table>
 
@@ -630,7 +630,7 @@
                       <p class="s5" style="padding-top: 1pt;ext-indent: 0pt;text-align: center;">80.00 - 100.00</p>
                   </td>
                   <td style="width:136pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                      <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">Very Good</p>
+                      <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">Excellent</p>
                   </td>
                 </tr>
                 <tr style="height:12pt">
@@ -663,7 +663,7 @@
                       <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">0.00 - 59.99</p>
                   </td>
                   <td style="width:136pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                      <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">Poor</p>
+                      <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">Need Improvement</p>
                   </td>
                 </tr>
             </table>

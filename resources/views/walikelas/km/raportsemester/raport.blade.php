@@ -241,8 +241,8 @@
       position: absolute;
       top: 0px;
       left: 0px;
-      background-image: url("{{ public_path().'/assets/dist/img/logo-with-text.png' }}");
-      background-size: 75%;
+      background-image: url("{{ public_path().'/assets/dist/img/logo.png' }}");
+      background-size: 40%;
       background-position: center center;
       background-repeat: no-repeat;
       opacity: 0.1;
@@ -260,19 +260,34 @@
     <div class="raport watermarked">
       <table class="header-table" style="width: 100%; border-collapse: collapse">
         <tr>
-            <td class="no-indent left-align">
-                <img src="./assets/dist/img/logo.png" alt="" width="80px" height="80px">
+            <td class="no-indent left-align" style="vertical-align: middle">
+                <img src="./assets/dist/img/logo-with-text.png" alt="" width="135" height="60">
             </td>
             
             <td class="title-center">
                 <h1 class="center-align pad-179 pad-5 no-indent">
-                    GLOBAL INDONESIA SCHOOL <br>
+                    <span style="font-size: 12pt">GLOBAL INDONESIA 
+                      @if($anggota_kelas->kelas->id == '1') 
+                        SENIOR HIGH SCHOOL 
+                      @elseif($anggota_kelas->kelas->id == '2') 
+                        JUNIOR HIGH SCHOOL 
+                      @elseif($anggota_kelas->kelas->id == '3') 
+                        PRIMARY SCHOOL
+                      @elseif($anggota_kelas->kelas->id == '4') 
+                        KINDERGARTEN
+                      @elseif($anggota_kelas->kelas->id == '5') 
+                        PLAYGROUP
+                      @endif
+                    </span>
+                    <br>
+
+                    <span style="font-size: 10.5pt">
                     @if($semester->id == 1)
                     FIRST SEMESTER PROGRESS REPORT
                     @else
                     YEAR END REPORT
                     @endif
-                     
+                    </span>
                      <br> 
                     {{str_replace('-', ' / ', $anggota_kelas->kelas->tapel->tahun_pelajaran)}}
                 </h1>
@@ -288,18 +303,18 @@
       </table>
   
       <!-- information name -->
-      <table class="information-container ml-5 pad-2-1">
+      <table class="information-container ml-5 pad-2-1"">
         <tr>
-          <td><h3>Name</h3></td>
-          <td><h3>: {{$anggota_kelas->siswa->nama_lengkap}}</h3></td>
-          <td><h3>Class</h3></td>
-          <td><h3>: {{$anggota_kelas->kelas->nama_kelas}}</h3></td>
+          <td style="width: 6%"><h3>Name</h3></td>
+          <td style="width: 64%"><h3>: {{$anggota_kelas->siswa->nama_lengkap}}</h3></td>
+          <td style="width: 6%"><h3>Class</h3></td>
+          <td style="width: 24%"><h3>: {{$anggota_kelas->kelas->nama_kelas}}</h3></td>
         </tr>
         <tr>
-          <td><h3>NIS</h3></td>
-          <td><h3>: {{$anggota_kelas->siswa->nis}} </h3></td>
-          <td><h3>NISN</h3></td>
-          <td><h3>: {{$anggota_kelas->siswa->nisn}}</h3></td>
+          <td style="width: 6%"><h3>NIS</h3></td>
+          <td style="width: 69%"><h3>: {{$anggota_kelas->siswa->nis}} </h3></td>
+          <td style="width: 6%"><h3>NISN</h3></td>
+          <td style="width: 19%"><h3>: {{$anggota_kelas->siswa->nisn}}</h3></td>
         </tr>
       </table>
   
@@ -329,7 +344,6 @@
             <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" bgcolor="#999999">
               <p class="s1" style="padding-top: 2pt;padding-left: 13pt; padding-right: 13pt;text-align: center;">Nilai Akhir</p>
             </td>
-  
             <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" bgcolor="#999999">
               <p class="s1" style="padding-top: 6pt;text-align: center;">Grade</p>
             </td>
@@ -344,23 +358,23 @@
           <?php $no++; ?>
           <tr style="height:25pt">
               <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s2" style="padding-top: 4pt;padding-right: 2pt;text-indent: 0pt;text-align: center;">{{$no}}</p>
+                <p class="s2" style="padding-top: 7pt;padding-right: 2pt;text-indent: 0pt;text-align: center;">{{$no}}</p>
               </td>
               <td style="width:181pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
                 <p class="s2" style="padding-top: 3pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">{{$nilai['nama_mapel']}}</p>
-                <p class="s3" style="padding-top: 2pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">{{$nilai['nama_mapel_indonesian']}}</p>
+                <p class="s3" style="padding-top: 2pt;padding-left: 2pt;text-indent: 0pt;text-align: left; padding-bottom: 3pt">{{$nilai['nama_mapel_indonesian']}}</p>
               </td>
               <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">{{$nilai['kkm']}}</p>
+                <p class="s2" style="padding-top: 7pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">{{$nilai['kkm']}}</p>
               </td>
               <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                  <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">{{$semester->id == 1 ? $nilai['nilai_akhir_semester_1'] : $nilai['nilai_akhir_total'] }}</p>
+                  <p class="s2" style="padding-top: 7pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">{{$semester->id == 1 ? $nilai['nilai_akhir_semester_1'] : $nilai['nilai_akhir_total'] }}</p>
               </td>
               <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s2" style="padding-top: 4pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">{{$nilai['predikat']}}</p>
+                <p class="s2" style="padding-top: 7pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">{{$nilai['predikat']}}</p>
               </td>
               <td style="width:187px;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s2" style="padding-top: 4pt;padding-bottom: 7pt;padding-left: 4pt; padding-right: 3pt;text-indent: 0pt; line-height: 1.3;">{!! 
+                <p class="s2" style="padding-top: 7pt;padding-bottom: 7pt;padding-left: 4pt; padding-right: 3pt;text-indent: 0pt; line-height: 1.3;">{!! 
                   !is_null($nilai['deskripsi_nilai']) ? nl2br($nilai['deskripsi_nilai']->deskripsi_raport) : '' !!}
                 </p>
               </td>
@@ -378,31 +392,31 @@
       <table style="border-collapse:collapse;margin-left:5.44pt" cellspacing="0">
           <tr style="height:14pt">
             <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" bgcolor="#CCCCCC">
-              <p class="s1" style="padding-top: 1pt;padding-left: 2pt;padding-right: 1pt;text-indent: 0pt;text-align: center;">No</p>
+              <p class="s1" style="padding-top: 1pt;padding-left: 2pt;padding-right: 1pt;text-indent: 0pt;text-align: center;padding-bottom: 1pt">No</p>
             </td>
             <td style="width:181pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" bgcolor="#CCCCCC">
-              <p class="s1" style="padding-top: 1pt;padding-left: 61pt;padding-right: 61pt;text-indent: 0pt;text-align: center;">Extracurricular</p>
+              <p class="s1" style="padding-top: 1pt;padding-left: 61pt;padding-right: 61pt;text-indent: 0pt;text-align: center; padding-bottom: 1pt">Extracurricular</p>
             </td>
             <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" bgcolor="#CCCCCC">
-              <p class="s1" style="padding-top: 1pt;padding-left: 1pt;text-indent: 0pt;text-align: center;">Grade</p>
+              <p class="s1" style="padding-top: 1pt;padding-left: 1pt;text-indent: 0pt;text-align: center; padding-bottom: 1pt">Grade</p>
             </td>
             <td style="width:284pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" bgcolor="#CCCCCC">
-              <p class="s1" style="padding-top: 1pt;padding-left: 100pt;padding-right: 99pt;text-indent: 0pt;text-align: center;">Remarks</p>
+              <p class="s1" style="padding-top: 1pt;padding-left: 100pt;padding-right: 99pt;text-indent: 0pt;text-align: center;padding-bottom: 1pt">Remarks</p>
             </td>
           </tr>
           @if(count($data_anggota_ekstrakulikuler) == 0)
           <tr style="height:12pt">
             <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-              <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">-</p>
+              <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;padding-bottom: 1pt">-</p>
             </td>
             <td style="width:181pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-              <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">-</p>
+              <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left;padding-bottom: 1pt">-</p>
             </td>
             <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-              <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">-</p>
+              <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;padding-bottom: 1pt">-</p>
             </td>
             <td style="width:284pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-              <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">-</p>
+              <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left;padding-bottom: 1pt">-</p>
             </td>
           </tr>
           @else
@@ -411,23 +425,19 @@
                 <?php $no++; ?>
                 <tr style="height:12pt">
                     <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                      <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">{{$no}}</p>
+                      <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center; padding-bottom: 1pt">{{$no}}</p>
                     </td>
                     <td style="width:181pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                      <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">{{$nilai_ekstra->ekstrakulikuler->nama_ekstrakulikuler}}</p>
+                      <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left; padding-bottom: 1pt">{{$nilai_ekstra->ekstrakulikuler->nama_ekstrakulikuler}}</p>
                     </td>
                     <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                      <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">{{$nilai_ekstra->nilai}}</p>
+                      <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center; padding-bottom: 1pt">{{$nilai_ekstra->nilai}}</p>
                     </td>
                     <td style="width:284pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                      <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">{!! nl2br($nilai_ekstra->deskripsi) !!}</p>
+                      <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left; padding-bottom: 1pt">{!! nl2br($nilai_ekstra->deskripsi) !!}</p>
                     </td>
                 </tr>
               @endforeach
-          {{-- @else
-            <?php $no = 0; ?>
-            @foreach($data_anggota_ekstrakulikuler as $nilai_ekstra)
-            <?php $no++; ?> --}}
           @endif 
       </table>
   
@@ -472,13 +482,13 @@
           <?php $no++; ?>
           <tr style="height:12pt">
               <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">{{$no}}</p>
+                <p class="s5" style="padding: 1pt 0;text-indent: 0pt;text-align: center;">{{$no}}</p>
               </td>
               <td style="width:181pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">{{$prestasi->nama_prestasi}}</p></p>
+                <p class="s5" style="padding: 1pt 0;padding-left: 2pt;text-indent: 0pt;text-align: left;">{{$prestasi->nama_prestasi}}</p></p>
               </td>
               <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">
+                <p class="s5" style="padding: 1pt 0;text-indent: 0pt;text-align: center;">
                   @if($prestasi->tingkat_prestasi == 1)
                     Internations
                   @elseif($prestasi->tingkat_prestasi == 2)
@@ -495,7 +505,7 @@
                 </p>
               </td>
               <td style="width:284pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">{!! nl2br($prestasi->deskripsi) !!}</p>
+                <p class="s5" style="padding: 1pt 0;padding-left: 2pt;text-indent: 0pt;text-align: left;">{!! nl2br($prestasi->deskripsi) !!}</p>
               </td>
           </tr>
           @endforeach
@@ -515,111 +525,111 @@
               <table style="border-collapse:collapse; margin-left: -2px" cellspacing="0">
                   <tr style="height:14pt">
                     <td style="width:190pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" colspan="2" bgcolor="#CCCCCC">
-                        <p class="s1" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">Absences</p>
+                        <p class="s1" style="padding: 1pt 0;text-indent: 0pt;text-align: center;">Absences</p>
                     </td>
                     <td style="width:50pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" bgcolor="#CCCCCC">
-                        <p class="s1" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">Days</p>
+                        <p class="s1" style="padding: 1pt 0;text-indent: 0pt;text-align: center;">Days</p>
                     </td>
                   </tr>
                 @if(!is_null($kehadiran_siswa))
                   <tr style="height:12pt">
                     <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                      <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">1</p>
+                      <p class="s5" style="padding: 1pt 0;text-indent: 0pt;text-align: center;">1</p>
                   </td>
                     <td style="width:178pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                        <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">Sick</p>
+                        <p class="s5" style="padding: 1pt 0;padding-left: 2pt;text-indent: 0pt;text-align: left;">Sick</p>
                     </td>
                     <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                        <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">{{$kehadiran_siswa->sakit}}</p>
+                        <p class="s5" style="padding: 1pt 0;text-indent: 0pt;text-align: center;">{{$kehadiran_siswa->sakit}}</p>
                     </td>
                   </tr>
                   <tr style="height:12pt">
                     <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                        <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">2</p>
+                        <p class="s5" style="padding: 1pt 0;text-indent: 0pt;text-align: center;">2</p>
                     </td>
                     <td style="width:178pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                        <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">Permit</p>
+                        <p class="s5" style="padding: 1pt 0;padding-left: 2pt;text-indent: 0pt;text-align: left;">Permit</p>
                     </td>
                     <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                        <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">{{$kehadiran_siswa->izin}}</p>
+                        <p class="s5" style="padding: 1pt 0;text-indent: 0pt;text-align: center;">{{$kehadiran_siswa->izin}}</p>
                     </td>
                   </tr>
                   <tr style="height:12pt">
                     <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                        <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">3</p>
+                        <p class="s5" style="padding: 1pt 0;text-indent: 0pt;text-align: center;">3</p>
                     </td>
                     <td style="width:178pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                        <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">Without Permission</p>
+                        <p class="s5" style="padding: 1pt 0;padding-left: 2pt;text-indent: 0pt;text-align: left;">Without Permission</p>
                     </td>
                     <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                        <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">{{$kehadiran_siswa->tanpa_keterangan}}</p>
+                        <p class="s5" style="padding: 1pt 0;text-indent: 0pt;text-align: center;">{{$kehadiran_siswa->tanpa_keterangan}}</p>
                     </td>
                   </tr>
                   <tr style="height:12pt">
                     <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
                         <p style="text-indent: 0pt;text-align: left;">
-                          <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;"><br></p>
+                          <p class="s5" style="padding: 1pt 0;text-indent: 0pt;text-align: center;"><br></p>
                         </p>
                     </td>
                     <td style="width:178pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
                         <p style="text-indent: 0pt;text-align: left;">
-                          <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;"><br></p>
+                          <p class="s5" style="padding: 1pt 0;text-indent: 0pt;text-align: center;"><br></p>
                         </p>
                     </td>
                     <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
                         <p style="text-indent: 0pt;text-align: left;">
-                          <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;"><br></p>
+                          <p class="s5" style="padding: 1pt 0;text-indent: 0pt;text-align: center;"><br></p>
                         </p>
                     </td>
                   </tr>
                 @else
                   <tr style="height:12pt">
                     <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                      <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">1</p>
+                      <p class="s5" style="padding: 1pt 0;text-indent: 0pt;text-align: center;">1</p>
                   </td>
                     <td style="width:178pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                        <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">Sick</p>
+                        <p class="s5" style="padding: 1pt 0;padding-left: 2pt;text-indent: 0pt;text-align: left;">Sick</p>
                     </td>
                     <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                        <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">0</p>
+                        <p class="s5" style="padding: 1pt 0;text-indent: 0pt;text-align: center;">0</p>
                     </td>
                   </tr>
                   <tr style="height:12pt">
                     <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                        <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">2</p>
+                        <p class="s5" style="padding: 1pt 0;text-indent: 0pt;text-align: center;">2</p>
                     </td>
                     <td style="width:178pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                        <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">Permit</p>
+                        <p class="s5" style="padding: 1pt 0;padding-left: 2pt;text-indent: 0pt;text-align: left;">Permit</p>
                     </td>
                     <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                        <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">0</p>
+                        <p class="s5" style="padding: 1pt 0;text-indent: 0pt;text-align: center;">0</p>
                     </td>
                   </tr>
                   <tr style="height:12pt">
                     <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                        <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">3</p>
+                        <p class="s5" style="padding: 1pt 0;text-indent: 0pt;text-align: center;">3</p>
                     </td>
                     <td style="width:178pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                        <p class="s5" style="padding-top: 1pt;padding-left: 2pt;text-indent: 0pt;text-align: left;">Without Permission</p>
+                        <p class="s5" style="padding: 1pt 0;padding-left: 2pt;text-indent: 0pt;text-align: left;">Without Permission</p>
                     </td>
                     <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                        <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">0</p>
+                        <p class="s5" style="padding: 1pt 0;text-indent: 0pt;text-align: center;">0</p>
                     </td>
                   </tr>
                   <tr style="height:12pt">
                     <td style="width:17pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
                         <p style="text-indent: 0pt;text-align: left;">
-                          <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;"><br></p>
+                          <p class="s5" style="padding: 1pt 0;text-indent: 0pt;text-align: center;"><br></p>
                         </p>
                     </td>
                     <td style="width:178pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
                         <p style="text-indent: 0pt;text-align: left;">
-                          <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;"><br></p>
+                          <p class="s5" style="padding: 1pt 0;text-indent: 0pt;text-align: center;"><br></p>
                         </p>
                     </td>
                     <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
                         <p style="text-indent: 0pt;text-align: left;">
-                          <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;"><br></p>
+                          <p class="s5" style="padding: 1pt 0;text-indent: 0pt;text-align: center;"><br></p>
                         </p>
                     </td>
                   </tr>
@@ -632,51 +642,51 @@
               <table style="border-collapse:collapse; margin-left: 0; padding-right: 10px" cellspacing="0">
                   <tr style="height:14pt">
                     <td style="width:278pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" colspan="3" bgcolor="#CCCCCC">
-                        <p class="s1" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">Grading Scale</p>
+                        <p class="s1" style="padding: 1pt 0;text-indent: 0pt;text-align: center;">Grading Scale</p>
                     </td>
                   </tr>
                   <tr style="height:12pt">
                     <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                        <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">A</p>
+                        <p class="s5" style="padding: 1pt 0;text-indent: 0pt;text-align: center;">A</p>
                     </td>
                     <td style="width:85pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                        <p class="s5" style="padding-top: 1pt;ext-indent: 0pt;text-align: center;">80.00 - 100.00</p>
+                        <p class="s5" style="padding: 1pt 0;ext-indent: 0pt;text-align: center;">80.00 - 100.00</p>
                     </td>
                     <td style="width:136pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                        <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">Very Good</p>
+                        <p class="s5" style="padding: 1pt 0;text-indent: 0pt;text-align: center;">Excellent</p>
                     </td>
                   </tr>
                   <tr style="height:12pt">
                     <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                        <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">B</p>
+                        <p class="s5" style="padding: 1pt 0;text-indent: 0pt;text-align: center;">B</p>
                     </td>
                     <td style="width:85pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                        <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">70.00 - 79.99</p>
+                        <p class="s5" style="padding: 1pt 0;text-indent: 0pt;text-align: center;">70.00 - 79.99</p>
                     </td>
                     <td style="width:136pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                        <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">Good</p>
+                        <p class="s5" style="padding: 1pt 0;text-indent: 0pt;text-align: center;">Good</p>
                     </td>
                   </tr>
                   <tr style="height:12pt">
                     <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                        <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">C</p>
+                        <p class="s5" style="padding: 1pt 0;text-indent: 0pt;text-align: center;">C</p>
                     </td>
                     <td style="width:85pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                        <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">60.00 - 69.99</p>
+                        <p class="s5" style="padding: 1pt 0;text-indent: 0pt;text-align: center;">60.00 - 69.99</p>
                     </td>
                     <td style="width:136pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                        <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">Fair</p>
+                        <p class="s5" style="padding: 1pt 0;text-indent: 0pt;text-align: center;">Fair</p>
                     </td>
                   </tr>
                   <tr style="height:12pt"> 
                     <td style="width:57pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                        <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">D</p>
+                        <p class="s5" style="padding: 1pt 0;text-indent: 0pt;text-align: center;">D</p>
                     </td>
                     <td style="width:85pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                        <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">0.00 - 59.99</p>
+                        <p class="s5" style="padding: 1pt 0;text-indent: 0pt;text-align: center;">0.00 - 59.99</p>
                     </td>
                     <td style="width:136pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                        <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: center;">Poor</p>
+                        <p class="s5" style="padding: 1pt 0;text-indent: 0pt;text-align: center;">Need Improvement</p>
                     </td>
                   </tr>
               </table>
@@ -692,12 +702,12 @@
       <table style="border-collapse:collapse; margin-left: 5.44pt;" cellspacing="0">
         <tr style="height:14pt">
             <td style="width:722px;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" colspan="3" bgcolor="#CCCCCC">
-              <p class="s1" style="padding-top: 1pt;padding-left: 110pt;padding-right: 110pt;text-indent: 0pt;text-align: center;">Homeroom Teacher&#39;s Comments</p>
+              <p class="s1" style="padding: 1pt 0;padding-left: 110pt;padding-right: 110pt;text-indent: 0pt;text-align: center;">Homeroom Teacher&#39;s Comments</p>
             </td>
         </tr>
         <tr style="height:14pt">
             <td style="width:278pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt" colspan="3">
-              <p class="s5" style="padding-top: 1pt;text-indent: 0pt;text-align: left; padding-left: 2pt;">           
+              <p class="s5" style="padding: 1pt 0;text-indent: 0pt;text-align: left; padding-left: 2pt;">           
                 @if(!is_null($catatan_wali_kelas))
                   {{$catatan_wali_kelas->catatan}}
                 @else 

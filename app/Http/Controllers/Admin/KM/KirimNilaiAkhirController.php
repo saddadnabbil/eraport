@@ -18,6 +18,7 @@ use App\RencanaNilaiSumatif;
 use Illuminate\Http\Request;
 use App\RencanaNilaiFormatif;
 use App\Http\Controllers\Controller;
+use App\Semester;
 use Illuminate\Support\Facades\Validator;
 
 class KirimNilaiAkhirController extends Controller
@@ -57,7 +58,7 @@ class KirimNilaiAkhirController extends Controller
 
             $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
             $term = Term::findorfail($pembelajaran->kelas->tingkatan->term_id);
-            $semester = Term::findorfail($pembelajaran->kelas->tingkatan->semester_id);
+            $semester = Semester::findorfail($pembelajaran->kelas->tingkatan->semester_id);
 
             $kkm = KmKkmMapel::where('mapel_id', $pembelajaran->mapel_id)->where('kelas_id', $pembelajaran->kelas_id)->first();
 

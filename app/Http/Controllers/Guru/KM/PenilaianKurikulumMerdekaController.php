@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use App\RencanaNilaiFormatif;
 use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
+use App\Semester;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -47,7 +48,7 @@ class PenilaianKurikulumMerdekaController extends Controller
             return redirect('guru/kelas')->with('toast_warning', 'Mohon isikan data kelas');
         }
 
-        return view('guru.km.penilaian.pilihkelas', compact('title', 'data_mapel', 'data_kelas', 'data_pembelajaran'));
+        return view('guru.km.penilaian.pilihkelas', compact('title', 'data_mapel', 'data_kelas', 'data_pembelajaran', 'tapel'));
     }
 
     /**
@@ -73,15 +74,16 @@ class PenilaianKurikulumMerdekaController extends Controller
 
             $tapel = Tapel::where('status', 1)->first();
             $term = Term::findorfail($pembelajaran->kelas->tingkatan->term_id);
+            $semester = Semester::findorfail($pembelajaran->kelas->tingkatan->semester_id);
             $guru = Guru::where('user_id', Auth::user()->id)->first();
 
             $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
             $data_pembelajaran = Pembelajaran::where('guru_id', $guru->id)->whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
 
-            $data_rencana_penilaian_sumatif = RencanaNilaiSumatif::with('nilai_sumatif')->where('term_id', $term->term)->where('pembelajaran_id', $request->pembelajaran_id)->get();
+            $data_rencana_penilaian_sumatif = RencanaNilaiSumatif::with('nilai_sumatif')->where('term_id', $term->term)->where('term_id', $term->term)->where('semester_id', $semester->id)->where('pembelajaran_id', $request->pembelajaran_id)->get();
             $count_cp_sumatif = count($data_rencana_penilaian_sumatif);
 
-            $data_rencana_penilaian_formatif = RencanaNilaiFormatif::with('nilai_formatif')->where('term_id', $term->term)->where('pembelajaran_id', $request->pembelajaran_id)->get();
+            $data_rencana_penilaian_formatif = RencanaNilaiFormatif::with('nilai_formatif')->where('term_id', $term->term)->where('term_id', $term->term)->where('semester_id', $semester->id)->where('pembelajaran_id', $request->pembelajaran_id)->get();
 
             $count_cp_formatif = count($data_rencana_penilaian_formatif);
 
@@ -154,7 +156,7 @@ class PenilaianKurikulumMerdekaController extends Controller
                     $nilaiAkhirRaport = 0;
                     $nilaiAkhirRevisi = null;
 
-                    $nilaiAkhir = NilaiAkhir::where('anggota_kelas_id', $anggota_kelas->id)->first();
+                    $nilaiAkhir = NilaiAkhir::where('anggota_kelas_id', $anggota_kelas->id)->where('term_id', $term->term)->where('semester_id', $semester->id)->first();
 
                     if ($nilaiAkhir) {
                         $nilaiAkhirFormatif = $nilaiAkhir->nilai_akhir_formatif;
@@ -170,7 +172,7 @@ class PenilaianKurikulumMerdekaController extends Controller
                 }
             }
 
-            return view('guru.km.penilaian.index', compact('title', 'pembelajaran_id', 'data_pembelajaran', 'data_anggota_kelas', 'data_rencana_penilaian_sumatif', 'count_cp_sumatif', 'data_rencana_penilaian_formatif', 'count_cp_formatif', 'rencana_penilaian_data_formatif', 'rencana_penilaian_data_sumatif', 'nilaiAkhirFormatif', 'nilaiAkhirSumatif', 'nilaiAkhirRaport', 'nilaiAkhirRevisi', 'term'));
+            return view('guru.km.penilaian.index', compact('title', 'pembelajaran_id', 'data_pembelajaran', 'data_anggota_kelas', 'data_rencana_penilaian_sumatif', 'count_cp_sumatif', 'data_rencana_penilaian_formatif', 'count_cp_formatif', 'rencana_penilaian_data_formatif', 'rencana_penilaian_data_sumatif', 'nilaiAkhirFormatif', 'nilaiAkhirSumatif', 'nilaiAkhirRaport', 'nilaiAkhirRevisi', 'term', 'semester'));
         }
     }
 
@@ -260,6 +262,7 @@ class PenilaianKurikulumMerdekaController extends Controller
                         'anggota_kelas_id' => $request->anggota_kelas_id[$count_siswa],
                         'pembelajaran_id' => $request->pembelajaran_id[$count_siswa],
                         'term_id' => $request->term_id[$count_siswa],
+                        'semester_id' => $request->semester_id[$count_siswa],
                         'nilai_akhir_formatif' => $nilaiAkhirFormatif,
                         'nilai_akhir_sumatif' => $nilaiAkhirSumatif,
                         'nilai_akhir_raport' => $nilaiAkhir,
@@ -273,6 +276,7 @@ class PenilaianKurikulumMerdekaController extends Controller
                             'anggota_kelas_id' => $dataNilaiAkhir['anggota_kelas_id'],
                             'pembelajaran_id' => $dataNilaiAkhir['pembelajaran_id'],
                             'term_id' => $dataNilaiAkhir['term_id'],
+                            'semester_id' => $request->semester_id[$count_siswa],
                         ],
                         $dataNilaiAkhir
                     );
@@ -281,50 +285,5 @@ class PenilaianKurikulumMerdekaController extends Controller
 
             return back()->with('toast_success', 'Data penilaian berhasil disimpan.');
         }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

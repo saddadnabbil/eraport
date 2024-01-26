@@ -18,6 +18,7 @@ use App\RencanaNilaiSumatif;
 use Illuminate\Http\Request;
 use App\RencanaNilaiFormatif;
 use App\Http\Controllers\Controller;
+use App\Semester;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -59,6 +60,7 @@ class KirimNilaiAkhirController extends Controller
 
             $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
             $term = Term::findorfail($pembelajaran->kelas->tingkatan->term_id);
+            $semester = Semester::findorfail($pembelajaran->kelas->tingkatan->semester_id);
 
             $kkm = KmKkmMapel::where('mapel_id', $pembelajaran->mapel_id)->where('kelas_id', $pembelajaran->kelas_id)->first();
 
@@ -66,8 +68,8 @@ class KirimNilaiAkhirController extends Controller
                 return back()->with('toast_error', 'Belum ada data kkm untuk ' . $pembelajaran->mapel->nama_mapel . ' ' . $pembelajaran->kelas->nama_kelas . '. Silahkan input kkm!');
             }
 
-            $rencana_nilai_sumatif = RencanaNilaiSumatif::where('pembelajaran_id', $pembelajaran->id)->get('id');
-            $rencana_nilai_formatif = RencanaNilaiFormatif::where('pembelajaran_id', $pembelajaran->id)->get('id');
+            $rencana_nilai_sumatif = RencanaNilaiSumatif::where('pembelajaran_id', $pembelajaran->id)->where('term_id', $term->id)->where('semester_id', $semester->id)->get('id');
+            $rencana_nilai_formatif = RencanaNilaiFormatif::where('pembelajaran_id', $pembelajaran->id)->where('term_id', $term->id)->where('semester_id', $semester->id)->get('id');
 
             if (count($rencana_nilai_sumatif) == 0 || count($rencana_nilai_formatif) == 0) {
                 return back()->with('toast_warning', 'Data rencana penilaian tidak ditemukan');
@@ -98,12 +100,12 @@ class KirimNilaiAkhirController extends Controller
                         ->where('siswa.status', 1)
                         ->get();
 
-                    if(count($data_anggota_kelas) == 0){
+                    if (count($data_anggota_kelas) == 0) {
                         return redirect(route('guru.penilaiankm.index'))->with('toast_error', 'Data anggota kelas tidak ditemukan');
                     }
 
                     foreach ($data_anggota_kelas as $anggota_kelas) {
-                        $data_nilai_akhir = NilaiAkhir::where('anggota_kelas_id', $anggota_kelas->id)->where('pembelajaran_id', $pembelajaran->id)->where('term_id', $term->id)->first();
+                        $data_nilai_akhir = NilaiAkhir::where('anggota_kelas_id', $anggota_kelas->id)->where('pembelajaran_id', $pembelajaran->id)->where('term_id', $term->id)->where('semester_id', $semester->id)->first();
 
                         if (!is_null($data_nilai_akhir)) {
                             $nilai_akhir_pengetahuan = $data_nilai_akhir->nilai_akhir_sumatif;
@@ -124,7 +126,7 @@ class KirimNilaiAkhirController extends Controller
                         $anggota_kelas->nilai_keterampilan = round($nilai_akhir_keterampilan, 0);
                         $anggota_kelas->nilai_akhir_raport = round($nilai_akhir_raport, 0);
                     }
-                    return view('guru.km.kirimnilaiakhirkm.create', compact('title', 'data_pembelajaran', 'pembelajaran', 'kkm', 'data_anggota_kelas', 'term'));
+                    return view('guru.km.kirimnilaiakhirkm.create', compact('title', 'data_pembelajaran', 'pembelajaran', 'kkm', 'data_anggota_kelas', 'term', 'semester'));
                 }
             }
         }

@@ -35,6 +35,7 @@ class RencanaNilaiSumatifController extends Controller
         foreach ($data_rencana_penilaian as $penilaian) {
             $term = Term::findorfail($penilaian->kelas->tingkatan->term_id);
             $semester = Semester::findorfail($penilaian->kelas->tingkatan->semester_id);
+            
             $rencana_penilaian = RencanaNilaiSumatif::where('term_id', $term->id)->where('semester_id', $semester->id)->where('pembelajaran_id', $penilaian->id)->get();
             $penilaian->jumlah_rencana_penilaian = count($rencana_penilaian);
         }

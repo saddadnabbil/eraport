@@ -84,10 +84,10 @@
                           <th colspan="4" class="text-center">Predikat</th>
                         </tr>
                         <tr>
-                          <th class="text-center">D = Poor </th>
+                          <th class="text-center">D = Need Improvement </th>
                           <th class="text-center">C = Fair </th>
                           <th class="text-center">B = Good </th>
-                          <th class="text-center">A = Very Good </th>
+                          <th class="text-center">A = Excellent </th>
                         </tr>
                       </thead>
                       <tbody>

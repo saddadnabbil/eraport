@@ -33,7 +33,7 @@ class RencanaNilaiFormatifController extends Controller
         $data_rencana_penilaian = Pembelajaran::where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
         foreach ($data_rencana_penilaian as $penilaian) {
             $term = Term::findorfail($penilaian->kelas->tingkatan->term_id);
-            $semester = Term::findorfail($penilaian->kelas->tingkatan->semester_id);
+            $semester = Semester::findorfail($penilaian->kelas->tingkatan->semester_id);
             $rencana_penilaian = RencanaNilaiFormatif::where('term_id', $term->id)->where('semester_id', $semester->id)->where('pembelajaran_id', $penilaian->id)->get();
             $penilaian->jumlah_rencana_penilaian = count($rencana_penilaian);
         }
@@ -52,7 +52,7 @@ class RencanaNilaiFormatifController extends Controller
         $title = 'Data Rencana Nilai Formatif';
         $pembelajaran = Pembelajaran::findorfail($id);
         $term = Term::findorfail($pembelajaran->kelas->tingkatan->term_id);
-        $semester = Term::findorfail($pembelajaran->kelas->tingkatan->semester_id);
+        $semester = Semester::findorfail($pembelajaran->kelas->tingkatan->semester_id);
         $data_rencana_penilaian = RencanaNilaiFormatif::where('term_id', $term->id)->where('semester_id', $semester->id)->where('pembelajaran_id', $id)->orderBy('kode_penilaian', 'ASC')->get();
         $data_rencana_penilaian_tambah = Pembelajaran::where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
 
@@ -75,7 +75,7 @@ class RencanaNilaiFormatifController extends Controller
 
         $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
         $term = Term::findorfail($pembelajaran->kelas->tingkatan->term_id);
-        $semester = Term::findorfail($pembelajaran->kelas->tingkatan->semester_id);
+        $semester = Semester::findorfail($pembelajaran->kelas->tingkatan->semester_id);
 
         $kelas = Kelas::findorfail($pembelajaran->kelas_id);
         $data_cp = CapaianPembelajaran::where([

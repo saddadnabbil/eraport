@@ -175,7 +175,7 @@
                               <div class="form-group row">
                                 <label for="nama_mapel" class="col-sm-3 col-form-label">Nama Mata Pelajaran</label>
                                 <div class="col-sm-9">
-                                  <input type="text" class="form-control" id="nama_mapel" name="nama_mapel" value="{{$mapel->nama_mapel}}" readonly>
+                                  <input type="text" class="form-control" id="nama_mapel" name="nama_mapel" value="{{$mapel->nama_mapel}}">
                                 </div>
                               </div>
 

@@ -36,7 +36,8 @@ class RencanaNilaiFormatifController extends Controller
         $data_rencana_penilaian = Pembelajaran::where('guru_id', $guru->id)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
         foreach ($data_rencana_penilaian as $penilaian) {
             $term = Term::findorfail($penilaian->kelas->tingkatan->term_id);
-            $rencana_penilaian = RencanaNilaiFormatif::where('term_id', $term->id)->where('pembelajaran_id', $penilaian->id)->get();
+            $semester = Semester::findorfail($penilaian->kelas->tingkatan->semester_id);
+            $rencana_penilaian = RencanaNilaiFormatif::where('term_id', $term->id)->where('semester_id', $semester->id)->where('pembelajaran_id', $penilaian->id)->get();
             $penilaian->jumlah_rencana_penilaian = count($rencana_penilaian);
         }
 
@@ -54,11 +55,12 @@ class RencanaNilaiFormatifController extends Controller
         $title = 'Data Rencana Nilai Formatif';
         $pembelajaran = Pembelajaran::findorfail($id);
         $term = Term::findorfail($pembelajaran->kelas->tingkatan->term_id);
-        $data_rencana_penilaian = RencanaNilaiFormatif::where('term_id', $term->id)->where('pembelajaran_id', $id)->orderBy('kode_penilaian', 'ASC')->get();
+        $semester = Semester::findorfail($pembelajaran->kelas->tingkatan->semester_id);
+        $data_rencana_penilaian = RencanaNilaiFormatif::where('term_id', $term->id)->where('semester_id', $semester->id)->where('pembelajaran_id', $id)->orderBy('kode_penilaian', 'ASC')->get();
         $data_rencana_penilaian_tambah = Pembelajaran::where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
 
         foreach ($data_rencana_penilaian_tambah as $penilaian) {
-            $rencana_penilaian = RencanaNilaiFormatif::where('term_id', $term->id)->where('pembelajaran_id', $penilaian->id)->groupBy('kode_penilaian')->get();
+            $rencana_penilaian = RencanaNilaiFormatif::where('term_id', $term->id)->where('semester_id', $semester->id)->where('pembelajaran_id', $penilaian->id)->groupBy('kode_penilaian')->get();
             $penilaian->jumlah_rencana_penilaian = count($rencana_penilaian);
         }
         return view('guru.km.rencanaformatif.show', compact('title', 'pembelajaran', 'data_rencana_penilaian', 'data_rencana_penilaian_tambah'));
@@ -76,6 +78,7 @@ class RencanaNilaiFormatifController extends Controller
 
         $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
         $term = Term::findorfail($pembelajaran->kelas->tingkatan->term_id);
+        $semester = Semester::findorfail($pembelajaran->kelas->tingkatan->semester_id);
 
         $kelas = Kelas::findorfail($pembelajaran->kelas_id);
         $data_cp = CapaianPembelajaran::where([
@@ -83,14 +86,14 @@ class RencanaNilaiFormatifController extends Controller
             'pembelajaran_id' => $pembelajaran->id,
         ])->orderBy('kode_cp', 'ASC')->get();
 
-        $data_rencana_penilaian = RencanaNilaiFormatif::where('pembelajaran_id', $pembelajaran->id)->where('term_id', $term->id)->get();
+        $data_rencana_penilaian = RencanaNilaiFormatif::where('pembelajaran_id', $pembelajaran->id)->where('term_id', $term->id)->where('semester_id', $semester->id)->get();
 
         if (count($data_rencana_penilaian) >= 3) {
             return redirect(route('rencanaformatif.index'))->with('toast_error', 'Data sudah tersedia');
         }
 
         $jumlah_penilaian = $request->jumlah_penilaian;
-        return view('guru.km.rencanaformatif.create', compact('title', 'pembelajaran', 'jumlah_penilaian', 'data_cp', 'data_rencana_penilaian', 'term'));
+        return view('guru.km.rencanaformatif.create', compact('title', 'pembelajaran', 'jumlah_penilaian', 'data_cp', 'data_rencana_penilaian', 'term', 'semester'));
     }
 
     /**
@@ -107,6 +110,7 @@ class RencanaNilaiFormatifController extends Controller
             $data_penilaian = [
                 'pembelajaran_id' => $request->pembelajaran_id,
                 'term_id' => $request->term_id,
+                'semester_id' => $request->semester_id,
                 'kode_penilaian' => $request->kode_penilaian[$count_penilaian],
                 'teknik_penilaian' => $request->teknik_penilaian[$count_penilaian],
                 'bobot_teknik_penilaian' => $request->bobot_teknik_penilaian[$count_penilaian],
@@ -118,6 +122,7 @@ class RencanaNilaiFormatifController extends Controller
             $criteria = [
                 'pembelajaran_id' => $request->pembelajaran_id,
                 'term_id' => $request->term_id,
+                'semester_id' => $request->semester_id,
                 'kode_penilaian' => $request->kode_penilaian[$count_penilaian],
                 // Anda bisa menambahkan kriteria lain sesuai kebutuhan
             ];

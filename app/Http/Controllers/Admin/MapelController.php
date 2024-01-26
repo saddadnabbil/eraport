@@ -74,6 +74,7 @@ class MapelController extends Controller
         } else {
             $mapel = Mapel::findorfail($id);
             $data_mapel = [
+                'nama_mapel' => $request->nama_mapel,
                 'nama_mapel_indonesian' => $request->nama_mapel_indonesian,
                 'ringkasan_mapel' => $request->ringkasan_mapel,
             ];

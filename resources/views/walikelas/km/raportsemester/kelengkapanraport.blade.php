@@ -29,7 +29,7 @@
 
     h1 {
       font-family: Arial, sans-serif;
-      font-size: 16pt;
+      font-size: 14pt;
     }
 
     h5 {
@@ -72,25 +72,25 @@
       position: absolute;
       top: 0px;
       left: 0px;
-      background-image: url("{{ public_path().'/assets/dist/img/logo-with-text.png' }}");
-      background-size: 60%;
+      background-image: url("{{ public_path().'/assets/dist/img/logo.png' }}");
+      background-size: 40%;
       background-position: center center;
       background-repeat: no-repeat;
       opacity: 0.1;
     }
 
     .no {
-        padding-top: 4pt;
+        padding-top: 6pt;
         width: 3%;
     }
 
     .name {
-        padding-top: 4pt;
+        padding-top: 6pt;
         width: 30%;
     }
 
     .value {
-        padding-top: 4pt;
+        padding-top: 6pt;
         width: 67%;
     }
 
@@ -110,21 +110,35 @@
             <!-- Header Table -->
             <table class="header-table" style="width: 100%; border-collapse: collapse;">
                 <tr>
-                    <td style="text-align: left; vertical-align: middle;">
-                        <img src="{{ public_path().'/assets/dist/img/tut-wuri-handayani.png' }}" alt="" width="80px" height="80px">
+                    <td style="text-align: right; vertical-align: middle; width: 5%; padding-left: -20px">
+                        <img src="./assets/dist/img/logo-with-text.png"  width="130px" height="55px">
                     </td>
                     
-                    <td style="text-align: center; vertical-align: middle;">
-                        <h1>
-                            GLOBAL INDONESIA SCHOOL <br>
-                            <span style="font-weight: normal; font-size: 15pt; padding-top: 7px;">
-                                DINAS PENDIDIKAN KABUPATEN SERANG 
-                            </span>
-                        </h1>
+                    <td style="text-align: center; vertical-align: middle; width: 80%;">
+                        <div style="position: relative; left: -27px;">
+                            <h1>
+                                GLOBAL INDONESIA 
+                                @if($anggota_kelas->kelas->id == '1') 
+                                SENIOR HIGH SCHOOL 
+                                @elseif($anggota_kelas->kelas->id == '2') 
+                                JUNIOR HIGH SCHOOL 
+                                @elseif($anggota_kelas->kelas->id == '3') 
+                                PRIMARY SCHOOL
+                                @elseif($anggota_kelas->kelas->id == '4') 
+                                KINDERGARTEN
+                                @elseif($anggota_kelas->kelas->id == '5') 
+                                PLAYGROUP
+                                @endif
+                                <br>
+                                <span style="font-weight: normal; font-size: 13pt; padding-top: 10;">
+                                    DINAS PENDIDIKAN KABUPATEN SERANG 
+                                </span>
+                            </h1>
+                        </div>
                     </td>
-        
-                    <td style="text-align: right; vertical-align: middle;">
-                        <img src="./assets/dist/img/logo.png" alt="" width="80px" height="80px">
+
+                    <td style="text-align: left; vertical-align: middle; width: 10%">
+                        <img src="{{ public_path().'/assets/dist/img/tut-wuri-handayani.png' }}" alt="" width="80px" height="80px">
                     </td>
                 </tr>
             </table>
@@ -237,22 +251,27 @@
             <!-- Header Table -->
             <table class="header-table" style="width: 100%; border-collapse: collapse;">
                 <tr>
-                    <td style="text-align: left; vertical-align: middle; width: 12%">
-                        <img src="./assets/dist/img/logo.png" alt="" width="75px" height="75px">
+                    <td style="text-align: left; vertical-align: middle; width: 60%">
+                        <img src="./assets/dist/img/logo-with-text.png" alt="" width="140" height="65">
                     </td>
                     
-                    <td style="text-align: left; vertical-align: middle; width: 57%">
-                        <h1 style="font-size: 16pt">
-                            GLOBAL INDONESIA SCHOOL
-                        </h1>
-                    </td>
-
                     <td style="text-align: left; vertical-align: middle;">
                         <h5 class="title" style=" text-align: right; font-size: 10pt"> 
-                            GLOBAL INDONESIA SCHOOL
+                            GLOBAL INDONESIA 
+                            @if($anggota_kelas->kelas->id == '1') 
+                            SENIOR HIGH SCHOOL 
+                            @elseif($anggota_kelas->kelas->id == '2') 
+                            JUNIOR HIGH SCHOOL 
+                            @elseif($anggota_kelas->kelas->id == '3') 
+                            PRIMARY SCHOOL
+                            @elseif($anggota_kelas->kelas->id == '4') 
+                            KINDERGARTEN
+                            @elseif($anggota_kelas->kelas->id == '5') 
+                            PLAYGROUP
+                            @endif 
                         </h5>
-                        <p style="text-align: right; font-weight: normal; font-size: 7pt">
-                            {{$alamat = str_replace("Kabupaten Serang, Banten.", "", $sekolah->alamat)}} Telp. {{$sekolah->nomor_telpon}}
+                        <p style="text-align: right; font-weight: normal; font-size: 6pt; line-height: 1.2; margin-left: 65px; vertical-align: middle">
+                            {{$alamat = str_replace("Kabupaten Serang, Banten.", "", $sekolah->alamat)}} <br> Telp. {{$sekolah->nomor_telpon}}
                         </p>
                     </td>
 
@@ -306,7 +325,7 @@
                         Place & Date of Birth
                     </td>
                     <td class="value">
-                        : {{ $anggota_kelas->siswa->tempat_lahir }}, {{$anggota_kelas->siswa->tanggal_lahir->isoFormat('D MMMM Y')}}
+                        : {{ strtoupper($anggota_kelas->siswa->tempat_lahir) }}, {{strtoupper($anggota_kelas->siswa->tanggal_lahir->isoFormat('D MMMM Y'))}}
                     </td>
                 </tr> 
                 <tr>
@@ -314,31 +333,43 @@
                         5.
                     </td>
                     <td class="name">
+                        Gender
+                    </td>
+                    <td class="value">
+                        : {{strtoupper($anggota_kelas->siswa->jenis_kelamin)}}
+                            
+                    </td>
+                </tr>                 
+                <tr>
+                    <td class="no">
+                        6.
+                    </td>
+                    <td class="name">
                         Religion
                     </td>
                     <td class="value">
                         : @if ( $anggota_kelas->siswa->agama == 1 )
-                            Islam
+                            ISLAM
                           @elseif ( $anggota_kelas->siswa->agama == 2 )
-                            Protestan
+                            PROTESTAN
                           @elseif ( $anggota_kelas->siswa->agama == 3 )
-                            Katolik
+                            KATOLIK
                           @elseif ( $anggota_kelas->siswa->agama == 4 )
-                            Hindu
+                            HINDU
                           @elseif ( $anggota_kelas->siswa->agama == 5 )
-                            Budha
+                            BUDHA
                           @elseif ( $anggota_kelas->siswa->agama == 6 )
-                            Khonghucu
+                            KHONGHUCU
                           @elseif ( $anggota_kelas->siswa->agama == 7 )
-                            Kepercayaan
+                            KEPERCAYAAN
                           @else
-                            Unknown
+                            UNKOWN
                           @endif
                     </td>
                 </tr> 
                 <tr>
                     <td class="no">
-                        6.
+                        7.
                     </td>
                     <td class="name">
                         Family Birth Order
@@ -349,7 +380,7 @@
                 </tr> 
                 <tr>
                     <td class="no">
-                        7.
+                        8.
                     </td>
                     <td class="name">
                         Number of Siblings
@@ -360,7 +391,7 @@
                 </tr> 
                 <tr>
                     <td class="no">
-                        8.
+                        9.
                     </td>
                     <td class="name">
                         Telp/Phone Number:
@@ -371,7 +402,7 @@
                 </tr> 
                 <tr>
                     <td class="no">
-                        9.
+                        10.
                     </td>
                     <td class="name">
                         Admission in:
@@ -387,7 +418,7 @@
                         Class
                     </td>
                     <td class="value">
-                        : {{ $anggota_kelas->siswa->kelas_masuk }}
+                        : {{ strtoupper($anggota_kelas->siswa->kelas_masuk) }}
                     </td>
                 </tr> 
                 <tr>
@@ -414,7 +445,7 @@
                 </tr> 
                 <tr>
                     <td class="no">
-                        10.
+                        11.
                     </td>
                     <td class="name">
                         Previous School
@@ -446,7 +477,7 @@
                 </tr> 
                 <tr>
                     <td class="no">
-                        11.
+                        12.
                     </td>
                     <td class="name">
                         Last Academic Level Achieved
@@ -489,7 +520,7 @@
                 </tr> 
                 <tr>
                     <td class="no">
-                        12.
+                        13.
                     </td>
                     <td class="name">
                         Parents
@@ -576,7 +607,7 @@
                 </tr> 
                 <tr>
                     <td class="no">
-                        13.
+                        14.
                     </td>
                     <td class="name">
                         Guardian (if any)
@@ -635,7 +666,6 @@
                 <tr>
                     <td style="text-align: left; vertical-align: middle; display: inline-block; border: 1px solid black; padding: 2pt">
                         <img src="{{ asset('/storage/'. $anggota_kelas->siswa->pas_photo) }}" alt="Pas Photo">
-                        @dd($anggota_kelas->siswa->pas_photo)
                     </td>
                     <td  style=" text-align: center; vertical-align: middle; line-height: 1.3; padding-right: 160pt">
                         <p style="font-size: 8pt">

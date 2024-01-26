@@ -38,6 +38,16 @@
                 <form action="{{ route('guru.penilaiankm.create') }}" method="GET">
                   @csrf
                   <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Semester</label>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control" value="{{$semester->id}}" disabled>
+                    </div>
+                    <label class="col-sm-2 col-form-label">Term</label>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control" value="{{$term->term}}" disabled>
+                    </div>
+                  </div>
+                  <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Kelas</label>
                     <div class="col-sm-10">
                       <select class="form-control select2" name="pembelajaran_id" style="width: 100%;" required onchange="this.form.submit();">
@@ -55,6 +65,7 @@
                 @csrf
                 <input type="hidden" name="pembelajaran_id" value="{{$pembelajaran_id}}">
                 <input type="hidden" name="term_id" value="{{$term->id}}">
+                <input type="hidden" name="semester_id" value="{{$semester->id}}">
                 <div class="table-responsive">
                   <table class="table table-bordered table-hover">
                     <thead class="bg-primary">
@@ -102,7 +113,9 @@
                                 <td class="text-center">{{$no}}</td>
                                 <td>{{$anggota_kelas->siswa->nama_lengkap}}</td>
                                 <input type="hidden" name="anggota_kelas_id[]" value="{{$anggota_kelas->id}}">
-
+                                <input type="hidden" name="term_id" value="{{$term->id}}">
+                                <input type="hidden" name="semester_id" value="{{$semester->id}}">
+                                
                                 <?php $i = 0; ?>
                                 @foreach($data_rencana_penilaian_formatif as $rencana_penilaian_formatif)
                                     @if ($rencana_penilaian_formatif->nilai_formatif->isEmpty())
