@@ -250,12 +250,12 @@
 
                               <div class="form-group row">
                                 <label for="tahun_masuk" class="col-sm-3 col-form-label required">Tahun Masuk</label>
-                                <div class="col-sm-4">
-                                  <input type="text" name="tahun_masuk" id="tahun_masuk" class="form-control" value="old('tahun_masuk')">
+                                <div class="col-sm-3">
+                                  <input type="text" name="tahun_masuk" id="tahun_masuk" class="form-control" placeholder="Tahun Masuk" value="{{old('tahun_masuk')}}">
                                 </div>
                                 <label for="semester_masuk" class="col-sm-2 col-form-label required">Semester Masuk</label>
                                 <div class="col-sm-4">
-                                  <input type="text" name="semester_masuk" id="semester_masuk" class="form-control" value="old('semester_masuk')">
+                                  <input type="text" name="semester_masuk" id="semester_masuk" class="form-control" placeholder="Semester Masuk" value="{{old('semester_masuk')}}">
                                 </div>
                               </div>
 

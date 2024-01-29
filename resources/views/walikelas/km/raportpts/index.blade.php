@@ -38,14 +38,21 @@
                 <form action="{{ route('raportptskm.store') }}" method="POST">
                   @csrf
                   <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Semester</label>
-                    <div class="col-sm-9">
-                      <select class="form-control" name="semester_id" style="width: 100%;" required onchange="this.form.submit()">
-                          <option value="1" @if( $semester->id  == '1' ) selected @endif>1</option>
-                          <option value="2" @if( $semester->id  == '2' ) selected @endif>2</option>
+                    <label class="col-sm-2 col-form-label">Term</label>
+                    <div class="col-sm-4">
+                      <select class="form-control" name="term_id" style="width: 100%;" required onchange="this.form.submit()">
+                          <option value="1" @if( $term->id  == '1' ) selected @endif>1</option>
+                          <option value="2" @if( $term->id  == '2' ) selected @endif>2</option>
                       </select>
                     </div>
-                  </div>
+                      <label class="col-sm-2 col-form-label">Semester</label>
+                      <div class="col-sm-4">
+                        <select class="form-control" name="semester_id" style="width: 100%;" required onchange="this.form.submit()">
+                            <option value="1" @if( $semester->id  == '1' ) selected @endif>1</option>
+                            <option value="2" @if( $semester->id  == '2' ) selected @endif>2</option>
+                        </select>
+                      </div>
+                    </div>
                 </form>
               </div>
 
@@ -78,6 +85,7 @@
                             <input type="hidden" name="paper_size" value="{{$paper_size}}">
                             <input type="hidden" name="orientation" value="{{$orientation}}">
                             <input type="hidden" name="semester_id" value="{{$semester->id}}">
+                            <input type="hidden" name="term_id" value="{{$term->id}}">
                             <button type="submit" class="btn btn-primary btn-sm">
                               <i class="fas fa-print"></i> Raport PTS
                             </button>

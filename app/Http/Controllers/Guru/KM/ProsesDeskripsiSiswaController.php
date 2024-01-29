@@ -7,23 +7,11 @@ use App\Term;
 use App\Kelas;
 use App\Tapel;
 use Carbon\Carbon;
-use App\K13KdMapel;
-use App\NilaiSumatif;
 use App\Pembelajaran;
-use App\NilaiFormatif;
 use App\KmNilaiAkhirRaport;
-use App\CapaianPembelajaran;
-use App\K13NilaiAkhirRaport;
-use App\K13NilaiPengetahuan;
-use App\RencanaNilaiSumatif;
 use Illuminate\Http\Request;
-use App\K13NilaiKeterampilan;
-use App\RencanaNilaiFormatif;
 use App\KmDeskripsiNilaiSiswa;
-use App\K13DeskripsiNilaiSiswa;
-use App\K13RencanaNilaiPengetahuan;
 use App\Http\Controllers\Controller;
-use App\K13RencanaNilaiKeterampilan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -59,8 +47,6 @@ class ProsesDeskripsiSiswaController extends Controller
         if ($validator->fails()) {
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
         } else {
-
-            // Data Master
             $title = 'Input Deskripsi Nilai Siswa';
             $tapel = Tapel::where('status', 1)->first();
 
@@ -70,37 +56,19 @@ class ProsesDeskripsiSiswaController extends Controller
 
             $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
             $term = Term::findorfail($pembelajaran->kelas->tingkatan->term_id);
+            $semester = Term::findorfail($pembelajaran->kelas->tingkatan->semester_id);
 
-            $data_nilai_siswa = KmNilaiAkhirRaport::where('pembelajaran_id', $pembelajaran->id)->where('term_id', $term->id)->get();
+            $data_nilai_siswa = KmNilaiAkhirRaport::where('pembelajaran_id', $pembelajaran->id)->where('term_id', $term->id)->where('semester_id', $semester->id)->get();
 
             if ($data_nilai_siswa->count() == 0) {
                 return redirect(route('guru.penilaiankm.index'))->with('toast_error', 'Belum ada data penilaian untuk ' . $pembelajaran->mapel->nama_mapel . ' ' . $pembelajaran->kelas->nama_kelas . '. Silahkan input penilaian!');
             } else {
                 foreach ($data_nilai_siswa as $nilai_siswa) {
-                    // $rencana_nilai_sumatif_id = RencanaNilaiSumatif::where('pembelajaran_id', $pembelajaran->id)->get('id');
-                    // $nilai_sumatif_terbaik = NilaiSumatif::whereIn('rencana_nilai_sumatif_id', $rencana_nilai_sumatif_id)->where('anggota_kelas_id', $nilai_siswa->anggota_kelas_id)->orderBy('nilai', 'DESC')->first();
-                    // $rencana_nilai_sumatif_terbaik_id = RencanaNilaiSumatif::findorfail($nilai_sumatif_terbaik->rencana_nilai_sumatif_id);
-                    // $cp_sumatif_terbaik = CapaianPembelajaran::findorfail($rencana_nilai_sumatif_terbaik_id->capaian_pembelajaran_id);
-
-                    // $nilai_siswa->deskripsi_sumatif = $cp_sumatif_terbaik->ringkasan_cp;
-
-                    // $rencana_nilai_formatif_id = RencanaNilaiFormatif::where('pembelajaran_id', $pembelajaran->id)->get('id');
-                    // $nilai_formatif_terbaik = NilaiFormatif::whereIn('rencana_nilai_formatif_id', $rencana_nilai_formatif_id)->where('anggota_kelas_id', $nilai_siswa->anggota_kelas_id)->orderBy('nilai', 'DESC')->first();
-                    // $rencana_nilai_formatif_terbaik = RencanaNilaiFormatif::findorfail($nilai_formatif_terbaik->rencana_nilai_formatif_id);
-                    // $cp_formatif_terbaik = CapaianPembelajaran::findorfail($rencana_nilai_formatif_terbaik->capaian_pembelajaran_id);
-
-                    // $nilai_siswa->deskripsi_formatif = $cp_formatif_terbaik->ringkasan_cp;
 
                     $nilai_siswa->deskripsi_nilai_siswa = KmDeskripsiNilaiSiswa::where('pembelajaran_id', $pembelajaran->id)->where('km_nilai_akhir_raport_id', $nilai_siswa->id)->first();
-
-
-                    // if($nilai_siswa->deskripsi_nilai_siswa == null) 
-                    // {
-                    //     $nilai_siswa->deskripsi_nilai_siswa = 
-                    // }
                 }
             }
-            return view('guru.km.prosesdeskripsi.create', compact('title', 'data_pembelajaran', 'pembelajaran', 'data_nilai_siswa', 'term'));
+            return view('guru.km.prosesdeskripsi.create', compact('title', 'data_pembelajaran', 'pembelajaran', 'data_nilai_siswa', 'term', 'semester'));
         }
     }
 

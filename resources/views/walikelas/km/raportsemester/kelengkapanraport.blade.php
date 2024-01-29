@@ -665,7 +665,11 @@
             <table class="footer-table" style="width: 100%; border-collapse: collapse; margin-top: 10pt; padding: 10 48pt 0 48pt;">
                 <tr>
                     <td style="text-align: left; vertical-align: middle; display: inline-block; border: 1px solid black; padding: 2pt">
-                        <img src="{{ asset('/storage/'. $anggota_kelas->siswa->pas_photo) }}" alt="Pas Photo">
+                        @if($anggota_kelas->siswa->pas_photo != null)
+                            <img src="{{ asset('/storage/'. $anggota_kelas->siswa->pas_photo) }}" alt="4x3">
+                        @else 
+                            <img src="{{ asset('/dist/img/4x3.png')}}" alt="4x3">
+                        @endif
                     </td>
                     <td  style=" text-align: center; vertical-align: middle; line-height: 1.3; padding-right: 160pt">
                         <p style="font-size: 8pt">

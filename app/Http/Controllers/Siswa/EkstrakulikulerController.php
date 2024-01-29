@@ -30,6 +30,8 @@ class EkstrakulikulerController extends Controller
         $data_id_ekstrakulikuler = Ekstrakulikuler::where('tapel_id', $tapel->id)->get('id');
 
         $anggota_kelas = AnggotaKelas::whereIn('kelas_id', $data_id_kelas)->where('siswa_id', $siswa->id)->first();
+
+
         if (is_null($anggota_kelas)) {
             return back()->with('toast_warning', 'Tidak ada ekstrakulikuler yang diikuti');
         } else {

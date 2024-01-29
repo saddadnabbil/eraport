@@ -23,7 +23,8 @@ class MapelImport implements ToCollection
                 Mapel::create([
                     'tapel_id' => $tapel->id,
                     'nama_mapel' => $row[1],
-                    'ringkasan_mapel' => $row[2]
+                    'nama_mapel_indonesian' => $row[2],
+                    'ringkasan_mapel' => $row[3]
                 ]);
             }
         }

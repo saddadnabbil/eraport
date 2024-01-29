@@ -31,11 +31,20 @@
             <div class="card-header">
               <h3 class="card-title"><i class="fas fa-file-alt"></i> {{$title}}</h3>
             </div>
-
             <div class="card-body">
               <div class="callout callout-info">
                 <form action="{{ route('prosesdeskripsikmadmin.create') }}" method="GET">
                   @csrf
+                  <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Semester</label>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control" value="{{$semester->id}}" disabled>
+                    </div>
+                    <label class="col-sm-2 col-form-label">Term</label>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control" value="{{$term->term}}" disabled>
+                    </div>
+                  </div>
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Mata Pelajaran</label>
                     <div class="col-sm-10">
@@ -60,6 +69,7 @@
                 <form action="{{ route('prosesdeskripsikmadmin.store') }}" method="POST">
                   @csrf
                   <input type="hidden" name="term_id" value="{{$term->id}}">
+                  <input type="hidden" name="semester_id" value="{{$semester->id}}">
                   <div class="card-body">
                     <div class="table-responsive">
                       <table class="table table-bordered table-striped">

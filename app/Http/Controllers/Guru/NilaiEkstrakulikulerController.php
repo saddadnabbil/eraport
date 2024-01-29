@@ -60,7 +60,7 @@ class NilaiEkstrakulikulerController extends Controller
             $id_anggota_kelas_dipilih = AnggotaKelas::join('siswa', 'siswa.id', '=', 'anggota_kelas.siswa_id')
                 ->where('anggota_kelas.kelas_id', $request->kelas_id)
                 ->whereIn('anggota_kelas.id', $id_all_anggota_ekstra)
-                ->where('siswa.status', 'di siswa')
+                ->where('siswa.status', 1)
                 ->get('anggota_kelas.id');
 
             $id_kelas = AnggotaKelas::whereIn('id', $id_all_anggota_ekstra)->get('kelas_id');

@@ -40,8 +40,9 @@
                     <label class="col-sm-3 col-form-label">Semester</label>
                     <div class="col-sm-9">
                       <select class="form-control" name="semester_id" style="width: 100%;" required onchange="this.form.submit()">
-                          <option value="1" @if( $tapel->semester_id  == '1' ) selected @endif>1</option>
-                          <option value="2" @if( $tapel->semester_id  == '2' ) selected @endif>2</option>
+                          <option value="" selected>-- Pilih Semester --</option>
+                          <option value="1">1</option>
+                          <option value="2">2</option>
                       </select>
                     </div>
                   </div>

@@ -38,6 +38,16 @@
                 <form action="{{ route('prosesdeskripsikm.create') }}" method="GET">
                   @csrf
                   <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Semester</label>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control" value="{{$semester->id}}" disabled>
+                    </div>
+                    <label class="col-sm-2 col-form-label">Term</label>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control" value="{{$term->term}}" disabled>
+                    </div>
+                  </div>
+                  <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Mata Pelajaran</label>
                     <div class="col-sm-10">
                       <select class="form-control select2" name="pembelajaran_id" style="width: 100%;" required onchange="this.form.submit();">

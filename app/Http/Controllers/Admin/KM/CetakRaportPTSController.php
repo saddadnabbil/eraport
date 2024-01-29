@@ -47,6 +47,7 @@ class CetakRaportPTSController extends Controller
         $kelas = Kelas::findorfail($request->kelas_id);
         $tapel = Tapel::where('status', 1)->first();
         $semester = Semester::findorfail($request->semester_id);
+        $term = Term::findorfail($request->term_id);
 
         $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
         $data_anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
@@ -58,7 +59,7 @@ class CetakRaportPTSController extends Controller
         $paper_size = 'A4';
         $orientation = 'potrait';
 
-        return view('admin.km.raportpts.index', compact('title', 'kelas', 'data_kelas', 'data_anggota_kelas', 'paper_size', 'orientation', 'semester'));
+        return view('admin.km.raportpts.index', compact('title', 'kelas', 'data_kelas', 'data_anggota_kelas', 'paper_size', 'orientation', 'semester', 'term'));
     }
 
     /**
@@ -79,9 +80,9 @@ class CetakRaportPTSController extends Controller
         $data_id_mapel_semester_ini = Mapel::where('tapel_id', $tapel->id)->get('id');
 
         $data_id_pembelajaran = Pembelajaran::where('kelas_id', $anggota_kelas->kelas_id)->get('id');
-        $data_nilai = KmNilaiAkhirRaport::where('term_id', $term->id)->where('semester_id', $semester->id)->whereIn('pembelajaran_id', $data_id_pembelajaran)->where('anggota_kelas_id', $anggota_kelas->id)->get();
+        $data_nilai = KmNilaiAkhirRaport::where('term_id', $term->id)->where('semester_id', $semester->id)->where('semester_id', $semester->id)->whereIn('pembelajaran_id', $data_id_pembelajaran)->where('anggota_kelas_id', $anggota_kelas->id)->get();
 
-        $data_nilai_term_1 = KmNilaiAkhirRaport::where('term_id', 1)->whereIn('pembelajaran_id', $data_id_pembelajaran)->where('anggota_kelas_id', $anggota_kelas->id)->get();
+        $data_nilai_term_1 = KmNilaiAkhirRaport::where('term_id', 1)->where('semester_id', $semester->id)->whereIn('pembelajaran_id', $data_id_pembelajaran)->where('anggota_kelas_id', $anggota_kelas->id)->get();
 
         $nilai_akhir_term_1 = [];
         foreach ($data_nilai_term_1 as $nilai_term_1) {
@@ -151,7 +152,7 @@ class CetakRaportPTSController extends Controller
         $kehadiran_siswa = KehadiranSiswa::where('anggota_kelas_id', $anggota_kelas->id)->first();
         $catatan_wali_kelas = CatatanWaliKelas::where('anggota_kelas_id', $anggota_kelas->id)->first();
 
-        $raport = PDF::loadview('walikelas.km.raportpts.raport', compact('title', 'sekolah', 'anggota_kelas', 'data_nilai', 'data_anggota_ekstrakulikuler', 'kehadiran_siswa', 'catatan_wali_kelas', 'nilai_akhir_total'))->setPaper($request->paper_size, $request->orientation);
+        $raport = PDF::loadview('walikelas.km.raportpts.raport', compact('title', 'sekolah', 'anggota_kelas', 'data_nilai', 'data_anggota_ekstrakulikuler', 'kehadiran_siswa', 'catatan_wali_kelas', 'nilai_akhir_total', 'semester', 'term'))->setPaper($request->paper_size, $request->orientation);
         return $raport->stream('RAPORT PTS ' . $anggota_kelas->siswa->nama_lengkap . ' (' . $anggota_kelas->kelas->nama_kelas . ').pdf');
     }
 }
