@@ -187,6 +187,10 @@ class KelasController extends Controller
             return back()->with('toast_warning', 'Tidak ada siswa yang dipilih');
         } else {
             $siswa_id = $request->input('siswa_id');
+            $kelas = Kelas::find($request->input('kelas_id'));
+            $tingkatan = Tingkatan::find($kelas->tingkatan_id);
+            $jurusan = Jurusan::find($kelas->jurusan_id);
+
             for ($count = 0; $count < count($siswa_id); $count++) {
                 $data = array(
                     'siswa_id' => $siswa_id[$count],
@@ -196,10 +200,36 @@ class KelasController extends Controller
                     'updated_at'  => Carbon::now(),
                 );
                 $insert_data[] = $data;
+
+                $siswa = Siswa::find($siswa_id[$count]);
+                if ($siswa->kelas_masuk == null && $siswa->tahun_masuk == null && $siswa->semester_masuk == null) {
+                    $siswa->update([
+                        'kelas_masuk' => $kelas->nama_kelas,
+                        'tahun_masuk' => Carbon::now()->year,
+                        'semester_masuk' => $tingkatan->semester_id,
+                    ]);
+                }
             }
 
             AnggotaKelas::insert($insert_data);
-            Siswa::whereIn('id', $siswa_id)->update(['kelas_id' => $request->input('kelas_id')]);
+            Siswa::whereIn('id', $siswa_id)->update([
+                'kelas_id' => $request->input('kelas_id'),
+                'tingkatan_id' => $tingkatan->id,
+                'jurusan_id' => $jurusan->id,
+            ]);
+
+
+            for ($count = 0; $count < count($siswa_id); $count++) {
+                $siswa = Siswa::whereIn('id', $siswa_id)->first();
+                if ($siswa->kelas_masuk === null && $siswa->tahun_masuk === null && $siswa->semester_masuk === null) {
+                    $siswa->update([
+                        'kelas_masuk' => $kelas->nama_kelas,
+                        'tahun_masuk' => Carbon::now()->year,
+                        'semester_masuk' => $tingkatan->semester_id
+                    ]);
+                }
+            }
+
             return back()->with('toast_success', 'Anggota kelas berhasil ditambahkan');
         }
     }
@@ -210,11 +240,13 @@ class KelasController extends Controller
             $anggota_kelas = AnggotaKelas::findorfail($id);
             $siswa = Siswa::findorfail($anggota_kelas->siswa_id);
 
-            $update_kelas_id = [
+            $update = [
                 'kelas_id' => null,
+                'tingkatan_id' => null,
+                'jurusan_id' => null,
             ];
+            $siswa->update($update);
             $anggota_kelas->delete();
-            $siswa->update($update_kelas_id);
             return back()->with('toast_success', 'Anggota kelas berhasil dihapus');
         } catch (\Throwable $th) {
             return back()->with('toast_error', 'Anggota kelas tidak dapat dihapus');

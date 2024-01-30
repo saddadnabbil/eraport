@@ -77,8 +77,8 @@ class CreateSiswasTable extends Migration
             $table->string('pekerjaan_ibu', 100)->nullable();
             $table->string('penghasil_ibu', 100)->nullable();
             // parent information guardian
-            $table->string('nik_wali', 16);
-            $table->string('nama_wali', 100);
+            $table->string('nik_wali', 16)->nullable();;
+            $table->string('nama_wali', 100)->nullable();;
             $table->string('tempat_lahir_wali', 100)->nullable();
             $table->date('tanggal_lahir_wali', 10)->nullable();
             $table->string('alamat_wali', 100)->nullable();
@@ -90,8 +90,8 @@ class CreateSiswasTable extends Migration
             $table->string('penghasil_wali', 100)->nullable();
 
             // student medical condition information
-            $table->unsignedInteger('tinggi_badan')->nullable();
-            $table->unsignedInteger('berat_badan')->nullable();
+            $table->string('tinggi_badan')->nullable();
+            $table->string('berat_badan')->nullable();
             $table->string('spesial_treatment')->nullable();
             $table->string('note_kesehatan')->nullable();
             $table->string('file_document_kesehatan')->nullable();

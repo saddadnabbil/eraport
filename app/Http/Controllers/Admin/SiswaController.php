@@ -516,6 +516,7 @@ class SiswaController extends Controller
             Excel::import(new SiswaImport, $request->file('file_import'));
             return back()->with('toast_success', 'Data siswa berhasil diimport');
         } catch (\Throwable $th) {
+            dd($th->getMessage()); // Output the error message for debugging
             return back()->with('toast_error', 'Maaf, format data tidak sesuai');
         }
     }

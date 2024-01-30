@@ -138,36 +138,37 @@
                     @foreach($anggota_kelas as $anggota)
                     <?php $no++; ?>
                     <tr>
-                      <td>{{$no}}</td>
-                      <td>{{$anggota->siswa->nis}}</td>
-                      <td>{{$anggota->siswa->nisn}}</td>
-                      <td>{{$anggota->siswa->nama_lengkap}}</td>
-                      <td>{{$anggota->siswa->tanggal_lahir}}</td>
-                      <td>{{$anggota->siswa->jenis_kelamin}}</td>
-                      <td>
-                        @if ($anggota->pendaftaran == 1)
-                        Siswa Baru
-                        @elseif ($anggota->pendaftaran == 2)
-                        Pindahan
-                        @elseif ($anggota->pendaftaran == 3)
-                        Naik Kelas
-                        @elseif ($anggota->pendaftaran == 4)
-                        Naik Kelas
-                        @elseif ($anggota->pendaftaran == 5)
-                        Mengulang
-                        @endif
-                      </td>
-                      <td>
-                        <form action="{{ route('kelas.anggota.delete', $anggota->id) }}" method="POST">
-                          @csrf
-                          @method('DELETE')
-                          <button type="submit" class="btn btn-danger btn-sm mt-1" onclick="return confirm('Hapus {{$title}} ?')">
-                            <i class="fas fa-trash-alt"></i>
-                          </button>
-                        </form>
-                      </td>
-                    </tr>
-
+                        <td>{{$no}}</td>
+                        <td>{{$anggota->siswa->nis}}</td>
+                        <td>{{$anggota->siswa->nisn}}</td>
+                        <td><a class="text-decoration-none text-dark" href="{{ route('siswa.show', $anggota->siswa->id) }}">{{$anggota->siswa->nama_lengkap}}</a></td>
+                        <td>{{ $anggota->siswa->tanggal_lahir->format('d-m-Y') }}</td>
+                        <td>{{$anggota->siswa->jenis_kelamin}}</td>
+                        <td>
+                          @if ($anggota->pendaftaran == 1)
+                          Siswa Baru
+                          @elseif ($anggota->pendaftaran == 2)
+                          Pindahan
+                          @elseif ($anggota->pendaftaran == 3)
+                          Naik Kelas
+                          @elseif ($anggota->pendaftaran == 4)
+                          Naik Kelas
+                          @elseif ($anggota->pendaftaran == 5)
+                          Mengulang
+                          @endif
+                        </td>
+                        <td>
+                          
+                          <form action="{{ route('kelas.anggota.delete', $anggota->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <a href="{{route('siswa.show', $anggota->siswa->id)}}" class="btn btn-warning btn-sm mt-1"><i class="fas fa-eye"></i></a>
+                            <button type="submit" class="btn btn-danger btn-sm mt-1" onclick="return confirm('Hapus {{$title}} ?')">
+                              <i class="fas fa-trash-alt"></i>
+                            </button>
+                          </form>
+                        </td>
+                      </tr>
                     @endforeach
                   </tbody>
                 </table>

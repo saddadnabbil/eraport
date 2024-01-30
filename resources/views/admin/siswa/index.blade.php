@@ -401,11 +401,11 @@
                               <div class="form-group row">
                                 <label for="tinggi_badan" class="col-sm-3 col-form-label">Tinggi Badan</label>
                                 <div class="col-sm-3">
-                                  <input type="number" class="form-control" id="tinggi_badan" name="tinggi_badan" placeholder="Tinggi Badan" value="{{old('tinggi_badan')}}">
+                                  <input type="text" class="form-control" id="tinggi_badan" name="tinggi_badan" placeholder="Tinggi Badan" value="{{old('tinggi_badan')}}">
                                 </div>
                                 <label for="berat_badan" class="col-sm-2 col-form-label">Berat Badan</label>
                                 <div class="col-sm-4">
-                                  <input type="number" class="form-control" id="berat_badan" name="berat_badan" placeholder="Berat Badan" value="{{old('berat_badan')}}">
+                                  <input type="text" class="form-control" id="berat_badan" name="berat_badan" placeholder="Berat Badan" value="{{old('berat_badan')}}">
                                 </div>
                               </div>
                               <div class="form-group row">

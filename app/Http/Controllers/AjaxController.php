@@ -6,13 +6,14 @@ use App\Guru;
 use App\Kelas;
 use App\Mapel;
 use App\Tapel;
+use App\Jurusan;
+use App\Silabus;
 use App\AnggotaKelas;
 use App\Pembelajaran;
 use Illuminate\Http\Request;
 use App\AnggotaEkstrakulikuler;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
-use App\Jurusan;
-use App\Silabus;
 use Illuminate\Support\Facades\Auth;
 
 class AjaxController extends Controller
@@ -35,10 +36,12 @@ class AjaxController extends Controller
     {
         $tapel = Tapel::where('status', 1)->first();
         $data_kelas = Kelas::where('tingkatan_id', $id)->where('tapel_id', $tapel->id)->get();
-        foreach ($data_kelas as $kelas) {
-            $data_jurusan = Jurusan::where('id', $kelas->jurusan_id)->get();
-        }
 
+        $data_jurusan = [];
+
+        foreach ($data_kelas as $kelas) {
+            $data_jurusan[] = Jurusan::where('id', $kelas->jurusan_id)->first();
+        }
 
         return json_encode(['data' => $data_kelas, 'data_jurusan' => $data_jurusan], true);
     }
