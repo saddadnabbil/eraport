@@ -1,30 +1,41 @@
 @include('layouts.main.header')
 @include('layouts.sidebar.admin')
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <div class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1 class="m-0 text-dark">{{$title}}</h1>
-        </div><!-- /.col -->
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item "><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active">{{$title}}</li>
-          </ol>
-        </div><!-- /.col -->
-      </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
+<div class="page-wrapper">
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <div class="page-breadcrumb">
+      <div class="row">
+          <div class="col-7 align-self-center">
+              <h4 class="page-title text-truncate text-dark font-weight-medium mb-1">{{$title}}</h4>
+              <div class="d-flex align-items-center">
+                  <nav aria-label="breadcrumb">
+                      <ol class="breadcrumb m-0 p-0">
+                          <li class="breadcrumb-item text-muted active" aria-current="page"><a href="{{ route('dashboard') }}">Dashboard</a></li>
+                          <li class="breadcrumb-item text-muted" aria-current="page">{{$title}}</li>
+                      </ol>
+                  </nav>
+              </div>
+          </div>
+          <div class="col-5 align-self-center">
+              <div class="customize-input float-end">
+                  <select class="custom-select custom-select-set form-control bg-white border-0 custom-shadow custom-radius">
+                      <option selected>Aug 23</option>
+                      <option value="1">July 23</option>
+                      <option value="2">Jun 23</option>
+                  </select>
+              </div>
+          </div>
+      </div>
   </div>
-  <!-- /.content-header -->
-
-  <!-- Main content -->
-  <section class="content">
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
     <div class="container-fluid">
-      <!-- ./row -->
       <div class="row">
         <div class="col-12">
           <div class="card">
@@ -221,12 +232,7 @@
         </div>
 
       </div>
-      <!-- /.row -->
     </div>
-    <!--/. container-fluid -->
-  </section>
-  <!-- /.content -->
 </div>
-<!-- /.content-wrapper -->
 
 @include('layouts.main.footer')

@@ -1,49 +1,53 @@
 @include('layouts.auth.header')
-
-<body class="hold-transition login-page">
-  <div class="login-box">
-    <div class="login-logo">
-      <img src="/assets/dist/img/logo.png" alt="Logo" class="brand-image img-circle">
-      <p class="login-box-msg">{{ env('APP_NAME') }}</p>
-    </div>
-    <!-- /.login-logo -->
-    <div class="card">
-      <div class="card-body login-card-body">
-        <p class="login-box-msg">LOGIN</p>
-
-        <form method="post" action="{{ route('login') }}">
-          @csrf
-          <div class="input-group mb-3">
-            <input type="text" class="form-control" name="username" placeholder="Username">
-            <div class="input-group-append">
-              <div class="input-group-text">
-                <span class="fas fa-user"></span>
+        <!-- ============================================================== -->
+        <!-- Login box.scss -->
+        <!-- ============================================================== -->
+        <div class="auth-wrapper d-flex no-block justify-content-center align-items-center position-relative" style="background:url({{ asset('assets/images/big/auth-bg.jpg') }}) no-repeat center center;">
+          <div class="auth-box row">
+              <div class="col-lg-7 col-md-5 modal-bg-img" style="background-image: url({{ asset('assets/images/img-login-upacara.png') }});">
               </div>
+                <div class="col-lg-5 col-md-7 bg-white">
+                    <div class="p-3">
+                        <div class="text-center">
+                            <img src="{{ asset('assets/images/logo-gis-circle.png') }}" alt="wrapkit">
+                        </div>
+                        <h2 class="mt-3 text-center">Sign In</h2>
+                        <p class="text-center">Enter your username and password.</p>
+                        
+                          <form method="post" action="{{ route('login') }}">
+                            @csrf
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group mb-3">
+                                        <label class="form-label text-dark" for="uname">Username</label>
+                                        <input class="form-control" id="uname" name="username" type="text"
+                                            placeholder="enter your username">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group mb-3">
+                                        <label class="form-label text-dark" for="pwd">Password</label>
+                                        <input class="form-control" id="pwd" name="password" type="password"
+                                            placeholder="enter your password">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                  <div class="form-check mb-3">
+                                    <input type="checkbox"  name="remember" class="form-check-input" id="exampleCheck2" style="border: 2px solid #4F5467;">
+                                    <label class="form-check-label" for="exampleCheck2">Remember me</label>
+                                  </div> 
+                                </div>
+                                <div class="col-lg-12 text-center">
+                                    <button type="submit" class="btn w-100 btn-dark">Sign In</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="input-group mb-3">
-            <input type="password" class="form-control" name="password" placeholder="Password">
-            <div class="input-group-append">
-              <div class="input-group-text">
-                <span class="fas fa-key"></span>
-              </div>
-            </div>
-          </div>
-          <div class="form-check mt-2 mb-2">
-            <input type="checkbox"  name="remember" class="form-check-input" id="exampleCheck2">
-            <label class="form-check-label" for="exampleCheck2">Remember me</label>
-          </div>
-          <div class="row mb-2">
-            <div class="col-12">
-              <button type="submit" class="btn btn-primary btn-block">LOGIN</button>
-            </div>
-          </div>
-        </form>
-
+        </div>
+        <!-- ============================================================== -->
+        <!-- Login box.scss -->
+        <!-- ============================================================== -->
       </div>
-      <!-- /.login-card-body -->
-    </div>
-  </div>
-  <!-- /.login-box -->
-
   @include('layouts.auth.footer')

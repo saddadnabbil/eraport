@@ -1,117 +1,148 @@
 <!DOCTYPE html>
-<html lang="en">
+<html dir="ltr" lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-
-  <title>{{$title}} | {{ env('APP_NAME') }} </title>
-
-  <link rel="icon" type="image/png" sizes="16x16" href="{{asset('assets/dist/img/logo.png')}}">
-  
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="/assets/plugins/fontawesome-free/css/all.min.css">
-  <!-- pace-progress -->
-  <link rel="stylesheet" href="/assets/plugins/pace-progress/themes/black/pace-theme-flat-top.css">
-  <!-- overlayScrollbars -->
-  <link rel="stylesheet" href="/assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
-  <!-- Select2 -->
-  <link rel="stylesheet" href="/assets/plugins/select2/css/select2.min.css">
-  <link rel="stylesheet" href="/assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
-  <!-- Bootstrap4 Duallistbox -->
-  <link rel="stylesheet" href="/assets/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="/assets/dist/css/adminlte.min.css">
-  <!-- summernote -->
-  <link rel="stylesheet" href="/assets/plugins/summernote/summernote-bs4.css">
-  <!-- DataTables -->
-  <link rel="stylesheet" href="/assets/plugins/datatables-bs4/css/dataTables.bootstrap4.css">
-  <!-- Custom Css -->
-  <link rel="stylesheet" href="/assets/dist/css/custom.css">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/images/favicon.png') }}" />
+    <title>{{$title}} | {{ env('APP_NAME') }}</title>
+    <!-- Custom CSS -->
+    <link href="{{ asset('assets/extra-libs/c3/c3.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/libs/chartist/dist/chartist.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css') }}" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link href="{{ asset('dist/css/style.min.css') }}" rel="stylesheet" />
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
 
-<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed pace-primary">
-  <div class="wrapper">
-    <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-      <!-- Left navbar links -->
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
-        </li>
-
-        <div class="d-none d-lg-flex align-items-center mr-4">
-          <a href="{{Auth::user()->role == 1 ? route('tapel.index') : '#'}}" class="btn btn-primary btn-sm text-left" style="line-height: 1">
-            @php
-              $tapel = App\Tapel::where('status', 1)->first();
-              // dd($tapel);
-              $term = App\Term::find($tapel->term_id);
-
-              $pg = App\Tingkatan::where('id', 1)->first();
-              $kg = App\Tingkatan::where('id', 2)->first();
-              $ps = App\Tingkatan::where('id', 3)->first();
-              $jhs = App\Tingkatan::where('id', 4)->first();
-              $shs = App\Tingkatan::where('id', 5)->first();
-            @endphp 
-             
-             School Year {{ str_replace('-', ' / ', $tapel->tahun_pelajaran) }} - (Semester PS {{$ps->semester_id . '-' . $ps->term_id}}) - (Semester JHS {{$jhs->semester_id . '-' . $jhs->term_id}}) - (Semester SHS {{$shs->semester_id . '-' . $shs->term_id}}) - Term {{$term->id }}
-          </a>
+<body>
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    {{-- <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
         </div>
-        <!-- End of Flex container -->
-      </ul>
+    </div> --}}
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+        data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <header class="topbar" data-navbarbg="skin6">
+            <nav class="navbar top-navbar navbar-expand-lg">
+                <div class="navbar-header" data-logobg="skin6">
+                    <!-- This is for the sidebar toggle which is visible on mobile only -->
+                    <a class="nav-toggler waves-effect waves-light d-block d-lg-none" href="javascript:void(0)"><i
+                            class="ti-menu ti-close"></i></a>
+                    <!-- ============================================================== -->
+                    <!-- Logo -->
+                    <!-- ============================================================== -->
+                    <div class="navbar-brand">
+                        <!-- Logo icon -->
+                        <a href="index.html">
+                            <img src="{{ asset('assets/images/logo-gis.png') }}" alt="" class="img-fluid" />
+                        </a>
+                    </div>
+                    <!-- ============================================================== -->
+                    <!-- End Logo -->
+                    <!-- ============================================================== -->
+                    <!-- ============================================================== -->
+                    <!-- Toggle which is visible on mobile only -->
+                    <!-- ============================================================== -->
+                    <a class="topbartoggler d-block d-lg-none waves-effect waves-light" href="javascript:void(0)"
+                        data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i
+                            class="ti-more"></i></a>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Logo -->
+                <!-- ============================================================== -->
+                <div class="navbar-collapse collapse" id="navbarSupportedContent">
+                    <!-- ============================================================== -->
+                    <!-- toggle and nav items -->
+                    <!-- ============================================================== -->
 
-      <!-- Right navbar links -->
-      <ul class="navbar-nav ml-auto">
-        <!-- Notifications Dropdown Menu -->
-        <li class="nav-item dropdown pr-2">
-          <!-- User Block  -->
-          <a class="user-block" data-toggle="dropdown" href="#">
-            @if (Auth::user()->role == 1)
-            <img class="img-circle" src="/assets/dist/img/avatar/{{Auth::user()->admin->avatar}}" alt="User Image">
-            <span class="username">{{Auth::user()->admin->nama_lengkap}}</span>
-            <span class="description">Administrator</span>
-            @elseif(Auth::user()->role == 2)
-            <img class="img-circle" src="/assets/dist/img/avatar/{{Auth::user()->guru->avatar}}" alt="User Image">
-            <span class="username">{{Auth::user()->guru->nama_lengkap}}</span>
-            <span class="description">{{session()->get('akses_sebagai')}}</span>
-            @else
-            <img class="img-circle" src="/assets/dist/img/avatar/{{Auth::user()->siswa->avatar}}" alt="User Image">
-            <span class="username">{{Auth::user()->siswa->nama_lengkap}}</span>
-            <span class="description">Siswa</span>
-            @endif
-          </a>
-          <!-- End User Block  -->
-
-          <!-- User Dropdown  -->
-          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-            <span class="dropdown-item dropdown-header">Akun Saya</span>
-            <div class="dropdown-divider"></div>
-            <a href="{{ route('profile') }}" class="dropdown-item">
-              <i class="fas fa-user mr-2"></i> Profile
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="{{ route('gantipassword') }}" class="dropdown-item">
-              <i class="fas fa-key mr-2"></i> Ganti Password
-            </a>
-            
-            @if(Auth::user()->role == 2)
-            <div class="dropdown-divider"></div>
-              @if(session()->get('akses_sebagai') == 'Guru Mapel' && session()->get('cek_wali_kelas') == true)
-                <a href="{{ route('akses') }}" class="dropdown-item" onclick="return confirm('Apakah anda yakin akan ganti akses login ?')">
-                  <i class="fas fa-chalkboard-teacher mr-2"></i> Akses Sebagai Wali Kelas
-                </a>
-              @elseif (session()->get('akses_sebagai') == 'Wali Kelas')
-                <a href="{{ route('akses') }}" class="dropdown-item" onclick="return confirm('Apakah anda yakin akan ganti akses login ?')">
-                  <i class="fas fa-chalkboard-teacher mr-2"></i> Akses Sebagai Guru Mapel
-                </a>
-              @endif
-            @endif
-            <div class="dropdown-divider"></div>
-            <a href="{{ route('logout') }}" class="dropdown-item dropdown-footer bg-danger" onclick="return confirm('Apakah anda yakin ingin keluar ?')"><i class="fas fa-sign-out-alt mr-1"></i> Keluar / Logout</a>
-          </div>
-          <!-- End User Dropdown  -->
-        </li>
-      </ul>
-    </nav>
-    <!-- /.navbar -->
+                        <ul class="navbar-nav float-left me-auto ms-3 ps-1">
+                            <div style="padding: 0 15px; margin-left: 1rem;">
+                                <a href="{{Auth::user()->role == 1 ? route('tapel.index') : 'javascript:void(0)'}}" style="line-height: 1">
+                                    <span class="badge bg-success">
+                                    @php
+                                        $tapel = App\Tapel::where('status', 1)->first();
+                                        $term = App\Term::find($tapel->term_id);
+    
+                                        $pg = App\Tingkatan::where('id', 1)->first();
+                                        $kg = App\Tingkatan::where('id', 2)->first();
+                                        $ps = App\Tingkatan::where('id', 3)->first();
+                                        $jhs = App\Tingkatan::where('id', 4)->first();
+                                        $shs = App\Tingkatan::where('id', 5)->first();
+                                        @endphp 
+                                        
+                                        School Year {{ str_replace('-', ' / ', $tapel->tahun_pelajaran) }} - (Semester PS {{$ps->semester_id . '-' . $ps->term_id}}) - (Semester JHS {{$jhs->semester_id . '-' . $jhs->term_id}}) - (Semester SHS {{$shs->semester_id . '-' . $shs->term_id}}) - Term {{$term->id }}
+                                    </span>
+                                </a>
+                            </div>
+                        </ul>
+                    <!-- ============================================================== -->
+                    <!-- Right side toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav float-end">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-bs-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                <img src="{{ asset('assets/images/users/profile-pic.jpg') }}" alt="user"
+                                    class="rounded-circle" width="40" />
+                                <span class="ms-2 d-none d-lg-inline-block"><span>Hello,</span>
+                                    <span class="text-dark">
+                                        @if (Auth::user()->role == 1)
+                                            {{Auth::user()->admin->nama_lengkap}}
+                                        @elseif(Auth::user()->role == 2)
+                                            {{Auth::user()->guru->nama_lengkap}}
+                                        @elseif(Auth::user()->role == 3)
+                                            {{Auth::user()->siswa->nama_lengkap}}
+                                        @endif
+                                        </span>
+                                    <i data-feather="chevron-down" class="svg-icon"></i></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end dropdown-menu-right user-dd animated flipInY">
+                                <a class="dropdown-item" href="{{ route('profile') }}"><i data-feather="user"
+                                        class="svg-icon me-2 ms-1"></i> My
+                                    Profile</a>
+                                <a class="dropdown-item" href="{{ route('gantipassword') }}"><i data-feather="settings"
+                                        class="svg-icon me-2 ms-1"></i>
+                                    Change Password</a>
+                                <div class="dropdown-divider"></div>
+                                <a 
+                                class="dropdown-item text-danger text-center" 
+                                href="{{ route('logout') }}" class="nav-link"
+                                aria-expanded="false"
+                                onclick="return confirm('Apakah anda yakin ingin keluar ?')"
+                                ><i data-feather="power"
+                                        class="svg-icon me-2 ms-1 text-danger"></i>
+                                    Logout</a>
+                            </div>
+                        </li>
+                        <!-- ============================================================== -->
+                        <!-- User profile and search -->
+                        <!-- ============================================================== -->
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
