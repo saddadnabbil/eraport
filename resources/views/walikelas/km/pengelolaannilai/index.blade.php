@@ -56,7 +56,7 @@
                         <td>{{$anggota_kelas->siswa->nama_lengkap}}</td>
                         <td class="text-center">{{$anggota_kelas->siswa->jenis_kelamin}}</td>
                         <td class="text-center">
-                          <button type="button" class="btn btn-primary btn-sm mt-1" data-toggle="modal" data-target="#modal-show{{$anggota_kelas->id}}">
+                          <button type="button" class="btn btn-primary btn-sm mt-1" data-bs-toggle="modal" data-bs-target="#modal-show{{$anggota_kelas->id}}">
                             <i class="fas fa-eye"></i> Lihat Nilai
                           </button>
 
@@ -66,8 +66,8 @@
                               <div class="modal-content">
                                 <div class="modal-header">
                                   <h5 class="modal-title">Nilai Akhir Semester Siswa</h5>
-                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
+                                  
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                                   </button>
                                 </div>
                                 <div class="modal-body">

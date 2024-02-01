@@ -1,5 +1,7 @@
-@include('layouts.main.header')
-@include('layouts.sidebar.admin')
+@extends('layouts.main.header')
+@section('sidebar')
+  @include('layouts.sidebar.admin')
+@endsection
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -31,7 +33,7 @@
             <div class="card-header">
               <h3 class="card-title"><i class="fas fa-book-reader"></i> {{$title}}</h3>
               <div class="card-tools">
-                <button type="button" class="btn btn-tool btn-sm" data-toggle="modal" data-target="#modal-tambah">
+                <button type="button" class="btn btn-tool btn-sm" data-bs-toggle="modal" data-bs-target="#modal-tambah">
                   <i class="fas fa-plus"></i>
                 </button>
               </div>
@@ -42,9 +44,7 @@
                 <div class="modal-content">
                   <div class="modal-header">
                     <h5 class="modal-title">Tambah {{$title}}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                   </div>
                   <form action="{{ route('ekstrakulikuler.store') }}" method="POST">
                     @csrf
@@ -77,7 +77,7 @@
                       </div>
                     </div>
                     <div class="modal-footer justify-content-end">
-                      <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                      <button type="button" class="btn btn-default" data-bs-dismiss="modal">Batal</button>
                       <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                   </form>
@@ -123,7 +123,7 @@
                         <form action="{{ route('ekstrakulikuler.destroy', $ekstrakulikuler->id) }}" method="POST">
                           @csrf
                           @method('DELETE')
-                          <button type="button" class="btn btn-warning btn-sm mt-1" data-toggle="modal" data-target="#modal-edit{{$ekstrakulikuler->id}}">
+                          <button type="button" class="btn btn-warning btn-sm mt-1" data-bs-toggle="modal" data-bs-target="#modal-edit{{$ekstrakulikuler->id}}">
                             <i class="fas fa-pencil-alt"></i>
                           </button>
                           <button type="submit" class="btn btn-danger btn-sm mt-1" onclick="return confirm('Hapus {{$title}} ?')">
@@ -139,9 +139,7 @@
                         <div class="modal-content">
                           <div class="modal-header">
                             <h5 class="modal-title">Edit {{$title}}</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                           </div>
                           <form action="{{ route('ekstrakulikuler.update', $ekstrakulikuler->id) }}" method="POST">
                             {{ method_field('PATCH') }}
@@ -168,7 +166,7 @@
                               </div>
                             </div>
                             <div class="modal-footer justify-content-end">
-                              <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                              <button type="button" class="btn btn-default" data-bs-dismiss="modal">Batal</button>
                               <button type="submit" class="btn btn-primary">Simpan</button>
                             </div>
                           </form>

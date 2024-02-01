@@ -1,5 +1,7 @@
-@include('layouts.main.header')
-@include('layouts.sidebar.admin')
+@extends('layouts.main.header')
+@section('sidebar')
+  @include('layouts.sidebar.admin')
+@endsection
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -86,16 +88,16 @@
               
               <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item">
-                  <a class="nav-link active text-dark" id="panel1-tab" data-toggle="tab" href="#panel1" role="tab" aria-controls="panel1" aria-selected="true">Student</a>
+                  <a class="nav-link active text-dark" id="panel1-tab" data-bs-target="tab" href="#panel1" role="tab" aria-controls="panel1" aria-selected="true">Student</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link text-dark" id="panel2-tab" data-toggle="tab" href="#panel2" role="tab" aria-controls="panel2" aria-selected="false">Father</a>
+                  <a class="nav-link text-dark" id="panel2-tab" data-bs-target="tab" href="#panel2" role="tab" aria-controls="panel2" aria-selected="false">Father</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link text-dark" id="panel3-tab" data-toggle="tab" href="#panel3" role="tab" aria-controls="panel3" aria-selected="false">Mother</a>
+                  <a class="nav-link text-dark" id="panel3-tab" data-bs-target="tab" href="#panel3" role="tab" aria-controls="panel3" aria-selected="false">Mother</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link text-dark" id="panel4-tab" data-toggle="tab" href="#panel4" role="tab" aria-controls="panel4" aria-selected="false">Guardian</a>
+                  <a class="nav-link text-dark" id="panel4-tab" data-bs-target="tab" href="#panel4" role="tab" aria-controls="panel4" aria-selected="false">Guardian</a>
                 </li>
               </ul>
               <div class="tab-content" id="myTabContent">
@@ -654,9 +656,9 @@
               </div>
 
               <a href="{{ route('siswa.index')}}" class="btn btn-success btn-sm">Kembali</a>
-              <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modal-edit{{$siswa->id}}">Edit</button>
+              <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modal-edit{{$siswa->id}}">Edit</button>
               @if($siswa->status != false && $siswa->user->status != false)
-              <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal-registrasi{{$siswa->id}}" title="Non Active Siswa">
+              <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modal-registrasi{{$siswa->id}}" title="Non Active Siswa">
                 Non Active
               </button>
               @else
@@ -679,8 +681,8 @@
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title">Edit {{$title}}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
+                
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                 </button>
               </div>
               <form action="{{ route('siswa.update', $siswa->id) }}" method="POST" enctype="multipart/form-data">
@@ -689,16 +691,16 @@
                 <div class="modal-body">
                   <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item">
-                      <a class="nav-link active text-dark" id="panel1-tab" data-toggle="tab" href="#panel21" role="tab" aria-controls="panel1" aria-selected="true">Student</a>
+                      <a class="nav-link active text-dark" id="panel1-tab" data-bs-target="tab" href="#panel21" role="tab" aria-controls="panel1" aria-selected="true">Student</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link text-dark" id="panel2-tab" data-toggle="tab" href="#panel22" role="tab" aria-controls="panel2" aria-selected="false">Father</a>
+                      <a class="nav-link text-dark" id="panel2-tab" data-bs-target="tab" href="#panel22" role="tab" aria-controls="panel2" aria-selected="false">Father</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link text-dark" id="panel3-tab" data-toggle="tab" href="#panel23" role="tab" aria-controls="panel3" aria-selected="false">Mother</a>
+                      <a class="nav-link text-dark" id="panel3-tab" data-bs-target="tab" href="#panel23" role="tab" aria-controls="panel3" aria-selected="false">Mother</a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link text-dark" id="panel4-tab" data-toggle="tab" href="#panel24" role="tab" aria-controls="panel4" aria-selected="false">Guardian</a>
+                      <a class="nav-link text-dark" id="panel4-tab" data-bs-target="tab" href="#panel24" role="tab" aria-controls="panel4" aria-selected="false">Guardian</a>
                     </li>
                   </ul>
                   <div class="tab-content" id="myTabContent">
@@ -1431,7 +1433,7 @@
                   </div> --}}
                 </div>
                 <div class="modal-footer justify-content-end">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                  <button type="button" class="btn btn-default" data-bs-dismiss="modal">Batal</button>
                   <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
               </form>
@@ -1447,8 +1449,8 @@
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title">Registrasi Siswa Keluar</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
+                
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                 </button>
               </div>
               <form action="{{ route('siswa.registrasi') }}" method="POST">
@@ -1497,7 +1499,7 @@
                   </div>
                 </div>
                 <div class="modal-footer justify-content-end">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                  <button type="button" class="btn btn-default" data-bs-dismiss="modal">Batal</button>
                   <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
               </form>

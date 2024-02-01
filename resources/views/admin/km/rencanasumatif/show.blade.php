@@ -1,5 +1,7 @@
-@include('layouts.main.header')
-@include('layouts.sidebar.admin')
+@extends('layouts.main.header')
+@section('sidebar')
+  @include('layouts.sidebar.admin')
+@endsection
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -85,7 +87,7 @@
                                   <i class="fas fa-trash-alt"></i>
                               </button>
 
-                              <button type="button" class="btn btn-sm btn-warning mt-1" data-toggle="modal" data-target="#modal-edit{{$rencana_penilaian->id}}">
+                              <button type="button" class="btn btn-sm btn-warning mt-1" data-bs-toggle="modal" data-bs-target="#modal-edit{{$rencana_penilaian->id}}">
                                 <i class="fas fa-pencil-alt"></i>
                               </button>
                           </form>
@@ -99,8 +101,8 @@
                               <div class="modal-content">
                                 <div class="modal-header">
                                   <h5 class="modal-title">Edit {{$title}}</h5>
-                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
+                                  
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                                   </button>
                                 </div>
                                 <div class="modal-body">

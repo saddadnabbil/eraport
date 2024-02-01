@@ -31,10 +31,10 @@
             <div class="card-header">
               <h3 class="card-title"><i class="fas fa-greater-than-equal"></i> {{$title}}</h3>
               <div class="card-tools">
-                <button type="button" class="btn btn-tool btn-sm" data-toggle="modal" data-target="#modal-tambah">
+                <button type="button" class="btn btn-tool btn-sm" data-bs-toggle="modal" data-bs-target="#modal-tambah">
                   <i class="fas fa-plus"></i>
                 </button>
-                <button type="button" class="btn btn-tool btn-sm" data-toggle="modal" data-target="#modal-import">
+                <button type="button" class="btn btn-tool btn-sm" data-bs-toggle="modal" data-bs-target="#modal-import">
                   <i class="fas fa-upload"></i>
                 </button>
               </div>
@@ -46,8 +46,8 @@
                 <div class="modal-content">
                   <div class="modal-header">
                     <h5 class="modal-title">Import {{$title}}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
+                    
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                     </button>
                   </div>
                   <form name="contact-form" action="{{ route('kkmguru.import') }}" method="POST" enctype="multipart/form-data">
@@ -69,7 +69,7 @@
                       </div>
                     </div>
                     <div class="modal-footer justify-content-end">
-                      <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                      <button type="button" class="btn btn-default" data-bs-dismiss="modal">Batal</button>
                       <button type="submit" class="btn btn-primary">Import</button>
                     </div>
                   </form>
@@ -84,8 +84,8 @@
                 <div class="modal-content">
                   <div class="modal-header">
                     <h5 class="modal-title">Tambah {{$title}}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
+                    
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                     </button>
                   </div>
                   <form action="{{ route('kkmguru.store') }}" method="POST">
@@ -117,7 +117,7 @@
                       </div>
                     </div>
                     <div class="modal-footer justify-content-end">
-                      <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                      <button type="button" class="btn btn-default" data-bs-dismiss="modal">Batal</button>
                       <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                   </form>
@@ -160,7 +160,7 @@
                         <form action="{{ route('kkmguru.destroy', $kkm->id) }}" method="POST">
                           @csrf
                           @method('DELETE')
-                          <button type="button" class="btn btn-warning btn-sm mt-1" data-toggle="modal" data-target="#modal-edit{{$kkm->id}}">
+                          <button type="button" class="btn btn-warning btn-sm mt-1" data-bs-toggle="modal" data-bs-target="#modal-edit{{$kkm->id}}">
                             <i class="fas fa-pencil-alt"></i>
                           </button>
                           <button type="submit" class="btn btn-danger btn-sm mt-1" onclick="return confirm('Hapus {{$title}} ?')">
@@ -176,9 +176,7 @@
                         <div class="modal-content">
                           <div class="modal-header">
                             <h5 class="modal-title">Edit {{$title}}</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                           </div>
                           <form action="{{ route('kkmguru.update', $kkm->id) }}" method="POST">
                             {{ method_field('PATCH') }}
@@ -204,7 +202,7 @@
                               </div>
                             </div>
                             <div class="modal-footer justify-content-end">
-                              <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                              <button type="button" class="btn btn-default" data-bs-dismiss="modal">Batal</button>
                               <button type="submit" class="btn btn-primary">Simpan</button>
                             </div>
                           </form>

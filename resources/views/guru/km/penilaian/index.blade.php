@@ -76,31 +76,31 @@
                         @endphp
                         <th rowspan="2" colspan="1" class="text-center" style="vertical-align: middle">No</th>
                         <th rowspan="2" colspan="1" class="text-center" style="vertical-align: middle">Nama Siswa</th>
-                        <th colspan="{{$count_cp_formatif}}" class="text-center" title data-toggle="popover" data-placement="top" data-content="<b>Penilaian Formatif <br> Bobot: 70</br>">Formatif (F)</th>
-                        <th colspan="{{$count_cp_sumatif}}" class="text-center" title data-toggle="popover" data-placement="top"  data-content="<b>Penilaian Sumatif <br> Bobot: 30</b>">Sumatif (S)</th>
+                        <th colspan="{{$count_cp_formatif}}" class="text-center" title data-bs-target="popover" data-placement="top" data-content="<b>Penilaian Formatif <br> Bobot: 70</br>">Formatif (F)</th>
+                        <th colspan="{{$count_cp_sumatif}}" class="text-center" title data-bs-target="popover" data-placement="top"  data-content="<b>Penilaian Sumatif <br> Bobot: 30</b>">Sumatif (S)</th>
                         <th colspan="2" class="text-center">Nilai Raport</th>
                       </tr>
                       <tr>
                         @foreach($rencana_penilaian_data_formatif as $rencana_penilaian_formatif)
                             <input type="hidden" name="rencana_nilai_formatif_id[]" value="{{$rencana_penilaian_formatif['id']}}">
                             <input type="hidden" name="bobot_rencana_nilai_formatif_id[]" value="{{$rencana_penilaian_formatif['bobot']}}">
-                            <th class="text-center" data-toggle="popover" data-placement="right" title data-content="<b>{{$rencana_penilaian_formatif['teknik_penilaian']}}<br> Bobot:{{$rencana_penilaian_formatif['bobot']}}</b><br></b>">
+                            <th class="text-center" data-bs-target="popover" data-placement="right" title data-content="<b>{{$rencana_penilaian_formatif['teknik_penilaian']}}<br> Bobot:{{$rencana_penilaian_formatif['bobot']}}</b><br></b>">
                               (F) {{$rencana_penilaian_formatif['kode_penilaian']}}
                             </th>
                         @endforeach
-                        <th class="text-center red" data-toggle="popover" data-placement="right" data-content="<b>Nilai Akhir Formatif</b>">NA (F)</th>
+                        <th class="text-center red" data-bs-target="popover" data-placement="right" data-content="<b>Nilai Akhir Formatif</b>">NA (F)</th>
 
                         @foreach($rencana_penilaian_data_sumatif as $rencana_penilaian_sumatif)
                             <input type="hidden" name="rencana_nilai_sumatif_id[]" value="{{$rencana_penilaian_sumatif['id']}}">
                             <input type="hidden" name="bobot_rencana_nilai_sumatif_id[]" value="{{$rencana_penilaian_sumatif['bobot']}}">
-                            <th class="text-center" data-toggle="popover" data-placement="right" title data-content="<b>{{$rencana_penilaian_sumatif['teknik_penilaian']}}<br> Bobot:{{$rencana_penilaian_sumatif['bobot']}}</b><br> <b></b> ">
+                            <th class="text-center" data-bs-target="popover" data-placement="right" title data-content="<b>{{$rencana_penilaian_sumatif['teknik_penilaian']}}<br> Bobot:{{$rencana_penilaian_sumatif['bobot']}}</b><br> <b></b> ">
                               (S) {{$rencana_penilaian_sumatif['kode_penilaian']}}
                             </th>
                         @endforeach
-                        <th class="text-center red" data-toggle="popover" data-placement="right" data-content="<b>Nilai Akhir Sumulatif</b>">NA (S)</th>
+                        <th class="text-center red" data-bs-target="popover" data-placement="right" data-content="<b>Nilai Akhir Sumulatif</b>">NA (S)</th>
 
-                        <th class="text-center red" data-toggle="popover" data-placement="right" data-content="<b>Nilai Rapor Akhir<br/>Sesuai Perhitungan Sistem</b>"> Akhir</th>
-                        <th class="text-center" data-toggle="popover" data-placement="right" data-content="<b>Nilai Rapor Akhir<br/>Sesuai Revisi Guru</b> <br/> Jika terdapat nilai pada kolom ini, maka nilai di kolom inilah yang akan digunakan di rapor."> Revisi</th>
+                        <th class="text-center red" data-bs-target="popover" data-placement="right" data-content="<b>Nilai Rapor Akhir<br/>Sesuai Perhitungan Sistem</b>"> Akhir</th>
+                        <th class="text-center" data-bs-target="popover" data-placement="right" data-content="<b>Nilai Rapor Akhir<br/>Sesuai Revisi Guru</b> <br/> Jika terdapat nilai pada kolom ini, maka nilai di kolom inilah yang akan digunakan di rapor."> Revisi</th>
                       </tr>
 
                     </thead>
@@ -197,7 +197,7 @@
 <script>
 
 $(function() {
-    $('[data-toggle="popover"]').popover({
+    $('[data-bs-target="popover"]').popover({
         trigger: 'hover',
         placement: function (popoverEl, targetEl) {
             return $(targetEl).data('placement');

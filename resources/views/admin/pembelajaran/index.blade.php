@@ -1,5 +1,7 @@
-@include('layouts.main.header')
-@include('layouts.sidebar.admin')
+@extends('layouts.main.header')
+@section('sidebar')
+  @include('layouts.sidebar.admin')
+@endsection
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -31,7 +33,7 @@
             <div class="card-header">
               <h3 class="card-title"><i class="fas fa-book-open"></i> {{$title}}</h3>
               <div class="card-tools">
-                <button type="button" class="btn btn-tool btn-sm" data-toggle="modal" data-target="#modal-settings">
+                <button type="button" class="btn btn-tool btn-sm" data-bs-toggle="modal" data-bs-target="#modal-settings">
                   <i class="fas fa-cog"></i>
                 </button>
                 <a href="{{ route('pembelajaran.export') }}" class="btn btn-tool btn-sm">
@@ -46,8 +48,8 @@
                 <div class="modal-content">
                   <div class="modal-header">
                     <h5 class="modal-title">Setting Pembelajaran</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
+                    
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                     </button>
                   </div>
                   <div class="modal-body">
