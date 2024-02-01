@@ -29,7 +29,7 @@
 @include('layouts.partials.sidebar._sidebar-item', [
     'isActive' => request()->routeIs($allowedRoutes),
     'hasArrow' => true,
-    'icon' => 'check-square',
+    'icon' => 'send',
     'itemName' => 'Nilai Akhir',
     'route' => 'javascript:void(0)',
     'subItems' => [

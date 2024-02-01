@@ -9,7 +9,8 @@
     <!-- Bread crumb and right sidebar toggle -->
     <!-- ============================================================== -->
     @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
-        'breadcrumbs' => [
+        'titleBreadCrumb' => $title,
+'breadcrumbs' => [
             [
                 'title' => 'Dashboard',
                 'url' => route('dashboard'),
@@ -62,7 +63,7 @@
                                 <input type="hidden" name="mapel_id[]" value="{{$mapel->id}}">
                               </td>
                               <td>
-                                <select class="form-control" name="kelompok[]" style="width: 100%;" required>
+                                <select class="form-control form-select" name="kelompok[]" style="width: 100%;" required>
                                   <option value="">-- Pilih Kelompok Mapel-- </option>
                                   <option value="A" @if($mapel->kelompok == 'A') selected @endif>Kelompok A </option>
                                   <option value="B" @if($mapel->kelompok == 'B') selected @endif>Kelompok B </option>

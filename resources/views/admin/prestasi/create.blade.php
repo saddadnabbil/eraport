@@ -3,29 +3,38 @@
   @include('layouts.sidebar.admin')
 @endsection
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <div class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1 class="m-0 text-dark">{{$title}}</h1>
-        </div><!-- /.col -->
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item "><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active">"><a href="{{ route('prestasiadmin.index') }}">Prestasi Siswa</a></li>
-            <li class="breadcrumb-item active">{{$title}}</li>
-          </ol>
-        </div><!-- /.col -->
-      </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-  </div>
-  <!-- /.content-header -->
+@section('content')
+  <div class="page-wrapper">
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
+        'titleBreadCrumb' => $title,
+'breadcrumbs' => [
+            [
+                'title' => 'Dashboard',
+                'url' => route('dashboard'),
+                'active' => true,
+            ],
+            [
+                'title' => 'Prestasi Siswa',
+                'url' => route('prestasiadmin.index'),
+                'active' => true,
+            ],
+            [
+                'title' => $title,
+                'url' => route('user.index'),
+                'active' => false,
+            ]
+        ]
+    ])
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
 
-  <!-- Main content -->
-  <section class="content">
+      <!-- ============================================================== -->
+      <!-- Container fluid  -->
+      <!-- ============================================================== -->
     <div class="container-fluid">
       <!-- ./row -->
       <div class="row">
@@ -34,9 +43,11 @@
             <div class="card-header">
               <h3 class="card-title"><i class="fas fa-trophy"></i> {{$title}}</h3>
               <div class="card-tools">
-                <button type="button" class="btn btn-tool btn-sm" data-bs-toggle="modal" data-bs-target="#modal-tambah">
-                  <i class="fas fa-plus"></i>
-                </button>
+                <div data-bs-toggle="tooltip" title="Tambah" class="d-inline-block">
+                  <button type="button" class="btn btn-tool btn-sm" data-bs-toggle="modal" data-bs-target="#modal-tambah">
+                    <i class="fas fa-plus"></i>
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -56,7 +67,7 @@
                       <div class="form-group row">
                         <label for="anggota_kelas_id" class="col-sm-3 col-form-label">Siswa</label>
                         <div class="col-sm-9">
-                          <select class="form-control select2" id="anggota_kelas_id" name="anggota_kelas_id" required>
+                          <select class="form-control form-select select2" id="anggota_kelas_id" name="anggota_kelas_id" required>
                             <option value="">-- Pilih Siswa --</option>
                             @foreach($data_anggota_kelas as $anggota)
                             <option value="{{$anggota->id}}">{{$anggota->siswa->nis}} | {{$anggota->siswa->nisn}} | {{$anggota->siswa->nama_lengkap}}</option>
@@ -83,7 +94,7 @@
                       <div class="form-group row">
                         <label for="jenis_prestasi" class="col-sm-3 col-form-label">Tingkatan Prestasi</label>
                         <div class="col-sm-9">
-                              <select class="form-control select2" id="tingkat_prestasi" name="tingkat_prestasi" required>
+                              <select class="form-control form-select select2" id="tingkat_prestasi" name="tingkat_prestasi" required>
                             <option value="">-- Pilih Tingkatan --</option>
                             <option value="1">Internations</option>
                             <option value="2">National</option>
@@ -114,7 +125,7 @@
             <!-- End Modal tambah -->
             <div class="card-body">
               <div class="table-responsive">
-                <table id="zero_config" class="table table-valign-middle table-hover">
+                <table id="zero_config" class="table table-valign-middle ">
                   <thead>
                     <tr>
                       <th>No</th>
@@ -214,7 +225,7 @@
                               <div class="form-group row">
                                 <label for="jenis_prestasi" class="col-sm-3 col-form-label">Tingkatan Prestasi</label>
                                 <div class="col-sm-9">
-                                    <select class="form-control select2" id="tingkat_prestasi" name="tingkat_prestasi" required>
+                                    <select class="form-control form-select select2" id="tingkat_prestasi" name="tingkat_prestasi" required>
                                     <option value="">-- Pilih Tingkatan --</option>
                                     <option value="1" {{$prestasi->tingkat_prestasi == 1 ? 'selected' : ''}}>Internations</option>
                                     <option value="2" {{$prestasi->tingkat_prestasi == 2 ? 'selected' : ''}}>National</option>

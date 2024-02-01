@@ -15,12 +15,32 @@
   <!-- Page wrapper  -->
   <!-- ============================================================== -->
   <div class="page-wrapper">
+      @php
+          $time = date("H");
+          $greeting = "";
+          if ($time < "12") {
+              $greeting = "Good morning, ";
+          } elseif ($time < "18") {
+              $greeting = "Good afternoon, ";
+          } else {
+              $greeting = "Good evening, ";
+          }
+
+          if (Auth::user()->role == 1) {
+              $fullName = Auth::user()->admin->nama_lengkap;
+          } elseif (Auth::user()->role == 2) {
+              $fullName = Auth::user()->guru->nama_lengkap;
+          } elseif (Auth::user()->role == 3) {
+              $fullName = Auth::user()->siswa->nama_lengkap;
+          }
+      @endphp
       @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
+        'titleBreadCrumb' => $greeting . $fullName . '!',
         'breadcrumbs' => [
           [
             'title' => 'Dashboard', 
             'url' => route('dashboard'),
-            'active' => true
+            'active' => false
           ]
         ],
       ])

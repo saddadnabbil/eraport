@@ -13,7 +13,8 @@
     <!-- Bread crumb and right sidebar toggle -->
     <!-- ============================================================== -->
     @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
-        'breadcrumbs' => [
+        'titleBreadCrumb' => $title,
+'breadcrumbs' => [
             [
                 'title' => 'Dashboard',
                 'url' => route('dashboard'),
@@ -49,7 +50,7 @@
                   <div class="form-group row">
                     <label class="col-sm-3 col-form-label">Semester</label>
                     <div class="col-sm-9">
-                      <select class="form-control" name="semester_id" style="width: 100%;" required >
+                      <select class="form-control form-select" name="semester_id" style="width: 100%;" required >
                           <option value="">-- Pilih Semester --</option>
                           <option value="1" @if( $semester->id  == '1' ) selected @endif>1</option>
                           <option value="2" @if( $semester->id  == '2' ) selected @endif>2</option>

@@ -1,29 +1,42 @@
-@include('layouts.main.header')
-@include('layouts.sidebar.guru')
+@extends('layouts.main.header')
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <div class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1 class="m-0 text-dark">{{$title}}</h1>
-        </div><!-- /.col -->
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item "><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item "><a href="{{ route('guru.penilaiankm.index') }}">Penilaian Raport</a></li>
-            <li class="breadcrumb-item active">{{$title}}</li>
-          </ol>
-        </div><!-- /.col -->
-      </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-  </div>
-  <!-- /.content-header -->
+@section('sidebar')
+  @include('layouts.sidebar.guru')
+@endsection
 
-  <!-- Main content -->
-  <section class="content">
+@section('content')
+  <div class="page-wrapper">
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
+        'titleBreadCrumb' => $title,
+        'breadcrumbs' => [
+            [
+                'title' => 'Dashboard',
+                'url' => route('dashboard'),
+                'active' => true,
+            ],
+            [
+                'title' => 'Penilaian',
+                'url' => route('guru.penilaiankm.index'),
+                'active' => false,
+            ],
+            [
+                'title' => $title,
+                'url' => '',
+                'active' => false,
+            ]
+
+        ]
+    ])
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
     <div class="container-fluid">
       <!-- ./row -->
       <div class="row">
@@ -50,7 +63,7 @@
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Kelas</label>
                     <div class="col-sm-10">
-                      <select class="form-control select2" name="pembelajaran_id" style="width: 100%;" required onchange="this.form.submit();">
+                      <select class="form-control form-select select2" name="pembelajaran_id" style="width: 100%;" required onchange="this.form.submit();">
                         <option value="" disabled>-- Pilih Kelas --</option>
                         @foreach($data_pembelajaran as $pembelajaran)
                         <option value="{{$pembelajaran->id}}" @if ($pembelajaran->id==$pembelajaran_id ) selected @endif>{{$pembelajaran->mapel->nama_mapel}} ({{$pembelajaran->kelas->nama_kelas}} - {{$pembelajaran->kelas->tingkatan->nama_tingkatan}})</option>
@@ -67,7 +80,7 @@
                 <input type="hidden" name="term_id" value="{{$term->id}}">
                 <input type="hidden" name="semester_id" value="{{$semester->id}}">
                 <div class="table-responsive">
-                  <table class="table table-bordered table-hover">
+                  <table class="table table-bordered">
                     <thead class="bg-primary">
                       <tr>
                         @php
@@ -186,149 +199,147 @@
       </div>
       <!-- /.row -->
     </div>
-          <!-- ============================================================== -->
-      <!-- End Container fluid  -->
-      <!-- ============================================================== -->
-    </div>
+    <!-- ============================================================== -->
+    <!-- End Container fluid  -->
+    <!-- ============================================================== -->
+  </div>
 @endsection
+
+@push('custom-scripts')
+  <script>
+  $(function() {
+      $('[data-bs-target="popover"]').popover({
+          trigger: 'hover',
+          placement: function (popoverEl, targetEl) {
+              return $(targetEl).data('placement');
+          },
+          html: true,
+      });
+  });
+  
+  $(document).ready(function() {
+      // Menghitung nilai akhir untuk setiap baris yang ada saat halaman dimuat
+      $('tbody tr').each(function() {
+          var row = $(this);
+          updateNilaiAkhirFormatif(row);
+          updateNilaiAkhirSumatif(row);
+          updateNilaiAkhirRaport(row);
+      });
+  });
+  
+  $(document).ready(function() {
+      $('tbody tr').each(function() {
+          var row = $(this);
+          updateNilaiAkhirFormatif(row);
+          updateNilaiAkhirSumatif(row);
+          updateNilaiAkhirRaport(row);
+      });
+  
+      $('.nilai_formatif_input').on('input', function() {
+          var row = $(this).closest('tr');  // Ambil baris terdekat
+          updateNilaiAkhirFormatif(row);
+      });
+  
+      function updateNilaiAkhirFormatif(row) {
+          var sum = 0;
+          var totalBobot = 0;
+  
+          row.find('.nilai_formatif_input').each(function() {
+              var value = parseInt($(this).val());
+              var bobot = parseFloat($(this).data('bobot'));
+  
+              console.log(value, bobot);
+  
+              if (!isNaN(value) && !isNaN(bobot)) {
+                  sum += value * bobot;
+                  totalBobot += bobot;
+              }
+          });
+  
+          var average = totalBobot > 0 ? sum / totalBobot : 0;
+          var averageFormatted = (average % 1 === 0) ? average.toFixed(0) : average.toFixed(0);
+  
+          row.find('td[name="nilaiAkhirFormatif"]').text(averageFormatted);
+          row.find('[name="nilaiAkhirFormatif"]').val(averageFormatted);
+      }
+  
+      $('.nilai_sumatif_input').on('input', function() {
+          var row = $(this).closest('tr');  // Ambil baris terdekat
+          updateNilaiAkhirSumatif(row);
+      });
+  
+      // Fungsi untuk menghitung nilai akhir sumatif berdasarkan bobot
+      function updateNilaiAkhirSumatif(row) {
+          var sum = 0;
+          var totalBobot = 0;
+  
+          row.find('.nilai_sumatif_input').each(function() {
+              var value = parseInt($(this).val());
+              var bobot = parseFloat($(this).data('bobot'));
+  
+              if (!isNaN(value) && !isNaN(bobot)) {
+                  sum += value * bobot;
+                  totalBobot += bobot;
+              }
+          });
+  
+          var average = totalBobot > 0 ? sum / totalBobot : 0;
+          var averageFormatted = (average % 1 === 0) ? average.toFixed(0) : average.toFixed(0);
+  
+          row.find('td[name="nilaiAkhirSumatif"]').text(averageFormatted);
+          row.find('[name="nilaiAkhirSumatif"]').val(averageFormatted);
+      }
+  
+      $('.nilai_sumatif_input, .nilai_formatif_input').on('input', function() {
+          var row = $(this).closest('tr');  // Ambil baris terdekat
+          updateNilaiAkhirRaport(row);
+      });
+  
+      function updateNilaiAkhirRaport(row) {
+          var sumSumatif = 0;
+          var countSumatif = 0;
+          row.find('.nilai_sumatif_input').each(function() {
+              var value = parseInt($(this).val());
+              if (!isNaN(value)) {
+                  sumSumatif += value;
+                  countSumatif++;
+              }
+          });
+  
+          var sumFormatif = 0;
+          var countFormatif = 0;
+          row.find('.nilai_formatif_input').each(function() {
+              var value = parseInt($(this).val());
+              if (!isNaN(value)) {
+                  sumFormatif += value;
+                  countFormatif++;
+              }
+          });
+  
+          var bobotSumatif = 0.3;
+          var bobotFormatif = 0.7;
+  
+          // Pastikan semua variabel memiliki nilai yang valid sebelum melakukan operasi matematika
+          if (sumSumatif !== null && countSumatif !== 0 && bobotSumatif !== null &&
+              sumFormatif !== null && countFormatif !== 0 && bobotFormatif !== null) {
+  
+              var nilaiAkhir = ((sumSumatif / countSumatif) * bobotSumatif) + ((sumFormatif / countFormatif) * bobotFormatif);
+  
+          } else {
+              var nilaiAkhir = 0;
+          }
+  
+          // Menghilangkan angka desimal jika angka desimalnya adalah 0
+          var nilaiAkhirFormatted = (nilaiAkhir % 1 === 0) ? nilaiAkhir.toFixed(0) : nilaiAkhir.toFixed(0);
+  
+          row.find('#nilaiAkhirRaportDisplay').text(nilaiAkhirFormatted);
+          row.find('#nilaiAkhirRaportInput').val(nilaiAkhirFormatted);
+      }
+  });
+  </script>
+@endpush
 
 @section('footer')
   @include('layouts.main.footer')
 @endsection
 
-<script>
-
-$(function() {
-    $('[data-bs-target="popover"]').popover({
-        trigger: 'hover',
-        placement: function (popoverEl, targetEl) {
-            return $(targetEl).data('placement');
-        },
-        html: true,
-    });
-});
-
-$(document).ready(function() {
-    // Menghitung nilai akhir untuk setiap baris yang ada saat halaman dimuat
-    $('tbody tr').each(function() {
-        var row = $(this);
-        updateNilaiAkhirFormatif(row);
-        updateNilaiAkhirSumatif(row);
-        updateNilaiAkhirRaport(row);
-    });
-});
-
-$(document).ready(function() {
-    $('tbody tr').each(function() {
-        var row = $(this);
-        updateNilaiAkhirFormatif(row);
-        updateNilaiAkhirSumatif(row);
-        updateNilaiAkhirRaport(row);
-    });
-
-    $('.nilai_formatif_input').on('input', function() {
-        var row = $(this).closest('tr');  // Ambil baris terdekat
-        updateNilaiAkhirFormatif(row);
-    });
-
-    function updateNilaiAkhirFormatif(row) {
-        var sum = 0;
-        var totalBobot = 0;
-
-        row.find('.nilai_formatif_input').each(function() {
-            var value = parseInt($(this).val());
-            var bobot = parseFloat($(this).data('bobot'));
-
-            console.log(value, bobot);
-
-            if (!isNaN(value) && !isNaN(bobot)) {
-                sum += value * bobot;
-                totalBobot += bobot;
-            }
-        });
-
-        var average = totalBobot > 0 ? sum / totalBobot : 0;
-        var averageFormatted = (average % 1 === 0) ? average.toFixed(0) : average.toFixed(0);
-
-        row.find('td[name="nilaiAkhirFormatif"]').text(averageFormatted);
-        row.find('[name="nilaiAkhirFormatif"]').val(averageFormatted);
-    }
-
-    $('.nilai_sumatif_input').on('input', function() {
-        var row = $(this).closest('tr');  // Ambil baris terdekat
-        updateNilaiAkhirSumatif(row);
-    });
-
-    // Fungsi untuk menghitung nilai akhir sumatif berdasarkan bobot
-    function updateNilaiAkhirSumatif(row) {
-        var sum = 0;
-        var totalBobot = 0;
-
-        row.find('.nilai_sumatif_input').each(function() {
-            var value = parseInt($(this).val());
-            var bobot = parseFloat($(this).data('bobot'));
-
-            if (!isNaN(value) && !isNaN(bobot)) {
-                sum += value * bobot;
-                totalBobot += bobot;
-            }
-        });
-
-        var average = totalBobot > 0 ? sum / totalBobot : 0;
-        var averageFormatted = (average % 1 === 0) ? average.toFixed(0) : average.toFixed(0);
-
-        row.find('td[name="nilaiAkhirSumatif"]').text(averageFormatted);
-        row.find('[name="nilaiAkhirSumatif"]').val(averageFormatted);
-    }
-
-    $('.nilai_sumatif_input, .nilai_formatif_input').on('input', function() {
-        var row = $(this).closest('tr');  // Ambil baris terdekat
-        updateNilaiAkhirRaport(row);
-    });
-
-    function updateNilaiAkhirRaport(row) {
-        var sumSumatif = 0;
-        var countSumatif = 0;
-        row.find('.nilai_sumatif_input').each(function() {
-            var value = parseInt($(this).val());
-            if (!isNaN(value)) {
-                sumSumatif += value;
-                countSumatif++;
-            }
-        });
-
-        var sumFormatif = 0;
-        var countFormatif = 0;
-        row.find('.nilai_formatif_input').each(function() {
-            var value = parseInt($(this).val());
-            if (!isNaN(value)) {
-                sumFormatif += value;
-                countFormatif++;
-            }
-        });
-
-        var bobotSumatif = 0.3;
-        var bobotFormatif = 0.7;
-
-        // Pastikan semua variabel memiliki nilai yang valid sebelum melakukan operasi matematika
-        if (sumSumatif !== null && countSumatif !== 0 && bobotSumatif !== null &&
-            sumFormatif !== null && countFormatif !== 0 && bobotFormatif !== null) {
-
-            var nilaiAkhir = ((sumSumatif / countSumatif) * bobotSumatif) + ((sumFormatif / countFormatif) * bobotFormatif);
-
-        } else {
-            var nilaiAkhir = 0;
-        }
-
-        // Menghilangkan angka desimal jika angka desimalnya adalah 0
-        var nilaiAkhirFormatted = (nilaiAkhir % 1 === 0) ? nilaiAkhir.toFixed(0) : nilaiAkhir.toFixed(0);
-
-        row.find('#nilaiAkhirRaportDisplay').text(nilaiAkhirFormatted);
-        row.find('#nilaiAkhirRaportInput').val(nilaiAkhirFormatted);
-    }
-});
-
-
-
-
-</script>

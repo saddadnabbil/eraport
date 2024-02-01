@@ -15,7 +15,27 @@
   <!-- Page wrapper  -->
   <!-- ============================================================== -->
   <div class="page-wrapper">
+      @php
+          $time = date("H");
+          $greeting = "";
+          if ($time < "12") {
+              $greeting = "Good morning, ";
+          } elseif ($time < "18") {
+              $greeting = "Good afternoon, ";
+          } else {
+              $greeting = "Good evening, ";
+          }
+
+          if (Auth::user()->role == 1) {
+              $fullName = Auth::user()->admin->nama_lengkap;
+          } elseif (Auth::user()->role == 2) {
+              $fullName = Auth::user()->guru->nama_lengkap;
+          } elseif (Auth::user()->role == 3) {
+              $fullName = Auth::user()->siswa->nama_lengkap;
+          }
+      @endphp
       @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
+        'titleBreadCrumb' => $greeting . $fullName . '!',
         'breadcrumbs' => [
           [
             'title' => 'Dashboard', 
@@ -28,311 +48,112 @@
       <!-- Container fluid  -->
       <!-- ============================================================== -->
     <div class="container-fluid">
-
-      <!-- Info -->
-      <div class="callout callout-success">
-        <h5>{{$sekolah->nama_sekolah}}</h5>
-        <p>Tahun Pelajaran {{$tapel->tahun_pelajaran}}
-          @if($tapel->semester_id == 1)
-          Semester Ganjil
-          @else
-          Semester Genap
-          @endif
-        </p>
-      </div>
-      <!-- End Info  -->
-
-      <!-- Info boxes -->
+      <!-- *************************************************************** -->
+      <!-- Start First Cards -->
+      <!-- *************************************************************** -->
       <div class="row">
-        <div class="col-12 col-sm-6 col-md-3">
-          <div class="info-box">
-            <span class="info-box-icon bg-info elevation-1"><i class="fas fa-layer-group"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Jumlah Kelas</span>
-              <span class="info-box-number">{{$jumlah_kelas_diampu}} <small>kelas diampu</small></span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-        <div class="col-12 col-sm-6 col-md-3">
-          <div class="info-box mb-3">
-            <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-book"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Jumlah Mapel</span>
-              <span class="info-box-number">{{$jumlah_mapel_diampu}} <small>mapel diampu</small></span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-
-        <!-- fix for small devices only -->
-        <div class="clearfix hidden-md-up"></div>
-
-        <div class="col-12 col-sm-6 col-md-3">
-          <div class="info-box mb-3">
-            <span class="info-box-icon bg-success elevation-1"><i class="fas fa-users"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Jumlah Siswa</span>
-              <span class="info-box-number">{{$jumlah_siswa_diampu}} <small>siswa diampu</small></span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-        <div class="col-12 col-sm-6 col-md-3">
-          <div class="info-box mb-3">
-            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-book-reader "></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Jumlah Ekstrakulikuler</span>
-              <span class="info-box-number">{{$jumlah_ekstrakulikuler_diampu}} <small>ekstrakulikuler diampu</small></span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->
-
-
-      {{-- <div class="row">
-        <div class="col-md-12">
-          <div class="card">
-            <div class="card-header">
-              <h3 class="card-title">Capaian Proses Penilaian</h3>
-
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                  <i class="fas fa-minus"></i>
-                </button>
-              </div>
-            </div>
-            <!-- /.card-header -->
+        <div class="col-sm-6 col-lg-3">
+          <div class="card border-end">
             <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-bordered">
-                  <thead class="bg-success">
-                    <tr>
-                      <th rowspan="2" class="text-center">No</th>
-                      <th rowspan="2" class="text-center">Kelas</th>
-                      <th rowspan="2" class="text-center">Mata Pelajaran</th>
-                      <th rowspan="2" class="text-center" style="width: 50px;">KKM</th>
-                      <th colspan="4" class="text-center" style="width: 200px;">Jumlah Perencanaan</th>
-                      <th rowspan="2" class="text-center" style="width: 100px;">Bobot</th>
-                      <th colspan="4" class="text-center" style="width: 200px;">Jumlah Penilaian</th>
-                      <th colspan="2" class="text-center" style="width: 200px;">Input Nilai</th>
-                      <th colspan="2" class="text-center" style="width: 100px;">Status Nilai Raport</th>
-                    </tr>
-                    <tr>
-                      <th class="text-center" style="width: 50px;">Peng</th>
-                      <th class="text-center" style="width: 50px;">Ket</th>
-                      <th class="text-center" style="width: 50px;">Skp Sprt</th>
-                      <th class="text-center" style="width: 50px;">Skp Sosial</th>
-
-                      <th class="text-center" style="width: 50px;">Peng</th>
-                      <th class="text-center" style="width: 50px;">Ket</th>
-                      <th class="text-center" style="width: 50px;">Skp Sprt</th>
-                      <th class="text-center" style="width: 50px;">Skp Sosial</th>
-
-                      <th class="text-center" style="width: 100px;">PTS</th>
-                      <th class="text-center" style="width: 100px;">PAS</th>
-
-                      <th class="text-center" style="width: 100px;">Kirim Nilai</th>
-                      <th class="text-center" style="width: 100px;">Proses Deskripsi</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php $no = 0; ?>
-                    @foreach($data_capaian_penilaian as $penilaian)
-                    <?php $no++; ?>
-                    <tr>
-                      <td class="text-center">{{$no}}</td>
-                      <td class="text-center">{{$penilaian->kelas->nama_kelas}}</td>
-                      <td>{{$penilaian->mapel->nama_mapel}}</td>
-                      <td class="text-center">
-                        @if(is_null($penilaian->kkm))
-                        <span class="badge bg-danger">0</span>
-                        @else
-                        <span class="badge bg-success">{{$penilaian->kkm}}</span>
-                        @endif
-                      </td>
-                      <td class="text-center">
-                        @if($penilaian->jumlah_rencana_pengetahuan == 0)
-                        <b class="text-danger">
-                          {{$penilaian->jumlah_rencana_pengetahuan}}
-                        </b>
-                        @else
-                        <b class="text-success">
-                          {{$penilaian->jumlah_rencana_pengetahuan}}
-                        </b>
-                        @endif
-                      </td>
-                      <td class="text-center">
-                        @if($penilaian->jumlah_rencana_keterampilan == 0)
-                        <b class="text-danger">
-                          {{$penilaian->jumlah_rencana_keterampilan}}
-                        </b>
-                        @else
-                        <b class="text-success">
-                          {{$penilaian->jumlah_rencana_keterampilan}}
-                        </b>
-                        @endif
-                      </td>
-                      <td class="text-center">
-                        @if($penilaian->jumlah_rencana_spiritual == 0)
-                        <b class="text-danger">
-                          {{$penilaian->jumlah_rencana_spiritual}}
-                        </b>
-                        @else
-                        <b class="text-success">
-                          {{$penilaian->jumlah_rencana_spiritual}}
-                        </b>
-                        @endif
-                      </td>
-                      <td class="text-center">
-                        @if($penilaian->jumlah_rencana_sosial == 0)
-                        <b class="text-danger">
-                          {{$penilaian->jumlah_rencana_sosial}}
-                        </b>
-                        @else
-                        <b class="text-success">
-                          {{$penilaian->jumlah_rencana_sosial}}
-                        </b>
-                        @endif
-                      </td>
-                      <td class="text-center">
-                        @if(is_null($penilaian->bobot_ph))
-                        <b class="text-danger">
-                          0
-                        </b>
-                        @else
-                        <b class="text-success">
-                          {{$penilaian->bobot_ph}};{{$penilaian->bobot_pts}};{{$penilaian->bobot_pas}}
-                        </b>
-                        @endif
-                      </td>
-
-                      <td class="text-center">
-                        @if($penilaian->jumlah_pengetahuan_telah_dinilai == 0)
-                        <b class="text-danger">
-                          0
-                        </b>
-                        @elseif($penilaian->jumlah_pengetahuan_telah_dinilai == $penilaian->jumlah_rencana_pengetahuan)
-                        <b class="text-success">
-                          {{$penilaian->jumlah_pengetahuan_telah_dinilai}}
-                        </b>
-                        @else
-                        <b class="text-warning">
-                          {{$penilaian->jumlah_pengetahuan_telah_dinilai}}
-                        </b>
-                        @endif
-                      </td>
-
-                      <td class="text-center">
-                        @if($penilaian->jumlah_keterampilan_telah_dinilai == 0)
-                        <b class="text-danger">
-                          0
-                        </b>
-                        @elseif($penilaian->jumlah_keterampilan_telah_dinilai == $penilaian->jumlah_rencana_keterampilan)
-                        <b class="text-success">
-                          {{$penilaian->jumlah_keterampilan_telah_dinilai}}
-                        </b>
-                        @else
-                        <b class="text-warning">
-                          {{$penilaian->jumlah_keterampilan_telah_dinilai}}
-                        </b>
-                        @endif
-                      </td>
-
-                      <td class="text-center">
-                        @if($penilaian->jumlah_spiritual_telah_dinilai == 0)
-                        <b class="text-danger">
-                          0
-                        </b>
-                        @elseif($penilaian->jumlah_spiritual_telah_dinilai == $penilaian->jumlah_rencana_spiritual)
-                        <b class="text-success">
-                          {{$penilaian->jumlah_spiritual_telah_dinilai}}
-                        </b>
-                        @else
-                        <b class="text-warning">
-                          {{$penilaian->jumlah_spiritual_telah_dinilai}}
-                        </b>
-                        @endif
-                      </td>
-
-                      <td class="text-center">
-                        @if($penilaian->jumlah_sosial_telah_dinilai == 0)
-                        <b class="text-danger">
-                          0
-                        </b>
-                        @elseif($penilaian->jumlah_sosial_telah_dinilai == $penilaian->jumlah_rencana_sosial)
-                        <b class="text-success">
-                          {{$penilaian->jumlah_sosial_telah_dinilai}}
-                        </b>
-                        @else
-                        <b class="text-warning">
-                          {{$penilaian->jumlah_sosial_telah_dinilai}}
-                        </b>
-                        @endif
-                      </td>
-
-                      @if($penilaian->nilai_pts_pas == 0)
-                      <td><span class="badge bg-danger">Belum Input</span></td>
-                      <td><span class="badge bg-danger">Belum Input</span></td>
-                      @else
-                      <td><span class="badge bg-success">Sudah Input</span></td>
-                      <td><span class="badge bg-success">Sudah Input</span></td>
-                      @endif
-
-                      @if($penilaian->kirim_nilai_raport == 0)
-                      <td><span class="badge bg-danger">Belum Kirim</span></td>
-                      @else
-                      <td><span class="badge bg-success">Sudah Kirim</span></td>
-                      @endif
-
-                      @if($penilaian->proses_deskripsi == 0)
-                      <td><span class="badge bg-danger">Belum Proses</span></td>
-                      @else
-                      <td><span class="badge bg-success">Sudah Proses</span></td>
-                      @endif
-
-                    </tr>
-                    @endforeach
-                  </tbody>
-                </table>
+              <div class="d-flex align-items-center">
+                <div class="w-80">
+                  <div class="d-inline-flex align-items-center">
+                    <h2 class="text-dark mb-1 font-weight-medium">{{$jumlah_kelas_diampu}} </h2>
+                    {{-- <span class="badge bg-primary font-12 text-white font-weight-medium rounded-pill ms-2 d-lg-block d-md-none">+18.33%</span> --}}
+                  </div>
+                  <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate" >
+                    Jumlah Kelas Diampu
+                  </h6>
+                </div>
+                <div class="ms-auto mt-md-3 mt-lg-0">
+                  <span class="opacity-7 text-muted"><i data-feather="user-plus"></i></span>
+                </div>
               </div>
-              <!-- /.table-responsive -->
-
             </div>
-            <!-- /.card-body -->
           </div>
         </div>
-      </div> --}}
+        <div class="col-sm-6 col-lg-3">
+          <div class="card border-end">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div class="w-80">
+                  <h2 class="text-dark mb-1 w-100 text-truncate font-weight-medium">
+                    {{-- <sup class="set-doller">$</sup>18,306 --}}
+                    {{$jumlah_mapel_diampu}}
+                  </h2>
+                  <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate" >
+                    Jumlah Mapel Diampu
+                  </h6>
+                </div>
+                <div class="ms-auto mt-md-3 mt-lg-0">
+                  <span class="opacity-7 text-muted"
+                    ><i data-feather="dollar-sign"></i
+                  ></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+          <div class="card border-end">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div class="w-80">
+                  <div class="d-inline-flex align-items-center">
+                    <h2 class="text-dark mb-1 font-weight-medium">{{ $jumlah_siswa_diampu }}</h2>
+                    {{-- <span
+                      class="badge bg-danger font-12 text-white font-weight-medium rounded-pill ms-2 d-md-none d-lg-block"
+                      >-18.33%</span
+                    > --}}
+                  </div>
+                  <h6
+                    class="text-muted font-weight-normal mb-0 w-100 text-truncate"
+                  >
+                    Jumlah Siswa Diampu
+                  </h6>
+                </div>
+                <div class="ms-auto mt-md-3 mt-lg-0">
+                  <span class="opacity-7 text-muted"
+                    ><i data-feather="file-plus"></i
+                  ></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div class="w-80">
+                  <h2 class="text-dark mb-1 font-weight-medium">{{ $jumlah_ekstrakulikuler_diampu }}</h2>
+                  <h6
+                    class="text-muted font-weight-normal mb-0 w-100 text-truncate"
+                  >
+                    Jumlah Ekstrakulikuler Diampu
+                  </h6>
+                </div>
+                <div class="ms-auto mt-md-3 mt-lg-0">
+                  <span class="opacity-7 text-muted"
+                    ><i data-feather="globe"></i
+                  ></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- *************************************************************** -->
+      <!-- End First Cards -->
+      <!-- *************************************************************** -->
 
       {{-- Start Capaian Penilaian Kurikulum Merdeka --}}
       <div class="row">
         <div class="col-md-12">
           <div class="card">
-            <div class="card-header">
-              <h3 class="card-title">Capaian Proses Penilaian </h3>
-
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                  <i class="fas fa-minus"></i>
-                </button>
-              </div>
-            </div>
             <!-- /.card-header -->
             <div class="card-body">
+              <h4 class="card-title">Capaian Proses Penilaian </h4>
               <div class="table-responsive">
                 <table class="table table-bordered">
                   <thead class="bg-success">
@@ -458,51 +279,82 @@
         <div class="col-md-8">
           <!-- MAP & BOX PANE -->
           <div class="card">
-            <div class="card-header">
-              <h3 class="card-title">Pengumuman</h3>
-
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                  <i class="fas fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-tool" data-card-widget="remove">
-                  <i class="fas fa-times"></i>
-                </button>
-              </div>
-            </div>
-            <!-- /.card-header -->
-            <div class="card-body pr-1">
-              <div class="row">
-                <div class="col-md-12">
-                  <!-- The time line -->
-                  <div class="timeline">
-                    <!-- timeline time label -->
-                    <div class="time-label">
-                      <span class="bg-success">Pengumuman Terakhir</span>
-                    </div>
-                    <!-- /.timeline-label -->
-                    <!-- timeline item -->
-                    @foreach($data_pengumuman->sortByDesc('created_at') as $pengumuman)
-                    <div>
-                      <i class="fas fa-envelope bg-primary"></i>
-                      <div class="timeline-item">
-                        <span class="time"><i class="far fa-clock"></i> {{$pengumuman->created_at}}</span>
-
-                        <h3 class="timeline-header"><a href="#">{{$pengumuman->user->admin->nama_lengkap}}</a> {{$pengumuman->judul}} @if($pengumuman->created_at != $pengumuman->updated_at)<small><i>edited</i></small>@endif</h3>
-
-                        <div class="timeline-body">
-                          {!! $pengumuman->isi !!}
+            <div class="col-md-12 col-lg-12">
+              <div class="card-body">
+                <h4 class="card-title">Recent Announcement</h4>
+                <div class="mt-4 activity">
+                  @foreach($data_pengumuman->sortByDesc('created_at') as $pengumuman)
+                    <div class="d-flex align-items-start border-left-line">
+                      <div>
+                        <a
+                          href="javascript:void(0)"
+                          class="btn btn-cyan btn-circle mb-2 btn-item"
+                        >
+                          <i data-feather="bell"></i>
+                        </a>
+                      </div>
+                      <div class="ms-3 mt-2">
+                        <h5 class="text-dark font-weight-medium mb-2 text-wrap">
+                          {{$pengumuman->judul}}
+                        </h5>
+                        <div >
+                          <p class="font-14 mb-2 text-muted text-wrap text-break note-editable" >
+                              {!! $pengumuman->isi !!}
+                          </p>
+                        </div>
+                        <span
+                          class="font-weight-light font-14 mb-1 d-block text-muted"
+                          >{{$pengumuman->user->admin->nama_lengkap}} - {{ \Carbon\Carbon::parse($pengumuman->created_at)->diffForHumans() }}</span
+                        >
+                        @if(Auth::user()->id == $pengumuman->user_id)
+                          <form action="{{ route('pengumuman.destroy', $pengumuman->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                              <button
+                                type="button"
+                                class="font-14 border-bottom text-info pb-1 border-info border-0 bg-transparent"
+                                data-bs-toggle="modal" data-bs-target="#modal-edit{{$pengumuman->id}}"
+                                >Edit</button>
+                              <button type="submit" class="font-14 border-bottom pb-1 text-danger border-danger border-0 bg-transparent" onclick="return confirm('Hapus pengumuman ?')">Hapus
+                              </button>
+                          </form>
+                        @endif
+                      </div>
+                      <!-- Modal edit  -->
+                      <div class="modal fade" id="modal-edit{{$pengumuman->id}}">
+                        <div class="modal-dialog modal-xl">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title">Edit {{$title}}</h5>
+                              
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                              </button>
+                            </div>
+                            <form action="{{ route('pengumuman.update', $pengumuman->id) }}" method="POST">
+                              {{ method_field('PATCH') }}
+                              @csrf
+                              <div class="modal-body">
+                                <div class="form-group">
+                                  <label>Judul Pengumuman</label>
+                                  <input type="text" class="form-control" name="judul" value="{{$pengumuman->judul}}" readonly>
+                                </div>
+                                <div class="form-group">
+                                  <label>Isi Pengumuman</label>
+                                  <textarea class="textarea" name="isi" style="width: 100%; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 5px;" required>{!! $pengumuman->isi !!}</textarea>
+                                </div>
+                              </div>
+                              <div class="modal-footer justify-content-end">
+                                <button type="button" class="btn btn-default" data-bs-dismiss="modal">Batal</button>
+                                <button type="submit" class="btn btn-primary">Simpan</button>
+                              </div>
+                            </form>
+                          </div>
                         </div>
                       </div>
+                      <!-- End Modal edit -->
                     </div>
-                    @endforeach
-                    <!-- END timeline item -->
-                    <div>
-                      <i class="fas fa-clock bg-gray"></i>
-                    </div>
-                  </div>
+                  @endforeach
                 </div>
-                <!-- /.col -->
               </div>
             </div>
             <!-- /.card-body -->
@@ -514,21 +366,10 @@
         <div class="col-md-4">
           <!-- PRODUCT LIST -->
           <div class="card">
-            <div class="card-header">
-              <h3 class="card-title">Riwayat Login</h3>
-
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                  <i class="fas fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-tool" data-card-widget="remove">
-                  <i class="fas fa-times"></i>
-                </button>
-              </div>
-            </div>
             <!-- /.card-header -->
-            <div class="card-body p-0">
-              <ul class="products-list product-list-in-card pl-2 pr-2">
+            <div class="card-body">
+            <h4 class="card-title">Riwayat Login</h4>
+            <ul class="products-list product-list-in-card">
                 @foreach($data_riwayat_login as $riwayat_login)
                 <li class="item">
 
@@ -570,7 +411,7 @@
                       @endif
 
                       @if($riwayat_login->status_login == false)
-                      <span class="time float-right"><i class="far fa-clock"></i> {{$riwayat_login->updated_at->diffForHumans()}}</span>
+                        <span class="time float-right"><i class="far fa-clock"></i> {{$riwayat_login->updated_at->diffForHumans()}}</span>
                       @endif
                     </span>
                   </div>

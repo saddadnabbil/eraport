@@ -1,6 +1,3 @@
-@include('layouts.main.header')
-@include('layouts.sidebar.guru')
-
 @extends('layouts.main.header')
 
 @section('sidebar')
@@ -13,6 +10,7 @@
     <!-- Bread crumb and right sidebar toggle -->
     <!-- ============================================================== -->
     @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
+        'titleBreadCrumb' => $title,
         'breadcrumbs' => [
             [
                 'title' => 'Dashboard',
@@ -21,7 +19,7 @@
             ],
             [
                 'title' => $title,
-                'url' => route('user.index'),
+                'url' => '',
                 'active' => false,
             ]
         ]
@@ -39,7 +37,7 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title"><i class="fas fa-file-alt"></i> {{$title}}</h3>
+              <h3 class="card-title">{{$title}}</h3>
             </div>
 
             <div class="card-body">
@@ -49,7 +47,7 @@
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Semester</label>
                     <div class="col-sm-4">
-                      <select class="form-control select2" name="semester_id" style="width: 100%;" disabled>
+                      <select class="form-control form-select select2" name="semester_id" style="width: 100%;" disabled>
                       @foreach($data_pembelajaran as $pembelajaran)
                         <option value="{{$pembelajaran->kelas->tingkatan->semester_id}}" selected>{{$pembelajaran->kelas->tingkatan->semester_id}}</option>
                       @endforeach
@@ -57,7 +55,7 @@
                     </div>
                     <label class="col-sm-2 col-form-label">Term</label>
                     <div class="col-sm-4">
-                      <select class="form-control select2" name="term_id" style="width: 100%;" disabled>
+                      <select class="form-control form-select select2" name="term_id" style="width: 100%;" disabled>
                       @foreach($data_pembelajaran as $pembelajaran)
                         <option value="{{$pembelajaran->kelas->tingkatan->term_id}}" selected>{{$pembelajaran->kelas->tingkatan->term_id}}</option>
                       @endforeach
@@ -67,7 +65,7 @@
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Mata Pelajaran</label>
                     <div class="col-sm-10">
-                      <select class="form-control select2" name="pembelajaran_id" style="width: 100%;" required onchange="this.form.submit();">
+                      <select class="form-control form-select select2" name="pembelajaran_id" style="width: 100%;" required onchange="this.form.submit();">
                         <option value="">-- Pilih Pembelajaran --</option>
                         @foreach($data_pembelajaran as $pembelajaran)
                         <option value="{{$pembelajaran->id}}">{{$pembelajaran->mapel->nama_mapel}} {{$pembelajaran->kelas->nama_kelas}}</option>

@@ -23,7 +23,7 @@ class ProsesDeskripsiSiswaController extends Controller
      */
     public function index()
     {
-        $title = 'Input Deskripsi Nilai Siswa';
+        $title = 'Deskripsi Nilai Siswa';
         $tapel = Tapel::where('status', 1)->first();
 
         $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');

@@ -10,7 +10,8 @@
   <!-- ============================================================== -->
   <div class="page-wrapper">
       @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
-        'breadcrumbs' => [
+        'titleBreadCrumb' => $title,
+'breadcrumbs' => [
           [
             'title' => 'Dashboard', 
             'url' => route('dashboard'),
@@ -18,8 +19,13 @@
           ],
           [
             'title' => 'Rencana Formatif',
-            'url' => route('rencanaformatif.index'),
-            'active' => false
+            'url' => route('guru.rencanaformatif.index'),
+            'active' => true
+          ],
+          [
+                'title' => $title,
+                'url' => '',
+                'active' => false,
           ]
         ],
       ])
@@ -32,7 +38,7 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title"><i class="fas fa-list-alt"></i> {{$title}}</h3>
+              <h3 class="card-title">{{$title}}</h3>
             </div>
 
             <div class="card-body">
@@ -120,7 +126,7 @@
                                       <div class="form-group row">
                                         <label for="jumlah_penilaian" class="col-sm-3 col-form-label">Teknik Penilaian</label>
                                         <div class="col-sm-9">
-                                        <select class="form-control" name="teknik_penilaian" style="width: 100%;" required oninvalid="this.setCustomValidity('silakan pilih item dalam daftar')" oninput="setCustomValidity('')">
+                                        <select class="form-control form-select" name="teknik_penilaian" style="width: 100%;" required oninvalid="this.setCustomValidity('silakan pilih item dalam daftar')" oninput="setCustomValidity('')">
                                           <option value="">-- Teknik Penilaian --</option>
                                           <option value="1" @if ($rencana_penilaian->teknik_penilaian == 1) selected @endif>Praktik</option>
                                           <option value="2" @if ($rencana_penilaian->teknik_penilaian == 2) selected @endif>Projek</option>

@@ -1,36 +1,44 @@
-@include('layouts.main.header')
-@include('layouts.sidebar.guru')
+@extends('layouts.main.header')
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <div class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1 class="m-0 text-dark">{{$title}}</h1>
-        </div><!-- /.col -->
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item "><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item "><a href="{{ route('guru.rencanaformatif.index') }}">Rencana Nilai Keterampilan</a></li>
-            <li class="breadcrumb-item active">{{$title}}</li>
-          </ol>
-        </div><!-- /.col -->
-      </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-  </div>
-  <!-- /.content-header -->
+@section('sidebar')
+  @include('layouts.sidebar.guru')
+@endsection
 
-  <!-- Main content -->
-  <section class="content">
+@section('content')
+  <!-- ============================================================== -->
+  <!-- Page wrapper  -->
+  <!-- ============================================================== -->
+  <div class="page-wrapper">
+      @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
+        'titleBreadCrumb' => $title,
+        'breadcrumbs' => [
+          [
+            'title' => 'Dashboard', 
+            'url' => route('dashboard'),
+            'active' => true
+          ],
+          [
+            'title' => 'Rencana Formatif',
+            'url' => route('guru.rencanaformatif.index'),
+            'active' => true
+          ],
+          [
+                'title' => $title,
+                'url' => '',
+                'active' => false,
+          ]
+        ],
+      ])
+      <!-- ============================================================== -->
+      <!-- Container fluid  -->
+      <!-- ============================================================== -->
     <div class="container-fluid">
       <!-- ./row -->
       <div class="row">
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title"><i class="fas fa-list-alt"></i> {{$title}}</h3>
+              <h3 class="card-title">{{$title}}</h3>
             </div>
 
             <div class="card-body">
@@ -59,7 +67,7 @@
                 <input type="hidden" name="pembelajaran_id" value="{{$pembelajaran->id}}">
                 <input type="hidden" name="term_id" value="{{$term->term}}">
                 <div class="table-responsive">
-                  <table class="table table-bordered table-hover">
+                  <table class="table table-bordered">
                     <thead class="bg-primary">
                       <tr>
                         <th>Penilaian</th>
@@ -70,7 +78,7 @@
                       <tr class="bg-primary">
                         <td>Kelompok/Teknik Penilaian</td>
                         @for ($i = 1; $i <= $jumlah_penilaian; $i++) <td>
-                          <select class="form-control" name="teknik_penilaian[]" style="width: 100%;" required oninvalid="this.setCustomValidity('silakan pilih item dalam daftar')" oninput="setCustomValidity('')" >
+                          <select class="form-control form-select" name="teknik_penilaian[]" style="width: 100%;" required oninvalid="this.setCustomValidity('silakan pilih item dalam daftar')" oninput="setCustomValidity('')" >
                             <option value="">-- Teknik Penilaian --</option>
                             <option value="1" @if ($i == 1) selected @endif>Praktik</option>
                             <option value="2" @if ($i == 2) selected @endif>Projek</option>

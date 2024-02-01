@@ -13,7 +13,8 @@
     <!-- Bread crumb and right sidebar toggle -->
     <!-- ============================================================== -->
     @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
-        'breadcrumbs' => [
+        'titleBreadCrumb' => $title,
+'breadcrumbs' => [
             [
                 'title' => 'Dashboard',
                 'url' => route('dashboard'),
@@ -69,7 +70,7 @@
                           <td class="text-center">{{$anggota_kelas->siswa->jenis_kelamin}}</td>
                           <td class="text-center">{{$anggota_kelas->kelas->nama_kelas}}</td>
                           <td>
-                            <select class="form-control select2" name="keputusan[]" style="width: 100%;" required>
+                            <select class="form-control form-select select2" name="keputusan[]" style="width: 100%;" required>
                               <option value="" @if($anggota_kelas->keputusan == null) selected @endif>-- Pilih Keputusan --</option>
                               @if($anggota_kelas->kelas->tingkatan_id != $tingkatan_akhir)
                               <option value="1" @if($anggota_kelas->keputusan == 1) selected @endif>Naik Kelas</option>

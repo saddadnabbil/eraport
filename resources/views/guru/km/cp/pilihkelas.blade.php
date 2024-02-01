@@ -1,5 +1,3 @@
-@include('layouts.main.header')
-@include('layouts.sidebar.guru')
 @extends('layouts.main.header')
 
 @section('sidebar')
@@ -12,7 +10,8 @@
     <!-- Bread crumb and right sidebar toggle -->
     <!-- ============================================================== -->
     @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
-        'breadcrumbs' => [
+        'titleBreadCrumb' => $title,
+'breadcrumbs' => [
             [
                 'title' => 'Dashboard',
                 'url' => route('dashboard'),
@@ -20,7 +19,7 @@
             ],
             [
                 'title' => $title,
-                'url' => route('user.index'),
+                'url' => route('guru.cp.index'),
                 'active' => false,
             ]
         ]
@@ -38,7 +37,7 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title"><i class="fas fa-table"></i> {{$title}}</h3>
+              <h3 class="card-title">{{$title}}</h3>
             </div>
 
             <div class="card-body">
@@ -48,7 +47,7 @@
                   <div class="form-group row">
                     <label for="pembelajaran_id" class="col-sm-3 col-form-label">Kelas</label>
                     <div class="col-sm-9">
-                      <select class="form-control select2" name="pembelajaran_id" style="width: 100%;" required onchange="this.form.submit();">
+                      <select class="form-control form-select select2" name="pembelajaran_id" style="width: 100%;" required onchange="this.form.submit();">
                         <option value="">-- Pilih Kelas --</option>
                         @foreach($data_pembelajaran as $pembelajaran)
                         <option value="{{$pembelajaran->id}}">{{$pembelajaran->mapel->nama_mapel}} ({{$pembelajaran->kelas->nama_kelas}} - {{$pembelajaran->kelas->tingkatan->nama_tingkatan}})</option>

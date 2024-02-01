@@ -9,10 +9,16 @@
     <!-- Bread crumb and right sidebar toggle -->
     <!-- ============================================================== -->
     @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
-        'breadcrumbs' => [
+        'titleBreadCrumb' => $title,
+'breadcrumbs' => [
             [
                 'title' => 'Dashboard',
                 'url' => route('dashboard'),
+                'active' => true,
+            ],
+            [
+                'title' => 'Nilai Raport Semester',
+                'url' => route('nilairaportkm.index'),
                 'active' => true,
             ],
             [
@@ -45,7 +51,7 @@
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Kelas</label>
                     <div class="col-sm-10">
-                      <select class="form-control select2" name="pembelajaran_id" style="width: 100%;" required onchange="this.form.submit();">
+                      <select class="form-control form-select select2" name="pembelajaran_id" style="width: 100%;" required onchange="this.form.submit();">
                         <option value="" disabled>-- Pilih Kelas --</option>
                         @foreach($data_pembelajaran as $pembelajaran)
                         <option value="{{$pembelajaran->id}}" @if ($pembelajaran->id==$pembelajaran_id ) selected @endif>{{$pembelajaran->mapel->nama_mapel}} ({{$pembelajaran->kelas->nama_kelas}} - {{$pembelajaran->kelas->tingkatan->nama_tingkatan}})</option>

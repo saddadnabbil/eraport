@@ -1,33 +1,52 @@
-@include('layouts.main.header')
-@include('layouts.sidebar.walikelas')
+@extends('layouts.main.header')
 
-@section('this-page-styles')
+@section('styles')
   <link href="{{ asset('assets/extra-libs/c3/c3.min.css') }}" rel="stylesheet" />
   <link href="{{ asset('assets/libs/chartist/dist/chartist.min.css') }}" rel="stylesheet" />
   <link href="{{ asset('assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css') }}" rel="stylesheet" />
 @endsection
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <div class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1 class="m-0 text-dark">{{$title}}</h1>
-        </div><!-- /.col -->
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item active">{{$title}}</li>
-          </ol>
-        </div><!-- /.col -->
-      </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-  </div>
-  <!-- /.content-header -->
+@section('sidebar')
+  @include('layouts.sidebar.guru')
+@endsection
 
-  <!-- Main content -->
-  <section class="content">
+@section('content')
+  <!-- ============================================================== -->
+  <!-- Page wrapper  -->
+  <!-- ============================================================== -->
+  <div class="page-wrapper">
+      @php
+          $time = date("H");
+          $greeting = "";
+          if ($time < "12") {
+              $greeting = "Good morning, ";
+          } elseif ($time < "18") {
+              $greeting = "Good afternoon, ";
+          } else {
+              $greeting = "Good evening, ";
+          }
+
+          if (Auth::user()->role == 1) {
+              $fullName = Auth::user()->admin->nama_lengkap;
+          } elseif (Auth::user()->role == 2) {
+              $fullName = Auth::user()->guru->nama_lengkap;
+          } elseif (Auth::user()->role == 3) {
+              $fullName = Auth::user()->siswa->nama_lengkap;
+          }
+      @endphp
+      @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
+        'titleBreadCrumb' => $greeting . $fullName . '!',
+        'breadcrumbs' => [
+          [
+            'title' => 'Dashboard', 
+            'url' => route('dashboard'),
+            'active' => false
+          ]
+        ],
+      ])
+      <!-- ============================================================== -->
+      <!-- Container fluid  -->
+      <!-- ============================================================== -->
     <div class="container-fluid">
 
       <!-- Info -->
@@ -98,10 +117,10 @@
               <h3 class="card-title">Pengumuman</h3>
 
               <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <button type="button" class="btn btn-tool" data-bs-card-widget="collapse">
                   <i class="fas fa-minus"></i>
                 </button>
-                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <button type="button" class="btn btn-tool" data-bs-card-widget="remove">
                   <i class="fas fa-times"></i>
                 </button>
               </div>
@@ -154,10 +173,10 @@
               <h3 class="card-title">Riwayat Login</h3>
 
               <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <button type="button" class="btn btn-tool" data-bs-card-widget="collapse">
                   <i class="fas fa-minus"></i>
                 </button>
-                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <button type="button" class="btn btn-tool" data-bs-card-widget="remove">
                   <i class="fas fa-times"></i>
                 </button>
               </div>
@@ -225,9 +244,10 @@
       <!-- /.row -->
     </div>
     <!--/. container-fluid -->
-  </section>
-  <!-- /.content -->
-</div>
+  </div>
+
+@endsection
+
 <!-- /.content-wrapper -->
 @push('custom-scripts')
   <script src="{{ asset('assets/extra-libs/c3/d3.min.js') }}"></script>

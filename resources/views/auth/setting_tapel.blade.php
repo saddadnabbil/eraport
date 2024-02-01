@@ -22,7 +22,7 @@
             </div>
           </div>
           <div class="mb-3">
-            <select class="form-control" name="semester" style="width: 100%;">
+            <select class="form-control form-select" name="semester" style="width: 100%;">
               <option value="">-- Pilih Semester -- </option>
               <option value="1">Semester Ganjil </option>
               <option value="2">Semester Genap </option>

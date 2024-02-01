@@ -10,7 +10,8 @@
     <!-- Bread crumb and right sidebar toggle -->
     <!-- ============================================================== -->
     @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
-        'breadcrumbs' => [
+        'titleBreadCrumb' => $title,
+'breadcrumbs' => [
             [
                 'title' => 'Dashboard',
                 'url' => route('dashboard'),
@@ -36,7 +37,7 @@
                 <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                    <h3 class="card-title"><i class="fas fa-calendar-week"></i> {{$title}}</h3>
+                    <h3 class="card-title">{{$title}}</h3>
                     <div class="card-tools">
                         <button type="button" class="btn btn-tool btn-sm" data-bs-toggle="modal" data-bs-target="#modal-tambah">
                         <i class="fas fa-plus"></i>
@@ -61,7 +62,7 @@
 
                                     <div class="form-group">
                                         <label for="mapel_id_tambah">Subject Name</label>
-                                        <select class="form-control select2" name="mapel_id" id="mapel_id_tambah" style="width: 100%;" required>
+                                        <select class="form-control form-select select2" name="mapel_id" id="mapel_id_tambah" style="width: 100%;" required>
                                             <option value="">-- Select Subject Name -- </option>
                                             @foreach($mapel as $data)
                                             <option value="{{$data->id}}"> {{$data->nama_mapel}}</option>
@@ -70,7 +71,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="kelas_id_tambah">Class</label>
-                                        <select class="form-control select2" name="kelas_id" id="kelas_id_tambah" style="width: 100%;" required>
+                                        <select class="form-control form-select select2" name="kelas_id" id="kelas_id_tambah" style="width: 100%;" required>
                                         <!--  -->
                                         </select>
                                     </div>
@@ -146,7 +147,7 @@
                     <div class="card-body">
                     <div class="table-responsive">
 
-                        <table id="zero_config" class="table table-striped table-valign-middle table-hover">
+                        <table id="zero_config" class="table table-striped table-valign-middle ">
                         <thead>
                             <tr>
                             <th>No</th>
@@ -226,7 +227,7 @@
                                                         <input type="hidden" name="pembelajaran_id" id="pembelajaran_id_edit{{$silabus->id}}">
                                                         <div class="form-group">
                                                             <label for="mapel_id_edit{{$silabus->id}}">Subject Name</label>
-                                                            <select class="form-control select2" name="mapel_id" id="mapel_id_edit{{$silabus->id}}" style="width: 100%;" required>
+                                                            <select class="form-control form-select select2" name="mapel_id" id="mapel_id_edit{{$silabus->id}}" style="width: 100%;" required>
                                                                 <option value="">-- Select Subject Name -- </option>
                                                                 @foreach($mapel as $data)
                                                                 <option value="{{$data->id}}"> {{$data->nama_mapel}}</option>
@@ -235,7 +236,7 @@
                                                         </div>
                                                         <div class="form-group">
                                                             <label for="kelas_id_edit{{$silabus->id}}">Class Name</label>
-                                                            <select class="form-control select2" name="kelas_id" id="kelas_id_edit{{$silabus->id}}" style="width: 100%;" required>
+                                                            <select class="form-control form-select select2" name="kelas_id" id="kelas_id_edit{{$silabus->id}}" style="width: 100%;" required>
                                                             <!--  -->
                                                             </select>
                                                         </div>

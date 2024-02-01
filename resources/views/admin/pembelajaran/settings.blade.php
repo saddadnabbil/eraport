@@ -41,7 +41,7 @@
                 <div class="col-sm-10">
                   <form action="{{ route('pembelajaran.settings') }}" method="POST">
                     @csrf
-                    <select class="form-control select2" name="kelas_id" style="width: 100%;" required onchange="this.form.submit();">
+                    <select class="form-control form-select select2" name="kelas_id" style="width: 100%;" required onchange="this.form.submit();">
                       <option value="" disabled> -- Pilih Kelas --</option>
                       <option value="" selected>{{$kelas->nama_kelas}} ( {{$kelas->tapel->tahun_pelajaran}}
                         @if($kelas->tapel->semester_id == 1)
@@ -68,7 +68,7 @@
               <form action="{{ route('pembelajaran.store') }}" method="POST">
                 @csrf
                 <div class="table-responsive">
-                  <table class="table table-bordered table-hover">
+                  <table class="table table-bordered">
                     <thead>
                       <tr>
                         <th>Kelas</th>
@@ -91,7 +91,7 @@
                           <input type="hidden" name="pembelajaran_id[]" value="{{$pembelajaran->id}}">
                         </td>
                         <td>
-                          <select class="form-control select2" name="update_guru_id[]" style="width: 100%;">
+                          <select class="form-control form-select select2" name="update_guru_id[]" style="width: 100%;">
                             <option value="">-- Pilih Guru -- </option>
                             @foreach($data_guru as $guru)
                             <option value="{{$guru->id}}" @if($pembelajaran->guru && $pembelajaran->guru->id == $guru->id) selected @endif>
@@ -101,7 +101,7 @@
                           </select>
                         </td>
                         <td>
-                          <select class="form-control" name="update_status[]">
+                          <select class="form-control form-select" name="update_status[]">
                             @if($pembelajaran->status == 1)
                             <option value="0">Tidak Aktif </option>
                             <option value="1" selected>Aktif </option>
@@ -129,7 +129,7 @@
                           <input type="hidden" name="mapel_id[]" value="{{$mapel->id}}">
                         </td>
                         <td>
-                          <select class="form-control select2" name="guru_id[]" style="width: 100%;">
+                          <select class="form-control form-select select2" name="guru_id[]" style="width: 100%;">
                             <option value="">-- Pilih Guru -- </option>
                             @foreach($data_guru as $guru)
                             <option value="{{$guru->id}}">{{$guru->nama_lengkap}}, {{$guru->gelar}}</option>
@@ -137,7 +137,7 @@
                           </select>
                         </td>
                         <td>
-                          <select class="form-control" name="status[]">
+                          <select class="form-control form-select" name="status[]">
                             <option value="0">Tidak Aktif </option>
                             <option value="1">Aktif </option>
                           </select>

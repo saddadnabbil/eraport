@@ -40,9 +40,11 @@
                 @endif
               </h3>
               <div class="card-tools">
-                <button type="button" class="btn btn-tool btn-sm" data-bs-toggle="modal" data-bs-target="#modal-tambah">
-                  <i class="fas fa-plus"></i>
-                </button>
+                <div data-bs-toggle="tooltip" title="Tambah" class="d-inline-block">
+                  <button type="button" class="btn btn-tool btn-sm" data-bs-toggle="modal" data-bs-target="#modal-tambah">
+                    <i class="fas fa-plus"></i>
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -98,7 +100,7 @@
 
             <div class="card-body">
               <div class="table-responsive">
-                <table id="zero_config" class="table table-striped table-valign-middle table-hover">
+                <table id="zero_config" class="table table-striped table-valign-middle ">
                   <thead>
                     <tr>
                       <th>No</th>

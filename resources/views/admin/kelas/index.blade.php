@@ -9,7 +9,8 @@
     <!-- Bread crumb and right sidebar toggle -->
     <!-- ============================================================== -->
     @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
-        'breadcrumbs' => [
+        'titleBreadCrumb' => $title,
+'breadcrumbs' => [
             [
                 'title' => 'Dashboard',
                 'url' => route('dashboard'),
@@ -37,9 +38,11 @@
             <div class="card-header">
               <h3 class="card-title"><i class="fas fa-user-tie"></i> {{$title}}</h3>
               <div class="card-tools">
-                <button type="button" class="btn btn-tool btn-sm" data-bs-toggle="modal" data-bs-target="#modal-tambah">
-                  <i class="fas fa-plus"></i>
-                </button>
+                <div data-bs-toggle="tooltip" title="Tambah" class="d-inline-block">
+                  <button type="button" class="btn btn-tool btn-sm" data-bs-toggle="modal" data-bs-target="#modal-tambah">
+                    <i class="fas fa-plus"></i>
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -68,7 +71,7 @@
                       <div class="form-group row">
                         <label for="tingkatan_id" class="col-sm-3 col-form-label">Tingkatan</label>
                         <div class="col-sm-9">
-                          <select class="form-control select2" name="tingkatan_id" style="width: 100%;" required>
+                          <select class="form-control form-select select2" name="tingkatan_id" style="width: 100%;" required>
                             <option value="">-- Pilih Tingkatan --</option>
                             @foreach($data_tingkatan as $tingkatan)
                               <option value="{{$tingkatan->id}}">{{$tingkatan->nama_tingkatan}}</option>
@@ -79,7 +82,7 @@
                       <div class="form-group row">
                         <label for="jurusan_id" class="col-sm-3 col-form-label">Jurusan Kelas</label>
                         <div class="col-sm-9">
-                          <select class="form-control select2" name="jurusan_id" style="width: 100%;" required>
+                          <select class="form-control form-select select2" name="jurusan_id" style="width: 100%;" required>
                             <option value="">-- Pilih Jurusan Kelas --</option>
                             @foreach($data_jurusan as $jurusan)
                               <option value="{{$jurusan->id}}">{{$jurusan->nama_jurusan}}</option>
@@ -96,7 +99,7 @@
                       <div class="form-group row">
                         <label for="guru_id" class="col-sm-3 col-form-label">Wali Kelas</label>
                         <div class="col-sm-9">
-                          <select class="form-control select2" name="guru_id" style="width: 100%;" required>
+                          <select class="form-control form-select select2" name="guru_id" style="width: 100%;" required>
                             <option value="">-- Pilih Wali Kelas --</option>
                             @foreach($data_guru as $guru)
                             <option value="{{$guru->id}}">{{$guru->nama_lengkap}}, {{$guru->gelar}}</option>
@@ -117,7 +120,7 @@
 
             <div class="card-body">
               <div class="table-responsive">
-                <table id="zero_config" class="table table-striped table-valign-middle table-hover">
+                <table id="zero_config" class="table table-striped table-valign-middle ">
                   <thead>
                     <tr>
                       <th>No</th>
@@ -181,7 +184,7 @@
                               <div class="form-group row">
                                 <label for="tingkatan_id" class="col-sm-3 col-form-label">Tingkatan</label>
                                 <div class="col-sm-9">
-                                  <select class="form-control select2" name="tingkatan_id" style="width: 100%;" required>
+                                  <select class="form-control form-select select2" name="tingkatan_id" style="width: 100%;" required>
                                     <option value=""></option>
                                     @foreach($data_tingkatan as $tingkatan)
                                       <option value="{{$tingkatan->id}}" @if($tingkatan->id == $kelas->tingkatan->id) selected @endif>{{$tingkatan->nama_tingkatan}}</option>
@@ -192,7 +195,7 @@
                               <div class="form-group row">
                                 <label for="jurusan_id" class="col-sm-3 col-form-label">Jurusan</label>
                                 <div class="col-sm-9">
-                                  <select class="form-control select2" name="jurusan_id" style="width: 100%;" required>
+                                  <select class="form-control form-select select2" name="jurusan_id" style="width: 100%;" required>
                                     <option value=""></option>
                                     @foreach($data_jurusan as $jurusan)
                                       <option value="{{$jurusan->id}}" @if($jurusan->id == $kelas->jurusan->id) selected @endif>{{$jurusan->nama_jurusan}}</option>
@@ -209,7 +212,7 @@
                               <div class="form-group row">
                                 <label for="guru_id" class="col-sm-3 col-form-label">Wali Kelas</label>
                                 <div class="col-sm-9">
-                                  <select class="form-control select2" name="guru_id" style="width: 100%;" required>
+                                  <select class="form-control form-select select2" name="guru_id" style="width: 100%;" required>
                                     <option value="" disabled>-- Pilih Wali Kelas -- </option>
                                     @foreach($data_guru as $guru)
                                     <option value="{{$guru->id}}" @if($guru->id == $kelas->guru->id) selected @endif>

@@ -10,12 +10,24 @@
   <!-- ============================================================== -->
   <div class="page-wrapper">
       @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
+        'titleBreadCrumb' => $title,
         'breadcrumbs' => [
-          [
-            'title' => 'Dashboard', 
-            'url' => route('dashboard'),
-            'active' => false
-          ]
+        [
+                'title' => 'Dashboard',
+                'url' => route('dashboard'),
+                'active' => true,
+            ],
+            [
+                'title' => 'Capaian Pelajaran',
+                'url' => route('guru.cp.index'),
+                'active' => false,
+            ],
+            [
+                'title' => $title,
+                'url' => '',
+                'active' => false,
+            ]
+
         ],
       ])
       <!-- ============================================================== -->
@@ -37,7 +49,7 @@
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Kelas</label>
                     <div class="col-sm-10">
-                      <select class="form-control select2" name="pembelajaran_id" style="width: 100%;" required onchange="this.form.submit();">
+                      <select class="form-control form-select select2" name="pembelajaran_id" style="width: 100%;" required onchange="this.form.submit();">
                         <option value="" disabled>-- Pilih Kelas --</option>
                         @foreach($data_pembelajaran as $pembelajaran)
                         <option value="{{$pembelajaran->id}}" @if ($pembelajaran->id==$pembelajaran_id ) selected @endif>{{$pembelajaran->mapel->nama_mapel}} ({{$pembelajaran->kelas->nama_kelas}} - {{$pembelajaran->kelas->tingkatan->nama_tingkatan}})</option>
@@ -56,13 +68,13 @@
                 <input type="hidden" name="pembelajaran_id" value="{{$pembelajaran_id}}">
 
                 <div class="table-responsive">
-                  <table class="table table-bordered table-hover">
+                  <table class="table table-bordered">
                     <thead>
                       <tr>
                         <th style="width: 100px;">Kode CP</th>
                         <th>Capaian Pembelajaran</th>
                         <th>Ringkasan Capaian Pembelajaran</th>
-                        <th style="width: 40px;">Aksi</th>
+                        <th >Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -81,7 +93,7 @@
                             <textarea class="form-control" name="ringkasan_cp[]" rows="2" required oninvalid="this.setCustomValidity('data tidak boleh kosong')" oninput="setCustomValidity('')" {{ $data->canDelete ? '' : 'disabled' }}>{{ $data->ringkasan_cp }}</textarea>
                           </td>
 
-                          <td>
+                          <td class="text-center">
                             <button 
                             type="button" 
                             class="btn btn-danger shadow btn-xs sharp" 

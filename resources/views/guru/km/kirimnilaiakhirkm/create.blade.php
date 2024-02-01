@@ -1,6 +1,3 @@
-@include('layouts.main.header')
-@include('layouts.sidebar.guru')
-
 @extends('layouts.main.header')
 
 @section('sidebar')
@@ -13,7 +10,8 @@
     <!-- Bread crumb and right sidebar toggle -->
     <!-- ============================================================== -->
     @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
-        'breadcrumbs' => [
+        'titleBreadCrumb' => $title,
+'breadcrumbs' => [
             [
                 'title' => 'Dashboard',
                 'url' => route('dashboard'),
@@ -39,7 +37,7 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title"><i class="fas fa-paper-plane"></i> {{$title}}</h3>
+              <h3 class="card-title">{{$title}}</h3>
             </div>
 
             <div class="card-body">
@@ -49,13 +47,13 @@
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Semester</label>
                     <div class="col-sm-4">
-                      <select class="form-control select2" name="semester_id" style="width: 100%;" disabled>
+                      <select class="form-control form-select select2" name="semester_id" style="width: 100%;" disabled>
                         <option value="{{$semester->id}}" selected>{{$semester->id}}</option>
                       </select>
                     </div>
                     <label class="col-sm-2 col-form-label">Term</label>
                     <div class="col-sm-4">
-                      <select class="form-control select2" name="term_id" style="width: 100%;" disabled>
+                      <select class="form-control form-select select2" name="term_id" style="width: 100%;" disabled>
                         <option value="{{$term->id}}" selected>{{$term->term}}</option>
                       </select>
                     </div>
@@ -63,7 +61,7 @@
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Mata Pelajaran</label>
                     <div class="col-sm-10">
-                      <select class="form-control select2" name="pembelajaran_id" style="width: 100%;" required onchange="this.form.submit();">
+                      <select class="form-control form-select select2" name="pembelajaran_id" style="width: 100%;" required onchange="this.form.submit();">
                         <option value="" disabled>-- Pilih Pembelajaran --</option>
                         @foreach($data_pembelajaran as $mapel)
                         <option value="{{$mapel->id}}" @if($mapel->id == $pembelajaran->id) selected @endif>{{$mapel->mapel->nama_mapel}} {{$mapel->kelas->nama_kelas}}</option>
@@ -80,9 +78,7 @@
                   <h3 class="card-title"><i class="fas fa-greater-than-equal"></i> Interval Predikat Berdasarkan KKM</h3>
 
                   <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                      <i class="fas fa-minus"></i>
-                    </button>
+
                   </div>
                 </div>
                 <div class="card-body">
@@ -125,7 +121,7 @@
               <!-- Nilai -->
               <div class="card">
                 <div class="card-header bg-primary">
-                  <h3 class="card-title"><i class="fas fa-file-invoice"></i> Nilai Raport</h3>
+                  <h3 class="card-title"> Nilai Raport</h3>
                 </div>
                 <form action="{{ route('kirimnilaiakhirkm.store') }}" method="POST">
                   @csrf
@@ -133,7 +129,7 @@
                   <input type="hidden" name="semester_id" value="{{$semester->id}}">
                   <div class="card-body">
                     <div class="table-responsive">
-                      <table class="table table-bordered table-hover table-striped">
+                      <table class="table table-bordered table-striped">
                         <thead class="bg-info">
                           <tr>
                             <th rowspan="2" class="text-center" style="vertical-align: middle">No</th>

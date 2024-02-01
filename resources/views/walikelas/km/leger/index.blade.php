@@ -13,7 +13,8 @@
     <!-- Bread crumb and right sidebar toggle -->
     <!-- ============================================================== -->
     @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
-        'breadcrumbs' => [
+        'titleBreadCrumb' => $title,
+'breadcrumbs' => [
             [
                 'title' => 'Dashboard',
                 'url' => route('dashboard'),
@@ -39,7 +40,7 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title"><i class="fas fa-table"></i> {{$title}}</h3>
+              <h3 class="card-title">{{$title}}</h3>
               <div class="card-tools">
                 <a href="{{ route('leger.show', $kelas->id) }}" class="btn btn-tool btn-sm" onclick="return confirm('Download {{$title}} ?')">
                   <i class="fas fa-download"></i>

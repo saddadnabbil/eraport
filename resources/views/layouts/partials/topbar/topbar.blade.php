@@ -65,25 +65,30 @@
                             <img src="{{ asset('assets/dist/img/avatar/default.png') }}" alt="user"
                                 class="rounded-circle" width="40" />
                             <span class="ms-2 d-none d-lg-inline-block"><span>Hello,</span>
-                                <span class="text-dark">
-                                    @if (Auth::user()->role == 1)
-                                        {{Auth::user()->admin->nama_lengkap}}
-                                    @elseif(Auth::user()->role == 2)
-                                        {{Auth::user()->guru->nama_lengkap}}
-                                    @elseif(Auth::user()->role == 3)
-                                        {{Auth::user()->siswa->nama_lengkap}}
-                                    @endif
-                                    </span>
-                                <i data-feather="chevron-down" class="svg-icon"></i></span>
+                            <span class="text-dark">
+                                @if (Auth::user()->role == 1)
+                                    {{Auth::user()->admin->nama_lengkap}}
+                                @elseif(Auth::user()->role == 2)
+                                    {{Auth::user()->guru->nama_lengkap}}
+                                @elseif(Auth::user()->role == 3)
+                                    {{Auth::user()->siswa->nama_lengkap}}
+                                @endif
+                            </span>
+                            <i data-feather="chevron-down" class="svg-icon"></i></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end dropdown-menu-right user-dd animated flipInY">
-                            <a class="dropdown-item" href="{{ route('profile') }}"><i data-feather="user"
-                                    class="svg-icon me-2 ms-1"></i> My
-                                Profile</a>
-                            <a class="dropdown-item" href="{{ route('gantipassword') }}"><i data-feather="settings"
-                                    class="svg-icon me-2 ms-1"></i>
-                                Change Password</a>
+                            <a class="dropdown-item" href="{{ route('profile') }}"><i data-feather="user" class="svg-icon me-2 ms-1"></i> My Profile</a>
+                            <a class="dropdown-item" href="{{ route('gantipassword') }}"><i data-feather="settings" class="svg-icon me-2 ms-1"></i>Change Password</a>
+                            
+                            @if(Auth::user()->role == 2)
+                                @if(session()->get('akses_sebagai') == 'Guru Mapel' && session()->get('cek_wali_kelas') == true)
+                                    <a class="dropdown-item" href="{{ route('akses') }}"><i data-feather="toggle-right" class="svg-icon me-2 ms-1"></i> Change to Homeroom</a>
+                                @elseif (session()->get('akses_sebagai') == 'Wali Kelas')
+                                    <a class="dropdown-item" href="{{ route('akses') }}"><i data-feather="toggle-left" class="svg-icon me-2 ms-1"></i> Change to Teacher</a>
+                                @endif
+                            @endif
                             <div class="dropdown-divider"></div>
+
                             <a 
                             class="dropdown-item text-danger text-center" 
                             href="{{ route('logout') }}" class="nav-link"

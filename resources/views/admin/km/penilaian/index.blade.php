@@ -9,15 +9,22 @@
     <!-- Bread crumb and right sidebar toggle -->
     <!-- ============================================================== -->
     @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
-        'breadcrumbs' => [
+        'titleBreadCrumb' => $title,
+'breadcrumbs' => [
             [
                 'title' => 'Dashboard',
                 'url' => route('dashboard'),
                 'active' => true,
             ],
             [
+                'title' => 'Penilaian',
+                'url' => route('penilaiankm.index'),
+                'active' => true,
+            ]
+            ,
+            [
                 'title' => $title,
-                'url' => route('user.index'),
+                'url' => '',
                 'active' => false,
             ]
         ]
@@ -55,7 +62,7 @@
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Kelas</label>
                     <div class="col-sm-10">
-                      <select class="form-control select2" name="pembelajaran_id" style="width: 100%;" required onchange="this.form.submit();">
+                      <select class="form-control form-select select2" name="pembelajaran_id" style="width: 100%;" required onchange="this.form.submit();">
                         <option value="" disabled>-- Pilih Kelas --</option>
                         @foreach($data_pembelajaran as $pembelajaran)
                         <option value="{{$pembelajaran->id}}" @if ($pembelajaran->id==$pembelajaran_id ) selected @endif>{{$pembelajaran->mapel->nama_mapel}} ({{$pembelajaran->kelas->nama_kelas}} - {{$pembelajaran->kelas->tingkatan->nama_tingkatan}})</option>
@@ -72,7 +79,7 @@
                 <input type="hidden" name="term_id" value="{{$term->id}}">
                 <input type="hidden" name="semester_id" value="{{$semester->id}}">
                 <div class="table-responsive">
-                  <table class="table table-bordered table-hover">
+                  <table class="table table-bordered">
                     <thead class="bg-primary">
                       <tr>
                         @php

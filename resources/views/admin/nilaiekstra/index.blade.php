@@ -9,7 +9,8 @@
     <!-- Bread crumb and right sidebar toggle -->
     <!-- ============================================================== -->
     @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
-        'breadcrumbs' => [
+        'titleBreadCrumb' => $title,
+'breadcrumbs' => [
             [
                 'title' => 'Dashboard',
                 'url' => route('dashboard'),
@@ -45,7 +46,7 @@
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Ekstrakulikuler</label>
                     <div class="col-sm-10">
-                      <select class="form-control select2" name="ekstrakulikuler_id" style="width: 100%;" required>
+                      <select class="form-control form-select select2" name="ekstrakulikuler_id" style="width: 100%;" required>
                         <option value="">-- Pilih Ekstrakulikuler --</option>
                         @foreach($data_ekstrakulikuler as $ekstrakulikuler)
                         <option value="{{$ekstrakulikuler->id}}">{{$ekstrakulikuler->nama_ekstrakulikuler}}</option>
@@ -56,7 +57,7 @@
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Kelas</label>
                     <div class="col-sm-10">
-                      <select class="form-control select2" name="kelas_id" style="width: 100%;" required onchange="this.form.submit();">
+                      <select class="form-control form-select select2" name="kelas_id" style="width: 100%;" required onchange="this.form.submit();">
                         <!--  -->
                       </select>
                     </div>

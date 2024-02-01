@@ -15,7 +15,8 @@
     <!-- Bread crumb and right sidebar toggle -->
     <!-- ============================================================== -->
     @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
-        'breadcrumbs' => [
+        'titleBreadCrumb' => $title,
+'breadcrumbs' => [
             [
                 'title' => 'Dashboard',
                 'url' => route('dashboard'),
@@ -162,7 +163,7 @@
                       <div class="form-group row">
                         <label class=" col-sm-3 col-form-label ">Tingkatan</label>
                         <div class="col-sm-3">
-                          <select class="form-control" required disabled>
+                          <select class="form-control form-select" required disabled>
                             <option value=""></option>
                             @foreach ($data_tingkatan as $tingkatan)
                               <option value="{{$tingkatan->id}}" @if ($tingkatan->id == $siswa->tingkatan_id) selected @endif>{{$tingkatan->nama_tingkatan}}</option>
@@ -171,7 +172,7 @@
                         </div>
                         <label class="col-sm-2 col-form-label ">Kelas</label>
                         <div class="col-sm-4">
-                          <select class="form-control"  required disabled>
+                          <select class="form-control form-select"  required disabled>
                             <option value=""></option>
                             <option value="{{ $siswa->kelas ? $siswa->kelas->id : 0 }}" selected>
                               {{ $siswa->kelas ? $siswa->kelas->nama_kelas : '' }}
@@ -187,7 +188,7 @@
                         </div>
                         <label class="col-sm-2 col-form-label ">Jurusan</label>
                         <div class="col-sm-4">
-                          <select class="form-control" required disabled>
+                          <select class="form-control form-select" required disabled>
                             <option value=""></option>
                             <option value="{{ $siswa->kelas && $siswa->kelas->jurusan ? $siswa->kelas->jurusan->id : 0 }}" selected>
                                 {{ $siswa->kelas && $siswa->kelas->jurusan ? $siswa->kelas->jurusan->nama_jurusan : '' }}
@@ -219,7 +220,7 @@
                         </div>
                         <label for="bloodtype" class="col-sm-2 col-form-label">Gol. Darah</label>
                         <div class="col-sm-4">
-                          <select class="form-control" name="blood_type" required disabled>
+                          <select class="form-control form-select" name="blood_type" required disabled>
                             <option value=""></option>
                             <option value="A" @if ( $siswa->blood_type =='A' ) selected @endif>A</option>
                             <option value="B" @if ( $siswa->blood_type =='B' ) selected @endif>B</option>
@@ -241,7 +242,7 @@
                       <div class="form-group row">
                         <label for="agama" class="col-sm-3 col-form-label">Agama</label>
                         <div class="col-sm-3">
-                          <select class="form-control" required disabled>
+                          <select class="form-control form-select" required disabled>
                             <option value=""></option>
                             <option value="1" @if ( $siswa->agama =='1' ) selected @endif>Islam</option>
                             <option value="2" @if ( $siswa->agama =='2' ) selected @endif>Protestan</option>
@@ -316,7 +317,7 @@
                       <div class="form-group row">
                         <label for="tinggal_bersama" class="col-sm-3 col-form-label">Tinggal Bersama</label>
                         <div class="col-sm-4">
-                          <select class="form-control" name="tinggal_bersama" disabled>
+                          <select class="form-control form-select" name="tinggal_bersama" disabled>
                             <option value=""></option>
                             <option value="Parents" @if ( $siswa->tinggal_bersama =='Parents' ) selected @endif>Parents</option>
                             <option value="Others" @if ( $siswa->tinggal_bersama =='Others' ) selected @endif>Others</option>
@@ -485,7 +486,7 @@
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Agama</label>
                         <div class="col-sm-9">
-                          <select class="form-control" disabled>
+                          <select class="form-control form-select" disabled>
                             <option selected>-- Pilih Agama --</option>
                             <option value="1" @if($siswa->agama_ayah == 1) selected @endif>Islam</option>
                             <option value="2" @if($siswa->agama_ayah == 2) selected @endif>Kristen</option>
@@ -563,7 +564,7 @@
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Agama</label>
                         <div class="col-sm-9">
-                          <select class="form-control" disabled>
+                          <select class="form-control form-select" disabled>
                             <option selected>-- Pilih Agama --</option>
                             <option value="1" @if ( $siswa->agama_ibu =='1' ) selected @endif>Islam</option>
                             <option value="2" @if ( $siswa->agama_ibu =='2' ) selected @endif>Kristen</option>
@@ -641,7 +642,7 @@
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Agama</label>
                         <div class="col-sm-9">
-                          <select class="form-control" disabled>
+                          <select class="form-control form-select" disabled>
                             <option selected>-- Pilih Agama --</option>
                             <option value="1" @if ( $siswa->agama_wali =='1' ) selected @endif>Islam</option>
                             <option value="2" @if ( $siswa->agama_wali =='2' ) selected @endif>Kristen</option>
@@ -805,7 +806,7 @@
                         <div class="form-group row">
                           <label class=" col-sm-3 col-form-label required">Tingkatan</label>
                           <div class="col-sm-3">
-                            <select class="form-control" id="kelas" name="tingkatan_id" required>
+                            <select class="form-control form-select" id="kelas" name="tingkatan_id" required>
                               <option value="">-- Pilih Tingkatan --</option>
                               @foreach ($data_tingkatan as $tingkatan)
                                 <option value="{{$tingkatan->id}}" @if ($tingkatan->id == $siswa->tingkatan_id) selected @endif>{{$tingkatan->nama_tingkatan}}</option>
@@ -814,7 +815,7 @@
                           </div>
                           <label class="col-sm-2 col-form-label required">Kelas</label>
                           <div class="col-sm-4">
-                            <select class="form-control" id="kelas_id" name="kelas_id" required>
+                            <select class="form-control form-select" id="kelas_id" name="kelas_id" required>
                               <option value="">-- Pilih Kelas --</option>
                               @if ($siswa->kelas)
                                 <option value="{{ $siswa->kelas->id }}" selected>
@@ -833,7 +834,7 @@
                           </div>
                           <label class="col-sm-2 col-form-label required">Jurusan</label>
                           <div class="col-sm-4">
-                            <select class="form-control" id="jurusan_id" name="jurusan_id" required>
+                            <select class="form-control form-select" id="jurusan_id" name="jurusan_id" required>
                               <option value="">-- Pilih Kelas --</option>
                               @if ($siswa->kelas)
                               <option value="{{ $siswa->kelas->jurusan->id }}" selected>
@@ -867,7 +868,7 @@
                           </div>
                           <label for="bloodtype" class="col-sm-2 col-form-label">Gol. Darah</label>
                           <div class="col-sm-4">
-                            <select class="form-control" name="blood_type">
+                            <select class="form-control form-select" name="blood_type">
                               <option value="">-- Pilih Gol. Darah --</option>
                               <option value="A" @if ( $siswa->blood_type =='A' ) selected @endif>A</option>
                               <option value="B" @if ( $siswa->blood_type =='B' ) selected @endif>B</option>
@@ -891,7 +892,7 @@
                         <div class="form-group row">
                           <label for="agama" class="col-sm-3 col-form-label required">Agama</label>
                           <div class="col-sm-3">
-                            <select class="form-control" name="agama" required>
+                            <select class="form-control form-select" name="agama" required>
                               <option value="">-- Pilih Agama --</option>
                               <option value="1" @if ( $siswa->agama =='1' ) selected @endif>Islam</option>
                               <option value="2" @if ( $siswa->agama =='2' ) selected @endif>Protestan</option>
@@ -980,7 +981,7 @@
                         <div class="form-group row">
                           <label for="tinggal_bersama" class="col-sm-3 col-form-label">Tinggal Bersama</label>
                           <div class="col-sm-4">
-                            <select class="form-control" name="tinggal_bersama">
+                            <select class="form-control form-select" name="tinggal_bersama">
                               <option value="">-- Pilih Tinggal Bersama --</option>
                               <option value="Parents" @if ( $siswa->tinggal_bersama =='Parents' ) selected @endif>Parents</option>
                               <option value="Others" @if ( $siswa->tinggal_bersama =='Others' ) selected @endif>Others</option>
@@ -1146,7 +1147,7 @@
                         <div class="form-group row">
                           <label for="agama_ayah" class="col-sm-3 col-form-label">Agama</label>
                           <div class="col-sm-9">
-                            <select class="form-control" id="agama_ayah" name="agama_ayah">
+                            <select class="form-control form-select" id="agama_ayah" name="agama_ayah">
                               <option selected>-- Pilih Agama --</option>
                               <option value="1" @if($siswa->agama_ayah == 1) selected @endif>Islam</option>
                               <option value="2" @if($siswa->agama_ayah == 2) selected @endif>Kristen</option>
@@ -1223,7 +1224,7 @@
                         <div class="form-group row">
                           <label for="agama_ibu" class="col-sm-3 col-form-label">Agama</label>
                           <div class="col-sm-9">
-                            <select class="form-control" id="agama_ibu" name="agama_ibu">
+                            <select class="form-control form-select" id="agama_ibu" name="agama_ibu">
                               <option selected>-- Pilih Agama --</option>
                               <option value="1" @if ( $siswa->agama_ibu =='1' ) selected @endif>Islam</option>
                               <option value="2" @if ( $siswa->agama_ibu =='2' ) selected @endif>Kristen</option>
@@ -1300,7 +1301,7 @@
                         <div class="form-group row">
                           <label for="agama_wali" class="col-sm-3 col-form-label">Agama</label>
                           <div class="col-sm-9">
-                            <select class="form-control" id="agama_wali" name="agama_wali">
+                            <select class="form-control form-select" id="agama_wali" name="agama_wali">
                               <option selected>-- Pilih Agama --</option>
                               <option value="1" @if ( $siswa->agama_wali =='1' ) selected @endif>Islam</option>
                               <option value="2" @if ( $siswa->agama_wali =='2' ) selected @endif>Kristen</option>
@@ -1376,7 +1377,7 @@
                   <div class="form-group row">
                     <label for="keluar_karena" class="col-sm-3 col-form-label">Keluar Karena</label>
                     <div class="col-sm-9 pt-1">
-                      <select class="form-control select2" name="keluar_karena" style="width: 100%;" required>
+                      <select class="form-control form-select select2" name="keluar_karena" style="width: 100%;" required>
                         <option value="">-- Pilih Jenis Keluar --</option>
                         @if($siswa->kelas->tingkatan_id == $tingkatan_akhir && $siswa->kelas->tapel->semester->semester == 2)
                           <option value="Lulus">Lulus</option>

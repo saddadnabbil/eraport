@@ -13,7 +13,8 @@
     <!-- Bread crumb and right sidebar toggle -->
     <!-- ============================================================== -->
     @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
-        'breadcrumbs' => [
+        'titleBreadCrumb' => $title,
+'breadcrumbs' => [
             [
                 'title' => 'Dashboard',
                 'url' => route('dashboard'),
@@ -50,7 +51,7 @@
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Term</label>
                     <div class="col-sm-4">
-                      <select class="form-control" name="term_id" style="width: 100%;" required>
+                      <select class="form-control form-select" name="term_id" style="width: 100%;" required>
                           <option value="">-- Pilih Term --</option>
                           <option value="1">1</option>
                           <option value="2">2</option>
@@ -58,7 +59,7 @@
                     </div>
                     <label class="col-sm-2 col-form-label">Semester</label>
                     <div class="col-sm-4">
-                      <select class="form-control" name="semester_id" style="width: 100%;" required onchange="this.form.submit()">
+                      <select class="form-control form-select" name="semester_id" style="width: 100%;" required onchange="this.form.submit()">
                           <option value="">-- Pilih Semester --</option>
                           <option value="1">1</option>
                           <option value="2">2</option>

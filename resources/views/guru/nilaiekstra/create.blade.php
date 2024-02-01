@@ -1,6 +1,3 @@
-@include('layouts.main.header')
-@include('layouts.sidebar.guru')
-
 @extends('layouts.main.header')
 
 @section('sidebar')
@@ -13,7 +10,8 @@
     <!-- Bread crumb and right sidebar toggle -->
     <!-- ============================================================== -->
     @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
-        'breadcrumbs' => [
+        'titleBreadCrumb' => $title,
+'breadcrumbs' => [
             [
                 'title' => 'Dashboard',
                 'url' => route('dashboard'),
@@ -49,7 +47,7 @@
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Ekstrakulikuler</label>
                     <div class="col-sm-10">
-                      <select class="form-control select2" name="ekstrakulikuler_id" style="width: 100%;" required>
+                      <select class="form-control form-select select2" name="ekstrakulikuler_id" style="width: 100%;" required>
                         <option value="" disabled>-- Pilih Ekstrakulikuler --</option>
                         @foreach($data_ekstrakulikuler as $ekstra)
                         <option value="{{$ekstra->id}}" @if($ekstrakulikuler->id == $ekstra->id) selected @endif>{{$ekstra->nama_ekstrakulikuler}}</option>
@@ -60,7 +58,7 @@
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Kelas</label>
                     <div class="col-sm-10">
-                      <select class="form-control select2" name="kelas_id" style="width: 100%;" required onchange="this.form.submit();">
+                      <select class="form-control form-select select2" name="kelas_id" style="width: 100%;" required onchange="this.form.submit();">
                         <option value="" disabled>-- Pilih Kelas --</option>
                         @foreach($data_kelas as $kls)
                         <option value="{{$kls->id}}" @if($kls->id == $kelas->id) selected @endif>{{$kls->nama_kelas}}</option>
@@ -108,7 +106,7 @@
                               <td class="text-center">{{$anggota_ekstrakulikuler->anggota_kelas->kelas->nama_kelas}}</td>
                               <td class="text-center">{{$anggota_ekstrakulikuler->ekstrakulikuler->nama_ekstrakulikuler}}</td>
                               <td>
-                                <select class="form-control" name="nilai[]" style="width: 100%;" required oninvalid="this.setCustomValidity('silakan pilih item dalam daftar')" oninput="setCustomValidity('')">
+                                <select class="form-control form-select" name="nilai[]" style="width: 100%;" required oninvalid="this.setCustomValidity('silakan pilih item dalam daftar')" oninput="setCustomValidity('')">
                                   @if(is_null($anggota_ekstrakulikuler->nilai))
                                   <option value="A">A</option>
                                   <option value="B" selected>B</option>
@@ -157,10 +155,7 @@
     </div>
 @endsection
 
-@section('footer')
-  @include('layouts.main.footer')
-@endsection
-
+@push('custom-scripts')
 <!-- ajax -->
 <script type="text/javascript">
   $(document).ready(function() {
@@ -209,3 +204,10 @@
         }).trigger('change');
     });
 </script>
+  
+@endpush
+
+@section('footer')
+  @include('layouts.main.footer')
+@endsection
+

@@ -31,11 +31,13 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title"><i class="fas fa-calendar-week"></i> {{$title}}</h3>
+              <h3 class="card-title">{{$title}}</h3>
               <div class="card-tools">
-                <button type="button" class="btn btn-tool btn-sm" data-bs-toggle="modal" data-bs-target="#modal-tambah">
-                  <i class="fas fa-plus"></i>
-                </button>
+                <div data-bs-toggle="tooltip" title="Tambah" class="d-inline-block">
+                  <button type="button" class="btn btn-tool btn-sm" data-bs-toggle="modal" data-bs-target="#modal-tambah">
+                    <i class="fas fa-plus"></i>
+                  </button>
+                </div>
               </div>
             </div>
 

@@ -2512,7 +2512,7 @@ progress {
   font-weight: 400;
   line-height: 1.5;
   color: #4F5467;
-  background-color: transparent;
+  /* background-color: transparent; */
   background-clip: padding-box;
   border: var(--bs-border-width) solid #e9ecef;
   appearance: none;
@@ -2533,7 +2533,7 @@ progress {
 }
 .form-control:focus {
   color: #4F5467;
-  background-color: transparent;
+  /* background-color: transparent; */
   border-color: rgba(0, 0, 0, 0.25);
   outline: 0;
   box-shadow: inset 0 1px 2px rgba(var(--bs-body-color-rgb), 0.075), transparent;
@@ -2661,7 +2661,7 @@ textarea.form-control-lg {
   font-weight: 400;
   line-height: 1.5;
   color: #4F5467;
-  background-color: transparent;
+  /* background-color: transparent; */
   background-image: var(--bs-form-select-bg-img), var(--bs-form-select-bg-icon, none);
   background-repeat: no-repeat;
   background-position: right 12px center;
@@ -17277,9 +17277,9 @@ strong {
   display: flex;
 }
 
-.product-description {
+/* .product-description {
   padding: 30px 30px 20px;
-}
+} */
 
 .list-icon {
   height: 19px;
@@ -18213,5 +18213,63 @@ thead.bg-info tr, thead.bg-primary tr {
 }
 
 .bg-gray, .bg-gray>a {
+  color: #fff!important;
+}
+
+.product-img {
+  float: left;
+}
+
+.products-list .product-img img {
+  height: 50px;
+  width: 50px;
+}
+
+.products-list .product-title {
+  font-weight: 600;
+}
+
+.products-list .product-info {
+  margin-left: 60px;
+}
+
+.products-list .product-description {
+  color: #6c757d;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.float-right {
+  float: right!important;
+}
+
+.w-80 {
+  width: 80%;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+tbody tr td {
+  vertical-align: middle;
+}
+
+tbody tr td.red.nilai-proses {
+  text-align: center;
+}
+
+th.red, td.red  {
+  background-color: var(--bs-danger)!important;
+  color: var(--bs-light);
+}
+
+td.red:hover {
+  background-color: var(--bs-danger)!important;
+}
+
+.card-header.bg-primary .card-title, .card-header.bg-success .card-title  {
   color: #fff!important;
 }

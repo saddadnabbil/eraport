@@ -9,7 +9,8 @@
     <!-- Bread crumb and right sidebar toggle -->
     <!-- ============================================================== -->
     @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
-        'breadcrumbs' => [
+        'titleBreadCrumb' => $title,
+'breadcrumbs' => [
             [
                 'title' => 'Dashboard',
                 'url' => route('dashboard'),
@@ -37,11 +38,13 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title"><i class="fas fa-calendar-week"></i> {{$title}}</h3>
+                <h3 class="card-title">{{$title}}</h3>
                 <div class="card-tools">
-                  <button type="button" class="btn btn-tool btn-sm" data-bs-toggle="modal" data-bs-target="#modal-tambah">
-                    <i class="fas fa-plus"></i>
-                  </button>
+                  <div data-bs-toggle="tooltip" title="Tambah" class="d-inline-block">
+                    <button type="button" class="btn btn-tool btn-sm" data-bs-toggle="modal" data-bs-target="#modal-tambah">
+                      <i class="fas fa-plus"></i>
+                    </button>
+                  </div>
                 </div>
               </div>
 
@@ -67,7 +70,7 @@
                         <div class="form-group row">
                           <label for="term_id" class="col-sm-3 col-form-label">Term</label>
                           <div class="col-sm-9">
-                            <select class="form-control select2" name="term_id" id="term_id">
+                            <select class="form-control form-select select2" name="term_id" id="term_id">
                               <option value="1">1</option>
                               <option value="2">2</option>
                             </select>
@@ -76,7 +79,7 @@
                         <div class="form-group row">
                           <label for="semester_id" class="col-sm-3 col-form-label">Semester</label>
                           <div class="col-sm-9">
-                            <select class="form-control select2" name="semester_id" id="semester_id">
+                            <select class="form-control form-select select2" name="semester_id" id="semester_id">
                             <option value="1">1</option>
                             <option value="2">2</option>
                             </select>
@@ -96,7 +99,7 @@
               <div class="card-body">
                 <div class="table-responsive">
 
-                  <table id="zero_config" class="table table-striped table-valign-middle table-hover">
+                  <table id="zero_config" class="table table-striped table-valign-middle ">
                     <thead>
                       <tr>
                         <th>No</th>

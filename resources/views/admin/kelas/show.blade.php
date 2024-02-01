@@ -16,7 +16,8 @@
   <!-- ============================================================== -->
   <div class="page-wrapper">
     @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
-      'breadcrumbs' => [
+      'titleBreadCrumb' => $title,
+'breadcrumbs' => [
         [
           'title' => 'Dashboard', 
           'url' => route('dashboard'),
@@ -59,9 +60,11 @@
                 @endif
               </h3>
               <div class="card-tools">
-                <button type="button" class="btn btn-tool btn-sm" data-bs-toggle="modal" data-bs-target="#modal-tambah">
-                  <i class="fas fa-plus"></i>
-                </button>
+                <div data-bs-toggle="tooltip" title="Tambah" class="d-inline-block">
+                  <button type="button" class="btn btn-tool btn-sm" data-bs-toggle="modal" data-bs-target="#modal-tambah">
+                    <i class="fas fa-plus"></i>
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -101,7 +104,7 @@
                             <div class="form-group row pt-3 pb-0 justify-content-end">
                               <label for="pendaftaran" class="col-sm-2 col-form-label">Jenis Pendaftaran</label>
                               <div class="col-sm-4">
-                                <select class="form-control" name="pendaftaran" required>
+                                <select class="form-control form-select" name="pendaftaran" required>
                                   <option value="">-- Pilih Jenis Pendaftaran --</option>
                                   <option value="2">Pindahan</option>
                                   @if($kelas->tapel->semester_id == 1)
@@ -133,7 +136,7 @@
 
             <div class="card-body">
               <div class="table-responsive">
-                <table id="zero_config" class="table table-striped table-valign-middle table-hover">
+                <table id="zero_config" class="table table-striped table-valign-middle ">
                   <thead>
                     <tr>
                       <th>No</th>
