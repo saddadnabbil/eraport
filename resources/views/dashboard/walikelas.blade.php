@@ -189,9 +189,9 @@
                       @endif
 
                       @if($riwayat_login->status_login == true)
-                      <span class="badge badge-success float-right">Online</span>
+                      <span class="badge bg-success float-right">Online</span>
                       @else
-                      <span class="badge badge-warning float-right">Offline</span>
+                      <span class="badge bg-warning float-right">Offline</span>
                       @endif
 
                     </a>

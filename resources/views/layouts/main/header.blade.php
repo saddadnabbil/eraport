@@ -5,11 +5,19 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <!-- Favicon icon -->
-        <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/images/favicon.png') }}" />
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/dist/img/logo.png') }}" />
         <title>{{$title}} | {{ env('APP_NAME') }}</title>
         
         <!-- CSS Kustom -->
         <link href="{{ asset('dist/css/style.min.css') }}" rel="stylesheet" />
+
+        <!-- Summernote -->
+        <link rel="stylesheet" href="{{ asset('assets/libs/summernote/summernote-bs4.css') }}">
+
+        {{-- datatables --}}
+        <!-- <link href="../assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet"> -->
+        <link rel="stylesheet" href="{{ asset('assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/extra-libs/datatables.net-bs4/css/responsive.dataTables.min.css') }}">
 
         {{-- Style CSS untuk halaman ini --}}
         @yield('styles')

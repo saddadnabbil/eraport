@@ -75,8 +75,8 @@
                       <div class="form-group row">
                         <label for="jenis_prestasi" class="col-sm-3 col-form-label">Jenis Prestasi</label>
                         <div class="col-sm-9 pt-1">
-                          <label class="form-check-label mr-3"><input type="radio" name="jenis_prestasi" value="1" required> Akademik</label>
-                          <label class="form-check-label mr-3"><input type="radio" name="jenis_prestasi" value="2" required> Non Akademik</label>
+                          <label class="form-check-label me-3"><input type="radio" name="jenis_prestasi" value="1" required> Akademik</label>
+                          <label class="form-check-label me-3"><input type="radio" name="jenis_prestasi" value="2" required> Non Akademik</label>
                         </div>
                       </div>
 
@@ -114,7 +114,7 @@
             <!-- End Modal tambah -->
             <div class="card-body">
               <div class="table-responsive">
-                <table id="example1" class="table table-valign-middle table-hover">
+                <table id="zero_config" class="table table-valign-middle table-hover">
                   <thead>
                     <tr>
                       <th>No</th>
@@ -206,8 +206,8 @@
                               <div class="form-group row">
                                 <label for="jenis_prestasi" class="col-sm-3 col-form-label">Jenis Prestasi</label>
                                 <div class="col-sm-9 pt-1">
-                                  <label class="form-check-label mr-3"><input type="radio" name="jenis_prestasi" value="1" {{ $prestasi->jenis_prestasi == 1 ? 'checked' : ''}} required> Akademik</label>
-                                  <label class="form-check-label mr-3"><input type="radio" name="jenis_prestasi" value="2" {{ $prestasi->jenis_prestasi == 2 ? 'checked' : ''}} required> Non Akademik</label>
+                                  <label class="form-check-label me-3"><input type="radio" name="jenis_prestasi" value="1" {{ $prestasi->jenis_prestasi == 1 ? 'checked' : ''}} required> Akademik</label>
+                                  <label class="form-check-label me-3"><input type="radio" name="jenis_prestasi" value="2" {{ $prestasi->jenis_prestasi == 2 ? 'checked' : ''}} required> Non Akademik</label>
                                 </div>
                               </div>
 
@@ -255,10 +255,12 @@
       </div>
       <!-- /.row -->
     </div>
-    <!--/. container-fluid -->
-  </section>
-  <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
+          <!-- ============================================================== -->
+      <!-- End Container fluid  -->
+      <!-- ============================================================== -->
+    </div>
+@endsection
 
-@include('layouts.main.footer')
+@section('footer')
+  @include('layouts.main.footer')
+@endsection

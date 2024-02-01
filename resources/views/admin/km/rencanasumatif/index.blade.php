@@ -3,29 +3,33 @@
   @include('layouts.sidebar.admin')
 @endsection
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <div class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1 class="m-0 text-dark">{{$title}}</h1>
-        </div><!-- /.col -->
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item "><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active">{{$title}}</li>
-          </ol>
-        </div><!-- /.col -->
-      </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-  </div>
-  <!-- /.content-header -->
+@section('content')
+  <div class="page-wrapper">
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
+        'breadcrumbs' => [
+            [
+                'title' => 'Dashboard',
+                'url' => route('dashboard'),
+                'active' => true,
+            ],
+            [
+                'title' => $title,
+                'url' => route('user.index'),
+                'active' => false,
+            ]
+        ]
+    ])
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
 
-  <!-- Main content -->
-  <section class="content">
-    <div class="container-fluid">
+      <!-- ============================================================== -->
+      <!-- Container fluid  -->
+      <!-- ============================================================== -->
+      <div class="container-fluid">
       <!-- ./row -->
       <div class="row">
         <div class="col-12">
@@ -36,7 +40,7 @@
 
             <div class="card-body">
               <div class="table-responsive">
-                <table id="example1" class="table table-striped table-valign-middle table-hover">
+                <table id="zero_config" class="table table-striped table-valign-middle table-hover">
                   <thead>
                     <tr>
                       <th>No</th>
@@ -56,9 +60,9 @@
                       <td>{{$penilaian->kelas->nama_kelas}}</td>
                       <td>
                         @if($penilaian->jumlah_rencana_penilaian == 0)
-                        <span class="badge badge-danger">Belum ada rencana penilaian</span>
+                        <span class="badge bg-danger">Belum ada rencana penilaian</span>
                         @else
-                        <span class="badge badge-success"><b>{{$penilaian->jumlah_rencana_penilaian}}</b> penilaian</span>
+                        <span class="badge bg-success"><b>{{$penilaian->jumlah_rencana_penilaian}}</b> penilaian</span>
                         @endif
                       </td>
                       <td>
@@ -88,10 +92,12 @@
       </div>
       <!-- /.row -->
     </div>
-    <!--/. container-fluid -->
-  </section>
-  <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
+          <!-- ============================================================== -->
+      <!-- End Container fluid  -->
+      <!-- ============================================================== -->
+    </div>
+@endsection
 
-@include('layouts.main.footer')
+@section('footer')
+  @include('layouts.main.footer')
+@endsection

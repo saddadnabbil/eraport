@@ -3,45 +3,47 @@
   @include('layouts.sidebar.admin')
 @endsection
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <div class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1 class="m-0 text-dark">{{$title}}</h1>
-        </div><!-- /.col -->
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item "><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active">{{$title}}</li>
-          </ol>
-        </div><!-- /.col -->
-      </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-  </div>
-  <!-- /.content-header -->
 
-  <!-- Main content -->
-  <section class="content">
-    <div class="container-fluid">
+@section('content')
+  <div class="page-wrapper">
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
+        'breadcrumbs' => [
+            [
+                'title' => 'Dashboard',
+                'url' => route('dashboard'),
+                'active' => true,
+            ],
+            [
+                'title' => $title,
+                'url' => route('tapel.index'),
+                'active' => false,
+            ]
+        ]
+    ])
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
 
-      {{-- select year --}}
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="container-fluid">
       <div class="row">
         <div class="col-12">
           <div class="card">
             <div class="card-header">
               <h3 class="card-title">Setting Of The School Year</h3>
-
             </div>
             <div class="card-body">
               <form action="{{ route('tapel.setAcademicYear') }}" method="POST">
                   @csrf
                   <div class="form-group row border-bottom">
                       <div class="col-6 form-inline" style="margin-bottom: 14px">
-                        <label class="mr-4 font-weight-normal"  for="select_tapel_id">Tahun Pelajaran</label>
-                        <select class="custom-select" name="select_tapel_id">
+                        <label class="me-4 font-weight-normal"  for="select_tapel_id">Tahun Pelajaran</label>
+                        <select class="custom-select form-control" name="select_tapel_id">
                           {{-- <option selected>{{ $tapel_id }}</option> --}}
                           @foreach($data_tapel as $tapel)
                               <option value="{{ $tapel->id }}" @if ($tapel->id == $sekolah->tapel_id) selected @endif>
@@ -69,8 +71,8 @@
                             
                           @else
                             <div class="col-2 form-inline">
-                              <label class="mr-4 font-weight-normal" for="select_semester_{{ str_replace(' ', '', strtolower($tingkatan->nama_tingkatan)) }}_id">Semester</label>
-                              <select class="custom-select" name="select_semester_{{ str_replace(' ', '', strtolower($tingkatan->nama_tingkatan)) }}_id">
+                              <label class="me-4 font-weight-normal" for="select_semester_{{ str_replace(' ', '', strtolower($tingkatan->nama_tingkatan)) }}_id">Semester</label>
+                              <select class="custom-select form-control" name="select_semester_{{ str_replace(' ', '', strtolower($tingkatan->nama_tingkatan)) }}_id">
                                 @foreach($data_semester as $semester)
                                   <option value="{{ $semester->id }}" @if ($semester->id == $tingkatan->semester_id) selected @endif>
                                     {{ $semester->semester }}                   
@@ -81,8 +83,8 @@
                           @endif
     
                           <div class="col-2 form-inline">
-                            <label class="mr-4 font-weight-normal" for="select_term_id">Term</label>
-                            <select class="custom-select" name="select_term_{{ str_replace(' ', '', strtolower($tingkatan->nama_tingkatan)) }}_id">
+                            <label class="me-4 font-weight-normal" for="select_term_id">Term</label>
+                            <select class="custom-select form-control" name="select_term_{{ str_replace(' ', '', strtolower($tingkatan->nama_tingkatan)) }}_id">
                                   @foreach($data_term as $term)
                                     <option value="{{ $term->id }}" @if ($term->id == $tingkatan->term_id) selected @endif>
                                       {{ $term->term }}                   
@@ -99,9 +101,8 @@
                   </div>
               </form>
             </div>
-            </div>
-          </div>        
-        </div>
+          </div>
+        </div>        
       </div>
 
       {{-- data table --}}
@@ -150,8 +151,7 @@
 
             <div class="card-body">
               <div class="table-responsive">
-
-                <table id="example1" class="table table-striped table-valign-middle table-hover">
+                <table id="zero_config" class="table table-striped table-valign-middle table-hover">
                   <thead>
                     <tr>
                       <th>No</th>
@@ -224,10 +224,14 @@
       </div>
       <!-- /.row -->
     </div>
-    <!--/. container-fluid -->
-  </section>
-  <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
+    <!-- ============================================================== -->
+    <!-- End Container fluid  -->
+    <!-- ============================================================== -->
+  </div>
+@endsection
 
-@include('layouts.main.footer')
+
+
+@section('footer')
+  @include('layouts.main.footer')
+@endsection

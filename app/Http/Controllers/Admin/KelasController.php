@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\AnggotaKelas;
+use App\CatatanWaliKelas;
 use App\Guru;
 use App\Http\Controllers\Controller;
 use App\Jurusan;
@@ -209,14 +210,18 @@ class KelasController extends Controller
         try {
             $anggota_kelas = AnggotaKelas::findorfail($id);
             $siswa = Siswa::findorfail($anggota_kelas->siswa_id);
+            $catatan_walikelas = CatatanWaliKelas::findorfail($anggota_kelas->id);
 
             $update_kelas_id = [
                 'kelas_id' => null,
             ];
-            $anggota_kelas->delete();
+
+            $catatan_walikelas->delete();
             $siswa->update($update_kelas_id);
+            $anggota_kelas->delete();
             return back()->with('toast_success', 'Anggota kelas berhasil dihapus');
         } catch (\Throwable $th) {
+            dd($th->getMessage());
             return back()->with('toast_error', 'Anggota kelas tidak dapat dihapus');
         }
     }

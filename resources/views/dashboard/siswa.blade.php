@@ -174,9 +174,9 @@
                       @endif
 
                       @if($riwayat_login->status_login == true && $riwayat_login->user->role == 3)
-                      <span class="badge badge-success float-right">Online</span>
+                      <span class="badge bg-success float-right">Online</span>
                       @elseif ($riwayat_login->status_login == false && $riwayat_login->user->role == 3)
-                      <span class="badge badge-warning float-right">Offline</span>
+                      <span class="badge bg-warning float-right">Offline</span>
                       @endif
 
                     </a>

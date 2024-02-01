@@ -6,8 +6,6 @@
   <link href="{{ asset('assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css') }}" rel="stylesheet" />
 @endsection
 
-@include('layouts.partials.topbar.topbar')
-
 @section('sidebar')
   @include('layouts.sidebar.admin')
 @endsection
@@ -18,12 +16,12 @@
   <!-- ============================================================== -->
   <div class="page-wrapper">
       @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
-        'breadcrumbss' => [
+        'breadcrumbs' => [
           [
             'title' => 'Dashboard', 
             'url' => route('dashboard'),
-            'active' => false
-          ],
+            'active' => true
+          ]
         ],
       ])
       <!-- ============================================================== -->
@@ -500,7 +498,7 @@
                           <div class="d-flex no-block align-items-center">
                             <div class="me-3">
                               <img
-                                src="../assets/images/users/widget-table-pic1.jpg"
+                                src="{{ asset('assets/images/users/widget-table-pic1.jpg') }}"
                                 alt="user"
                                 class="rounded-circle"
                                 width="45"
@@ -570,7 +568,7 @@
                           <div class="d-flex no-block align-items-center">
                             <div class="me-3">
                               <img
-                                src="../assets/images/users/widget-table-pic2.jpg"
+                                src="{{ asset('assets/images/users/widget-table-pic2.jpg') }}"
                                 alt="user"
                                 class="rounded-circle"
                                 width="45"
@@ -633,7 +631,7 @@
                           <div class="d-flex no-block align-items-center">
                             <div class="me-3">
                               <img
-                                src="../assets/images/users/widget-table-pic3.jpg"
+                                src="{{ asset('assets/images/users/widget-table-pic3.jpg')}}"
                                 alt="user"
                                 class="rounded-circle"
                                 width="45"
@@ -701,7 +699,7 @@
                           <div class="d-flex no-block align-items-center">
                             <div class="me-3">
                               <img
-                                src="../assets/images/users/widget-table-pic4.jpg"
+                                src="{{ asset('assets/images/users/widget-table-pic4.jpg') }}"
                                 alt="user"
                                 class="rounded-circle"
                                 width="45"

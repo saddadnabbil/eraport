@@ -3,29 +3,33 @@
   @include('layouts.sidebar.admin')
 @endsection
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <div class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1 class="m-0 text-dark">{{$title}}</h1>
-        </div><!-- /.col -->
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item "><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active">{{$title}}</li>
-          </ol>
-        </div><!-- /.col -->
-      </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-  </div>
-  <!-- /.content-header -->
+@section('content')
+  <div class="page-wrapper">
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
+        'breadcrumbs' => [
+            [
+                'title' => 'Dashboard',
+                'url' => route('dashboard'),
+                'active' => true,
+            ],
+            [
+                'title' => $title,
+                'url' => route('user.index'),
+                'active' => false,
+            ]
+        ]
+    ])
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
 
-  <!-- Main content -->
-  <section class="content">
-    <div class="container-fluid">
+      <!-- ============================================================== -->
+      <!-- Container fluid  -->
+      <!-- ============================================================== -->
+      <div class="container-fluid">
       <!-- ./row -->
       <div class="row">
         <div class="col-12">
@@ -64,8 +68,8 @@
                         <label for="file_import" class="col-sm-2 col-form-label">File Import</label>
                         <div class="col-sm-10">
                           <div class="custom-file">
-                            <input type="file" class="custom-file-input" name="file_import" id="customFile" accept="application/vnd.ms-excel">
-                            <label class="custom-file-label" for="customFile">Pilih file</label>
+                            <input type="file" class="custom-file-input form-control" name="file_import" id="customFile" accept="application/vnd.ms-excel">
+                            
                           </div>
                         </div>
                       </div>
@@ -129,7 +133,7 @@
 
             <div class="card-body">
               <div class="table-responsive">
-                <table id="example1" class="table table-striped table-valign-middle table-hover">
+                <table id="zero_config" class="table table-striped table-valign-middle table-hover">
                   <thead>
                     <tr>
                       <th>No</th>
@@ -223,42 +227,48 @@
       </div>
       <!-- /.row -->
     </div>
-    <!--/. container-fluid -->
-  </section>
-  <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
+        <!-- ============================================================== -->
+      <!-- End Container fluid  -->
+      <!-- ============================================================== -->
+    </div>
+@endsection
 
-<!-- end ajax -->
-@include('layouts.main.footer')
+@push('custom-scripts')
+  <!-- ajax -->
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('select[name="mapel_id"]').on('change', function() {
+        var mapel_id = $(this).val();
+        if (mapel_id) {
+          $.ajax({
+            url: '/admin/getKelas/ajax/' + mapel_id,
+            type: "GET",
+            dataType: "json",
+            success: function(data) {
+              $('select[name="kelas_id"').empty();
 
-<!-- ajax -->
-<script type="text/javascript">
-  $(document).ready(function() {
-    $('select[name="mapel_id"]').on('change', function() {
-      var mapel_id = $(this).val();
-      if (mapel_id) {
-        $.ajax({
-          url: '/admin/getKelas/ajax/' + mapel_id,
-          type: "GET",
-          dataType: "json",
-          success: function(data) {
-            $('select[name="kelas_id"').empty();
-
-            $('select[name="kelas_id"]').append(
-              '<option value="">-- Pilih Kelas --</option>'
-            );
-            
-            $.each(data, function(i, data) {
               $('select[name="kelas_id"]').append(
-                '<option value="' +
-                data.kelas_id + '">' + data.nama_kelas + '</option>');
-            });
-          }
-        });
-      } else {
-        $('select[name="kelas_id"').empty();
-      }
+                '<option value="">-- Pilih Kelas --</option>'
+              );
+              
+              $.each(data, function(i, data) {
+                $('select[name="kelas_id"]').append(
+                  '<option value="' +
+                  data.kelas_id + '">' + data.nama_kelas + '</option>');
+              });
+            }
+          });
+        } else {
+          $('select[name="kelas_id"').empty();
+        }
+      });
     });
-  });
-</script>
+  </script>
+  <!-- end ajax -->
+@endpush
+
+@section('footer')
+    @include('layouts.main.footer')
+@endsection
+
+

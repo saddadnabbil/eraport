@@ -1,11 +1,5 @@
 @extends('layouts.main.header')
 
-@section('styles')
-    <!-- <link href="../assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet"> -->
-    <link rel="stylesheet" href="../assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css">
-    <link rel="stylesheet" href="../assets/extra-libs/datatables.net-bs4/css/responsive.dataTables.min.css">
-@endsection
-
 @section('sidebar')
   @include('layouts.sidebar.admin')
 @endsection
@@ -68,32 +62,32 @@
                         <div class="form-group row">
                           <label for="nama_lengkap" class="col-sm-3 col-form-label">Nama Lengkap</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap" placeholder="Nama Lengkap" value="{{old('nama_lengkap')}}">
+                            <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap" placeholder="Nama Lengkap" value="{{old('nama_lengkap')}}" required>
                           </div>
                         </div>
                         <div class="form-group row">
                           <label for="jenis_kelamin" class="col-sm-3 col-form-label">Jenis Kelamin</label>
                           <div class="col-sm-9 pt-1">
-                            <label class="radio-inline mr-3"><input type="radio" name="jenis_kelamin" value="Male" @if (old('jenis_kelamin')=='Male' ) checked @endif required> Male</label>
-                            <label class="radio-inline mr-3"><input type="radio" name="jenis_kelamin" value="Female" @if (old('jenis_kelamin')=='Female' ) checked @endif required> Female</label>
+                            <label class="radio-inline me-3"><input type="radio" name="jenis_kelamin" value="Male" @if (old('jenis_kelamin')=='Male' ) checked @endif required> Male</label>
+                            <label class="radio-inline me-3"><input type="radio" name="jenis_kelamin" value="Female" @if (old('jenis_kelamin')=='Female' ) checked @endif required> Female</label>
                           </div>
                         </div>
                         <div class="form-group row">
                           <label for="tanggal_lahir" class="col-sm-3 col-form-label">Tanggal Lahir</label>
                           <div class="col-sm-9">
-                            <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir" value="{{old('tanggal_lahir')}}">
+                            <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir" value="{{old('tanggal_lahir')}}" required>
                           </div>
                         </div>
                         <div class="form-group row">
                           <label for="email" class="col-sm-3 col-form-label">Email</label>
                           <div class="col-sm-9">
-                            <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{{old('email')}}">
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{{old('email')}}" required>
                           </div>
                         </div>
                         <div class="form-group row">
                           <label for="nomor_hp" class="col-sm-3 col-form-label">Nomor HP</label>
                           <div class="col-sm-9">
-                            <input type="number" class="form-control" id="nomor_hp" name="nomor_hp" placeholder="Nomor HP" value="{{old('nomor_hp')}}">
+                            <input type="number" class="form-control" id="nomor_hp" name="nomor_hp" placeholder="Nomor HP" value="{{old('nomor_hp')}}" required>
                           </div>
                         </div>
                       </div>
@@ -203,14 +197,14 @@
                                 <div class="form-group row">
                                   <label for="password" class="col-sm-3 col-form-label">Password</label>
                                   <div class="col-sm-9">
-                                    <input type="password" class="form-control" name="password" placeholder="Password Baru">
+                                    <input type="password" class="form-control" name="password" placeholder="Password Baru" required>
                                   </div>
                                 </div>
                                 <div class="form-group row">
                                   <label for="status" class="col-sm-3 col-form-label">Status Akun</label>
                                   <div class="col-sm-9 pt-1">
-                                    <label class="radio-inline mr-3"><input type="radio" name="status" value="1" @if ($user->status==1 ) checked @endif required> Aktif</label>
-                                    <label class="radio-inline mr-3"><input type="radio" name="status" value="0" @if ($user->status==0 ) checked @endif required> Non Aktif</label>
+                                    <label class="radio-inline me-3"><input type="radio" name="status" value="1" @if ($user->status==1 ) checked @endif required> Aktif</label>
+                                    <label class="radio-inline me-3"><input type="radio" name="status" value="0" @if ($user->status==0 ) checked @endif required> Non Aktif</label>
                                   </div>
                                 </div>
                               </div>
@@ -240,15 +234,6 @@
       <!-- ============================================================== -->
     </div>
 @endsection
-
-
-@push('custom-scripts')
-    <!--This page plugins -->
-    <script src="../assets/extra-libs/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="../assets/extra-libs/datatables.net-bs4/js/dataTables.responsive.min.js"></script>
-    <script src="../dist/js/pages/datatable/datatable-basic.init.js"></script>
-
-@endpush
 
 @section('footer')
   @include('layouts.main.footer')

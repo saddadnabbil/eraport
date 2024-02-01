@@ -124,7 +124,7 @@
                                       </td>
                                       </div>
                                     </div>
-                                    <div class="text-right">
+                                    <div class="text-end">
                                         <button type="submit" class="btn btn-primary">Submit</button>
                                     </div>
                                   </form>
@@ -149,10 +149,12 @@
       </div>
       <!-- /.row -->
     </div>
-    <!--/. container-fluid -->
-  </section>
-  <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
+          <!-- ============================================================== -->
+      <!-- End Container fluid  -->
+      <!-- ============================================================== -->
+    </div>
+@endsection
 
-@include('layouts.main.footer')
+@section('footer')
+  @include('layouts.main.footer')
+@endsection

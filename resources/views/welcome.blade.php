@@ -168,7 +168,7 @@
                             <a class="nav-link" href="javascript:void(0)">
                                 <div class="customize-input">
                                     <select
-                                        class="custom-select form-control bg-white custom-radius custom-shadow border-0">
+                                        class="custom-select form-control form-control bg-white custom-radius custom-shadow border-0">
                                         <option selected>EN</option>
                                         <option value="1">AB</option>
                                         <option value="2">AK</option>
@@ -490,7 +490,7 @@
                     </div>
                     <div class="col-5 align-self-center">
                         <div class="customize-input float-end">
-                            <select class="custom-select custom-select-set form-control bg-white border-0 custom-shadow custom-radius">
+                            <select class="custom-select form-control custom-select-set form-control bg-white border-0 custom-shadow custom-radius">
                                 <option selected>Aug 23</option>
                                 <option value="1">July 23</option>
                                 <option value="2">Jun 23</option>

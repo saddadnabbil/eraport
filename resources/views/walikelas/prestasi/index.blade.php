@@ -1,29 +1,39 @@
 @include('layouts.main.header')
 @include('layouts.sidebar.walikelas')
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <div class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1 class="m-0 text-dark">{{$title}}</h1>
-        </div><!-- /.col -->
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item "><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active">{{$title}}</li>
-          </ol>
-        </div><!-- /.col -->
-      </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-  </div>
-  <!-- /.content-header -->
+@extends('layouts.main.header')
 
-  <!-- Main content -->
-  <section class="content">
-    <div class="container-fluid">
+@section('sidebar')
+  @include('layouts.sidebar.admin')
+@endsection
+
+@section('content')
+  <div class="page-wrapper">
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
+        'breadcrumbs' => [
+            [
+                'title' => 'Dashboard',
+                'url' => route('dashboard'),
+                'active' => true,
+            ],
+            [
+                'title' => $title,
+                'url' => route('user.index'),
+                'active' => false,
+            ]
+        ]
+    ])
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+
+      <!-- ============================================================== -->
+      <!-- Container fluid  -->
+      <!-- ============================================================== -->
+      <div class="container-fluid">
       <!-- ./row -->
       <div class="row">
         <div class="col-12">
@@ -72,8 +82,8 @@
                       <div class="form-group row">
                         <label for="jenis_prestasi" class="col-sm-3 col-form-label">Jenis Prestasi</label>
                         <div class="col-sm-9 pt-1">
-                          <label class="form-check-label mr-3"><input type="radio" name="jenis_prestasi" value="1" required> Akademik</label>
-                          <label class="form-check-label mr-3"><input type="radio" name="jenis_prestasi" value="2" required> Non Akademik</label>
+                          <label class="form-check-label me-3"><input type="radio" name="jenis_prestasi" value="1" required> Akademik</label>
+                          <label class="form-check-label me-3"><input type="radio" name="jenis_prestasi" value="2" required> Non Akademik</label>
                         </div>
                       </div>
 
@@ -111,7 +121,7 @@
             <!-- End Modal tambah -->
             <div class="card-body">
               <div class="table-responsive">
-                <table id="example1" class="table table-valign-middle table-hover">
+                <table id="zero_config" class="table table-valign-middle table-hover">
                   <thead>
                     <tr>
                       <th>No</th>
@@ -203,8 +213,8 @@
                               <div class="form-group row">
                                 <label for="jenis_prestasi" class="col-sm-3 col-form-label">Jenis Prestasi</label>
                                 <div class="col-sm-9 pt-1">
-                                  <label class="form-check-label mr-3"><input type="radio" name="jenis_prestasi" value="1" {{ $prestasi->jenis_prestasi == 1 ? 'checked' : ''}} required> Akademik</label>
-                                  <label class="form-check-label mr-3"><input type="radio" name="jenis_prestasi" value="2" {{ $prestasi->jenis_prestasi == 2 ? 'checked' : ''}} required> Non Akademik</label>
+                                  <label class="form-check-label me-3"><input type="radio" name="jenis_prestasi" value="1" {{ $prestasi->jenis_prestasi == 1 ? 'checked' : ''}} required> Akademik</label>
+                                  <label class="form-check-label me-3"><input type="radio" name="jenis_prestasi" value="2" {{ $prestasi->jenis_prestasi == 2 ? 'checked' : ''}} required> Non Akademik</label>
                                 </div>
                               </div>
 
@@ -252,10 +262,12 @@
       </div>
       <!-- /.row -->
     </div>
-    <!--/. container-fluid -->
-  </section>
-  <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
+          <!-- ============================================================== -->
+      <!-- End Container fluid  -->
+      <!-- ============================================================== -->
+    </div>
+@endsection
 
-@include('layouts.main.footer')
+@section('footer')
+  @include('layouts.main.footer')
+@endsection

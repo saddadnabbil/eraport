@@ -3,103 +3,113 @@
   @include('layouts.sidebar.admin')
 @endsection
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <div class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1 class="m-0 text-dark">{{$title}}</h1>
-        </div><!-- /.col -->
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item "><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active">{{$title}}</li>
-          </ol>
-        </div><!-- /.col -->
-      </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-  </div>
-  <!-- /.content-header -->
+@section('styles')
+    <!-- <link href="../assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="{{asset('assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/extra-libs/datatables.net-bs4/css/responsive.dataTables.min.css')}}">
+@endsection
 
-  <!-- Main content -->
-  <section class="content">
+@section('content')
+  <div class="page-wrapper">
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
+        'breadcrumbs' => [
+            [
+                'title' => 'Dashboard',
+                'url' => route('dashboard'),
+                'active' => true,
+            ],
+            [
+                'title' => $title,
+                'url' => route('tapel.index'),
+                'active' => false,
+            ]
+        ]
+    ])
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
     <div class="container-fluid">
-            <!-- Info boxes -->
-            <div class="row">
-              <div class="col-12 col-sm-6 col-md-3">
-                <div class="info-box">
-                  <span class="info-box-icon bg-info elevation-1"><i class="fas fa-layer-group"></i></span>
-      
-                  <div class="info-box-content">
-                    <span class="info-box-text">Playgroup</span>
-                    <span class="info-box-number">{{$jumlah_kelas_play_group}} <small>students</small></span>
-                  </div>
-                  <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-              </div>
-              <!-- /.col -->
-              <div class="col-12 col-sm-6 col-md-3">
-                <div class="info-box mb-3">
-                  <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-book"></i></span>
-      
-                  <div class="info-box-content">
-                    <span class="info-box-text">Kindergarten</span>
-                    <span class="info-box-number">{{$jumlah_kelas_kinder_garten}} <small>students</small></span>
-                  </div>
-                  <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-              </div>
-              <!-- /.col -->
-      
-              <!-- fix for small devices only -->
-              <div class="clearfix hidden-md-up"></div>
-      
-              <div class="col-12 col-sm-6 col-md-3">
-                <div class="info-box mb-3">
-                  <span class="info-box-icon bg-success elevation-1"><i class="fas fa-users"></i></span>
-      
-                  <div class="info-box-content">
-                    <span class="info-box-text">Primary School</span>
-                    <span class="info-box-number">{{$jumlah_kelas_primary_school}} <small>students</small></span>
-                  </div>
-                  <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-              </div>
-              <!-- /.col -->
-              <div class="col-12 col-sm-6 col-md-3">
-                <div class="info-box mb-3">
-                  <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-book-reader "></i></span>
-      
-                  <div class="info-box-content">
-                    <span class="info-box-text">Junior High School</span>
-                    <span class="info-box-number">{{$jumlah_kelas_junior_high_school}} <small>students</small></span>
-                  </div>
-                  <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-              </div>
-              <!-- /.col -->
-              <!-- /.col -->
-              <div class="col-12 col-sm-6 col-md-3">
-                <div class="info-box mb-3">
-                  <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-book-reader "></i></span>
-      
-                  <div class="info-box-content">
-                    <span class="info-box-text">Senior High School</span>
-                    <span class="info-box-number">{{$jumlah_kelas_senior_high_school}} <small>students</small></span>
-                  </div>
-                  <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-              </div>
-              <!-- /.col -->
+      <!-- Info boxes -->
+      <div class="row">
+        <div class="col-12 col-sm-6 col-md-3">
+          <div class="info-box">
+            <span class="info-box-icon bg-info elevation-1"><i class="fas fa-layer-group"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Playgroup</span>
+              <span class="info-box-number">{{$jumlah_kelas_play_group}} <small>students</small></span>
             </div>
-            <!-- /.row -->
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-12 col-sm-6 col-md-3">
+          <div class="info-box mb-3">
+            <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-book"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Kindergarten</span>
+              <span class="info-box-number">{{$jumlah_kelas_kinder_garten}} <small>students</small></span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+
+        <!-- fix for small devices only -->
+        <div class="clearfix hidden-md-up"></div>
+
+        <div class="col-12 col-sm-6 col-md-3">
+          <div class="info-box mb-3">
+            <span class="info-box-icon bg-success elevation-1"><i class="fas fa-users"></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Primary School</span>
+              <span class="info-box-number">{{$jumlah_kelas_primary_school}} <small>students</small></span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-12 col-sm-6 col-md-3">
+          <div class="info-box mb-3">
+            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-book-reader "></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Junior High School</span>
+              <span class="info-box-number">{{$jumlah_kelas_junior_high_school}} <small>students</small></span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <!-- /.col -->
+        <div class="col-12 col-sm-6 col-md-3">
+          <div class="info-box mb-3">
+            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-book-reader "></i></span>
+
+            <div class="info-box-content">
+              <span class="info-box-text">Senior High School</span>
+              <span class="info-box-number">{{$jumlah_kelas_senior_high_school}} <small>students</small></span>
+            </div>
+            <!-- /.info-box-content -->
+          </div>
+          <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
 
       <!-- ./row -->
       <div class="row">
@@ -142,8 +152,8 @@
                         <label for="file_import" class="col-sm-2 col-form-label">File Import</label>
                         <div class="col-sm-10">
                           <div class="custom-file">
-                            <input type="file" class="custom-file-input" name="file_import" id="customFile" accept="application/vnd.ms-excel">
-                            <label class="custom-file-label" for="customFile">Pilih file</label>
+                            <input type="file" class="custom-file-input form-control" name="file_import" id="customFile" accept="application/vnd.ms-excel">
+                            
                           </div>
                         </div>
                       </div>
@@ -240,8 +250,8 @@
                               <div class="form-group row">
                                 <label for="nama_wali" class="col-sm-3 col-form-label required">Jenis Pendaftaran</label>
                                 <div class="col-sm-3 pt-1">
-                                  <label class="form-check-label mr-3"><input type="radio" name="jenis_pendaftaran" onchange='CheckPendaftaran(this.value);' value="1" @if (old('jenis_pendaftaran')=='1' ) checked @endif required> Siswa Baru</label>
-                                  <label class="form-check-label mr-3"><input type="radio" name="jenis_pendaftaran" onchange='CheckPendaftaran(this.value);' value="2" @if (old('jenis_pendaftaran')=='2' ) checked @endif required> Pindahan</label>
+                                  <label class="form-check-label me-3"><input type="radio" name="jenis_pendaftaran" onchange='CheckPendaftaran(this.value);' value="1" @if (old('jenis_pendaftaran')=='1' ) checked @endif required> Siswa Baru</label>
+                                  <label class="form-check-label me-3"><input type="radio" name="jenis_pendaftaran" onchange='CheckPendaftaran(this.value);' value="2" @if (old('jenis_pendaftaran')=='2' ) checked @endif required> Pindahan</label>
                                 </div>
                                 <label class="col-sm-2 col-form-label required">Jurusan</label>
                                 <div class="col-sm-4">
@@ -264,8 +274,8 @@
                               <div class="form-group row">
                                 <label for="jenis_kelamin" class="col-sm-3 col-form-label required">Jenis Kelamin</label>
                                 <div class="col-sm-3 pt-1">
-                                  <label class="form-check-label mr-3"><input type="radio" name="jenis_kelamin" value="Male" @if (old('jenis_kelamin')=='Male' ) checked @endif required> Male</label>
-                                  <label class="form-check-label mr-3"><input type="radio" name="jenis_kelamin" value="Female" @if (old('jenis_kelamin')=='Female' ) checked @endif required> Female</label>
+                                  <label class="form-check-label me-3"><input type="radio" name="jenis_kelamin" value="Male" @if (old('jenis_kelamin')=='Male' ) checked @endif required> Male</label>
+                                  <label class="form-check-label me-3"><input type="radio" name="jenis_kelamin" value="Female" @if (old('jenis_kelamin')=='Female' ) checked @endif required> Female</label>
                                 </div>
                                 <label for="bloodtype" class="col-sm-2 col-form-label">Gol. Darah</label>
                                 <div class="col-sm-4">
@@ -326,8 +336,7 @@
                                 <div class="col-sm-4 custom-file">
                                   <div class="input-group">
                                       <div class="custom-file">
-                                          <input type="file" name="pas_photo" class="custom-file-input" id="pas_photo" onchange="readURL(this);" required>
-                                          <label class="custom-file-label" for="pas_photo">Choose file</label>
+                                          <input type="file" name="pas_photo" class="custom-file-input form-control" id="pas_photo" onchange="readURL(this);" required>
                                       </div>
                                   </div>
                                 </div>
@@ -428,8 +437,7 @@
                                 <div class="col-sm-9 custom-file">
                                   <div class="input-group">
                                       <div class="custom-file">
-                                          <input type="file" name="file_document_kesehatan" class="custom-file-input" id="file_document_kesehatan">
-                                          <label class="custom-file-label" for="file_document_kesehatan">Choose file</label>
+                                          <input type="file" name="file_document_kesehatan" class="custom-file-input form-control" id="file_document_kesehatan">
                                       </div>
                                   </div>
                                 </div>
@@ -439,8 +447,7 @@
                                 <div class="col-sm-9 custom-file">
                                   <div class="input-group">
                                       <div class="custom-file">
-                                          <input type="file" name="file_list_pertanyaan" class="custom-file-input" id="file_list_pertanyaan">
-                                          <label class="custom-file-label" for="file_list_pertanyaan">Choose file</label>
+                                          <input type="file" name="file_list_pertanyaan" class="custom-file-input form-control" id="file_list_pertanyaan">
                                       </div>
                                   </div>
                                 </div>
@@ -487,8 +494,7 @@
                                 <div class="col-sm-9 custom-file">
                                   <div class="input-group">
                                       <div class="custom-file">
-                                          <input type="file" name="file_dokument_sekolah_lama" class="custom-file-input" id="file_dokument_sekolah_lama">
-                                          <label class="custom-file-label" for="file_dokument_sekolah_lama">Choose file</label>
+                                          <input type="file" name="file_dokument_sekolah_lama" class="custom-file-input form-control" id="file_dokument_sekolah_lama">
                                       </div>
                                   </div>
                                 </div>
@@ -741,7 +747,7 @@
 
             <div class="card-body">
               <div class="table-responsive">
-                <table id="example1" class="table table-striped table-valign-middle table-hover">
+                <table id="zero_config" class="table table-striped table-valign-middle table-hover">
                   <thead>
                     <tr>
                       <th>No</th>
@@ -878,68 +884,74 @@
       </div>
       <!-- /.row -->
     </div>
-    <!--/. container-fluid -->
-  </section>
-  <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
-
-@include('layouts.main.footer')
-
-<script>
-    function readURL(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-                $('#pas_photo_preview')
-                    .attr('src', e.target.result);
-            };
-
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-</script>
-
-<!-- ajax get class id and and jurusan class name-->
-<script type="text/javascript">
-  $(document).ready(function() {
-    $('select[name="tingkatan_id"]').on('change', function() {
-      var tingkatan_id = $(this).val();
-      console.log(tingkatan_id);
-      if (tingkatan_id) {
-        $.ajax({
-          url: '/admin/getKelasByTingkatan/ajax/' + tingkatan_id,
-          type: "GET",
-          dataType: "json",
-          success: function(response) {
-            $('select[name="kelas_id"]').empty();
-            $('select[name="jurusan_id"]').empty();
-
-            $('select[name="kelas_id"]').append(
-              '<option value="">-- Select Class Name --</option>'
-            );
-
-            $('select[name="jurusan_id"]').append(
-              '<option value="">-- Select Level Name --</option>'
-            );
-
-            $.each(response.data, function(i, item) {
-              $('select[name="kelas_id"]').append(
-                '<option value="' +
-                item.id + '">' + item.nama_kelas + '</option>');
-            });
-
-            $.each(response.data_jurusan, function(i, item) {
-              $('select[name="jurusan_id"]').append(
-                '<option value="' +
-                item.id + '">' + item.nama_jurusan + '</option>');
-            });
+    <!-- ============================================================== -->
+    <!-- End Container fluid  -->
+    <!-- ============================================================== -->
+  </div>
+  @endsection
+  
+  @push('custom-scripts')
+      <!-- pas_photo preview-->
+      <script>
+          function readURL(input) {
+              if (input.files && input.files[0]) {
+                  var reader = new FileReader();
+      
+                  reader.onload = function (e) {
+                      $('#pas_photo_preview')
+                          .attr('src', e.target.result);
+                  };
+      
+                  reader.readAsDataURL(input.files[0]);
+              }
           }
+      </script>
+      
+      <!-- ajax get class id and and jurusan class name-->
+      <script type="text/javascript">
+        $(document).ready(function() {
+          $('select[name="tingkatan_id"]').on('change', function() {
+            var tingkatan_id = $(this).val();
+            console.log(tingkatan_id);
+            if (tingkatan_id) {
+              $.ajax({
+                url: '/admin/getKelasByTingkatan/ajax/' + tingkatan_id,
+                type: "GET",
+                dataType: "json",
+                success: function(response) {
+                  $('select[name="kelas_id"]').empty();
+                  $('select[name="jurusan_id"]').empty();
+      
+                  $('select[name="kelas_id"]').append(
+                    '<option value="">-- Select Class Name --</option>'
+                  );
+      
+                  $('select[name="jurusan_id"]').append(
+                    '<option value="">-- Select Level Name --</option>'
+                  );
+      
+                  $.each(response.data, function(i, item) {
+                    $('select[name="kelas_id"]').append(
+                      '<option value="' +
+                      item.id + '">' + item.nama_kelas + '</option>');
+                  });
+      
+                  $.each(response.data_jurusan, function(i, item) {
+                    $('select[name="jurusan_id"]').append(
+                      '<option value="' +
+                      item.id + '">' + item.nama_jurusan + '</option>');
+                  });
+                }
+              });
+            } else {
+              $('select[name="kelas_id"').empty();
+            }
+          });
         });
-      } else {
-        $('select[name="kelas_id"').empty();
-      }
-    });
-  });
-</script>
+      </script>
+  @endpush
+  
+  @section('footer')
+    @include('layouts.main.footer')
+  @endsection
+
