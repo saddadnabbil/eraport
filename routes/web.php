@@ -331,14 +331,13 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('getPembelajaranId/', 'AjaxController@getPembelajaranId')->name('guru.get.pembelajaran.id');;
 
 
-        Route::resource('silabus', 'Guru\K13\SilabusController')->only(['index', 'store', 'update', 'destroy'])->names([
+        Route::resource('silabus', 'Guru\SilabusController')->only(['index', 'store', 'update', 'destroy'])->names([
           'index' => 'guru.silabus.index',
           'store' => 'guru.silabus.store',
           'update' => 'guru.silabus.update',
           'destroy' => 'guru.silabus.destroy'
         ]);
-        Route::delete('/silabus/{id}/destroy/{fileType}', 'Guru\K13\SilabusController@destroyFile')->name('guru.silabus.destroyFile');
-
+        Route::delete('/silabus/{id}/destroy/{fileType}', 'Guru\SilabusController@destroyFile')->name('guru.silabus.destroyFile');
 
         Route::get('/pdf/{filename}', 'Admin\PdfController@viewSilabusPDF')->name('silabus.guru.pdf.view');
 

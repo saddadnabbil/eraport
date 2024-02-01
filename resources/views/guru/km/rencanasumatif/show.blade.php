@@ -1,29 +1,31 @@
-@include('layouts.main.header')
-@include('layouts.sidebar.guru')
+@extends('layouts.main.header')
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <div class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1 class="m-0 text-dark">{{$title}}</h1>
-        </div><!-- /.col -->
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item "><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item "><a href="{{ route('guru.rencanasumatif.index') }}">Rencana Nilai Sumatif</a></li>
-            <li class="breadcrumb-item active">{{$title}}</li>
-          </ol>
-        </div><!-- /.col -->
-      </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-  </div>
-  <!-- /.content-header -->
+@section('sidebar')
+  @include('layouts.sidebar.guru')
+@endsection
 
-  <!-- Main content -->
-  <section class="content">
+@section('content')
+  <!-- ============================================================== -->
+  <!-- Page wrapper  -->
+  <!-- ============================================================== -->
+  <div class="page-wrapper">
+      @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
+        'breadcrumbs' => [
+          [
+            'title' => 'Dashboard', 
+            'url' => route('dashboard'),
+            'active' => true
+          ],
+          [
+            'title' => 'Rencana Sumatif',
+            'url' => route('rencanasumatif.index'),
+            'active' => false
+          ]
+        ],
+      ])
+      <!-- ============================================================== -->
+      <!-- Container fluid  -->
+      <!-- ============================================================== -->
     <div class="container-fluid">
       <!-- ./row -->
       <div class="row">

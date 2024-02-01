@@ -4,7 +4,7 @@
 @extends('layouts.main.header')
 
 @section('sidebar')
-  @include('layouts.sidebar.admin')
+  @include('layouts.sidebar.guru')
 @endsection
 
 @section('content')
@@ -134,7 +134,7 @@
                   <label class="col-sm-2 col-form-label">Foto Profile </label>
                   <div class="col-sm-10">
                     <div class="custom-file">
-                      <input type="file" class="custom-file-input form-control" name="avatar" id="customFile" accept="image/*">
+                      <input type="file" class="custom-file-input form-control form-control" name="avatar" id="customFile" accept="image/*">
                       {{$guru->avatar}}</label>
                     </div>
                   </div>

@@ -60,23 +60,23 @@
 
                       @if(is_null($bobot_nilai->bobot_ph))
                       <td class="text-center">
-                        <span class="badge badge-danger">0</span>
+                        <span class="badge bg-danger">0</span>
                       </td>
                       <td class="text-center">
-                        <span class="badge badge-danger">0</span>
+                        <span class="badge bg-danger">0</span>
                       </td>
                       <td class="text-center">
-                        <span class="badge badge-danger">0</span>
+                        <span class="badge bg-danger">0</span>
                       </td>
                       @else
                       <td class="text-center">
-                        <span class="badge badge-success">{{$bobot_nilai->bobot_ph}}</span>
+                        <span class="badge bg-success">{{$bobot_nilai->bobot_ph}}</span>
                       </td>
                       <td class="text-center">
-                        <span class="badge badge-success">{{$bobot_nilai->bobot_pts}}</span>
+                        <span class="badge bg-success">{{$bobot_nilai->bobot_pts}}</span>
                       </td>
                       <td class="text-center">
-                        <span class="badge badge-success">{{$bobot_nilai->bobot_pas}}</span>
+                        <span class="badge bg-success">{{$bobot_nilai->bobot_pas}}</span>
                       </td>
                       @endif
 

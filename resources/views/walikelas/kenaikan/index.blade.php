@@ -4,7 +4,7 @@
 @extends('layouts.main.header')
 
 @section('sidebar')
-  @include('layouts.sidebar.admin')
+  @include('layouts.sidebar.guru')
 @endsection
 
 @section('content')

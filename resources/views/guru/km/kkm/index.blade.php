@@ -4,7 +4,7 @@
 @extends('layouts.main.header')
 
 @section('sidebar')
-  @include('layouts.sidebar.admin')
+  @include('layouts.sidebar.guru')
 @endsection
 
 @section('content')
@@ -72,7 +72,7 @@
                         <label for="file_import" class="col-sm-2 col-form-label">File Import</label>
                         <div class="col-sm-10">
                           <div class="custom-file">
-                            <input type="file" class="custom-file-input form-control" name="file_import" id="customFile" accept="application/vnd.ms-excel">
+                            <input type="file" class="custom-file-input form-control form-control" name="file_import" id="customFile" accept="application/vnd.ms-excel">
                             
                           </div>
                         </div>

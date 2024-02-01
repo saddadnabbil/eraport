@@ -152,7 +152,7 @@
                         <label for="file_import" class="col-sm-2 col-form-label">File Import</label>
                         <div class="col-sm-10">
                           <div class="custom-file">
-                            <input type="file" class="custom-file-input form-control" name="file_import" id="customFile" accept="application/vnd.ms-excel">
+                            <input type="file" class="custom-file-input form-control form-control" name="file_import" id="customFile" accept="application/vnd.ms-excel">
                             
                           </div>
                         </div>
@@ -353,7 +353,7 @@
                                 <div class="col-sm-4 custom-file">
                                   <div class="input-group">
                                       <div class="custom-file">
-                                          <input type="file" name="pas_photo" class="custom-file-input form-control" id="pas_photo" onchange="readURL(this);" required>
+                                          <input type="file" name="pas_photo" class="custom-file-input form-control form-control" id="pas_photo" onchange="readURL(this);" required>
                                       </div>
                                   </div>
                                 </div>
@@ -454,7 +454,7 @@
                                 <div class="col-sm-9 custom-file">
                                   <div class="input-group">
                                       <div class="custom-file">
-                                          <input type="file" name="file_document_kesehatan" class="custom-file-input form-control" id="file_document_kesehatan">
+                                          <input type="file" name="file_document_kesehatan" class="custom-file-input form-control form-control" id="file_document_kesehatan">
                                       </div>
                                   </div>
                                 </div>
@@ -464,7 +464,7 @@
                                 <div class="col-sm-9 custom-file">
                                   <div class="input-group">
                                       <div class="custom-file">
-                                          <input type="file" name="file_list_pertanyaan" class="custom-file-input form-control" id="file_list_pertanyaan">
+                                          <input type="file" name="file_list_pertanyaan" class="custom-file-input form-control form-control" id="file_list_pertanyaan">
                                       </div>
                                   </div>
                                 </div>
@@ -511,7 +511,7 @@
                                 <div class="col-sm-9 custom-file">
                                   <div class="input-group">
                                       <div class="custom-file">
-                                          <input type="file" name="file_dokument_sekolah_lama" class="custom-file-input form-control" id="file_dokument_sekolah_lama">
+                                          <input type="file" name="file_dokument_sekolah_lama" class="custom-file-input form-control form-control" id="file_dokument_sekolah_lama">
                                       </div>
                                   </div>
                                 </div>

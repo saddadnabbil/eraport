@@ -924,7 +924,7 @@
                           <div class="col-sm-4 custom-file">
                             <div class="input-group">
                                 <div class="custom-file">
-                                    <input type="file" name="pas_photo" class="custom-file-input form-control" id="pas_photo" onchange="readURL(this);" >
+                                    <input type="file" name="pas_photo" class="custom-file-input form-control form-control" id="pas_photo" onchange="readURL(this);" >
                                 </div>
                             </div>
                           </div>
@@ -1025,7 +1025,7 @@
                           <div class="col-sm-9 custom-file">
                             <div class="input-group">
                                 <div class="custom-file">
-                                    <input type="file" name="file_document_kesehatan" class="custom-file-input form-control" id="file_document_kesehatan">
+                                    <input type="file" name="file_document_kesehatan" class="custom-file-input form-control form-control" id="file_document_kesehatan">
                                 </div>
                             </div>
                           </div>
@@ -1035,7 +1035,7 @@
                           <div class="col-sm-9 custom-file">
                             <div class="input-group">
                                 <div class="custom-file">
-                                    <input type="file" name="file_list_pertanyaan" class="custom-file-input form-control" id="file_list_pertanyaan">
+                                    <input type="file" name="file_list_pertanyaan" class="custom-file-input form-control form-control" id="file_list_pertanyaan">
                                 </div>
                             </div>
                           </div>
@@ -1098,7 +1098,7 @@
                           <div class="col-sm-9 custom-file">
                             <div class="input-group">
                                 <div class="custom-file">
-                                    <input type="file" name="file_dokument_sekolah_lama" class="custom-file-input form-control" id="file_dokument_sekolah_lama">
+                                    <input type="file" name="file_dokument_sekolah_lama" class="custom-file-input form-control form-control" id="file_dokument_sekolah_lama">
                                 </div>
                             </div>
                           </div>

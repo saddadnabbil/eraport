@@ -61,29 +61,29 @@
 
                       @if(is_null($bobot_nilai->bobot_uh))
                       <td class="text-center">
-                        <span class="badge badge-danger">0</span>
+                        <span class="badge bg-danger">0</span>
                       </td>
                       <td class="text-center">
-                        <span class="badge badge-danger">0</span>
+                        <span class="badge bg-danger">0</span>
                       </td>
                       <td class="text-center">
-                        <span class="badge badge-danger">0</span>
+                        <span class="badge bg-danger">0</span>
                       </td>
                       <td class="text-center">
-                        <span class="badge badge-danger">0</span>
+                        <span class="badge bg-danger">0</span>
                       </td>
                       @else
                       <td class="text-center">
-                        <span class="badge badge-success">{{$bobot_nilai->bobot_tugas}}</span>
+                        <span class="badge bg-success">{{$bobot_nilai->bobot_tugas}}</span>
                       </td>
                       <td class="text-center">
-                        <span class="badge badge-success">{{$bobot_nilai->bobot_uh}}</span>
+                        <span class="badge bg-success">{{$bobot_nilai->bobot_uh}}</span>
                       </td>
                       <td class="text-center">
-                        <span class="badge badge-success">{{$bobot_nilai->bobot_uts}}</span>
+                        <span class="badge bg-success">{{$bobot_nilai->bobot_uts}}</span>
                       </td>
                       <td class="text-center">
-                        <span class="badge badge-success">{{$bobot_nilai->bobot_uas}}</span>
+                        <span class="badge bg-success">{{$bobot_nilai->bobot_uas}}</span>
                       </td>
                       @endif
 

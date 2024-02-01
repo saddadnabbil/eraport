@@ -54,9 +54,9 @@
                       <td>{{$penilaian->kelas->nama_kelas}}</td>
                       <td>
                         @if($penilaian->jumlah_rencana_penilaian == 0)
-                        <span class="badge badge-danger">Belum ada rencana penilaian</span>
+                        <span class="badge bg-danger">Belum ada rencana penilaian</span>
                         @else
-                        <span class="badge badge-success"><b>{{$penilaian->jumlah_rencana_penilaian}}</b> penilaian</span>
+                        <span class="badge bg-success"><b>{{$penilaian->jumlah_rencana_penilaian}}</b> penilaian</span>
                         @endif
                       </td>
                       <td>

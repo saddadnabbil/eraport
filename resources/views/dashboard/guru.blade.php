@@ -1,34 +1,32 @@
-@include('layouts.main.header')
-@include('layouts.sidebar.guru')
+@extends('layouts.main.header')
 
-@section('this-page-styles')
+@section('styles')
   <link href="{{ asset('assets/extra-libs/c3/c3.min.css') }}" rel="stylesheet" />
   <link href="{{ asset('assets/libs/chartist/dist/chartist.min.css') }}" rel="stylesheet" />
   <link href="{{ asset('assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css') }}" rel="stylesheet" />
 @endsection
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <div class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1 class="m-0 text-dark">{{$title}}</h1>
-        </div><!-- /.col -->
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <!-- <li class="breadcrumb-item "><a href="{{ route('dashboard') }}">{{$title}}</a></li> -->
-            <li class="breadcrumb-item active">{{$title}}</li>
-          </ol>
-        </div><!-- /.col -->
-      </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-  </div>
-  <!-- /.content-header -->
+@section('sidebar')
+  @include('layouts.sidebar.guru')
+@endsection
 
-  <!-- Main content -->
-  <section class="content">
+@section('content')
+  <!-- ============================================================== -->
+  <!-- Page wrapper  -->
+  <!-- ============================================================== -->
+  <div class="page-wrapper">
+      @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
+        'breadcrumbs' => [
+          [
+            'title' => 'Dashboard', 
+            'url' => route('dashboard'),
+            'active' => false
+          ]
+        ],
+      ])
+      <!-- ============================================================== -->
+      <!-- Container fluid  -->
+      <!-- ============================================================== -->
     <div class="container-fluid">
 
       <!-- Info -->
@@ -590,13 +588,17 @@
       </div>
       <!-- /.row -->
     </div>
-    <!--/. container-fluid -->
-  </section>
-  <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
+    <!-- ============================================================== -->
+      <!-- End ontainer fluid  -->
+      <!-- ============================================================== -->
+  </div>
+  <!-- ============================================================== -->
+  <!-- End Page wrapper  -->
+  <!-- ============================================================== -->
+@endsection
 
 @push('custom-scripts')
+  <!--This page JavaScript -->
   <script src="{{ asset('assets/extra-libs/c3/d3.min.js') }}"></script>
   <script src="{{ asset('assets/extra-libs/c3/c3.min.js') }}"></script>
   <script src="{{ asset('assets/libs/chartist/dist/chartist.min.js') }}"></script>
@@ -604,6 +606,8 @@
   <script src="{{ asset('assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js') }}"></script>
   <script src="{{ asset('assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js') }}"></script>
   <script src="{{ asset('dist/js/pages/dashboards/dashboard1.min.js') }}"></script>
-@nedpush
+@endpush
 
-@include('layouts.main.footer')
+@section('footer')
+  @include('layouts.main.footer')
+@endsection

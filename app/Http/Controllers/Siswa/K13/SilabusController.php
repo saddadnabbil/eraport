@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Siswa\K13;
+namespace App\Http\Controllers\Siswa;
 
 use App\Kelas;
 use App\Siswa;

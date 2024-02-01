@@ -61,21 +61,21 @@
                                     @endphp
                                 
                                     @if (isset($silabus->k_tigabelas))
-                                        <a href="{{ route('silabus.siswa.pdf.view', ['filename' => $silabus->k_tigabelas]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; K13</a>
+                                        <a href="{{ route('silabus.siswa.pdf.view', ['filename' => $silabus->k_tigabelas]) }}" class="badge bg-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; K13</a>
                                         @php
                                         $flag = true;
                                         @endphp
                                     @endif
                                 
                                     @if (isset($silabus->cambridge))
-                                        <a href="{{ route('silabus.siswa.pdf.view', ['filename' => $silabus->cambridge]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; Cambridge</a>
+                                        <a href="{{ route('silabus.siswa.pdf.view', ['filename' => $silabus->cambridge]) }}" class="badge bg-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; Cambridge</a>
                                         @php
                                         $flag = true;
                                         @endphp
                                     @endif
                                 
                                     @if (isset($silabus->edexcel))
-                                        <a href="{{ route('silabus.siswa.pdf.view', ['filename' => $silabus->edexcel]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; Edexcel</a>
+                                        <a href="{{ route('silabus.siswa.pdf.view', ['filename' => $silabus->edexcel]) }}" class="badge bg-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; Edexcel</a>
                                         @php
                                         $flag = true;
                                         @endphp
@@ -91,14 +91,14 @@
                                     @endphp
                                 
                                     @if (isset($silabus->book_indo_siswa))
-                                        <a href="{{ route('silabus.siswa.pdf.view', ['filename' => $silabus->book_indo_siswa]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; Indonesian</a>
+                                        <a href="{{ route('silabus.siswa.pdf.view', ['filename' => $silabus->book_indo_siswa]) }}" class="badge bg-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; Indonesian</a>
                                         @php
                                         $flag = true;
                                         @endphp
                                     @endif
                                 
                                     @if (isset($silabus->book_english_siswa))
-                                        <a href="{{ route('silabus.siswa.pdf.view', ['filename' => $silabus->book_english_siswa]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; English</a>
+                                        <a href="{{ route('silabus.siswa.pdf.view', ['filename' => $silabus->book_english_siswa]) }}" class="badge bg-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; English</a>
                                         @php
                                         $flag = true;
                                         @endphp
@@ -114,14 +114,14 @@
                                     @endphp
                                 
                                     @if (isset($silabus->book_indo_guru))
-                                        <a href="{{ route('silabus.siswa.pdf.view', ['filename' => $silabus->book_indo_guru]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; Indonesian</a>
+                                        <a href="{{ route('silabus.siswa.pdf.view', ['filename' => $silabus->book_indo_guru]) }}" class="badge bg-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; Indonesian</a>
                                         @php
                                         $flag = true;
                                         @endphp
                                     @endif
                                 
                                     @if (isset($silabus->book_english_guru))
-                                        <a href="{{ route('silabus.siswa.pdf.view', ['filename' => $silabus->book_english_guru]) }}" class="badge badge-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; English</a>
+                                        <a href="{{ route('silabus.siswa.pdf.view', ['filename' => $silabus->book_english_guru]) }}" class="badge bg-info badge-sm" target="_blank"><i class="nav-icon fas fa-download"></i> &nbsp; English</a>
                                         @php
                                         $flag = true;
                                         @endphp
@@ -172,7 +172,7 @@
                                                             <label for="k_tigabelas">Input File K13</label>
                                                             <div class="input-group">
                                                                 <div class="custom-file">
-                                                                    <input type="file" name="k_tigabelas" class="custom-file-input" id="k_tigabelas">
+                                                                    <input type="file" name="k_tigabelas" class="custom-file-input form-control" id="k_tigabelas">
                                                                     <label class="custom-file-label" for="k_tigabelas">Choose file</label>
                                                                 </div>
                                                             </div>
@@ -181,7 +181,7 @@
                                                             <label for="cambridge">Input File Cambridge</label>
                                                             <div class="input-group">
                                                                 <div class="custom-file">
-                                                                    <input type="file" name="cambridge" class="custom-file-input" id="cambridge">
+                                                                    <input type="file" name="cambridge" class="custom-file-input form-control" id="cambridge">
                                                                     <label class="custom-file-label" for="cambridge">Choose file</label>
                                                                 </div>
                                                             </div>
@@ -190,7 +190,7 @@
                                                                 <label for="edexcel">Input File Edexcel</label>
                                                                 <div class="input-group">
                                                                     <div class="custom-file">
-                                                                        <input type="file" name="edexcel" class="custom-file-input" id="edexcel">
+                                                                        <input type="file" name="edexcel" class="custom-file-input form-control" id="edexcel">
                                                                         <label class="custom-file-label" for="edexcel">Choose file</label>
                                                                     </div>
                                                                 </div>
@@ -202,7 +202,7 @@
                                                         <label for="book_indo_siswa">Input File Book Indo Student</label>
                                                         <div class="input-group">
                                                             <div class="custom-file">
-                                                                <input type="file" name="book_indo_siswa" class="custom-file-input" id="book_indo_siswa">
+                                                                <input type="file" name="book_indo_siswa" class="custom-file-input form-control" id="book_indo_siswa">
                                                                 <label class="custom-file-label" for="book_indo_siswa">Choose file</label>
                                                             </div>
                                                         </div>
@@ -211,7 +211,7 @@
                                                         <label for="book_english_siswa">Input File Book English Student</label>
                                                         <div class="input-group">
                                                             <div class="custom-file">
-                                                                <input type="file" name="book_english_siswa" class="custom-file-input" id="book_english_siswa">
+                                                                <input type="file" name="book_english_siswa" class="custom-file-input form-control" id="book_english_siswa">
                                                                 <label class="custom-file-label" for="book_english_siswa">Choose file</label>
                                                             </div>
                                                         </div>
@@ -223,7 +223,7 @@
                                                                 <label for="book_indo_guru">Input File Book Indo Teacher</label>
                                                                 <div class="input-group">
                                                                     <div class="custom-file">
-                                                                        <input type="file" name="book_indo_guru" class="custom-file-input " id="book_indo_guru">
+                                                                        <input type="file" name="book_indo_guru" class="custom-file-input form-control " id="book_indo_guru">
                                                                         <label class="custom-file-label" for="book_indo_guru">Choose file</label>
                                                                     </div>
                                                                 </div>
@@ -232,7 +232,7 @@
                                                                 <label for="book_english_guru">Input File Book English Teacher</label>
                                                                 <div class="input-group">
                                                                     <div class="custom-file">
-                                                                        <input type="file" name="book_english_guru" class="custom-file-input " id="book_english_guru">
+                                                                        <input type="file" name="book_english_guru" class="custom-file-input form-control " id="book_english_guru">
                                                                         <label class="custom-file-label" for="book_english_guru">Choose file</label>
                                                                     </div>
                                                                 </div>
