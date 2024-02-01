@@ -14,6 +14,11 @@ use App\Http\Controllers\PdfController;
 |
 */
 
+// /welcome
+Route::get('/welcome',  function () {
+  return view('welcome');
+});
+
 Route::get('/unauthorized', function () {
   $title = 'Unauthorized';
   return view('errorpage.401', compact('title'));
@@ -465,6 +470,9 @@ Route::group(['middleware' => ['auth']], function () {
         ]);
         Route::resource('hasilnilai', 'Walikelas\KM\PengelolaanNilaiController',  [
           'uses' => ['index']
+        ]);
+        Route::resource('nilairaportkmwalas', 'Admin\KM\NilaiRaportSemesterController',  [
+          'uses' => ['index', 'store']
         ]);
 
         Route::resource('leger', 'Walikelas\KM\LegerNilaiSiswaController',  [

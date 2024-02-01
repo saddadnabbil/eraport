@@ -1,35 +1,46 @@
-@include('layouts.main.header')
-@include('layouts.sidebar.admin')
+@extends('layouts.main.header')
+@section('sidebar')
+  @include('layouts.sidebar.admin')
+@endsection
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <div class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1 class="m-0 text-dark">{{$title}}</h1>
-        </div><!-- /.col -->
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item "><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active">{{$title}}</li>
-          </ol>
-        </div><!-- /.col -->
-      </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-  </div>
-  <!-- /.content-header -->
+@section('content')
+  <div class="page-wrapper">
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
+        'breadcrumbs' => [
+            [
+                'title' => 'Dashboard',
+                'url' => route('dashboard'),
+                'active' => true,
+            ],
+            [
+                'title' => $title,
+                'url' => route('user.index'),
+                'active' => false,
+            ]
+        ]
+    ])
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
 
-  <!-- Main content -->
-  <section class="content">
-    <div class="container-fluid">
+      <!-- ============================================================== -->
+      <!-- Container fluid  -->
+      <!-- ============================================================== -->
+      <div class="container-fluid">
       <!-- ./row -->
       <div class="row">
         <div class="col-12">
           <div class="card">
             <div class="card-header">
               <h3 class="card-title"><i class="fas fa-table"></i> {{$title}}</h3>
+              <div class="card-tools">
+                <a href="{{ route('adminlegerkm.show', $kelas->id) }}" class="btn btn-tool btn-sm">
+                  <i class="fas fa-download"></i>
+                </a>
+              </div>
             </div>
 
             <div class="card-body">
@@ -50,9 +61,7 @@
                 </form>
               </div>
 
-              <div>
-                <a href="{{ route('adminlegerkm.show', $kelas->id) }}" class="btn btn-primary float-right"><i class="fas fa-download"></i> Download Leger</a>
-              </div>
+
 
               <div class="table-responsive pt-3">
                 <table class="table table-bordered table-striped">
@@ -129,10 +138,12 @@
       </div>
       <!-- /.row -->
     </div>
-    <!--/. container-fluid -->
-  </section>
-  <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
+          <!-- ============================================================== -->
+      <!-- End Container fluid  -->
+      <!-- ============================================================== -->
+    </div>
+@endsection
 
-@include('layouts.main.footer')
+@section('footer')
+  @include('layouts.main.footer')
+@endsection

@@ -119,7 +119,7 @@
                   </div>
                   <div class="card-footer clearfix">
                     <button type="submit" class="btn btn-primary float-right">Simpan</button>
-                    <a href="{{ route('prosesdeskripsikm.index') }}" class="btn btn-default float-right mr-2">Batal</a>
+                    <a href="{{ route('prosesdeskripsikm.index') }}" class="btn btn-default float-right me-2">Batal</a>
                   </div>
                 </form>
               </div>
@@ -131,13 +131,15 @@
       </div>
       <!-- /.row -->
     </div>
-    <!--/. container-fluid -->
-  </section>
-  <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
+          <!-- ============================================================== -->
+      <!-- End Container fluid  -->
+      <!-- ============================================================== -->
+    </div>
+@endsection
 
-@include('layouts.main.footer')
+@section('footer')
+  @include('layouts.main.footer')
+@endsection
 
 </body>
 

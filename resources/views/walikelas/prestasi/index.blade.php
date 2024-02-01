@@ -1,29 +1,39 @@
 @include('layouts.main.header')
 @include('layouts.sidebar.walikelas')
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <div class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1 class="m-0 text-dark">{{$title}}</h1>
-        </div><!-- /.col -->
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item "><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active">{{$title}}</li>
-          </ol>
-        </div><!-- /.col -->
-      </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-  </div>
-  <!-- /.content-header -->
+@extends('layouts.main.header')
 
-  <!-- Main content -->
-  <section class="content">
-    <div class="container-fluid">
+@section('sidebar')
+  @include('layouts.sidebar.admin')
+@endsection
+
+@section('content')
+  <div class="page-wrapper">
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
+        'breadcrumbs' => [
+            [
+                'title' => 'Dashboard',
+                'url' => route('dashboard'),
+                'active' => true,
+            ],
+            [
+                'title' => $title,
+                'url' => route('user.index'),
+                'active' => false,
+            ]
+        ]
+    ])
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+
+      <!-- ============================================================== -->
+      <!-- Container fluid  -->
+      <!-- ============================================================== -->
+      <div class="container-fluid">
       <!-- ./row -->
       <div class="row">
         <div class="col-12">
@@ -31,7 +41,7 @@
             <div class="card-header">
               <h3 class="card-title"><i class="fas fa-trophy"></i> {{$title}}</h3>
               <div class="card-tools">
-                <button type="button" class="btn btn-tool btn-sm" data-toggle="modal" data-target="#modal-tambah">
+                <button type="button" class="btn btn-tool btn-sm" data-bs-toggle="modal" data-bs-target="#modal-tambah">
                   <i class="fas fa-plus"></i>
                 </button>
               </div>
@@ -43,8 +53,8 @@
                 <div class="modal-content">
                   <div class="modal-header">
                     <h5 class="modal-title">Tambah {{$title}}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
+                    
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                     </button>
                   </div>
                   <form action="{{ route('prestasi.store') }}" method="POST">
@@ -72,8 +82,8 @@
                       <div class="form-group row">
                         <label for="jenis_prestasi" class="col-sm-3 col-form-label">Jenis Prestasi</label>
                         <div class="col-sm-9 pt-1">
-                          <label class="form-check-label mr-3"><input type="radio" name="jenis_prestasi" value="1" required> Akademik</label>
-                          <label class="form-check-label mr-3"><input type="radio" name="jenis_prestasi" value="2" required> Non Akademik</label>
+                          <label class="form-check-label me-3"><input type="radio" name="jenis_prestasi" value="1" required> Akademik</label>
+                          <label class="form-check-label me-3"><input type="radio" name="jenis_prestasi" value="2" required> Non Akademik</label>
                         </div>
                       </div>
 
@@ -101,7 +111,7 @@
 
                     </div>
                     <div class="modal-footer justify-content-end">
-                      <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                      <button type="button" class="btn btn-default" data-bs-dismiss="modal">Batal</button>
                       <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                   </form>
@@ -111,7 +121,7 @@
             <!-- End Modal tambah -->
             <div class="card-body">
               <div class="table-responsive">
-                <table id="example1" class="table table-valign-middle table-hover">
+                <table id="zero_config" class="table table-valign-middle table-hover">
                   <thead>
                     <tr>
                       <th>No</th>
@@ -164,7 +174,7 @@
                         <form action="{{ route('prestasi.destroy', $prestasi->id) }}" method="POST">
                           @csrf
                           @method('DELETE')
-                          <button type="button" class="btn btn-warning btn-sm mt-1" data-toggle="modal" data-target="#modal-edit{{$prestasi->id}}">
+                          <button type="button" class="btn btn-warning btn-sm mt-1" data-bs-toggle="modal" data-bs-target="#modal-edit{{$prestasi->id}}">
                             <i class="fas fa-pen"></i>
                           </button>
                           <button type="submit" class="btn btn-danger btn-sm mt-1" onclick="return confirm('Hapus {{$title}} ?')">
@@ -180,9 +190,7 @@
                         <div class="modal-content">
                           <div class="modal-header">
                             <h5 class="modal-title">Tambah {{$title}}</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                           </div>
                           <form action="{{ route('prestasi.update', $prestasi->id) }}" method="POST">
                             @csrf
@@ -205,8 +213,8 @@
                               <div class="form-group row">
                                 <label for="jenis_prestasi" class="col-sm-3 col-form-label">Jenis Prestasi</label>
                                 <div class="col-sm-9 pt-1">
-                                  <label class="form-check-label mr-3"><input type="radio" name="jenis_prestasi" value="1" {{ $prestasi->jenis_prestasi == 1 ? 'checked' : ''}} required> Akademik</label>
-                                  <label class="form-check-label mr-3"><input type="radio" name="jenis_prestasi" value="2" {{ $prestasi->jenis_prestasi == 2 ? 'checked' : ''}} required> Non Akademik</label>
+                                  <label class="form-check-label me-3"><input type="radio" name="jenis_prestasi" value="1" {{ $prestasi->jenis_prestasi == 1 ? 'checked' : ''}} required> Akademik</label>
+                                  <label class="form-check-label me-3"><input type="radio" name="jenis_prestasi" value="2" {{ $prestasi->jenis_prestasi == 2 ? 'checked' : ''}} required> Non Akademik</label>
                                 </div>
                               </div>
 
@@ -234,7 +242,7 @@
 
                             </div>
                             <div class="modal-footer justify-content-end">
-                              <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                              <button type="button" class="btn btn-default" data-bs-dismiss="modal">Batal</button>
                               <button type="submit" class="btn btn-primary">Simpan</button>
                             </div>
                           </form>
@@ -254,10 +262,12 @@
       </div>
       <!-- /.row -->
     </div>
-    <!--/. container-fluid -->
-  </section>
-  <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
+          <!-- ============================================================== -->
+      <!-- End Container fluid  -->
+      <!-- ============================================================== -->
+    </div>
+@endsection
 
-@include('layouts.main.footer')
+@section('footer')
+  @include('layouts.main.footer')
+@endsection

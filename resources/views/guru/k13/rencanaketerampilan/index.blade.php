@@ -61,12 +61,12 @@
                       </td>
                       <td>
                         @if($penilaian->jumlah_rencana_penilaian == 0)
-                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-tambah{{$penilaian->id}}">
+                        <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modal-tambah{{$penilaian->id}}">
                           <i class="fas fa-plus"></i>
                         </button>
                         @else
                         <a href="{{ route('rencanaketerampilan.show', $penilaian->id) }}" class="btn btn-sm btn-success"><i class="fas fa-eye"></i></a>
-                        <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modal-edit{{$penilaian->id}}">
+                        <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modal-edit{{$penilaian->id}}">
                           <i class="fas fa-pencil-alt"></i>
                         </button>
                         @endif
@@ -79,9 +79,7 @@
                         <div class="modal-content">
                           <div class="modal-header">
                             <h5 class="modal-title">Tambah {{$title}}</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                           </div>
                           <div class="modal-body">
                             <form action="{{ route('rencanaketerampilan.create') }}" method="GET">
@@ -116,9 +114,7 @@
                         <div class="modal-content">
                           <div class="modal-header">
                             <h5 class="modal-title">Edit {{$title}}</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                           </div>
                           <div class="modal-body">
                             <div class="alert alert-warning alert-dismissible">

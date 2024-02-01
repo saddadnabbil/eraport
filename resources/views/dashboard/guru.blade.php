@@ -1,6 +1,12 @@
 @include('layouts.main.header')
 @include('layouts.sidebar.guru')
 
+@section('this-page-styles')
+  <link href="{{ asset('assets/extra-libs/c3/c3.min.css') }}" rel="stylesheet" />
+  <link href="{{ asset('assets/libs/chartist/dist/chartist.min.css') }}" rel="stylesheet" />
+  <link href="{{ asset('assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css') }}" rel="stylesheet" />
+@endsection
+
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
@@ -156,9 +162,9 @@
                       <td>{{$penilaian->mapel->nama_mapel}}</td>
                       <td class="text-center">
                         @if(is_null($penilaian->kkm))
-                        <span class="badge badge-danger">0</span>
+                        <span class="badge bg-danger">0</span>
                         @else
-                        <span class="badge badge-success">{{$penilaian->kkm}}</span>
+                        <span class="badge bg-success">{{$penilaian->kkm}}</span>
                         @endif
                       </td>
                       <td class="text-center">
@@ -282,23 +288,23 @@
                       </td>
 
                       @if($penilaian->nilai_pts_pas == 0)
-                      <td><span class="badge badge-danger">Belum Input</span></td>
-                      <td><span class="badge badge-danger">Belum Input</span></td>
+                      <td><span class="badge bg-danger">Belum Input</span></td>
+                      <td><span class="badge bg-danger">Belum Input</span></td>
                       @else
-                      <td><span class="badge badge-success">Sudah Input</span></td>
-                      <td><span class="badge badge-success">Sudah Input</span></td>
+                      <td><span class="badge bg-success">Sudah Input</span></td>
+                      <td><span class="badge bg-success">Sudah Input</span></td>
                       @endif
 
                       @if($penilaian->kirim_nilai_raport == 0)
-                      <td><span class="badge badge-danger">Belum Kirim</span></td>
+                      <td><span class="badge bg-danger">Belum Kirim</span></td>
                       @else
-                      <td><span class="badge badge-success">Sudah Kirim</span></td>
+                      <td><span class="badge bg-success">Sudah Kirim</span></td>
                       @endif
 
                       @if($penilaian->proses_deskripsi == 0)
-                      <td><span class="badge badge-danger">Belum Proses</span></td>
+                      <td><span class="badge bg-danger">Belum Proses</span></td>
                       @else
-                      <td><span class="badge badge-success">Sudah Proses</span></td>
+                      <td><span class="badge bg-success">Sudah Proses</span></td>
                       @endif
 
                     </tr>
@@ -362,9 +368,9 @@
                       <td>{{$penilaian->mapel->nama_mapel}}</td>
                       <td class="text-center">
                         @if(is_null($penilaian->kkm))
-                        <span class="badge badge-danger">0</span>
+                        <span class="badge bg-danger">0</span>
                         @else
-                        <span class="badge badge-success">{{$penilaian->kkm}}</span>
+                        <span class="badge bg-success">{{$penilaian->kkm}}</span>
                         @endif
                       </td>
                       <td class="text-center">
@@ -423,15 +429,15 @@
                       </td>
 
                       @if($penilaian->kirim_nilai_raport == 0)
-                      <td><span class="badge badge-danger">Belum Kirim</span></td>
+                      <td><span class="badge bg-danger">Belum Kirim</span></td>
                       @else
-                      <td><span class="badge badge-success">Sudah Kirim</span></td>
+                      <td><span class="badge bg-success">Sudah Kirim</span></td>
                       @endif
 
                       @if($penilaian->proses_deskripsi == 0)
-                      <td><span class="badge badge-danger">Belum Proses</span></td>
+                      <td><span class="badge bg-danger">Belum Proses</span></td>
                       @else
-                      <td><span class="badge badge-success">Sudah Proses</span></td>
+                      <td><span class="badge bg-success">Sudah Proses</span></td>
                       @endif
 
                     </tr>
@@ -549,9 +555,9 @@
                       @endif
 
                       @if($riwayat_login->status_login == true)
-                      <span class="badge badge-success float-right">Online</span>
+                      <span class="badge bg-success float-right">Online</span>
                       @else
-                      <span class="badge badge-warning float-right">Offline</span>
+                      <span class="badge bg-warning float-right">Offline</span>
                       @endif
 
                     </a>
@@ -589,5 +595,15 @@
   <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+
+@push('custom-scripts')
+  <script src="{{ asset('assets/extra-libs/c3/d3.min.js') }}"></script>
+  <script src="{{ asset('assets/extra-libs/c3/c3.min.js') }}"></script>
+  <script src="{{ asset('assets/libs/chartist/dist/chartist.min.js') }}"></script>
+  <script src="{{ asset('assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js') }}"></script>
+  <script src="{{ asset('assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js') }}"></script>
+  <script src="{{ asset('assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js') }}"></script>
+  <script src="{{ asset('dist/js/pages/dashboards/dashboard1.min.js') }}"></script>
+@nedpush
 
 @include('layouts.main.footer')

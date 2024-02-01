@@ -89,7 +89,7 @@
 
                       @if(is_null($bobot_nilai->bobot_uh))
                       <td class="text-center">
-                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-tambah{{$bobot_nilai->id}}">
+                        <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modal-tambah{{$bobot_nilai->id}}">
                           <i class="fas fa-plus"></i>
                         </button>
                       </td>
@@ -99,8 +99,8 @@
                           <div class="modal-content">
                             <div class="modal-header">
                               <h5 class="modal-title">Setting Bobot Penilaian</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
+                              
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                               </button>
                             </div>
                             <form action="{{ route('bobot.store') }}" method="POST">
@@ -135,7 +135,7 @@
                                 </div>
                               </div>
                               <div class="modal-footer justify-content-end">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                                <button type="button" class="btn btn-default" data-bs-dismiss="modal">Batal</button>
                                 <button type="submit" class="btn btn-primary">Simpan</button>
                               </div>
                             </form>
@@ -146,7 +146,7 @@
 
                       @else
                       <td class="text-center">
-                        <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modal-edit{{$bobot_nilai->id}}">
+                        <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#modal-edit{{$bobot_nilai->id}}">
                           <i class="fas fa-pencil-alt"></i>
                         </button>
                       </td>
@@ -157,8 +157,8 @@
                           <div class="modal-content">
                             <div class="modal-header">
                               <h5 class="modal-title">Edit Bobot Penilaian</h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
+                              
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                               </button>
                             </div>
 
@@ -195,7 +195,7 @@
                                 </div>
                               </div>
                               <div class="modal-footer justify-content-end">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                                <button type="button" class="btn btn-default" data-bs-dismiss="modal">Batal</button>
                                 <button type="submit" class="btn btn-primary">Simpan</button>
                               </div>
                             </form>

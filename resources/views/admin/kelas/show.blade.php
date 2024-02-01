@@ -1,29 +1,42 @@
-@include('layouts.main.header')
-@include('layouts.sidebar.admin')
+@extends('layouts.main.header')
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <div class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1 class="m-0 text-dark">{{$title}}</h1>
-        </div><!-- /.col -->
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item "><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item "><a href="{{ route('kelas.index') }}">Kelas</a></li>
-            <li class="breadcrumb-item active">{{$title}}</li>
-          </ol>
-        </div><!-- /.col -->
-      </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-  </div>
-  <!-- /.content-header -->
+@section('styles')
+  <link href="{{ asset('assets/extra-libs/c3/c3.min.css') }}" rel="stylesheet" />
+  <link href="{{ asset('assets/libs/chartist/dist/chartist.min.css') }}" rel="stylesheet" />
+  <link href="{{ asset('assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css') }}" rel="stylesheet" />
+@endsection
 
-  <!-- Main content -->
-  <section class="content">
+@section('sidebar')
+  @include('layouts.sidebar.admin')
+@endsection
+
+@section('content')
+  <!-- ============================================================== -->
+  <!-- Page wrapper  -->
+  <!-- ============================================================== -->
+  <div class="page-wrapper">
+    @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
+      'breadcrumbs' => [
+        [
+          'title' => 'Dashboard', 
+          'url' => route('dashboard'),
+          'active' => true
+        ],
+        [
+          'title' => 'Kelas', 
+          'url' => route('kelas.index'),
+          'active' => true
+        ],
+        [
+          'title' => 'Anggota Kelas', 
+          'url' => route('kelas.index'),
+          'active' => false
+        ],
+      ],
+    ])
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
     <div class="container-fluid">
       <!-- ./row -->
       <div class="row">
@@ -46,7 +59,7 @@
                 @endif
               </h3>
               <div class="card-tools">
-                <button type="button" class="btn btn-tool btn-sm" data-toggle="modal" data-target="#modal-tambah">
+                <button type="button" class="btn btn-tool btn-sm" data-bs-toggle="modal" data-bs-target="#modal-tambah">
                   <i class="fas fa-plus"></i>
                 </button>
               </div>
@@ -58,8 +71,8 @@
                 <div class="modal-content">
                   <div class="modal-header">
                     <h5 class="modal-title">Tambah {{$title}}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
+                    
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                     </button>
                   </div>
                   <form action="{{ route('kelas.anggota') }}" method="POST">
@@ -109,7 +122,7 @@
                       <!-- /.row -->
                     </div>
                     <div class="modal-footer justify-content-end">
-                      <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                      <button type="button" class="btn btn-default" data-bs-dismiss="modal">Batal</button>
                       <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                   </form>
@@ -120,7 +133,7 @@
 
             <div class="card-body">
               <div class="table-responsive">
-                <table id="example1" class="table table-striped table-valign-middle table-hover">
+                <table id="zero_config" class="table table-striped table-valign-middle table-hover">
                   <thead>
                     <tr>
                       <th>No</th>
@@ -182,10 +195,12 @@
       </div>
       <!-- /.row -->
     </div>
-    <!--/. container-fluid -->
-  </section>
-  <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
+          <!-- ============================================================== -->
+      <!-- End Container fluid  -->
+      <!-- ============================================================== -->
+    </div>
+@endsection
 
-@include('layouts.main.footer')
+@section('footer')
+  @include('layouts.main.footer')
+@endsection

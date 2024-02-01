@@ -1,45 +1,49 @@
-@include('layouts.main.header')
-@include('layouts.sidebar.admin')
+@extends('layouts.main.header')
+@section('sidebar')
+  @include('layouts.sidebar.admin')
+@endsection
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <div class="content-header">
+
+@section('content')
+  <div class="page-wrapper">
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
+        'breadcrumbs' => [
+            [
+                'title' => 'Dashboard',
+                'url' => route('dashboard'),
+                'active' => true,
+            ],
+            [
+                'title' => $title,
+                'url' => route('tapel.index'),
+                'active' => false,
+            ]
+        ]
+    ])
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
     <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1 class="m-0 text-dark">{{$title}}</h1>
-        </div><!-- /.col -->
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item "><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active">{{$title}}</li>
-          </ol>
-        </div><!-- /.col -->
-      </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-  </div>
-  <!-- /.content-header -->
-
-  <!-- Main content -->
-  <section class="content">
-    <div class="container-fluid">
-
-      {{-- select year --}}
       <div class="row">
         <div class="col-12">
           <div class="card">
             <div class="card-header">
               <h3 class="card-title">Setting Of The School Year</h3>
-
             </div>
             <div class="card-body">
               <form action="{{ route('tapel.setAcademicYear') }}" method="POST">
                   @csrf
                   <div class="form-group row border-bottom">
                       <div class="col-6 form-inline" style="margin-bottom: 14px">
-                        <label class="mr-4 font-weight-normal"  for="select_tapel_id">Tahun Pelajaran</label>
-                        <select class="custom-select" name="select_tapel_id">
+                        <label class="me-4 font-weight-normal"  for="select_tapel_id">Tahun Pelajaran</label>
+                        <select class="custom-select form-control" name="select_tapel_id">
                           {{-- <option selected>{{ $tapel_id }}</option> --}}
                           @foreach($data_tapel as $tapel)
                               <option value="{{ $tapel->id }}" @if ($tapel->id == $sekolah->tapel_id) selected @endif>
@@ -67,8 +71,8 @@
                             
                           @else
                             <div class="col-2 form-inline">
-                              <label class="mr-4 font-weight-normal" for="select_semester_{{ str_replace(' ', '', strtolower($tingkatan->nama_tingkatan)) }}_id">Semester</label>
-                              <select class="custom-select" name="select_semester_{{ str_replace(' ', '', strtolower($tingkatan->nama_tingkatan)) }}_id">
+                              <label class="me-4 font-weight-normal" for="select_semester_{{ str_replace(' ', '', strtolower($tingkatan->nama_tingkatan)) }}_id">Semester</label>
+                              <select class="custom-select form-control" name="select_semester_{{ str_replace(' ', '', strtolower($tingkatan->nama_tingkatan)) }}_id">
                                 @foreach($data_semester as $semester)
                                   <option value="{{ $semester->id }}" @if ($semester->id == $tingkatan->semester_id) selected @endif>
                                     {{ $semester->semester }}                   
@@ -79,8 +83,8 @@
                           @endif
     
                           <div class="col-2 form-inline">
-                            <label class="mr-4 font-weight-normal" for="select_term_id">Term</label>
-                            <select class="custom-select" name="select_term_{{ str_replace(' ', '', strtolower($tingkatan->nama_tingkatan)) }}_id">
+                            <label class="me-4 font-weight-normal" for="select_term_id">Term</label>
+                            <select class="custom-select form-control" name="select_term_{{ str_replace(' ', '', strtolower($tingkatan->nama_tingkatan)) }}_id">
                                   @foreach($data_term as $term)
                                     <option value="{{ $term->id }}" @if ($term->id == $tingkatan->term_id) selected @endif>
                                       {{ $term->term }}                   
@@ -97,9 +101,8 @@
                   </div>
               </form>
             </div>
-            </div>
-          </div>        
-        </div>
+          </div>
+        </div>        
       </div>
 
       {{-- data table --}}
@@ -110,7 +113,7 @@
             <div class="card-header">
               <h3 class="card-title"><i class="fas fa-calendar-week"></i> {{$title}}</h3>
               <div class="card-tools">
-                <button type="button" class="btn btn-tool btn-sm" data-toggle="modal" data-target="#modal-tambah">
+                <button type="button" class="btn btn-tool btn-sm" data-bs-toggle="modal" data-bs-target="#modal-tambah">
                   <i class="fas fa-plus"></i>
                 </button>
               </div>
@@ -122,8 +125,8 @@
                 <div class="modal-content">
                   <div class="modal-header">
                     <h5 class="modal-title">Tambah {{$title}}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
+                    
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                     </button>
                   </div>
                   <form action="{{ route('tapel.store') }}" method="POST">
@@ -137,7 +140,7 @@
                       </div>
                     </div>
                     <div class="modal-footer justify-content-end">
-                      <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                      <button type="button" class="btn btn-default" data-bs-dismiss="modal">Batal</button>
                       <button type="submit" class="btn btn-primary">Simpan</button>
                     </div>
                   </form>
@@ -148,8 +151,7 @@
 
             <div class="card-body">
               <div class="table-responsive">
-
-                <table id="example1" class="table table-striped table-valign-middle table-hover">
+                <table id="zero_config" class="table table-striped table-valign-middle table-hover">
                   <thead>
                     <tr>
                       <th>No</th>
@@ -168,7 +170,7 @@
                         <form action="{{ route('tapel.destroy', $tapel->id) }}" method="POST">
                           @csrf
                           @method('DELETE')
-                          <button type="button" class="btn btn-warning btn-sm mt-1" data-toggle="modal" data-target="#modal-edit{{$tapel->id}}">
+                          <button type="button" class="btn btn-warning btn-sm mt-1" data-bs-toggle="modal" data-bs-target="#modal-edit{{$tapel->id}}">
                             <i class="fas fa-pencil-alt"></i>
                           </button>
                           <button type="submit" class="btn btn-danger btn-sm mt-1" onclick="return confirm('Hapus {{$title}} ?')">
@@ -184,8 +186,8 @@
                       <div class="modal-content">
                         <div class="modal-header">
                           <h5 class="modal-title">Edit {{$title}}</h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                          
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                           </button>
                         </div>
 
@@ -201,7 +203,7 @@
                             </div>
                           </div>
                           <div class="modal-footer justify-content-end">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                            <button type="button" class="btn btn-default" data-bs-dismiss="modal">Batal</button>
                             <button type="submit" class="btn btn-primary">Simpan</button>
                           </div>
                         </form>
@@ -222,10 +224,14 @@
       </div>
       <!-- /.row -->
     </div>
-    <!--/. container-fluid -->
-  </section>
-  <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
+    <!-- ============================================================== -->
+    <!-- End Container fluid  -->
+    <!-- ============================================================== -->
+  </div>
+@endsection
 
-@include('layouts.main.footer')
+
+
+@section('footer')
+  @include('layouts.main.footer')
+@endsection

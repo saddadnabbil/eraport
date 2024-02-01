@@ -1,0 +1,65 @@
+@php
+    // Mendapatkan role pengguna saat ini
+    $userRole = Auth::user()->role;
+    
+
+    // Menentukan route berdasarkan peran pengguna
+    switch ($userRole) {
+        case 1:
+            $checkRoute = route('user.index');
+            $dynamicRoute = route('user.index');
+            break;
+        case 2:
+            $checkRoute = route('user.index');
+            $dynamicRoute = route('user.index');
+            break;
+        // ... tambahkan kasus lain jika diperlukan
+        default:
+            $dynamicRoute = route('user.index');
+    }
+@endphp
+
+@include('layouts.partials.sidebar._sidebar-item', [
+    'isActive' => request()->routeIs(['tglraportkm.*', 'kkmadmin.*', 'mappingkm.*', 'kehadiranadmin.*', 'prestasiadmin.*', 'catatanadmin.*', 'kenaikanadmin.*']),
+    'hasArrow' => true,
+    'icon' => 'clipboard',
+    'itemName' => 'Input Data',
+    'route' => 'javascript:void(0)',
+    'subItems' => [
+        [
+            'name' => 'Minimum Criteria',
+            'route' => route('kkmadmin.index'),
+            'isActive' => request()->routeIs('kkmadmin.*'),
+        ],
+        [
+            'name' => 'Mapping Subject',
+            'route' => route('mappingkm.index'),
+            'isActive' => request()->routeIs('mappingkm.*'),
+        ],
+        [
+            'name' => 'Kehadiran Siswa',
+            'route' => route('kehadiranadmin.index'),
+            'isActive' => request()->routeIs('kehadiranadmin.*'),
+        ],
+        [
+            'name' => 'Prestasi Siswa',
+            'route' => route('prestasiadmin.index'),
+            'isActive' => request()->routeIs('prestasiadmin.*'),
+        ],
+        [
+            'name' => 'Catatan Wali Kelas',
+            'route' => route('catatanadmin.index'),
+            'isActive' => request()->routeIs('catatanadmin.*'),
+        ],
+        [
+            'name' => 'Tanggal Raport',
+            'route' => route('tglraportkm.index'),
+            'isActive' => request()->routeIs('tglraportkm.*'),
+        ],
+        [
+            'name' => 'Kenaikan Kelas',
+            'route' => route('kenaikanadmin.index'),
+            'isActive' => request()->routeIs('kenaikanadmin.*'),
+        ],
+    ],
+])

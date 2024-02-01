@@ -1,29 +1,35 @@
-@include('layouts.main.header')
-@include('layouts.sidebar.admin')
+@extends('layouts.main.header')
+@section('sidebar')
+  @include('layouts.sidebar.admin')
+@endsection
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <div class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1 class="m-0 text-dark">{{$title}}</h1>
-        </div><!-- /.col -->
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item "><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active">{{$title}}</li>
-          </ol>
-        </div><!-- /.col -->
-      </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-  </div>
-  <!-- /.content-header -->
+@section('content')
+  <div class="page-wrapper">
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
+        'breadcrumbs' => [
+            [
+                'title' => 'Dashboard',
+                'url' => route('dashboard'),
+                'active' => true,
+            ],
+            [
+                'title' => $title,
+                'url' => route('user.index'),
+                'active' => false,
+            ]
+        ]
+    ])
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
 
-  <!-- Main content -->
-  <section class="content">
-    <div class="container-fluid">
+      <!-- ============================================================== -->
+      <!-- Container fluid  -->
+      <!-- ============================================================== -->
+      <div class="container-fluid">
       <!-- ./row -->
       <div class="row">
         <div class="col-12">
@@ -31,7 +37,7 @@
             <div class="card-header">
               <h3 class="card-title"><i class="fas fa-book-open"></i> {{$title}}</h3>
               <div class="card-tools">
-                <button type="button" class="btn btn-tool btn-sm" data-toggle="modal" data-target="#modal-settings">
+                <button type="button" class="btn btn-tool btn-sm" data-bs-toggle="modal" data-bs-target="#modal-settings">
                   <i class="fas fa-cog"></i>
                 </button>
                 <a href="{{ route('pembelajaran.export') }}" class="btn btn-tool btn-sm">
@@ -46,8 +52,8 @@
                 <div class="modal-content">
                   <div class="modal-header">
                     <h5 class="modal-title">Setting Pembelajaran</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
+                    
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                     </button>
                   </div>
                   <div class="modal-body">
@@ -79,7 +85,7 @@
 
             <div class="card-body">
               <div class="table-responsive">
-                <table id="example1" class="table table-striped table-valign-middle table-hover">
+                <table id="zero_config" class="table table-striped table-valign-middle table-hover">
                   <thead>
                     <tr>
                       <th>No</th>
@@ -118,10 +124,12 @@
       </div>
       <!-- /.row -->
     </div>
-    <!--/. container-fluid -->
-  </section>
-  <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
+          <!-- ============================================================== -->
+      <!-- End Container fluid  -->
+      <!-- ============================================================== -->
+    </div>
+@endsection
 
-@include('layouts.main.footer')
+@section('footer')
+  @include('layouts.main.footer')
+@endsection

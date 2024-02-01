@@ -34,7 +34,7 @@ class MapingMapelController extends Controller
                     $mapel->nomor_urut = $mapping->nomor_urut;
                 }
             }
-            return view('admin.k13.mapping.index', compact('title', 'data_mapel'));
+            return view('admin.km.mapping.index', compact('title', 'data_mapel'));
         }
     }
 

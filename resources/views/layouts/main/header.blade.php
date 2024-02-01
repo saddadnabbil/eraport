@@ -1,117 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <!-- Favicon icon -->
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/dist/img/logo.png') }}" />
+        <title>{{$title}} | {{ env('APP_NAME') }}</title>
+        
+        <!-- CSS Kustom -->
+        <link href="{{ asset('dist/css/style.min.css') }}" rel="stylesheet" />
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <!-- Summernote -->
+        <link rel="stylesheet" href="{{ asset('assets/libs/summernote/summernote-bs4.css') }}">
 
-  <title>{{$title}} | {{ env('APP_NAME') }} </title>
+        {{-- datatables --}}
+        <!-- <link href="../assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet"> -->
+        <link rel="stylesheet" href="{{ asset('assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/extra-libs/datatables.net-bs4/css/responsive.dataTables.min.css') }}">
 
-  <link rel="icon" type="image/png" sizes="16x16" href="{{asset('assets/dist/img/logo.png')}}">
-  
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="/assets/plugins/fontawesome-free/css/all.min.css">
-  <!-- pace-progress -->
-  <link rel="stylesheet" href="/assets/plugins/pace-progress/themes/black/pace-theme-flat-top.css">
-  <!-- overlayScrollbars -->
-  <link rel="stylesheet" href="/assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
-  <!-- Select2 -->
-  <link rel="stylesheet" href="/assets/plugins/select2/css/select2.min.css">
-  <link rel="stylesheet" href="/assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
-  <!-- Bootstrap4 Duallistbox -->
-  <link rel="stylesheet" href="/assets/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="/assets/dist/css/adminlte.min.css">
-  <!-- summernote -->
-  <link rel="stylesheet" href="/assets/plugins/summernote/summernote-bs4.css">
-  <!-- DataTables -->
-  <link rel="stylesheet" href="/assets/plugins/datatables-bs4/css/dataTables.bootstrap4.css">
-  <!-- Custom Css -->
-  <link rel="stylesheet" href="/assets/dist/css/custom.css">
-</head>
+        {{-- Style CSS untuk halaman ini --}}
+        @yield('styles')
 
-<body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed pace-primary">
-  <div class="wrapper">
-    <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-      <!-- Left navbar links -->
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
-        </li>
+        <!-- HTML5 Shim dan Respond.js untuk mendukung elemen HTML5 dan kueri media di IE8 -->
+        <!-- PERINGATAN: Respond.js tidak akan berfungsi jika Anda melihat halaman melalui file:// -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
 
-        <div class="d-none d-lg-flex align-items-center mr-4">
-          <a href="{{Auth::user()->role == 1 ? route('tapel.index') : '#'}}" class="btn btn-primary btn-sm text-left" style="line-height: 1">
-            @php
-              $tapel = App\Tapel::where('status', 1)->first();
-              // dd($tapel);
-              $term = App\Term::find($tapel->term_id);
+    <body>
+        <!-- ============================================================== -->
+        <!-- Preloader - style you can find in spinners.css -->
+        <!-- ============================================================== -->
+        {{-- <div class="preloader">
+            <div class="lds-ripple">
+                <div class="lds-pos"></div>
+                <div class="lds-pos"></div>
+            </div>
+        </div> --}}
+        <!-- ============================================================== -->
+        <!-- Main wrapper - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+            data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
+            @include('layouts.partials.topbar.topbar')
 
-              $pg = App\Tingkatan::where('id', 1)->first();
-              $kg = App\Tingkatan::where('id', 2)->first();
-              $ps = App\Tingkatan::where('id', 3)->first();
-              $jhs = App\Tingkatan::where('id', 4)->first();
-              $shs = App\Tingkatan::where('id', 5)->first();
-            @endphp 
-             
-             School Year {{ str_replace('-', ' / ', $tapel->tahun_pelajaran) }} - (Semester PS {{$ps->semester_id . '-' . $ps->term_id}}) - (Semester JHS {{$jhs->semester_id . '-' . $jhs->term_id}}) - (Semester SHS {{$shs->semester_id . '-' . $shs->term_id}}) - Term {{$term->id }}
-          </a>
+            @yield('sidebar')
+            <!-- ============================================================== -->
+            <!-- End Topbar header -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Left Sidebar - style you can find in sidebar.scss  -->
+            <!-- ============================================================== -->
+            @yield('content')
         </div>
-        <!-- End of Flex container -->
-      </ul>
+        <!-- ============================================================== -->
+        <!-- End Wrapper -->
+        <!-- ============================================================== -->
 
-      <!-- Right navbar links -->
-      <ul class="navbar-nav ml-auto">
-        <!-- Notifications Dropdown Menu -->
-        <li class="nav-item dropdown pr-2">
-          <!-- User Block  -->
-          <a class="user-block" data-toggle="dropdown" href="#">
-            @if (Auth::user()->role == 1)
-            <img class="img-circle" src="/assets/dist/img/avatar/{{Auth::user()->admin->avatar}}" alt="User Image">
-            <span class="username">{{Auth::user()->admin->nama_lengkap}}</span>
-            <span class="description">Administrator</span>
-            @elseif(Auth::user()->role == 2)
-            <img class="img-circle" src="/assets/dist/img/avatar/{{Auth::user()->guru->avatar}}" alt="User Image">
-            <span class="username">{{Auth::user()->guru->nama_lengkap}}</span>
-            <span class="description">{{session()->get('akses_sebagai')}}</span>
-            @else
-            <img class="img-circle" src="/assets/dist/img/avatar/{{Auth::user()->siswa->avatar}}" alt="User Image">
-            <span class="username">{{Auth::user()->siswa->nama_lengkap}}</span>
-            <span class="description">Siswa</span>
-            @endif
-          </a>
-          <!-- End User Block  -->
+        @yield('footer')
+    </body>
+</html>
 
-          <!-- User Dropdown  -->
-          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-            <span class="dropdown-item dropdown-header">Akun Saya</span>
-            <div class="dropdown-divider"></div>
-            <a href="{{ route('profile') }}" class="dropdown-item">
-              <i class="fas fa-user mr-2"></i> Profile
-            </a>
-            <div class="dropdown-divider"></div>
-            <a href="{{ route('gantipassword') }}" class="dropdown-item">
-              <i class="fas fa-key mr-2"></i> Ganti Password
-            </a>
-            
-            @if(Auth::user()->role == 2)
-            <div class="dropdown-divider"></div>
-              @if(session()->get('akses_sebagai') == 'Guru Mapel' && session()->get('cek_wali_kelas') == true)
-                <a href="{{ route('akses') }}" class="dropdown-item" onclick="return confirm('Apakah anda yakin akan ganti akses login ?')">
-                  <i class="fas fa-chalkboard-teacher mr-2"></i> Akses Sebagai Wali Kelas
-                </a>
-              @elseif (session()->get('akses_sebagai') == 'Wali Kelas')
-                <a href="{{ route('akses') }}" class="dropdown-item" onclick="return confirm('Apakah anda yakin akan ganti akses login ?')">
-                  <i class="fas fa-chalkboard-teacher mr-2"></i> Akses Sebagai Guru Mapel
-                </a>
-              @endif
-            @endif
-            <div class="dropdown-divider"></div>
-            <a href="{{ route('logout') }}" class="dropdown-item dropdown-footer bg-danger" onclick="return confirm('Apakah anda yakin ingin keluar ?')"><i class="fas fa-sign-out-alt mr-1"></i> Keluar / Logout</a>
-          </div>
-          <!-- End User Dropdown  -->
-        </li>
-      </ul>
-    </nav>
-    <!-- /.navbar -->
+
+    
+

@@ -1,12 +1,18 @@
 @include('sweetalert::alert')
 
-<!-- jQuery -->
-<script src="assets/plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- AdminLTE App -->
-<script src="assets/dist/js/adminlte.min.js"></script>
-
+    <!-- ============================================================== -->
+    <!-- All Required js -->
+    <!-- ============================================================== -->
+    <script src="{{ asset('assets/libs/jquery/dist/jquery.min.js') }} "></script>
+    <!-- Bootstrap tether Core JavaScript -->
+    <script src="{{ asset('assets/libs/popper.js/dist/umd/popper.min.js') }} "></script>
+    <script src="{{ asset('assets/libs/bootstrap/dist/js/bootstrap.min.js') }} "></script>
+    <!-- ============================================================== -->
+    <!-- This page plugin js -->
+    <!-- ============================================================== -->
+    <script>
+        $(".preloader ").fadeOut();
+    </script>
 </body>
 
 </html>

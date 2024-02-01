@@ -10,7 +10,7 @@
         Kami tidak dapat menemukan halaman yang Anda cari
       </p>
 
-      <div class="row mr-2 ml-2">
+      <div class="row me-2 ml-2">
         <div class="col-12">
           <a href="{{ route('dashboard') }}" class="btn btn-primary btn-block">Kembali Ke Dashboard</a>
         </div>

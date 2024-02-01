@@ -1,30 +1,35 @@
-@include('layouts.main.header')
-@include('layouts.sidebar.admin')
+@extends('layouts.main.header')
+@section('sidebar')
+  @include('layouts.sidebar.admin')
+@endsection
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <div class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1 class="m-0 text-dark">{{$title}}</h1>
-        </div><!-- /.col -->
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item "><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active">{{$title}}</li>
-          </ol>
-        </div><!-- /.col -->
-      </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-  </div>
-  <!-- /.content-header -->
+@section('content')
+  <div class="page-wrapper">
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
+        'breadcrumbs' => [
+            [
+                'title' => 'Dashboard',
+                'url' => route('dashboard'),
+                'active' => true,
+            ],
+            [
+                'title' => $title,
+                'url' => route('sekolah.index'),
+                'active' => false,
+            ]
+        ]
+    ])
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
 
-  <!-- Main content -->
-  <section class="content">
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
     <div class="container-fluid">
-      <!-- ./row -->
       <div class="row">
         <div class="col-12">
           <div class="card">
@@ -98,11 +103,18 @@
                 </div>
                 <div class="form-group row">
                   <label for="logo" class="col-sm-2 col-form-label">Logo Sekolah</label>
-                  <div class="col-sm-3">
+                  <div class="col-sm-5">
                     <div class="custom-file">
-                      <input type="file" class="custom-file-input" name="logo" id="customFile" accept="image/*">
-                      <label class="custom-file-label" for="customFile">{{$sekolah->logo}}</label>
+                      <input type="file" class="custom-file-input form-control" name="logo" id="customFile" onchange="readURL(this);" accept="image/*">
+                      </label>
                     </div>
+                  </div>
+                  <div class="col-sm-5">
+                    @if ($sekolah->logo == null)
+                      {{-- <img src="{{ asset('assets/dist/img/3x4.png') }}" alt="" id="pas_photo_preview"> --}}
+                    @else
+                      <img class="mb-2" src="{{ asset('assets/images/logo/'.$sekolah->logo) }}" id="pas_photo_preview" alt="{{$sekolah->logo}}">
+                    @endif
                   </div>
                 </div>
                 <div class="form-group row">
@@ -122,14 +134,33 @@
           </div>
           <!-- /.card -->
         </div>
-
       </div>
-      <!-- /.row -->
+      <!-- ============================================================== -->
+      <!-- End Container fluid  -->
+      <!-- ============================================================== -->
     </div>
-    <!--/. container-fluid -->
-  </section>
-  <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
+  @endsection
+  
+  @push('custom-scripts')
 
-@include('layouts.main.footer')
+
+      <!-- pas_photo preview-->
+      <script>
+          function readURL(input) {
+              if (input.files && input.files[0]) {
+                  var reader = new FileReader();
+      
+                  reader.onload = function (e) {
+                      $('#pas_photo_preview')
+                          .attr('src', e.target.result);
+                  };
+      
+                  reader.readAsDataURL(input.files[0]);
+              }
+          }
+      </script>
+  @endpush
+  
+  @section('footer')
+    @include('layouts.main.footer')
+  @endsection

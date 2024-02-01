@@ -1,5 +1,7 @@
-@include('layouts.main.header')
-@include('layouts.sidebar.admin')
+@extends('layouts.main.header')
+@section('sidebar')
+  @include('layouts.sidebar.admin')
+@endsection
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -72,15 +74,15 @@
                     @if($existingData && count($existingData) > 0)
                       @foreach($existingData as $data)
                         <tr>
-                          <td {!! $data->canDelete ? '' : 'data-toggle="popover" data-placement="right" title data-content="<b>Tidak Bisa Diedit.</b> <br> Sedang digunakan dalam salah satu penilaian"' !!}>
+                          <td {!! $data->canDelete ? '' : 'data-bs-target="popover" data-placement="right" title data-content="<b>Tidak Bisa Diedit.</b> <br> Sedang digunakan dalam salah satu penilaian"' !!}>
                             <input type="text" class="form-control" name="kode_cp[]" value="{{ $data->kode_cp }}" required oninvalid="this.setCustomValidity('data tidak boleh kosong')" oninput="setCustomValidity('')" {{ $data->canDelete ? '' : 'disabled' }}>
                           </td>
 
-                          <td {!! $data->canDelete ? '' : 'data-toggle="popover" data-placement="right" title data-content="<b>Tidak Bisa Diedit.</b> <br> Sedang digunakan dalam salah satu penilaian"' !!}>
+                          <td {!! $data->canDelete ? '' : 'data-bs-target="popover" data-placement="right" title data-content="<b>Tidak Bisa Diedit.</b> <br> Sedang digunakan dalam salah satu penilaian"' !!}>
                             <textarea class="form-control" name="capaian_pembelajaran[]" rows="2" required oninvalid="this.setCustomValidity('data tidak boleh kosong')" oninput="setCustomValidity('')" {{ $data->canDelete ? '' : 'disabled' }}>{{ $data->capaian_pembelajaran }}</textarea>
                           </td>
 
-                          <td {!! $data->canDelete ? '' : 'data-toggle="popover" data-placement="right" title data-content="<b>Tidak Bisa Diedit.</b> <br> Sedang digunakan dalam salah satu penilaian"' !!}>
+                          <td {!! $data->canDelete ? '' : 'data-bs-target="popover" data-placement="right" title data-content="<b>Tidak Bisa Diedit.</b> <br> Sedang digunakan dalam salah satu penilaian"' !!}>
                             <textarea class="form-control" name="ringkasan_cp[]" rows="2" required oninvalid="this.setCustomValidity('data tidak boleh kosong')" oninput="setCustomValidity('')" {{ $data->canDelete ? '' : 'disabled' }}>{{ $data->ringkasan_cp }}</textarea>
                           </td>
 
@@ -90,7 +92,7 @@
                             class="btn btn-danger shadow btn-xs sharp" 
                             id="deleteButton{{ $data->id }}" 
                             onclick="{{ $data->canDelete ? 'deleteData(' . $data->id . ')' : '' }}" 
-                            {{ $data->canDelete ? '' : 'data-toggle="popover" data-placement="right" title="Tidak Bisa Dihapus" data-content="<b>Sedang digunakan dalam salah satu penilaian.</b>" disabled' }}>
+                            {{ $data->canDelete ? '' : 'data-bs-target="popover" data-placement="right" title="Tidak Bisa Dihapus" data-content="<b>Sedang digunakan dalam salah satu penilaian.</b>" disabled' }}>
                               <i class="fas fa-trash-alt"></i>
                             </button>
                             <button type="button" name="add" id="add" class="btn btn-primary shadow btn-xs sharp"><i class="fa fa-plus"></i></button>
@@ -118,7 +120,7 @@
 
                 <div class="card-footer clearfix">
                   <button type="submit" class="btn btn-primary float-right">Simpan</button>
-                  <a href="{{ route('cp.index') }}" class="btn btn-default float-right mr-2">Batal</a>
+                  <a href="{{ route('cp.index') }}" class="btn btn-default float-right me-2">Batal</a>
                 </div>
             </form>
           </div>
@@ -128,13 +130,15 @@
       </div>
       <!-- /.row -->
     </div>
-    <!--/. container-fluid -->
-  </section>
-  <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
+          <!-- ============================================================== -->
+      <!-- End Container fluid  -->
+      <!-- ============================================================== -->
+    </div>
+@endsection
 
-@include('layouts.main.footer')
+@section('footer')
+  @include('layouts.main.footer')
+@endsection
 
 <script type="text/javascript">
   $(document).ready(function() {
@@ -180,7 +184,7 @@
 
 <script>
   $(function() {
-      $('[data-toggle="popover"]').popover({
+      $('[data-bs-target="popover"]').popover({
           trigger: 'hover',
           placement: function (popoverEl, targetEl) {
               return $(targetEl).data('placement');

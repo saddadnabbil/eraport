@@ -1,6 +1,12 @@
 @include('layouts.main.header')
 @include('layouts.sidebar.walikelas')
 
+@section('this-page-styles')
+  <link href="{{ asset('assets/extra-libs/c3/c3.min.css') }}" rel="stylesheet" />
+  <link href="{{ asset('assets/libs/chartist/dist/chartist.min.css') }}" rel="stylesheet" />
+  <link href="{{ asset('assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css') }}" rel="stylesheet" />
+@endsection
+
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
@@ -183,9 +189,9 @@
                       @endif
 
                       @if($riwayat_login->status_login == true)
-                      <span class="badge badge-success float-right">Online</span>
+                      <span class="badge bg-success float-right">Online</span>
                       @else
-                      <span class="badge badge-warning float-right">Offline</span>
+                      <span class="badge bg-warning float-right">Offline</span>
                       @endif
 
                     </a>
@@ -223,5 +229,14 @@
   <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+@push('custom-scripts')
+  <script src="{{ asset('assets/extra-libs/c3/d3.min.js') }}"></script>
+  <script src="{{ asset('assets/extra-libs/c3/c3.min.js') }}"></script>
+  <script src="{{ asset('assets/libs/chartist/dist/chartist.min.js') }}"></script>
+  <script src="{{ asset('assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js') }}"></script>
+  <script src="{{ asset('assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js') }}"></script>
+  <script src="{{ asset('assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js') }}"></script>
+  <script src="{{ asset('dist/js/pages/dashboards/dashboard1.min.js') }}"></script>
+@nedpush
 
 @include('layouts.main.footer')

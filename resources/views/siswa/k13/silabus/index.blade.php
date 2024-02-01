@@ -139,8 +139,8 @@
                                         <div class="modal-content">
                                             <div class="modal-header">
                                             <h5 class="modal-title">Edit {{$title}}</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
+                                            
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                                             </button>
                                             </div>
                                             {{-- <form action="{{ route('guru.silabus.update', $silabus->id) }}" method="POST" enctype="multipart/form-data">
@@ -240,7 +240,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer justify-content-end">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                                                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Batal</button>
                                                     <button type="submit" class="btn btn-primary">Simpan</button>
                                                 </div>
                                             </form> --}}

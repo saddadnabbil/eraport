@@ -76,19 +76,28 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = User::findorfail($id);
-        if (is_null($request->password)) {
-            $data = [
-                'status' => $request->status
-            ];
+        $validator = Validator::make($request->all(), [
+            'password' => 'required',
+            'status' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
         } else {
-            $data = [
-                'password' => bcrypt($request->password),
-                'status' => $request->status
-            ];
+
+            $user = User::findorfail($id);
+            if (is_null($request->password)) {
+                $data = [
+                    'status' => $request->password
+                ];
+            } else {
+                $data = [
+                    'password' => bcrypt($request->password),
+                    'status' => $request->status
+                ];
+            }
+            $user->update($data);
+            return back()->with('toast_success', 'User berhasil diedit');
         }
-        $user->update($data);
-        return back()->with('toast_success', 'User berhasil diedit');
     }
 
     public function export()

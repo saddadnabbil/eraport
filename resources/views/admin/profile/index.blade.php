@@ -1,29 +1,35 @@
-@include('layouts.main.header')
-@include('layouts.sidebar.admin')
+@extends('layouts.main.header')
+@section('sidebar')
+  @include('layouts.sidebar.admin')
+@endsection
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <div class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1 class="m-0 text-dark">{{$title}}</h1>
-        </div><!-- /.col -->
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item "><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active">{{$title}}</li>
-          </ol>
-        </div><!-- /.col -->
-      </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-  </div>
-  <!-- /.content-header -->
+@section('content')
+  <div class="page-wrapper">
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
+        'breadcrumbs' => [
+            [
+                'title' => 'Dashboard',
+                'url' => route('dashboard'),
+                'active' => true,
+            ],
+            [
+                'title' => $title,
+                'url' => route('user.index'),
+                'active' => false,
+            ]
+        ]
+    ])
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
 
-  <!-- Main content -->
-  <section class="content">
-    <div class="container-fluid">
+      <!-- ============================================================== -->
+      <!-- Container fluid  -->
+      <!-- ============================================================== -->
+      <div class="container-fluid">
       <div class="row">
         <div class="col-md-3">
 
@@ -75,8 +81,8 @@
                 <div class="form-group row">
                   <label class="col-sm-2 col-form-label">Jenis Kelamin</label>
                   <div class="col-sm-10 pt-1">
-                    <label class="form-check-label mr-3"><input type="radio" name="jenis_kelamin" value="Male" @if ($admin->jenis_kelamin =='Male' ) checked @endif required> Laki-Laki</label>
-                    <label class="form-check-label mr-3"><input type="radio" name="jenis_kelamin" value="Female" @if ($admin->jenis_kelamin =='Female' ) checked @endif required> Perempuan</label>
+                    <label class="form-check-label me-3"><input type="radio" name="jenis_kelamin" value="Male" @if ($admin->jenis_kelamin =='Male' ) checked @endif required> Laki-Laki</label>
+                    <label class="form-check-label me-3"><input type="radio" name="jenis_kelamin" value="Female" @if ($admin->jenis_kelamin =='Female' ) checked @endif required> Perempuan</label>
                   </div>
                 </div>
 
@@ -105,8 +111,8 @@
                   <label class="col-sm-2 col-form-label">Foto Profile </label>
                   <div class="col-sm-10">
                     <div class="custom-file">
-                      <input type="file" class="custom-file-input" name="avatar" id="customFile" accept="image/*">
-                      <label class="custom-file-label" for="customFile">{{$admin->avatar}}</label>
+                      <input type="file" class="custom-file-input form-control" name="avatar" id="customFile" accept="image/*">
+                      {{$admin->avatar}}</label>
                     </div>
                   </div>
                 </div>

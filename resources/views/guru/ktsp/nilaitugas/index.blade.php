@@ -31,10 +31,10 @@
             <div class="card-header">
               <h3 class="card-title"><i class="fas fa-list-ol"></i> {{$title}}</h3>
               <div class="card-tools">
-                <button type="button" class="btn btn-tool btn-sm" data-toggle="modal" data-target="#modal-download" title="Donwload Format Import">
+                <button type="button" class="btn btn-tool btn-sm" data-bs-toggle="modal" data-bs-target="#modal-download" title="Donwload Format Import">
                   <i class="fas fa-download"></i>
                 </button>
-                <button type="button" class="btn btn-tool btn-sm" data-toggle="modal" data-target="#modal-import" title="Import Nilai">
+                <button type="button" class="btn btn-tool btn-sm" data-bs-toggle="modal" data-bs-target="#modal-import" title="Import Nilai">
                   <i class="fas fa-upload"></i>
                 </button>
               </div>
@@ -47,8 +47,8 @@
                 <div class="modal-content">
                   <div class="modal-header">
                     <h5 class="modal-title">Download Format Import {{$title}}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
+                    
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                     </button>
                   </div>
                   <form name="contact-form" action="{{ route('nilaitugas.format_import') }}" method="GET">
@@ -75,7 +75,7 @@
                       </div>
                     </div>
                     <div class="modal-footer justify-content-end">
-                      <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                      <button type="button" class="btn btn-default" data-bs-dismiss="modal">Batal</button>
                       <button type="submit" class="btn btn-primary">Download</button>
                     </div>
                   </form>
@@ -90,8 +90,8 @@
                 <div class="modal-content">
                   <div class="modal-header">
                     <h5 class="modal-title">Import {{$title}}</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
+                    
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                     </button>
                   </div>
                   <form name="contact-form" action="{{ route('nilaitugas.import') }}" method="POST" enctype="multipart/form-data">
@@ -116,7 +116,7 @@
                       </div>
                     </div>
                     <div class="modal-footer justify-content-end">
-                      <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                      <button type="button" class="btn btn-default" data-bs-dismiss="modal">Batal</button>
                       <button type="submit" class="btn btn-primary">Import</button>
                     </div>
                   </form>
