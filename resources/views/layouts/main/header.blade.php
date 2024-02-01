@@ -10,10 +10,10 @@
         
         <!-- CSS Kustom -->
         <link href="{{ asset('dist/css/style.min.css') }}" rel="stylesheet" />
-
         <!-- Summernote -->
         <link rel="stylesheet" href="{{ asset('assets/libs/summernote/summernote-bs4.css') }}">
-
+        <!-- Font Awesome Icons -->
+        <link rel="stylesheet" href="{{asset('assets/libs/fontawesome-free/css/all.min.css')}}">
         {{-- datatables --}}
         <!-- <link href="../assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet"> -->
         <link rel="stylesheet" href="{{ asset('assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css') }}">

@@ -40,7 +40,7 @@
       <div class="row">
         <div class="col-12 col-sm-6 col-md-3">
           <div class="info-box">
-            <span class="info-box-icon bg-info elevation-1"><i class="fas fa-layer-group"></i></span>
+            <span class="info-box-icon bg-info elevation-1"><i class="fas fa-layer-group  text-light"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text">Playgroup</span>
@@ -53,7 +53,7 @@
         <!-- /.col -->
         <div class="col-12 col-sm-6 col-md-3">
           <div class="info-box mb-3">
-            <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-book"></i></span>
+            <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-book  text-light"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text">Kindergarten</span>
@@ -66,11 +66,11 @@
         <!-- /.col -->
 
         <!-- fix for small devices only -->
-        <div class="clearfix hidden-md-up"></div>
+        {{-- <div class="clearfix hidden-md-up"></div> --}}
 
         <div class="col-12 col-sm-6 col-md-3">
           <div class="info-box mb-3">
-            <span class="info-box-icon bg-success elevation-1"><i class="fas fa-users"></i></span>
+            <span class="info-box-icon bg-success elevation-1"><i class="fas fa-users text-light"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text">Primary School</span>
@@ -83,7 +83,7 @@
         <!-- /.col -->
         <div class="col-12 col-sm-6 col-md-3">
           <div class="info-box mb-3">
-            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-book-reader "></i></span>
+            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-book-reader text-light"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text">Junior High School</span>
@@ -97,7 +97,7 @@
         <!-- /.col -->
         <div class="col-12 col-sm-6 col-md-3">
           <div class="info-box mb-3">
-            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-book-reader "></i></span>
+            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-book-reader  text-light"></i></span>
 
             <div class="info-box-content">
               <span class="info-box-text">Senior High School</span>
@@ -182,22 +182,39 @@
                     @csrf
                     <div class="modal-body">
                       <div class="container">
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
                           <li class="nav-item">
-                            <a class="nav-link active text-dark" id="panel1-tab" data-bs-target="tab" href="#panel1" role="tab" aria-controls="panel1" aria-selected="true">Student</a>
+                              <a href="#student1" data-bs-toggle="tab" aria-expanded="false"
+                                  class="nav-link rounded-0 active">
+                                  <i class="mdi mdi-home-variant d-lg-none d-block me-1"></i>
+                                  <span class="d-none d-lg-block">Student</span>
+                              </a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link text-dark" id="panel2-tab" data-bs-target="tab" href="#panel2" role="tab" aria-controls="panel2" aria-selected="false">Father</a>
+                              <a href="#father1" data-bs-toggle="tab" aria-expanded="true"
+                                  class="nav-link rounded-0 ">
+                                  <i class="mdi mdi-account-circle d-lg-none d-block me-1"></i>
+                                  <span class="d-none d-lg-block">Father</span>
+                              </a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link text-dark" id="panel3-tab" data-bs-target="tab" href="#panel3" role="tab" aria-controls="panel3" aria-selected="false">Mother</a>
+                              <a href="#mother1" data-bs-toggle="tab" aria-expanded="true"
+                                  class="nav-link rounded-0">
+                                  <i class="mdi mdi-account-circle d-lg-none d-block me-1"></i>
+                                  <span class="d-none d-lg-block">Mother</span>
+                              </a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link text-dark" id="panel4-tab" data-bs-target="tab" href="#panel4" role="tab" aria-controls="panel4" aria-selected="false">Guardian</a>
+                              <a href="#guardian1" data-bs-toggle="tab" aria-expanded="false"
+                                  class="nav-link rounded-0">
+                                  <i class="mdi mdi-settings-outline d-lg-none d-block me-1"></i>
+                                  <span class="d-none d-lg-block">Guardian</span>
+                              </a>
                           </li>
                         </ul>
-                        <div class="tab-content" id="myTabContent">
-                          <div class="tab-pane fade show active" id="panel1" role="tabpanel" aria-labelledby="panel1-tab">
+
+                        <div class="tab-content">
+                          <div class="tab-pane show active" id="student1">
                             {{-- A. Personal Information --}}
                             <div class="border-bottom p-2">
                               <h6 class="mt-2"><b>A. Personal Information</b></h6>
@@ -501,7 +518,7 @@
                               </div>
                             </div>
                           </div>
-                          <div class="tab-pane fade" id="panel2" role="tabpanel" aria-labelledby="panel2-tab">
+                          <div class="tab-pane" id="father1">
                             {{-- A. Father --}}
                             <div class="border-bottom p-2">
                               <h6 class="mt-2"><b>A. Father</b></h6>
@@ -578,7 +595,7 @@
                               </div>
                             </div>
                           </div>
-                          <div class="tab-pane fade" id="panel3" role="tabpanel" aria-labelledby="panel3-tab">
+                          <div class="tab-pane" id="mother1">
                             {{-- A. Mother --}}
                             <div class="border-bottom p-2">
                               <h6 class="mt-2"><b>A. Mother</b></h6>
@@ -655,7 +672,7 @@
                               </div>
                             </div>
                           </div>
-                          <div class="tab-pane fade" id="panel4" role="tabpanel" aria-labelledby="panel4-tab">
+                          <div class="tab-pane" id="guardian1">
                             {{-- A. Guardian --}}
                             <div class="border-bottom p-2">
                               <h6 class="mt-2"><b>A. Guardian</b></h6>

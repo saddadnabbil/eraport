@@ -127,27 +127,26 @@
               </ul>
 
               <div class="tab-content">
-                  <div class="tab-pane" id="student1">
+                  <div class="tab-pane  show active" id="student1">
                     {{-- A. Personal Information --}}
-                  <div class="border-bottom p-2">
-                    <h6 class="mt-2"><b>A. Personal Information</b></h6>
-                    <div class="form-group row">
-                      <label for="nik" class="col-sm-3 col-form-label ">NIK</label>
-                      <div class="col-sm-9">
-                        <input type="text" class="form-control"  placeholder="NIK" value="{{ $siswa->nik }}" disabled>
+                    <div class="border-bottom p-2">
+                      <h6 class="mt-2"><b>A. Personal Information</b></h6>
+                      <div class="form-group row">
+                        <label for="nik" class="col-sm-3 col-form-label ">NIK</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control"  placeholder="NIK" value="{{ $siswa->nik }}" disabled>
+                        </div>
                       </div>
-                    </div>
-                    <div class="form-group row">
-                      <label for="nis" class="col-sm-3 col-form-label">NIS</label>
-                      <div class="col-sm-3">
-                        <input type="number" class="form-control" id="nis" name="nis" placeholder="NIS" value="{{ $siswa->nis }}" disabled>
+                      <div class="form-group row">
+                        <label for="nis" class="col-sm-3 col-form-label">NIS</label>
+                        <div class="col-sm-3">
+                          <input type="number" class="form-control" id="nis" name="nis" placeholder="NIS" value="{{ $siswa->nis }}" disabled>
                         </div>
                         <label for="nisn" class="col-sm-2 col-form-label">NISN</label>
                         <div class="col-sm-4">
                           <input type="number" class="form-control" id="nisn" name="nisn" placeholder="NISN" value="{{ $siswa->nisn }}" disabled>
                         </div>
                       </div>
-                      
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Nama Siswa</label>
                         <div class="col-sm-9">
@@ -160,61 +159,56 @@
                           <input type="text" class="form-control" placeholder="" value="{{ $siswa->nama_panggilan }}" disabled>
                         </div>
                       </div>
-
-                    <div class="form-group row">
-                      <label class=" col-sm-3 col-form-label ">Tingkatan</label>
-                      <div class="col-sm-3">
-                        <select class="form-control" required disabled>
-                          <option value=""></option>
-                          @foreach ($data_tingkatan as $tingkatan)
-                            <option value="{{$tingkatan->id}}" @if ($tingkatan->id == $siswa->tingkatan_id) selected @endif>{{$tingkatan->nama_tingkatan}}</option>
-                          @endforeach
-                        </select>
+                      <div class="form-group row">
+                        <label class=" col-sm-3 col-form-label ">Tingkatan</label>
+                        <div class="col-sm-3">
+                          <select class="form-control" required disabled>
+                            <option value=""></option>
+                            @foreach ($data_tingkatan as $tingkatan)
+                              <option value="{{$tingkatan->id}}" @if ($tingkatan->id == $siswa->tingkatan_id) selected @endif>{{$tingkatan->nama_tingkatan}}</option>
+                            @endforeach
+                          </select>
+                        </div>
+                        <label class="col-sm-2 col-form-label ">Kelas</label>
+                        <div class="col-sm-4">
+                          <select class="form-control"  required disabled>
+                            <option value=""></option>
+                            <option value="{{ $siswa->kelas ? $siswa->kelas->id : 0 }}" selected>
+                              {{ $siswa->kelas ? $siswa->kelas->nama_kelas : '' }}
+                            </option>
+                          </select>
+                        </div>
                       </div>
-                      <label class="col-sm-2 col-form-label ">Kelas</label>
-                      <div class="col-sm-4">
-                        <select class="form-control"  required disabled>
-                          <option value=""></option>
-                          <option value="{{ $siswa->kelas ? $siswa->kelas->id : 0 }}" selected>
-                            {{ $siswa->kelas ? $siswa->kelas->nama_kelas : '' }}
-                          </option>
-                        </select>
+                      <div class="form-group row">
+                        <label for="nama_wali" class="col-sm-3 col-form-label ">Jenis Pendaftaran</label>
+                        <div class="col-sm-3 pt-1">
+                          <label class="form-check-label mr-3"><input type="radio" onchange='CheckPendaftaran(this.value);' value="1" @if ($siswa->jenis_pendaftaran=='1' ) checked @endif required disabled> Siswa Baru</label>
+                          <label class="form-check-label mr-3"><input type="radio" onchange='CheckPendaftaran(this.value);' value="2" @if ($siswa->jenis_pendaftaran=='2' ) checked @endif required disabled> Pindahan</label>
+                        </div>
+                        <label class="col-sm-2 col-form-label ">Jurusan</label>
+                        <div class="col-sm-4">
+                          <select class="form-control" required disabled>
+                            <option value=""></option>
+                            <option value="{{ $siswa->kelas && $siswa->kelas->jurusan ? $siswa->kelas->jurusan->id : 0 }}" selected>
+                                {{ $siswa->kelas && $siswa->kelas->jurusan ? $siswa->kelas->jurusan->nama_jurusan : '' }}
+                            </option>
+                          </select>
+                        </div>
                       </div>
-                    <div class="form-group row">
-                      <label for="nama_wali" class="col-sm-3 col-form-label ">Jenis Pendaftaran</label>
-                      <div class="col-sm-3 pt-1">
-                        <label class="form-check-label mr-3"><input type="radio" onchange='CheckPendaftaran(this.value);' value="1" @if ($siswa->jenis_pendaftaran=='1' ) checked @endif required disabled> Siswa Baru</label>
-                        <label class="form-check-label mr-3"><input type="radio" onchange='CheckPendaftaran(this.value);' value="2" @if ($siswa->jenis_pendaftaran=='2' ) checked @endif required disabled> Pindahan</label>
-                      </div>
-                      <label class="col-sm-2 col-form-label ">Jurusan</label>
-                      <div class="col-sm-4">
-                        <select class="form-control" required disabled>
-                          <option value=""></option>
-                          <option value="{{ $siswa->kelas && $siswa->kelas->jurusan ? $siswa->kelas->jurusan->id : 0 }}" selected>
-                              {{ $siswa->kelas && $siswa->kelas->jurusan ? $siswa->kelas->jurusan->nama_jurusan : '' }}
-                          </option>
-                        </select>
-                      </div>
-
-                    <div class="form-group row">
-                      <label for="tahun_masuk" class="col-sm-3 col-form-label required">Tahun Masuk</label>
-                      <div class="col-sm-3">
-                        <input type="text"  class="form-control" value="{{ $siswa->tahun_masuk }}" disabled>
-                      </div>
-                      <label for="semester_masuk" class="col-sm-2 col-form-label required">Semester Masuk</label>
-                      <div class="col-sm-4">
-                        <input type="text" class="form-control" value="{{ $siswa->semester_masuk }}" disabled>
-                      </div>
-                    </div>
-                    <div class="form-group row">
-                      <label for="kelas_masuk" class="col-sm-3 col-form-label required">Kelas Masuk</label>
-                      <div class="col-sm-3">
-                        <input type="text"  class="form-control" value="{{ $siswa->kelas_masuk }}" disabled>
+                      <div class="form-group row">
+                        <label for="tahun_masuk" class="col-sm-3 col-form-label required">Tahun Masuk</label>
+                        <div class="col-sm-3">
+                          <input type="text"  class="form-control" value="{{ $siswa->tahun_masuk }}" disabled>
+                        </div>
+                        <label for="semester_masuk" class="col-sm-2 col-form-label required">Semester Masuk</label>
+                        <div class="col-sm-4">
+                          <input type="text" class="form-control" value="{{ $siswa->semester_masuk }}" disabled>
+                        </div>
                       </div>
                       <div class="form-group row">
                         <label for="kelas_masuk" class="col-sm-3 col-form-label required">Kelas Masuk</label>
                         <div class="col-sm-3">
-                          <input type="text" name="kelas_masuk" id="kelas_masuk" class="form-control" value="{{ $siswa->kelas_masuk }}" disabled>
+                          <input type="text"  class="form-control" value="{{ $siswa->kelas_masuk }}" disabled>
                         </div>
                       </div>
                       <div class="form-group row">
@@ -244,24 +238,24 @@
                           <input type="date" class="form-control" value="{{ $siswa->tanggal_lahir ? \Carbon\Carbon::parse($siswa->tanggal_lahir)->format('Y-m-d') : '' }}" disabled>
                         </div>
                       </div>
-
-                    <div class="form-group row">
-                      <label for="agama" class="col-sm-3 col-form-label">Agama</label>
-                      <div class="col-sm-3">
-                        <select class="form-control" required disabled>
-                          <option value=""></option>
-                          <option value="1" @if ( $siswa->agama =='1' ) selected @endif>Islam</option>
-                          <option value="2" @if ( $siswa->agama =='2' ) selected @endif>Protestan</option>
-                          <option value="3" @if ( $siswa->agama =='3' ) selected @endif>Katolik</option>
-                          <option value="4" @if ( $siswa->agama =='4' ) selected @endif>Hindu</option>
-                          <option value="5" @if ( $siswa->agama =='5' ) selected @endif>Budha</option>
-                          <option value="6" @if ( $siswa->agama =='6' ) selected @endif>Khonghucu</option>
-                          <option value="7" @if ( $siswa->agama =='7' ) selected @endif>Kepercayaan</option>
-                        </select>
-                      </div>
-                      <label for="warga_negara" class="col-sm-2 col-form-label">Warga Negara</label>
-                      <div class="col-sm-4">
-                        <input type="text" class="form-control" value="{{ $siswa->warga_negara }}" disabled>
+                      <div class="form-group row">
+                        <label for="agama" class="col-sm-3 col-form-label">Agama</label>
+                        <div class="col-sm-3">
+                          <select class="form-control" required disabled>
+                            <option value=""></option>
+                            <option value="1" @if ( $siswa->agama =='1' ) selected @endif>Islam</option>
+                            <option value="2" @if ( $siswa->agama =='2' ) selected @endif>Protestan</option>
+                            <option value="3" @if ( $siswa->agama =='3' ) selected @endif>Katolik</option>
+                            <option value="4" @if ( $siswa->agama =='4' ) selected @endif>Hindu</option>
+                            <option value="5" @if ( $siswa->agama =='5' ) selected @endif>Budha</option>
+                            <option value="6" @if ( $siswa->agama =='6' ) selected @endif>Khonghucu</option>
+                            <option value="7" @if ( $siswa->agama =='7' ) selected @endif>Kepercayaan</option>
+                          </select>
+                        </div>
+                        <label for="warga_negara" class="col-sm-2 col-form-label">Warga Negara</label>
+                        <div class="col-sm-4">
+                          <input type="text" class="form-control" value="{{ $siswa->warga_negara }}" disabled>
+                        </div>
                       </div>
 
                       <div class="form-group row">
@@ -319,35 +313,34 @@
                           <input type="number" class="form-control" placeholder="" value="{{ $siswa->nomor_hp }}" disabled>
                         </div>
                       </div>
-                    </div>
-                    <div class="form-group row">
-                      <label for="tinggal_bersama" class="col-sm-3 col-form-label">Tinggal Bersama</label>
-                      <div class="col-sm-4">
-                        <select class="form-control" name="tinggal_bersama" disabled>
-                          <option value=""></option>
-                          <option value="Parents" @if ( $siswa->tinggal_bersama =='Parents' ) selected @endif>Parents</option>
-                          <option value="Others" @if ( $siswa->tinggal_bersama =='Others' ) selected @endif>Others</option>
-                        </select>
-                      </div>
-                      <label for="transportasi" class="col-sm-2 col-form-label">Transportasi</label>
-                      <div class="col-sm-3">
-                        <input type="text" class="form-control"  value="{{ $siswa->transportasi }}" disabled>
-                      </div>
+                      <div class="form-group row">
+                        <label for="tinggal_bersama" class="col-sm-3 col-form-label">Tinggal Bersama</label>
+                        <div class="col-sm-4">
+                          <select class="form-control" name="tinggal_bersama" disabled>
+                            <option value=""></option>
+                            <option value="Parents" @if ( $siswa->tinggal_bersama =='Parents' ) selected @endif>Parents</option>
+                            <option value="Others" @if ( $siswa->tinggal_bersama =='Others' ) selected @endif>Others</option>
+                          </select>
+                        </div>
+                        <label for="transportasi" class="col-sm-2 col-form-label">Transportasi</label>
+                        <div class="col-sm-3">
+                          <input type="text" class="form-control"  value="{{ $siswa->transportasi }}" disabled>
+                        </div>
+                      </div>   
                     </div>   
                     
                     {{-- C. Student Medical Condition --}}
                     <div class="border-bottom mt-3 p-2" >
                       <h6 class="mt-2"><b>C. Student Medical Condition</b></h6>
-
-                    <div class="form-group row">
-                      <label class="col-sm-3 col-form-label">Tinggi Badan</label>
-                      <div class="col-sm-4">
-                        <input type="text" class="form-control" placeholder="" value="{{ $siswa->tinggi_badan }}" disabled>
-                      </div>
-                      <label  class="col-sm-2 col-form-label">Berat Badan</label>
-                      <div class="col-sm-3">
-                        <input type="text" class="form-control" placeholder="" value="{{ $siswa->berat_badan }}" disabled>
-
+                      <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Tinggi Badan</label>
+                        <div class="col-sm-4">
+                          <input type="text" class="form-control" placeholder="" value="{{ $siswa->tinggi_badan }}" disabled>
+                        </div>
+                        <label  class="col-sm-2 col-form-label">Berat Badan</label>
+                        <div class="col-sm-3">
+                          <input type="text" class="form-control" placeholder="" value="{{ $siswa->berat_badan }}" disabled>
+                        </div>
                       </div>
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Spesial Treatment</label>
@@ -361,7 +354,6 @@
                           <input type="text" class="form-control" placeholder="" value="{{ $siswa->note_kesehatan }}" disabled>
                         </div>
                       </div>
-
                       <div class="form-group row">
                         <label  class="col-sm-3 col-form-label">File Document Kesehatan</label>
                         <div class="col-sm-9 custom-file">
@@ -407,23 +399,22 @@
                           <input type="text" class="form-control" placeholder="" value="{{ $siswa->nama_sekolah_lama }}" disabled>
                         </div>
                       </div>
-
-                    <div class="form-group row">
-                      <label for="" class="col-sm-3 col-form-label">Prestasi</label>
-                      <div class="col-sm-4">
-                        <input type="text" class="form-control"  value="{{ $siswa->prestasi_sekolah_lama }}" disabled>
+                      <div class="form-group row">
+                        <label for="" class="col-sm-3 col-form-label">Prestasi</label>
+                        <div class="col-sm-4">
+                          <input type="text" class="form-control"  value="{{ $siswa->prestasi_sekolah_lama }}" disabled>
+                        </div>
+                        <label for="" class="col-sm-2 col-form-label">Tahun Prestasi</label>
+                        <div class="col-sm-3">
+                          <input type="text" class="form-control"  value="{{ $siswa->tahun_prestasi_sekolah_lama }}" disabled>
+                        </div>
                       </div>
-                      <label for="" class="col-sm-2 col-form-label">Tahun Prestasi</label>
-                      <div class="col-sm-3">
-                        <input type="text" class="form-control"  value="{{ $siswa->tahun_prestasi_sekolah_lama }}" disabled>
+                      <div class="form-group row">
+                        <label for="" class="col-sm-3 col-form-label">Sertifikat Number</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control"  value="{{ $siswa->sertifikat_number_sekolah_lama }}" disabled>
+                        </div>
                       </div>
-                    </div>
-                    <div class="form-group row">
-                      <label for="" class="col-sm-3 col-form-label">Sertifikat Number</label>
-                      <div class="col-sm-9">
-                        <input type="text" class="form-control"  value="{{ $siswa->sertifikat_number_sekolah_lama }}" disabled>
-                      </div>
-
                       <div class="form-group row">
                         <label for="alamat_sekolah_lama" class="col-sm-3 col-form-label">Alamat Sekolah</label>
                         <div class="col-sm-9">
@@ -452,7 +443,8 @@
                       </div>
                     </div>
                   </div>
-                  <div class="tab-pane show active" id="father1">
+
+                  <div class="tab-pane" id="father1">
                     {{-- A. Father --}}
                     <div class="border-bottom p-2">
                       <h6 class="mt-2"><b>A. Father</b></h6>
@@ -521,15 +513,16 @@
                           <input type="text" class="form-control" placeholder="Pekerjaan" value="{{ $siswa->pekerjaan_ayah }}" disabled>
                         </div>
                       </div>
-                    </div>
-                    <div class="form-group row">
-                      <label for="penghasil_ayah" class="col-sm-3 col-form-label">Penghasilan</label>
-                      <div class="col-sm-9">
-                        <input type="text" class="form-control" placeholder="Penghasilan" value="{{ $siswa->penghasil_ayah }}" disabled>
+                      <div class="form-group row">
+                        <label for="penghasil_ayah" class="col-sm-3 col-form-label">Penghasilan</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" placeholder="Penghasilan" value="{{ $siswa->penghasil_ayah }}" disabled>
+                        </div>
                       </div>
                     </div>
                   </div>
-                  <div class="tab-pane show active" id="mother1">
+
+                  <div class="tab-pane" id="mother1">
                     {{-- A. Mother --}}
                     <div class="border-bottom p-2">
                       <h6 class="mt-2"><b>A. Mother</b></h6>
@@ -598,14 +591,15 @@
                           <input type="text" class="form-control" placeholder="Pekerjaan Ayah" value="{{ $siswa->pekerjaan_ibu }}" disabled>
                         </div>
                       </div>
-                    </div>
-                    <div class="form-group row">
-                      <label for="penghasil_ibu" class="col-sm-3 col-form-label">Penghasilan</label>
-                      <div class="col-sm-9">
-                        <input type="text" class="form-control" placeholder="Penghasilan" value="{{ $siswa->penghasil_ibu }}" disabled>
+                      <div class="form-group row">
+                        <label for="penghasil_ibu" class="col-sm-3 col-form-label">Penghasilan</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" placeholder="Penghasilan" value="{{ $siswa->penghasil_ibu }}" disabled>
+                        </div>
                       </div>
                     </div>
                   </div>
+
                   <div class="tab-pane" id="guardian1">
                     {{-- A. Guardian --}}
                     <div class="border-bottom p-2">
@@ -675,15 +669,15 @@
                           <input type="text" class="form-control"  placeholder="Pekerjaan" value="{{ $siswa->pekerjaan_wali }}" disabled>
                         </div>
                       </div>
-                    </div>
-                    <div class="form-group row">
-                      <label class="col-sm-3 col-form-label">Penghasilan</label>
-                      <div class="col-sm-9">
-                        <input type="text" class="form-control" placeholder="Penghasilan" value="{{ $siswa->penghasil_wali }}" disabled>
+                      <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Penghasilan</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" placeholder="Penghasilan" value="{{ $siswa->penghasil_wali }}" disabled>
+                        </div>
                       </div>
                     </div>
                   </div>
-              </div>
+                </div>
 
               <a href="{{ route('siswa.index')}}" class="btn btn-success btn-sm">Kembali</a>
               <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modal-edit{{$siswa->id}}">Edit</button>
@@ -719,22 +713,39 @@
                 {{ method_field('PATCH') }}
                 @csrf
                 <div class="modal-body">
-                  <ul class="nav nav-tabs" id="myTab" role="tablist">
+                  <ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
                     <li class="nav-item">
-                      <a class="nav-link active text-dark" id="panel1-tab" data-bs-target="tab" href="#panel21" role="tab" aria-controls="panel1" aria-selected="true">Student</a>
+                        <a href="#student2" data-bs-toggle="tab" aria-expanded="false"
+                            class="nav-link rounded-0 active">
+                            <i class="mdi mdi-home-variant d-lg-none d-block me-1"></i>
+                            <span class="d-none d-lg-block">Student</span>
+                        </a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link text-dark" id="panel2-tab" data-bs-target="tab" href="#panel22" role="tab" aria-controls="panel2" aria-selected="false">Father</a>
+                        <a href="#father2" data-bs-toggle="tab" aria-expanded="true"
+                            class="nav-link rounded-0 ">
+                            <i class="mdi mdi-account-circle d-lg-none d-block me-1"></i>
+                            <span class="d-none d-lg-block">Father</span>
+                        </a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link text-dark" id="panel3-tab" data-bs-target="tab" href="#panel23" role="tab" aria-controls="panel3" aria-selected="false">Mother</a>
+                        <a href="#mother2" data-bs-toggle="tab" aria-expanded="true"
+                            class="nav-link rounded-0">
+                            <i class="mdi mdi-account-circle d-lg-none d-block me-1"></i>
+                            <span class="d-none d-lg-block">Mother</span>
+                        </a>
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link text-dark" id="panel4-tab" data-bs-target="tab" href="#panel24" role="tab" aria-controls="panel4" aria-selected="false">Guardian</a>
+                        <a href="#guardian2" data-bs-toggle="tab" aria-expanded="false"
+                            class="nav-link rounded-0">
+                            <i class="mdi mdi-settings-outline d-lg-none d-block me-1"></i>
+                            <span class="d-none d-lg-block">Guardian</span>
+                        </a>
                     </li>
                   </ul>
-                  <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="panel21" role="tabpanel" aria-labelledby="panel1-tab">
+
+                  <div class="tab-content">
+                    <div class="tab-pane show active" id="student2">
 
                       <div class="border-bottom p-2">
                         <h6 class="mt-2"><b>Authentication User</b></h6>
@@ -1094,7 +1105,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="tab-pane fade" id="panel22" role="tabpanel" aria-labelledby="panel2-tab">
+                    <div class="tab-pane" id="father2">
                       {{-- A. Father --}}
                       <div class="border-bottom p-2">
                         <h6 class="mt-2"><b>A. Father</b></h6>
@@ -1171,7 +1182,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="tab-pane fade" id="panel23" role="tabpanel" aria-labelledby="panel3-tab">
+                    <div class="tab-pane" id="mother2">
                       {{-- A. Mother --}}
                       <div class="border-bottom p-2">
                         <h6 class="mt-2"><b>A. Mother</b></h6>
@@ -1248,7 +1259,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="tab-pane fade" id="panel24" role="tabpanel" aria-labelledby="panel4-tab">
+                    <div class="tab-pane" id="guardian2">
                       {{-- A. Guardian --}}
                       <div class="border-bottom p-2">
                         <h6 class="mt-2"><b>A. Guardian</b></h6>
