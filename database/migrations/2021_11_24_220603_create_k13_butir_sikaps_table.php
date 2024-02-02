@@ -19,8 +19,7 @@ class CreateK13ButirSikapsTable extends Migration
             $table->string('kode', 10)->unique();
             $table->string('butir_sikap');
             $table->timestamps();
-
-            // Jenis Kompetensi
+            $table->softDeletes();            // Jenis Kompetensi
             // 1 = Sikap Spiritual
             // 2 = Sikap Sosial 
 

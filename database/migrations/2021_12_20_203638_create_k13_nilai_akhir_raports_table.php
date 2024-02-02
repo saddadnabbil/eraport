@@ -25,9 +25,10 @@ class CreateK13NilaiAkhirRaportsTable extends Migration
             $table->enum('nilai_spiritual', ['1', '2', '3', '4']);
             $table->enum('nilai_sosial', ['1', '2', '3', '4']);
             $table->timestamps();
-
-            $table->foreign('pembelajaran_id')->references('id')->on('pembelajaran');
-            $table->foreign('anggota_kelas_id')->references('id')->on('anggota_kelas');
+            $table->softDeletes();
+            
+            $table->foreign('pembelajaran_id')->references('id')->on('pembelajaran')->onDelete('cascade');
+            $table->foreign('anggota_kelas_id')->references('id')->on('anggota_kelas')->onDelete('cascade');
         });
 
         // Nilai Sosial & Spiritual

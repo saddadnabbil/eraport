@@ -118,9 +118,12 @@ class KelasController extends Controller
         $anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
             ->where('anggota_kelas.kelas_id', $id)
             ->where('siswa.status', 1)
+            ->where('siswa.kelas_id', $id)
             ->orderBy('siswa.nama_lengkap', 'ASC')
             ->get();
+
         $siswa_belum_masuk_kelas = Siswa::where('status', 1)->where('kelas_id', null)->get();
+            
         foreach ($siswa_belum_masuk_kelas as $belum_masuk_kelas) {
             $kelas_sebelumhya = AnggotaKelas::where('siswa_id', $belum_masuk_kelas->id)->orderBy('id', 'DESC')->first();
             if (is_null($kelas_sebelumhya)) {
@@ -281,46 +284,103 @@ class KelasController extends Controller
         }
     }
 
+    // public function delete_anggota($id)
+    // {
+    //     try {
+    //         $anggota_kelas = AnggotaKelas::findOrFail($id);
+    //         $siswa = Siswa::findOrFail($anggota_kelas->siswa_id);
+
+    //         $update = [
+    //             'kelas_id' => null,
+    //             'tingkatan_id' => null,
+    //             'jurusan_id' => null,
+    //         ];
+
+    //         $siswa->update($update);
+
+    //         $anggota_kelas->delete();
+    //         return back()->with('toast_success', 'Anggota kelas berhasil dihapus');
+    //     } catch (\Throwable $th) {
+    //         return back()->with('toast_error', 'Anggota kelas tidak dapat dihapus');
+    //     }
+    // }
+
     public function delete_anggota($id)
     {
+        $anggota_kelas = AnggotaKelas::findOrFail($id);
+    
         try {
-            $anggota_kelas = AnggotaKelas::findOrFail($id);
-            $siswa = Siswa::findOrFail($anggota_kelas->siswa_id);
-            $catatan_walikelas = CatatanWaliKelas::where('anggota_kelas_id', $anggota_kelas->id)->delete();
-
-            // $anggota_ekstra_kulikuler_ids = AnggotaEkstrakulikuler::where('anggota_kelas_id', $anggota_kelas->id)->pluck('id');
-            // $nilai_ekstrakulikuler = NilaiEkstrakulikuler::whereIn('anggota_ekstrakulikuler_id', $anggota_ekstra_kulikuler_ids)->delete();
-            // $anggota_ekstra_kulikuler = AnggotaEkstrakulikuler::where('anggota_kelas_id', $anggota_kelas->id)->delete();
-
-            // // k13
-            // $anggota_kelas = AnggotaKelas::findOrFail($id);
-            // $k13_nilai_akhir_raport_ids = K13NilaiAkhirRaport::where('anggota_kelas_id', $anggota_kelas->id)->pluck('id');
-            // K13DeskripsiSikapSiswa::where('anggota_kelas_id', $anggota_kelas->id)->delete();
-            // K13DeskripsiNilaiSiswa::whereIn('k13_nilai_akhir_raport_id', $k13_nilai_akhir_raport_ids)->delete();
-            // K13NilaiAkhirRaport::where('anggota_kelas_id', $anggota_kelas->id)->delete();
-            // K13NilaiKeterampilan::where('anggota_kelas_id', $anggota_kelas->id)->delete();
-            // K13NilaiPengetahuan::where('anggota_kelas_id', $anggota_kelas->id)->delete();
-            // K13NilaiPtsPas::where('anggota_kelas_id', $anggota_kelas->id)->delete();
-            // K13NilaiSosial::where('anggota_kelas_id', $anggota_kelas->id)->delete();
-            // K13NilaiSpiritual::where('anggota_kelas_id', $anggota_kelas->id)->delete();
-
-
-            // km
-
-
-            $update = [
+            // Set kelas_id to null
+            $anggota_kelas->siswa->update([
                 'kelas_id' => null,
                 'tingkatan_id' => null,
-                'jurusan_id' => null,
-            ];
-
-            $siswa->update($update);
-
+                'jurusan_id' => null
+            ]);
+                        
+            // Delete the anggota_kelas record
             $anggota_kelas->delete();
-            return back()->with('toast_success', 'Anggota kelas berhasil dihapus');
+    
+            return back()->with('toast_success', 'Anggota Kelas berhasil dihapus');
         } catch (\Throwable $th) {
             dd($th->getMessage());
-            return back()->with('toast_error', 'Anggota kelas tidak dapat dihapus');
+            return back()->with('toast_error', 'Terjadi kesalahan saat menghapus anggota kelas.');
         }
+    }
+    
+
+    /**
+     * Permanently remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyPermanent($id)
+    {
+        $anggota_kelas = AnggotaKelas::withTrashed()->findOrFail($id);
+
+        try {
+            $anggota_kelas->forceDelete();
+
+            return back()->with('toast_success', 'Anggota Kelas berhasil dihapus secara permanen');
+        } catch (\Throwable $th) {
+            return back()->with('toast_error', 'Terjadi kesalahan saat menghapus siswa secara permanen.');
+        }
+    }
+
+    /**
+     * Restore the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function restore($id)
+    {
+        try {
+            $anggota_kelas = AnggotaKelas::withTrashed()->findOrFail($id);
+
+            $anggota_kelas_not_trashed = AnggotaKelas::where('siswa_id', $anggota_kelas->siswa_id)->where('id', '!=', $anggota_kelas->id)->get();
+
+            // delete force
+            $anggota_kelas_not_trashed->each(function ($anggota) {
+                $anggota->forceDelete();
+            });
+    
+            $anggota_kelas->restoreAnggotaKelas();
+
+
+    
+            return back()->with('toast_success', 'Anggota Kelas berhasil direstorasi');
+        } catch (\Throwable $th) {
+            dd($th->getMessage());
+            return back()->with('toast_error', 'Terjadi kesalahan saat merestorasi Anggota Kelas.');
+        }
+    }
+
+    public function showTrash()
+    {
+        $title = "Data Trash Anggota Kelas";
+        $anggotaKelasTrashed = AnggotaKelas::onlyTrashed()->get();
+
+        return view('admin.kelas.trash', compact('title', 'anggotaKelasTrashed'));
     }
 }

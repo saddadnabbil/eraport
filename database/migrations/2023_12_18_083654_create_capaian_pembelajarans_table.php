@@ -23,10 +23,11 @@ class CreateCapaianPembelajaransTable extends Migration
             $table->string('capaian_pembelajaran');
             $table->string('ringkasan_cp', 150);
             $table->timestamps();
-
+            $table->softDeletes();            
+            
             $table->foreign('mapel_id')->references('id')->on('mapel');
             $table->foreign('tingkatan_id')->references('id')->on('tingkatans');
-            $table->foreign('pembelajaran_id')->references('id')->on('pembelajaran');
+                   $table->foreign('pembelajaran_id')->references('id')->on('pembelajaran')->onDelete('cascade');
         });
     }
 

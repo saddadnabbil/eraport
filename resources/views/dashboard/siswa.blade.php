@@ -26,13 +26,14 @@
                 $greeting = 'Good evening, ';
             }
 
-            if (Auth::user()->role == 1) {
-                $fullName = Auth::user()->admin->nama_lengkap;
-            } elseif (Auth::user()->role == 2) {
-                $fullName = Auth::user()->guru->nama_lengkap;
-            } elseif (Auth::user()->role == 3) {
-                $fullName = Auth::user()->siswa->nama_lengkap;
-            }
+if (Auth::user()->role == 1) {
+    $fullName = optional(Auth::user()->admin)->nama_lengkap ?? 'Admin not available';
+} elseif (Auth::user()->role == 2) {
+    $fullName = optional(Auth::user()->guru)->nama_lengkap ?? 'Guru not available';
+} elseif (Auth::user()->role == 3) {
+    $fullName = optional(Auth::user()->siswa)->nama_lengkap ?? 'Siswa not available';
+}
+
         @endphp
         @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
             'titleBreadCrumb' => $greeting . $fullName . '!',
@@ -126,8 +127,8 @@
                                                         {!! $pengumuman->isi !!}
                                                     </p>
                                                 </div>
-                                                <span
-                                                    class="font-weight-light font-14 mb-1 d-block text-muted">{{ $pengumuman->user->admin->nama_lengkap }}
+                                                <span class="font-weight-light font-14 mb-1 d-block text-muted">
+                                                    {{ optional($pengumuman->user->admin)->nama_lengkap ?? '' }}
                                                     -
                                                     {{ \Carbon\Carbon::parse($pengumuman->created_at)->diffForHumans() }}</span>
                                                 @if (Auth::user()->id == $pengumuman->user_id)
@@ -204,25 +205,26 @@
                                     <li class="item">
                                         <div class="product-img">
                                             @if ($riwayat_login->user->role == 1)
-                                                <img src="assets/dist/img/avatar/{{ $riwayat_login->user->admin->avatar }}"
+                                                <img src="assets/dist/img/avatar/{{ optional($riwayat_login->user->admin)->avatar ?? 'default.png' }}"
                                                     alt="Avatar" class="img-size-50">
                                             @elseif($riwayat_login->user->role == 2)
-                                                <img src="assets/dist/img/avatar/{{ $riwayat_login->user->guru->avatar }}"
+                                                <img src="assets/dist/img/avatar/{{ optional($riwayat_login->user->guru)->avatar ?? 'default.png' }}"
                                                     alt="Avatar" class="img-size-50">
                                             @elseif($riwayat_login->user->role == 3)
-                                                <img src="assets/dist/img/avatar/{{ $riwayat_login->user->siswa->avatar }}"
+                                                <img src="assets/dist/img/avatar/{{ optional($riwayat_login->user->siswa)->avatar ?? 'default.png' }}"
                                                     alt="Avatar" class="img-size-50">
                                             @endif
                                         </div>
+                                        
 
                                         <div class="product-info">
                                             <a href="javascript:void(0)" class="product-title">
                                                 @if ($riwayat_login->user->role == 1)
-                                                    {{ $riwayat_login->user->admin->nama_lengkap }}
+                                                    {{ optional($riwayat_login->user->admin)->nama_lengkap ?? 'Admin not available' }}
                                                 @elseif($riwayat_login->user->role == 2)
-                                                    {{ $riwayat_login->user->guru->nama_lengkap }}
+                                                    {{ optional($riwayat_login->user->guru)->nama_lengkap ?? 'Guru not available' }}
                                                 @elseif($riwayat_login->user->role == 3)
-                                                    {{ $riwayat_login->user->siswa->nama_lengkap }}
+                                                    {{ optional($riwayat_login->user->siswa)->nama_lengkap ?? 'Siswa not available' }}
                                                 @endif
 
                                                 @if ($riwayat_login->status_login == true)

@@ -26,8 +26,9 @@ class CreateGurusTable extends Migration
             $table->string('alamat', 100);
             $table->string('avatar');
             $table->timestamps();
+            $table->softDeletes();
 
-            $table->foreign('user_id')->references('id')->on('user');
+            $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade');
         });
     }
 

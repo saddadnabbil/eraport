@@ -19,9 +19,10 @@ class CreateK13NilaiKeterampilansTable extends Migration
             $table->unsignedBigInteger('anggota_kelas_id')->unsigned();
             $table->integer('nilai');
             $table->timestamps();
-
+            $table->softDeletes();            
+            
             $table->foreign('k13_rencana_nilai_keterampilan_id')->references('id')->on('k13_rencana_nilai_keterampilan');
-            $table->foreign('anggota_kelas_id')->references('id')->on('anggota_kelas');
+            $table->foreign('anggota_kelas_id')->references('id')->on('anggota_kelas')->onDelete('cascade');
         });
     }
 

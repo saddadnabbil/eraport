@@ -3,12 +3,6 @@
     @include('layouts.sidebar.admin')
 @endsection
 
-@section('styles')
-    <!-- <link href="../assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet"> -->
-    <link rel="stylesheet" href="{{ asset('assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/extra-libs/datatables.net-bs4/css/responsive.dataTables.min.css') }}">
-@endsection
-
 @section('content')
     <div class="page-wrapper">
         <!-- ============================================================== -->
@@ -139,6 +133,11 @@
                                 <div data-bs-toggle="tooltip" title="Export" class="d-inline-block" class="d-inline-block">
                                     <a href="{{ route('siswa.export') }}" class="btn btn-tool btn-sm">
                                         <i class="fas fa-download"></i>
+                                    </a>
+                                </div>
+                                <div data-bs-toggle="tooltip" title="Trash" class="d-inline-block" class="d-inline-block">
+                                    <a href="{{ route('siswa.trash') }}" class="btn btn-tool btn-sm">
+                                        <i class="fas fa-trash"></i>
                                     </a>
                                 </div>
                             </div>

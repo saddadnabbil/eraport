@@ -23,8 +23,9 @@ class CreateRencanaNilaiSumatifsTable extends Migration
             $table->enum('teknik_penilaian', ['1', '2', '3']);
             $table->integer('bobot_teknik_penilaian');
             $table->timestamps();
-
-            $table->foreign('pembelajaran_id')->references('id')->on('pembelajaran');
+            $table->softDeletes();
+            
+            $table->foreign('pembelajaran_id')->references('id')->on('pembelajaran')->onDelete('cascade');
             $table->foreign('capaian_pembelajaran_id')->references('id')->on('capaian_pembelajarans');
             $table->foreign('semester_id')->references('id')->on('semesters');
             $table->foreign('term_id')->references('id')->on('terms');

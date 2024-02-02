@@ -19,9 +19,10 @@ class CreateK13NilaiSpiritualsTable extends Migration
             $table->unsignedBigInteger('anggota_kelas_id')->unsigned();
             $table->enum('nilai', ['1', '2', '3', '4']);
             $table->timestamps();
-
+            $table->softDeletes();            
+            
             $table->foreign('k13_rencana_nilai_spiritual_id')->references('id')->on('k13_rencana_nilai_spiritual');
-            $table->foreign('anggota_kelas_id')->references('id')->on('anggota_kelas');
+            $table->foreign('anggota_kelas_id')->references('id')->on('anggota_kelas')->onDelete('cascade');
         });
 
         // Nilai 

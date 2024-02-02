@@ -5,11 +5,12 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -63,5 +64,58 @@ class User extends Authenticatable
     public function pengumuman()
     {
         return $this->hasMany('App\Pengumuman');
+    }
+
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Listen for the 'restoring' event
+        static::restoring(function ($user) {
+            // Restore related records
+            $user->admin?->restore();
+            $user->guru?->restore();
+            $user->siswa?->restore();
+        });
+    }
+
+
+    /**
+     * Trash the User record.
+     */
+    public function trash()
+    {
+        $this->delete();
+    }
+
+    public function restoreUser()
+    {
+        $this->restore();
+
+        $this->update([
+            'status' => 1
+        ]);
+
+        switch ($this->role) {
+            case 1:
+                $this->admin()->withTrashed()->restore();
+                $this->admin()->update([
+                    'status' => 1
+                ]);
+                break;
+            case 2:
+                $this->guru()->withTrashed()->restore();
+                $this->guru()->update([
+                    'status' => 1
+                ]);
+                break;
+            case 3:
+                $this->siswa()->withTrashed()->restore();
+                $this->siswa()->update([
+                    'status' => 1
+                ]);
+                break;
+        }
     }
 }

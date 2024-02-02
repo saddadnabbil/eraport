@@ -20,8 +20,9 @@ class CreateK13RencanaBobotPenilaiansTable extends Migration
             $table->integer('bobot_pts');
             $table->integer('bobot_pas');
             $table->timestamps();
-
-            $table->foreign('pembelajaran_id')->references('id')->on('pembelajaran');
+            $table->softDeletes();
+            
+            $table->foreign('pembelajaran_id')->references('id')->on('pembelajaran')->onDelete('cascade');
         });
     }
 

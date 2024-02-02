@@ -4,11 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AnggotaEkstrakulikuler extends Model
 {
 
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'anggota_ekstrakulikuler';
     protected $fillable = [

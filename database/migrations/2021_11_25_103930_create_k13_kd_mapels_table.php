@@ -23,7 +23,8 @@ class CreateK13KdMapelsTable extends Migration
             $table->string('kompetensi_dasar');
             $table->string('ringkasan_kompetensi', 150);
             $table->timestamps();
-
+            $table->softDeletes();            
+            
             $table->foreign('mapel_id')->references('id')->on('mapel');
             $table->foreign('tingkatan_id')->references('id')->on('tingkatans');
 

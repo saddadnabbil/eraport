@@ -50,7 +50,10 @@ Route::group(['middleware' => ['auth']], function () {
 
       // User Controller
       Route::get('user/export', 'Admin\UserController@export')->name('user.export');
-      Route::resource('user', 'Admin\UserController')->only(['index', 'store', 'update']);
+      Route::resource('user', 'Admin\UserController')->only(['index', 'store', 'update', 'destroy']);
+      Route::get('user/trash', 'Admin\UserController@showTrash')->name('user.trash');
+      Route::delete('user/{id}/permanent-delete', 'Admin\UserController@destroyPermanent')->name('user.permanent-delete');
+      Route::patch('user/{id}/restore', 'Admin\UserController@restore')->name('user.restore');
 
       // Sekolah Controller
       Route::resource('sekolah', 'Admin\SekolahController')->only(['index', 'update']);
@@ -60,6 +63,9 @@ Route::group(['middleware' => ['auth']], function () {
       Route::get('guru/import', 'Admin\GuruController@format_import')->name('guru.format_import');
       Route::post('guru/import', 'Admin\GuruController@import')->name('guru.import');
       Route::resource('guru', 'Admin\GuruController')->only(['index', 'store', 'update', 'destroy']);
+      Route::get('guru/trash', 'Admin\GuruController@showTrash')->name('guru.trash');
+      Route::delete('guru/{id}/permanent-delete', 'Admin\GuruController@destroyPermanent')->name('guru.permanent-delete');
+      Route::patch('guru/{id}/restore', 'Admin\GuruController@restore')->name('guru.restore');
 
       // Tapel Controller
       Route::resource('tapel', 'Admin\TapelController')->except(['create', 'edit']);
@@ -85,17 +91,25 @@ Route::group(['middleware' => ['auth']], function () {
       Route::post('kelas/anggota', 'Admin\KelasController@store_anggota')->name('kelas.anggota');
       Route::delete('kelas/anggota/{anggota}', 'Admin\KelasController@delete_anggota')->name('kelas.anggota.delete');
       Route::post('kelas/anggota/{anggota}', 'Admin\KelasController@pindah_kelas')->name('kelas.anggota.pindah_kelas');
+      Route::get('kelas/trash', 'Admin\KelasController@showTrash')->name('kelas.anggota_kelas.trash');
+      Route::delete('kelas/{id}/permanent-delete', 'Admin\KelasController@destroyPermanent')->name('kelas.anggota_kelas.permanent-delete');
+      Route::patch('kelas/{id}/restore', 'Admin\KelasController@restore')->name('kelas.anggota_kelas.restore');
       Route::resource('kelas', 'Admin\KelasController',  [
         'uses' => ['index', 'store', 'show', 'destroy']
       ]);
+
       Route::get('siswa/export', 'Admin\SiswaController@export')->name('siswa.export');
       Route::get('siswa/import', 'Admin\SiswaController@format_import')->name('siswa.format_import');
       Route::post('siswa/import', 'Admin\SiswaController@import')->name('siswa.import');
       Route::post('siswa/registrasi', 'Admin\SiswaController@registrasi')->name('siswa.registrasi');
       Route::post('siswa/activate', 'Admin\SiswaController@activate')->name('siswa.activate');
+      Route::get('siswa/trash', 'Admin\SiswaController@showTrash')->name('siswa.trash');
+      Route::delete('siswa/{id}/permanent-delete', 'Admin\SiswaController@destroyPermanent')->name('siswa.permanent-delete');
+      Route::patch('siswa/{id}/restore', 'Admin\SiswaController@restore')->name('siswa.restore');
       Route::resource('siswa', 'Admin\SiswaController',  [
         'uses' => ['index', 'store', 'update', 'destroy']
       ]);
+
       Route::get('/pdf/{filename}', 'Admin\PdfController@viewDocumentSiswaPDF')->name('document.siswa.pdf.view');
 
       Route::get('mapel/import', 'Admin\MapelController@format_import')->name('mapel.format_import');

@@ -26,7 +26,6 @@ class GuruController extends Controller
         return view('admin.guru.index', compact('title', 'data_guru'));
     }
 
-
     /**
      * Store a newly created resource in storage.
      *
@@ -46,14 +45,16 @@ class GuruController extends Controller
             'alamat' => 'required|min:4|max:255',
         ]);
         if ($validator->fails()) {
-            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+            return back()
+                ->with('toast_error', $validator->messages()->all()[0])
+                ->withInput();
         } else {
             try {
                 $user = new User([
                     'username' => strtolower(str_replace(' ', '', $request->nama_lengkap)),
                     'password' => bcrypt('123456'),
                     'role' => 2,
-                    'status' => true
+                    'status' => true,
                 ]);
                 $user->save();
             } catch (\Throwable $th) {
@@ -70,13 +71,12 @@ class GuruController extends Controller
                 'tanggal_lahir' => $request->tanggal_lahir,
                 'nuptk' => $request->nuptk,
                 'alamat' => $request->alamat,
-                'avatar' => 'default.png'
+                'avatar' => 'default.png',
             ]);
             $guru->save();
             return back()->with('toast_success', 'Data guru berhasil ditambahkan');
         }
     }
-
 
     /**
      * Update the specified resource in storage.
@@ -97,7 +97,9 @@ class GuruController extends Controller
             'alamat' => 'required|min:4|max:255',
         ]);
         if ($validator->fails()) {
-            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+            return back()
+                ->with('toast_error', $validator->messages()->all()[0])
+                ->withInput();
         } else {
             $guru = Guru::findorfail($id);
             $data_guru = [
@@ -115,47 +117,105 @@ class GuruController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $guru = Guru::findorfail($id);
-        $user = User::findorfail($guru->user_id);
-        try {
-            $guru->delete();
-            $user->delete();
-            return back()->with('toast_success', 'Data guru berhasil dihapus');
-        } catch (\Throwable $th) {
-            return back()->with('toast_error', 'Data guru tidak dapat dihapus');
-        }
-    }
-
     public function export()
     {
         $filename = 'data_guru ' . date('Y-m-d H_i_s') . '.xls';
-        return Excel::download(new GuruExport, $filename);
+        return Excel::download(new GuruExport(), $filename);
     }
 
     public function format_import()
     {
-        $file = public_path() . "/format_import/format_import_guru.xls";
-        $headers = array(
-            'Content-Type: application/xls',
-        );
+        $file = public_path() . '/format_import/format_import_guru.xls';
+        $headers = ['Content-Type: application/xls'];
         return Response::download($file, 'format_import_guru ' . date('Y-m-d H_i_s') . '.xls', $headers);
     }
 
     public function import(Request $request)
     {
         try {
-            Excel::import(new GuruImport, $request->file('file_import'));
+            Excel::import(new GuruImport(), $request->file('file_import'));
             return back()->with('toast_success', 'Data guru berhasil diimport');
         } catch (\Throwable $th) {
             return back()->with('toast_error', 'Maaf, format data tidak sesuai');
         }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+
+    public function destroy($id)
+    {
+        $guru = Guru::findOrFail($id);
+
+        try {
+            $guru->update([
+                'status' => 0
+            ]);
+            $guru->delete();
+
+            $guru->user->update([
+                'status' => 0
+            ]);
+            $guru->user->delete();
+
+            return back()->with('toast_success', 'Guru & User berhasil dihapus');
+        } catch (\Throwable $th) {
+            return back()->with('toast_error', 'Terjadi kesalahan saat menghapus Guru.');
+        }
+    }
+
+    /**
+     * Permanently remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyPermanent($id)
+    {
+        $guru = Guru::withTrashed()->findOrFail($id);
+
+        try {
+            // Permanent delete the Guru and its User record
+            $guru->user->forceDelete();
+            $guru->forceDelete();
+
+            return back()->with('toast_success', 'Guru & User berhasil dihapus secara permanen');
+        } catch (\Throwable $th) {
+            dd($th->getMessage());
+            return back()->with('toast_error', 'Terjadi kesalahan saat menghapus Guru secara permanen.');
+        }
+    }
+
+    /**
+     * Restore the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function restore($id)
+    {
+        try {
+            $guru = Guru::withTrashed()->findOrFail($id);
+    
+            // Restore the Guru record and related AnggotaKelas records
+            $guru->restoreGuru();
+    
+            return back()->with('toast_success', 'Guru & User berhasil direstorasi');
+        } catch (\Throwable $th) {
+            dd($th->getMessage());
+            return back()->with('toast_error', 'Terjadi kesalahan saat merestorasi Guru.');
+        }
+    }
+
+    public function showTrash()
+    {
+        $title = "Data Trash Guru";
+        $guruTrashed = Guru::onlyTrashed()->get();
+
+        return view('admin.guru.trash', compact('title', 'guruTrashed'));
     }
 }

@@ -21,7 +21,7 @@ class CreateK13DeskripsiNilaiSiswasTable extends Migration
             $table->string('deskripsi_keterampilan', 200);
             $table->timestamps();
             
-            $table->foreign('pembelajaran_id')->references('id')->on('pembelajaran');
+            $table->foreign('pembelajaran_id')->references('id')->on('pembelajaran')->onDelete('cascade');
             $table->foreign('k13_nilai_akhir_raport_id')->references('id')->on('k13_nilai_akhir_raport');
         });
     }

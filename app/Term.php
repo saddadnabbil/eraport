@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Term extends Model
 {
+    use \Illuminate\Database\Eloquent\SoftDeletes;
+    
     protected $table = 'terms';
     protected $fillable = [
         'term'

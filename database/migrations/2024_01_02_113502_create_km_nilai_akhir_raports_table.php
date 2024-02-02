@@ -27,9 +27,10 @@ class CreateKmNilaiAkhirRaportsTable extends Migration
             $table->integer('nilai_akhir_raport');
             $table->enum('predikat_akhir_raport', ['A', 'B', 'C', 'D']);
             $table->timestamps();
+            $table->softDeletes();
 
-            $table->foreign('pembelajaran_id')->references('id')->on('pembelajaran');
-            $table->foreign('anggota_kelas_id')->references('id')->on('anggota_kelas');
+            $table->foreign('pembelajaran_id')->references('id')->on('pembelajaran')->onDelete('cascade');
+            $table->foreign('anggota_kelas_id')->references('id')->on('anggota_kelas')->onDelete('cascade');
             $table->foreign('semester_id')->references('id')->on('semesters');
             $table->foreign('term_id')->references('id')->on('terms');
         });

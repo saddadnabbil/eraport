@@ -23,8 +23,9 @@ class CreateAdminsTable extends Migration
             $table->string('nomor_hp', 13)->unique();
             $table->string('avatar');
             $table->timestamps();
+            $table->softDeletes();
 
-            $table->foreign('user_id')->references('id')->on('user');
+            $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade');
         });
     }
 

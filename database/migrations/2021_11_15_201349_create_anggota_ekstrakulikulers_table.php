@@ -18,8 +18,9 @@ class CreateAnggotaEkstrakulikulersTable extends Migration
             $table->unsignedBigInteger('anggota_kelas_id')->unsigned();
             $table->unsignedBigInteger('ekstrakulikuler_id')->unsigned();
             $table->timestamps();
-
-            $table->foreign('anggota_kelas_id')->references('id')->on('anggota_kelas');
+            $table->softDeletes();            
+            
+            $table->foreign('anggota_kelas_id')->references('id')->on('anggota_kelas')->onDelete('cascade');
             $table->foreign('ekstrakulikuler_id')->references('id')->on('ekstrakulikuler');
         });
     }

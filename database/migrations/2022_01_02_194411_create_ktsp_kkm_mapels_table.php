@@ -19,9 +19,10 @@ class CreateKtspKkmMapelsTable extends Migration
             $table->unsignedBigInteger('kelas_id')->unsigned();
             $table->integer('kkm');
             $table->timestamps();
-
+            $table->softDeletes();            
+            
             $table->foreign('mapel_id')->references('id')->on('mapel');
-            $table->foreign('kelas_id')->references('id')->on('kelas');
+            $table->foreign('kelas_id')->references('id')->on('kelas')->onDelete('cascade');
         });
     }
 

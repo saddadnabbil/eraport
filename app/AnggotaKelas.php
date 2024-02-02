@@ -2,12 +2,13 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class AnggotaKelas extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
     
     protected $table = 'anggota_kelas';
     protected $fillable = [ 
@@ -117,5 +118,20 @@ class AnggotaKelas extends Model
     public function ktsp_nilai_akhir_raport()
     {
         return $this->hasMany('App\KtspNilaiAkhirRaport');
+    }
+
+    public function trash()
+    {
+        $this->delete();
+    }
+    public function restoreAnggotaKelas()
+    {
+        $this->restore();
+
+        $this->siswa->update([
+            'kelas_id' => $this->kelas_id,
+            'tingkatan_id' => $this->kelas->tingkatan_id,
+            'jurusan_id' => $this->kelas->jurusan_id,
+        ]);
     }
 }

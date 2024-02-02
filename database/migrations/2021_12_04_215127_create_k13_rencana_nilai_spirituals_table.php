@@ -18,8 +18,9 @@ class CreateK13RencanaNilaiSpiritualsTable extends Migration
             $table->unsignedBigInteger('pembelajaran_id')->unsigned();
             $table->unsignedBigInteger('k13_butir_sikap_id')->unsigned();
             $table->timestamps();
-
-            $table->foreign('pembelajaran_id')->references('id')->on('pembelajaran');
+            $table->softDeletes();
+            
+            $table->foreign('pembelajaran_id')->references('id')->on('pembelajaran')->onDelete('cascade');
             $table->foreign('k13_butir_sikap_id')->references('id')->on('k13_butir_sikap');
         });
     }

@@ -54,6 +54,11 @@
                                         <i class="fas fa-download"></i>
                                     </a>
                                 </div>
+                                <div data-bs-toggle="tooltip" title="Trash" class="d-inline-block" class="d-inline-block">
+                                    <a href="{{ route('guru.trash') }}" class="btn btn-tool btn-sm">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
                             </div>
                         </div>
 

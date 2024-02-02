@@ -18,8 +18,9 @@ class CreateCatatanWaliKelasTable extends Migration
             $table->unsignedBigInteger('anggota_kelas_id')->unsigned();
             $table->string('catatan', 200);
             $table->timestamps();
-
-            $table->foreign('anggota_kelas_id')->references('id')->on('anggota_kelas');
+            $table->softDeletes();            
+            
+            $table->foreign('anggota_kelas_id')->references('id')->on('anggota_kelas')->onDelete('cascade');
         });
     }
 

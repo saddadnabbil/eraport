@@ -17,6 +17,7 @@ class CreateJurusansTable extends Migration
             $table->id();
             $table->string('nama_jurusan');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

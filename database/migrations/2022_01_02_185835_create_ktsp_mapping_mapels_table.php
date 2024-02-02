@@ -19,7 +19,8 @@ class CreateKtspMappingMapelsTable extends Migration
             $table->enum('kelompok', ['1', '2', '3']);
             $table->integer('nomor_urut');
             $table->timestamps();
-
+            $table->softDeletes();            
+            
             $table->foreign('mapel_id')->references('id')->on('mapel');
         });
 

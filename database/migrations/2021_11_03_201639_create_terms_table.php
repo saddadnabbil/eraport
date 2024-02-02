@@ -17,6 +17,7 @@ class CreateTermsTable extends Migration
             $table->id();
             $table->enum('term', ['1', '2']);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

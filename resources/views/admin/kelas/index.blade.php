@@ -165,7 +165,13 @@
                                                 <td>{{ $kelas->tingkatan->nama_tingkatan }}</td>
                                                 <td>{{ $kelas->jurusan->nama_jurusan }}</td>
                                                 <td>{{ $kelas->nama_kelas }}</td>
-                                                <td>{{ $kelas->guru->nama_lengkap }}, {{ $kelas->guru->gelar }}</td>
+                                                <td>
+                                                    @if ($kelas->guru)
+                                                        {{ $kelas->guru->nama_lengkap }}, {{ $kelas->guru->gelar }}
+                                                    @else
+                                                        Guru not assigned
+                                                    @endif
+                                                </td>
                                                 <td>
                                                     <a href="{{ route('kelas.show', $kelas->id) }}"
                                                         class="btn btn-primary btn-sm">
@@ -251,11 +257,11 @@
                                                                     <div class="col-sm-9">
                                                                         <select class="form-control form-select select2"
                                                                             name="guru_id" style="width: 100%;" required>
-                                                                            <option value="" disabled>-- Pilih Wali
-                                                                                Kelas -- </option>
+                                                                            <option value="" disabled selected>--
+                                                                                Pilih Wali Kelas --</option>
                                                                             @foreach ($data_guru as $guru)
                                                                                 <option value="{{ $guru->id }}"
-                                                                                    @if ($guru->id == $kelas->guru->id) selected @endif>
+                                                                                    @if ($kelas->guru && $guru->id == $kelas->guru->id) selected @endif>
                                                                                     {{ $guru->nama_lengkap }},
                                                                                     {{ $guru->gelar }}
                                                                                 </option>

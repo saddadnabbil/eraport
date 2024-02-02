@@ -16,12 +16,13 @@ class CreateAnggotaKelasTable extends Migration
         Schema::create('anggota_kelas', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('siswa_id')->unsigned();
-            $table->unsignedBigInteger('kelas_id')->unsigned();
+            $table->unsignedBigInteger('kelas_id')->unsigned()->nullable();
             $table->enum('pendaftaran', ['1', '2', '3', '4', '5']);
             $table->timestamps();
+            $table->softDeletes();
 
-            $table->foreign('siswa_id')->references('id')->on('siswa');
-            $table->foreign('kelas_id')->references('id')->on('kelas');
+            $table->foreign('siswa_id')->references('id')->on('siswa')->onDelete('cascade');
+            $table->foreign('kelas_id')->references('id')->on('kelas')->onDelete('cascade');
         });
 
         // Pendaftaran 

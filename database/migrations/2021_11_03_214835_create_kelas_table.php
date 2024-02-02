@@ -21,11 +21,12 @@ class CreateKelasTable extends Migration
             $table->unsignedBigInteger('guru_id')->unsigned();
             $table->string('nama_kelas', 30);
             $table->timestamps();
-
+            $table->softDeletes();            
+            
             $table->foreign('tingkatan_id')->references('id')->on('tingkatans');
             $table->foreign('jurusan_id')->references('id')->on('jurusans');
             $table->foreign('tapel_id')->references('id')->on('tapels');
-            $table->foreign('guru_id')->references('id')->on('guru');
+            $table->foreign('guru_id')->references('id')->on('guru')->onDelete('cascade');
         });
     }
 

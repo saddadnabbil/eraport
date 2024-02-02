@@ -19,7 +19,8 @@ class CreateKmTglRaportsTable extends Migration
             $table->string('tempat_penerbitan', 50);
             $table->date('tanggal_pembagian');
             $table->timestamps();
-
+            $table->softDeletes();            
+            
             $table->foreign('tapel_id')->references('id')->on('tapels');
         });
     }

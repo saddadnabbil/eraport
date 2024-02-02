@@ -20,9 +20,10 @@ class CreateKtspNilaiUtsUasTable extends Migration
             $table->integer('nilai_uts');
                 $table->integer('nilai_uas');
             $table->timestamps();
-
-            $table->foreign('pembelajaran_id')->references('id')->on('pembelajaran');
-            $table->foreign('anggota_kelas_id')->references('id')->on('anggota_kelas');
+            $table->softDeletes();
+            
+            $table->foreign('pembelajaran_id')->references('id')->on('pembelajaran')->onDelete('cascade');
+            $table->foreign('anggota_kelas_id')->references('id')->on('anggota_kelas')->onDelete('cascade');
         });
     }
 

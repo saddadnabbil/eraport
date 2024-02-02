@@ -19,8 +19,9 @@ class CreateKenaikanKelasTable extends Migration
             $table->enum('keputusan', ['1', '2', '3', '4']);
             $table->string('kelas_tujuan', 25)->nullable();
             $table->timestamps();
-
-            $table->foreign('anggota_kelas_id')->references('id')->on('anggota_kelas');
+            $table->softDeletes();            
+            
+            $table->foreign('anggota_kelas_id')->references('id')->on('anggota_kelas')->onDelete('cascade');
         });
 
         // Keputusan 

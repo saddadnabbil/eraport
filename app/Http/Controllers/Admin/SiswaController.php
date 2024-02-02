@@ -464,37 +464,6 @@ class SiswaController extends Controller
         return $model->$fileField; // Return the existing file path if no new file is uploaded
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $data_siswa = Siswa::findorfail($id);
-        $data_user = User::findorfail($data_siswa->user_id);
-
-        $data_anggota_kelas = AnggotaKelas::where('siswa_id', $data_siswa->id)->get();
-        if ($data_anggota_kelas->count() == 0) {
-            $data_siswa->delete();
-            $data_user->delete();
-            return back()->with('toast_success', 'Siswa berhasil dihapus');
-        } elseif ($data_anggota_kelas->count() == 1) {
-            try {
-                $anggota_kelas = AnggotaKelas::where('siswa_id', $data_siswa->id)->first();
-                $anggota_kelas->delete();
-                $data_siswa->delete();
-                $data_user->delete();
-                return back()->with('toast_success', 'Siswa berhasil dihapus');
-            } catch (\Throwable $th) {
-                return back()->with('toast_error', 'Data siswa tidak dapat dihapus');
-            }
-        } else {
-            return back()->with('toast_error', 'Data siswa tidak dapat dihapus');
-        }
-    }
-
     public function export()
     {
         $filename = 'data_siswa ' . date('Y-m-d H_i_s') . '.xls';
@@ -516,7 +485,6 @@ class SiswaController extends Controller
             Excel::import(new SiswaImport, $request->file('file_import'));
             return back()->with('toast_success', 'Data siswa berhasil diimport');
         } catch (\Throwable $th) {
-            dd($th->getMessage()); // Output the error message for debugging
             return back()->with('toast_error', 'Maaf, format data tidak sesuai');
         }
     }
@@ -572,5 +540,90 @@ class SiswaController extends Controller
         $siswa_keluar->delete();
 
         return back()->with('toast_success', 'Siswa ' . $siswa->nama_lengkap . ' telah memberhasil diaktifkan');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $siswa = Siswa::findOrFail($id);
+
+        try {
+            $siswa->update([
+                'status' => 0
+            ]);
+
+            $siswa->user->update([
+                'status' => 0
+            ]);
+
+            $siswa->delete();
+
+            foreach ($siswa->anggota_kelas as $anggotaKelas) {
+                $anggotaKelas->delete();
+            }
+
+            $siswa->user->delete();
+
+
+
+            return back()->with('toast_success', 'Siswa & User berhasil dihapus');
+        } catch (\Throwable $th) {
+            return back()->with('toast_error', 'Terjadi kesalahan saat menghapus siswa.');
+        }
+    }
+
+    /**
+     * Permanently remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyPermanent($id)
+    {
+        $siswa = Siswa::withTrashed()->findOrFail($id);
+
+        try {
+            $siswa->anggota_kelas()->forceDelete();
+
+            $siswa->user->forceDelete();
+            $siswa->forceDelete();
+
+            return back()->with('toast_success', 'Siswa & User berhasil dihapus secara permanen');
+        } catch (\Throwable $th) {
+            return back()->with('toast_error', 'Terjadi kesalahan saat menghapus siswa secara permanen.');
+        }
+    }
+
+    /**
+     * Restore the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function restore($id)
+    {
+        try {
+            $siswa = Siswa::withTrashed()->findOrFail($id);
+    
+            $siswa->restoreSiswa();
+    
+            return back()->with('toast_success', 'Siswa & User berhasil direstorasi');
+        } catch (\Throwable $th) {
+            dd($th->getMessage());
+            return back()->with('toast_error', 'Terjadi kesalahan saat merestorasi siswa.');
+        }
+    }
+
+    public function showTrash()
+    {
+        $title = "Data Trash Siswa";
+        $siswaTrashed = Siswa::onlyTrashed()->get();
+
+        return view('admin.siswa.trash', compact('title', 'siswaTrashed'));
     }
 }

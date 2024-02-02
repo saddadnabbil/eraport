@@ -27,6 +27,7 @@ class CreateSekolahsTable extends Migration
             $table->string('kepala_sekolah', 100);
             $table->string('nip_kepala_sekolah', 18)->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

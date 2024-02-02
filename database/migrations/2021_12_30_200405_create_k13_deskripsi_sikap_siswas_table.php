@@ -21,8 +21,9 @@ class CreateK13DeskripsiSikapSiswasTable extends Migration
             $table->enum('nilai_sosial', ['1', '2', '3', '4']);
             $table->string('deskripsi_sosial');
             $table->timestamps();
-
-            $table->foreign('anggota_kelas_id')->references('id')->on('anggota_kelas');
+            $table->softDeletes();            
+            
+            $table->foreign('anggota_kelas_id')->references('id')->on('anggota_kelas')->onDelete('cascade');
 
             // Nilai 
             // 1 = Kurang 

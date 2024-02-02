@@ -19,7 +19,8 @@ class CreateK13MappingMapelsTable extends Migration
             $table->enum('kelompok', ['A', 'B']);
             $table->integer('nomor_urut');
             $table->timestamps();
-
+            $table->softDeletes();            
+            
             $table->foreign('mapel_id')->references('id')->on('mapel');
         });
 

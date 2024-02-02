@@ -18,8 +18,9 @@ class CreateRiwayatLoginsTable extends Migration
             $table->unsignedBigInteger('user_id')->unsigned();
             $table->boolean('status_login');
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('user');
+            $table->softDeletes();            
+                
+            $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade');
         });
     }
 

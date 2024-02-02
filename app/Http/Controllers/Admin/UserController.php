@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Admin;
-use App\Exports\UserExport;
-use App\Http\Controllers\Controller;
+use Excel;
+use App\Guru;
 use App\User;
+use App\Admin;
+use App\Siswa;
+use App\Exports\UserExport;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use Excel;
 
 
 class UserController extends Controller
@@ -104,5 +106,101 @@ class UserController extends Controller
     {
         $filename = 'user_e_raport ' . date('Y-m-d H_i_s') . '.xls';
         return Excel::download(new UserExport, $filename);
+    }
+    
+    public function destroy($id)
+    {
+        $user = User::findorfail($id);
+
+        try {
+
+            if (!is_null($user->siswa)) {
+                $user->siswa->update([
+                    'status' => 0
+                ]);
+                $user->siswa->delete();
+            }
+
+            if (!is_null($user->guru)) {
+                $user->guru->update([
+                    'status' => 0
+                ]);
+                $user->guru->delete();
+            } 
+            
+            if (!is_null($user->admin)) {
+                $user->guru->update([
+                    'status' => 0
+                ]);
+                $user->admin->delete();
+            }
+            
+
+            $user->update([
+                'status' => 0
+            ]);
+
+            $user->delete();
+
+            return back()->with('toast_success', 'User berhasil dihapus');
+        } catch (\Throwable $th) {
+            dd($th->getMessage());
+            return back()->with('toast_error', 'Terjadi kesalahan saat menghapus user.');
+        }
+
+        return back()->with('toast_success', 'User ' . $user->username . ' telah dihapus');
+    }
+
+        /**
+     * Permanently remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyPermanent($id)
+    {
+        $user = User::withTrashed()->findOrFail($id);
+
+        try {
+            // Permanent delete the related Siswa records
+            $user->siswa()->forceDelete();
+            $user->guru()->forceDelete();
+            $user->admin()->forceDelete();
+
+            // Permanent delete the user and its User record
+            $user->user->forceDelete();
+            $user->forceDelete();
+
+            return back()->with('toast_success', 'User berhasil dihapus secara permanen');
+        } catch (\Throwable $th) {
+            return back()->with('toast_error', 'Terjadi kesalahan saat menghapus user secara permanen.');
+        }
+    }
+
+    /**
+     * Restore the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function restore($id)
+    {
+        try {
+            $user = User::withTrashed()->findOrFail($id);
+
+            $user->restoreUser();
+    
+            return back()->with('toast_success', 'User berhasil direstore');
+        } catch (\Throwable $th) {
+            return back()->with('toast_error', 'Terjadi kesalahan saat merestorasi user.');
+        }
+    }
+
+    public function showTrash()
+    {
+        $title = "Data Trash User";
+        $userTrashed = User::onlyTrashed()->get();
+
+        return view('admin.user.trash', compact('title', 'userTrashed'));
     }
 }

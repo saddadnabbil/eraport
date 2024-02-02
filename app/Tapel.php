@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tapel extends Model
 {
+    use \Illuminate\Database\Eloquent\SoftDeletes;
+    
     protected $table = 'tapels';
     protected $fillable = [
         'tahun_pelajaran',

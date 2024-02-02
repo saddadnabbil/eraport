@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class NilaiSumatif extends Model
 {
     use HasFactory;
+    use \Illuminate\Database\Eloquent\SoftDeletes;
 
     protected $table = 'km_nilai_sumatifs';
     protected $guarded = ['id'];

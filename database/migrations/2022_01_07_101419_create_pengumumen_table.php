@@ -19,8 +19,9 @@ class CreatePengumumenTable extends Migration
             $table->string('judul');
             $table->longText('isi');
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('user');
+            $table->softDeletes();            
+            
+            $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade');
         });
     }
 

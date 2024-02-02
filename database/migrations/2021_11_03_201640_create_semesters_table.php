@@ -17,6 +17,7 @@ class CreateSemestersTable extends Migration
             $table->id();
             $table->enum('semester', ['1', '2']);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

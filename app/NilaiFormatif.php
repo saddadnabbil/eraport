@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class NilaiFormatif extends Model
 {
     use HasFactory;
+    use \Illuminate\Database\Eloquent\SoftDeletes;
 
     protected $table = 'km_nilai_formatifs';
     protected $guarded = ['id'];

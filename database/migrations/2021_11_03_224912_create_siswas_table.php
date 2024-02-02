@@ -112,10 +112,11 @@ class CreateSiswasTable extends Migration
             $table->string('avatar');
             $table->enum('status', ['1', '2', '3']);
             $table->timestamps();
+            $table->softDeletes();
 
-            $table->foreign('user_id')->references('id')->on('user');
+            $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade');
             $table->foreign('tingkatan_id')->references('id')->on('tingkatans');
-            $table->foreign('kelas_id')->references('id')->on('kelas');
+            $table->foreign('kelas_id')->references('id')->on('kelas')->onDelete('cascade');
         });
 
         // Jenis Pendaftaran 

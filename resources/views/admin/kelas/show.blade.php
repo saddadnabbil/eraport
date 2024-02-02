@@ -67,6 +67,11 @@
                                         <i class="fas fa-plus"></i>
                                     </button>
                                 </div>
+                                <div data-bs-toggle="tooltip" title="Trash" class="d-inline-block" class="d-inline-block">
+                                    <a href="{{ route('kelas.anggota_kelas.trash') }}" class="btn btn-tool btn-sm">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
                             </div>
                         </div>
 
@@ -191,7 +196,7 @@
                                                 </td>
                                                 <td>
 
-                                                    {{-- <form action="{{ route('kelas.anggota.delete', $anggota->id) }}"
+                                                    <form action="{{ route('kelas.anggota.delete', $anggota->id) }}"
                                                         method="POST">
                                                         @csrf
                                                         @method('DELETE')
@@ -202,8 +207,8 @@
                                                             onclick="return confirm('Hapus {{ $title }} ?')">
                                                             <i class="fas fa-trash-alt"></i>
                                                         </button>
-                                                    </form> --}}
-                                                    <input type="hidden" name="siswa_id"
+                                                    </form>
+                                                    {{-- <input type="hidden" name="siswa_id"
                                                         value="{{ $anggota->siswa->id }}">
                                                     <a href="{{ route('siswa.show', $anggota->siswa->id) }}"
                                                         class="btn btn-warning btn-sm mt-1"><i class="fas fa-eye"></i></a>
@@ -211,7 +216,7 @@
                                                         data-bs-toggle="modal"
                                                         data-bs-target="#modal-edit{{ $anggota->id }}">
                                                         <i class="fas fa-paper-plane"></i>
-                                                    </button>
+                                                    </button> --}}
                                                     {{-- <button type="submit" class="btn btn-danger btn-sm mt-1"
                                                             onclick="return confirm('Pindahkan {{ $title }} ?')">
                                                             <i class="fas fa-trash-alt"></i>

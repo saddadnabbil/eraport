@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Silabus extends Model
 {
     use HasFactory;
+    use \Illuminate\Database\Eloquent\SoftDeletes;
 
     protected $table = 'silabuses';
     protected $fillable = ['pembelajaran_id', 'kelas_id', 'mapel_id', 'k_tigabelas', 'cambridge', 'edexcel', 'book_indo_siswa', 'book_english_siswa', 'book_indo_guru', 'book_english_guru'];

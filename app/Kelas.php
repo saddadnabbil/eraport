@@ -4,9 +4,12 @@ namespace App;
 
 use App\Jurusan;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Kelas extends Model
 {
+    use SoftDeletes;
+    
     protected $table = 'kelas';
     protected $fillable = [
         'tapel_id',
@@ -23,7 +26,7 @@ class Kelas extends Model
 
     public function guru()
     {
-        return $this->belongsTo('App\Guru');
+        return $this->belongsTo('App\Guru')->withTrashed();
     }
 
     public function siswa()

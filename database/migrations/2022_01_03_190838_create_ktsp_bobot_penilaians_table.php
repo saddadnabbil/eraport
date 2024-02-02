@@ -21,8 +21,9 @@ class CreateKtspBobotPenilaiansTable extends Migration
             $table->integer('bobot_uts');
             $table->integer('bobot_uas');
             $table->timestamps();
-
-            $table->foreign('pembelajaran_id')->references('id')->on('pembelajaran');
+            $table->softDeletes();
+            
+            $table->foreign('pembelajaran_id')->references('id')->on('pembelajaran')->onDelete('cascade');
         });
     }
 

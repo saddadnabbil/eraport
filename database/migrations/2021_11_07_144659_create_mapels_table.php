@@ -20,7 +20,8 @@ class CreateMapelsTable extends Migration
             $table->string('nama_mapel_indonesian');
             $table->string('ringkasan_mapel', 50);
             $table->timestamps();
-
+            $table->softDeletes();            
+            
             $table->foreign('tapel_id')->references('id')->on('tapels');
         });
     }

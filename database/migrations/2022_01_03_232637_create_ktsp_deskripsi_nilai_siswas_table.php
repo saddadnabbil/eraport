@@ -19,8 +19,9 @@ class CreateKtspDeskripsiNilaiSiswasTable extends Migration
             $table->unsignedBigInteger('ktsp_nilai_akhir_raport_id')->unsigned();
             $table->string('deskripsi', 100);
             $table->timestamps();
-
-            $table->foreign('pembelajaran_id')->references('id')->on('pembelajaran');
+            $table->softDeletes();
+            
+            $table->foreign('pembelajaran_id')->references('id')->on('pembelajaran')->onDelete('cascade');
             $table->foreign('ktsp_nilai_akhir_raport_id')->references('id')->on('ktsp_nilai_akhir_raport');
         });
     }

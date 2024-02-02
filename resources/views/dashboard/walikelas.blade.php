@@ -27,12 +27,13 @@
             }
 
             if (Auth::user()->role == 1) {
-                $fullName = Auth::user()->admin->nama_lengkap;
+                $fullName = optional(Auth::user()->admin)->nama_lengkap ?? 'Admin not available';
             } elseif (Auth::user()->role == 2) {
-                $fullName = Auth::user()->guru->nama_lengkap;
+                $fullName = optional(Auth::user()->guru)->nama_lengkap ?? 'Guru not available';
             } elseif (Auth::user()->role == 3) {
-                $fullName = Auth::user()->siswa->nama_lengkap;
+                $fullName = optional(Auth::user()->siswa)->nama_lengkap ?? 'Siswa not available';
             }
+
         @endphp
         @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
             'titleBreadCrumb' => $greeting . $fullName . '!',

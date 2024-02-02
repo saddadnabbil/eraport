@@ -21,9 +21,10 @@ class CreateKtspNilaiAkhirRaportsTable extends Migration
             $table->integer('nilai_akhir');
             $table->enum('predikat', ['A', 'B', 'C', 'D']);
             $table->timestamps();
-
-            $table->foreign('pembelajaran_id')->references('id')->on('pembelajaran');
-            $table->foreign('anggota_kelas_id')->references('id')->on('anggota_kelas');
+            $table->softDeletes();
+            
+            $table->foreign('pembelajaran_id')->references('id')->on('pembelajaran')->onDelete('cascade');
+            $table->foreign('anggota_kelas_id')->references('id')->on('anggota_kelas')->onDelete('cascade');
         });
 
         // Predikat

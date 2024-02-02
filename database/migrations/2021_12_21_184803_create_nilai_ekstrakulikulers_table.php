@@ -20,7 +20,8 @@ class CreateNilaiEkstrakulikulersTable extends Migration
             $table->enum('nilai', ['A', 'B', 'C', 'D']);
             $table->string('deskripsi', 200);
             $table->timestamps();
-
+            $table->softDeletes();            
+            
             $table->foreign('ekstrakulikuler_id')->references('id')->on('ekstrakulikuler');
             $table->foreign('anggota_ekstrakulikuler_id')->references('id')->on('anggota_ekstrakulikuler');
         });

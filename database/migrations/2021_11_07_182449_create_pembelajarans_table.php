@@ -20,10 +20,11 @@ class CreatePembelajaransTable extends Migration
             $table->unsignedBigInteger('guru_id')->nullable()->unsigned();
             $table->boolean('status');
             $table->timestamps();
-
-            $table->foreign('kelas_id')->references('id')->on('kelas');
+            $table->softDeletes();            
+            
+            $table->foreign('kelas_id')->references('id')->on('kelas')->onDelete('cascade');
             $table->foreign('mapel_id')->references('id')->on('mapel');
-            $table->foreign('guru_id')->references('id')->on('guru');
+            $table->foreign('guru_id')->references('id')->on('guru')->onDelete('cascade');
         });
     }
 

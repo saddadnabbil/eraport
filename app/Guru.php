@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Guru extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'guru';
     protected $fillable = [
         'user_id',
@@ -22,7 +25,7 @@ class Guru extends Model
 
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo('App\User')->withTrashed();
     }
 
     public function kelas()
@@ -38,5 +41,26 @@ class Guru extends Model
     public function ekstrakulikuler()
     {
         return $this->hasMany('App\Ekstrakulikuler');
+    }
+
+    /**
+     * Trash the Guru record.
+     */
+    public function trash()
+    {
+        $this->delete();
+    }
+    public function restoreGuru()
+    {
+        $this->user()->withTrashed()->restore();
+        $this->restore();
+
+        $this->update([
+            'status' => 1
+        ]);
+
+        $this->user->update([
+            'status' => 1
+        ]);
     }
 }

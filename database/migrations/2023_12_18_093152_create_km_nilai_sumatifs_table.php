@@ -19,9 +19,10 @@ class CreateKmNilaiSumatifsTable extends Migration
             $table->unsignedBigInteger('anggota_kelas_id')->unsigned();
             $table->integer('nilai')->nullable();
             $table->timestamps();
-
-            $table->foreign('rencana_nilai_sumatif_id')->references('id')->on('rencana_nilai_sumatifs');
-            $table->foreign('anggota_kelas_id')->references('id')->on('anggota_kelas');
+            $table->softDeletes();            
+            
+            $table->foreign('rencana_nilai_sumatif_id')->references('id')->on('rencana_nilai_sumatifs')->onDelete('cascade');
+            $table->foreign('anggota_kelas_id')->references('id')->on('anggota_kelas')->onDelete('cascade');
         });
     }
 

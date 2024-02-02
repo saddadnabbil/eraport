@@ -21,8 +21,9 @@ class CreatePrestasiSiswasTable extends Migration
             $table->enum('tingkat_prestasi', ['1', '2', '3', '4', '5', '6']);
             $table->string('deskripsi', 200);
             $table->timestamps();
-
-            $table->foreign('anggota_kelas_id')->references('id')->on('anggota_kelas');
+            $table->softDeletes();            
+            
+            $table->foreign('anggota_kelas_id')->references('id')->on('anggota_kelas')->onDelete('cascade');
         });
 
         // Jenis Prestasi 

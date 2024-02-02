@@ -119,8 +119,14 @@
                                                 </td>
                                                 <td>{{ $pembelajaran->kelas->nama_kelas }}</td>
                                                 <td>{{ $pembelajaran->mapel->nama_mapel }}</td>
-                                                <td>{{ $pembelajaran->guru->nama_lengkap }},
-                                                    {{ $pembelajaran->guru->gelar }}</td>
+                                                <td>
+                                                    @if ($pembelajaran->guru)
+                                                        {{ $pembelajaran->guru->nama_lengkap }},
+                                                        {{ $pembelajaran->guru->gelar }}
+                                                    @else
+                                                        Guru not available
+                                                    @endif
+                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>

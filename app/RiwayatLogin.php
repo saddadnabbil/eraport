@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class RiwayatLogin extends Model
 {
+    use \Illuminate\Database\Eloquent\SoftDeletes;
+    
     protected $table = 'riwayat_login';
     protected $fillable = [
         'user_id',

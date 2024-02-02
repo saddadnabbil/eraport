@@ -19,7 +19,8 @@ class CreateEkstrakulikulersTable extends Migration
             $table->unsignedBigInteger('pembina_id')->unsigned();
             $table->string('nama_ekstrakulikuler', 50);
             $table->timestamps();
-
+            $table->softDeletes();            
+            
             $table->foreign('tapel_id')->references('id')->on('tapels');
             $table->foreign('pembina_id')->references('id')->on('guru');
 

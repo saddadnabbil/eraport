@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pembelajaran extends Model
 {
+    use \Illuminate\Database\Eloquent\SoftDeletes;
+    
     protected $table = 'pembelajaran';
     protected $fillable = [
         'kelas_id',
@@ -26,7 +28,7 @@ class Pembelajaran extends Model
 
     public function guru()
     {
-        return $this->belongsTo('App\Guru');
+        return $this->belongsTo('App\Guru')->withTrashed();
     }
 
     public function tingkatan()

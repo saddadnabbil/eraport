@@ -19,7 +19,8 @@ class CreateTingkatansTable extends Migration
             $table->unsignedBigInteger('term_id')->unsigned();
             $table->unsignedBigInteger('semester_id')->unsigned();
             $table->timestamps();
-
+            $table->softDeletes();            
+            
             $table->foreign('term_id')->references('id')->on('terms');
             $table->foreign('semester_id')->references('id')->on('semesters');
         });

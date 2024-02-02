@@ -18,6 +18,7 @@ class CreatePenilaianKurikulumMerdekasTable extends Migration
             $table->integer('nilai_akhir');
             $table->integer('nilai_revisi');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

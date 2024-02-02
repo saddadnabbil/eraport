@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class SiswaKeluar extends Model
 {
+    use \Illuminate\Database\Eloquent\SoftDeletes;
+    
     protected $table = 'siswa_keluar';
     protected $fillable = [
         'siswa_id',

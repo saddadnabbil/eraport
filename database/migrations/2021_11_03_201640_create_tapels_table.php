@@ -20,6 +20,7 @@ class CreateTapelsTable extends Migration
             $table->unsignedBigInteger('term_id')->unsigned();
             $table->boolean('status')->default(0);
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('semester_id')->references('id')->on('semesters');
             $table->foreign('term_id')->references('id')->on('terms');

@@ -20,8 +20,9 @@ class CreateSiswaKeluarsTable extends Migration
             $table->date('tanggal_keluar');
             $table->string('alasan_keluar')->nullable();
             $table->timestamps();
-
-            $table->foreign('siswa_id')->references('id')->on('siswa');
+            $table->softDeletes();            
+            
+            $table->foreign('siswa_id')->references('id')->on('siswa')->onDelete('cascade');
         });
         // Jenis Registrasi
         // 2 = Keluar

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class RencanaNilaiFormatif extends Model
 {
     use HasFactory;
+    use \Illuminate\Database\Eloquent\SoftDeletes;
 
     protected $guarded = ['id'];
 

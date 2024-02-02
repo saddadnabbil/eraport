@@ -736,7 +736,13 @@
                 {{-- Serang, January 09, 2024<br>Homeroom Teacher --}}
                 {{$anggota_kelas->kelas->tapel->km_tgl_raport->tempat_penerbitan}}, {{$anggota_kelas->kelas->tapel->km_tgl_raport->tanggal_pembagian->isoFormat('MMMM D, Y')}}<br>Homeroom Teacher
               </p>
-              <p class="s7" style="padding-top: 37pt; text-align: center; border-bottom: 1px solid black; display: inline-block; width: auto;">{{$anggota_kelas->kelas->guru->nama_lengkap}}, {{$anggota_kelas->kelas->guru->gelar}}</p>
+              <p class="s7" style="padding-top: 37pt; text-align: center; border-bottom: 1px solid black; display: inline-block; width: auto;">
+                @if ($anggota_kelas->kelas->guru)
+                    {{ $anggota_kelas->kelas->guru->nama_lengkap }}, {{ $anggota_kelas->kelas->guru->gelar }}
+                @else
+                    Guru not available
+                @endif
+            </p>
           </td>
         </tr>
         <!-- Bottom Section -->
