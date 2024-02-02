@@ -1,41 +1,52 @@
-@include('layouts.auth.header')
+  @include('layouts.auth.header')
+  <!-- ============================================================== -->
+  <!-- Login box.scss -->
+  <!-- ============================================================== -->
+  <div class="auth-wrapper d-flex no-block justify-content-center align-items-center position-relative"
+      style="background:url({{ asset('assets/images/big/auth-bg.jpg') }}) no-repeat center center;">
+      <div class="auth-box row">
+          <div class="col-lg-7 col-md-5 modal-bg-img"
+              style="background-image: url({{ asset('assets/images/img-login-upacara.png') }});">
+          </div>
+          <div class="col-lg-5 col-md-7 bg-white">
+              <div class="p-3">
+                  <div class="text-center">
+                      <img src="{{ asset('assets/images/logo-gis-circle.png') }}" alt="wrapkit">
+                  </div>
+                  <h2 class="mt-3 text-center font-18 mb-3">Change Password</h2>
 
-<body class="hold-transition login-page">
-  <div class="login-box">
-    <div class="login-logo">
-      <img src="/assets/dist/img/logo.png" alt="Logo" class="brand-image img-circle">
-      <p class="login-box-msg">G'MELS</p>
-    </div>
-    <!-- /.login-logo -->
-    <div class="card">
-      <div class="card-body login-card-body">
-        <p class="login-box-msg">GANTI PASSWORD</p>
-
-        <form method="post" action="{{ route('gantipassword') }}">
-          @csrf
-          <div class="form-group mb-3">
-            <input type="password" class="form-control" name="password_lama" placeholder="Password Lama">
+                  <form method="post" action="{{ route('gantipassword') }}">
+                      @csrf
+                      <div class="row">
+                          <div class="col-lg-12">
+                              <div class="form-group mb-3">
+                                  <input class="form-control" id="password_lama" name="password_lama" type="password"
+                                      placeholder="password lama">
+                              </div>
+                          </div>
+                          <div class="col-lg-12">
+                              <div class="form-group mb-3">
+                                  <input class="form-control" id="pwd" name="password_baru" type="password"
+                                      placeholder="password baru">
+                              </div>
+                          </div>
+                          <div class="col-lg-12">
+                              <div class="form-group mb-3">
+                                  <input class="form-control" id="pwd" name="konfirmasi_password" type="password"
+                                      placeholder="konfirmasi password">
+                              </div>
+                          </div>
+                          <div class="col-lg-12 text-center">
+                              <button type="submit" class="btn w-100 btn-dark">Change Password</button>
+                          </div>
+                      </div>
+                  </form>
+              </div>
           </div>
-          <div class="form-group mb-3">
-            <input type="password" class="form-control" name="password_baru" placeholder="Password Baru">
-          </div>
-          <div class="form-group mb-3">
-            <input type="password" class="form-control" name="konfirmasi_password" placeholder="Konfirmasi Password">
-          </div>
-          <div class="row mb-2">
-            <div class="col-12">
-              <button type="submit" class="btn btn-primary btn-block">GANTI PASSWORD</button>
-            </div>
-          </div>
-        </form>
-
-        <p class="mb-1">
-          <a href="{{ route('dashboard') }}">Kembali ke Dashboard</a>
-        </p>
       </div>
-      <!-- /.login-card-body -->
-    </div>
   </div>
-  <!-- /.login-box -->
-
+  <!-- ============================================================== -->
+  <!-- Login box.scss -->
+  <!-- ============================================================== -->
+  </div>
   @include('layouts.auth.footer')

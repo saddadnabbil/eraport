@@ -1,4 +1,4 @@
-@include('sweetalert::alert')
+    @include('sweetalert::alert')
 
     <!-- ============================================================== -->
     <!-- All Required js -->

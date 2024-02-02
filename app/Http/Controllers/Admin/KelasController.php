@@ -2,18 +2,29 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\AnggotaKelas;
-use App\CatatanWaliKelas;
 use App\Guru;
-use App\Http\Controllers\Controller;
-use App\Jurusan;
 use App\Kelas;
 use App\Mapel;
 use App\Siswa;
 use App\Tapel;
+use App\Jurusan;
 use App\Tingkatan;
 use Carbon\Carbon;
+use App\AnggotaKelas;
+use App\Ekstrakulikuler;
+use App\CatatanWaliKelas;
+use App\K13NilaiAkhirRaport;
+use App\K13NilaiPengetahuan;
 use Illuminate\Http\Request;
+use App\K13NilaiKeterampilan;
+use App\NilaiEkstrakulikuler;
+use App\AnggotaEkstrakulikuler;
+use App\K13DeskripsiNilaiSiswa;
+use App\K13DeskripsiSikapSiswa;
+use App\Http\Controllers\Controller;
+use App\K13NilaiPtsPas;
+use App\K13NilaiSosial;
+use App\K13NilaiSpiritual;
 use Illuminate\Support\Facades\Validator;
 
 class KelasController extends Controller
@@ -103,6 +114,7 @@ class KelasController extends Controller
     {
         $title = 'Anggota Kelas';
         $kelas = Kelas::findorfail($id);
+        $data_kelas = Kelas::where('tingkatan_id', $kelas->tingkatan_id)->get();
         $anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
             ->where('anggota_kelas.kelas_id', $id)
             ->where('siswa.status', 1)
@@ -117,7 +129,7 @@ class KelasController extends Controller
                 $belum_masuk_kelas->kelas_sebelumhya = $kelas_sebelumhya->kelas->nama_kelas;
             }
         }
-        return view('admin.kelas.show', compact('title', 'kelas', 'anggota_kelas', 'siswa_belum_masuk_kelas'));
+        return view('admin.kelas.show', compact('title', 'kelas', 'data_kelas', 'anggota_kelas', 'siswa_belum_masuk_kelas'));
     }
 
     /**
@@ -235,12 +247,66 @@ class KelasController extends Controller
         }
     }
 
+    public function pindah_kelas(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'siswa_id' => 'required',
+            'kelas_id' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return back()->with('toast_warning', 'Tidak ada siswa yang dipilih');
+        } else {
+            $siswa_id = $request->input('siswa_id');
+            $kelas = Kelas::find($request->kelas_id);
+
+            $data = array(
+                'siswa_id' => $siswa_id,
+                'kelas_id'  => $request->kelas_id,
+                'pendaftaran'  => 2,
+                'created_at'  => Carbon::now(),
+                'updated_at'  => Carbon::now(),
+            );
+            $insert_data[] = $data;
+
+            // Delete the existing record from the old class
+            AnggotaKelas::where('siswa_id', $siswa_id)->delete();
+
+            // Insert the record into the new class
+            AnggotaKelas::insert($insert_data);
+            Siswa::where('id', $siswa_id)->update([
+                'kelas_id' => $request->kelas_id,
+            ]);
+
+            return back()->with('toast_success', 'Anggota kelas berhasil dipindahkan');
+        }
+    }
+
     public function delete_anggota($id)
     {
         try {
-            $anggota_kelas = AnggotaKelas::findorfail($id);
-            $siswa = Siswa::findorfail($anggota_kelas->siswa_id);
-            $catatan_walikelas = CatatanWaliKelas::findorfail($anggota_kelas->id);
+            $anggota_kelas = AnggotaKelas::findOrFail($id);
+            $siswa = Siswa::findOrFail($anggota_kelas->siswa_id);
+            $catatan_walikelas = CatatanWaliKelas::where('anggota_kelas_id', $anggota_kelas->id)->delete();
+
+            // $anggota_ekstra_kulikuler_ids = AnggotaEkstrakulikuler::where('anggota_kelas_id', $anggota_kelas->id)->pluck('id');
+            // $nilai_ekstrakulikuler = NilaiEkstrakulikuler::whereIn('anggota_ekstrakulikuler_id', $anggota_ekstra_kulikuler_ids)->delete();
+            // $anggota_ekstra_kulikuler = AnggotaEkstrakulikuler::where('anggota_kelas_id', $anggota_kelas->id)->delete();
+
+            // // k13
+            // $anggota_kelas = AnggotaKelas::findOrFail($id);
+            // $k13_nilai_akhir_raport_ids = K13NilaiAkhirRaport::where('anggota_kelas_id', $anggota_kelas->id)->pluck('id');
+            // K13DeskripsiSikapSiswa::where('anggota_kelas_id', $anggota_kelas->id)->delete();
+            // K13DeskripsiNilaiSiswa::whereIn('k13_nilai_akhir_raport_id', $k13_nilai_akhir_raport_ids)->delete();
+            // K13NilaiAkhirRaport::where('anggota_kelas_id', $anggota_kelas->id)->delete();
+            // K13NilaiKeterampilan::where('anggota_kelas_id', $anggota_kelas->id)->delete();
+            // K13NilaiPengetahuan::where('anggota_kelas_id', $anggota_kelas->id)->delete();
+            // K13NilaiPtsPas::where('anggota_kelas_id', $anggota_kelas->id)->delete();
+            // K13NilaiSosial::where('anggota_kelas_id', $anggota_kelas->id)->delete();
+            // K13NilaiSpiritual::where('anggota_kelas_id', $anggota_kelas->id)->delete();
+
+
+            // km
+
 
             $update = [
                 'kelas_id' => null,
@@ -248,8 +314,8 @@ class KelasController extends Controller
                 'jurusan_id' => null,
             ];
 
-            $catatan_walikelas->delete();
-            $siswa->update($update_kelas_id);
+            $siswa->update($update);
+
             $anggota_kelas->delete();
             return back()->with('toast_success', 'Anggota kelas berhasil dihapus');
         } catch (\Throwable $th) {

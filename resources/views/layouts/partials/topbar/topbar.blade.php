@@ -12,7 +12,7 @@
                 <!-- ============================================================== -->
                 <div class="navbar-brand">
                     <!-- Logo icon -->
-                    <a href="index.html">
+                    <a href="{{ route('dashboard') }}">
                         <img src="{{ asset('assets/images/logo-gis.png') }}" alt="" class="img-fluid" />
                     </a>
                 </div>
@@ -30,31 +30,75 @@
             <!-- ============================================================== -->
             <!-- End Logo -->
             <!-- ============================================================== -->
-            <div class="navbar-collapse collapse" id="navbarSupportedContent">
+            <div class="navbar-collapse collapse d-flex align-items-center justify-content-center"
+                id="navbarSupportedContent">
                 <!-- ============================================================== -->
                 <!-- toggle and nav items -->
                 <!-- ============================================================== -->
 
-                    <ul class="navbar-nav float-left me-auto ms-3 ps-1">
+                <ul class="navbar-nav float-left me-auto ms-3 ps-1">
+                    @if (Auth::user()->role == 2)
                         <div style="padding: 0 15px; margin-left: 1rem;">
-                            <a href="{{Auth::user()->role == 1 ? route('tapel.index') : 'javascript:void(0)'}}" style="line-height: 1">
-                                <span class="badge bg-success">
-                                @php
-                                    $tapel = App\Tapel::where('status', 1)->first();
-                                    $term = App\Term::find($tapel->term_id);
-
-                                    $pg = App\Tingkatan::where('id', 1)->first();
-                                    $kg = App\Tingkatan::where('id', 2)->first();
-                                    $ps = App\Tingkatan::where('id', 3)->first();
-                                    $jhs = App\Tingkatan::where('id', 4)->first();
-                                    $shs = App\Tingkatan::where('id', 5)->first();
-                                    @endphp 
-                                    
-                                    School Year {{ str_replace('-', ' / ', $tapel->tahun_pelajaran) }} - (Semester PS {{$ps->semester_id . '-' . $ps->term_id}}) - (Semester JHS {{$jhs->semester_id . '-' . $jhs->term_id}}) - (Semester SHS {{$shs->semester_id . '-' . $shs->term_id}}) - Term {{$term->id }}
-                                </span>
-                            </a>
+                            <li class="nav-item d-none d-md-block">
+                                <a class="nav-link" href="javascript:void(0)">
+                                    <div class="customize-input">
+                                        <select id="roleSelect"
+                                            class="custom-select form-control bg-white custom-radius custom-shadow border-0">
+                                            <option value="1" @if (session()->get('akses_sebagai') == 'Guru Mapel' && session()->get('cek_wali_kelas') == true) selected @endif><a
+                                                    class="dropdown-item" href="{{ route('akses') }}">
+                                                    @if (session()->get('akses_sebagai') == 'Guru Mapel' && session()->get('cek_wali_kelas') == true)
+                                                        Teacher
+                                                    @else
+                                                        Change
+                                                        to Teacher
+                                                    @endif
+                                                </a></option>
+                                            <option value="2" @if (session()->get('akses_sebagai') == 'Wali Kelas') selected @endif>
+                                                <a class="dropdown-item" href="{{ route('akses') }}">
+                                                    @if (session()->get('akses_sebagai') == 'Wali Kelas')
+                                                        Homeroom
+                                                    @else
+                                                        Change
+                                                        to Homeroom
+                                                    @endif
+                                                </a>
+                                            </option>
+                                        </select>
+                                    </div>
+                                </a>
+                            </li>
                         </div>
-                    </ul>
+                    @endif
+
+                    <div class="d-flex align-items-center justify-content-center"
+                        style="padding: 0 15px; margin-left: 1rem;">
+                        <li class="nav-item d-none d-md-block">
+                            <a href="{{ Auth::user()->role == 1 ? route('tapel.index') : 'javascript:void(0)' }}"
+                                style="line-height: 1">
+                                <div class="customize-input">
+                                    <span class="badge bg-success">
+                                        @php
+                                            $tapel = App\Tapel::where('status', 1)->first();
+                                            $term = App\Term::find($tapel->term_id);
+
+                                            $pg = App\Tingkatan::where('id', 1)->first();
+                                            $kg = App\Tingkatan::where('id', 2)->first();
+                                            $ps = App\Tingkatan::where('id', 3)->first();
+                                            $jhs = App\Tingkatan::where('id', 4)->first();
+                                            $shs = App\Tingkatan::where('id', 5)->first();
+                                        @endphp
+
+                                        School Year {{ str_replace('-', ' / ', $tapel->tahun_pelajaran) }} - (Semester
+                                        PS
+                                        {{ $ps->semester_id . '-' . $ps->term_id }}) - (Semester JHS
+                                        {{ $jhs->semester_id . '-' . $jhs->term_id }}) - (Semester SHS
+                                        {{ $shs->semester_id . '-' . $shs->term_id }}) - Term {{ $term->id }}
+                                    </span>
+                                </div>
+                            </a>
+                        </li>
+                    </div>
+                </ul>
                 <!-- ============================================================== -->
                 <!-- Right side toggle and nav items -->
                 <!-- ============================================================== -->
@@ -65,36 +109,37 @@
                             <img src="{{ asset('assets/dist/img/avatar/default.png') }}" alt="user"
                                 class="rounded-circle" width="40" />
                             <span class="ms-2 d-none d-lg-inline-block"><span>Hello,</span>
-                            <span class="text-dark">
-                                @if (Auth::user()->role == 1)
-                                    {{Auth::user()->admin->nama_lengkap}}
-                                @elseif(Auth::user()->role == 2)
-                                    {{Auth::user()->guru->nama_lengkap}}
-                                @elseif(Auth::user()->role == 3)
-                                    {{Auth::user()->siswa->nama_lengkap}}
-                                @endif
-                            </span>
-                            <i data-feather="chevron-down" class="svg-icon"></i></span>
+                                <span class="text-dark">
+                                    @if (Auth::user()->role == 1)
+                                        {{ Auth::user()->admin->nama_lengkap }}
+                                    @elseif(Auth::user()->role == 2)
+                                        {{ Auth::user()->guru->nama_lengkap }}
+                                    @elseif(Auth::user()->role == 3)
+                                        {{ Auth::user()->siswa->nama_lengkap }}
+                                    @endif
+                                </span>
+                                <i data-feather="chevron-down" class="svg-icon"></i></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end dropdown-menu-right user-dd animated flipInY">
-                            <a class="dropdown-item" href="{{ route('profile') }}"><i data-feather="user" class="svg-icon me-2 ms-1"></i> My Profile</a>
-                            <a class="dropdown-item" href="{{ route('gantipassword') }}"><i data-feather="settings" class="svg-icon me-2 ms-1"></i>Change Password</a>
-                            
-                            @if(Auth::user()->role == 2)
-                                @if(session()->get('akses_sebagai') == 'Guru Mapel' && session()->get('cek_wali_kelas') == true)
-                                    <a class="dropdown-item" href="{{ route('akses') }}"><i data-feather="toggle-right" class="svg-icon me-2 ms-1"></i> Change to Homeroom</a>
+                            <a class="dropdown-item" href="{{ route('profile') }}"><i data-feather="user"
+                                    class="svg-icon me-2 ms-1"></i> My Profile</a>
+                            <a class="dropdown-item" href="{{ route('gantipassword') }}"><i data-feather="settings"
+                                    class="svg-icon me-2 ms-1"></i>Change Password</a>
+
+                            @if (Auth::user()->role == 2)
+                                @if (session()->get('akses_sebagai') == 'Guru Mapel' && session()->get('cek_wali_kelas') == true)
+                                    <a class="dropdown-item" href="{{ route('akses') }}"><i data-feather="toggle-right"
+                                            class="svg-icon me-2 ms-1"></i> Change to Homeroom</a>
                                 @elseif (session()->get('akses_sebagai') == 'Wali Kelas')
-                                    <a class="dropdown-item" href="{{ route('akses') }}"><i data-feather="toggle-left" class="svg-icon me-2 ms-1"></i> Change to Teacher</a>
+                                    <a class="dropdown-item" href="{{ route('akses') }}"><i data-feather="toggle-left"
+                                            class="svg-icon me-2 ms-1"></i> Change to Teacher</a>
                                 @endif
                             @endif
                             <div class="dropdown-divider"></div>
 
-                            <a 
-                            class="dropdown-item text-danger text-center" 
-                            href="{{ route('logout') }}" class="nav-link"
-                            aria-expanded="false"
-                            onclick="return confirm('Apakah anda yakin ingin keluar ?')"
-                            ><i data-feather="power"
+                            <a class="dropdown-item text-danger text-center" href="{{ route('logout') }}"
+                                class="nav-link" aria-expanded="false"
+                                onclick="return confirm('Apakah anda yakin ingin keluar ?')"><i data-feather="power"
                                     class="svg-icon me-2 ms-1 text-danger"></i>
                                 Logout</a>
                         </div>
@@ -106,3 +151,15 @@
             </div>
         </nav>
     </header>
+
+    <script>
+        document.getElementById('roleSelect').addEventListener('change', function() {
+            var selectedValue = this.value;
+
+            if (selectedValue == 1) {
+                window.location.href = "{{ route('akses') }}";
+            } else if (selectedValue == 2) {
+                window.location.href = "{{ route('akses') }}";
+            }
+        });
+    </script>

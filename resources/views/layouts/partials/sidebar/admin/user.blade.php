@@ -3,11 +3,11 @@
 
     switch ($userRole) {
         case 1:
-            $checkRoute = request()->routeIs('user.index');
+            $checkRoute = request()->routeIs('user.*');
             $dynamicRoute = route('user.index');
             break;
         case 2:
-            $checkRoute = request()->routeIs('user.index');
+            $checkRoute = request()->routeIs('user..*');
             $dynamicRoute = route('user.index');
             break;
     }

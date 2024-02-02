@@ -19,6 +19,6 @@
     'isActive' => $checkRoute,
     'hasArrow' => false,
     'icon' => 'file-plus',
-    'itemName' => 'Proses Deskripsi Siswa',
+    'itemName' => 'Deskripsi Siswa',
     'route' => $dynamicRoute,
 ])

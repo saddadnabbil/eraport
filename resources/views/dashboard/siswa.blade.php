@@ -1,226 +1,280 @@
-@include('layouts.main.header')
-@include('layouts.sidebar.siswa')
+@extends('layouts.main.header')
 
-@section('this-page-styles')
-  <link href="{{ asset('assets/extra-libs/c3/c3.min.css') }}" rel="stylesheet" />
-  <link href="{{ asset('assets/libs/chartist/dist/chartist.min.css') }}" rel="stylesheet" />
-  <link href="{{ asset('assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css') }}" rel="stylesheet" />
+@section('styles')
+    <link href="{{ asset('assets/extra-libs/c3/c3.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/libs/chartist/dist/chartist.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css') }}" rel="stylesheet" />
 @endsection
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-  <!-- Content Header (Page header) -->
-  <div class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1 class="m-0 text-dark">{{$title}}</h1>
-        </div><!-- /.col -->
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item active">{{$title}}</li>
-          </ol>
-        </div><!-- /.col -->
-      </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-  </div>
-  <!-- /.content-header -->
+@section('sidebar')
+    @include('layouts.sidebar.siswa')
+@endsection
 
-  <!-- Main content -->
-  <section class="content">
-    <div class="container-fluid">
+@section('content')
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <div class="page-wrapper">
+        @php
+            $time = date('H');
+            $greeting = '';
+            if ($time < '12') {
+                $greeting = 'Good morning, ';
+            } elseif ($time < '18') {
+                $greeting = 'Good afternoon, ';
+            } else {
+                $greeting = 'Good evening, ';
+            }
 
-      <!-- Info -->
-      <div class="callout callout-success">
-        <h5>{{$sekolah->nama_sekolah}}</h5>
-        <p>Tahun Pelajaran {{$tapel->tahun_pelajaran}}
-          @if($tapel->semester_id == 1)
-          Semester Ganjil
-          @else
-          Semester Genap
-          @endif
-        </p>
-      </div>
-      <!-- End Info  -->
-
-      <!-- Info boxes -->
-      <div class="row">
-        <div class="col-12 col-sm-6 col-md-6">
-          <div class="info-box">
-            <span class="info-box-icon bg-info elevation-1"><i class="fas fa-book-reader"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Jumlah Ekstrakulikuler</span>
-              <span class="info-box-number">
-                {{$jumlah_ekstrakulikuler}} <small>yang diikuti</small>
-              </span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-        <div class="col-12 col-sm-6 col-md-6">
-          <div class="info-box mb-3">
-            <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-book"></i></span>
-
-            <div class="info-box-content">
-              <span class="info-box-text">Jumlah Mata Pelajaran</span>
-              <span class="info-box-number">
-                {{$jumlah_mapel}} <small>yang dipelajari</small>
-              </span>
-            </div>
-            <!-- /.info-box-content -->
-          </div>
-          <!-- /.info-box -->
-        </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->
-
-
-      <!-- Main row -->
-      <div class="row">
-        <!-- Left col -->
-        <div class="col-md-8">
-          <!-- MAP & BOX PANE -->
-          <div class="card">
-            <div class="card-header">
-              <h3 class="card-title">Pengumuman</h3>
-
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-bs-card-widget="collapse">
-                  <i class="fas fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-tool" data-bs-card-widget="remove">
-                  <i class="fas fa-times"></i>
-                </button>
-              </div>
-            </div>
-            <!-- /.card-header -->
-            <div class="card-body pr-1">
-              <div class="row">
-                <div class="col-md-12">
-                  <!-- The time line -->
-                  <div class="timeline">
-                    <!-- timeline time label -->
-                    <div class="time-label">
-                      <span class="bg-success">Pengumuman Terakhir</span>
-                    </div>
-                    <!-- /.timeline-label -->
-                    <!-- timeline item -->
-                    @foreach($data_pengumuman->sortByDesc('created_at') as $pengumuman)
-                    <div>
-                      <i class="fas fa-envelope bg-primary"></i>
-                      <div class="timeline-item">
-                        <span class="time"><i class="far fa-clock"></i> {{$pengumuman->created_at}}</span>
-
-                        <h3 class="timeline-header"><a href="#">{{$pengumuman->user->admin->nama_lengkap}}</a> {{$pengumuman->judul}} @if($pengumuman->created_at != $pengumuman->updated_at)<small><i>edited</i></small>@endif</h3>
-
-                        <div class="timeline-body">
-                          {!! $pengumuman->isi !!}
+            if (Auth::user()->role == 1) {
+                $fullName = Auth::user()->admin->nama_lengkap;
+            } elseif (Auth::user()->role == 2) {
+                $fullName = Auth::user()->guru->nama_lengkap;
+            } elseif (Auth::user()->role == 3) {
+                $fullName = Auth::user()->siswa->nama_lengkap;
+            }
+        @endphp
+        @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
+            'titleBreadCrumb' => $greeting . $fullName . '!',
+            'breadcrumbs' => [
+                [
+                    'title' => 'Dashboard',
+                    'url' => route('dashboard'),
+                    'active' => false,
+                ],
+            ],
+        ])
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <!-- *************************************************************** -->
+            <!-- Start First Cards -->
+            <!-- *************************************************************** -->
+            <div class="row">
+                <div class="col-sm-6 col-lg-6">
+                    <div class="card border-end">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="w-80">
+                                    <h2 class="text-dark mb-1 w-100 text-truncate font-weight-medium">
+                                        {{-- <sup class="set-doller">$</sup>18,306 --}}
+                                        {{ $jumlah_ekstrakulikuler }}
+                                    </h2>
+                                    <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">
+                                        Jumlah Ekstrakulikuler yang Diikuti
+                                    </h6>
+                                </div>
+                                <div class="ms-auto mt-md-3 mt-lg-0">
+                                    <span class="opacity-7 text-muted"><i data-feather="dollar-sign"></i></span>
+                                </div>
+                            </div>
                         </div>
-                      </div>
                     </div>
-                    @endforeach
-                    <!-- END timeline item -->
-                    <div>
-                      <i class="fas fa-clock bg-gray"></i>
+                </div>
+                <div class="col-sm-6 col-lg-6">
+                    <div class="card border-end">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <div class="w-80">
+                                    <div class="d-inline-flex align-items-center">
+                                        <h2 class="text-dark mb-1 font-weight-medium">{{ $jumlah_mapel }}</h2>
+                                        {{-- <span
+                          class="badge bg-danger font-12 text-white font-weight-medium rounded-pill ms-2 d-md-none d-lg-block"
+                          >-18.33%</span
+                          > --}}
+                                    </div>
+                                    <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">
+                                        Jumlah Mata Pelajaran yang Diikuti
+                                    </h6>
+                                </div>
+                                <div class="ms-auto mt-md-3 mt-lg-0">
+                                    <span class="opacity-7 text-muted"><i data-feather="file-plus"></i></span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                  </div>
+                </div>
+            </div>
+            <!-- *************************************************************** -->
+            <!-- End First Cards -->
+            <!-- *************************************************************** -->
+
+            <!-- Main row -->
+            <div class="row">
+                <!-- Left col -->
+                <div class="col-md-8">
+                    <!-- MAP & BOX PANE -->
+                    <div class="card">
+                        <div class="col-md-12 col-lg-12">
+                            <div class="card-body">
+                                <h4 class="card-title">Recent Announcement</h4>
+                                <div class="mt-4 activity">
+                                    @foreach ($data_pengumuman->sortByDesc('created_at') as $pengumuman)
+                                        <div class="d-flex align-items-start border-left-line">
+                                            <div>
+                                                <a href="javascript:void(0)" class="btn btn-cyan btn-circle mb-2 btn-item">
+                                                    <i data-feather="bell"></i>
+                                                </a>
+                                            </div>
+                                            <div class="ms-3 mt-2">
+                                                <h5 class="text-dark font-weight-medium mb-2 text-wrap">
+                                                    {{ $pengumuman->judul }}
+                                                </h5>
+                                                <div>
+                                                    <p class="font-14 mb-2 text-muted text-wrap text-break note-editable">
+                                                        {!! $pengumuman->isi !!}
+                                                    </p>
+                                                </div>
+                                                <span
+                                                    class="font-weight-light font-14 mb-1 d-block text-muted">{{ $pengumuman->user->admin->nama_lengkap }}
+                                                    -
+                                                    {{ \Carbon\Carbon::parse($pengumuman->created_at)->diffForHumans() }}</span>
+                                                @if (Auth::user()->id == $pengumuman->user_id)
+                                                    <form action="{{ route('pengumuman.destroy', $pengumuman->id) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="button"
+                                                            class="font-14 border-bottom text-info pb-1 border-info border-0 bg-transparent"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#modal-edit{{ $pengumuman->id }}">Edit</button>
+                                                        <button type="submit"
+                                                            class="font-14 border-bottom pb-1 text-danger border-danger border-0 bg-transparent"
+                                                            onclick="return confirm('Hapus pengumuman ?')">Hapus
+                                                        </button>
+                                                    </form>
+                                                @endif
+                                            </div>
+                                            <!-- Modal edit  -->
+                                            <div class="modal fade" id="modal-edit{{ $pengumuman->id }}">
+                                                <div class="modal-dialog modal-xl">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">Edit {{ $title }}</h5>
+
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-hidden="true"></button>
+                                                            </button>
+                                                        </div>
+                                                        <form action="{{ route('pengumuman.update', $pengumuman->id) }}"
+                                                            method="POST">
+                                                            {{ method_field('PATCH') }}
+                                                            @csrf
+                                                            <div class="modal-body">
+                                                                <div class="form-group">
+                                                                    <label>Judul Pengumuman</label>
+                                                                    <input type="text" class="form-control"
+                                                                        name="judul" value="{{ $pengumuman->judul }}"
+                                                                        readonly>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label>Isi Pengumuman</label>
+                                                                    <textarea class="textarea" name="isi"
+                                                                        style="width: 100%; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 5px;" required>{!! $pengumuman->isi !!}</textarea>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer justify-content-end">
+                                                                <button type="button" class="btn btn-default"
+                                                                    data-bs-dismiss="modal">Batal</button>
+                                                                <button type="submit"
+                                                                    class="btn btn-primary">Simpan</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- End Modal edit -->
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
                 </div>
                 <!-- /.col -->
-              </div>
-            </div>
-            <!-- /.card-body -->
-          </div>
 
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Riwayat Login</h4>
+                            <ul class="products-list product-list-in-card">
+                                @foreach ($data_riwayat_login as $riwayat_login)
+                                    <li class="item">
+                                        <div class="product-img">
+                                            @if ($riwayat_login->user->role == 1)
+                                                <img src="assets/dist/img/avatar/{{ $riwayat_login->user->admin->avatar }}"
+                                                    alt="Avatar" class="img-size-50">
+                                            @elseif($riwayat_login->user->role == 2)
+                                                <img src="assets/dist/img/avatar/{{ $riwayat_login->user->guru->avatar }}"
+                                                    alt="Avatar" class="img-size-50">
+                                            @elseif($riwayat_login->user->role == 3)
+                                                <img src="assets/dist/img/avatar/{{ $riwayat_login->user->siswa->avatar }}"
+                                                    alt="Avatar" class="img-size-50">
+                                            @endif
+                                        </div>
+
+                                        <div class="product-info">
+                                            <a href="javascript:void(0)" class="product-title">
+                                                @if ($riwayat_login->user->role == 1)
+                                                    {{ $riwayat_login->user->admin->nama_lengkap }}
+                                                @elseif($riwayat_login->user->role == 2)
+                                                    {{ $riwayat_login->user->guru->nama_lengkap }}
+                                                @elseif($riwayat_login->user->role == 3)
+                                                    {{ $riwayat_login->user->siswa->nama_lengkap }}
+                                                @endif
+
+                                                @if ($riwayat_login->status_login == true)
+                                                    <span class="badge bg-success float-right">Online</span>
+                                                @else
+                                                    <span class="badge bg-warning float-right">Offline</span>
+                                                @endif
+                                            </a>
+
+                                            <span class="product-description">
+                                                @if ($riwayat_login->user->role == 1)
+                                                    Administrator
+                                                @elseif($riwayat_login->user->role == 2)
+                                                    Guru
+                                                @elseif($riwayat_login->user->role == 3)
+                                                    Siswa
+                                                @endif
+
+                                                @if ($riwayat_login->status_login == false)
+                                                    <span class="time float-right">
+                                                        <i class="far fa-clock"></i>
+                                                        {{ $riwayat_login->updated_at->diffForHumans() }}
+                                                    </span>
+                                                @endif
+                                            </span>
+                                        </div>
+                                        <!-- /.item -->
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        <!-- /.card-body -->
+
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
         </div>
-        <!-- /.col -->
-
-        <div class="col-md-4">
-          <!-- PRODUCT LIST -->
-          <div class="card">
-            <div class="card-header">
-              <h3 class="card-title">Riwayat Login</h3>
-
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-bs-card-widget="collapse">
-                  <i class="fas fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-tool" data-bs-card-widget="remove">
-                  <i class="fas fa-times"></i>
-                </button>
-              </div>
-            </div>
-            <!-- /.card-header -->
-            <div class="card-body p-0">
-              <ul class="products-list product-list-in-card pl-2 pr-2">
-                @foreach($data_riwayat_login as $riwayat_login)
-                <li class="item">
-
-                  @if($riwayat_login->user->role == 1 && $riwayat_login->user->role == 2)
-                  @elseif($riwayat_login->user->role == 3)
-                  <div class="product-img">
-                    <img src="assets/dist/img/avatar/{{$riwayat_login->user->siswa->avatar}}" alt="Avatar" class="img-size-50">
-                  </div>
-                    @endif
-
-                  <div class="product-info">
-                    <a href="javascript:void(0)" class="product-title">
-                      @if($riwayat_login->user->role == 1 &&  $riwayat_login->user->role == 2)
-                      @elseif($riwayat_login->user->role == 3)
-                      {{$riwayat_login->user->siswa->nama_lengkap}}
-                      @endif
-
-                      @if($riwayat_login->status_login == true && $riwayat_login->user->role == 3)
-                      <span class="badge bg-success float-right">Online</span>
-                      @elseif ($riwayat_login->status_login == false && $riwayat_login->user->role == 3)
-                      <span class="badge bg-warning float-right">Offline</span>
-                      @endif
-
-                    </a>
-
-                    <span class="product-description">
-                      @if($riwayat_login->user->role == 1 && $riwayat_login->user->role == 2)
-
-                      @elseif($riwayat_login->user->role == 3)
-                      Siswa
-                      @endif
-
-                      @if($riwayat_login->status_login == false && $riwayat_login->user->role == 3)
-                        <span class="time float-right"><i class="far fa-clock"></i> {{$riwayat_login->updated_at->diffForHumans()}}</span>
-                      @endif
-                    </span>
-                  </div>
-                </li>
-                <!-- /.item -->
-                @endforeach
-              </ul>
-            </div>
-            <!-- /.card-body -->
-
-          </div>
-          <!-- /.card -->
-        </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->
     </div>
-    <!--/. container-fluid -->
-  </section>
-  <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
+@endsection
 
+<!-- /.content-wrapper -->
 @push('custom-scripts')
-  <script src="{{ asset('assets/extra-libs/c3/d3.min.js') }}"></script>
-  <script src="{{ asset('assets/extra-libs/c3/c3.min.js') }}"></script>
-  <script src="{{ asset('assets/libs/chartist/dist/chartist.min.js') }}"></script>
-  <script src="{{ asset('assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js') }}"></script>
-  <script src="{{ asset('assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js') }}"></script>
-  <script src="{{ asset('assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js') }}"></script>
-  <script src="{{ asset('dist/js/pages/dashboards/dashboard1.min.js') }}"></script>
-@nedpush
+    <script src="{{ asset('assets/extra-libs/c3/d3.min.js') }}"></script>
+    <script src="{{ asset('assets/extra-libs/c3/c3.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/chartist/dist/chartist.min.js') }}"></script>
+    <script src="{{ asset('assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js') }}"></script>
+    <script src="{{ asset('assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js') }}"></script>
+    <script src="{{ asset('assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js') }}"></script>
+    <script src="{{ asset('dist/js/pages/dashboards/dashboard1.min.js') }}"></script>
+@endpush
 
 @include('layouts.main.footer')

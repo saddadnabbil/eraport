@@ -37,7 +37,7 @@ class SilabusController extends Controller
 
             //     $data_silabus_pembelajaran->silabus = $data_silabus->where('pembelajaran_id', $data_silabus_pembelajaran->id)->where('kelas_id', $anggota_kelas->id);
             // }
-            return view('siswa.k13.silabus.index', compact('title', 'siswa', 'data_silabus'));
+            return view('siswa.silabus.index', compact('title', 'siswa', 'data_silabus'));
         }
     }
 }

@@ -122,7 +122,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title"><i class="fas fa-users"></i> {{ $title }}</h3>
+                            <h3 class="card-title"> {{ $title }}</h3>
                             <div class="card-tools">
                                 <div data-bs-toggle="tooltip" title="Tambah" class="d-inline-block" class="d-inline-block">
                                     <button type="button" class="btn btn-tool btn-sm" data-bs-toggle="modal"
@@ -294,8 +294,8 @@
                                                                 <label
                                                                     class=" col-sm-3 col-form-label required">Tingkatan</label>
                                                                 <div class="col-sm-3">
-                                                                    <select class="form-control form-select" id="kelas"
-                                                                        name="tingkatan_id" required>
+                                                                    <select class="form-control form-select"
+                                                                        id="kelas" name="tingkatan_id" required>
                                                                         <option value="">-- Pilih Tingkatan --
                                                                         </option>
                                                                         @foreach ($data_tingkatan as $tingkatan)
@@ -307,8 +307,8 @@
                                                                 <label
                                                                     class="col-sm-2 col-form-label required">Kelas</label>
                                                                 <div class="col-sm-4">
-                                                                    <select class="form-control form-select" id="kelas_id"
-                                                                        name="kelas_id" required>
+                                                                    <select class="form-control form-select"
+                                                                        id="kelas_id" name="kelas_id" required>
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -334,8 +334,8 @@
                                                                 <label
                                                                     class="col-sm-2 col-form-label required">Jurusan</label>
                                                                 <div class="col-sm-4">
-                                                                    <select class="form-control form-select" id="jurusan_id"
-                                                                        name="jurusan_id" required>
+                                                                    <select class="form-control form-select"
+                                                                        id="jurusan_id" name="jurusan_id" required>
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -380,7 +380,8 @@
                                                                 <label for="bloodtype"
                                                                     class="col-sm-2 col-form-label">Gol. Darah</label>
                                                                 <div class="col-sm-4">
-                                                                    <select class="form-control form-select" name="bloodtype">
+                                                                    <select class="form-control form-select"
+                                                                        name="bloodtype">
                                                                         <option value="">-- Pilih Gol. Darah --
                                                                         </option>
                                                                         <option value="A">A</option>
@@ -414,7 +415,8 @@
                                                                 <label for="agama"
                                                                     class="col-sm-3 col-form-label required">Agama</label>
                                                                 <div class="col-sm-3">
-                                                                    <select class="form-control form-select" name="agama" required>
+                                                                    <select class="form-control form-select"
+                                                                        name="agama" required>
                                                                         <option value="">-- Pilih Agama --</option>
                                                                         <option value="1">Islam</option>
                                                                         <option value="2">Protestan</option>
@@ -550,7 +552,8 @@
                                                                 <label for="tinggal_bersama"
                                                                     class="col-sm-3 col-form-label">Tinggal Bersama</label>
                                                                 <div class="col-sm-3">
-                                                                    <select class="form-control form-select" name="tinggal_bersama">
+                                                                    <select class="form-control form-select"
+                                                                        name="tinggal_bersama">
                                                                         <option value="">-- Pilih Tinggal Bersama --
                                                                         </option>
                                                                         <option value="Parents">Parents</option>
@@ -785,8 +788,8 @@
                                                                 <label for="agama_ayah"
                                                                     class="col-sm-3 col-form-label">Agama</label>
                                                                 <div class="col-sm-9">
-                                                                    <select class="form-control form-select" id="agama_ayah"
-                                                                        name="agama_ayah">
+                                                                    <select class="form-control form-select"
+                                                                        id="agama_ayah" name="agama_ayah">
                                                                         <option selected>-- Pilih Agama --</option>
                                                                         <option value="1">Islam</option>
                                                                         <option value="2">Kristen</option>
@@ -901,8 +904,8 @@
                                                                 <label for="agama_ibu"
                                                                     class="col-sm-3 col-form-label">Agama</label>
                                                                 <div class="col-sm-9">
-                                                                    <select class="form-control form-select" id="agama_ibu"
-                                                                        name="agama_ibu">
+                                                                    <select class="form-control form-select"
+                                                                        id="agama_ibu" name="agama_ibu">
                                                                         <option selected>-- Pilih Agama --</option>
                                                                         <option value="1">Islam</option>
                                                                         <option value="2">Kristen</option>
@@ -1017,8 +1020,8 @@
                                                                 <label for="agama_wali"
                                                                     class="col-sm-3 col-form-label">Agama</label>
                                                                 <div class="col-sm-9">
-                                                                    <select class="form-control form-select" id="agama_wali"
-                                                                        name="agama_wali">
+                                                                    <select class="form-control form-select"
+                                                                        id="agama_wali" name="agama_wali">
                                                                         <option selected>-- Pilih Agama --</option>
                                                                         <option value="1">Islam</option>
                                                                         <option value="2">Kristen</option>
@@ -1191,7 +1194,8 @@
                                                                             class="col-sm-3 col-form-label">Keluar
                                                                             Karena</label>
                                                                         <div class="col-sm-9 pt-1">
-                                                                            <select class="form-control form-select select2"
+                                                                            <select
+                                                                                class="form-control form-select select2"
                                                                                 name="keluar_karena" style="width: 100%;"
                                                                                 required>
                                                                                 <option value="">-- Pilih Jenis

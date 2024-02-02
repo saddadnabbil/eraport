@@ -1,143 +1,48 @@
-<!-- Main Sidebar Container -->
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
-  <!-- Brand Logo -->
-  <a href="{{ route('dashboard') }}" class="brand-link">
-    <img src="/assets/dist/img/logo.png" alt="Logo" class="brand-image img-circle">
-    <span class="brand-text font-weight-light">{{ env('APP_NAME') }} </span>
-  </a>
+<!-- ============================================================== -->
+<!-- Left Sidebar - style you can find in sidebar.scss  -->
+<!-- ============================================================== -->
+<aside class="left-sidebar" data-sidebarbg="skin6">
+    <!-- Sidebar scroll-->
+    <div class="scroll-sidebar" data-sidebarbg="skin6">
+        <!-- Sidebar navigation-->
+        <nav class="sidebar-nav">
+            <ul id="sidebarnav">
+                <li class="sidebar-item">
+                    <a class="sidebar-link sidebar-link" href="{{ route('dashboard') }}" aria-expanded="false"><i
+                            data-feather="home" class="feather-icon"></i><span class="hide-menu"> Dashboard </span></a>
+                </li>
+                @include('layouts.partials.sidebar.walikelas.pesertadidik')
 
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <!-- Sidebar Menu -->
-    <nav class="mt-2">
-      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-        <li class="nav-item">
-          <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard.*') ? 'active' : '' }}">
-            <i class="nav-icon fas fa-tachometer-alt"></i>
-            <p>
-              Dashboard
-            </p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="{{ route('pesertadidik.index') }}" class="nav-link {{ request()->routeIs('pesertadidik.*') ? 'active' : '' }}">
-            <i class="nav-icon fas fa-users"></i>
-            <p>
-              Data Peserta Didik
-            </p>
-          </a>
-        </li>
-        <li class="nav-item has-treeview {{ request()->routeIs(['kehadiran.*', 'prestasi.*', 'catatan.*', 'kenaikan.*']) ? 'menu-open' : '' }}">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-clipboard-list"></i>
-            <p>
-              Input Data dan Nilai
-              <i class="fas fa-angle-left right"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview bg-secondary">
-            <li class="nav-item">
-              <a href="{{ route('kehadiran.index') }}" class="nav-link {{ request()->routeIs('kehadiran.*') ? 'active' : '' }}">
-                <i class="fas fa-user-check nav-icon"></i>
-                <p>Input Kehadiran Siswa</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ route('prestasi.index') }}" class="nav-link {{ request()->routeIs('prestasi.*') ? 'active' : '' }}">
-                <i class="fas fa-trophy nav-icon"></i>
-                <p>Input Prestasi Siswa</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ route('catatan.index') }}" class="nav-link {{ request()->routeIs('catatan.*') ? 'active' : '' }}">
-                <i class="fas fa-edit nav-icon"></i>
-                <p>Catatan Wali Kelas</p>
-              </a>
-            </li>
-            @if(Auth::user()->guru->kelas->first()->tingkatan_id == 1 || Auth::user()->guru->kelas->first()->tingkatan_id == 2)
-            @else
-            <li class="nav-item">
-              <a href="{{ route('kenaikan.index') }}" class="nav-link {{ request()->routeIs('kenaikan.*') ? 'active' : '' }}">
-                <i class="fas fa-layer-group nav-icon"></i>
-                <p>Input Kenaikan Kelas</p>
-              </a>
-            </li>  
-            @endif
-          </ul>
-        </li>
+                <li class="list-divider"></li>
+                <li class="nav-small-cap">
+                    <span class="hide-menu">REPORT KM</span>
+                </li>
+                @include('layouts.partials.sidebar.walikelas.inputdata')
 
-        <!-- Kurikulum 2013 -->
+                <li class="list-divider"></li>
+                <li class="nav-small-cap">
+                    <span class="hide-menu">REPORT RESULT KM</span>
+                </li>
+                @include('layouts.partials.sidebar.walikelas.statuspenilaian')
+                @include('layouts.partials.sidebar.walikelas.pengelolaannilai')
+                @include('layouts.partials.sidebar.walikelas.leger')
+                @include('layouts.partials.sidebar.walikelas.printreport')
 
-        <li class="nav-item">
-          <a href="{{ route('statusnilaiguru.index') }}" class="nav-link {{ request()->routeIs('statusnilaiguru.*') ? 'active' : '' }}">
-            <i class="nav-icon fas fa-check-circle"></i>
-            <p>
-              Cek Status Penilaian
-            </p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="{{ route('hasilnilai.index') }}" class="nav-link {{ request()->routeIs('hasilnilai.*') ? 'active' : '' }}">
-            <i class="nav-icon fas fa-check-square"></i>
-            <p>
-              Hasil Pengelolaan Nilai
-            </p>
-          </a>
-        </li>
-        {{-- <li class="nav-item">
-          <a href="{{ route('prosesdeskripsisikap.index') }}" class="nav-link {{ request()->routeIs('prosesdeskripsisikap.*') ? 'active' : '' }}">
-            <i class="nav-icon fas fa-file-alt"></i>
-            <p>
-              Proses Deskripsi Sikap
-            </p>
-          </a>
-        </li> --}}
-        <li class="nav-item">
-          <a href="{{ route('leger.index') }}" class="nav-link {{ request()->routeIs('leger.*') ? 'active' : '' }}">
-            <i class="nav-icon fas fa-table"></i>
-            <p>
-              Leger Nilai Siswa
-            </p>
-          </a>
-        </li>
-
-        <li class="nav-item has-treeview {{ request()->routeIs(['raportptskm.*', 'raportsemesterkm.*']) ? 'menu-open' : '' }}">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-print"></i>
-            <p>
-              Cetak Raport
-              <i class="fas fa-angle-left right"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview bg-secondary">
-            <li class="nav-item">
-              <a href="{{ route('raportptskm.index') }}" class=" nav-link {{ request()->routeIs('raportptskm.*') ? 'active' : '' }}">
-                <i class="fas fa-print nav-icon"></i>
-                <p>Raport Tengah Semester</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{{ route('raportsemesterkm.index') }}" class="nav-link {{ request()->routeIs('raportsemesterkm.*') ? 'active' : '' }}">
-                <i class="fas fa-print nav-icon"></i>
-                <p>Raport Semester</p>
-              </a>
-            </li>
-          </ul>
-        </li>
-
-        <!-- End Kurikulum 2013 -->
-
-        <li class="nav-item bg-danger mt-2">
-          <a href="{{ route('logout') }}" class="nav-link {{ request()->routeIs('ekstra.*') ? 'active' : '' }}" onclick="return confirm('Apakah anda yakin ingin keluar ?')">
-            <i class="nav-icon fas fa-sign-out-alt"></i>
-            <p>
-              Keluar / Logout
-            </p>
-          </a> 
-        </li>
-      </ul>
-    </nav>
-    <!-- /.sidebar-menu -->
-  </div>
-  <!-- /.sidebar -->
+                <li class="list-divider"></li>
+                <li class="nav-small-cap">
+                    <span class="hide-menu">AUTHTENTICATION</span>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link sidebar-link" href="{{ route('logout') }}" class="nav-link"
+                        aria-expanded="false" onclick="return confirm('Apakah anda yakin ingin keluar ?')"><i
+                            data-feather="log-out" class="feather-icon text-danger"></i><span
+                            class="hide-menu test text-danger">Logout</span></a>
+                </li>
+        </nav>
+        <!-- End Sidebar navigation -->
+    </div>
+    <!-- End Sidebar scroll-->
 </aside>
+<!-- ============================================================== -->
+<!-- End Left Sidebar - style you can find in sidebar.scss  -->
+<!-- ============================================================== -->

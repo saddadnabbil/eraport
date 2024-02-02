@@ -1,0 +1,9 @@
+TASK: 
+- implement softdeletes disemua table, si kelascotnroller untuk pindah kelas itu udah dibuat tapi belum selesai
+- softdelete list:
+    1. user
+    2. student
+    3. teacher
+    4. anggota kelas
+    5. learning data
+- dashboard admin masih belum sesuai

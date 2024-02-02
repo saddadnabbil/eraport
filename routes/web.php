@@ -84,6 +84,7 @@ Route::group(['middleware' => ['auth']], function () {
 
       Route::post('kelas/anggota', 'Admin\KelasController@store_anggota')->name('kelas.anggota');
       Route::delete('kelas/anggota/{anggota}', 'Admin\KelasController@delete_anggota')->name('kelas.anggota.delete');
+      Route::post('kelas/anggota/{anggota}', 'Admin\KelasController@pindah_kelas')->name('kelas.anggota.pindah_kelas');
       Route::resource('kelas', 'Admin\KelasController',  [
         'uses' => ['index', 'store', 'show', 'destroy']
       ]);
@@ -503,7 +504,7 @@ Route::group(['middleware' => ['auth']], function () {
     'uses' => ['index']
   ]);
 
-  Route::resource('silabus', 'Siswa\K13\SilabusController')->only(['index'])->names([
+  Route::resource('silabus', 'Siswa\SilabusController')->only(['index'])->names([
     'index' => 'siswa.silabus.index',
   ]);
   Route::get('/pdf/{filename}', 'Admin\PdfController@viewSilabusPDF')->name('silabus.siswa.pdf.view');

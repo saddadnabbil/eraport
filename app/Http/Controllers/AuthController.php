@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Guru;
+use App\Term;
 use App\User;
 use App\Kelas;
 use App\Tapel;
 use App\Sekolah;
+use App\Semester;
 use Carbon\Carbon;
 use App\RiwayatLogin;
 use Illuminate\Http\Request;
@@ -42,12 +44,28 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
         } else {
-            $tapel = new Tapel([
+            $semesterData = [
+                ['semester' => 1],
+                ['semester' => 2],
+            ];
+
+            $termData = [
+                ['term' => 1],
+                ['term' => 2],
+            ];
+
+            Semester::insert($semesterData);
+            Term::insert($termData);
+
+            $tapelData = [
                 'tahun_pelajaran' => $request->tahun_pelajaran,
-                'semester' => $request->semester,
-            ]);
-            $tapel->save();
-            return back()->with('toast_success', 'Regitrasi berhasil');
+                'semester_id' => $request->semester,
+                'term_id' => $request->term,
+            ];
+
+            Tapel::create($tapelData);
+
+            return back()->with('toast_success', 'Registrasi berhasil');
         }
     }
 
@@ -81,9 +99,9 @@ class AuthController extends Controller
                 } else {
                     $cek_riwayat->update(['status_login' => true]);
                 }
-            
+
                 $tapel = Tapel::where('status', 1)->first();
-            
+
                 session([
                     // 'kurikulum' => $request->kurikulum,
                     // 'tapel_id' => $request->tahun_pelajaran,
@@ -91,12 +109,12 @@ class AuthController extends Controller
                     'semester_id' => $tapel->semester_id,
                     'term_id' => $tapel->term_id,
                 ]);
-            
+
                 $guru = Guru::where('user_id', Auth::id())->first();
-            
+
                 if ($guru) {
                     $cek_wali_kelas = Kelas::where('guru_id', $guru->id)->first();
-            
+
                     if (Auth::user()->role == 2) {
                         if ($cek_wali_kelas == null) {
                             session([

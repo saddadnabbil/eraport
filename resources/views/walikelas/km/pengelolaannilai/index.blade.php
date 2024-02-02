@@ -1,10 +1,7 @@
-@include('layouts.main.header')
-@include('layouts.sidebar.walikelas')
-
 @extends('layouts.main.header')
 
 @section('sidebar')
-  @include('layouts.sidebar.guru')
+  @include('layouts.sidebar.walikelas')
 @endsection
 
 @section('content')

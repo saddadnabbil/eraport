@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers\Admin\KM;
 
+use App\Term;
 use App\Kelas;
 use App\Mapel;
 use App\Tapel;
+use App\Sekolah;
+use App\Semester;
 use App\Pembelajaran;
 use App\CapaianPembelajaran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
-use App\Sekolah;
 use Illuminate\Support\Facades\Validator;
 
 class CapaianPembelajaranController extends Controller
@@ -49,9 +51,12 @@ class CapaianPembelajaranController extends Controller
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
         } else {
             $title = 'Tambah Capaian Pembelajaran';
-            $tapel = Tapel::where('status', 1)->first();
-            $semester = Sekolah::first()->semester_id;
             $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
+
+            $tapel = Tapel::where('status', 1)->first();
+            $term = Term::findorfail($pembelajaran->kelas->tingkatan->term_id);
+            $semester = Semester::findorfail($pembelajaran->kelas->tingkatan->semester_id);
+
             $pembelajaran_id = $request->pembelajaran_id;
             $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
             $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
@@ -63,7 +68,7 @@ class CapaianPembelajaranController extends Controller
                 $data->canDelete = $this->isCapaianPembelajaranDeletable($data);
             }
 
-            return view('admin.km.cp.create', compact('title', 'mapel_id', 'tingkatan_id', 'tapel', 'existingData', 'data_pembelajaran', 'pembelajaran_id', 'pembelajaran', 'semester'));
+            return view('admin.km.cp.create', compact('title', 'mapel_id', 'tingkatan_id', 'tapel', 'existingData', 'data_pembelajaran', 'pembelajaran_id', 'pembelajaran', 'semester', 'term'));
         }
     }
 
@@ -123,7 +128,7 @@ class CapaianPembelajaranController extends Controller
                         'mapel_id'            => $request->mapel_id,
                         'tingkatan_id'        => $request->tingkatan_id,
                         'pembelajaran_id'     => $request->pembelajaran_id,
-                        'semester'            => $request->semester,
+                        'semester'            => $request->semester_id,
                         'kode_cp'             => $request->kode_cp[$count],
                         'capaian_pembelajaran' => $request->capaian_pembelajaran[$count],
                         'ringkasan_cp'        => $request->ringkasan_cp[$count],

@@ -1,9 +1,6 @@
 @php
-    // Mendapatkan role pengguna saat ini
     $userRole = Auth::user()->role;
-    
 
-    // Menentukan route berdasarkan peran pengguna
     switch ($userRole) {
         case 1:
             $checkRoute = route('user.index');
@@ -13,9 +10,6 @@
             $checkRoute = route('user.index');
             $dynamicRoute = route('user.index');
             break;
-        // ... tambahkan kasus lain jika diperlukan
-        default:
-            $dynamicRoute = route('user.index');
     }
 @endphp
 

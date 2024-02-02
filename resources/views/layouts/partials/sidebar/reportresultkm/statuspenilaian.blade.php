@@ -42,7 +42,7 @@
             'isActive' => $checkRouteAssesmentStatus,
         ],
         [
-            'name' => 'Hasil Pengelolaan Nilai',
+            'name' => 'Pengelolaan Nilai',
             'route' => $dynamicRouteHasilPengelolaan,
             'isActive' => $checkRouteHasilPengelolaan,
         ],

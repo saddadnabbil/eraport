@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Guru\KM;
 
 use App\Guru;
+use App\Term;
 use App\Kelas;
 use App\Mapel;
 use App\Tapel;
 use App\Sekolah;
+use App\Semester;
 use App\Pembelajaran;
 use App\CapaianPembelajaran;
 use Illuminate\Http\Request;
@@ -52,9 +54,12 @@ class CapaianPembelajaranController extends Controller
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
         } else {
             $title = 'Tambah Capaian Pembelajaran';
-            $tapel = Tapel::where('status', 1)->first();
-            $semester = Sekolah::first()->semester_id;
             $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
+
+            $tapel = Tapel::where('status', 1)->first();
+            $term = Term::findorfail($pembelajaran->kelas->tingkatan->term_id);
+            $semester = Semester::findorfail($pembelajaran->kelas->tingkatan->semester_id);
+
             $pembelajaran_id = $request->pembelajaran_id;
             $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
             $guru = Guru::where('user_id', Auth::user()->id)->first();
