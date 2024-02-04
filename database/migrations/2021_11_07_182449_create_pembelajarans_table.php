@@ -23,7 +23,7 @@ class CreatePembelajaransTable extends Migration
             $table->softDeletes();            
             
             $table->foreign('kelas_id')->references('id')->on('kelas')->onDelete('cascade');
-            $table->foreign('mapel_id')->references('id')->on('mapel');
+            $table->foreign('mapel_id')->references('id')->on('mapel')->onDelete('cascade');
             $table->foreign('guru_id')->references('id')->on('guru')->onDelete('cascade');
         });
     }

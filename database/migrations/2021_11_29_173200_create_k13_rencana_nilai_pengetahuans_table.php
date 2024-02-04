@@ -24,7 +24,7 @@ class CreateK13RencanaNilaiPengetahuansTable extends Migration
             $table->softDeletes();
             
             $table->foreign('pembelajaran_id')->references('id')->on('pembelajaran')->onDelete('cascade');
-            $table->foreign('k13_kd_mapel_id')->references('id')->on('k13_kd_mapel');
+            $table->foreign('k13_kd_mapel_id')->references('id')->on('k13_kd_mapel')->onDelete('cascade');
 
             // Teknik Penilaian
             // 1 = Tes Tulis

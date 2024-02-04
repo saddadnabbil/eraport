@@ -25,7 +25,7 @@ class CreateCapaianPembelajaransTable extends Migration
             $table->timestamps();
             $table->softDeletes();            
             
-            $table->foreign('mapel_id')->references('id')->on('mapel');
+            $table->foreign('mapel_id')->references('id')->on('mapel')->onDelete('cascade');
             $table->foreign('tingkatan_id')->references('id')->on('tingkatans');
                    $table->foreign('pembelajaran_id')->references('id')->on('pembelajaran')->onDelete('cascade');
         });

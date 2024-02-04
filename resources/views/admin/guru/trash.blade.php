@@ -71,25 +71,17 @@
                                                 </td>
                                                 <td class="text-center">
                                                     <div class="d-flex gap-2">
-                                                        <div data-bs-toggle="tooltip" data-bs-original-title="Restore">
-                                                            <form method="POST"
-                                                                action="{{ route('guru.restore', ['id' => $guru->id]) }}">
-                                                                @csrf
-                                                                @method('PATCH')
-                                                                <button type="submit" class="btn btn-primary"><i
-                                                                        class="fas fa-undo"></i></button>
-                                                            </form>
-                                                        </div>
-                                                        <div data-bs-toggle="tooltip"
-                                                            data-bs-original-title="Delete Permanent">
-                                                            <form method="POST"
-                                                                action="{{ route('guru.permanent-delete', ['id' => $guru->id]) }}">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit" class="btn btn-danger"><i
-                                                                        class="fas fa-trash-alt"></i></button>
-                                                            </form>
-                                                        </div>
+                                                        @include('components.actions.restore-button', [
+                                                            'route' => route('guru.restore', $guru->id),
+                                                            'id' => $guru->id,
+                                                        ])
+                                                        @include('components.actions.delete-button', [
+                                                            'route' => route('guru.permanent-delete', $guru->id),
+                                                            'id' => $guru->id,
+                                                            'isPermanent' => true,
+                                                            'withEdit' => false,
+                                                            'withShow' => false,
+                                                        ])
                                                     </div>
                                                 </td>
                                             </tr>

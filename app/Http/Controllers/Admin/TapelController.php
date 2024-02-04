@@ -65,7 +65,9 @@ class TapelController extends Controller
                 'term_id' => 1,
             ]);
             $tapel->save();
-            Siswa::where('status', 1)->update(['kelas_id' => null]);
+
+            // Siswa::where('status', 1)->update(['kelas_id' => null]);
+
             return back()->with('toast_success', 'Tahun Pelajaran berhasil ditambahkan');
         }
     }
@@ -100,12 +102,15 @@ class TapelController extends Controller
     //     return back()->with('success', 'Academic year deleted successfully');
     // }
 
-    public function destroy($id)
-    {
-        $tapel = Tapel::findorfail($id);
-        $tapel->delete();
-        return back()->with('toast_success', 'Tahun Pelajaran berhasil dihapus');
-    }
+    // public function destroy($id)
+    // {
+    //     $tapel = Tapel::findorfail($id);
+    //     if ($tapel->status == 1) {
+    //         return back()->with('toast_error', 'Tahun Pelajaran masih aktif');
+    //     }
+    //     $tapel->forceDelete();
+    //     return back()->with('toast_success', 'Tahun Pelajaran berhasil dihapus');
+    // }
 
     public function setAcademicYear(Request $request): RedirectResponse
     {

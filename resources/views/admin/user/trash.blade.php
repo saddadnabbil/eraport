@@ -85,25 +85,21 @@
                                                 </td>
                                                 <td class=" text-center">
                                                     <div class="d-flex gap-2">
-                                                        <div data-bs-toggle="tooltip" data-bs-original-title="Restore">
-                                                            <form method="POST"
-                                                                action="{{ route('user.restore', ['id' => $user->id]) }}">
-                                                                @csrf
-                                                                @method('PATCH')
-                                                                <button type="submit" class="btn btn-primary"><i
-                                                                        class="fas fa-undo"></i></button>
-                                                            </form>
-                                                        </div>
-                                                        <div data-bs-toggle="tooltip"
-                                                            data-bs-original-title="Delete Permanent">
-                                                            <form method="POST"
-                                                                action="{{ route('user.permanent-delete', ['id' => $user->id]) }}">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit" class="btn btn-danger"><i
-                                                                        class="fas fa-trash-alt"></i></button>
-                                                            </form>
-                                                        </div>
+                                                        @include('components.actions.restore-button', [
+                                                            'route' => route('user.restore', [
+                                                                'id' => $user->id,
+                                                            ]),
+                                                            'id' => $user->id,
+                                                        ])
+                                                        @include('components.actions.delete-button', [
+                                                            'route' => route('user.permanent-delete', [
+                                                                'id' => $user->id,
+                                                            ]),
+                                                            'id' => $user->id,
+                                                            'isPermanent' => true,
+                                                            'withEdit' => false,
+                                                            'withShow' => false
+                                                        ])
                                                     </div>
                                                 </td>
                                             </tr>
@@ -123,6 +119,10 @@
         <!-- ============================================================== -->
     </div>
 @endsection
+
+@push('custom-scripts')
+    @include('components.sweet-alert-script')    
+@endpush
 
 @section('footer')
     @include('layouts.main.footer')

@@ -65,14 +65,14 @@
                                                 <td>{{ $siswa->nama_lengkap }}</td>
                                                 <td>
                                                     @if ($siswa->kelas_id == null)
-                                                        <span class="badge light badge-warning">Belum terdata</span>
+                                                        <span class="badge light bg-warning">Belum terdata</span>
                                                     @else
                                                         {{ $siswa->kelas->tingkatan->nama_tingkatan }}
                                                     @endif
                                                 </td>
                                                 <td>
                                                     @if ($siswa->kelas_id == null)
-                                                        <span class="badge light badge-warning">Belum masuk anggota
+                                                        <span class="badge light bg-warning">Belum masuk anggota
                                                             kelas</span>
                                                     @else
                                                         {{ $siswa->kelas->nama_kelas }}
@@ -89,22 +89,23 @@
                                                     @endif
                                                 </td>
 
-                                                <td class=" text-center">
+                                                <td class="text-center">
                                                     <div class="d-flex gap-2">
-                                                        <div data-bs-toggle="tooltip" data-bs-original-title="Restore" >
-                                                            <form method="POST" action="{{ route('siswa.restore', ['id' => $siswa->id]) }}">
-                                                                @csrf
-                                                                @method('PATCH')
-                                                                <button type="submit" class="btn btn-primary"><i class="fas fa-undo"></i></button>
-                                                            </form>
-                                                        </div>
-                                                        <div data-bs-toggle="tooltip" data-bs-original-title="Delete Permanent">
-                                                            <form method="POST" action="{{ route('siswa.permanent-delete', ['id' => $siswa->id]) }}">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-                                                            </form>
-                                                        </div>
+                                                        @include('components.actions.restore-button', [
+                                                            'route' => route('siswa.restore', [
+                                                                'id' => $siswa->id,
+                                                            ]),
+                                                            'id' => $siswa->id,
+                                                        ])
+                                                        @include('components.actions.delete-button', [
+                                                            'route' => route('siswa.permanent-delete', [
+                                                                'id' => $siswa->id,
+                                                            ]),
+                                                            'isPermanent' => false,
+                                                            'id' => $siswa->id,
+                                                            'withEdit' => false,
+                                                            'withShow' => false
+                                                        ])
                                                     </div>
                                                 </td>
                                             </tr>
@@ -125,6 +126,10 @@
         <!-- ============================================================== -->
     </div>
 @endsection
+
+@push('custom-scripts')
+    @include('components.sweet-alert-script')
+@endpush
 
 @section('footer')
     @include('layouts.main.footer')

@@ -21,7 +21,7 @@ class CreateAnggotaEkstrakulikulersTable extends Migration
             $table->softDeletes();            
             
             $table->foreign('anggota_kelas_id')->references('id')->on('anggota_kelas')->onDelete('cascade');
-            $table->foreign('ekstrakulikuler_id')->references('id')->on('ekstrakulikuler');
+            $table->foreign('ekstrakulikuler_id')->references('id')->on('ekstrakulikuler')->onDelete('cascade');
         });
     }
 

@@ -22,8 +22,8 @@ class CreateNilaiEkstrakulikulersTable extends Migration
             $table->timestamps();
             $table->softDeletes();            
             
-            $table->foreign('ekstrakulikuler_id')->references('id')->on('ekstrakulikuler');
-            $table->foreign('anggota_ekstrakulikuler_id')->references('id')->on('anggota_ekstrakulikuler');
+            $table->foreign('ekstrakulikuler_id')->references('id')->on('ekstrakulikuler')->onDelete('cascade');
+            $table->foreign('anggota_ekstrakulikuler_id')->references('id')->on('anggota_ekstrakulikuler')->onDelete('cascade');
         });
 
         // Nilai

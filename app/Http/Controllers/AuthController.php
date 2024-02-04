@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use App\Rules\MatchOldPassword;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
@@ -25,6 +26,11 @@ class AuthController extends Controller
      */
     public function index()
     {
+        // If user is already authenticated, redirect to dashboard
+        if (Auth::check()) {
+            return redirect()->route('dashboard');
+        }
+
         $data_tapel = Tapel::orderBy('id', 'DESC')->get();
         if (count($data_tapel) == 0) {
             $title = 'Setting Tahun Pelajaran';
@@ -42,17 +48,13 @@ class AuthController extends Controller
             'semester' => 'required',
         ]);
         if ($validator->fails()) {
-            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+            return back()
+                ->with('toast_error', $validator->messages()->all()[0])
+                ->withInput();
         } else {
-            $semesterData = [
-                ['semester' => 1],
-                ['semester' => 2],
-            ];
+            $semesterData = [['semester' => 1], ['semester' => 2]];
 
-            $termData = [
-                ['term' => 1],
-                ['term' => 2],
-            ];
+            $termData = [['term' => 1], ['term' => 2]];
 
             Semester::insert($semesterData);
             Term::insert($termData);
@@ -78,73 +80,83 @@ class AuthController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'username' => 'required|exists:user',
+            'username' => 'required|exists:user,username',
             'password' => 'required',
-            // 'kurikulum' => 'required',
-            // 'tahun_pelajaran' => 'required',
         ]);
+
         if ($validator->fails()) {
-            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+            return redirect()
+                ->back()
+                ->with('toast_error', $validator->errors()->first())
+                ->withInput();
+        }
+
+        $credentials = $request->only('username', 'password');
+
+        if (Auth::attempt($credentials, $request->remember)) {
+            // Login successful
+            $this->updateLoginHistory();
+
+            $tapel = Tapel::where('status', 1)->first();
+
+            session([
+                'tapel_id' => $tapel->id,
+                'semester_id' => $tapel->semester_id,
+                'term_id' => $tapel->term_id,
+            ]);
+
+            $this->handleGuruSession();
+
+            // Redirect to the dashboard
+            return redirect()
+                ->route('dashboard')
+                ->with('toast_success', 'Login berhasil');
         } else {
-            $user_login = User::where('username', $request->username)->first();
-            if (Auth::attempt(['username' => $request->username, 'password' => $request->password], $request->remember)) {
-                // Login successful
-                $cek_riwayat = RiwayatLogin::where('user_id', Auth::id())->first();
-                if (is_null($cek_riwayat)) {
-                    $riwayat_login = new RiwayatLogin([
-                        'user_id' => Auth::id(),
-                        'status_login' => true
-                    ]);
-                    $riwayat_login->save();
-                } else {
-                    $cek_riwayat->update(['status_login' => true]);
-                }
+            return redirect()
+                ->back()
+                ->with('toast_error', 'Kombinasi username dan password tidak valid.')
+                ->withInput();
+        }
+    }
 
-                $tapel = Tapel::where('status', 1)->first();
+    protected function updateLoginHistory()
+    {
+        $cek_riwayat = RiwayatLogin::where('user_id', Auth::id())->first();
 
-                session([
-                    // 'kurikulum' => $request->kurikulum,
-                    // 'tapel_id' => $request->tahun_pelajaran,
-                    'tapel_id' => $tapel->id,
-                    'semester_id' => $tapel->semester_id,
-                    'term_id' => $tapel->term_id,
-                ]);
+        if (is_null($cek_riwayat)) {
+            $riwayat_login = new RiwayatLogin([
+                'user_id' => Auth::id(),
+                'status_login' => true,
+            ]);
+            $riwayat_login->save();
+        } else {
+            $cek_riwayat->update(['status_login' => true]);
+        }
+    }
 
-                $guru = Guru::where('user_id', Auth::id())->first();
+    protected function handleGuruSession()
+    {
+        $guru = Guru::where('user_id', Auth::id())->first();
 
-                if ($guru) {
-                    $cek_wali_kelas = Kelas::where('guru_id', $guru->id)->first();
+        if ($guru && Auth::user()->role == 2) {
+            $cek_wali_kelas = Kelas::where('guru_id', $guru->id)->first();
 
-                    if (Auth::user()->role == 2) {
-                        if ($cek_wali_kelas == null) {
-                            session([
-                                'akses_sebagai' => 'Guru Mapel',
-                                'cek_wali_kelas' => false,
-                            ]);
-                        } else {
-                            session([
-                                'akses_sebagai' => 'Guru Mapel',
-                                'cek_wali_kelas' => true,
-                            ]);
-                        }
-                    }
-                }
-
-                return redirect('/dashboard')->with('toast_success', 'Login berhasil');
-            } else {
-                return back()->with('toast_error', 'password salah.');
-            }
-
-            //     return redirect('/dashboard')->with('toast_success', 'Login berhasil');
-            // }
+            session([
+                'akses_sebagai' => 'Guru Mapel',
+                'cek_wali_kelas' => $cek_wali_kelas != null,
+            ]);
         }
     }
 
     public function logout(Request $request)
     {
         RiwayatLogin::where('user_id', Auth::id())->update([
-            'status_login' => false
+            'status_login' => false,
         ]);
+
+        // Set remember_me ke null pada saat logout
+        Auth::user()->update(['remember_me' => null]);
+
         $request->session()->flush();
         Auth::logout();
         return redirect('/')->with('toast_success', 'Logout berhasil');
@@ -159,13 +171,15 @@ class AuthController extends Controller
     public function ganti_password(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'password_lama' => ['required', new MatchOldPassword],
+            'password_lama' => ['required', new MatchOldPassword()],
             'password_baru' => 'required|min:6',
             'konfirmasi_password' => 'required|same:password_baru',
         ]);
 
         if ($validator->fails()) {
-            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+            return back()
+                ->with('toast_error', $validator->messages()->all()[0])
+                ->withInput();
         } else {
             $user = User::findorfail(Auth::id());
             $data = [
@@ -181,14 +195,15 @@ class AuthController extends Controller
     public function admin_ganti_password(Request $request)
     {
         $validator = Validator::make($request->all(), [
-
-            'password_lama' => ['required', new MatchOldPassword],
+            'password_lama' => ['required', new MatchOldPassword()],
             'password_baru' => 'required|min:6',
             'konfirmasi_password' => 'required|same:password_baru',
         ]);
 
         if ($validator->fails()) {
-            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+            return back()
+                ->with('toast_error', $validator->messages()->all()[0])
+                ->withInput();
         } else {
             $user = User::findorfail(Auth::id());
             $data = [
@@ -220,5 +235,10 @@ class AuthController extends Controller
             ]);
             return redirect('/dashboard')->with('toast_success', 'Akses guru mapel berhasil');
         }
+    }
+
+    public function redirect()
+    {
+        return redirect('/dashboard');
     }
 }

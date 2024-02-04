@@ -19,8 +19,9 @@ class CreateKehadiranSiswasTable extends Migration
             $table->integer('sakit');
             $table->integer('izin');
             $table->integer('tanpa_keterangan');
-            
             $table->timestamps();
+            $table->softDeletes();
+
             $table->foreign('anggota_kelas_id')->references('id')->on('anggota_kelas')->onDelete('cascade');
         });
     }

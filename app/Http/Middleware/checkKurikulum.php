@@ -18,6 +18,6 @@ class checkKurikulum
         if (session('kurikulum') ==  $kurikulum) {
             return $next($request);
         }
-        return redirect('/unauthorized');
+        return back()->with('toast_error', '404 Page Not Found!');
     }
 }

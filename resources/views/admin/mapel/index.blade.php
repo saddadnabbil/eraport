@@ -176,20 +176,13 @@
                                                 <td>{{ $mapel->nama_mapel_indonesian }}</td>
                                                 <td>{{ $mapel->ringkasan_mapel }}</td>
                                                 <td>
-                                                    <form action="{{ route('mapel.destroy', $mapel->id) }}"
-                                                        method="POST">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="button" class="btn btn-warning btn-sm mt-1"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#modal-edit{{ $mapel->id }}">
-                                                            <i class="fas fa-pencil-alt"></i>
-                                                        </button>
-                                                        <button type="submit" class="btn btn-danger btn-sm mt-1"
-                                                            onclick="return confirm('Hapus {{ $title }} ?')">
-                                                            <i class="fas fa-trash-alt"></i>
-                                                        </button>
-                                                    </form>
+                                                    @include('components.actions.delete-button', [
+                                                        'route' => route('mapel.destroy', $mapel->id),
+                                                        'id' => $mapel->id,
+                                                        'isPermanent' => true,
+                                                        'withEdit' => true,
+                                                        'withShow' => false,
+                                                    ])
                                                 </td>
                                             </tr>
 
@@ -269,6 +262,10 @@
         <!-- ============================================================== -->
     </div>
 @endsection
+
+@push('custom-scripts')
+    @include('components.sweet-alert-script')
+@endpush
 
 @section('footer')
     @include('layouts.main.footer')

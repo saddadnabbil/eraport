@@ -137,11 +137,13 @@
                             @endif
                             <div class="dropdown-divider"></div>
 
-                            <a class="dropdown-item text-danger text-center" href="{{ route('logout') }}"
-                                class="nav-link" aria-expanded="false"
-                                onclick="return confirm('Apakah anda yakin ingin keluar ?')"><i data-feather="power"
-                                    class="svg-icon me-2 ms-1 text-danger"></i>
-                                Logout</a>
+                            <form class="dropdown-item text-danger text-center" id="logout-form"
+                                action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                
+                                <button type="button" onclick="confirmLogout()"
+                                    class="text-decoration-none border-0 bg-transparent btn-link text-danger"><i data-feather="log-out" class="svg-icon me-2 ms-1 feather-icon text-danger"></i>Logout</button>
+                            </form>
                         </div>
                     </li>
                     <!-- ============================================================== -->
@@ -163,3 +165,5 @@
             }
         });
     </script>
+
+    @include('components.sweet-alert-script')

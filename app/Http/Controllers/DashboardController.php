@@ -41,6 +41,7 @@ use App\K13DeskripsiNilaiSiswa;
 use App\KtspDeskripsiNilaiSiswa;
 use App\K13RencanaBobotPenilaian;
 use App\K13RencanaNilaiSpiritual;
+use Illuminate\Support\Facades\DB;
 use App\K13RencanaNilaiPengetahuan;
 use App\K13RencanaNilaiKeterampilan;
 use Illuminate\Support\Facades\Auth;
@@ -57,13 +58,22 @@ class DashboardController extends Controller
         $title = 'Dashboard';
         $sekolah = Sekolah::first();
         $tapel = Tapel::where('status', 1)->first();
-        $data_pengumuman = Pengumuman::all();
+        $data_pengumuman = Pengumuman::latest()->take(3)->get();
         $data_riwayat_login = RiwayatLogin::where('user_id', '!=', Auth::user()->id)->where('updated_at', '>=', Carbon::today())->orderBy('status_login', 'DESC')->orderBy('updated_at', 'DESC')->get();
 
         if (Auth::user()->role == 1) {
             $jumlah_guru = Guru::all()->count();
             $jumlah_siswa = Siswa::where('status', 1)->count();
+
+            $jumlah_siswa_shs = Siswa::where('status', 1)->where('tingkatan_id', 5)->count();
+            $jumlah_siswa_jhs = Siswa::where('status', 1)->where('tingkatan_id', 4)->count();
+            $jumlah_siswa_ps = Siswa::where('status', 1)->where('tingkatan_id', 3)->count();
+            $jumlah_siswa_kg = Siswa::where('status', 1)->where('tingkatan_id', 2)->count();
+            $jumlah_siswa_pg = Siswa::where('status', 1)->where('tingkatan_id', 2)->count();
+            
+
             $jumlah_kelas = Kelas::where('tapel_id', $tapel->id)->count();
+            
             $jumlah_ekstrakulikuler = Ekstrakulikuler::where('tapel_id', $tapel->id)->count();
 
             return view('dashboard.admin', compact(
@@ -74,6 +84,11 @@ class DashboardController extends Controller
                 'tapel',
                 'jumlah_guru',
                 'jumlah_siswa',
+                'jumlah_siswa_shs',
+                'jumlah_siswa_jhs',
+                'jumlah_siswa_ps',
+                'jumlah_siswa_kg',
+                'jumlah_siswa_pg',
                 'jumlah_kelas',
                 'jumlah_ekstrakulikuler',
             ));

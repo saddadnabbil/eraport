@@ -21,7 +21,7 @@ class CreateKmMappingMapelsTable extends Migration
             $table->timestamps();
             $table->softDeletes();            
             
-            $table->foreign('mapel_id')->references('id')->on('mapel');
+            $table->foreign('mapel_id')->references('id')->on('mapel')->onDelete('cascade');
         });
     }
 

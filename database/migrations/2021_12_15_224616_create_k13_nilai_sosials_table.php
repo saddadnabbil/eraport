@@ -21,7 +21,7 @@ class CreateK13NilaiSosialsTable extends Migration
             $table->timestamps();
             $table->softDeletes();            
             
-            $table->foreign('k13_rencana_nilai_sosial_id')->references('id')->on('k13_rencana_nilai_sosial');
+            $table->foreign('k13_rencana_nilai_sosial_id')->references('id')->on('k13_rencana_nilai_sosial')->onDelete('cascade');
             $table->foreign('anggota_kelas_id')->references('id')->on('anggota_kelas')->onDelete('cascade');
         });
 

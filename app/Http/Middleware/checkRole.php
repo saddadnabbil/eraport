@@ -18,6 +18,6 @@ class checkRole
         if (in_array($request->user()->role, $role)) {
             return $next($request);
         }
-        return redirect('/unauthorized');
+        return back()->with('toast_error', '404 Page Not Found!');
     }
 }

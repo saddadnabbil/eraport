@@ -35,8 +35,7 @@
             <div class="row">
                 <div class="col-12 col-sm-6 col-md-3">
                     <div class="info-box">
-                        <span class="info-box-icon bg-info elevation-1"><i
-                                class="fas fa-layer-group  text-light"></i></span>
+                        <span class="info-box-icon bg-info elevation-1"><i class="fas fa-layer-group  text-light"></i></span>
 
                         <div class="info-box-content">
                             <span class="info-box-text">Playgroup</span>
@@ -1113,14 +1112,14 @@
                                                 <td>{{ $siswa->nama_lengkap }}</td>
                                                 <td>
                                                     @if ($siswa->kelas_id == null)
-                                                        <span class="badge light badge-warning">Belum terdata</span>
+                                                        <span class="badge light bg-warning">Belum terdata</span>
                                                     @else
                                                         {{ $siswa->kelas->tingkatan->nama_tingkatan }}
                                                     @endif
                                                 </td>
                                                 <td>
                                                     @if ($siswa->kelas_id == null)
-                                                        <span class="badge light badge-warning">Belum masuk anggota
+                                                        <span class="badge light bg-warning">Belum masuk anggota
                                                             kelas</span>
                                                     @else
                                                         {{ $siswa->kelas->nama_kelas }}
@@ -1137,20 +1136,17 @@
                                                     @endif
                                                 </td>
 
-                                                <td>
-                                                    <form action="{{ route('siswa.destroy', $siswa->id) }}"
-                                                        method="POST">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <a href="{{ route('siswa.show', $siswa->id) }}"
-                                                            class="btn btn-warning btn-sm mt-1">
-                                                            <i class="fas fa-eye"></i>
-                                                        </a>
-                                                        <button type="submit" class="btn btn-danger btn-sm mt-1"
-                                                            onclick="return confirm('Hapus {{ $title }} ?')">
-                                                            <i class="fas fa-trash-alt"></i>
-                                                        </button>
-                                                    </form>
+                                                <td class="text-center">
+                                                    <!-- resources/views/admin/user.blade.php -->
+
+                                                    @include('components.actions.delete-button', [
+                                                        'route' => route('siswa.destroy', $siswa->id),
+                                                        'id' => $siswa->id,
+                                                        'isPermanent' => false,
+                                                        'withShow' => true,
+                                                        'showRoute' => route('siswa.show', $siswa->id),
+                                                        'withEdit' => false,
+                                                    ])
                                                 </td>
                                             </tr>
 
@@ -1264,6 +1260,8 @@
 @endsection
 
 @push('custom-scripts')
+    @include('components.sweet-alert-script')
+
     <!-- pas_photo preview-->
     <script>
         function readURL(input) {

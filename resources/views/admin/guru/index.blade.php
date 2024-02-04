@@ -235,19 +235,13 @@
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    <form action="{{ route('guru.destroy', $guru->id) }}" method="POST">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="button" class="btn btn-warning btn-sm mt-1"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#modal-edit{{ $guru->id }}">
-                                                            <i class="fas fa-pencil-alt"></i>
-                                                        </button>
-                                                        <button type="submit" class="btn btn-danger btn-sm mt-1"
-                                                            onclick="return confirm('Hapus {{ $title }} ?')">
-                                                            <i class="fas fa-trash-alt"></i>
-                                                        </button>
-                                                    </form>
+                                                    @include('components.actions.delete-button', [
+                                                        'route' => route('guru.destroy', $guru->id),
+                                                        'id' => $guru->id,
+                                                        'isPermanent' => false,
+                                                        'withEdit' => true,
+                                                        'withShow' => false,
+                                                    ])
                                                 </td>
                                             </tr>
 

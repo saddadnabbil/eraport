@@ -37,7 +37,7 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title"><i class="fas fa-book-reader"></i> {{$title}}</h3>
+              <h3 class="card-title"> {{$title}}</h3>
             </div>
 
             <div class="card-body">
@@ -73,7 +73,7 @@
 
               <div class="card">
                 <div class="card-header bg-primary">
-                  <h3 class="card-title"><i class="fas fa-book-reader"></i> Nilai Ekstrakulikuler</h3>
+                  <h3 class="card-title"> Nilai Ekstrakulikuler</h3>
                 </div>
                 <form action="{{ route('nilaiekstra.store') }}" method="POST">
                   @csrf

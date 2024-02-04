@@ -30,7 +30,7 @@ class CreateSilabusesTable extends Migration
             
             $table->foreign('pembelajaran_id')->references('id')->on('pembelajaran')->onDelete('cascade');
             $table->foreign('kelas_id')->references('id')->on('kelas')->onDelete('cascade');
-            $table->foreign('mapel_id')->references('id')->on('mapel');
+            $table->foreign('mapel_id')->references('id')->on('mapel')->onDelete('cascade');
         });
     }
 

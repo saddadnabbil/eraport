@@ -23,9 +23,9 @@ class CreateKelasTable extends Migration
             $table->timestamps();
             $table->softDeletes();            
             
-            $table->foreign('tingkatan_id')->references('id')->on('tingkatans');
-            $table->foreign('jurusan_id')->references('id')->on('jurusans');
-            $table->foreign('tapel_id')->references('id')->on('tapels');
+            $table->foreign('tingkatan_id')->references('id')->on('tingkatans')->onDelete('cascade');
+            $table->foreign('jurusan_id')->references('id')->on('jurusans')->onDelete('cascade');;
+            $table->foreign('tapel_id')->references('id')->on('tapels')->onDelete('cascade');
             $table->foreign('guru_id')->references('id')->on('guru')->onDelete('cascade');
         });
     }

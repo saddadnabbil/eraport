@@ -60,14 +60,22 @@
                                         @foreach ($anggotaKelasTrashed as $anggota)
                                             <?php $no++; ?>
                                             <tr>
+                                                @if($anggota->siswa)
                                                 <td>{{ $no }}</td>
-                                                <td>{{ $anggota->siswa->nis }}</td>
-                                                <td>{{ $anggota->siswa->nisn }}</td>
-                                                <td><a class="text-decoration-none text-dark"
-                                                        href="{{ route('siswa.show', $anggota->siswa->id) }}">{{ $anggota->siswa->nama_lengkap }}</a>
-                                                </td>
-                                                <td>{{ $anggota->siswa->tanggal_lahir->format('d-m-Y') }}</td>
-                                                <td>{{ $anggota->siswa->jenis_kelamin }}</td>
+                                                    <td>{{ $anggota->siswa->nis ?? '-' }}</td>
+                                                    <td>{{ $anggota->siswa->nisn ?? '-' }}</td>
+                                                    <td>
+                                                        @if($anggota->siswa->nama_lengkap)
+                                                            <a class="text-decoration-none text-dark"
+                                                                href="{{ route('siswa.show', $anggota->siswa->id) }}">
+                                                                {{ $anggota->siswa->nama_lengkap }}
+                                                            </a>
+                                                        @else
+                                                            {{ '-' }}
+                                                        @endif
+                                                    </td>
+                                                    <td>{{ $anggota->siswa->tanggal_lahir ? $anggota->siswa->tanggal_lahir->format('d-m-Y') : '-' }}</td>
+                                                    <td>{{ $anggota->siswa->jenis_kelamin ?? '-' }}</td>
                                                 <td>
                                                     @if ($anggota->pendaftaran == 1)
                                                         Siswa Baru
@@ -102,6 +110,10 @@
                                                         </div>
                                                     </td>
                                                 </td>
+                                                @else
+                                                <!-- Handle the case where $anggota->siswa is null -->
+                                                <td colspan="8" class="text-center">Siswa not available</td>
+                                            @endif
                                             </tr>
                                         @endforeach
                                     </tbody>

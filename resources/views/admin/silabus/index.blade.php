@@ -410,7 +410,6 @@
             });
 
             $(document).on('change', '[id^="kelas_id_edit"], [id^="mapel_id_edit"]', function () {
-                console.log('Change event triggered');
                 var id = $(this).attr('id');
                 updatePembelajaranId(id);
             });
@@ -541,6 +540,27 @@
                             timer: 1500
                         });
                     });
+                }
+            });
+        }
+    </script>
+
+    {{-- delete data --}}
+    <script>
+        function confirmAndSubmit(title, id) {
+            Swal.fire({
+                title: 'Delete ' + title + '?',
+                text: 'This action cannot be undone.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, Delete!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Submit the form for record deletion
+                    document.getElementById('deleteForm' + id).submit();
                 }
             });
         }

@@ -41,13 +41,12 @@ class JurusanController extends Controller
 
     public function destroy($id)
     {
-
-
         $jurusan = Jurusan::findorfail($id);
         try {
-            $jurusan->delete();
+            $jurusan->forceDelete();
             return back()->with('toast_success', 'Jurusan berhasil dihapus');
         } catch (\Throwable $th) {
+            dd($th->getMessage());
             return back()->with('toast_warning', 'Jurusan ini gagal dihapus karena memiliki relasi dengan data kelas');
         }
     }

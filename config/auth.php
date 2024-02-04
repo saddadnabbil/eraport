@@ -39,6 +39,10 @@ return [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
+            'remember_me' => [
+                'enabled' => true,
+                'lifetime' => 120,
+            ],
         ],
 
         'api' => [

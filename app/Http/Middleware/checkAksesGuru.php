@@ -18,6 +18,6 @@ class checkAksesGuru
         if (session('akses_sebagai') ==  $akses_sebagai) {
             return $next($request);
         }
-        return redirect('/unauthorized');
+        return back()->with('toast_error', '404 Page Not Found!');
     }
 }

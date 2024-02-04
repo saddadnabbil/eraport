@@ -99,7 +99,7 @@ class KirimNilaiAkhirController extends Controller
                         ->get();
 
                     if (count($data_anggota_kelas) == 0) {
-                        return redirect(route('guru.penilaiankm.index'))->with('toast_error', 'Data anggota kelas tidak ditemukan');
+                        return redirect(route('penilaiankm.index'))->with('toast_error', 'Data anggota kelas tidak ditemukan');
                     }
 
                     foreach ($data_anggota_kelas as $anggota_kelas) {

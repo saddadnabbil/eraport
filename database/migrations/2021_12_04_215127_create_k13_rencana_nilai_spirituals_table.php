@@ -21,7 +21,7 @@ class CreateK13RencanaNilaiSpiritualsTable extends Migration
             $table->softDeletes();
             
             $table->foreign('pembelajaran_id')->references('id')->on('pembelajaran')->onDelete('cascade');
-            $table->foreign('k13_butir_sikap_id')->references('id')->on('k13_butir_sikap');
+            $table->foreign('k13_butir_sikap_id')->references('id')->on('k13_butir_sikap')->onDelete('cascade');
         });
     }
 

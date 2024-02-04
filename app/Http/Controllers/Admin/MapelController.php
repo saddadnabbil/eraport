@@ -93,9 +93,10 @@ class MapelController extends Controller
     {
         $mapel = Mapel::findorfail($id);
         try {
-            $mapel->delete();
+            $mapel->forceDelete();
             return back()->with('toast_success', 'Mata Pelajaran berhasil dihapus');
         } catch (\Throwable $th) {
+            dd($th->getMessage());
             return back()->with('toast_warning', 'Data Mata Pelajaran tidak dapat dihapus');
         }
     }

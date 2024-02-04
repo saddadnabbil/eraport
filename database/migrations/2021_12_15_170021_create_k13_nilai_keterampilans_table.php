@@ -21,7 +21,7 @@ class CreateK13NilaiKeterampilansTable extends Migration
             $table->timestamps();
             $table->softDeletes();            
             
-            $table->foreign('k13_rencana_nilai_keterampilan_id')->references('id')->on('k13_rencana_nilai_keterampilan');
+            $table->foreign('k13_rencana_nilai_keterampilan_id')->references('id')->on('k13_rencana_nilai_keterampilan')->onDelete('cascade');
             $table->foreign('anggota_kelas_id')->references('id')->on('anggota_kelas')->onDelete('cascade');
         });
     }

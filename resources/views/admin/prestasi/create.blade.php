@@ -41,7 +41,7 @@
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title"><i class="fas fa-trophy"></i> {{$title}}</h3>
+              <h3 class="card-title"> {{$title}}</h3>
               <div class="card-tools">
                 <div data-bs-toggle="tooltip" title="Tambah" class="d-inline-block">
                   <button type="button" class="btn btn-tool btn-sm" data-bs-toggle="modal" data-bs-target="#modal-tambah">

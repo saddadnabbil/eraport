@@ -25,8 +25,8 @@ class CreateK13KdMapelsTable extends Migration
             $table->timestamps();
             $table->softDeletes();            
             
-            $table->foreign('mapel_id')->references('id')->on('mapel');
-            $table->foreign('tingkatan_id')->references('id')->on('tingkatans');
+            $table->foreign('mapel_id')->references('id')->on('mapel')->onDelete('cascade');
+            $table->foreign('tingkatan_id')->references('id')->on('tingkatans')->onDelete('cascade');
 
             // Jenis Kompetensi
             // 1 = Sikap Spiritual
