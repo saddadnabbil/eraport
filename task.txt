@@ -1,9 +1,19 @@
-TASK: 
-- implement softdeletes disemua table, si kelascotnroller untuk pindah kelas itu udah dibuat tapi belum selesai
+TASK for weekend in 2,3,4 Feb 2024: 
+- implement softdeletes disemua table, si kelascotnroller untuk pindah kelas itu udah dibuat tapi belum selesai (done ✅)
 - softdelete list:
-    1. user
-    2. student
-    3. teacher
-    4. anggota kelas
-    5. learning data
-- dashboard admin masih belum sesuai
+    1. user (done ✅)
+    2. student (done ✅)
+    3. teacher (done ✅)
+    4. anggota kelas (done ✅)
+    5. learning data (no need)
+- dashboard admin masih belum sesuai (done ✅)
+- create ui for 404 error page not found (done ✅)
+- fix callback if it's have auth:check true for login (done ✅)
+- add sweetalert for all delete button and restore button (done ✅ (have to check again))
+
+
+NEW TASK for 4 Feb 2024:
+- create feature employee 
+- fix field form & data column for teacher role
+- import feature for teacher role
+- export feature for teacher role
