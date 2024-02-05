@@ -18,7 +18,7 @@
                 ],
                 [
                     'title' => $title,
-                    'url' => route('user.index'),
+                    'url' => route('positionkaryawan.index'),
                     'active' => false,
                 ],
             ],
@@ -60,36 +60,23 @@
                                             aria-hidden="true"></button>
                                         </button>
                                     </div>
-                                    <form action="{{ route('tingkatan.store') }}" method="POST">
+                                    <form action="{{ route('positionkaryawan.store') }}" method="POST">
                                         @csrf
                                         <div class="modal-body">
                                             <div class="form-group row">
-                                                <label for="tahun_pelajaran" class="col-sm-3 col-form-label">Nama
-                                                    Tingkatan</label>
+                                                <label class="col-sm-3 col-form-label">Position Code</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control" id="nama_tingkatan"
-                                                        name="nama_tingkatan" placeholder="Nama Tingkatan"
-                                                        value="{{ old('nama_tingkatan') }}">
+                                                    <input type="text" class="form-control" id="position_kode"
+                                                        name="position_kode" placeholder="Position Code"
+                                                        value="{{ old('position_kode') }}">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="term_id" class="col-sm-3 col-form-label">Term</label>
+                                                <label class="col-sm-3 col-form-label">Position Name</label>
                                                 <div class="col-sm-9">
-                                                    <select class="form-control form-select select2" name="term_id"
-                                                        id="term_id">
-                                                        <option value="1">1</option>
-                                                        <option value="2">2</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label for="semester_id" class="col-sm-3 col-form-label">Semester</label>
-                                                <div class="col-sm-9">
-                                                    <select class="form-control form-select select2" name="semester_id"
-                                                        id="semester_id">
-                                                        <option value="1">1</option>
-                                                        <option value="2">2</option>
-                                                    </select>
+                                                    <input type="text" class="form-control" id="position_nama"
+                                                        name="position_nama" placeholder="Position Name"
+                                                        value="{{ old('position_nama') }}">
                                                 </div>
                                             </div>
                                         </div>
@@ -111,21 +98,25 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Nama Tingkatan</th>
+                                            <th>Position Code</th>
+                                            <th>Position Name</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php $no = 0; ?>
-                                        @foreach ($data_tingkatan as $tingkatan)
+                                        @foreach ($dataPositionKaryawan as $position)
                                             <?php $no++; ?>
                                             <tr>
                                                 <td>{{ $no }}</td>
-                                                <td>{{ $tingkatan->nama_tingkatan }}</td>
+                                                <td>{{ $position->position_kode }}</td>
+                                                <td>{{ $position->position_nama }}</td>
                                                 <td class="text-center">
                                                     @include('components.actions.delete-button', [
-                                                        'route' => route('tingkatan.destroy', $tingkatan->id),
-                                                        'id' => $tingkatan->id,
+                                                        'route' => route(
+                                                            'positionkaryawan.destroy',
+                                                            $position->id),
+                                                        'id' => $position->id,
                                                         'isPermanent' => true,
                                                         'withEdit' => true,
                                                         'withShow' => false,
@@ -135,7 +126,7 @@
 
 
                                             <!-- Modal edit  -->
-                                            <div class="modal fade" id="modal-edit{{ $tingkatan->id }}">
+                                            <div class="modal fade" id="modal-edit{{ $position->id }}">
                                                 <div class="modal-dialog modal-lg">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
@@ -144,24 +135,31 @@
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                                 aria-hidden="true"></button>
                                                         </div>
-                                                        <form action="{{ route('tingkatan.update', $tingkatan->id) }}"
+                                                        <form
+                                                            action="{{ route('positionkaryawan.update', $position->id) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('PUT')
-                                                            <input type="hidden" name="term_id"
-                                                                value="{{ $tingkatan->term_id }}">
-                                                            <input type="hidden" name="semester_id"
-                                                                value="{{ $tingkatan->semester_id }}">
                                                             <div class="modal-body">
                                                                 <div class="form-group row">
-                                                                    <label for="tahun_pelajaran"
-                                                                        class="col-sm-3 col-form-label">Nama
-                                                                        Tingkatan</label>
+                                                                    <label class="col-sm-3 col-form-label">Position
+                                                                        Code</label>
                                                                     <div class="col-sm-9">
                                                                         <input type="text" class="form-control"
-                                                                            id="nama_tingkatan" name="nama_tingkatan"
-                                                                            placeholder="Nama Tingkatan"
-                                                                            value="{{ $tingkatan->nama_tingkatan }}"">
+                                                                            id="position_kode" name="position_kode"
+                                                                            placeholder="Position Code"
+                                                                            value="{{ $position->position_kode }}"
+                                                                            disabled>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <label class="col-sm-3 col-form-label">Position
+                                                                        Name</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control"
+                                                                            id="position_nama" name="position_nama"
+                                                                            placeholder="Position Name"
+                                                                            value="{{ $position->position_nama }}">
                                                                     </div>
                                                                 </div>
                                                             </div>

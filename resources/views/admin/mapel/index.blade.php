@@ -263,9 +263,7 @@
     </div>
 @endsection
 
-@push('custom-scripts')
-    @include('components.sweet-alert-script')
-@endpush
+
 
 @section('footer')
     @include('layouts.main.footer')

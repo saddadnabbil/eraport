@@ -1260,8 +1260,6 @@
 @endsection
 
 @push('custom-scripts')
-    @include('components.sweet-alert-script')
-
     <!-- pas_photo preview-->
     <script>
         function readURL(input) {

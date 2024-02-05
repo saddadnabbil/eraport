@@ -25,6 +25,7 @@ use Database\Seeders\SiswaTableSeeder;
 use Database\Seeders\TapelTableSeeder;
 use Database\Seeders\K13KkmTableSeeder;
 use Database\Seeders\JurusanTableSeeder;
+use Database\Seeders\KaryawanTableSeeder;
 use Database\Seeders\SemesterTableSeeder;
 use Database\Seeders\TingkatanTableSeeder;
 use Database\Seeders\K13KdMapelTableSeeder;
@@ -33,17 +34,22 @@ use Database\Seeders\NilaiAkhirTableSeeder;
 use Database\Seeders\KmTglRaportTableSeeder;
 use Database\Seeders\AnggotaKelasTableSeeder;
 use Database\Seeders\K13TglRaportTableSeeder;
+use Database\Seeders\KmNilaiAkhirTableSeeder;
 use Database\Seeders\NilaiSumatifTableSeeder;
 use Database\Seeders\PembelajaranTableSeeder;
+use Database\Seeders\UnitKaryawanTableSeeder;
 use Database\Seeders\K13ButirSikapTableSeeder;
-use Database\Seeders\KmNilaiFormatifTableSeeder;
 use Database\Seeders\PrestasiSiswaTableSeeder;
 use Database\Seeders\K13NilaiPtsPasTableSeeder;
 use Database\Seeders\K13NilaiSosialTableSeeder;
 use Database\Seeders\KmMappingMapelTableSeeder;
+use Database\Seeders\KmNilaiSumatifTableSeeder;
+use Database\Seeders\StatusKaryawanTableSeeder;
 use UsersTableSeeder as GlobalUsersTableSeeder;
 use Database\Seeders\EkstrakulikulerTableSeeder;
 use Database\Seeders\K13MappingMapelTableSeeder;
+use Database\Seeders\KmNilaiFormatifTableSeeder;
+use Database\Seeders\PositionKaryawanTableSeeder;
 use Database\Seeders\K13NilaiSpiritualTableSeeder;
 use Database\Seeders\KmNilaiAkhirRaportTableSeeder;
 use SekolahTableSeeder as GlobalSekolahTableSeeder;
@@ -62,8 +68,6 @@ use Database\Seeders\K13RencanaBobotPenilaianTableSeeder;
 use Database\Seeders\K13RencanaNilaiSpiritualTableSeeder;
 use Database\Seeders\K13RencanaNilaiPengetahuanTableSeeder;
 use Database\Seeders\K13RencanaNilaiKeterampilanTableSeeder;
-use Database\Seeders\KmNilaiAkhirTableSeeder;
-use Database\Seeders\KmNilaiSumatifTableSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -127,6 +131,12 @@ class DatabaseSeeder extends Seeder
             KmNilaiAkhirTableSeeder::class,
             KmMappingMapelTableSeeder::class,
             KmTglRaportTableSeeder::class,
+
+            // Karyawan
+            StatusKaryawanTableSeeder::class,
+            UnitKaryawanTableSeeder::class,
+            PositionKaryawanTableSeeder::class,
+            KaryawanTableSeeder::class,
         ]);
     }
 }

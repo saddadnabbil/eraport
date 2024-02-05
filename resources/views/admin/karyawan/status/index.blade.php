@@ -18,7 +18,7 @@
                 ],
                 [
                     'title' => $title,
-                    'url' => route('user.index'),
+                    'url' => route('statuskaryawan.index'),
                     'active' => false,
                 ],
             ],
@@ -60,36 +60,25 @@
                                             aria-hidden="true"></button>
                                         </button>
                                     </div>
-                                    <form action="{{ route('tingkatan.store') }}" method="POST">
+                                    <form action="{{ route('statuskaryawan.store') }}" method="POST">
                                         @csrf
                                         <div class="modal-body">
                                             <div class="form-group row">
-                                                <label for="tahun_pelajaran" class="col-sm-3 col-form-label">Nama
-                                                    Tingkatan</label>
+                                                <label for="tahun_pelajaran" class="col-sm-3 col-form-label">Status
+                                                    Code</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control" id="nama_tingkatan"
-                                                        name="nama_tingkatan" placeholder="Nama Tingkatan"
-                                                        value="{{ old('nama_tingkatan') }}">
+                                                    <input type="text" class="form-control" id="status_kode"
+                                                        name="status_kode" placeholder="Status Code"
+                                                        value="{{ old('status_kode') }}">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="term_id" class="col-sm-3 col-form-label">Term</label>
+                                                <label for="tahun_pelajaran" class="col-sm-3 col-form-label">Status
+                                                    Name</label>
                                                 <div class="col-sm-9">
-                                                    <select class="form-control form-select select2" name="term_id"
-                                                        id="term_id">
-                                                        <option value="1">1</option>
-                                                        <option value="2">2</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label for="semester_id" class="col-sm-3 col-form-label">Semester</label>
-                                                <div class="col-sm-9">
-                                                    <select class="form-control form-select select2" name="semester_id"
-                                                        id="semester_id">
-                                                        <option value="1">1</option>
-                                                        <option value="2">2</option>
-                                                    </select>
+                                                    <input type="text" class="form-control" id="status_nama"
+                                                        name="status_nama" placeholder="Status Name"
+                                                        value="{{ old('status_nama') }}">
                                                 </div>
                                             </div>
                                         </div>
@@ -111,21 +100,23 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Nama Tingkatan</th>
+                                            <th>Status Code</th>
+                                            <th>Status Name</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php $no = 0; ?>
-                                        @foreach ($data_tingkatan as $tingkatan)
+                                        @foreach ($dataStatusKaryawan as $status)
                                             <?php $no++; ?>
                                             <tr>
                                                 <td>{{ $no }}</td>
-                                                <td>{{ $tingkatan->nama_tingkatan }}</td>
+                                                <td>{{ $status->status_kode }}</td>
+                                                <td>{{ $status->status_nama }}</td>
                                                 <td class="text-center">
                                                     @include('components.actions.delete-button', [
-                                                        'route' => route('tingkatan.destroy', $tingkatan->id),
-                                                        'id' => $tingkatan->id,
+                                                        'route' => route('statuskaryawan.destroy', $status->id),
+                                                        'id' => $status->id,
                                                         'isPermanent' => true,
                                                         'withEdit' => true,
                                                         'withShow' => false,
@@ -135,7 +126,7 @@
 
 
                                             <!-- Modal edit  -->
-                                            <div class="modal fade" id="modal-edit{{ $tingkatan->id }}">
+                                            <div class="modal fade" id="modal-edit{{ $status->id }}">
                                                 <div class="modal-dialog modal-lg">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
@@ -144,24 +135,29 @@
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                                 aria-hidden="true"></button>
                                                         </div>
-                                                        <form action="{{ route('tingkatan.update', $tingkatan->id) }}"
+                                                        <form action="{{ route('statuskaryawan.update', $status->id) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('PUT')
-                                                            <input type="hidden" name="term_id"
-                                                                value="{{ $tingkatan->term_id }}">
-                                                            <input type="hidden" name="semester_id"
-                                                                value="{{ $tingkatan->semester_id }}">
                                                             <div class="modal-body">
                                                                 <div class="form-group row">
                                                                     <label for="tahun_pelajaran"
-                                                                        class="col-sm-3 col-form-label">Nama
-                                                                        Tingkatan</label>
+                                                                        class="col-sm-3 col-form-label">Status Code</label>
                                                                     <div class="col-sm-9">
                                                                         <input type="text" class="form-control"
-                                                                            id="nama_tingkatan" name="nama_tingkatan"
-                                                                            placeholder="Nama Tingkatan"
-                                                                            value="{{ $tingkatan->nama_tingkatan }}"">
+                                                                            id="status_kode" name="status_kode"
+                                                                            placeholder="Status Code"
+                                                                            value="{{ $status->status_kode }}" disabled>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <label for="tahun_pelajaran"
+                                                                        class="col-sm-3 col-form-label">Status Name</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control"
+                                                                            id="status_nama" name="status_nama"
+                                                                            placeholder="Status Name"
+                                                                            value="{{ $status->status_nama }}">
                                                                     </div>
                                                                 </div>
                                                             </div>

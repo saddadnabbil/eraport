@@ -150,9 +150,9 @@
                                                 <td>{{ $no }}</td>
                                                 <td>
                                                     @if ($user->role == 1)
-                                                        {{ $user->admin->nama_lengkap }}
-                                                    @elseif($user->role == 2)
-                                                        {{ $user->guru->nama_lengkap }}
+                                                        {{ optional($user->admin)->nama_lengkap }}
+                                                    @elseif ($user->role == 2)
+                                                        {{ optional($user->guru)->nama_lengkap }}
                                                     @elseif ($user->role == 3)
                                                         @if ($user->siswa)
                                                             {{ $user->siswa->nama_lengkap }}
@@ -214,18 +214,18 @@
                                                                         @if ($user->role == 1)
                                                                             <input type="text" class="form-control"
                                                                                 name="nama_lengkap"
-                                                                                value="{{ $user->admin->nama_lengkap }}"
+                                                                                value="{{ optional($user->admin)->nama_lengkap }}"
                                                                                 readonly>
                                                                         @elseif($user->role == 2)
                                                                             <input type="text" class="form-control"
                                                                                 name="nama_lengkap"
-                                                                                value="{{ $user->guru->nama_lengkap }}"
+                                                                                value="{{ optional($user->guru)->nama_lengkap }}"
                                                                                 readonly>
                                                                         @elseif($user->role == 3)
                                                                             @if ($user->siswa)
                                                                                 <input type="text" class="form-control"
                                                                                     name="nama_lengkap"
-                                                                                    value="{{ $user->siswa->nama_lengkap }}"
+                                                                                    value="{{ optional($user->siswa)->nama_lengkap }}"
                                                                                     readonly>
                                                                             @else
                                                                                 -
@@ -297,9 +297,7 @@
     </div>
 @endsection
 
-@push('custom-scripts')
-    @include('components.sweet-alert-script')
-@endpush
+
 
 @section('footer')
     @include('layouts.main.footer')

@@ -104,7 +104,7 @@
                                                             'isPermanent' => false,
                                                             'id' => $siswa->id,
                                                             'withEdit' => false,
-                                                            'withShow' => false
+                                                            'withShow' => false,
                                                         ])
                                                     </div>
                                                 </td>
@@ -127,9 +127,7 @@
     </div>
 @endsection
 
-@push('custom-scripts')
-    @include('components.sweet-alert-script')
-@endpush
+
 
 @section('footer')
     @include('layouts.main.footer')

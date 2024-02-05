@@ -21,9 +21,9 @@ Route::get('/unauthorized', function () {
 
 // Rute Fallback untuk 404
 Route::fallback(function () {
-  $title = 'Page Not Found';
+    $title = 'Page Not Found';
 
-  return view('errorpage.404', compact('title'));
+    return view('errorpage.404', compact('title'));
 });
 
 Route::get('/', 'AuthController@index')->name('login.get')->middleware('guest');
@@ -271,6 +271,25 @@ Route::group(['middleware' => ['auth']], function () {
                 'uses' => ['index', 'store', 'update', 'destroy'],
             ]);
             // End Raport KM
+
+            // Karyawan
+            Route::resource('statuskaryawan', 'Admin\StatusKaryawanController', [
+                'uses' => ['index', 'update', 'destroy'],
+            ]);
+            Route::resource('unitkaryawan', 'Admin\UnitKaryawanController', [
+                'uses' => ['index', 'update', 'destroy'],
+            ]);
+            Route::resource('positionkaryawan', 'Admin\PositionKaryawanController', [
+                'uses' => ['index', 'update', 'destroy'],
+            ]);
+            Route::resource('karyawan', 'Admin\KaryawanController', [
+                'uses' => ['index', 'update', 'show', 'destroy'],
+            ]);
+            Route::get('karyawan/export', 'Admin\KaryawanController@export')->name('karyawan.export');
+            Route::get('karyawan/import', 'Admin\KaryawanController@format_import')->name('karyawan.format_import');
+            Route::post('karyawan/import', 'Admin\KaryawanController@import')->name('karyawan.import');
+            Route::get('karyawan/trash', 'Admin\KaryawanController@showTrash')->name('karyawan.trash');
+            Route::post('karyawan/activate', 'Admin\KaryawanController@activate')->name('karyawan.activate');
         });
     });
     // End Route User Admin

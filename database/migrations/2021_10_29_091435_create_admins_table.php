@@ -17,7 +17,7 @@ class CreateAdminsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id')->unique()->unsigned();
             $table->string('nama_lengkap', 100);
-            $table->enum('jenis_kelamin', ['L', 'P']);
+            $table->enum('jenis_kelamin', ['MALE', 'FEMALE']);
             $table->date('tanggal_lahir');
             $table->string('email', 100)->unique();
             $table->string('nomor_hp', 13)->unique();

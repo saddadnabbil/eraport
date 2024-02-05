@@ -56,5 +56,12 @@ class UsersTableSeeder extends Seeder
             'role' => '3',
             'status' => true,
         ]);
+
+        User::create([
+            'username' => 'karyawan',
+            'password' => bcrypt('123456'),
+            'role' => '2',
+            'status' => true,
+        ]);
     }
 }

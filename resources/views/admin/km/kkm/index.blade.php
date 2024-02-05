@@ -183,19 +183,13 @@
                                                     {{ $kkm->kelas->nama_kelas }}</td>
                                                 <td>{{ $kkm->kkm }}</td>
                                                 <td>
-                                                    <form action="{{ route('kkmadmin.destroy', $kkm->id) }}" method="POST">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="button" class="btn btn-warning btn-sm mt-1"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#modal-edit{{ $kkm->id }}">
-                                                            <i class="fas fa-pencil-alt"></i>
-                                                        </button>
-                                                        <button type="submit" class="btn btn-danger btn-sm mt-1"
-                                                            onclick="return confirm('Hapus {{ $title }} ?')">
-                                                            <i class="fas fa-trash-alt"></i>
-                                                        </button>
-                                                    </form>
+                                                    @include('components.actions.delete-button', [
+                                                        'route' => route('kkmadmin.destroy', $kkm->id),
+                                                        'id' => $kkm->id,
+                                                        'isPermanent' => true,
+                                                        'withEdit' => true,
+                                                        'withShow' => false,
+                                                    ])
                                                 </td>
                                             </tr>
 
@@ -205,8 +199,8 @@
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <h5 class="modal-title">Edit {{ $title }}</h5>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                                aria-hidden="true"></button>
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal" aria-hidden="true"></button>
                                                         </div>
                                                         <form action="{{ route('kkmadmin.update', $kkm->id) }}"
                                                             method="POST">
@@ -214,12 +208,14 @@
                                                             @csrf
                                                             <div class="modal-body">
                                                                 <div class="form-group row">
-                                                                    <label for="mapel_id" class="col-sm-3 col-form-label">Mata
+                                                                    <label for="mapel_id"
+                                                                        class="col-sm-3 col-form-label">Mata
                                                                         Pelajaran</label>
                                                                     <div class="col-sm-9">
                                                                         <input type="text" class="form-control"
                                                                             id="mapel_id"
-                                                                            value="{{ $kkm->mapel->nama_mapel }}" readonly>
+                                                                            value="{{ $kkm->mapel->nama_mapel }}"
+                                                                            readonly>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group row">
@@ -228,7 +224,8 @@
                                                                     <div class="col-sm-9">
                                                                         <input type="text" class="form-control"
                                                                             id="kelas_id"
-                                                                            value="{{ $kkm->kelas->nama_kelas }}" readonly>
+                                                                            value="{{ $kkm->kelas->nama_kelas }}"
+                                                                            readonly>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group row">
@@ -244,7 +241,8 @@
                                                             <div class="modal-footer justify-content-end">
                                                                 <button type="button" class="btn btn-default"
                                                                     data-bs-dismiss="modal">Batal</button>
-                                                                <button type="submit" class="btn btn-primary">Simpan</button>
+                                                                <button type="submit"
+                                                                    class="btn btn-primary">Simpan</button>
                                                             </div>
                                                         </form>
                                                     </div>

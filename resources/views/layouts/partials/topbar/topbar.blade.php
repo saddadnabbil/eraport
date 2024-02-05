@@ -88,11 +88,33 @@
                                             $shs = App\Tingkatan::where('id', 5)->first();
                                         @endphp
 
-                                        School Year {{ str_replace('-', ' / ', $tapel->tahun_pelajaran) }} - (Semester
-                                        PS
-                                        {{ $ps->semester_id . '-' . $ps->term_id }}) - (Semester JHS
-                                        {{ $jhs->semester_id . '-' . $jhs->term_id }}) - (Semester SHS
-                                        {{ $shs->semester_id . '-' . $shs->term_id }}) - Term {{ $term->id }}
+                                        @php
+                                            $tapel = App\Tapel::where('status', 1)->first();
+                                            $term = App\Term::find($tapel->term_id);
+
+                                            $pg = App\Tingkatan::where('id', 1)->first();
+                                            $kg = App\Tingkatan::where('id', 2)->first();
+                                            $ps = App\Tingkatan::where('id', 3)->first();
+                                            $jhs = App\Tingkatan::where('id', 4)->first();
+                                            $shs = App\Tingkatan::where('id', 5)->first();
+                                        @endphp
+
+                                        @if (optional($pg)->count() > 0 &&
+                                                optional($kg)->count() > 0 &&
+                                                optional($ps)->count() > 0 &&
+                                                optional($jhs)->count() > 0 &&
+                                                optional($shs)->count() > 0)
+                                            School Year {{ str_replace('-', ' / ', $tapel->tahun_pelajaran) }} -
+                                            (Semester PS
+                                            {{ optional($ps)->semester_id . '-' . optional($ps)->term_id }}) -
+                                            (Semester JHS
+                                            {{ optional($jhs)->semester_id . '-' . optional($jhs)->term_id }}) -
+                                            (Semester SHS
+                                            {{ optional($shs)->semester_id . '-' . optional($shs)->term_id }}) - Term
+                                            {{ $term->id }}
+                                        @else
+                                            No Levels Found
+                                        @endif
                                     </span>
                                 </div>
                             </a>
@@ -140,9 +162,11 @@
                             <form class="dropdown-item text-danger text-center" id="logout-form"
                                 action="{{ route('logout') }}" method="POST">
                                 @csrf
-                                
+
                                 <button type="button" onclick="confirmLogout()"
-                                    class="text-decoration-none border-0 bg-transparent btn-link text-danger"><i data-feather="log-out" class="svg-icon me-2 ms-1 feather-icon text-danger"></i>Logout</button>
+                                    class="text-decoration-none border-0 bg-transparent btn-link text-danger"><i
+                                        data-feather="log-out"
+                                        class="svg-icon me-2 ms-1 feather-icon text-danger"></i>Logout</button>
                             </form>
                         </div>
                     </li>
@@ -165,5 +189,3 @@
             }
         });
     </script>
-
-    @include('components.sweet-alert-script')

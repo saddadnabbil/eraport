@@ -37,7 +37,7 @@ class CreateSiswasTable extends Migration
             $table->date('tanggal_lahir');
             $table->string('anak_ke', 2)->nullable();
             $table->string('jml_saudara_kandung', 2)->nullable();
-            $table->string('warga_negara', 2)->nullable();
+            $table->string('warga_negara')->nullable();
             $table->string('pas_photo')->nullable();
 
             // domicile information

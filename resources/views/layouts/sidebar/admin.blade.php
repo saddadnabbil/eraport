@@ -10,7 +10,7 @@
                           </span></a>
                   </li>
                   @include('layouts.partials.sidebar.admin.user')
-
+                  @include('layouts.partials.sidebar.admin.karyawan')
 
                   @include('layouts.partials.sidebar.admin.pengumuman')
                   @include('layouts.partials.sidebar.admin.masterdata')
@@ -55,5 +55,3 @@
       </div>
       <!-- End Sidebar scroll-->
   </aside>
-
-  @include('components.sweet-alert-script')

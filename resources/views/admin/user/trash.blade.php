@@ -98,7 +98,7 @@
                                                             'id' => $user->id,
                                                             'isPermanent' => true,
                                                             'withEdit' => false,
-                                                            'withShow' => false
+                                                            'withShow' => false,
                                                         ])
                                                     </div>
                                                 </td>
@@ -121,7 +121,6 @@
 @endsection
 
 @push('custom-scripts')
-    @include('components.sweet-alert-script')    
 @endpush
 
 @section('footer')

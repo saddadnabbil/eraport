@@ -148,34 +148,41 @@ class TapelController extends Controller
                 throw new \Exception('Data Sekolah tidak ditemukan.');
             }
 
+            if (optional($pg)->count > 0) {
+                // PG dan KG
+                $data_tingkatan_pg_kg = [
+                    'term_id' => $request->select_term_playgroup_id,
+                ];
+                $pg->update($data_tingkatan_pg_kg);
+                $kg->update($data_tingkatan_pg_kg);
+            }
 
-            // PG dan KG
-            $data_tingkatan_pg_kg = [
-                'term_id' => $request->select_term_playgroup_id,
-            ];
-            $pg->update($data_tingkatan_pg_kg);
-            $kg->update($data_tingkatan_pg_kg);
+            if (optional($ps)->count > 0) {
+                // PS
+                $data_tingkatan_ps = [
+                    'term_id' => $request->select_term_primaryschool_id,
+                    'semester_id' => $request->select_semester_primaryschool_id,
+                ];
+                $ps->update($data_tingkatan_ps);
+            }
 
-            // PS
-            $data_tingkatan_ps = [
-                'term_id' => $request->select_term_primaryschool_id,
-                'semester_id' => $request->select_semester_primaryschool_id,
-            ];
-            $ps->update($data_tingkatan_ps);
+            if (optional($jhs)->count > 0) {
+                // JHS
+                $data_tingkatan_jhs = [
+                    'term_id' => $request->select_term_juniorhighschool_id,
+                    'semester_id' => $request->select_semester_juniorhighschool_id,
+                ];
+                $jhs->update($data_tingkatan_jhs);
+            }
 
-            // JHS
-            $data_tingkatan_jhs = [
-                'term_id' => $request->select_term_juniorhighschool_id,
-                'semester_id' => $request->select_semester_juniorhighschool_id,
-            ];
-            $jhs->update($data_tingkatan_jhs);
-
-            // SHS
-            $data_tingkatan_shs = [
-                'term_id' => $request->select_term_seniorhighschool_id,
-                'semester_id' => $request->select_semester_seniorhighschool_id,
-            ];
-            $shs->update($data_tingkatan_shs);
+            if (optional($shs)->count > 0) {
+                // SHS
+                $data_tingkatan_shs = [
+                    'term_id' => $request->select_term_seniorhighschool_id,
+                    'semester_id' => $request->select_semester_seniorhighschool_id,
+                ];
+                $shs->update($data_tingkatan_shs);
+            }
 
             $data_term_1 = Tingkatan::whereHas('term', function ($query) {
                 $query->where('term_id', 1);
@@ -221,7 +228,7 @@ class TapelController extends Controller
 
             $tapel->update([
                 'status' => 1,
-            ]); 
+            ]);
 
             $data_sekolah = [
                 'tapel_id' => $request->select_tapel_id,

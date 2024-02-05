@@ -26,3 +26,6 @@ flush-db:
 
 flush-db-with-seeding:
 	docker exec php /bin/sh -c "php artisan migrate:fresh --seed"
+	
+dump:
+	composer dump-autoload
