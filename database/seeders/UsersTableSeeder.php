@@ -20,21 +20,6 @@ class UsersTableSeeder extends Seeder
             'status' => true,
         ]);
 
-        // gurus
-        User::create([
-            'username' => 'not defined',
-            'password' => bcrypt('123456'),
-            'role' => '2',
-            'status' => true,
-        ]);
-
-        User::create([
-            'username' => 'notdefined2',
-            'password' => bcrypt('123456'),
-            'role' => '2',
-            'status' => true,
-        ]);
-
         // siswas
         User::create([
             'username' => 'siswa',
@@ -58,7 +43,7 @@ class UsersTableSeeder extends Seeder
         ]);
 
         User::create([
-            'username' => 'karyawan',
+            'username' => 'guru',
             'password' => bcrypt('123456'),
             'role' => '2',
             'status' => true,

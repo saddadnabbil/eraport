@@ -140,7 +140,6 @@ class KaryawanController extends Controller
                 $role = $unitRoles[$request->unit_karyawan_id];
                 $userRole = $role;
                 dd($role, $userRole);
-
             }
 
             $user = new User([
@@ -377,11 +376,12 @@ class KaryawanController extends Controller
             'keterangan' => $request->keterangan,
         ]);
 
-        // Save the Karyawan instance to the database
-        $karyawan->save();
 
         // Optionally, you can update and save any uploaded files to the model
         $this->updateUploadedFiles($request, $karyawan);
+
+        // Save the Karyawan instance to the database
+        $karyawan->save();
 
         // Redirect or return a response as needed
         return back()->with('toast_success', 'Karyawan ' . $request->nama_lengkap . ' berhasil diperbarui');

@@ -16,7 +16,7 @@ class SiswaTableSeeder extends Seeder
     public function run()
     {
         Siswa::create([
-            'user_id' => 4,
+            'user_id' => 2,
             'kelas_id' => 1,
             'tingkatan_id' => 5,
             'jurusan_id' => 1,
@@ -89,7 +89,7 @@ class SiswaTableSeeder extends Seeder
         ]);
 
         Siswa::create([
-            'user_id' => 5,
+            'user_id' => 3,
             'kelas_id' => 2,
             'tingkatan_id' => 5,
             'jurusan_id' => 1,
@@ -160,7 +160,7 @@ class SiswaTableSeeder extends Seeder
         ]);
 
         Siswa::create([
-            'user_id' => 6,
+            'user_id' => 4,
             'kelas_id' => 2,
             'jurusan_id' => 1,
             'tingkatan_id' => 5,

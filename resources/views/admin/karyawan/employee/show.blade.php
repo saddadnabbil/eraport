@@ -40,7 +40,7 @@
             {{-- data table --}}
             <!-- ./row -->
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-12 col-lg-3">
                     <!-- Profile Image -->
                     <div class="card card-primary card-outline">
                         <div class="card-body box-profile">
@@ -94,7 +94,7 @@
 
                 </div>
                 <!-- /.col -->
-                <div class="col-md-8">
+                <div class="col-md-12 col-lg-9">
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title"> Detail Karyawan</h3>
@@ -822,16 +822,15 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-3">
-                                                    @if ($karyawan->photo_kartu_identitas == null)
-                                                        <img src="{{ asset('assets/dist/img/preview.png') }}"
-                                                            alt="" id="pas_photo_preview"
-                                                            width="190px" height="144px">
+                                                    @if ($karyawan->pas_photo == null)
+                                                        <img src="{{ asset('assets/dist/img/3x4.png') }}" alt=""
+                                                            id="pas_photo_preview" width="105px" height="144px">
                                                     @else
                                                         <img class="mb-2"
                                                             src="{{ asset('storage/' . $karyawan->pas_photo) }}"
                                                             alt="{{ $karyawan->pas_photo_preview }}"
-                                                            id="pas_photo_preview" alt="pas_photo_preview"
-                                                            width="105px" height="144px">
+                                                            id="pas_photo_preview" alt="pas_photo_preview" width="105px"
+                                                            height="144px">
                                                     @endif
                                                 </div>
                                             </div>
