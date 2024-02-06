@@ -29,7 +29,7 @@ class RencanaNilaiFormatifController extends Controller
     {
         $title = 'Rencana Nilai Formatif';
         $tapel = Tapel::where('status', 1)->first();
-        $guru = Guru::where('user_id', Auth::user()->id)->first();
+        $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
 
         $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
 

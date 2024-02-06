@@ -1,5 +1,18 @@
 @include('layouts.partials.sidebar._sidebar-item', [
-    'isActive' => request()->routeIs(['sekolah.*', 'guru.*', 'siswa.*', 'tingkatan.*', 'jurusan.*', 'tapel.*', 'mapel.*', 'kkm.*', 'kelas.*', 'pembelajaran.*', 'ekstrakulikuler.*', 'admin.silabus.*']),
+    'isActive' => request()->routeIs([
+        'sekolah.*',
+        'guru.*',
+        'siswa.*',
+        'tingkatan.*',
+        'jurusan.*',
+        'tapel.*',
+        'mapel.*',
+        'kkm.*',
+        'kelas.*',
+        'pembelajaran.*',
+        'ekstrakulikuler.*',
+        'admin.silabus.*',
+    ]),
     'hasArrow' => true,
     'icon' => 'database',
     'itemName' => 'Master Data',
@@ -59,6 +72,11 @@
             'name' => 'Syllabus',
             'route' => route('admin.silabus.index'),
             'isActive' => request()->routeIs('admin.silabus.*'),
+        ],
+        [
+            'name' => 'Time Table',
+            'route' => route('jadwalpelajaran.index'),
+            'isActive' => request()->routeIs('jadwalpelajaran.*'),
         ],
     ],
 ])

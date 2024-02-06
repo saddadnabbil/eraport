@@ -136,7 +136,7 @@ class AuthController extends Controller
 
     protected function handleGuruSession()
     {
-        $guru = Guru::where('user_id', Auth::id())->first();
+        $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
 
         if ($guru && Auth::user()->role == 2) {
             $cek_wali_kelas = Kelas::where('guru_id', $guru->id)->first();
@@ -219,7 +219,7 @@ class AuthController extends Controller
     public function ganti_akses()
     {
         if (session()->get('akses_sebagai') == 'Guru Mapel') {
-            $guru = Guru::where('user_id', Auth::id())->first();
+            $guru = Guru::where('karyawan_id', Auth::id())->first();
             $cek_wali_kelas = Kelas::where('guru_id', $guru->id)->first();
             if (!is_null($cek_wali_kelas)) {
                 session()->put([

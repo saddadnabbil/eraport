@@ -50,7 +50,7 @@ class CetakRaportSemesterController extends Controller
         $tapel = Tapel::where('status', 1)->first();
         $semester = Semester::findorfail($request->semester_id);
 
-        $guru = Guru::where('user_id', Auth::user()->id)->first();
+        $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
         $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)->where('guru_id', $guru->id)->get('id');
         $id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('id');
         $kelas_id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('kelas_id');

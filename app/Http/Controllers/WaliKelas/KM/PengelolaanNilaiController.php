@@ -28,7 +28,7 @@ class PengelolaanNilaiController extends Controller
         $title = 'Hasil Pengelolaan Nilai';
         $sekolah = Sekolah::first();
         $tapel = Tapel::where('status', 1)->first();
-        $guru = Guru::where('user_id', Auth::user()->id)->first();
+        $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
         $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)->where('guru_id', $guru->id)->get('id');
         $data_pembelajaran_kelas = Pembelajaran::whereIn('kelas_id', $id_kelas_diampu)->where('status', 1)->get();
 

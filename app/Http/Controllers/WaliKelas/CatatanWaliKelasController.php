@@ -23,7 +23,7 @@ class CatatanWaliKelasController extends Controller
     {
         $title = 'Input Catatan Wali Kelas';
         $tapel = Tapel::where('status', 1)->first();
-        $guru = Guru::where('user_id', Auth::user()->id)->first();
+        $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
 
         $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)->where('guru_id', $guru->id)->get('id');
 

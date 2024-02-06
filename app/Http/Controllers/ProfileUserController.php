@@ -22,7 +22,7 @@ class ProfileUserController extends Controller
             $admin = Admin::where('user_id', Auth::user()->id)->first();
             return view('admin.profile.index', compact('title', 'admin'));
         } elseif (Auth::user()->role == 2) {
-            $guru = Guru::where('user_id', Auth::user()->id)->first();
+            $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
             return view('guru.profile.index', compact('title', 'guru'));
         } elseif (Auth::user()->role == 3) {
             $siswa = Siswa::where('user_id', Auth::user()->id)->first();

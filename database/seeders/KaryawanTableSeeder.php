@@ -15,7 +15,7 @@ class KaryawanTableSeeder extends Seeder
     public function run()
     {
         Karyawan::create([
-            'user_id' => 7,
+            'user_id' => 5,
             'status_karyawan_id' => 1,
             'unit_karyawan_id' => 2,
             'position_karyawan_id' => 1,

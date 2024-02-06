@@ -200,10 +200,10 @@ class GuruController extends Controller
     {
         try {
             $guru = Guru::withTrashed()->findOrFail($id);
-    
+
             // Restore the Guru record and related AnggotaKelas records
             $guru->restoreGuru();
-    
+
             return back()->with('toast_success', 'Guru & User berhasil direstorasi');
         } catch (\Throwable $th) {
             dd($th->getMessage());

@@ -17,7 +17,7 @@ class SekolahTableSeeder extends Seeder
             'npsn' => '0000000000',
             'kode_pos' => '62001',
             'alamat' => 'Perumahan Emerald Lake, Jl. Raya Tasikardi, Pelamunan, Kramatwatu, Serang-Banten, 42161 Kabupaten Serang, Banten.',
-            'logo' => 'default.png',
+            // 'logo' => 'logo.png',
             'nomor_telpon' => '0254-7941564',
             'email' => 'admin@gis.com',
             'kepala_sekolah' => 'IVAN SENEVIRATNE, M.ED',

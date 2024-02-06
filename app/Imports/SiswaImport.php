@@ -29,7 +29,7 @@ class SiswaImport implements ToCollection
                 'status' => true
             ]);
 
-            // dd($row);
+            dd($row);
             // Convert date values to Unix timestamp
             $tanggal_lahir = Date::excelToTimestamp($row[12]);
             $tanggal_lahir_ayah = Date::excelToTimestamp($row[30]);

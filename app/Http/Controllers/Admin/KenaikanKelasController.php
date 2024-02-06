@@ -41,7 +41,7 @@ class KenaikanKelasController extends Controller
 
 
         if ($semester->id == 2) {
-            $guru = Guru::where('user_id', Auth::user()->id)->first();
+            $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
             $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)->where('id', $request->kelas_id)->get('id');
 
             $id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('id');

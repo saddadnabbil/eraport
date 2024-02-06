@@ -42,17 +42,20 @@
                             <form action="{{ route('tapel.setAcademicYear') }}" method="POST">
                                 @csrf
                                 <div class="form-group row border-bottom">
-                                    <div class="col-6 form-inline" style="margin-bottom: 14px">
-                                        <label class="me-4 font-weight-normal" for="select_tapel_id">Tahun Pelajaran</label>
-                                        <select class="custom-select form-control" name="select_tapel_id">
-                                            {{-- <option selected>{{ $tapel_id }}</option> --}}
-                                            @foreach ($data_tapel as $tapel)
-                                                <option value="{{ $tapel->id }}"
-                                                    @if ($tapel->id == $sekolah->tapel_id) selected @endif>
-                                                    {{ $tapel->tahun_pelajaran }}
-                                                </option>
-                                            @endforeach
-                                        </select>
+                                    <div class="col-lg-5 col-md-6 form-inline" style="margin-bottom: 14px">
+                                        <label class="me-4 col-lg-6 col-md-6font-weight-normal" for="select_tapel_id">Tahun
+                                            Pelajaran</label>
+                                        <div class="col-6">
+                                            <select class="custom-select form-control" name="select_tapel_id">
+                                                {{-- <option selected>{{ $tapel_id }}</option> --}}
+                                                @foreach ($data_tapel as $tapel)
+                                                    <option value="{{ $tapel->id }}"
+                                                        @if ($tapel->id == $sekolah->tapel_id) selected @endif>
+                                                        {{ $tapel->tahun_pelajaran }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -73,38 +76,44 @@
                                         <div class="form-group row ">
                                             @if ($tingkatan->nama_tingkatan == 'Playgroup')
                                             @else
-                                                <div class="col-2 form-inline">
-                                                    <label class="me-4 font-weight-normal"
+                                                <div class="col-lg-5 col-md-6 form-inline">
+                                                    <label class="col-lg-6 col-md-6me-4 font-weight-normal"
                                                         for="select_semester_{{ str_replace(' ', '', strtolower($tingkatan->nama_tingkatan)) }}_id">Semester</label>
+                                                    <div class="col-6">
+                                                        <select class="custom-select form-control  me-3"
+                                                            name="select_semester_{{ str_replace(' ', '', strtolower($tingkatan->nama_tingkatan)) }}_id">
+                                                            @foreach ($data_semester as $semester)
+                                                                <option value="{{ $semester->id }}"
+                                                                    @if ($semester->id == $tingkatan->semester_id) selected @endif>
+                                                                    {{ $semester->semester }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            @endif
+
+                                            <div class="col-lg-5 col-md-6 form-inline">
+                                                <label class="me-4 col-lg-6 col-md-6 font-weight-normal"
+                                                    for="select_term_id">Term</label>
+                                                <div class="col-6">
                                                     <select class="custom-select form-control"
-                                                        name="select_semester_{{ str_replace(' ', '', strtolower($tingkatan->nama_tingkatan)) }}_id">
-                                                        @foreach ($data_semester as $semester)
-                                                            <option value="{{ $semester->id }}"
-                                                                @if ($semester->id == $tingkatan->semester_id) selected @endif>
-                                                                {{ $semester->semester }}
+                                                        name="select_term_{{ str_replace(' ', '', strtolower($tingkatan->nama_tingkatan)) }}_id">
+                                                        @foreach ($data_term as $term)
+                                                            <option value="{{ $term->id }}"
+                                                                @if ($term->id == $tingkatan->term_id) selected @endif>
+                                                                {{ $term->term }}
                                                             </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                            @endif
-
-                                            <div class="col-2 form-inline">
-                                                <label class="me-4 font-weight-normal" for="select_term_id">Term</label>
-                                                <select class="custom-select form-control"
-                                                    name="select_term_{{ str_replace(' ', '', strtolower($tingkatan->nama_tingkatan)) }}_id">
-                                                    @foreach ($data_term as $term)
-                                                        <option value="{{ $term->id }}"
-                                                            @if ($term->id == $tingkatan->term_id) selected @endif>
-                                                            {{ $term->term }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
                                             </div>
                                         </div>
                                     </div>
                                 @endforeach
 
-                                <div class="d-flex justify-content-end">
+                                <div class="d-flex
+                                                justify-content-end">
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
                             </form>
@@ -198,8 +207,8 @@
                                                         <div class="modal-header">
                                                             <h5 class="modal-title">Edit {{ $title }}</h5>
 
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                                aria-hidden="true"></button>
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal" aria-hidden="true"></button>
                                                             </button>
                                                         </div>
 

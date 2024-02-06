@@ -27,7 +27,7 @@ class NilaiEkstrakulikulerController extends Controller
         $title = 'Input Nilai Ekstrakulikuler';
         $tapel = Tapel::where('status', 1)->first();
 
-        $guru = Guru::where('user_id', Auth::user()->id)->first();
+        $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
         $data_ekstrakulikuler = Ekstrakulikuler::where('tapel_id', $tapel->id)->where('pembina_id', $guru->id)->orderBy('nama_ekstrakulikuler', 'ASC')->get();
 
         return view('guru.nilaiekstra.index', compact('title', 'data_ekstrakulikuler'));
@@ -50,7 +50,7 @@ class NilaiEkstrakulikulerController extends Controller
             // Data Master 
             $title = 'Input Nilai Ekstrakulikuler';
             $tapel = Tapel::where('status', 1)->first();
-            $guru = Guru::where('user_id', Auth::user()->id)->first();
+            $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
             $data_ekstrakulikuler = Ekstrakulikuler::where('tapel_id', $tapel->id)->where('pembina_id', $guru->id)->orderBy('nama_ekstrakulikuler', 'ASC')->get();
 
             $ekstrakulikuler = Ekstrakulikuler::findorfail($request->ekstrakulikuler_id);

@@ -30,7 +30,7 @@ class LegerNilaiSiswaController extends Controller
     {
         $title = 'Leger Nilai Siswa';
         $tapel = Tapel::where('status', 1)->first();
-        $guru = Guru::where('user_id', Auth::user()->id)->first();
+        $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
         $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)->where('guru_id', $guru->id)->get('id');
         $kelas = Kelas::findorfail($id_kelas_diampu)->first();
         $term = Term::findorfail($kelas->tingkatan->term_id);

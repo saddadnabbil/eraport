@@ -298,6 +298,10 @@ Route::group(['middleware' => ['auth']], function () {
             Route::resource('karyawan', 'Admin\KaryawanController', [
                 'only' => ['index', 'store', 'update', 'destroy'],
             ]);
+
+            Route::resource('jadwalpelajaran', 'Admin\JadwalPelajaranController', [
+                'only' => ['index', 'store', 'update', 'destroy'],
+            ]);
         });
     });
     // End Route User Admin

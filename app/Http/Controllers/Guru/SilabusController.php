@@ -31,7 +31,7 @@ class SilabusController extends Controller
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
 
 
-        $guru = Guru::where('user_id', Auth::user()->id)->first();
+        $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
         $id_kelas = Kelas::where('tapel_id', $tapel->id)
             ->where('guru_id', $guru->id)
             ->pluck('id');

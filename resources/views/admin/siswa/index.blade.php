@@ -171,7 +171,7 @@
                                                         <input type="file"
                                                             class="custom-file-input form-control form-control"
                                                             name="file_import" id="customFile"
-                                                            accept="application/vnd.ms-excel">
+                                                            accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
 
                                                     </div>
                                                 </div>

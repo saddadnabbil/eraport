@@ -23,7 +23,7 @@ class CapaianPembelajaranController extends Controller
     {
         $title = 'Capaian Pembajaran';
         $tapel = Tapel::where('status', 1)->first();
-        $guru = Guru::where('user_id', Auth::user()->id)->first();
+        $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
 
         $data_mapel = Mapel::where('tapel_id', $tapel->id)->orderBy('nama_mapel', 'ASC')->get();
         $id_mapel = Mapel::where('tapel_id', $tapel->id)->get('id');
@@ -62,7 +62,7 @@ class CapaianPembelajaranController extends Controller
 
             $pembelajaran_id = $request->pembelajaran_id;
             $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
-            $guru = Guru::where('user_id', Auth::user()->id)->first();
+            $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
             $data_pembelajaran = Pembelajaran::where('guru_id', $guru->id)->whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
             $mapel_id = $pembelajaran->mapel->id;
             $tingkatan_id = $pembelajaran->kelas->tingkatan->id;

@@ -485,6 +485,7 @@ class SiswaController extends Controller
             Excel::import(new SiswaImport, $request->file('file_import'));
             return back()->with('toast_success', 'Data siswa berhasil diimport');
         } catch (\Throwable $th) {
+            dd($th->getMessage());
             return back()->with('toast_error', 'Maaf, format data tidak sesuai');
         }
     }
@@ -609,9 +610,9 @@ class SiswaController extends Controller
     {
         try {
             $siswa = Siswa::withTrashed()->findOrFail($id);
-    
+
             $siswa->restoreSiswa();
-    
+
             return back()->with('toast_success', 'Siswa & User berhasil direstorasi');
         } catch (\Throwable $th) {
             dd($th->getMessage());

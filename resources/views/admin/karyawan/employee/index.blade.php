@@ -52,11 +52,6 @@
                                         <i class="fas fa-upload"></i>
                                     </button>
                                 </div>
-                                <div data-bs-toggle="tooltip" title="Export" class="d-inline-block">
-                                    <a href="{{ route('karyawan.export') }}" class="btn btn-tool btn-sm">
-                                        <i class="fas fa-download"></i>
-                                    </a>
-                                </div>
                                 <div data-bs-toggle="tooltip" title="Trash" class="d-inline-block" class="d-inline-block">
                                     <a href="{{ route('karyawan.trash') }}" class="btn btn-tool btn-sm">
                                         <i class="fas fa-trash"></i>
@@ -373,7 +368,8 @@
                                                 <label for="email" class="col-sm-3 col-form-label">Email</label>
                                                 <div class="col-sm-3">
                                                     <input type="text" class="form-control" id="email"
-                                                        name="email" placeholder="Email" value="{{ old('email') }}" required>
+                                                        name="email" placeholder="Email" value="{{ old('email') }}"
+                                                        required>
                                                 </div>
                                                 <label for="email_sekolah" class="col-sm-3 col-form-label ">Email
                                                     School</label>

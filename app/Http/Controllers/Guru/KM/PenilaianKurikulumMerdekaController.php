@@ -33,7 +33,7 @@ class PenilaianKurikulumMerdekaController extends Controller
     {
         $title = 'Penilaian Raport';
         $tapel = Tapel::where('status', 1)->first();
-        $guru = Guru::where('user_id', Auth::user()->id)->first();
+        $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
 
         $data_mapel = Mapel::where('tapel_id', $tapel->id)->orderBy('nama_mapel', 'ASC')->get();
 
@@ -75,7 +75,7 @@ class PenilaianKurikulumMerdekaController extends Controller
             $tapel = Tapel::where('status', 1)->first();
             $term = Term::findorfail($pembelajaran->kelas->tingkatan->term_id);
             $semester = Semester::findorfail($pembelajaran->kelas->tingkatan->semester_id);
-            $guru = Guru::where('user_id', Auth::user()->id)->first();
+            $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
 
             $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
             $data_pembelajaran = Pembelajaran::where('guru_id', $guru->id)->whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
