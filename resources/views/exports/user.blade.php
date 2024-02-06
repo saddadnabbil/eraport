@@ -88,7 +88,7 @@
                     <td align="center" style="border: 1px solid #000000;">{{ $no }}</td>
                     <td style="border: 1px solid #000000;">
                         @if ($pembelajaran->guru)
-                            {{ $guru->guru->nama_lengkap }}
+                            {{ $guru->guru->karyawan->nama_lengkap }}
                         @else
                             Guru not available
                         @endif
@@ -96,7 +96,7 @@
                     <td style="border: 1px solid #000000;">{{ $guru->username }}</td>
                     <td style="border: 1px solid #000000;">Guru</td>
                     <td style="border: 1px solid #000000;">
-                        @if ($guru->status == 1)
+                        @if ($guru->karyawan->status == 1)
                             Aktif
                         @else
                             Non Aktif

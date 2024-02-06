@@ -29,7 +29,7 @@
             if (Auth::user()->role == 1) {
                 $fullName = Auth::user()->admin->nama_lengkap;
             } elseif (Auth::user()->role == 2) {
-                $fullName = Auth::user()->guru->nama_lengkap;
+                $fullName = Auth::user()->guru->karyawan->nama_lengkap;
             } elseif (Auth::user()->role == 3) {
                 $fullName = Auth::user()->siswa->nama_lengkap;
             }
@@ -290,7 +290,7 @@
                               @if($riwayat_login->user->role == 1)
                               {{$riwayat_login->user->admin->nama_lengkap}}
                               @elseif($riwayat_login->user->role == 2)
-                              {{$riwayat_login->user->guru->nama_lengkap}}
+                              {{$riwayat_login->user->guru->karyawan->nama_lengkap}}
                               @elseif($riwayat_login->user->role == 3)
                               {{$riwayat_login->user->siswa->nama_lengkap}}
                               @endif

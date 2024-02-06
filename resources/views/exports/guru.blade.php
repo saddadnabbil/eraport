@@ -40,8 +40,8 @@
       <?php $no++; ?>
       <tr>
         <td align="center" style="border: 1px solid #000000;">{{ $no }}</td>
-        <td style="border: 1px solid #000000;">{{ $guru->nama_lengkap }}</td>
-        <td style="border: 1px solid #000000;">{{ $guru->gelar }}</td>
+        <td style="border: 1px solid #000000;">{{ $guru->karyawan->nama_lengkap }}</td>
+        <td style="border: 1px solid #000000;"></td>
         <td style="border: 1px solid #000000;">{{ $guru->nip }}</td>
         <td style="border: 1px solid #000000;">{{ $guru->nuptk }}</td>
         <td style="border: 1px solid #000000;">{{ $guru->tempat_lahir }}</td>

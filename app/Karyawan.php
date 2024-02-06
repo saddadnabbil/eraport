@@ -30,4 +30,33 @@ class Karyawan extends Model
     {
         return $this->belongsTo('App\User')->withTrashed();
     }
+
+    public function guru()
+    {
+        return $this->belongsTo('App\Guru')->withTrashed();
+    }
+
+
+    /**
+     * Trash the Karyawan record.
+     */
+    public function trash()
+    {
+        $this->delete();
+    }
+
+    public function restoreKaryawan()
+    {
+        $this->user()->withTrashed()->restore();
+
+        $this->restore();
+
+        $this->update([
+            'status' => 1
+        ]);
+
+        $this->user->update([
+            'status' => 1
+        ]);
+    }
 }

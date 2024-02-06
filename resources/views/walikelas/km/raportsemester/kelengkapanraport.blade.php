@@ -325,7 +325,7 @@
                         Place & Date of Birth
                     </td>
                     <td class="value">
-                        : {{ strtoupper($anggota_kelas->siswa->tempat_lahir) }}, {{strtoupper($anggota_kelas->siswa->tanggal_lahir->isoFormat('D MMMM Y'))}}
+                        : {{ strtoupper($anggota_kelas->siswa->tempat_lahir) }} {{strtoupper($anggota_kelas->siswa->tanggal_lahir->isoFormat('D MMMM Y'))}}
                     </td>
                 </tr> 
                 <tr>

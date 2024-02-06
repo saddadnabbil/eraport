@@ -23,7 +23,7 @@
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
+            cancelButtonColor: '#6c757d',
             confirmButtonText: 'Yes, Delete!',
             cancelButtonText: 'Cancel',
             timer: 5000, // 5000 milliseconds (5 seconds) delay
@@ -37,23 +37,41 @@
         });
     }
 
-    function confirmActiveAndSubmit(title, id) {
+    function confirmActive(title, id) {
         Swal.fire({
             title: 'Apakah benar ingin mengaktifkan ' + title + ' ?',
             text: 'This action cannot be undone.',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Yes, Delete!',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Yes, Activate!',
             cancelButtonText: 'Cancel',
-            timer: 5000, // 5000 milliseconds (5 seconds) delay
-            timerProgressBar: true,
-            allowOutsideClick: false // Prevent closing the modal by clicking outside
         }).then((result) => {
             if (result.isConfirmed) {
-                // If the user confirms, submit the form
-                document.getElementById('deleteForm' + id).submit();
+                // If the user confirms, trigger the form submission
+                console.log('form-active' + id)
+
+                document.getElementById('form-active' + id).submit();
+            }
+        });
+    }
+
+    function confirmNonActive(title, id) {
+        Swal.fire({
+            title: 'Apakah benar ingin menonaktifkan ' + title + ' ?',
+            text: 'This action cannot be undone.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Yes, Deactivate!',
+            cancelButtonText: 'Cancel',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // If the user confirms, trigger the form submission
+                console.log('form-non-active' + id)
+                document.getElementById('form-non-active' + id).submit();
             }
         });
     }

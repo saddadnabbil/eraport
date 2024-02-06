@@ -20,11 +20,11 @@
             'route' => route('siswa.index'),
             'isActive' => request()->routeIs('siswa.*'),
         ],
-        [
-            'name' => 'Teachers',
-            'route' => route('guru.index'),
-            'isActive' => request()->routeIs('guru.*'),
-        ],
+        // [
+        //     'name' => 'Teachers',
+        //     'route' => route('guru.index'),
+        //     'isActive' => request()->routeIs('guru.*'),
+        // ],
         [
             'name' => 'Level',
             'route' => route('tingkatan.index'),

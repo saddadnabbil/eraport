@@ -373,14 +373,14 @@
                                                 <label for="email" class="col-sm-3 col-form-label">Email</label>
                                                 <div class="col-sm-3">
                                                     <input type="text" class="form-control" id="email"
-                                                        name="email" placeholder="Email" value="{{ old('email') }}">
+                                                        name="email" placeholder="Email" value="{{ old('email') }}" required>
                                                 </div>
                                                 <label for="email_sekolah" class="col-sm-3 col-form-label ">Email
                                                     School</label>
                                                 <div class="col-sm-3">
                                                     <input type="text" class="form-control" id="email_sekolah"
                                                         name="email_sekolah" value="{{ old('email_sekolah') }}"
-                                                        placeholder="Email School" required>
+                                                        placeholder="Email School">
                                                 </div>
                                             </div>
                                             <div class="form-group row">

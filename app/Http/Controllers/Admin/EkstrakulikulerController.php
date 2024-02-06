@@ -35,7 +35,7 @@ class EkstrakulikulerController extends Controller
             $ekstrakulikuler->jumlah_anggota = $jumlah_anggota;
             $ekstrakulikuler->anggota = $anggota_ekstrakulikuler;
         }
-        $data_guru = Guru::orderBy('nama_lengkap', 'ASC')->get();
+        $data_guru = Guru::orderBy('id', 'ASC')->get();
         return view('admin.ekstrakulikuler.index', compact('title', 'data_ekstrakulikuler', 'tapel', 'data_guru'));
     }
 

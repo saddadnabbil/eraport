@@ -17,7 +17,7 @@ class KaryawanTableSeeder extends Seeder
         Karyawan::create([
             'user_id' => 7,
             'status_karyawan_id' => 1,
-            'unit_karyawan_id' => 1,
+            'unit_karyawan_id' => 2,
             'position_karyawan_id' => 1,
             'join_date' => '2022-01-01',
             'permanent_date' => '2023-01-01',

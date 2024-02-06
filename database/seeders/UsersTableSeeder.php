@@ -22,14 +22,14 @@ class UsersTableSeeder extends Seeder
 
         // gurus
         User::create([
-            'username' => 'guru',
+            'username' => 'not defined',
             'password' => bcrypt('123456'),
             'role' => '2',
             'status' => true,
         ]);
 
         User::create([
-            'username' => 'guru 2',
+            'username' => 'notdefined2',
             'password' => bcrypt('123456'),
             'role' => '2',
             'status' => true,

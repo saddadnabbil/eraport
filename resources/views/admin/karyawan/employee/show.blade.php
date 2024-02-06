@@ -245,10 +245,10 @@
                                 <div class="form-group row">
                                     <label for="jenis_kelamin" class="col-sm-3 col-form-label disabled">Gender</label>
                                     <div class="col-sm-3 pt-1">
-                                        <label class="form-check-label me-3"><input type="radio" value="Male"
+                                        <label class="form-check-label me-3"><input type="radio" value="MALE"
                                                 @if ($karyawan->jenis_kelamin == 'MALE') checked @endif disabled>
                                             Male</label>
-                                        <label class="form-check-label me-3"><input type="radio" value="Female"
+                                        <label class="form-check-label me-3"><input type="radio" value="FEMALE"
                                                 @if ($karyawan->jenis_kelamin == 'FEMALE') checked @endif disabled>
                                             Female</label>
                                     </div>
@@ -391,55 +391,55 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="photo_kartu_identitas" class="col-sm-3 col-form-label disabled">Photo
+                                    <label for="photo_kartu_identitas_show" class="col-sm-3 col-form-label disabled">Photo
                                         Identity Card</label>
                                     <div class="col-sm-3">
                                         @if ($karyawan->photo_kartu_identitas == null)
                                             <img src="{{ asset('assets/dist/img/preview.png') }}" alt=""
-                                                id="photo_kartu_identitas_preview" width="190px" height="144px">
+                                                id="photo_kartu_identitas_preview_show" width="190px" height="144px">
                                         @else
                                             <img class="mb-2"
                                                 src="{{ asset('storage/' . $karyawan->photo_kartu_identitas) }}"
-                                                alt="{{ $karyawan->photo_kartu_identitas }}" alt="photo_kartu_identitas"
-                                                width="190px" height="144px">
+                                                alt="{{ $karyawan->photo_kartu_identitas }}"
+                                                alt="photo_kartu_identitas_show" width="190px" height="144px">
                                         @endif
                                     </div>
-                                    <label for="photo_taxpayer" class="col-sm-3 col-form-label disabled">Photo
+                                    <label for="photo_taxpayer_show" class="col-sm-3 col-form-label disabled">Photo
                                         Taxpayer</label>
                                     <div class="col-sm-3">
                                         @if ($karyawan->photo_taxpayer == null)
                                             <img src="{{ asset('assets/dist/img/preview.png') }}" alt=""
-                                                id="photo_taxpayer_preview" width="190px" height="144px">
+                                                id="photo_taxpayer_preview_show" width="190px" height="144px">
                                         @else
                                             <img class="mb-2" src="{{ asset('storage/' . $karyawan->photo_taxpayer) }}"
-                                                alt="{{ $karyawan->photo_taxpayer }}" alt="photo_taxpayer"
+                                                alt="{{ $karyawan->photo_taxpayer }}" alt="photo_taxpayer_show"
                                                 width="190px" height="144px">
                                         @endif
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="photo_kk" class="col-sm-3 col-form-label disabled">Photo
+                                    <label for="photo_kk_show" class="col-sm-3 col-form-label disabled">Photo
                                         Family Card</label>
                                     <div class="col-sm-3">
                                         @if ($karyawan->photo_kk == null)
                                             <img src="{{ asset('assets/dist/img/preview.png') }}" alt=""
-                                                id="photo_kk_preview" width="190px" height="144px">
+                                                id="photo_kk_preview_show" width="190px" height="144px">
                                         @else
                                             <img class="mb-2" src="{{ asset('storage/' . $karyawan->photo_kk) }}"
-                                                alt="{{ $karyawan->photo_kk }}" alt="photo_kk" width="190px"
+                                                alt="{{ $karyawan->photo_kk }}" alt="photo_kk_show" width="190px"
                                                 height="144px">
                                         @endif
                                     </div>
 
-                                    <label for="other_document" class="col-sm-3 col-form-label disabled">
+                                    <label for="other_document_show" class="col-sm-3 col-form-label disabled">
                                         Other Document</label>
                                     <div class="col-sm-3">
                                         @if ($karyawan->other_document == null)
                                             <img src="{{ asset('assets/dist/img/preview.png') }}" alt=""
-                                                id="other_document_preview" width="190px" height="144px">
+                                                id="other_document_preview_show" width="190px" height="144px">
                                         @else
                                             <img class="mb-2" src="{{ asset('storage/' . $karyawan->other_document) }}"
-                                                alt="{{ $karyawan->other_document }}" alt="other_document"
+                                                alt="{{ $karyawan->other_document }}" alt="other_document_show"
                                                 width="190px" height="144px">
                                         @endif
                                     </div>
@@ -449,17 +449,22 @@
                             <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#modal-edit{{ $karyawan->id }}">Edit</button>
                             @if ($karyawan->status != false && $karyawan->user->status != false)
-                                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                    data-bs-target="#modal-registrasi{{ $karyawan->id }}" title="Non Active karyawan">
-                                    Non Active
-                                </button>
-                            @else
-                                <form action="{{ route('karyawan.activate') }}" method="POST"
+                                <form id="form-non-active{{ $karyawan->id }}"
+                                    action="{{ route('karyawan.nonactivate') }}" method="POST"
                                     style="display: inline-block;">
                                     @csrf
-                                    <input type="hidden" name="id" value="{{ $karyawan->id }}" disabled>
-                                    <button type="submit" class="btn btn-warning btn-sm"
-                                        onclick="confirmAndSubmit('{{ $title }}', {{ $karyawan->id }})">Activate</button>
+                                    <input type="hidden" name="id" value="{{ $karyawan->id }}">
+                                    <button type="button" class="btn btn-danger btn-sm"
+                                        onclick="confirmNonActive('{{ $title }}', {{ $karyawan->id }})">Non
+                                        Active</button>
+                                </form>
+                            @else
+                                <form id="form-active{{ $karyawan->id }}" action="{{ route('karyawan.activate') }}"
+                                    method="POST" style="display: inline-block;">
+                                    @csrf
+                                    <input type="hidden" name="id" value="{{ $karyawan->id }}">
+                                    <button type="button" class="btn btn-warning btn-sm"
+                                        onclick="confirmActive('{{ $title }}', {{ $karyawan->id }})">Activate</button>
                                 </form>
                             @endif
                         </div>
@@ -591,7 +596,7 @@
                                                 <div class="col-sm-3">
                                                     <input type="text" class="form-control" id="nomor_taxpayer"
                                                         name="nomor_taxpayer" placeholder="Taxpayer No."
-                                                        value="{{ $karyawan->nomor_taxpayer }}" required>
+                                                        value="{{ $karyawan->nomor_taxpayer }}">
                                                 </div>
                                                 <label for="nama_taxpayer" class="col-sm-3 col-form-label ">
                                                     Name of Taxpayer</label>
@@ -608,7 +613,7 @@
                                                     <input type="text" class="form-control"
                                                         id="nomor_bpjs_ketenagakerjaan" name="nomor_bpjs_ketenagakerjaan"
                                                         placeholder="No BPJS Ketenagakerjaan"
-                                                        value="{{ $karyawan->nomor_bpjs_ketenagakerjaan }}" required>
+                                                        value="{{ $karyawan->nomor_bpjs_ketenagakerjaan }}">
                                                 </div>
                                                 <label for="iuran_bpjs_ketenagakerjaan" class="col-sm-3 col-form-label ">
                                                     Iuran BPJS Ketenagakerjaan</label>
@@ -626,7 +631,7 @@
                                                     <input type="text" class="form-control" id="nomor_bpjs_yayasan"
                                                         name="nomor_bpjs_yayasan"
                                                         placeholder="No BPJS Kesehatan (Yayasan)"
-                                                        value="{{ $karyawan->nomor_bpjs_yayasan }}" required>
+                                                        value="{{ $karyawan->nomor_bpjs_yayasan }}">
                                                 </div>
                                                 <label for="nomor_bpjs_pribadi" class="col-sm-3 col-form-label ">
                                                     No BPJS Kesehatan (Pribadi)</label>
@@ -638,15 +643,14 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="jenis_kelamin"
-                                                    class="col-sm-3 col-form-label required">Gender</label>
+                                                <label for="jenis_kelamin" class="col-sm-3 col-form-label">Gender</label>
                                                 <div class="col-sm-3 pt-1">
                                                     <label class="form-check-label me-3"><input type="radio"
-                                                            value="Male"
+                                                            value="MALE" name="jenis_kelamin"
                                                             @if ($karyawan->jenis_kelamin == 'MALE') checked @endif>
                                                         Male</label>
                                                     <label class="form-check-label me-3"><input type="radio"
-                                                            value="Female"
+                                                            value="FEMALE" name="jenis_kelamin"
                                                             @if ($karyawan->jenis_kelamin == 'FEMALE') checked @endif>
                                                         Female</label>
                                                 </div>
@@ -707,7 +711,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="alamat_sekarang" class="col-sm-3 col-form-label required">
+                                                <label for="alamat_sekarang" class="col-sm-3 col-form-label">
                                                     Current
                                                     Address</label>
                                                 <div class="col-sm-9">
@@ -728,17 +732,17 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="nomor_phone" class="col-sm-3 col-form-label">Phone</label>
-                                                <div class="col-sm-3">
-                                                    <input type="text" class="form-control" id="nomor_phone"
-                                                        name="nomor_phone" placeholder="Phone"
-                                                        value="{{ $karyawan->nomor_phone }}">
-                                                </div>
                                                 <label for="nomor_hp" class="col-sm-3 col-form-label ">Handphone</label>
                                                 <div class="col-sm-3">
                                                     <input type="text" class="form-control" id="nomor_hp"
                                                         name="nomor_hp" value="{{ $karyawan->nomor_hp }}"
                                                         placeholder="Handphone" required>
+                                                </div>
+                                                <label for="nomor_phone" class="col-sm-3 col-form-label">Phone</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control" id="nomor_phone"
+                                                        name="nomor_phone" placeholder="Phone"
+                                                        value="{{ $karyawan->nomor_phone }}">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -746,14 +750,14 @@
                                                 <div class="col-sm-3">
                                                     <input type="text" class="form-control" id="email"
                                                         name="email" placeholder="Email"
-                                                        value="{{ $karyawan->email }}">
+                                                        value="{{ $karyawan->email }}" required>
                                                 </div>
                                                 <label for="email_sekolah" class="col-sm-3 col-form-label ">Email
                                                     School</label>
                                                 <div class="col-sm-3">
                                                     <input type="text" class="form-control" id="email_sekolah"
                                                         name="email_sekolah" value="{{ $karyawan->email_sekolah }}"
-                                                        placeholder="Email School" required>
+                                                        placeholder="Email School">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -818,8 +822,17 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-3">
-                                                    <img src="{{ asset('assets/dist/img/3x4.png') }}" alt=""
-                                                        id="pas_photo_preview" width="105px" height="144px">
+                                                    @if ($karyawan->photo_kartu_identitas == null)
+                                                        <img src="{{ asset('assets/dist/img/preview.png') }}"
+                                                            alt="" id="pas_photo_preview"
+                                                            width="190px" height="144px">
+                                                    @else
+                                                        <img class="mb-2"
+                                                            src="{{ asset('storage/' . $karyawan->pas_photo) }}"
+                                                            alt="{{ $karyawan->pas_photo_preview }}"
+                                                            id="pas_photo_preview" alt="pas_photo_preview"
+                                                            width="105px" height="144px">
+                                                    @endif
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -844,7 +857,8 @@
                                                         <img class="mb-2"
                                                             src="{{ asset('storage/' . $karyawan->photo_kartu_identitas) }}"
                                                             alt="{{ $karyawan->photo_kartu_identitas }}"
-                                                            alt="photo_kartu_identitas" width="190px" height="144px">
+                                                            id="photo_kartu_identitas_preview" alt="photo_kartu_identitas"
+                                                            width="190px" height="144px">
                                                     @endif
                                                 </div>
                                             </div>
@@ -868,8 +882,8 @@
                                                     @else
                                                         <img class="mb-2"
                                                             src="{{ asset('storage/' . $karyawan->photo_taxpayer) }}"
-                                                            alt="{{ $karyawan->photo_taxpayer }}" alt="photo_taxpayer"
-                                                            width="190px" height="144px">
+                                                            alt="{{ $karyawan->photo_taxpayer }}"
+                                                            id="photo_taxpayer_preview" width="190px" height="144px">
                                                     @endif
                                                 </div>
                                             </div>
@@ -893,7 +907,7 @@
                                                     @else
                                                         <img class="mb-2"
                                                             src="{{ asset('storage/' . $karyawan->photo_kk) }}"
-                                                            alt="{{ $karyawan->photo_kk }}" alt="photo_kk"
+                                                            alt="{{ $karyawan->photo_kk }}" id="photo_kk_preview"
                                                             width="190px" height="144px">
                                                     @endif
                                                 </div>
@@ -919,10 +933,15 @@
                                                     @else
                                                         <img class="mb-2"
                                                             src="{{ asset('storage/' . $karyawan->other_document) }}"
-                                                            alt="{{ $karyawan->other_document }}" alt="other_document"
-                                                            width="190px" height="144px">
+                                                            alt="{{ $karyawan->other_document }}"
+                                                            id="other_document_preview" width="190px" height="144px">
                                                     @endif
                                                 </div>
+                                            </div>
+                                            <div class="modal-footer justify-content-end">
+                                                <button type="button" class="btn btn-default"
+                                                    data-bs-dismiss="modal">Batal</button>
+                                                <button type="submit" class="btn btn-primary">Simpan</button>
                                             </div>
                                         </div>
                                 </div>
@@ -935,8 +954,80 @@
                 </div>
                 <!--/. container-fluid -->
             </div>
-        @endsection
+        </div>
+    </div>
+@endsection
 
-        @section('footer')
-            @include('layouts.main.footer')
-        @endsection
+@push('custom-scripts')
+    <!-- pas_photo preview-->
+    <script>
+        function readURLPasPhoto(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $('#pas_photo_preview')
+                        .attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function readURLKartuIdentitas(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $('#photo_kartu_identitas_preview')
+                        .attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function readURLTaxpayer(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $('#photo_taxpayer_preview')
+                        .attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function readURLKK(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $('#photo_kk_preview')
+                        .attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function readURLOtherDocument(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $('#other_document_preview')
+                        .attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+@endpush
+
+@section('footer')
+    @include('layouts.main.footer')
+@endsection

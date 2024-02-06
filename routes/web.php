@@ -14,6 +14,7 @@ use App\Http\Controllers\PdfController;
 |
 */
 
+// Your custom unauthorized page
 Route::get('/unauthorized', function () {
     $title = 'Unauthorized';
     return view('errorpage.401', compact('title'));
@@ -22,16 +23,16 @@ Route::get('/unauthorized', function () {
 // Rute Fallback untuk 404
 Route::fallback(function () {
     $title = 'Page Not Found';
-
     return view('errorpage.404', compact('title'));
 });
 
-Route::get('/', 'AuthController@index')->name('login.get')->middleware('guest');
+Route::get('/', 'AuthController@index')
+    ->name('login.get')
+    ->middleware('guest');
 Route::post('/', 'AuthController@store')->name('login');
 Route::post('/settingtapel', 'AuthController@setting_tapel')->name('setting.tapel');
 
 Route::group(['middleware' => ['auth']], function () {
-
     Route::get('/logout', 'AuthController@redirect')->name('logout.redirect');
 
     Route::post('/logout', 'AuthController@logout')->name('logout');
@@ -282,14 +283,21 @@ Route::group(['middleware' => ['auth']], function () {
             Route::resource('positionkaryawan', 'Admin\PositionKaryawanController', [
                 'uses' => ['index', 'update', 'destroy'],
             ]);
-            Route::resource('karyawan', 'Admin\KaryawanController', [
-                'uses' => ['index', 'update', 'show', 'destroy'],
-            ]);
+
             Route::get('karyawan/export', 'Admin\KaryawanController@export')->name('karyawan.export');
             Route::get('karyawan/import', 'Admin\KaryawanController@format_import')->name('karyawan.format_import');
             Route::post('karyawan/import', 'Admin\KaryawanController@import')->name('karyawan.import');
             Route::get('karyawan/trash', 'Admin\KaryawanController@showTrash')->name('karyawan.trash');
+            Route::delete('karyawan/{id}/permanent-delete', 'Admin\KaryawanController@destroyPermanent')->name('karyawan.permanent-delete');
+            Route::post('karyawan/{id}/restore', 'Admin\KaryawanController@restore')->name('karyawan.restore');
             Route::post('karyawan/activate', 'Admin\KaryawanController@activate')->name('karyawan.activate');
+            Route::post('karyawan/nonactivate', 'Admin\KaryawanController@nonActivate')->name('karyawan.nonactivate');
+
+            Route::get('karyawan/{id}', 'Admin\KaryawanController@show')->name('karyawan.show');
+
+            Route::resource('karyawan', 'Admin\KaryawanController', [
+                'only' => ['index', 'store', 'update', 'destroy'],
+            ]);
         });
     });
     // End Route User Admin

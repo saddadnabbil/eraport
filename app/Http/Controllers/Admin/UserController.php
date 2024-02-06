@@ -122,19 +122,12 @@ class UserController extends Controller
             }
 
             if (!is_null($user->guru)) {
-                $user->guru->update([
-                    'status' => 0
-                ]);
                 $user->guru->delete();
             } 
             
             if (!is_null($user->admin)) {
-                $user->guru->update([
-                    'status' => 0
-                ]);
                 $user->admin->delete();
             }
-            
 
             $user->update([
                 'status' => 0
@@ -192,6 +185,7 @@ class UserController extends Controller
     
             return back()->with('toast_success', 'User berhasil direstore');
         } catch (\Throwable $th) {
+            dd($th->getMessage());
             return back()->with('toast_error', 'Terjadi kesalahan saat merestorasi user.');
         }
     }

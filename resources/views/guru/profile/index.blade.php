@@ -44,7 +44,7 @@
                                     style="border: none">
                             </div>
 
-                            <h3 class="profile-username text-center">{{ $guru->nama_lengkap }}, {{ $guru->gelar }}</h3>
+                            <h3 class="profile-username text-center">{{ $guru->karyawan->nama_lengkap }} </h3>
 
                             <p class="text-muted text-center">Guru</p>
 
@@ -80,14 +80,14 @@
                                     <label class="col-sm-2 col-form-label">Nama Lengkap</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" name="nama_lengkap"
-                                            value="{{ $guru->nama_lengkap }}">
+                                            value="{{ $guru->karyawan->nama_lengkap }}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">Gelar</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" name="gelar"
-                                            value="{{ $guru->gelar }}">
+                                            value="">
                                     </div>
                                 </div>
                                 <div class="form-group row">

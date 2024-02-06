@@ -105,15 +105,9 @@ class User extends Authenticatable
         switch ($this->role) {
             case 1:
                 $this->admin()->withTrashed()->restore();
-                $this->admin()->update([
-                    'status' => 1
-                ]);
                 break;
             case 2:
                 $this->guru()->withTrashed()->restore();
-                $this->guru()->update([
-                    'status' => 1
-                ]);
                 break;
             case 3:
                 $this->siswa()->withTrashed()->restore();

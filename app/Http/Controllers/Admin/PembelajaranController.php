@@ -48,7 +48,7 @@ class PembelajaranController extends Controller
         $data_pembelajaran_kelas = Pembelajaran::where('kelas_id', $request->kelas_id)->get();
         $mapel_id_pembelajaran_kelas = Pembelajaran::where('kelas_id', $request->kelas_id)->get('mapel_id');
         $data_mapel = Mapel::whereNotIn('id', $mapel_id_pembelajaran_kelas)->get();
-        $data_guru = Guru::orderBy('nama_lengkap', 'ASC')->get();
+        $data_guru = Guru::orderBy('id', 'ASC')->get();
         return view('admin.pembelajaran.settings', compact('title', 'tapel', 'kelas', 'data_kelas', 'data_pembelajaran_kelas', 'data_mapel', 'data_guru'));
     }
 

@@ -11,21 +11,12 @@ class Guru extends Model
 
     protected $table = 'guru';
     protected $fillable = [
-        'user_id',
-        'nama_lengkap',
-        'gelar',
-        'nip',
-        'jenis_kelamin',
-        'tempat_lahir',
-        'tanggal_lahir',
-        'nuptk',
-        'alamat',
-        'avatar',
+        'karyawan_id'
     ];
 
-    public function user()
+    public function karyawan()
     {
-        return $this->belongsTo('App\User')->withTrashed();
+        return $this->belongsTo('App\Karyawan')->withTrashed();
     }
 
     public function kelas()
@@ -52,14 +43,10 @@ class Guru extends Model
     }
     public function restoreGuru()
     {
-        $this->user()->withTrashed()->restore();
+        $this->karyawan()->withTrashed()->restore();
         $this->restore();
 
-        $this->update([
-            'status' => 1
-        ]);
-
-        $this->user->update([
+        $this->karyawan->update([
             'status' => 1
         ]);
     }

@@ -38,7 +38,7 @@ class PembelajaranTableSeeder extends Seeder
         Pembelajaran::create([
             'kelas_id' => 2,
             'mapel_id' => 1,
-            'guru_id' => 2,
+            'guru_id' => 1,
             'status' => true
         ]);
     }

@@ -80,7 +80,7 @@
                                             <tr>
                                                 <td class="text-center">{{ $no }}</td>
                                                 <td>{{ $anggota_ekstra->ekstrakulikuler->nama_ekstrakulikuler }}</td>
-                                                <td>{{ $anggota_ekstra->ekstrakulikuler->pembina->nama_lengkap }},
+                                                <td>{{ $anggota_ekstra->ekstrakulikuler->pembina->nama_lengkap }}
                                                     {{ $anggota_ekstra->ekstrakulikuler->pembina->gelar }}</td>
                                                 @if (!is_null($anggota_ekstra->nilai))
                                                     <td class="text-center">

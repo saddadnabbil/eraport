@@ -87,6 +87,10 @@ class DatabaseSeeder extends Seeder
             TingkatanTableSeeder::class,
             GlobalUsersTableSeeder::class,
             AdminTableSeeder::class,
+            StatusKaryawanTableSeeder::class,
+            UnitKaryawanTableSeeder::class,
+            PositionKaryawanTableSeeder::class,
+            KaryawanTableSeeder::class,
             GuruTableSeeder::class,
             KelasTableSeeder::class,
             SiswaTableSeeder::class,
@@ -131,12 +135,6 @@ class DatabaseSeeder extends Seeder
             KmNilaiAkhirTableSeeder::class,
             KmMappingMapelTableSeeder::class,
             KmTglRaportTableSeeder::class,
-
-            // Karyawan
-            StatusKaryawanTableSeeder::class,
-            UnitKaryawanTableSeeder::class,
-            PositionKaryawanTableSeeder::class,
-            KaryawanTableSeeder::class,
         ]);
     }
 }

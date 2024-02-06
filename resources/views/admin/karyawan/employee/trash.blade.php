@@ -17,8 +17,13 @@
                     'active' => true,
                 ],
                 [
+                    'title' => 'Data Karyawan',
+                    'url' => route('karyawan.index'),
+                    'active' => true,
+                ],
+                [
                     'title' => $title,
-                    'url' => route('user.index'),
+                    'url' => route('karyawan.index'),
                     'active' => false,
                 ],
             ],
@@ -44,42 +49,46 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Nama Lengkap</th>
-                                            <th>NIP</th>
-                                            <th>NUPTK</th>
-                                            <th>Tempat Lahir</th>
-                                            <th>Jenis Kelamin</th>
-                                            <th>Aksi</th>
+                                            <th>Employee Code</th>
+                                            <th>Employee Name</th>
+                                            <th>Sex</th>
+                                            <th>Status Employee</th>
+                                            <th>Unit</th>
+                                            <th>Position</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php $no = 0; ?>
-                                        @foreach ($guruTrashed as $guru)
+                                        @foreach ($karyawanTrashed as $karyawan)
                                             <?php $no++; ?>
                                             <tr>
                                                 <td>{{ $no }}</td>
-                                                <td>{{ $guru->karyawan->nama_lengkap }} </td>
-                                                <td>{{ $guru->nip }}</td>
-                                                <td>{{ $guru->nuptk }}</td>
-                                                <td>{{ $guru->tempat_lahir }}</td>
+                                                <td>{{ $karyawan->kode_karyawan }}</td>
+                                                <td>{{ $karyawan->nama_lengkap }}</td>
+                                                <td>{{ $karyawan->jenis_kelamin }}</td>
+                                                <td>{{ $karyawan->statusKaryawan->status_nama }}</td>
+                                                <td>{{ $karyawan->unitKaryawan->unit_nama }}</td>
+                                                <td>{{ $karyawan->positionKaryawan->position_nama }}</td>
                                                 <td>
-                                                    @if ($guru->jenis_kelamin == 'L')
-                                                        Male
+                                                    @if ($karyawan->status == true)
+                                                        <span class="badge bg-success">Aktif</span>
                                                     @else
-                                                        Female
+                                                        <span class="badge bg-danger">Non Aktif</span>
                                                     @endif
                                                 </td>
                                                 <td class="text-center">
                                                     <div class="d-flex gap-2">
                                                         @include('components.actions.restore-button', [
-                                                            'route' => route('guru.restore', $guru->id),
-                                                            'id' => $guru->id,
-                                                            'method' => 'PATCH',
+                                                            'route' => route('karyawan.restore', $karyawan->id),
+                                                            'id' => $karyawan->id,
+                                                            'method' => 'POST'
                                                         ])
                                                         @include('components.actions.delete-button', [
-                                                            'route' => route('guru.permanent-delete', $guru->id),
-                                                            'id' => $guru->id,
-                                                            'isPermanent' => true,
+                                                            'route' => route('karyawan.permanent-delete', $karyawan->id),
+                                                            'id' => $karyawan->id,
+                                                            'isPermanent' => false,
                                                             'withEdit' => false,
                                                             'withShow' => false,
                                                         ])

@@ -54,7 +54,7 @@ class KelasController extends Controller
                 $kelas->jumlah_anggota = $jumlah_anggota;
             }
 
-            $data_guru = Guru::orderBy('nama_lengkap', 'ASC')->get();
+            $data_guru = Guru::orderBy('id', 'ASC')->get();
             $data_tingkatan = Tingkatan::orderBy('id', 'ASC')->get();
             $data_jurusan = Jurusan::orderBy('id', 'ASC')->get();
 

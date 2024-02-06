@@ -95,7 +95,7 @@
                                                 <td>{{ $pembelajaran->mapel->nama_mapel }}</td>
                                                 <td>
                                                     @if ($pembelajaran->guru)
-                                                        {{ $pembelajaran->guru->nama_lengkap }}
+                                                        {{ $pembelajaran->guru->karyawan->nama_lengkap }}
                                                     @else
                                                         Guru not available
                                                     @endif

@@ -13,7 +13,7 @@ class GuruExport implements FromView, ShouldAutoSize
     {
         $time_download = date('Y-m-d H:i:s');
 
-        $data_guru = Guru::orderBy('nama_lengkap', 'ASC')->get();
+        $data_guru = Guru::orderBy('id', 'ASC')->get();
 
         return view('exports.guru', compact('time_download', 'data_guru'));
     }

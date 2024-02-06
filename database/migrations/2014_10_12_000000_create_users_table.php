@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('username')->unique();
             $table->string('password');
-            $table->enum('role', ['1', '2', '3']);
+            $table->enum('role', ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11']);
             $table->boolean('status');
             $table->rememberToken();
             $table->timestamps();
@@ -25,9 +25,19 @@ class CreateUsersTable extends Migration
         });
 
         // Role 
+        // 0 = Super Admin
         // 1 = Admin 
         // 2 = Guru 
         // 3 = Siswa
+        // 4 = Curriculum
+        // 5 = HRD / Personel
+        // 6 = Finance
+        // 7 = Librarian
+        // 8 = Admision / PSB Online
+        // 9 = GA Inventory
+        // 10 = Counter
+        // 11 = Sales
+
 
         // Status 
         // true = Aktif 

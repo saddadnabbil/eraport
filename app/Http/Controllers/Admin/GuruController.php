@@ -22,7 +22,7 @@ class GuruController extends Controller
     public function index()
     {
         $title = 'Data Guru';
-        $data_guru = Guru::orderBy('nama_lengkap', 'ASC')->get();
+        $data_guru = Guru::orderBy('id', 'ASC')->get();
         return view('admin.guru.index', compact('title', 'data_guru'));
     }
 

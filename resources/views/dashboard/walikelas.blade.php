@@ -246,7 +246,7 @@
                                                 @if ($riwayat_login->user->role == 1)
                                                     {{ $riwayat_login->user->admin->nama_lengkap }}
                                                 @elseif($riwayat_login->user->role == 2)
-                                                    {{ $riwayat_login->user->guru->nama_lengkap }}
+                                                    {{ $riwayat_login->user->guru->karyawan->nama_lengkap }}
                                                 @elseif($riwayat_login->user->role == 3)
                                                     {{ $riwayat_login->user->siswa->nama_lengkap }}
                                                 @endif

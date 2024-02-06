@@ -15,20 +15,12 @@ class CreateGurusTable extends Migration
     {
         Schema::create('guru', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id')->unique()->unsigned();
-            $table->string('nama_lengkap', 100);
-            $table->string('gelar', 10)->nullable();
-            $table->string('nip', 18)->unique()->nullable();
-            $table->enum('jenis_kelamin', ['MALE', 'FEMALE']);
-            $table->string('tempat_lahir', 30);
-            $table->date('tanggal_lahir');
-            $table->string('nuptk', 16)->unique()->nullable();
-            $table->string('alamat', 100);
-            $table->string('avatar');
+            $table->unsignedBigInteger('karyawan_id')->unique()->unsigned();
+
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('user_id')->references('id')->on('user')->onDelete('cascade');
+            $table->foreign('karyawan_id')->references('id')->on('karyawans')->onDelete('cascade');
         });
     }
 

@@ -210,7 +210,6 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Nama Lengkap</th>
-                                            <th>NIP</th>
                                             <th>NUPTK</th>
                                             <th>Tempat Lahir</th>
                                             <th>Jenis Kelamin</th>
@@ -223,7 +222,7 @@
                                             <?php $no++; ?>
                                             <tr>
                                                 <td>{{ $no }}</td>
-                                                <td>{{ $guru->nama_lengkap }}, {{ $guru->gelar }}</td>
+                                                <td>{{ $guru->karyawan->nama_lengkap }} </td>
                                                 <td>{{ $guru->nip }}</td>
                                                 <td>{{ $guru->nuptk }}</td>
                                                 <td>{{ $guru->tempat_lahir }}</td>
@@ -266,7 +265,7 @@
                                                                     <div class="col-sm-9">
                                                                         <input type="text" class="form-control"
                                                                             id="nama_lengkap" name="nama_lengkap"
-                                                                            value="{{ $guru->nama_lengkap }}" readonly>
+                                                                            value="{{ $guru->karyawan->nama_lengkap }}" readonly>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group row">
@@ -275,7 +274,7 @@
                                                                     <div class="col-sm-9">
                                                                         <input type="text" class="form-control"
                                                                             id="gelar" name="gelar"
-                                                                            value="{{ $guru->gelar }}">
+                                                                            value="">
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group row">

@@ -90,6 +90,7 @@
                                                                 'id' => $user->id,
                                                             ]),
                                                             'id' => $user->id,
+                                                            'method' => 'PATCH',
                                                         ])
                                                         @include('components.actions.delete-button', [
                                                             'route' => route('user.permanent-delete', [

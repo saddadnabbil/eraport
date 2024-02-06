@@ -53,7 +53,7 @@
                     <td style="border: 1px solid #000000;">{{ $pembelajaran->mapel->nama_mapel }}</td>
                     <td style="border: 1px solid #000000;">
                         @if ($pembelajaran->guru)
-                            {{ $pembelajaran->guru->nama_lengkap }}, {{ $pembelajaran->guru->gelar }}
+                            {{ $pembelajaran->guru->karyawan->nama_lengkap }} {{ $pembelajaran->guru->gelar }}
                         @else
                             Guru not available
                         @endif

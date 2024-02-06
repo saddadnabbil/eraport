@@ -87,8 +87,8 @@
                                                         style="width: 100%;" required>
                                                         <option value="">-- Pilih Pembina --</option>
                                                         @foreach ($data_guru as $guru)
-                                                            <option value="{{ $guru->id }}">{{ $guru->nama_lengkap }},
-                                                                {{ $guru->gelar }}</option>
+                                                            <option value="{{ $guru->id }}">{{ $guru->karyawan->nama_lengkap }}
+                                                                </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -132,7 +132,7 @@
                                                     @endif
                                                 </td>
                                                 <td>{{ $ekstrakulikuler->nama_ekstrakulikuler }}</td>
-                                                <td>{{ $ekstrakulikuler->pembina->nama_lengkap }},
+                                                <td>{{ $ekstrakulikuler->pembina->nama_lengkap }}
                                                     {{ $ekstrakulikuler->pembina->gelar }}</td>
                                                 <td>
                                                     <a href="{{ route('ekstrakulikuler.show', $ekstrakulikuler->id) }}"
@@ -199,8 +199,8 @@
                                                                             @foreach ($data_guru as $guru)
                                                                                 <option value="{{ $guru->id }}"
                                                                                     @if ($guru->id == $ekstrakulikuler->pembina->id) selected @endif>
-                                                                                    {{ $guru->nama_lengkap }},
-                                                                                    {{ $guru->gelar }}
+                                                                                    {{ $guru->karyawan->nama_lengkap }}
+                                                                                    
                                                                                 </option>
                                                                             @endforeach
                                                                         </select>

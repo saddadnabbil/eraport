@@ -96,6 +96,7 @@
                                                                 'id' => $siswa->id,
                                                             ]),
                                                             'id' => $siswa->id,
+                                                            'method' => 'PATCH',
                                                         ])
                                                         @include('components.actions.delete-button', [
                                                             'route' => route('siswa.permanent-delete', [

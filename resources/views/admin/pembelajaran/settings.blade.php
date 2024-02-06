@@ -108,7 +108,7 @@
                                                             @foreach ($data_guru as $guru)
                                                                 <option value="{{ $guru->id }}"
                                                                     @if ($pembelajaran->guru && $pembelajaran->guru->id == $guru->id) selected @endif>
-                                                                    {{ $guru->nama_lengkap }}, {{ $guru->gelar }}
+                                                                    {{ $guru->karyawan->nama_lengkap }} 
                                                                 </option>
                                                             @endforeach
                                                         </select>
@@ -149,7 +149,7 @@
                                                             <option value="">-- Pilih Guru -- </option>
                                                             @foreach ($data_guru as $guru)
                                                                 <option value="{{ $guru->id }}">
-                                                                    {{ $guru->nama_lengkap }}, {{ $guru->gelar }}
+                                                                    {{ $guru->karyawan->nama_lengkap }} 
                                                                 </option>
                                                             @endforeach
                                                         </select>

@@ -135,7 +135,7 @@
                                     @if (Auth::user()->role == 1)
                                         {{ Auth::user()->admin->nama_lengkap }}
                                     @elseif(Auth::user()->role == 2)
-                                        {{ Auth::user()->guru->nama_lengkap }}
+                                        {{ Auth::user()->guru->karyawan->nama_lengkap }}
                                     @elseif(Auth::user()->role == 3)
                                         {{ Auth::user()->siswa->nama_lengkap }}
                                     @endif
