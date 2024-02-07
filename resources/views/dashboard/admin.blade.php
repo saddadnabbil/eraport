@@ -266,66 +266,68 @@
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6">
-                  <!-- PRODUCT LIST -->
-                  <div class="card">
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                    <h4 class="card-title">Riwayat Login</h4>
-                    <ul class="products-list product-list-in-card">
-                        @foreach($data_riwayat_login as $riwayat_login)
-                        <li class="item">
-        
-                          <div class="product-img">
-                            @if($riwayat_login->user->role == 1)
-                            <img src="assets/dist/img/avatar/{{$riwayat_login->user->admin->avatar}}" alt="Avatar" class="img-size-50">
-                            @elseif($riwayat_login->user->role == 2)
-                            <img src="assets/dist/img/avatar/{{$riwayat_login->user->karyawan->avatar}}" alt="Avatar" class="img-size-50">
-                            @elseif($riwayat_login->user->role == 3)
-                            <img src="assets/dist/img/avatar/{{$riwayat_login->user->siswa->avatar}}" alt="Avatar" class="img-size-50">
-                            @endif
-                          </div>
-        
-                          <div class="product-info">
-                            <a href="javascript:void(0)" class="product-title">
-                              @if($riwayat_login->user->role == 1)
-                              {{$riwayat_login->user->admin->nama_lengkap}}
-                              @elseif($riwayat_login->user->role == 2)
-                              {{$riwayat_login->user->karyawan->nama_lengkap}}
-                              @elseif($riwayat_login->user->role == 3)
-                              {{$riwayat_login->user->siswa->nama_lengkap}}
-                              @endif
-        
-                              @if($riwayat_login->status_login == true)
-                              <span class="badge bg-success float-right">Online</span>
-                              @else
-                              <span class="badge bg-warning float-right">Offline</span>
-                              @endif
-        
-                            </a>
-        
-                            <span class="product-description">
-                              @if($riwayat_login->user->role == 1)
-                              Administrator
-                              @elseif($riwayat_login->user->role == 2)
-                              Guru
-                              @elseif($riwayat_login->user->role == 3)
-                              Siswa
-                              @endif
-        
-                              @if($riwayat_login->status_login == false)
-                                <span class="time float-right"><i class="far fa-clock"></i> {{$riwayat_login->updated_at->diffForHumans()}}</span>
-                              @endif
-                            </span>
-                          </div>
-                        </li>
-                        <!-- /.item -->
-                        @endforeach
-                      </ul>
+                    <!-- PRODUCT LIST -->
+                    <div class="card">
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <h4 class="card-title">Riwayat Login</h4>
+                            <ul class="products-list product-list-in-card">
+                                @foreach ($data_riwayat_login as $riwayat_login)
+                                    <li class="item">
+                                        <div class="product-img">
+                                            @if ($riwayat_login->user->role == 1)
+                                                <img src="assets/dist/img/avatar/{{ $riwayat_login->user->admin->avatar }}"
+                                                    alt="Avatar" class="img-size-50">
+                                            @elseif($riwayat_login->user->role == 2)
+                                                <img src="assets/dist/img/avatar/{{ $riwayat_login->user->karyawan->avatar }}"
+                                                    alt="Avatar" class="img-size-50">
+                                            @elseif($riwayat_login->user->role == 3)
+                                                <img src="assets/dist/img/avatar/{{ $riwayat_login->user->siswa->avatar }}"
+                                                    alt="Avatar" class="img-size-50">
+                                            @endif
+                                        </div>
+
+                                        <div class="product-info">
+                                            <a href="javascript:void(0)" class="product-title">
+                                                @if ($riwayat_login->user->role == 1)
+                                                    {{ $riwayat_login->user->admin->nama_lengkap }}
+                                                @elseif($riwayat_login->user->role == 2)
+                                                    {{ $riwayat_login->user->karyawan->nama_lengkap }}
+                                                @elseif($riwayat_login->user->role == 3)
+                                                    {{ $riwayat_login->user->siswa->nama_lengkap }}
+                                                @endif
+
+                                                @if ($riwayat_login->status_login == true)
+                                                    <span class="badge bg-success float-right">Online</span>
+                                                @else
+                                                    <span class="badge bg-warning float-right">Offline</span>
+                                                @endif
+                                            </a>
+                                            <span class="product-description">
+                                                @if ($riwayat_login->user->role == 1)
+                                                    Administrator
+                                                @elseif($riwayat_login->user->role == 2)
+                                                    Guru
+                                                @elseif($riwayat_login->user->role == 3)
+                                                    Siswa
+                                                @endif
+
+                                                @if ($riwayat_login->status_login == false)
+                                                    <span class="time float-right"><i class="far fa-clock"></i>
+                                                        {{ $riwayat_login->updated_at->diffForHumans() }}</span>
+                                                @endif
+                                            </span>
+                                        </div>
+                                    </li>
+                                    <hr>
+                                    <!-- /.item -->
+                                @endforeach
+                            </ul>
+                        </div>
+                        <!-- /.card-body -->
+
                     </div>
-                    <!-- /.card-body -->
-        
-                  </div>
-                  <!-- /.card -->
+                    <!-- /.card -->
                 </div>
             </div>
             <!-- *************************************************************** -->

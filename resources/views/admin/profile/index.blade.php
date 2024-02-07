@@ -39,7 +39,8 @@
                         <div class="card-body box-profile">
                             <div class="text-center">
                                 <img class="profile-user-img img-fluid img-circle"
-                                    src="/assets/dist/img/avatar/{{ Auth::user()->admin->avatar }}" alt="Avatar">
+                                    src="/assets/dist/img/avatar/{{ Auth::user()->admin->avatar }}" alt="Avatar"
+                                    style="border: none">
                             </div>
 
                             <h3 class="profile-username text-center">{{ $admin->nama_lengkap }}</h3>
@@ -124,7 +125,7 @@
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input form-control" name="avatar"
                                                 id="customFile" accept="image/*">
-                                            {{ $admin->avatar }}</label>
+                                            </label>
                                         </div>
                                     </div>
                                 </div>
@@ -152,9 +153,9 @@
             </div>
             <!-- /.row -->
         </div><!-- /.container-fluid -->
-        </section>
-        <!-- /.content -->
     </div>
-    <!-- /.content-wrapper -->
+@endsection
 
+@section('footer')
     @include('layouts.main.footer')
+@endsection

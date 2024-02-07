@@ -1,6 +1,6 @@
 @extends('layouts.main.header')
 @section('sidebar')
-    @include('layouts.sidebar.admin')
+    @include('layouts.sidebar.guru')
 @endsection
 
 @section('content')
@@ -17,13 +17,8 @@
                     'active' => true,
                 ],
                 [
-                    'title' => 'Data Karyawan',
-                    'url' => route('karyawan.index'),
-                    'active' => false,
-                ],
-                [
-                    'title' => $title,
-                    'url' => route('karyawan.index'),
+                    'title' => 'Profile',
+                    'url' => route('profile'),
                     'active' => false,
                 ],
             ],
@@ -45,12 +40,14 @@
                     <div class="card card-primary card-outline">
                         <div class="card-body box-profile">
                             <div class="text-center">
-                                @if ($karyawan->pas_photo == null)
-                                    <img class="profile-user-img" src="/assets/dist/img/avatar/{{ $karyawan->avatar }}"
-                                        alt="Avatar" style="border: none">
+                                @if (optional($karyawan)->pas_photo == null)
+                                    <img class="profile-user-img" src="{{ asset('assets/dist/img/avatar/default.png') }}"
+                                        alt="Default Avatar" style="border: none">
                                 @else
-                                    <img class="mb-2" src="{{ asset('storage/' . $karyawan->pas_photo) }}"
-                                        alt="{{ $karyawan->pas_photo }}" alt="pas_photo" width="105px" height="144px">
+                                    <img class="mb-2"
+                                        src="{{ optional($karyawan)->pas_photo ? asset('storage/' . $karyawan->pas_photo) : 'fallback_image.jpg' }}"
+                                        alt="{{ optional($karyawan)->pas_photo }}" alt="pas_photo" width="105px"
+                                        height="144px">
                                 @endif
                             </div>
 
@@ -63,7 +60,7 @@
                                 @elseif($karyawan->user->role == '2')
                                     {{ $karyawan->positionKaryawan->position_nama }}
                                 @elseif($karyawan->user->role == '3')
-                                    karyawan
+                                    Siswa
                                 @endif
                             </p>
 
@@ -101,7 +98,18 @@
                         </div><!-- /.card-header -->
                         <div class="card-body">
                             <div class="border-bottom p-2">
-                                <h6 class="mt-2"><b>A. Employee Information</b></h6>
+                                <h6 class="mt-2"><b>A. Credentials</b></h6>
+                                <div class="form-group row">
+                                    <label for="kode_karyawan" class="col-sm-3 col-form-label ">
+                                        Username</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="username"
+                                            name="username" placeholder="Username"
+                                            value="{{ $karyawan->user->username }}" disabled>
+                                    </div>
+                                </div>
+
+                                <h6 class="mt-2"><b>B. Employee Information</b></h6>
                                 <div class="form-group row">
                                     <label for="status_karyawan_id" class="col-sm-3 col-form-label ">Status
                                     </label>
@@ -160,7 +168,7 @@
                                             disabled>
                                     </div>
                                 </div>
-                                <h6 class="mt-2"><b>B. Personal Information</b></h6>
+                                <h6 class="mt-2"><b>C. Personal Information</b></h6>
                                 <div class="form-group row">
                                     <label for="kode_karyawan" class="col-sm-3 col-form-label ">
                                         Employee Code</label>
@@ -445,28 +453,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="{{ route('karyawan.index') }}" class="btn btn-success btn-sm">Kembali</a>
-                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                            <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#modal-edit{{ $karyawan->id }}">Edit</button>
-                            @if ($karyawan->status != false && $karyawan->user->status != false)
-                                <form id="form-non-active{{ $karyawan->id }}"
-                                    action="{{ route('karyawan.nonactivate') }}" method="POST"
-                                    style="display: inline-block;">
-                                    @csrf
-                                    <input type="hidden" name="id" value="{{ $karyawan->id }}">
-                                    <button type="button" class="btn btn-danger btn-sm"
-                                        onclick="confirmNonActive('{{ $title }}', {{ $karyawan->id }})">Non
-                                        Active</button>
-                                </form>
-                            @else
-                                <form id="form-active{{ $karyawan->id }}" action="{{ route('karyawan.activate') }}"
-                                    method="POST" style="display: inline-block;">
-                                    @csrf
-                                    <input type="hidden" name="id" value="{{ $karyawan->id }}">
-                                    <button type="button" class="btn btn-warning btn-sm"
-                                        onclick="confirmActive('{{ $title }}', {{ $karyawan->id }})">Activate</button>
-                                </form>
-                            @endif
                         </div>
 
                         <!-- Modal edit  -->
@@ -480,18 +468,45 @@
                                             aria-hidden="true"></button>
                                         </button>
                                     </div>
-                                    <form action="{{ route('karyawan.update', $karyawan->id) }}" method="POST"
+                                    <form action="{{ route('profileguru.update', $karyawan->id) }}" method="POST"
                                         enctype="multipart/form-data">
                                         {{ method_field('PATCH') }}
                                         @csrf
                                         <div class="modal-body">
-                                            <h6 class="mt-2"><b>A. Employee Information</b></h6>
+                                            <h6 class="mt-2"><b>A. Credentials</b></h6>
+                                            <div class="form-group row">
+                                                <label for="username" class="col-sm-3 col-form-label ">
+                                                    Username</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control" id="username"
+                                                        name="username" placeholder="Username"
+                                                        value="{{ $karyawan->user->username }}" required>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="old_password" class="col-sm-3 col-form-label ">
+                                                    Old Password</label>
+                                                <div class="col-sm-3">
+                                                    <input type="password" class="form-control" id="old_password"
+                                                        name="old_password" placeholder="Old password"
+                                                        value="" >
+                                                </div>
+                                                <label for="kode_karyawan" class="col-sm-3 col-form-label ">
+                                                    Old Password</label>
+                                                <div class="col-sm-3">
+                                                    <input type="password" class="form-control" id="new_password"
+                                                        name="new_password" placeholder="New password"
+                                                        value="" >
+                                                </div>
+                                            </div>
+
+                                            <h6 class="mt-2"><b>B. Employee Information</b></h6>
                                             <div class="form-group row">
                                                 <label for="status_karyawan_id" class="col-sm-3 col-form-label ">Status
                                                 </label>
                                                 <div class="col-sm-3">
                                                     <select class="form-control form-select" id="status_karyawan_id"
-                                                        name="status_karyawan_id" required>
+                                                        name="status_karyawan_id" disabled>
                                                         <option value="">-- Select Status --
                                                         </option>
                                                         @foreach ($dataStatusKaryawan as $status)
@@ -505,7 +520,7 @@
                                                     Date</label>
                                                 <div class="col-sm-3">
                                                     <input type="date" class="form-control" id="permanent_date"
-                                                        name="permanent_date" value="{{ $karyawan->permanent_date }}">
+                                                        name="permanent_date" value="{{ $karyawan->permanent_date }}" disabled>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -513,7 +528,7 @@
                                                 </label>
                                                 <div class="col-sm-3">
                                                     <select class="form-control form-select" id="unit_karyawan_id"
-                                                        name="unit_karyawan_id" required>
+                                                        name="unit_karyawan_id" disabled>
                                                         <option value="">-- Select Unit --
                                                         </option>
                                                         @foreach ($dataUnitKaryawan as $unit)
@@ -528,7 +543,7 @@
                                                 </label>
                                                 <div class="col-sm-3">
                                                     <select class="form-control form-select" id="position_karyawan_id"
-                                                        name="position_karyawan_id" required>
+                                                        name="position_karyawan_id" disabled>
                                                         <option value="">
                                                             -- Select Position --
                                                         </option>
@@ -545,17 +560,17 @@
                                                     Join Date</label>
                                                 <div class="col-sm-3">
                                                     <input type="date" class="form-control" id="join_date"
-                                                        name="join_date" value="{{ $karyawan->join_date }}" required>
+                                                        name="join_date" value="{{ $karyawan->join_date }}" disabled>
                                                 </div>
                                             </div>
-                                            <h6 class="mt-2"><b>B. Personal Information</b></h6>
+                                            <h6 class="mt-2"><b>C. Personal Information</b></h6>
                                             <div class="form-group row">
                                                 <label for="kode_karyawan" class="col-sm-3 col-form-label ">
                                                     Employee Code</label>
                                                 <div class="col-sm-3">
                                                     <input type="text" class="form-control" id="kode_karyawan"
                                                         name="kode_karyawan" placeholder="Employee Code"
-                                                        value="{{ $karyawan->kode_karyawan }}" required>
+                                                        value="{{ $karyawan->kode_karyawan }}" disabled>
                                                 </div>
                                                 <label for="nama_lengkap" class="col-sm-3 col-form-label ">
                                                     Employee Name</label>

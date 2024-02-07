@@ -366,13 +366,13 @@
                                                                 <div class="col-sm-3 pt-1">
                                                                     <label class="form-check-label me-3"><input
                                                                             type="radio" name="jenis_kelamin"
-                                                                            value="Male"
-                                                                            @if (old('jenis_kelamin') == 'Male') checked @endif
+                                                                            value="MALE"
+                                                                            @if (old('jenis_kelamin') == 'MALE') checked @endif
                                                                             required> Male</label>
                                                                     <label class="form-check-label me-3"><input
                                                                             type="radio" name="jenis_kelamin"
-                                                                            value="Female"
-                                                                            @if (old('jenis_kelamin') == 'Female') checked @endif
+                                                                            value="FEMALE"
+                                                                            @if (old('jenis_kelamin') == 'FEMALE') checked @endif
                                                                             required> Female</label>
                                                                 </div>
                                                                 <label for="bloodtype"

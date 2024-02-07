@@ -377,7 +377,6 @@
                             <ul class="products-list product-list-in-card">
                                 @foreach ($data_riwayat_login as $riwayat_login)
                                     <li class="item">
-
                                         <div class="product-img">
                                             @if ($riwayat_login->user->role == 1)
                                                 <img src="assets/dist/img/avatar/{{ $riwayat_login->user->admin->avatar }}"
@@ -406,9 +405,7 @@
                                                 @else
                                                     <span class="badge bg-warning float-right">Offline</span>
                                                 @endif
-
                                             </a>
-
                                             <span class="product-description">
                                                 @if ($riwayat_login->user->role == 1)
                                                     Administrator
@@ -425,6 +422,8 @@
                                             </span>
                                         </div>
                                     </li>
+                                    <hr>
+
                                     <!-- /.item -->
                                 @endforeach
                             </ul>

@@ -40,7 +40,7 @@
                         <div class="card-body box-profile">
                             <div class="text-center">
                                 <img class="profile-user-img img-fluid img-circle"
-                                    src="/assets/dist/img/avatar/{{ Auth::user()->guru->avatar }}" alt="Avatar"
+                                    src="/assets/dist/img/avatar/{{ Auth::user()->karyawan->avatar }}" alt="Avatar"
                                     style="border: none">
                             </div>
 
@@ -50,7 +50,7 @@
 
                             <ul class="list-group list-group-unbordered mb-3">
                                 <li class="list-group-item">
-                                    <b>Username</b> <a class="float-right">{{ $guru->user->username }}</a>
+                                    <b>Username</b> <a class="float-right">{{ $guru->karyawan->user->username }}</a>
                                 </li>
                                 <li class="list-group-item">
                                     <b>NIP</b> <a class="float-right">{{ $guru->email }}</a>
@@ -175,7 +175,6 @@
             </div>
             <!-- /.row -->
         </div><!-- /.container-fluid -->
-        </section>
     </div>
 @endsection
 

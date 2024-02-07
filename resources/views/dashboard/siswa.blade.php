@@ -26,13 +26,13 @@
                 $greeting = 'Good evening, ';
             }
 
-if (Auth::user()->role == 1) {
-    $fullName = optional(Auth::user()->admin)->nama_lengkap ?? 'Admin not available';
-} elseif (Auth::user()->role == 2) {
-    $fullName = optional(Auth::user()->karyawan)->nama_lengkap ?? 'Guru not available';
-} elseif (Auth::user()->role == 3) {
-    $fullName = optional(Auth::user()->siswa)->nama_lengkap ?? 'Siswa not available';
-}
+            if (Auth::user()->role == 1) {
+                $fullName = optional(Auth::user()->admin)->nama_lengkap ?? 'Admin not available';
+            } elseif (Auth::user()->role == 2) {
+                $fullName = optional(Auth::user()->karyawan)->nama_lengkap ?? 'Guru not available';
+            } elseif (Auth::user()->role == 3) {
+                $fullName = optional(Auth::user()->siswa)->nama_lengkap ?? 'Siswa not available';
+            }
 
         @endphp
         @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
@@ -205,26 +205,25 @@ if (Auth::user()->role == 1) {
                                     <li class="item">
                                         <div class="product-img">
                                             @if ($riwayat_login->user->role == 1)
-                                                <img src="assets/dist/img/avatar/{{ optional($riwayat_login->user->admin)->avatar ?? 'default.png' }}"
+                                                <img src="assets/dist/img/avatar/{{ $riwayat_login->user->admin->avatar }}"
                                                     alt="Avatar" class="img-size-50">
                                             @elseif($riwayat_login->user->role == 2)
-                                                <img src="assets/dist/img/avatar/{{ optional($riwayat_login->user->guru)->avatar ?? 'default.png' }}"
+                                                <img src="assets/dist/img/avatar/{{ $riwayat_login->user->karyawan->avatar }}"
                                                     alt="Avatar" class="img-size-50">
                                             @elseif($riwayat_login->user->role == 3)
-                                                <img src="assets/dist/img/avatar/{{ optional($riwayat_login->user->siswa)->avatar ?? 'default.png' }}"
+                                                <img src="assets/dist/img/avatar/{{ $riwayat_login->user->siswa->avatar }}"
                                                     alt="Avatar" class="img-size-50">
                                             @endif
                                         </div>
-                                        
 
                                         <div class="product-info">
                                             <a href="javascript:void(0)" class="product-title">
                                                 @if ($riwayat_login->user->role == 1)
-                                                    {{ optional($riwayat_login->user->admin)->nama_lengkap ?? 'Admin not available' }}
+                                                    {{ $riwayat_login->user->admin->nama_lengkap }}
                                                 @elseif($riwayat_login->user->role == 2)
-                                                    {{ optional($riwayat_login->user->guru)->nama_lengkap ?? 'Guru not available' }}
+                                                    {{ $riwayat_login->user->karyawan->nama_lengkap }}
                                                 @elseif($riwayat_login->user->role == 3)
-                                                    {{ optional($riwayat_login->user->siswa)->nama_lengkap ?? 'Siswa not available' }}
+                                                    {{ $riwayat_login->user->siswa->nama_lengkap }}
                                                 @endif
 
                                                 @if ($riwayat_login->status_login == true)
@@ -233,7 +232,6 @@ if (Auth::user()->role == 1) {
                                                     <span class="badge bg-warning float-right">Offline</span>
                                                 @endif
                                             </a>
-
                                             <span class="product-description">
                                                 @if ($riwayat_login->user->role == 1)
                                                     Administrator
@@ -244,14 +242,14 @@ if (Auth::user()->role == 1) {
                                                 @endif
 
                                                 @if ($riwayat_login->status_login == false)
-                                                    <span class="time float-right">
-                                                        <i class="far fa-clock"></i>
-                                                        {{ $riwayat_login->updated_at->diffForHumans() }}
-                                                    </span>
+                                                    <span class="time float-right"><i class="far fa-clock"></i>
+                                                        {{ $riwayat_login->updated_at->diffForHumans() }}</span>
                                                 @endif
                                             </span>
                                         </div>
-                                        <!-- /.item -->
+                                    </li>
+                                    <hr>
+                                    <!-- /.item -->
                                     </li>
                                 @endforeach
                             </ul>

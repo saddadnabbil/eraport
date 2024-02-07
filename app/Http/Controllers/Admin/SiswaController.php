@@ -91,7 +91,7 @@ class SiswaController extends Controller
             $request->all(),
             [
                 'nama_lengkap' => 'required|min:3|max:100',
-                'jenis_kelamin' => 'required|in:Male,Female',
+                'jenis_kelamin' => 'required|in:MALE,FEMALE',
                 'jenis_pendaftaran' => 'required|in:1,2',
                 'jenis_pendaftaran' => 'required|in:1,2',
                 'semester_masuk' => 'required',
@@ -285,7 +285,7 @@ class SiswaController extends Controller
                 'password' => 'nullable|min:8|max:255',
 
                 'nama_lengkap' => 'required|min:3|max:100',
-                'jenis_kelamin' => 'required|in:Male,Female',
+                'jenis_kelamin' => 'required|in:MALE,FEMALE',
                 'jenis_pendaftaran' => 'required|in:1,2',
 
                 'semester_masuk' => 'required',

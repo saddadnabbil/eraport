@@ -233,11 +233,11 @@
                                             <label for="jenis_kelamin" class="col-sm-3 col-form-label">Jenis
                                                 Kelamin</label>
                                             <div class="col-sm-3 pt-1">
-                                                <label class="form-check-label me-3"><input type="radio" value="Male"
-                                                        @if ($siswa->jenis_kelamin == 'Male') checked @endif required disabled>
+                                                <label class="form-check-label me-3"><input type="radio" value="MALE"
+                                                        @if ($siswa->jenis_kelamin == 'MALE') checked @endif required disabled>
                                                     Male</label>
-                                                <label class="form-check-label me-3"><input type="radio" value="Female"
-                                                        @if ($siswa->jenis_kelamin == 'Female') checked @endif required disabled>
+                                                <label class="form-check-label me-3"><input type="radio" value="FEMALE"
+                                                        @if ($siswa->jenis_kelamin == 'FEMALE') checked @endif required disabled>
                                                     Female</label>
                                             </div>
                                             <label for="bloodtype" class="col-sm-2 col-form-label">Gol. Darah</label>
@@ -1064,12 +1064,12 @@
                                                         class="col-sm-3 col-form-label required">Jenis Kelamin</label>
                                                     <div class="col-sm-3 pt-1">
                                                         <label class="form-check-label me-3"><input type="radio"
-                                                                name="jenis_kelamin" value="Male"
-                                                                @if ($siswa->jenis_kelamin == 'Male') checked @endif required>
+                                                                name="jenis_kelamin" value="MALE"
+                                                                @if ($siswa->jenis_kelamin == 'MALE') checked @endif required>
                                                             Male</label>
                                                         <label class="form-check-label me-3"><input type="radio"
-                                                                name="jenis_kelamin" value="Female"
-                                                                @if ($siswa->jenis_kelamin == 'Female') checked @endif required>
+                                                                name="jenis_kelamin" value="FEMALE"
+                                                                @if ($siswa->jenis_kelamin == 'FEMALE') checked @endif required>
                                                             Female</label>
                                                     </div>
                                                     <label for="bloodtype" class="col-sm-2 col-form-label">Gol.

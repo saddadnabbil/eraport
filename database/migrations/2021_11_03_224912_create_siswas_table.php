@@ -30,7 +30,7 @@ class CreateSiswasTable extends Migration
             $table->string('nama_lengkap', 100);
             $table->string('nama_panggilan', 100);
             $table->string('nik', 16)->unique();
-            $table->enum('jenis_kelamin', ['Male', 'Female']);
+            $table->enum('jenis_kelamin', ['MALE', 'FEMALE']);
             $table->enum('blood_type', ['A', 'B', 'AB', 'O'])->nullable();
             $table->enum('agama', ['1', '2', '3', '4', '5', '6', '7']);
             $table->string('tempat_lahir', 50);

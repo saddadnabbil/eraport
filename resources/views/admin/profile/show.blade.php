@@ -17,13 +17,8 @@
                     'active' => true,
                 ],
                 [
-                    'title' => 'Data Karyawan',
-                    'url' => route('karyawan.index'),
-                    'active' => false,
-                ],
-                [
-                    'title' => $title,
-                    'url' => route('karyawan.index'),
+                    'title' => 'Profile',
+                    'url' => route('profile'),
                     'active' => false,
                 ],
             ],
@@ -45,12 +40,12 @@
                     <div class="card card-primary card-outline">
                         <div class="card-body box-profile">
                             <div class="text-center">
-                                @if ($karyawan->pas_photo == null)
-                                    <img class="profile-user-img" src="/assets/dist/img/avatar/{{ $karyawan->avatar }}"
+                                @if (optional($karyawan)->pas_photo == null)
+                                    <img class="profile-user-img" src="/assets/dist/img/avatar/{{ optional($karyawan->avatar, 'default-avatar.jpg') }}"
                                         alt="Avatar" style="border: none">
                                 @else
-                                    <img class="mb-2" src="{{ asset('storage/' . $karyawan->pas_photo) }}"
-                                        alt="{{ $karyawan->pas_photo }}" alt="pas_photo" width="105px" height="144px">
+                                    <img class="mb-2" src="{{ optional($karyawan)->pas_photo ? asset('storage/' . $karyawan->pas_photo) : 'fallback_image.jpg' }}"
+                                        alt="{{ optional($karyawan)->pas_photo }}" alt="pas_photo" width="105px" height="144px">
                                 @endif
                             </div>
 
@@ -61,7 +56,7 @@
                                 @if ($karyawan->user->role == '1')
                                     Admin
                                 @elseif($karyawan->user->role == '2')
-                                    {{ $karyawan->positionKaryawan->position_nama }}
+                                    Guru
                                 @elseif($karyawan->user->role == '3')
                                     karyawan
                                 @endif
