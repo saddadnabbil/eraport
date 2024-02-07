@@ -29,7 +29,7 @@
             if (Auth::user()->role == 1) {
                 $fullName = optional(Auth::user()->admin)->nama_lengkap ?? 'Admin not available';
             } elseif (Auth::user()->role == 2) {
-                $fullName = optional(Auth::user()->guru)->nama_lengkap ?? 'Guru not available';
+                $fullName = optional(Auth::user()->karyawan)->nama_lengkap ?? 'Guru not available';
             } elseif (Auth::user()->role == 3) {
                 $fullName = optional(Auth::user()->siswa)->nama_lengkap ?? 'Siswa not available';
             }
@@ -233,7 +233,7 @@
                                                 <img src="assets/dist/img/avatar/{{ $riwayat_login->user->admin->avatar }}"
                                                     alt="Avatar" class="img-size-50">
                                             @elseif($riwayat_login->user->role == 2)
-                                                <img src="assets/dist/img/avatar/{{ $riwayat_login->user->guru->avatar }}"
+                                                <img src="assets/dist/img/avatar/{{ $riwayat_login->user->karyawan->avatar }}"
                                                     alt="Avatar" class="img-size-50">
                                             @elseif($riwayat_login->user->role == 3)
                                                 <img src="assets/dist/img/avatar/{{ $riwayat_login->user->siswa->avatar }}"
@@ -246,7 +246,7 @@
                                                 @if ($riwayat_login->user->role == 1)
                                                     {{ $riwayat_login->user->admin->nama_lengkap }}
                                                 @elseif($riwayat_login->user->role == 2)
-                                                    {{ $riwayat_login->user->guru->karyawan->nama_lengkap }}
+                                                    {{ $riwayat_login->user->karyawan->nama_lengkap }}
                                                 @elseif($riwayat_login->user->role == 3)
                                                     {{ $riwayat_login->user->siswa->nama_lengkap }}
                                                 @endif

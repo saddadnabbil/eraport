@@ -27,9 +27,9 @@
             }
 
             if (Auth::user()->role == 1) {
-                $fullName = Auth::user()->admin->nama_lengkap;
+                $fullName = Auth::user()->karyawan>nama_lengkap;
             } elseif (Auth::user()->role == 2) {
-                $fullName = Auth::user()->guru->karyawan->nama_lengkap;
+                $fullName = Auth::user()->karyawan->nama_lengkap;
             } elseif (Auth::user()->role == 3) {
                 $fullName = Auth::user()->siswa->nama_lengkap;
             }
@@ -376,7 +376,6 @@
                             <h4 class="card-title">Riwayat Login</h4>
                             <ul class="products-list product-list-in-card">
                                 @foreach ($data_riwayat_login as $riwayat_login)
-                                    @dd($riwayat_login)
                                     <li class="item">
 
                                         <div class="product-img">
@@ -384,7 +383,7 @@
                                                 <img src="assets/dist/img/avatar/{{ $riwayat_login->user->admin->avatar }}"
                                                     alt="Avatar" class="img-size-50">
                                             @elseif($riwayat_login->user->role == 2)
-                                                <img src="assets/dist/img/avatar/{{ $riwayat_login->user->guru->avatar }}"
+                                                <img src="assets/dist/img/avatar/{{ $riwayat_login->user->karyawan->avatar }}"
                                                     alt="Avatar" class="img-size-50">
                                             @elseif($riwayat_login->user->role == 3)
                                                 <img src="assets/dist/img/avatar/{{ $riwayat_login->user->siswa->avatar }}"
@@ -397,7 +396,7 @@
                                                 @if ($riwayat_login->user->role == 1)
                                                     {{ $riwayat_login->user->admin->nama_lengkap }}
                                                 @elseif($riwayat_login->user->role == 2)
-                                                    {{ $riwayat_login->user->guru->karyawan->nama_lengkap }}
+                                                    {{ $riwayat_login->user->karyawan->nama_lengkap }}
                                                 @elseif($riwayat_login->user->role == 3)
                                                     {{ $riwayat_login->user->siswa->nama_lengkap }}
                                                 @endif

@@ -136,15 +136,17 @@ class AuthController extends Controller
 
     protected function handleGuruSession()
     {
-        $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
+        if(Auth::user()->role == 2) {
+            $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
 
-        if ($guru && Auth::user()->role == 2) {
-            $cek_wali_kelas = Kelas::where('guru_id', $guru->id)->first();
+            if ($guru && Auth::user()->role == 2) {
+                $cek_wali_kelas = Kelas::where('guru_id', $guru->id)->first();
 
-            session([
-                'akses_sebagai' => 'Guru Mapel',
-                'cek_wali_kelas' => $cek_wali_kelas != null,
-            ]);
+                session([
+                    'akses_sebagai' => 'Guru Mapel',
+                    'cek_wali_kelas' => $cek_wali_kelas != null,
+                ]);
+            }
         }
     }
 
@@ -219,21 +221,21 @@ class AuthController extends Controller
     public function ganti_akses()
     {
         if (session()->get('akses_sebagai') == 'Guru Mapel') {
-            $guru = Guru::where('karyawan_id', Auth::id())->first();
+            $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
             $cek_wali_kelas = Kelas::where('guru_id', $guru->id)->first();
             if (!is_null($cek_wali_kelas)) {
                 session()->put([
                     'akses_sebagai' => 'Wali Kelas',
                 ]);
-                return redirect('/dashboard')->with('toast_success', 'Akses wali kelas berhasil');
+                return redirect('/dashboard')->with('toast_success', 'Homeroom access successful');
             } else {
-                return back()->with('toast_error', 'Anda tidak memiliki akses sebagai wali kelas');
+                return back()->with('toast_error', 'You do not have access as homeroom teacher');
             }
         } else {
             session()->put([
                 'akses_sebagai' => 'Guru Mapel',
             ]);
-            return redirect('/dashboard')->with('toast_success', 'Akses guru mapel berhasil');
+            return redirect('/dashboard')->with('toast_success', 'Teacher access was successful');
         }
     }
 

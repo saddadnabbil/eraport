@@ -29,7 +29,7 @@
 if (Auth::user()->role == 1) {
     $fullName = optional(Auth::user()->admin)->nama_lengkap ?? 'Admin not available';
 } elseif (Auth::user()->role == 2) {
-    $fullName = optional(Auth::user()->guru)->nama_lengkap ?? 'Guru not available';
+    $fullName = optional(Auth::user()->karyawan)->nama_lengkap ?? 'Guru not available';
 } elseif (Auth::user()->role == 3) {
     $fullName = optional(Auth::user()->siswa)->nama_lengkap ?? 'Siswa not available';
 }
