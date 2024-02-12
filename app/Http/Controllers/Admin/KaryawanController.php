@@ -342,33 +342,20 @@ class KaryawanController extends Controller
                 // Sales
             ];
 
-            $userRole = 11;
-
+            $user = User::findOrFail($karyawan->user_id);
             if (isset($unitRoles[$request->unit_karyawan_id])) {
                 $role = $unitRoles[$request->unit_karyawan_id];
-                $userRole = $role;
-                dd($role, $userRole);
+                $user->role = $role; // update the role
+                $user->status = true; // update the status
+                $user->save(); // save the changes
             }
-
-            $user = new User([
-                'username' => strtolower(str_replace(' ', '', $request->nama_lengkap . $request->kode_karyawan)),
-                'password' => bcrypt('123456'),
-                'role' => $userRole,
-                'status' => true,
-            ]);
-
-            $user->save();
         } catch (\Throwable $th) {
             return back()->with('toast_error', 'Username telah digunakan');
         }
 
-        // Update the associated User model
-        $karyawan->user->update([
-            'username' => strtolower(str_replace(' ', '', $request->nama_lengkap . $request->kode_karyawan)),
-        ]);
-
         // Update the Karyawan instance with the new request data
         $karyawan->update([
+            'user_id' => $user->id,
             'status_karyawan_id' => $request->status_karyawan_id,
             'unit_karyawan_id' => $request->unit_karyawan_id,
             'position_karyawan_id' => $request->position_karyawan_id,

@@ -29,3 +29,6 @@ flush-db-with-seeding:
 	
 dump:
 	composer dump-autoload
+
+fresh-seed:
+	php artisan migrate:fresh --seed

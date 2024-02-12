@@ -79,7 +79,7 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'password' => 'required',
+            'password' => 'nullable|min:8|max:100',
             'status' => 'required',
         ]);
         if ($validator->fails()) {
@@ -89,8 +89,9 @@ class UserController extends Controller
             $user = User::findorfail($id);
             if (is_null($request->password)) {
                 $data = [
-                    'status' => $request->password
+                    'status' => $request->status
                 ];
+                $user->karyawan->update($data);
             } else {
                 $data = [
                     'password' => bcrypt($request->password),
@@ -107,7 +108,7 @@ class UserController extends Controller
         $filename = 'user_e_raport ' . date('Y-m-d H_i_s') . '.xls';
         return Excel::download(new UserExport, $filename);
     }
-    
+
     public function destroy($id)
     {
         $user = User::findorfail($id);
@@ -123,8 +124,8 @@ class UserController extends Controller
 
             if (!is_null($user->guru)) {
                 $user->guru->delete();
-            } 
-            
+            }
+
             if (!is_null($user->admin)) {
                 $user->admin->delete();
             }
@@ -144,7 +145,7 @@ class UserController extends Controller
         return back()->with('toast_success', 'User ' . $user->username . ' telah dihapus');
     }
 
-        /**
+    /**
      * Permanently remove the specified resource from storage.
      *
      * @param  int  $id
@@ -182,7 +183,7 @@ class UserController extends Controller
             $user = User::withTrashed()->findOrFail($id);
 
             $user->restoreUser();
-    
+
             return back()->with('toast_success', 'User berhasil direstore');
         } catch (\Throwable $th) {
             dd($th->getMessage());
