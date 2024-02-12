@@ -29,12 +29,12 @@ class PengelolaanNilaiController extends Controller
         $sekolah = Sekolah::first();
         $tapel = Tapel::where('status', 1)->first();
         $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
-        $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)->where('guru_id', $guru->id)->get('id');
+        $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)->where('guru_id', $guru->id)->pluck('id')->toArray();
         $data_pembelajaran_kelas = Pembelajaran::whereIn('kelas_id', $id_kelas_diampu)->where('status', 1)->get();
 
         $data_kelas = Kelas::where('guru_id', $guru->id)->where('tapel_id', $tapel->id)->get();
 
-        $kelas = Kelas::findorfail($id_kelas_diampu)->first();
+        $kelas = Kelas::findorfail($id_kelas_diampu[0]);
 
         $term = Term::findorfail($kelas->tingkatan->term_id);
         $semester = Semester::findorfail($kelas->tingkatan->semester_id);

@@ -27,7 +27,7 @@
             }
 
             if (Auth::user()->role == 1) {
-                $fullName = Auth::user()->karyawan>nama_lengkap;
+                $fullName = Auth::user()->karyawan > nama_lengkap;
             } elseif (Auth::user()->role == 2) {
                 $fullName = Auth::user()->karyawan->nama_lengkap;
             } elseif (Auth::user()->role == 3) {
@@ -373,7 +373,7 @@
                     <div class="card">
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <h4 class="card-title">Riwayat Login</h4>
+                            <h4 class="card-title">Login History</h4>
                             <ul class="products-list product-list-in-card">
                                 @foreach ($data_riwayat_login as $riwayat_login)
                                     <li class="item">

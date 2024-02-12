@@ -223,7 +223,7 @@
                     <div class="card">
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <h4 class="card-title">Riwayat Login</h4>
+                            <h4 class="card-title">Login History</h4>
                             <ul class="products-list product-list-in-card">
                                 @foreach ($data_riwayat_login as $riwayat_login)
                                     <li class="item">
@@ -275,6 +275,7 @@
                                             </span>
                                         </div>
                                     </li>
+                                    <hr>
                                     <!-- /.item -->
                                 @endforeach
                             </ul>

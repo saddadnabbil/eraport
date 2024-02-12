@@ -59,7 +59,7 @@ class DashboardController extends Controller
         $sekolah = Sekolah::first();
         $tapel = Tapel::where('status', 1)->first();
         $data_pengumuman = Pengumuman::latest()->take(3)->get();
-        $data_riwayat_login = RiwayatLogin::where('user_id', '!=', Auth::user()->id)->where('updated_at', '>=', Carbon::today())->orderBy('status_login', 'DESC')->orderBy('updated_at', 'DESC')->get(); 
+        $data_riwayat_login = RiwayatLogin::where('user_id', '!=', Auth::user()->id)->where('updated_at', '>=', Carbon::today())->orderBy('status_login', 'DESC')->orderBy('updated_at', 'DESC')->get();
 
         if (Auth::user()->role == 1) {
             $jumlah_guru = Guru::all()->count();
@@ -173,7 +173,7 @@ class DashboardController extends Controller
                 ));
             } elseif (session()->get('akses_sebagai') == 'Wali Kelas') {
 
-                $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)->where('guru_id', $guru->id)->get('id');
+                $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)->where('guru_id', $guru->id)->pluck('id')->toArray();
                 $jumlah_anggota_kelas = count(AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get());
 
                 $id_pembelajaran_kelas = Pembelajaran::whereIn('kelas_id', $id_kelas_diampu)->where('status', 1)->get('id');

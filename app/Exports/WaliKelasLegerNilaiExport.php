@@ -30,7 +30,7 @@ class WaliKelasLegerNilaiExport implements FromView, ShouldAutoSize
         $sekolah = Sekolah::first();
         $tapel = Tapel::where('status', 1)->first();
         $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
-        $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)->where('guru_id', $guru->id)->get('id');
+        $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)->where('guru_id', $guru->id)->pluck('id')->toArray();
 
         $data_id_mapel_semester_ini = Mapel::where('tapel_id', $tapel->id)->get('id');
 
@@ -88,6 +88,6 @@ class WaliKelasLegerNilaiExport implements FromView, ShouldAutoSize
             }
         }
 
-        return view('exports.walikelas.k13.legernilai', compact('time_download', 'sekolah', 'data_mapel_kelompok_a', 'data_mapel_kelompok_b', 'data_ekstrakulikuler', 'count_ekstrakulikuler', 'data_anggota_kelas'));
+        return view('exports.walikelas.km.legernilai', compact('time_download', 'sekolah', 'data_mapel_kelompok_a', 'data_mapel_kelompok_b', 'data_ekstrakulikuler', 'count_ekstrakulikuler', 'data_anggota_kelas'));
     }
 }
