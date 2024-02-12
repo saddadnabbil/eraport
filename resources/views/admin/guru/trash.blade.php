@@ -44,7 +44,7 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Nama Lengkap</th>
+                                            <th>Full name</th>
                                             <th>NIP</th>
                                             <th>NUPTK</th>
                                             <th>Tempat Lahir</th>

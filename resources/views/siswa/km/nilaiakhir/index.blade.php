@@ -43,7 +43,7 @@
                             <div class="callout callout-info">
                                 <div class="form-group row">
                                     <div class="col-sm-3">
-                                        Nama Lengkap
+                                        Full name
                                     </div>
                                     <div class="col-sm-9">
                                         : {{ $siswa->nama_lengkap }}

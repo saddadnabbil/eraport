@@ -79,7 +79,7 @@
                                 @method('put')
                                 @csrf
                                 <div class="form-group row">
-                                    <label class="col-sm-2 col-form-label">Nama Lengkap</label>
+                                    <label class="col-sm-2 col-form-label">Full name</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" name="nama_lengkap"
                                             value="{{ $siswa->nama_lengkap }}">

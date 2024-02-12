@@ -76,7 +76,7 @@
                                                     Lengkap</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control" id="nama_lengkap"
-                                                        name="nama_lengkap" placeholder="Nama Lengkap"
+                                                        name="nama_lengkap" placeholder="Full name"
                                                         value="{{ old('nama_lengkap') }}" required>
                                                 </div>
                                             </div>
@@ -135,7 +135,7 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Nama Lengkap</th>
+                                            <th>Full name</th>
                                             <th>Username</th>
                                             <th>Level</th>
                                             <th>Status Akun</th>
