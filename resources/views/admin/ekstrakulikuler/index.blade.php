@@ -87,8 +87,9 @@
                                                         style="width: 100%;" required>
                                                         <option value="">-- Pilih Pembina --</option>
                                                         @foreach ($data_guru as $guru)
-                                                            <option value="{{ $guru->id }}">{{ $guru->karyawan->nama_lengkap }}
-                                                                </option>
+                                                            <option value="{{ $guru->id }}">
+                                                                {{ $guru->karyawan->nama_lengkap }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -120,7 +121,7 @@
                                     </thead>
                                     <tbody>
                                         <?php $no = 0; ?>
-                                        @foreach ($data_ekstrakulikuler as $ekstrakulikuler)
+                                        @foreach ($dataJadwalPelajaran as $ekstrakulikuler)
                                             <?php $no++; ?>
                                             <tr>
                                                 <td>{{ $no }}</td>
@@ -200,7 +201,7 @@
                                                                                 <option value="{{ $guru->id }}"
                                                                                     @if ($guru->id == $ekstrakulikuler->pembina->id) selected @endif>
                                                                                     {{ $guru->karyawan->nama_lengkap }}
-                                                                                    
+
                                                                                 </option>
                                                                             @endforeach
                                                                         </select>

@@ -16,13 +16,14 @@ class CreateJadwalPelajaransTable extends Migration
         Schema::create('jadwal_pelajarans', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('tapel_id')->unsigned();
+            $table->unsignedBigInteger('kelas_id')->unsigned();
 
-            $table->date('testing_date');
-
+            $table->string('nama');
             $table->timestamps();
             $table->softDeletes();
 
             $table->foreign('tapel_id')->references('id')->on('tapels')->onDelete('cascade');
+            $table->foreign('kelas_id')->references('id')->on('kelas')->onDelete('cascade');
         });
     }
 

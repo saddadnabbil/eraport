@@ -300,8 +300,15 @@ Route::group(['middleware' => ['auth']], function () {
             ]);
 
             Route::resource('jadwalpelajaran', 'Admin\JadwalPelajaranController', [
-                'only' => ['index', 'store', 'update', 'destroy'],
+                'only' => ['index', 'create', 'store', 'show', 'edit', 'update', 'destroy'],
             ]);
+            Route::get('jadwalpelajaran/{id}/build', 'Admin\JadwalPelajaranController@build')->name('jadwalpelajaran.build');
+
+            Route::post('jadwalpelajaran/manage', 'Admin\JadwalPelajaranController@manage')->name('jadwalpelajaran.manage');
+            Route::put('jadwalpelajaran/{id}/manage', 'JadwalPelajaranController@manageUpdate')->name('jadwalpelajaran.manage.update');
+
+            Route::post('jadwalpelajaran/timeslot', 'Admin\JadwalPelajaranController@timeSlot')->name('jadwalpelajaran.timeSlot');
+            Route::delete('jadwalpelajaran/timeslot/{id}', 'Admin\JadwalPelajaranController@deleteTimeSlot')->name('jadwalpelajaran.deleteTimeSlot');
         });
     });
     // End Route User Admin

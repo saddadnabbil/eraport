@@ -18253,6 +18253,10 @@ thead.bg-info tr, thead.bg-primary tr {
   width: 100%;
 }
 
+.table-auto {
+  table-layout: auto;
+}
+
 tbody tr td {
   vertical-align: middle;
 }
