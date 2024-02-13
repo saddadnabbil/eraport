@@ -39,134 +39,69 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">{{ $title }}</h3>
-                            <div class="card-tools">
-                                <div data-bs-toggle="tooltip" title="Tambah" class="d-inline-block">
-                                    <button type="button" class="btn btn-tool btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#modal-tambah">
-                                        <i class="fas fa-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
                         </div>
-
-                        <!-- Modal tambah  -->
-                        <div class="modal fade" id="modal-tambah">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Tambah {{ $title }}</h5>
-
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-hidden="true"></button>
-                                        </button>
-                                    </div>
-                                    <form action="{{ route('jadwalpelajaran.store') }}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="tapel_id" value="{{ $tapel->id }}">
-                                        <input type="hidden" name="kelas_id" value="{{ $pembelajaran->kelas->id }}">
-                                        <div class="modal-body">
-                                            <div class="form-group row">
-                                                <label for="nama" class="col-sm-3 col-form-label">Timetable
-                                                    Name</label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control" id="nama" name="nama"
-                                                        placeholder="Timetable Name" value="{{ old('nama') }}">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer justify-content-end">
-                                            <button type="button" class="btn btn-default"
-                                                data-bs-dismiss="modal">Batal</button>
-                                            <button type="submit" class="btn btn-primary">Simpan</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- End Modal tambah -->
 
                         <div class="card-body">
                             <div class="table-responsive">
-
-                                <table id="zero_config" class="table table-striped table-valign-middle ">
-                                    <thead>
-                                        <tr>
-                                            <th>No</th>
-                                            <th>Timetable Name</th>
-                                            <th>Class</th>
-                                            <th>Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php $no = 0; ?>
-                                        @foreach ($dataJadwalPelajaran as $jadwalPelajaran)
-                                            <?php $no++; ?>
+                                <div class="beautify-scrollbar">
+                                    <table class="border w-100 my-4 table-auto">
+                                        <thead>
                                             <tr>
-                                                <td>{{ $no }}</td>
-                                                <td>{{ $jadwalPelajaran->nama }}</td>
-                                                <td>{{ $jadwalPelajaran->kelas->nama_kelas }}</td>
-                                                <td class="text-center">
-                                                    @include('components.actions.delete-button', [
-                                                        'route' => route(
-                                                            'jadwalpelajaran.destroy',
-                                                            $jadwalPelajaran->id),
-                                                        'id' => $jadwalPelajaran->id,
-                                                        'isPermanent' => true,
-                                                        'withEdit' => false,
-                                                        'withShow' => true,
-                                                        'showRoute' => route(
-                                                            'jadwalpelajaran.build',
-                                                            $jadwalPelajaran->id),
-                                                    ])
-                                                </td>
+                                                <th class="text-center p-2 w-60 whitespace-nowrap">
+                                                    <p class="text-center mb-0">Time</p>
+                                                </th>
+                                                @foreach ($dataWeekdays as $weekdays)
+                                                    <th scope="col" class="border p-2   w-60 whitespace-nowrap">
+                                                        <p class="text-center mb-0">
+                                                            {{ $weekdays }}
+                                                        </p>
+                                                    </th>
+                                                @endforeach
                                             </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if ($dataJadwalPelajaranSlot->isEmpty())
+                                                <tr>
+                                                    <td colspan="{{ count($dataWeekdays) + 1 }}"
+                                                        class="text-center p-4 border">
+                                                        Data tidak tersedia</td>
+                                                </tr>
+                                            @else
+                                                @foreach ($dataJadwalPelajaranSlot as $slot)
+                                                    <tr>
+                                                        <td scope="col" class="p-4 border">
+                                                            <p class="">
+                                                                <strong>
+                                                                    <p>{{ \Carbon\Carbon::parse($slot->start_time)->format('H:i') }}
+                                                                        -
+                                                                        {{ \Carbon\Carbon::parse($slot->stop_time)->format('H:i') }}
+                                                                    </p>
+                                                                </strong>
+                                                            </p>
+                                                        </td>
+                                                        @foreach ($dataWeekdays as $day => $weekdays)
+                                                            <td class="p-4 border w-60">
+                                                                <select
+                                                                    name="mapel[{{ $slot->id }}][{{ $weekdays }}]"
+                                                                    class="form-control form-select" disabled>
+                                                                    <option value="">-- select subject --
+                                                                    </option>
+                                                                    @foreach ($dataMapel as $mapel)
+                                                                        <option value="{{ $mapel->id }}"
+                                                                            @if (isset($selected[$slot->id][$weekdays]) && $selected[$slot->id][$weekdays] == $mapel->id) selected @endif>
+                                                                            {{ $mapel->nama_mapel }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </td>
+                                                        @endforeach
+                                                    </tr>
+                                                @endforeach
+                                            @endif
 
-                                            <!-- Modal edit  -->
-                                            <div class="modal fade" id="modal-edit{{ $jadwalPelajaran->id }}">
-                                                <div class="modal-dialog modal-lg">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title">Edit {{ $title }}</h5>
-
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                                aria-hidden="true"></button>
-                                                        </div>
-                                                        <form
-                                                            action="{{ route('jadwalpelajaran.update', $jadwalPelajaran->id) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            @method('PUT')
-                                                            <input type="hidden" name="tapel_id"
-                                                                value="{{ $tapel->id }}">
-                                                            <input type="hidden" name="kelas_id"
-                                                                value="{{ $pembelajaran->kelas->id }}">
-                                                            <div class="modal-body">
-                                                                <div class="form-group row">
-                                                                    <label for="nama"
-                                                                        class="col-sm-3 col-form-label">Timetable
-                                                                        Name</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control"
-                                                                            id="nama" name="nama"
-                                                                            placeholder="Timetable Name"
-                                                                            value="{{ $jadwalPelajaran->nama }}">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="modal-footer justify-content-end">
-                                                                <button type="button" class="btn btn-default"
-                                                                    data-bs-dismiss="modal">Batal</button>
-                                                                <button type="submit"
-                                                                    class="btn btn-primary">Simpan</button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- End Modal edit -->
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>

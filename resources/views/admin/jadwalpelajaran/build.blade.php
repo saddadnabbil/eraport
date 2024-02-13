@@ -55,12 +55,12 @@
                                         <table class="border w-100 my-4 table-auto">
                                             <thead>
                                                 <tr>
-                                                    <th class="text-center p-4 w-60 whitespace-nowrap">
-                                                        <p>Time</p>
+                                                    <th class="text-centerwhitespace-nowrap">
+                                                        <p class="text-center mb-0">Time</p>
                                                     </th>
                                                     @foreach ($dataWeekdays as $weekdays)
-                                                        <th scope="col" class="border p-4 w-60 whitespace-nowrap">
-                                                            <p class="text-center ">
+                                                        <th scope="col" class="border  whitespace-nowrap">
+                                                            <p class="text-center mb-0">
                                                                 {{ $weekdays }}
                                                             </p>
                                                         </th>
@@ -68,43 +68,78 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($dataJadwalPelajaranSlot as $slot)
+                                                @if ($dataJadwalPelajaranSlot->isEmpty())
                                                     <tr>
-                                                        <td scope="col" class="p-4 border">
-                                                            <p class="">
-                                                                <strong>
-                                                                    <p>{{ \Carbon\Carbon::parse($slot->start_time)->format('H:i') }}
-                                                                        -
-                                                                        {{ \Carbon\Carbon::parse($slot->stop_time)->format('H:i') }}
-                                                                    </p>
-                                                                </strong>
-                                                            </p>
-                                                        </td>
-                                                        @foreach ($dataWeekdays as $day => $weekdays)
-                                                            {{-- @dd($selected)
+                                                        <td colspan="{{ count($dataWeekdays) + 1 }}"
+                                                            class="text-center border">
+                                                            Data tidak tersedia</td>
+                                                    </tr>
+                                                @else
+                                                    @foreach ($dataJadwalPelajaranSlot as $slot)
+                                                        <tr>
+                                                            <td scope="col" class="border">
+                                                                <p class="">
+                                                                    <strong>
+                                                                        <p>{{ \Carbon\Carbon::parse($slot->start_time)->format('H:i') }}
+                                                                            -
+                                                                            {{ \Carbon\Carbon::parse($slot->stop_time)->format('H:i') }}
+                                                                        </p>
+                                                                    </strong>
+                                                                </p>
+                                                            </td>
+                                                            @if ($slot->keterangan == 1)
+                                                                @foreach ($dataWeekdays as $day => $weekdays)
+                                                                    {{-- @dd($selected)
                                                             @dd($selected[$slot->id][$weekdays]) --}}
 
-                                                            <td class="p-4 border w-60">
-                                                                <select
-                                                                    name="mapel[{{ $slot->id }}][{{ $weekdays }}]"
-                                                                    class="form-control form-select">
-                                                                    <option value="">-- select subject --</option>
-                                                                    @foreach ($dataMapel as $mapel)
-                                                                        <option value="{{ $mapel->id }}"
-                                                                            @if (isset($selected[$slot->id][$weekdays]) && $selected[$slot->id][$weekdays] == $mapel->id) selected @endif>
-                                                                            {{ $mapel->nama_mapel }}
-                                                                        </option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </td>
-                                                        @endforeach
-                                                    </tr>
-                                                @endforeach
+                                                                    <td class="border ">
+                                                                        <select
+                                                                            name="kelas[{{ $slot->id }}][{{ $weekdays }}]"
+                                                                            class="form-control form-select">
+                                                                            <option value="">-- select subject --
+                                                                            </option>
+                                                                            @foreach ($dataKelas as $kelas)
+                                                                                <option value="{{ $kelas->id }}"
+                                                                                    @if (isset($selected[$slot->id][$weekdays]) && $selected[$slot->id][$weekdays] == $kelas->id) selected @endif>
+                                                                                    {{ $kelas->nama_kelas }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </td>
+                                                                @endforeach
+                                                            @elseif ($slot->keterangan == 2)
+                                                                <td colspan="{{ count($dataWeekdays) }}"
+                                                                    class="border text-center">
+                                                                    <p class="">
+                                                                        <strong>
+                                                                            Homeroom - Recess
+                                                                        </strong>
+                                                                    </p>
+                                                                </td>
+                                                            @elseif ($slot->keterangan == 3)
+                                                                <td colspan="{{ count($dataWeekdays) }}"
+                                                                    class="border text-center">
+                                                                    <p class="">
+                                                                        <strong>
+                                                                            Mealtime
+                                                                        </strong>
+                                                                    </p>
+                                                                </td>
+                                                            @endif
+                                                        </tr>
+                                                    @endforeach
+                                                @endif
+
                                             </tbody>
                                         </table>
                                     </div>
 
-                                    <button type="submit" class="btn btn-primary">Save</button>
+                                    @if (!$dataJadwalPelajaranSlot->isEmpty())
+                                        <div class="d-flex justify-content-start">
+                                            <button type="submit" class="btn btn-primary rounded">Save</button>
+                                        </div>
+                                    @endif
+
                                 </form>
                             </div>
                         </div>
@@ -156,6 +191,24 @@
                                                         value="{{ old('stop_time') }}">
                                                 </div>
                                             </div>
+                                            <div class="form-group row">
+                                                <label for="stop_time" class="col-sm-3 col-form-label">Note</label>
+                                                <div class="col-sm-9">
+                                                    <select name="keterangan" id="keterangan"
+                                                        class="form-control form-select">
+                                                        <option value="">-- Pilih Keterangan --</option>
+                                                        <option value="1"
+                                                            @if (old('keterangan') == '1') selected @endif>Lesson Hours
+                                                        </option>
+                                                        <option value="2"
+                                                            @if (old('keterangan') == '2') selected @endif>Recess
+                                                        </option>
+                                                        <option value="3"
+                                                            @if (old('keterangan') == '3') selected @endif>Mealtime
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="modal-footer justify-content-end">
                                             <button type="button" class="btn btn-default"
@@ -178,6 +231,7 @@
                                             <th>Timeslot</th>
                                             <th>Start Time</th>
                                             <th>Stop Time</th>
+                                            <th>Note</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -191,6 +245,9 @@
                                                     {{ \Carbon\Carbon::parse($slot->stop_time)->format('H:i') }}</td>
                                                 <td>{{ \Carbon\Carbon::parse($slot->start_time)->format('H:i') }}</td>
                                                 <td>{{ \Carbon\Carbon::parse($slot->start_time)->format('H:i') }}</td>
+                                                <td>
+                                                    {{ $slot->keterangan == '1' ? 'Lesson Hours' : ($slot->keterangan == '2' ? 'Recess' : 'Mealtime') }}
+                                                </td>
                                                 <td class="text-center">
                                                     @include('components.actions.delete-button', [
                                                         'route' => route(
@@ -211,8 +268,8 @@
                                                         <div class="modal-header">
                                                             <h5 class="modal-title">Edit {{ $title }}</h5>
 
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                                aria-hidden="true"></button>
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal" aria-hidden="true"></button>
                                                         </div>
                                                         <form
                                                             action="{{ route('jadwalpelajaran.update', $jadwalPelajaran->id) }}"

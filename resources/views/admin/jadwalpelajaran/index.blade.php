@@ -106,18 +106,26 @@
                                                 <td>{{ $jadwalPelajaran->nama }}</td>
                                                 <td>{{ $jadwalPelajaran->kelas->nama_kelas }}</td>
                                                 <td class="text-center">
-                                                    @include('components.actions.delete-button', [
-                                                        'route' => route(
-                                                            'jadwalpelajaran.destroy',
-                                                            $jadwalPelajaran->id),
-                                                        'id' => $jadwalPelajaran->id,
-                                                        'isPermanent' => true,
-                                                        'withEdit' => false,
-                                                        'withShow' => true,
-                                                        'showRoute' => route(
-                                                            'jadwalpelajaran.build',
-                                                            $jadwalPelajaran->id),
-                                                    ])
+                                                    <div class="d-flex justify-content-center gap-2">
+                                                        <div data-bs-toggle="tooltip" data-bs-original-title="Build">
+                                                            <a href="{{ route('jadwalpelajaran.build', $jadwalPelajaran->id) }}"
+                                                                class="btn btn-warning btn-sm mt-1">
+                                                                <i class="fas fa-hammer"></i>
+                                                            </a>
+                                                        </div>
+                                                        @include('components.actions.delete-button', [
+                                                            'route' => route(
+                                                                'jadwalpelajaran.destroy',
+                                                                $jadwalPelajaran->id),
+                                                            'id' => $jadwalPelajaran->id,
+                                                            'isPermanent' => true,
+                                                            'withEdit' => false,
+                                                            'withShow' => true,
+                                                            'showRoute' => route(
+                                                                'jadwalpelajaran.show',
+                                                                $jadwalPelajaran->id),
+                                                        ])
+                                                    </div>
                                                 </td>
                                             </tr>
 

@@ -19,10 +19,16 @@ class CreateJadwalPelajaranSlotsTable extends Migration
 
             $table->time('start_time');
             $table->time('stop_time');
+            $table->enum('keterangan', ['1', '2', '3']);
 
             $table->timestamps();
 
             $table->foreign('jadwal_pelajaran_id')->references('id')->on('jadwal_pelajarans')->onDelete('cascade');
+            
+            // keterangan
+            // 1 = jam pelajaran
+            // 2 = recess
+            // 3 = mealtime
         });
     }
 

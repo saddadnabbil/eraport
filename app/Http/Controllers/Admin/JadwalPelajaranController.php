@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Kelas;
 use App\Mapel;
 use App\Tapel;
 use App\Pembelajaran;
@@ -112,9 +113,9 @@ class JadwalPelajaranController extends Controller
         $jadwalPelajaran = JadwalPelajaran::findOrFail($id);
         $dataJadwalPelajaranSlot = JadwalPelajaranSlot::where('jadwal_pelajaran_id', $id)->orderBy('start_time', 'ASC')->get();
 
-        $dataMapel = Mapel::where('tapel_id', $tapel->id)->orderBy('id', 'ASC')->get();
+        $dataKelas = Kelas::where('status', 1)->orderBy('kelas_id', 'ASC')->get();
 
-        return view('admin.jadwalpelajaran.build', compact('title', 'jadwalPelajaran', 'dataJadwalPelajaranSlot', 'dataWeekdays', 'dataMapel', 'selected'));
+        return view('admin.jadwalpelajaran.build', compact('title', 'jadwalPelajaran', 'dataJadwalPelajaranSlot', 'dataWeekdays', 'dataKelas', 'selected'));
     }
 
     public function timeSlot(Request $request)
@@ -123,6 +124,7 @@ class JadwalPelajaranController extends Controller
             'jadwal_pelajaran_id' => 'required',
             'start_time' => 'required',
             'stop_time' => 'required',
+            'keterangan' => 'required',
         ]);
         if ($validator->fails()) {
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
@@ -132,6 +134,7 @@ class JadwalPelajaranController extends Controller
             'jadwal_pelajaran_id' => $request->jadwal_pelajaran_id,
             'start_time' => $request->start_time,
             'stop_time' => $request->stop_time,
+            'keterangan' => $request->keterangan,
         ]);
         $jadwalPelajaranSlot->save();
 
@@ -197,8 +200,37 @@ class JadwalPelajaranController extends Controller
     public function show($id)
     {
         $title = 'Show Timetable';
+        $tapel = Tapel::where('status', 1)->first();
 
-        return view('admin.jadwalpelajaran.show', compact('title'));
+        // Inisialisasi array kosong untuk menyimpan nama hari weekdays
+        $dataWeekdays = [];
+
+        for ($i = Carbon::MONDAY; $i <= Carbon::FRIDAY; $i++) {
+            $dayOfWeek = Carbon::now()->startOfWeek()->addDays($i - Carbon::MONDAY)->isoFormat('dddd');
+            $dataWeekdays[] = $dayOfWeek;
+        }
+
+        $dataWeekdays = array_values($dataWeekdays);
+        array_unshift($dataWeekdays, null);
+        unset($dataWeekdays[0]);
+
+        // Inisialisasi variabel $selected sebagai array kosong
+        $selected = [];
+
+        // Dapatkan data jadwal pelajaran yang sudah ada, misalnya dari database
+        $existingScheduleData = JadwalPelajaranRecord::all();
+
+        // Isi variabel $selected dengan data jadwal pelajaran yang sudah ada
+        foreach ($existingScheduleData as $schedule) {
+            $selected[$schedule->jadwal_pelajaran_slot_id][$schedule->hari] = $schedule->mapel_id;
+        }
+
+        $jadwalPelajaran = JadwalPelajaran::findOrFail($id);
+        $dataJadwalPelajaranSlot = JadwalPelajaranSlot::where('jadwal_pelajaran_id', $id)->orderBy('start_time', 'ASC')->get();
+
+        $dataMapel = Mapel::where('tapel_id', $tapel->id)->orderBy('id', 'ASC')->get();
+
+        return view('admin.jadwalpelajaran.show', compact('title', 'dataWeekdays', 'selected', 'jadwalPelajaran', 'dataJadwalPelajaranSlot', 'dataMapel'));
     }
 
     /**
