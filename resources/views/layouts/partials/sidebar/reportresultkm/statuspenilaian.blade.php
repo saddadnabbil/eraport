@@ -10,13 +10,13 @@
 
             $checkRouteHasilPengelolaan = request()->routeIs('pengelolaannilaikm.*');
             $dynamicRouteHasilPengelolaan = route('pengelolaannilaikm.index');
-            
+
             $checkRouteSemesterReportValue = request()->routeIs('nilairaportkm.*');
             $dynamicRouteSemesterReportValue = route('nilairaportkm.index');
             break;
         case 2:
             $allowedRoutes = ['kirimnilaiakhirkm.*', 'kirimnilaiakhirkm.*', 'nilairaportkmwalas.*'];
-            
+
             $checkRouteAssesmentStatus = request()->routeIs('statusnilaiguru.*');
             $dynamicRouteAssesmentStatus = route('statusnilaiguru.index');
 
@@ -40,16 +40,19 @@
             'name' => 'Assessment Status',
             'route' => $dynamicRouteAssesmentStatus,
             'isActive' => $checkRouteAssesmentStatus,
+            'childHasArrow' => false,
         ],
         [
             'name' => 'Pengelolaan Nilai',
             'route' => $dynamicRouteHasilPengelolaan,
             'isActive' => $checkRouteHasilPengelolaan,
+            'childHasArrow' => false,
         ],
         [
             'name' => 'Semester Report Value',
             'route' => $dynamicRouteSemesterReportValue,
             'isActive' => $checkRouteSemesterReportValue,
+            'childHasArrow' => false,
         ],
     ],
 ])

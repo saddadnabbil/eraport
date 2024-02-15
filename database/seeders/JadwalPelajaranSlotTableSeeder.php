@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\JadwalPelajaranSlot;
 use Illuminate\Database\Seeder;
 
 class JadwalPelajaranSlotTableSeeder extends Seeder
@@ -13,6 +14,5 @@ class JadwalPelajaranSlotTableSeeder extends Seeder
      */
     public function run()
     {
-        //
     }
 }

@@ -277,7 +277,7 @@ h6, .h6 {
 
 p {
   margin-top: 0;
-  margin-bottom: 1rem;
+  /* margin-bottom: 1rem; */
 }
 
 abbr[title] {
@@ -16440,7 +16440,7 @@ sidebar navigation
   top: 23px;
 }
 .sidebar-nav #sidebarnav .sidebar-item .first-level .sidebar-item.active .sidebar-link.active {
-  color: #fff;
+  /* color: #fff; */
   font-weight: 500;
 }
 .sidebar-nav #sidebarnav .sidebar-item .first-level .sidebar-item.active + .base-level-line {

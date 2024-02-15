@@ -18,12 +18,12 @@
                 ],
                 [
                     'title' => 'Timetable',
-                    'url' => route('jadwalpelajaran.index'),
+                    'url' => route('jadwalmengajar.index'),
                     'active' => true,
                 ],
                 [
                     'title' => $title,
-                    'url' => route('jadwalpelajaran.index'),
+                    'url' => route('jadwalmengajar.index'),
                     'active' => false,
                 ],
             ],
@@ -65,9 +65,9 @@
                                             aria-hidden="true"></button>
                                         </button>
                                     </div>
-                                    <form action="{{ route('jadwalpelajaran.timeslot') }}" method="POST">
+                                    <form action="{{ route('jadwalmengajar.timeslot') }}" method="POST">
                                         @csrf
-                                        <input type="hidden" name="tapel_id" value="{{ $tapel->id }}">
+                                        <input type="hidden" name="jadwal_mengajar_id" value="{{ $jadwalMengajar->id }}">
                                         <div class="modal-body">
                                             <div class="form-group row">
                                                 <label for="start_time" class="col-sm-3 col-form-label">Start Time</label>
@@ -131,13 +131,13 @@
                                     </thead>
                                     <tbody>
                                         <?php $no = 0; ?>
-                                        @if ($dataJadwalPelajaranSlot->isEmpty())
+                                        @if ($dataJadwalMengajarSlot->isEmpty())
                                             <tr>
                                                 <td colspan="6" class="text-center border p-3">
                                                     Data tidak tersedia</td>
                                             </tr>
                                         @else
-                                            @foreach ($dataJadwalPelajaranSlot as $slot)
+                                            @foreach ($dataJadwalMengajarSlot as $slot)
                                                 <?php $no++; ?>
                                                 <tr>
                                                     <td>{{ $no }}</td>
@@ -151,7 +151,7 @@
                                                     <td class="text-center">
                                                         @include('components.actions.delete-button', [
                                                             'route' => route(
-                                                                'jadwalpelajaran.deleteTimeSlot',
+                                                                'jadwalmengajar.deleteTimeSlot',
                                                                 $slot->id),
                                                             'id' => $slot->id,
                                                             'isPermanent' => true,
@@ -160,6 +160,46 @@
                                                         ])
                                                     </td>
                                                 </tr>
+
+                                                <!-- Modal edit  -->
+                                                <div class="modal fade" id="modal-edit{{ $slot->id }}">
+                                                    <div class="modal-dialog modal-lg">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">Edit {{ $title }}</h5>
+
+                                                                <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal" aria-hidden="true"></button>
+                                                            </div>
+                                                            <form
+                                                                action="{{ route('jadwalmengajar.update', $jadwalMengajar->id) }}"
+                                                                method="POST">
+                                                                @csrf
+                                                                @method('PUT')
+                                                                <div class="modal-body">
+                                                                    <div class="form-group row">
+                                                                        <label for="nama"
+                                                                            class="col-sm-3 col-form-label">Timetable
+                                                                            Name</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="text" class="form-control"
+                                                                                id="nama" name="nama"
+                                                                                placeholder="Timetable Name"
+                                                                                value="{{ $jadwalMengajar->nama }}">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer justify-content-end">
+                                                                    <button type="button" class="btn btn-default"
+                                                                        data-bs-dismiss="modal">Batal</button>
+                                                                    <button type="submit"
+                                                                        class="btn btn-primary">Simpan</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- End Modal edit -->
                                             @endforeach
                                         @endif
                                     </tbody>
@@ -174,7 +214,8 @@
                             <h3 class="card-title">{{ $title }}</h3>
                             <div class="card-tools">
                                 <div data-bs-toggle="tooltip" data-bs-original-title="Show">
-                                    <a href="{{ route('jadwalpelajaran.show', $kelas->id) }}" class="mt-1 me-2 text-dark">
+                                    <a href="{{ route('jadwalmengajar.show', $jadwalMengajar->id) }}"
+                                        class="mt-1 me-2 text-dark">
                                         <i class="fas fa-eye"></i>
                                     </a>
                                 </div>
@@ -183,9 +224,9 @@
 
                         <div class="card-body">
                             <div class="table-responsive">
-                                <form action="{{ route('jadwalpelajaran.store') }}" method="POST">
+                                <form action="{{ route('jadwalmengajar.manage') }}" method="POST">
                                     @csrf
-                                    <input type="hidden" name="kelas_id" value="{{ $kelas->id }}">
+
                                     <div class="beautify-scrollbar">
                                         <table class="border w-100 my-4 table-auto">
                                             <thead>
@@ -203,14 +244,14 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @if ($dataJadwalPelajaranSlot->isEmpty())
+                                                @if ($dataJadwalMengajarSlot->isEmpty())
                                                     <tr>
                                                         <td colspan="{{ count($dataWeekdays) + 1 }}"
                                                             class="text-center border p-3 ">
                                                             Data tidak tersedia</td>
                                                     </tr>
                                                 @else
-                                                    @foreach ($dataJadwalPelajaranSlot as $slot)
+                                                    @foreach ($dataJadwalMengajarSlot as $slot)
                                                         <tr>
                                                             <td scope="col" class="p-3 border">
                                                                 <p class="text-center">
@@ -230,14 +271,14 @@
 
                                                                     <td class="p-3 border ">
                                                                         <select
-                                                                            name="mapel[{{ $slot->id }}][{{ $weekdays }}]"
+                                                                            name="kelas[{{ $slot->id }}][{{ $weekdays }}]"
                                                                             class="form-control form-select">
                                                                             <option value="">-- select subject --
                                                                             </option>
-                                                                            @foreach ($dataMapel as $mapel)
-                                                                                <option value="{{ $mapel->id }}"
-                                                                                    @if (isset($selected[$slot->id][$weekdays]) && $selected[$slot->id][$weekdays] == $mapel->id) selected @endif>
-                                                                                    {{ $mapel->nama_mapel }}
+                                                                            @foreach ($dataKelas as $kelas)
+                                                                                <option value="{{ $kelas->id }}"
+                                                                                    @if (isset($selected[$slot->id][$weekdays]) && $selected[$slot->id][$weekdays] == $kelas->id) selected @endif>
+                                                                                    {{ $kelas->nama_kelas }}
                                                                                 </option>
                                                                             @endforeach
                                                                         </select>
@@ -270,7 +311,7 @@
                                         </table>
                                     </div>
 
-                                    @if (!$dataJadwalPelajaranSlot->isEmpty())
+                                    @if (!$dataJadwalMengajarSlot->isEmpty())
                                         <div class="d-flex justify-content-start">
                                             <button type="submit" class="btn btn-primary rounded">Save</button>
                                         </div>
@@ -281,7 +322,6 @@
                         </div>
                     </div>
                     <!-- /.card -->
-
                 </div>
 
             </div>

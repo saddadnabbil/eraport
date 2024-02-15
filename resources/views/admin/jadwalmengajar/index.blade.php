@@ -60,10 +60,10 @@
                                             aria-hidden="true"></button>
                                         </button>
                                     </div>
-                                    <form action="{{ route('jadwalpelajaran.store') }}" method="POST">
+                                    <form action="{{ route('jadwalmengajar.store') }}" method="POST">
                                         @csrf
                                         <input type="hidden" name="tapel_id" value="{{ $tapel->id }}">
-                                        <input type="hidden" name="kelas_id" value="{{ $kelas->id }}">
+                                        <input type="hidden" name="kelas_id" value="{{ $pembelajaran->kelas->id }}">
                                         <div class="modal-body">
                                             <div class="form-group row">
                                                 <label for="nama" class="col-sm-3 col-form-label">Timetable
@@ -99,38 +99,38 @@
                                     </thead>
                                     <tbody>
                                         <?php $no = 0; ?>
-                                        @foreach ($dataJadwalPelajaran as $jadwalPelajaran)
+                                        @foreach ($dataJadwalMengajar as $jadwalMengajar)
                                             <?php $no++; ?>
                                             <tr>
                                                 <td>{{ $no }}</td>
-                                                <td>{{ $jadwalPelajaran->nama }}</td>
-                                                <td>{{ $kelas->nama_kelas }}</td>
+                                                <td>{{ $jadwalMengajar->nama }}</td>
+                                                <td>{{ $pembelajaran->kelas->nama_kelas }}</td>
                                                 <td class="text-center">
                                                     <div class="d-flex justify-content-center gap-2">
                                                         <div data-bs-toggle="tooltip" data-bs-original-title="Build">
-                                                            <a href="{{ route('jadwalpelajaran.build', $jadwalPelajaran->id) }}"
+                                                            <a href="{{ route('jadwalmengajar.build', $jadwalMengajar->id) }}"
                                                                 class="btn btn-warning btn-sm mt-1">
                                                                 <i class="fas fa-hammer"></i>
                                                             </a>
                                                         </div>
                                                         @include('components.actions.delete-button', [
                                                             'route' => route(
-                                                                'jadwalpelajaran.destroy',
-                                                                $jadwalPelajaran->id),
-                                                            'id' => $jadwalPelajaran->id,
+                                                                'jadwalmengajar.destroy',
+                                                                $jadwalMengajar->id),
+                                                            'id' => $jadwalMengajar->id,
                                                             'isPermanent' => true,
                                                             'withEdit' => false,
                                                             'withShow' => true,
                                                             'showRoute' => route(
-                                                                'jadwalpelajaran.show',
-                                                                $jadwalPelajaran->id),
+                                                                'jadwalmengajar.show',
+                                                                $jadwalMengajar->id),
                                                         ])
                                                     </div>
                                                 </td>
                                             </tr>
 
                                             <!-- Modal edit  -->
-                                            <div class="modal fade" id="modal-edit{{ $jadwalPelajaran->id }}">
+                                            <div class="modal fade" id="modal-edit{{ $jadwalMengajar->id }}">
                                                 <div class="modal-dialog modal-lg">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
@@ -140,14 +140,14 @@
                                                                 aria-hidden="true"></button>
                                                         </div>
                                                         <form
-                                                            action="{{ route('jadwalpelajaran.update', $jadwalPelajaran->id) }}"
+                                                            action="{{ route('jadwalmengajar.update', $jadwalMengajar->id) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('PUT')
                                                             <input type="hidden" name="tapel_id"
                                                                 value="{{ $tapel->id }}">
                                                             <input type="hidden" name="kelas_id"
-                                                                value="{{ $kelas->id }}">
+                                                                value="{{ $pembelajaran->kelas->id }}">
                                                             <div class="modal-body">
                                                                 <div class="form-group row">
                                                                     <label for="nama"
@@ -157,7 +157,7 @@
                                                                         <input type="text" class="form-control"
                                                                             id="nama" name="nama"
                                                                             placeholder="Timetable Name"
-                                                                            value="{{ $jadwalPelajaran->nama }}">
+                                                                            value="{{ $jadwalMengajar->nama }}">
                                                                     </div>
                                                                 </div>
                                                             </div>

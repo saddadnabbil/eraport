@@ -45,11 +45,6 @@
                     'active' => true,
                 ],
                 [
-                    'title' => 'Timetable',
-                    'url' => route('jadwalpelajaran.index'),
-                    'active' => true,
-                ],
-                [
                     'title' => $title,
                     'url' => route('statuskaryawan.index'),
                     'active' => false,
@@ -93,7 +88,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @if ($dataJadwalPelajaranSlot->isEmpty())
+                                            @if ($dataJadwalMengajarSlot->isEmpty())
                                                 <tr>
                                                     <td colspan="{{ count($dataWeekdays) + 1 }}"
                                                         class="text-center border p-4 ">
@@ -113,7 +108,7 @@
                                                         }
                                                     }
                                                 @endphp --}}
-                                                @foreach ($dataJadwalPelajaranSlot as $index => $slot)
+                                                @foreach ($dataJadwalMengajarSlot as $index => $slot)
                                                     <tr>
                                                         <td scope="col" rowspan="" class="p-4 border">
                                                             <p class="text-center">
@@ -130,9 +125,9 @@
                                                             @foreach ($dataWeekdays as $day => $weekdays)
                                                                 @php
                                                                     $rowspan = 1;
-                                                                    for ($i = $index + 1; $i < count($dataJadwalPelajaranSlot); $i++) {
-                                                                        if (isset($selected[$dataJadwalPelajaranSlot[$i]->id][$weekdays])) {
-                                                                            if ($selected[$dataJadwalPelajaranSlot[$i]->id][$weekdays] != $selected[$slot->id][$weekdays]) {
+                                                                    for ($i = $index + 1; $i < count($dataJadwalMengajarSlot); $i++) {
+                                                                        if (isset($selected[$dataJadwalMengajarSlot[$i]->id][$weekdays])) {
+                                                                            if ($selected[$dataJadwalMengajarSlot[$i]->id][$weekdays] != $selected[$slot->id][$weekdays]) {
                                                                                 break;
                                                                             }
                                                                             $rowspan++;
@@ -141,10 +136,10 @@
                                                                 @endphp
                                                                 <td class="p-4 border  {{ isset($selected[$slot->id][$weekdays]) && $selected[$slot->id][$weekdays] ? 'bg-primary' : '' }}"
                                                                     rowspan="{{ $rowspan }}">
-                                                                    @foreach ($dataMapel as $mapel)
-                                                                        @if (isset($selected[$slot->id][$weekdays]) && $selected[$slot->id][$weekdays] == $mapel->id)
+                                                                    @foreach ($dataKelas as $kelas)
+                                                                        @if (isset($selected[$slot->id][$weekdays]) && $selected[$slot->id][$weekdays] == $kelas->id)
                                                                             <div class=" text-center">
-                                                                                {{ $mapel->nama_mapel }}</div>
+                                                                                {{ $kelas->nama_kelas }}</div>
                                                                         @endif
                                                                     @endforeach
                                                                 </td>

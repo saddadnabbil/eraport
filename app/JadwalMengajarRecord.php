@@ -2,19 +2,20 @@
 
 namespace App;
 
+use App\JadwalMengajarSlot;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class JadwalPelajaranRecord extends Model
+class JadwalMengajarRecord extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
 
-    public function jadwalPelajaranSlot(): BelongsTo
+    public function jadwalMengajarSlot(): BelongsTo
     {
-        return $this->belongsTo(JadwalPelajaranSlot::class);
+        return $this->belongsTo(JadwalMengajarSlot::class);
     }
 
     public function pembelajaran(): BelongsTo
@@ -24,6 +25,6 @@ class JadwalPelajaranRecord extends Model
 
     public function timeSlots(): HasMany
     {
-        return $this->hasMany(JadwalPelajaranSlot::class, 'jadwal_pelajaran_record_id');
+        return $this->hasMany(JadwalMengajarSlot::class, 'jadwal_mengajar_record_id');
     }
 }

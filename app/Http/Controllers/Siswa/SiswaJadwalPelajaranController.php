@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Siswa;
 
 use App\Kelas;
 use App\Mapel;
@@ -25,12 +25,12 @@ class JadwalPelajaranController extends Controller
      */
     public function index()
     {
-        $tapel = Tapel::where('status', 1)->first();
         $title = 'Pilih Kelas - Time Table';
 
-        $dataKelas = Kelas::where('tapel_id', $tapel->id)->get();
+        $data_pembelajaran = Pembelajaran::where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
 
-        return view('admin.jadwalpelajaran.pilihkelas', compact('title', 'dataKelas'));
+
+        return view('admin.jadwalpelajaran.pilihkelas', compact('title', 'data_pembelajaran'));
     }
 
     /**
@@ -40,18 +40,55 @@ class JadwalPelajaranController extends Controller
      */
     public function create(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'kelas_id' => 'required|exists:kelas,id',
-        ]);
+        $tapel = Tapel::where('status', 1)->first();
 
+        $pembelajaran = Pembelajaran::where('id', $request->pembelajaran_id)->first();
+        $title = 'Timetable - ' . $pembelajaran->mapel->nama_mapel . ' - ' . $pembelajaran->kelas->nama_kelas;
+
+        $dataJadwalPelajaran = JadwalPelajaran::where('tapel_id', 1)->where('mapel_id', $pembelajaran->mapel_id)->get();
+
+        return view('admin.jadwalpelajaran.index', compact('title', 'dataJadwalPelajaran', 'tapel', 'pembelajaran'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'tapel_id' => 'required',
+            'mapel_id' => 'required',
+            'nama' => 'required',
+        ]);
         if ($validator->fails()) {
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
         }
 
-        $pembelajaran = Pembelajaran::where('kelas_id', $request->kelas_id)->first();
-        $kelas = Kelas::where('id', $request->kelas_id)->first();
+        $jadwalPelajaran = new JadwalPelajaran([
+            'tapel_id' => $request->tapel_id,
+            'mapel_id' => $request->mapel_id,
+            'nama' => $request->nama,
+        ]);
+        $jadwalPelajaran->save();
 
-        $title = 'Manage Timetable - ' .  $pembelajaran->kelas->nama_kelas;
+        return back()->with('toast_success', 'Timetable berhasil ditambahkan');
+    }
+
+    /**
+     * Build the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function build($id)
+    {
+        $jadwalPelajaran = JadwalPelajaran::where('id', $id)->first();
+        $pembelajaran = Pembelajaran::where('mapel_id', $jadwalPelajaran->mapel_id)->first();
+
+        $title = 'Manage Timetable' . ' - ' . $pembelajaran->mapel->nama_mapel . ' - ' . $pembelajaran->kelas->nama_kelas;
         $tapel = Tapel::where('status', 1)->first();
 
         // Inisialisasi array kosong untuk menyimpan nama hari weekdays
@@ -70,78 +107,25 @@ class JadwalPelajaranController extends Controller
         $selected = [];
 
         // Dapatkan data jadwal pelajaran yang sudah ada, misalnya dari database
-        $existingScheduleData = JadwalPelajaranRecord::where('kelas_id', $request->kelas_id)->get();
+        $existingScheduleData = JadwalPelajaranRecord::all();
 
         // Isi variabel $selected dengan data jadwal pelajaran yang sudah ada
         foreach ($existingScheduleData as $schedule) {
             $selected[$schedule->jadwal_pelajaran_slot_id][$schedule->hari] = $schedule->mapel_id;
         }
 
-        $dataJadwalPelajaranSlot = JadwalPelajaranSlot::where('tapel_id', $tapel->id)->orderBy('start_time', 'ASC')->get();
+        $jadwalPelajaran = JadwalPelajaran::findOrFail($id);
+        $dataJadwalPelajaranSlot = JadwalPelajaranSlot::where('jadwal_pelajaran_id', $id)->orderBy('start_time', 'ASC')->get();
 
         $dataMapel = Mapel::where('tapel_id', $tapel->id)->orderBy('id', 'ASC')->get();
 
-        return view('admin.jadwalpelajaran.build', compact('title', 'tapel', 'kelas', 'dataJadwalPelajaranSlot', 'dataWeekdays', 'dataMapel', 'selected'));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        // Validasi input
-        $request->validate([
-            'mapel' => 'required|array', // pastikan data mapel ada dan berbentuk array
-            'mapel.*.*' => 'nullable|exists:mapel,id', // Jadikan nullable dan pastikan setiap subject yang dipilih valid
-            'kelas_id' => 'required|exists:kelas,id',
-        ]);
-
-        // Loop melalui data yang dikirim dari formulir
-        foreach ($request->mapel as $slotId => $mapel) {
-            foreach ($mapel as $day => $subjectId) {
-                // Cari apakah jadwal pelajaran record dengan slotId dan hari yang sama sudah ada
-                $existingRecord = JadwalPelajaranRecord::where('jadwal_pelajaran_slot_id', $slotId)
-                    ->where('hari', $day)
-                    ->first();
-
-                if ($existingRecord) {
-                    // Jika sudah ada, lakukan update
-                    $existingRecord->update([
-                        'mapel_id' => $subjectId,
-                    ]);
-                } else {
-                    // Jika belum ada, lakukan create
-                    JadwalPelajaranRecord::create([
-                        'jadwal_pelajaran_slot_id' => $slotId,
-                        'mapel_id' => $subjectId,
-                        'kelas_id' => $request->kelas_id,
-                        'hari' => $day,
-                    ]);
-                }
-            }
-        }
-
-        // Redirect kembali dengan pesan sukses
-        return back()->with('success', 'Jadwal Pelajaran berhasil disimpan.');
-    }
-
-
-    public function indexTimeSlot()
-    {
-        dd('ini index timeslot');
-        $title = 'Manage Time Slot';
-        $timeSlot = JadwalPelajaranSlot::all();
-
-        return view('admin.jadwalpelajaran.timeslot', compact('title', 'timeSlot'));
+        return view('admin.jadwalpelajaran.build', compact('title', 'jadwalPelajaran', 'dataJadwalPelajaranSlot', 'dataWeekdays', 'dataMapel', 'selected'));
     }
 
     public function timeSlot(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'tapel_id' => 'required',
+            'jadwal_pelajaran_id' => 'required',
             'start_time' => 'required',
             'stop_time' => 'required',
             'keterangan' => 'required',
@@ -151,7 +135,7 @@ class JadwalPelajaranController extends Controller
         }
 
         $jadwalPelajaranSlot = new JadwalPelajaranSlot([
-            'tapel_id' => $request->tapel_id,
+            'jadwal_pelajaran_id' => $request->jadwal_pelajaran_id,
             'start_time' => $request->start_time,
             'stop_time' => $request->stop_time,
             'keterangan' => $request->keterangan,
@@ -177,6 +161,38 @@ class JadwalPelajaranController extends Controller
 
     public function manage(Request $request)
     {
+        // Validasi input
+        $request->validate([
+            'mapel' => 'required|array', // pastikan data mapel ada dan berbentuk array
+            'mapel.*.*' => 'nullable|exists:mapel,id', // Jadikan nullable dan pastikan setiap subject yang dipilih valid
+        ]);
+
+        // Loop melalui data yang dikirim dari formulir
+        foreach ($request->mapel as $slotId => $mapel) {
+            foreach ($mapel as $day => $subjectId) {
+                // Cari apakah jadwal pelajaran record dengan slotId dan hari yang sama sudah ada
+                $existingRecord = JadwalPelajaranRecord::where('jadwal_pelajaran_slot_id', $slotId)
+                    ->where('hari', $day)
+                    ->first();
+
+                if ($existingRecord) {
+                    // Jika sudah ada, lakukan update
+                    $existingRecord->update([
+                        'mapel_id' => $subjectId,
+                    ]);
+                } else {
+                    // Jika belum ada, lakukan create
+                    JadwalPelajaranRecord::create([
+                        'jadwal_pelajaran_slot_id' => $slotId,
+                        'mapel_id' => $subjectId,
+                        'hari' => $day,
+                    ]);
+                }
+            }
+        }
+
+        // Redirect kembali dengan pesan sukses
+        return back()->with('success', 'Jadwal Pelajaran berhasil disimpan.');
     }
 
     /**
@@ -187,9 +203,10 @@ class JadwalPelajaranController extends Controller
      */
     public function show($id)
     {
-        $pembelajaran = Pembelajaran::where('kelas_id', $id)->first();
+        $jadwalPelajaran = JadwalPelajaran::where('id', $id)->first();
+        $pembelajaran = Pembelajaran::where('mapel_id', $jadwalPelajaran->mapel_id)->first();
 
-        $title = 'Manage Timetable - ' .  $pembelajaran->kelas->nama_kelas;
+        $title = 'Manage Timetable' . ' - ' . $pembelajaran->mapel->nama_mapel . ' - ' . $pembelajaran->kelas->nama_kelas;
         $tapel = Tapel::where('status', 1)->first();
 
         // Inisialisasi array kosong untuk menyimpan nama hari weekdays
@@ -221,6 +238,29 @@ class JadwalPelajaranController extends Controller
         $dataMapel = Mapel::where('tapel_id', $tapel->id)->orderBy('id', 'ASC')->get();
 
         return view('admin.jadwalpelajaran.show', compact('title', 'dataWeekdays', 'selected', 'jadwalPelajaran', 'dataJadwalPelajaranSlot', 'dataMapel'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
     }
 
     /**

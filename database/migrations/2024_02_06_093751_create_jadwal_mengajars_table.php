@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateJadwalPelajaranSlotsTable extends Migration
+class CreateJadwalMengajarsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,22 +13,17 @@ class CreateJadwalPelajaranSlotsTable extends Migration
      */
     public function up()
     {
-        Schema::create('jadwal_pelajaran_slots', function (Blueprint $table) {
+        Schema::create('jadwal_mengajars', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('tapel_id')->unsigned();
+            $table->unsignedBigInteger('kelas_id')->unsigned();
 
-            $table->time('start_time');
-            $table->time('stop_time');
-            $table->enum('keterangan', ['1', '2', '3']);
-
+            $table->string('nama');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('tapel_id')->references('id')->on('tapels')->onDelete('cascade');
-
-            // keterangan
-            // 1 = jam pelajaran
-            // 2 = recess
-            // 3 = mealtime
+            $table->foreign('kelas_id')->references('id')->on('kelas')->onDelete('cascade');
         });
     }
 
@@ -39,6 +34,6 @@ class CreateJadwalPelajaranSlotsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jadwal_pelajaran_slots');
+        Schema::dropIfExists('jadwal_pelajarans');
     }
 }
