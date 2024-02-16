@@ -36,19 +36,19 @@ class SiswaController extends Controller
             return redirect('admin/kelas')->with('toast_warning', 'Mohon isikan data kelas');
         } else {
 
-            $jumlah_kelas_play_group = Kelas::where('tapel_id', $tapel->id)
+            $jumlah_kelas_play_group = Siswa::where('status', 1)
                 ->where('tingkatan_id', '1')
                 ->count();
-            $jumlah_kelas_kinder_garten = Kelas::where('tapel_id', $tapel->id)
+            $jumlah_kelas_kinder_garten = Siswa::where('status', 1)
                 ->where('tingkatan_id', '2')
                 ->count();
-            $jumlah_kelas_primary_school = Kelas::where('tapel_id', $tapel->id)
+            $jumlah_kelas_primary_school = Siswa::where('status', 1)
                 ->where('tingkatan_id', '3')
                 ->count();
-            $jumlah_kelas_junior_high_school = Kelas::where('tapel_id', $tapel->id)
+            $jumlah_kelas_junior_high_school = Siswa::where('status', 1)
                 ->where('tingkatan_id', '4')
                 ->count();
-            $jumlah_kelas_senior_high_school = Kelas::where('tapel_id', $tapel->id)
+            $jumlah_kelas_senior_high_school = Siswa::where('status', 1)
                 ->where('tingkatan_id', '5')
                 ->count();
 
