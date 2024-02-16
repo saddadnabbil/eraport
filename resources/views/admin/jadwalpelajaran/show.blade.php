@@ -136,24 +136,16 @@
                                                                     $rowspan = 1;
                                                                     for ($i = $index + 1; $i < count($dataJadwalPelajaranSlot); $i++) {
                                                                         if (isset($selected[$dataJadwalPelajaranSlot[$i]->id][$weekdays])) {
-                                                                            if (!isset($skippedCells[$i])) {
-                                                                                $skippedCells[$i] = [];
-                                                                            }
-                                                                            if (!isset($skippedCells[$i][$weekdays])) {
-                                                                                $skippedCells[$i][$weekdays] = false;
-                                                                            }
-
-                                                                            if ($skippedCells[$i][$weekdays]) {
+                                                                            if (in_array($i, $skippedCells)) {
                                                                                 continue;
                                                                             }
-
-                                                                            if ($selected[$dataJadwalPelajaranSlot[$i]->id][$weekdays] != $selected[$slot->id][$weekdays] || ($selected[$dataJadwalPelajaranSlot[$i]->id][$weekdays] == $selected[$slot->id][$weekdays] && $dataJadwalPelajaranSlot[$i]->id == $slot->id && $weekdays == $day)) {
+                                                                            if ($selected[$dataJadwalPelajaranSlot[$i]->id][$weekdays] != $selected[$slot->id][$weekdays]) {
                                                                                 break;
                                                                             }
                                                                             $rowspan++;
                                                                             // Add the skipped cells to the list
                                                                             for ($j = $index + 1; $j < $index + $rowspan; $j++) {
-                                                                                $skippedCells[$j][$weekdays] = true;
+                                                                                $skippedCells[] = $j;
                                                                             }
                                                                         }
                                                                     }
