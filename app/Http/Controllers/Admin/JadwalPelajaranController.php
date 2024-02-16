@@ -102,7 +102,6 @@ class JadwalPelajaranController extends Controller
         // Loop melalui data yang dikirim dari formulir
         foreach ($request->mapel as $slotId => $mapel) {
             foreach ($mapel as $day => $subjectId) {
-                // Cari apakah jadwal pelajaran record dengan slotId dan hari yang sama sudah ada
                 $existingRecord = JadwalPelajaranRecord::where('jadwal_pelajaran_slot_id', $slotId)
                     ->where('hari', $day)
                     ->first();
@@ -129,16 +128,15 @@ class JadwalPelajaranController extends Controller
     }
 
 
-    public function indexTimeSlot()
+    public function timeSlot()
     {
-        dd('ini index timeslot');
         $title = 'Manage Time Slot';
-        $timeSlot = JadwalPelajaranSlot::all();
-
-        return view('admin.jadwalpelajaran.timeslot', compact('title', 'timeSlot'));
+        $tapel = Tapel::where('status', 1)->first();
+        $dataJadwalPelajaranSlot = JadwalPelajaranSlot::orderBy('start_time', 'ASC')->get();
+        return view('admin.jadwalpelajaran.timeslot', compact('title', 'dataJadwalPelajaranSlot', 'tapel'));
     }
 
-    public function timeSlot(Request $request)
+    public function storeTimeSlot(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'tapel_id' => 'required',
@@ -175,10 +173,6 @@ class JadwalPelajaranController extends Controller
         }
     }
 
-    public function manage(Request $request)
-    {
-    }
-
     /**
      * Display the specified resource.
      *
@@ -208,19 +202,25 @@ class JadwalPelajaranController extends Controller
         $selected = [];
 
         // Dapatkan data jadwal pelajaran yang sudah ada, misalnya dari database
-        $existingScheduleData = JadwalPelajaranRecord::all();
+        $existingScheduleData = JadwalPelajaranRecord::where('kelas_id', $id)->get();
 
         // Isi variabel $selected dengan data jadwal pelajaran yang sudah ada
         foreach ($existingScheduleData as $schedule) {
             $selected[$schedule->jadwal_pelajaran_slot_id][$schedule->hari] = $schedule->mapel_id;
         }
 
-        $jadwalPelajaran = JadwalPelajaran::findOrFail($id);
-        $dataJadwalPelajaranSlot = JadwalPelajaranSlot::where('jadwal_pelajaran_id', $id)->orderBy('start_time', 'ASC')->get();
+        $dataJadwalPelajaranSlot = JadwalPelajaranSlot::where('tapel_id', $tapel->id)->orderBy('start_time', 'ASC')->get();
 
         $dataMapel = Mapel::where('tapel_id', $tapel->id)->orderBy('id', 'ASC')->get();
 
-        return view('admin.jadwalpelajaran.show', compact('title', 'dataWeekdays', 'selected', 'jadwalPelajaran', 'dataJadwalPelajaranSlot', 'dataMapel'));
+        return view('admin.jadwalpelajaran.show', compact('title', 'dataWeekdays', 'selected', 'dataJadwalPelajaranSlot', 'dataMapel'));
+    }
+
+    public function print()
+    {
+        $title = 'Kelengkapan Raport';
+        $kelengkapan_raport = PDF::loadview('walikelas.km.raportsemester.kelengkapanraport', compact('title', 'sekolah', 'anggota_kelas', 'semester'))->setPaper($request->paper_size, $request->orientation);
+        return $kelengkapan_raport->stream('KELENGKAPAN RAPORT ' . $anggota_kelas->siswa->nama_lengkap . ' (' . $anggota_kelas->kelas->nama_kelas . ').pdf');
     }
 
     /**

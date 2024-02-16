@@ -55,6 +55,7 @@ use Database\Seeders\K13NilaiSpiritualTableSeeder;
 use Database\Seeders\KmNilaiAkhirRaportTableSeeder;
 use SekolahTableSeeder as GlobalSekolahTableSeeder;
 use Database\Seeders\CapaianPembelajaranTableSeeder;
+use Database\Seeders\JadwalPelajaranSlotTableSeeder;
 use Database\Seeders\K13NilaiAkhirRaportTableSeeder;
 use Database\Seeders\K13NilaiPengetahuanTableSeeder;
 use Database\Seeders\RencanaNilaiSumatifTableSeeder;
@@ -138,7 +139,7 @@ class DatabaseSeeder extends Seeder
             KmTglRaportTableSeeder::class,
 
             // Timetable
-            JadwalPelajaranTableSeeder::class
+            JadwalPelajaranSlotTableSeeder::class,
         ]);
     }
 }

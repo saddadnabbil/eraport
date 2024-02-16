@@ -113,6 +113,10 @@
                                                         }
                                                     }
                                                 @endphp --}}
+                                                @php
+                                                    $skippedCells = [];
+                                                @endphp
+
                                                 @foreach ($dataJadwalPelajaranSlot as $index => $slot)
                                                     <tr>
                                                         <td scope="col" rowspan="" class="p-4 border">
@@ -132,21 +136,41 @@
                                                                     $rowspan = 1;
                                                                     for ($i = $index + 1; $i < count($dataJadwalPelajaranSlot); $i++) {
                                                                         if (isset($selected[$dataJadwalPelajaranSlot[$i]->id][$weekdays])) {
-                                                                            if ($selected[$dataJadwalPelajaranSlot[$i]->id][$weekdays] != $selected[$slot->id][$weekdays]) {
+                                                                            if (!isset($skippedCells[$i])) {
+                                                                                $skippedCells[$i] = [];
+                                                                            }
+                                                                            if (!isset($skippedCells[$i][$weekdays])) {
+                                                                                $skippedCells[$i][$weekdays] = false;
+                                                                            }
+
+                                                                            if ($skippedCells[$i][$weekdays]) {
+                                                                                continue;
+                                                                            }
+
+                                                                            if ($selected[$dataJadwalPelajaranSlot[$i]->id][$weekdays] != $selected[$slot->id][$weekdays] || ($selected[$dataJadwalPelajaranSlot[$i]->id][$weekdays] == $selected[$slot->id][$weekdays] && $dataJadwalPelajaranSlot[$i]->id == $slot->id && $weekdays == $day)) {
                                                                                 break;
                                                                             }
                                                                             $rowspan++;
+                                                                            // Add the skipped cells to the list
+                                                                            for ($j = $index + 1; $j < $index + $rowspan; $j++) {
+                                                                                $skippedCells[$j][$weekdays] = true;
+                                                                            }
                                                                         }
                                                                     }
                                                                 @endphp
-                                                                <td class="p-4 border  {{ isset($selected[$slot->id][$weekdays]) && $selected[$slot->id][$weekdays] ? 'bg-primary' : '' }}"
+                                                                @php
+                                                                    $isPrimary = isset($selected[$slot->id][$weekdays]) && $selected[$slot->id][$weekdays] && !in_array($index, $skippedCells);
+                                                                @endphp
+                                                                <td class="p-4 border{{ $isPrimary ? ' bg-primary' : '' }}"
                                                                     rowspan="{{ $rowspan }}">
-                                                                    @foreach ($dataMapel as $mapel)
-                                                                        @if (isset($selected[$slot->id][$weekdays]) && $selected[$slot->id][$weekdays] == $mapel->id)
-                                                                            <div class=" text-center">
-                                                                                {{ $mapel->nama_mapel }}</div>
-                                                                        @endif
-                                                                    @endforeach
+                                                                    @if (!in_array($index, $skippedCells))
+                                                                        @foreach ($dataMapel as $mapel)
+                                                                            @if (isset($selected[$slot->id][$weekdays]) && $selected[$slot->id][$weekdays] == $mapel->id)
+                                                                                <div class=" text-center">
+                                                                                    {{ $mapel->nama_mapel }}</div>
+                                                                            @endif
+                                                                        @endforeach
+                                                                    @endif
                                                                 </td>
                                                             @endforeach
                                                         @elseif ($slot->keterangan == 2)

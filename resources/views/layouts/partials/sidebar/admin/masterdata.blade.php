@@ -87,13 +87,13 @@
         [
             'name' => 'TimeTable',
             'route' => 'javascript:void(0)',
-            'isActive' => request()->routeIs('timeslot.*'),
+            'isActive' => request()->routeIs(['jadwalpelajaran.*', 'jadwalmengajar.*']),
             'childHasArrow' => true,
             'childSubItems' => [
                 [
                     'name' => 'Timeslot',
-                    'route' => route('jadwalpelajaran.timeslot.index'),
-                    'isActive' => request()->routeIs('jadwalpelajaran.timeslot.*'),
+                    'route' => route('timeslot.index'),
+                    'isActive' => request()->routeIs('timeslot.*'),
                 ],
                 [
                     'name' => 'Timetable',
@@ -103,7 +103,7 @@
                 [
                     'name' => 'Timetable Teacher',
                     'route' => route('jadwalmengajar.index'),
-                    'isActive' => request()->routeIs('karyawan.*'),
+                    'isActive' => request()->routeIs('jadwalmengajar.*'),
                 ],
             ],
         ],

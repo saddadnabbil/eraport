@@ -65,7 +65,7 @@
                                             aria-hidden="true"></button>
                                         </button>
                                     </div>
-                                    <form action="{{ route('jadwalpelajaran.timeslot') }}" method="POST">
+                                    <form action="{{ route('timeslot.store') }}" method="POST">
                                         @csrf
                                         <input type="hidden" name="tapel_id" value="{{ $tapel->id }}">
                                         <div class="modal-body">
@@ -150,9 +150,7 @@
                                                     </td>
                                                     <td class="text-center">
                                                         @include('components.actions.delete-button', [
-                                                            'route' => route(
-                                                                'jadwalpelajaran.deleteTimeSlot',
-                                                                $slot->id),
+                                                            'route' => route('timeslot.destory', $slot->id),
                                                             'id' => $slot->id,
                                                             'isPermanent' => true,
                                                             'withEdit' => false,
@@ -169,7 +167,6 @@
                     </div>
                     <!-- /.card -->
                 </div>
-
             </div>
             <!-- /.row -->
         </div>

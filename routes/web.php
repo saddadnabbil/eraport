@@ -299,24 +299,28 @@ Route::group(['middleware' => ['auth']], function () {
                 'only' => ['index', 'store', 'update', 'destroy'],
             ]);
 
+            // timeslot
+            Route::get('timeslot', 'Admin\JadwalPelajaranController@timeSlot')->name('timeslot.index');
+            Route::post('timeslot', 'Admin\JadwalPelajaranController@storeTimeSlot')->name('timeslot.store');
+            Route::delete('timeslot/{id}', 'Admin\JadwalPelajaranController@deleteTimeSlot')->name('timeslot.destory');
+
             // jadwal pelajaran -> siswa
             Route::resource('jadwalpelajaran', 'Admin\JadwalPelajaranController', [
                 'only' => ['index', 'create', 'store', 'show', 'edit', 'update', 'destroy'],
             ]);
             Route::get('jadwalpelajaran/{id}/build', 'Admin\JadwalPelajaranController@build')->name('jadwalpelajaran.build');
             Route::post('jadwalpelajaran/manage', 'Admin\JadwalPelajaranController@manage')->name('jadwalpelajaran.manage');
-            Route::put('jadwalpelajaran/{id}/manage', 'JadwalPelajaranController@manageUpdate')->name('jadwalpelajaran.manage.update');
-            Route::get('jadwalpelajaran/timeslot', 'Admin\JadwalPelajaranController@indexTimeSlot')->name('jadwalpelajaran.timeslot.index');
-            Route::post('jadwalpelajaran/timeslot', 'Admin\JadwalPelajaranController@timeSlot')->name('jadwalpelajaran.timeslot');
-            Route::delete('jadwalpelajaran/timeslot/{id}', 'Admin\JadwalPelajaranController@deleteTimeSlot')->name('jadwalpelajaran.deleteTimeSlot');
+            Route::put('jadwalpelajaran/{id}/manage', 'Admin\JadwalPelajaranController@manageUpdate')->name('jadwalpelajaran.manage.update');
+            Route::get('jadwalpelajaran/print', 'Admin\JadwalPelajaranController@print')->name('jadwalpelajaran.print');
 
             // jadwal mengajar -> guru
             Route::resource('jadwalmengajar', 'Admin\JadwalMengajarController', [
-                'only' => ['index', 'create', 'store', 'show', 'edit', 'update', 'destroy'],
+                'only' => ['index', 'create', 'store', 'show', 'edit', 'destroy'],
             ]);
             Route::get('jadwalmengajar/{id}/build', 'Admin\JadwalMengajarController@build')->name('jadwalmengajar.build');
             Route::post('jadwalmengajar/manage', 'Admin\JadwalMengajarController@manage')->name('jadwalmengajar.manage');
-            Route::put('jadwalmengajar/{id}/manage', 'JadwalMengajarController@manageUpdate')->name('jadwalmengajar.manage.update');
+            Route::put('jadwalmengajar/{id}/manage', 'Admin\JadwalMengajarController@manageUpdate')->name('jadwalmengajar.manage.update');
+            Route::get('jadwalmengajar/print', 'Admin\JadwalPelajaranController@print')->name('jadwalmengajar.print');
         });
     });
     // End Route User Admin
