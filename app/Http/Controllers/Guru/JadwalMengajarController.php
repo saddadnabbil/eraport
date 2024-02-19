@@ -41,9 +41,9 @@ class JadwalMengajarController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request)
     {
-        $pembelajaran = Pembelajaran::findOrFail($id);
+        $pembelajaran = Pembelajaran::findOrFail($request->pembelajaran_id);
 
         $title = 'Teacher Schedule - ' . $pembelajaran->mapel->nama_mapel . ' - ' . $pembelajaran->guru->karyawan->nama_lengkap;
         $tapel = Tapel::where('status', 1)->first();
@@ -71,7 +71,7 @@ class JadwalMengajarController extends Controller
 
         $dataKelas = Kelas::where('tapel_id', $tapel->id)->orderBy('id', 'ASC')->get();
 
-        return view('admin.jadwalmengajar.show', compact('title', 'dataWeekdays', 'selected', 'dataJadwalPelajaranSlot', 'dataKelas', 'pembelajaran'));
+        return view('guru.jadwalmengajar.show', compact('title', 'dataWeekdays', 'selected', 'dataJadwalPelajaranSlot', 'dataKelas', 'pembelajaran'));
     }
 
     public function print(Request $request, $id)

@@ -1,6 +1,6 @@
 @extends('layouts.main.header')
 @section('sidebar')
-    @include('layouts.sidebar.guru')
+    @include('layouts.sidebar.siswa')
 @endsection
 
 @php
@@ -45,7 +45,7 @@
                     'active' => true,
                 ],
                 [
-                    'title' => 'Teacher Schedule',
+                    'title' => 'Timetable',
                     'url' => route('jadwalpelajaran.index'),
                     'active' => true,
                 ],
@@ -74,7 +74,7 @@
                             <h3 class="card-title">{{ $title }}</h3>
                             <div class="card-tools">
                                 <div data-bs-toggle="tooltip" title="Print" class="d-inline-block" class="d-inline-block">
-                                    <a href="{{ route('guru.jadwalmengajar.print', $pembelajaran->id) }}"
+                                    <a href="{{ route('siswa.jadwalpelajaran.print', $anggota_kelas->kelas->id) }}"
                                         class="btn btn-tool btn-sm">
                                         <i class="fas fa-download"></i>
                                     </a>
@@ -84,12 +84,11 @@
 
                         <div class="card-body">
                             <div class="d-flex justify-content-center mt-3 text-dark">
-                                <h3><strong>{{ strtoupper($pembelajaran->mapel->nama_mapel) }} -
-                                        {{ strtoupper($pembelajaran->guru->karyawan->nama_lengkap) }}</strong></h3>
+                                <h3><strong>{{ strtoupper($anggota_kelas->kelas->nama_kelas) }} </strong></h3>
                             </div>
                             <div class="table-responsive">
                                 <div class="beautify-scrollbar">
-                                    <table class="border-dark w-100 my-4 table-auto">
+                                    <table class="border w-100 my-4 table-auto">
                                         <thead>
                                             <tr>
                                                 <th class="text-center p-1 whitespace-nowrap"
@@ -150,10 +149,10 @@
                                                                 <td class="p-1 border"
                                                                     style="{{ $isPrimary ? ' background-color: 	#a7d7ff7d; color: #212529' : '' }}"
                                                                     rowspan="{{ $rowspan }}">
-                                                                    @foreach ($dataKelas as $kelas)
-                                                                        @if (isset($selected[$slot->id][$weekdays]) && $selected[$slot->id][$weekdays] == $kelas->id)
+                                                                    @foreach ($dataMapel as $mapel)
+                                                                        @if (isset($selected[$slot->id][$weekdays]) && $selected[$slot->id][$weekdays] == $mapel->id)
                                                                             <div class="text-center">
-                                                                                {{ $kelas->nama_kelas }}
+                                                                                {{ $mapel->nama_mapel }}
                                                                             </div>
                                                                         @endif
                                                                     @endforeach

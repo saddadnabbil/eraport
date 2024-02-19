@@ -3,12 +3,12 @@
 
     switch ($userRole) {
         case 2:
-            $checkRoute = request()->routeIs('guru.jadwalMengajar.*');
-            $dynamicRoute = route('guru.jadwalMengajar');
+            $checkRoute = request()->routeIs('guru.jadwalmengajar.*');
+            $dynamicRoute = route('guru.jadwalmengajar');
             break;
         case 3:
-            $checkRoute = request()->routeIs('siswa.jadwalPelajaran.*');
-            $dynamicRoute = route('siswa.jadwalPelajaran');
+            $checkRoute = request()->routeIs('siswa.jadwalpelajaran.*');
+            $dynamicRoute = route('siswa.jadwalpelajaran');
             break;
     }
 @endphp

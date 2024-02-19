@@ -1,6 +1,6 @@
 @extends('layouts.main.header')
 @section('sidebar')
-    @include('layouts.sidebar.guru')
+    @include('layouts.sidebar.siswa')
 @endsection
 
 @section('content')
@@ -41,19 +41,18 @@
 
                         <div class="card-body">
                             <div class="callout callout-info">
-                                <form action="{{ route('guru.jadwalmengajar.show') }}" method="GET">
+                                <form action="{{ route('jadwalpelajaran.create') }}" method="GET">
                                     @csrf
-
                                     <div class="form-group row">
                                         <label for="pembelajaran_id" class="col-sm-3 col-form-label">Kelas</label>
                                         <div class="col-sm-9">
-                                            <select class="form-control form-select select2" name="pembelajaran_id"
+                                            <select class="form-control form-select select2" name="kelas_id"
                                                 style="width: 100%;" required onchange="this.form.submit();">
                                                 <option value="" selected>-- Pilih Kelas --</option>
-                                                @foreach ($dataPembelajaran as $pembelajaran)
-                                                    <option value="{{ $pembelajaran->id }}">
-                                                        {{ $pembelajaran->mapel->nama_mapel }}
-                                                    </option>
+                                                @foreach ($dataKelas as $kelas)
+                                                    <option value="{{ $kelas->id }}">
+                                                        {{ $kelas->nama_kelas }}
+                                                    </option>)
                                                 @endforeach
                                             </select>
                                         </div>

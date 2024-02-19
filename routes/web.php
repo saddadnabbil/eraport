@@ -339,7 +339,9 @@ Route::group(['middleware' => ['auth']], function () {
             Route::group(['middleware' => 'checkAksesGuru:Guru Mapel'], function () {
 
                 // jadwal mengajar -> guru
-                Route::get('jadwalmengajar', 'Guru\JadwalMengajarController@index')->name('guru.jadwalMengajar');
+                Route::get('jadwalmengajar', 'Guru\JadwalMengajarController@index')->name('guru.jadwalmengajar');
+                Route::get('jadwalmengajar/show', 'Guru\JadwalMengajarController@show')->name('guru.jadwalmengajar.show');
+                Route::get('jadwalmengajar/{id}/print', 'Guru\JadwalMengajarController@print')->name('guru.jadwalmengajar.print');
 
                 Route::get('kkmguru/import', 'Guru\KM\KkmMapelController@format_import')->name('kkmguru.format_import');
                 Route::post('kkmguru/import', 'Guru\KM\KkmMapelController@import')->name('kkmguru.import');
@@ -566,11 +568,8 @@ Route::group(['middleware' => ['auth']], function () {
     // Route User Siswa
 
     // jadwal pelajaran -> siswa
-    Route::resource('jadwalpelajaransiswa', 'Admin\JadwalPelajaranController', [
-        'only' => ['index', 'create', 'store', 'show', 'edit', 'update', 'destroy'],
-    ])->names([
-        'index' => 'siswa.jadwalpelajaran.index',
-    ]);;
+    Route::get('jadwalpelajaran', 'Siswa\JadwalPelajaranController@index')->name('siswa.jadwalpelajaran');
+    Route::get('jadwalpelajaran/{id}/print', 'Siswa\JadwalPelajaranController@print')->name('siswa.jadwalpelajaran.print');
 
     Route::resource('profilesiswa', 'Siswa\ProfileController', [
         'uses' => ['update'],
