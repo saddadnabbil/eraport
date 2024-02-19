@@ -9,8 +9,11 @@ use App\UnitKaryawan;
 use App\StatusKaryawan;
 use App\PositionKaryawan;
 use Illuminate\Http\Request;
+use App\Imports\KaryawanImport;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 
 class KaryawanController extends Controller
@@ -439,24 +442,25 @@ class KaryawanController extends Controller
     //     return Excel::download(new KaryawanExport, $filename);
     // }
 
-    // public function format_import()
-    // {
-    //     $file = public_path() . "/format_import/format_import_karyawan.xls";
-    //     $headers = array(
-    //         'Content-Type: application/xls',
-    //     );
-    //     return Response::download($file, 'format_import_karyawan ' . date('Y-m-d H_i_s') . '.xls', $headers);
-    // }
+    public function format_import()
+    {
+        $file = public_path() . "/format_import/format_import_karyawan.xls";
+        $headers = array(
+            'Content-Type: application/xls',
+        );
+        return Response::download($file, 'format_import_karyawan ' . date('Y-m-d H_i_s') . '.xls', $headers);
+    }
 
-    // public function import(Request $request)
-    // {
-    //     try {
-    //         Excel::import(new KaryawanImport, $request->file('file_import'));
-    //         return back()->with('toast_success', 'Data karyawan berhasil diimport');
-    //     } catch (\Throwable $th) {
-    //         return back()->with('toast_error', 'Maaf, format data tidak sesuai');
-    //     }
-    // }
+    public function import(Request $request)
+    {
+        try {
+            Excel::import(new KaryawanImport, $request->file('file_import'));
+            return back()->with('toast_success', 'Data karyawan berhasil diimport');
+        } catch (\Throwable $th) {
+            dd($th->getMessage());
+            return back()->with('toast_error', 'Maaf, format data tidak sesuai');
+        }
+    }
 
     public function activate(Request $request)
     {
