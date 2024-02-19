@@ -6,13 +6,14 @@ use App\Kelas;
 use App\Mapel;
 use App\Tapel;
 use App\Pembelajaran;
+use App\JadwalMengajar;
 use App\JadwalPelajaran;
+use PDF;
 use App\JadwalPelajaranSlot;
 use Illuminate\Http\Request;
 use App\JadwalPelajaranRecord;
 use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
-use App\JadwalMengajar;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
@@ -159,6 +160,31 @@ class JadwalPelajaranController extends Controller
         return back()->with('toast_success', 'Timeslot jadwal pelajaran berhasil ditambahkan');
     }
 
+
+    public function updateTimeSlot(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), [
+            'start_time' => 'required',
+            'stop_time' => 'required',
+            'keterangan' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+        }
+
+        $slot = JadwalPelajaranSlot::findorfail($id);
+
+        $data_slot = [
+            'start_time' => $request->start_time,
+            'stop_time' => $request->stop_time,
+            'keterangan' => $request->keterangan,
+        ];
+
+        $slot->update($data_slot);
+
+        return back()->with('toast_success', 'Timeslot jadwal pelajaran berhasil ditambahkan');
+    }
+
     public function deleteTimeSlot($id)
     {
         try {
@@ -183,7 +209,10 @@ class JadwalPelajaranController extends Controller
     {
         $pembelajaran = Pembelajaran::where('kelas_id', $id)->first();
 
-        $title = 'Manage Timetable - ' .  $pembelajaran->kelas->nama_kelas;
+        $kelas = Kelas::where('id', $id)->first();
+
+
+        $title = 'Timetable - ' .  $pembelajaran->kelas->nama_kelas;
         $tapel = Tapel::where('status', 1)->first();
 
         // Inisialisasi array kosong untuk menyimpan nama hari weekdays
@@ -202,7 +231,7 @@ class JadwalPelajaranController extends Controller
         $selected = [];
 
         // Dapatkan data jadwal pelajaran yang sudah ada, misalnya dari database
-        $existingScheduleData = JadwalPelajaranRecord::where('kelas_id', $id)->get();
+        $existingScheduleData = JadwalPelajaranRecord::where('kelas_id', $id)->orderBy('jadwal_pelajaran_slot_id', 'ASC')->get();
 
         // Isi variabel $selected dengan data jadwal pelajaran yang sudah ada
         foreach ($existingScheduleData as $schedule) {
@@ -213,14 +242,46 @@ class JadwalPelajaranController extends Controller
 
         $dataMapel = Mapel::where('tapel_id', $tapel->id)->orderBy('id', 'ASC')->get();
 
-        return view('admin.jadwalpelajaran.show', compact('title', 'dataWeekdays', 'selected', 'dataJadwalPelajaranSlot', 'dataMapel'));
+        return view('admin.jadwalpelajaran.show', compact('title', 'kelas', 'dataWeekdays', 'selected', 'dataJadwalPelajaranSlot', 'dataMapel'));
     }
 
-    public function print()
+    public function print(Request $request, $id)
     {
-        $title = 'Kelengkapan Raport';
-        $kelengkapan_raport = PDF::loadview('walikelas.km.raportsemester.kelengkapanraport', compact('title', 'sekolah', 'anggota_kelas', 'semester'))->setPaper($request->paper_size, $request->orientation);
-        return $kelengkapan_raport->stream('KELENGKAPAN RAPORT ' . $anggota_kelas->siswa->nama_lengkap . ' (' . $anggota_kelas->kelas->nama_kelas . ').pdf');
+        $pembelajaran = Pembelajaran::where('kelas_id', $id)->first();
+
+        $kelas = Kelas::findOrFail($id);
+        $title = 'Print Timetable - ' . $kelas->nama_kelas;
+
+        $tapel = Tapel::where('status', 1)->first();
+
+        // Inisialisasi array kosong untuk menyimpan nama hari weekdays
+        $dataWeekdays = [];
+
+        for ($i = Carbon::MONDAY; $i <= Carbon::FRIDAY; $i++) {
+            $dayOfWeek = Carbon::now()->startOfWeek()->addDays($i - Carbon::MONDAY)->isoFormat('dddd');
+            $dataWeekdays[] = $dayOfWeek;
+        }
+
+        $dataWeekdays = array_values($dataWeekdays);
+        array_unshift($dataWeekdays, null);
+        unset($dataWeekdays[0]);
+
+        // Inisialisasi variabel $selected sebagai array kosong
+        $selected = [];
+
+        // Dapatkan data jadwal pelajaran yang sudah ada, misalnya dari database
+        $existingScheduleData = JadwalPelajaranRecord::where('kelas_id', $id)->orderBy('jadwal_pelajaran_slot_id', 'ASC')->get();
+
+        // Isi variabel $selected dengan data jadwal pelajaran yang sudah ada
+        foreach ($existingScheduleData as $schedule) {
+            $selected[$schedule->jadwal_pelajaran_slot_id][$schedule->hari] = $schedule->mapel_id;
+        }
+
+        $dataJadwalPelajaranSlot = JadwalPelajaranSlot::where('tapel_id', $tapel->id)->orderBy('start_time', 'ASC')->get();
+
+        $dataMapel = Mapel::where('tapel_id', $tapel->id)->orderBy('id', 'ASC')->get();
+        $timetable = PDF::loadview('admin.jadwalpelajaran.print', compact('title', 'dataWeekdays', 'selected', 'dataJadwalPelajaranSlot', 'dataMapel', 'kelas'))->setPaper('A4', 'landscape');
+        return $timetable->stream('Print (' . $kelas->nama_kelas . ').pdf');
     }
 
     /**

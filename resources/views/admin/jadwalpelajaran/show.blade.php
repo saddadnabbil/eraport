@@ -72,19 +72,31 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">{{ $title }}</h3>
+                            <div class="card-tools">
+                                <div data-bs-toggle="tooltip" title="Print" class="d-inline-block" class="d-inline-block">
+                                    <a href="{{ route('jadwalmengajar.print', $kelas->id) }}" class="btn btn-tool btn-sm">
+                                        <i class="fas fa-download"></i>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="card-body">
+                            <div class="d-flex justify-content-center mt-3 text-dark">
+                                <h3><strong>{{ strtoupper($kelas->nama_kelas) }} </strong></h3>
+                            </div>
                             <div class="table-responsive">
                                 <div class="beautify-scrollbar">
                                     <table class="border w-100 my-4 table-auto">
                                         <thead>
                                             <tr>
-                                                <th class="text-center p-1 whitespace-nowrap">
+                                                <th class="text-center p-1 whitespace-nowrap"
+                                                    style="background-color: #93acd457; color: #212529">
                                                     <p class="text-center mb-0">Time</p>
                                                 </th>
                                                 @foreach ($dataWeekdays as $weekdays)
-                                                    <th scope="col" class="border p-1 whitespace-nowrap">
+                                                    <th scope="col" class="border p-1 whitespace-nowrap"
+                                                        style="background-color: #93acd457; color: #212529">
                                                         <p class="text-center mb-0">
                                                             {{ $weekdays }}
                                                         </p>
@@ -96,115 +108,106 @@
                                             @if ($dataJadwalPelajaranSlot->isEmpty())
                                                 <tr>
                                                     <td colspan="{{ count($dataWeekdays) + 1 }}"
-                                                        class="text-center border p-4 ">
+                                                        class="text-center border p-1 ">
                                                         Data tidak tersedia</td>
                                                 </tr>
                                             @else
-                                                {{-- @php
-                                                    $rowspanCounts = [];
-
-                                                    foreach ($selected as $slotId => $selectedDays) {
-                                                        foreach ($selectedDays as $day => $value) {
-                                                            if (!isset($rowspanCounts[$day])) {
-                                                                $rowspanCounts[$day] = 1;
-                                                            } else {
-                                                                $rowspanCounts[$day]++;
-                                                            }
-                                                        }
-                                                    }
-                                                @endphp --}}
                                                 @php
                                                     $skippedCells = [];
                                                 @endphp
-
                                                 @foreach ($dataJadwalPelajaranSlot as $index => $slot)
                                                     <tr>
-                                                        <td scope="col" rowspan="" class="p-4 border">
-                                                            <p class="text-center">
-                                                                <strong>
-                                                                    <p class="text-center">
-                                                                        {{ \Carbon\Carbon::parse($slot->start_time)->format('H:i') }}
-                                                                        -
-                                                                        {{ \Carbon\Carbon::parse($slot->stop_time)->format('H:i') }}
-                                                                    </p>
-                                                                </strong>
+                                                        <td scope="col" rowspan="" class="p-1 border">
+                                                            <p class="text-center text-dark">
+                                                                {{ \Carbon\Carbon::parse($slot->start_time)->format('H:i') }}
+                                                                -
+                                                                {{ \Carbon\Carbon::parse($slot->stop_time)->format('H:i') }}
                                                             </p>
                                                         </td>
                                                         @if ($slot->keterangan == 1)
                                                             @foreach ($dataWeekdays as $day => $weekdays)
                                                                 @php
                                                                     $rowspan = 1;
-                                                                    for ($i = $index + 1; $i < count($dataJadwalPelajaranSlot); $i++) {
-                                                                        if (isset($selected[$dataJadwalPelajaranSlot[$i]->id][$weekdays])) {
-                                                                            if (in_array($i, $skippedCells)) {
-                                                                                continue;
-                                                                            }
-                                                                            if ($selected[$dataJadwalPelajaranSlot[$i]->id][$weekdays] != $selected[$slot->id][$weekdays]) {
-                                                                                break;
-                                                                            }
-                                                                            $rowspan++;
-                                                                            // Add the skipped cells to the list
-                                                                            for ($j = $index + 1; $j < $index + $rowspan; $j++) {
-                                                                                $skippedCells[] = $j;
-                                                                            }
-                                                                        }
-                                                                    }
                                                                 @endphp
-                                                                @php
-                                                                    $isPrimary = isset($selected[$slot->id][$weekdays]) && $selected[$slot->id][$weekdays] && !in_array($index, $skippedCells);
-                                                                @endphp
-                                                                <td class="p-4 border{{ $isPrimary ? ' bg-primary' : '' }}"
-                                                                    rowspan="{{ $rowspan }}">
-                                                                    @if (!in_array($index, $skippedCells))
-                                                                        @foreach ($dataMapel as $mapel)
-                                                                            @if (isset($selected[$slot->id][$weekdays]) && $selected[$slot->id][$weekdays] == $mapel->id)
-                                                                                <div class=" text-center">
-                                                                                    {{ $mapel->nama_mapel }}</div>
-                                                                            @endif
-                                                                        @endforeach
+                                                                @for ($i = $index + 1; $i < count($dataJadwalPelajaranSlot); $i++)
+                                                                    @if (isset($selected[$dataJadwalPelajaranSlot[$i]->id][$weekdays]))
+                                                                        @if ($selected[$dataJadwalPelajaranSlot[$i]->id][$weekdays] != $selected[$slot->id][$weekdays])
+                                                                        @break
                                                                     @endif
+                                                                    @php
+                                                                        $rowspan++;
+                                                                        // Add the skipped cells to the list
+                                                                        $skippedCells[] = ['slot_id' => $dataJadwalPelajaranSlot[$i]->id, 'days' => $weekdays, 'index' => $i];
+                                                                    @endphp
+                                                                @endif
+                                                            @endfor
+                                                            @php
+                                                                $isPrimary = isset($selected[$slot->id][$weekdays]) && $selected[$slot->id][$weekdays] && !in_array(['slot_id' => $slot->id, 'days' => $weekdays, 'index' => $index], $skippedCells);
+                                                            @endphp
+                                                            @if (!in_array(['slot_id' => $slot->id, 'days' => $weekdays, 'index' => $index], $skippedCells))
+                                                                <td class="p-1 border"
+                                                                    style="{{ $isPrimary ? ' background-color: 	#a7d7ff7d; color: #212529' : '' }}"
+                                                                    rowspan="{{ $rowspan }}">
+                                                                    @foreach ($dataMapel as $mapel)
+                                                                        @if (isset($selected[$slot->id][$weekdays]) && $selected[$slot->id][$weekdays] == $mapel->id)
+                                                                            <div class="text-center">
+                                                                                {{ $mapel->nama_mapel }}
+                                                                            </div>
+                                                                        @endif
+                                                                    @endforeach
                                                                 </td>
-                                                            @endforeach
-                                                        @elseif ($slot->keterangan == 2)
-                                                            <td colspan="{{ count($dataWeekdays) }}"
-                                                                class="border text-center p-3 bg-success">
-                                                                <p class="text-center">
-                                                                    <strong>
+                                                            @endif
+                                                        @endforeach
+                                                    @else
+                                                        <td colspan="{{ count($dataWeekdays) }}"
+                                                            class="border text-center p-1 text-dark">
+                                                            <strong>
+                                                                <i>
+                                                                    @if ($slot->keterangan == 2)
                                                                         Homeroom - Recess
-                                                                    </strong>
-                                                                </p>
-                                                            </td>
-                                                        @elseif ($slot->keterangan == 3)
-                                                            <td colspan="{{ count($dataWeekdays) }}"
-                                                                class="border text-center p-3 bg-success">
-                                                                <p class="text-center">
-                                                                    <strong>
+                                                                    @elseif ($slot->keterangan == 3)
                                                                         Mealtime
-                                                                    </strong>
-                                                                </p>
-                                                            </td>
-                                                        @endif
-                                                    </tr>
-                                                @endforeach
-                                            @endif
-                                        </tbody>
-                                    </table>
-                                </div>
+                                                                    @else
+                                                                        Other
+                                                                    @endif
+                                                                </i>
+                                                            </strong>
+                                                        </td>
+                                                    @endif
+                                                </tr>
+                                            @endforeach
+
+                                        @endif
+                                    </tbody>
+                                </table>
                             </div>
+                            <table style="margin: 120px auto 20px; text-align: center;">
+                                <tr>
+                                    <td style="padding-right: 20px;">
+                                        <img src="{{ asset('assets/dist/img/merdeka-belajar.png') }}"
+                                            alt="Merdeka Belajar" style="max-width: 100%; height: 100px;">
+                                    </td>
+                                    <td style="padding-left: 20px;">
+                                        <img src="{{ asset('assets/dist/img/pearson-edexcel.png') }}"
+                                            alt="Pearson Edexcel" style="max-width: 100%; height: 100px;">
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
-                    <!-- /.card -->
                 </div>
-
+                <!-- /.card -->
             </div>
-            <!-- /.row -->
+
         </div>
-        <!--/. container-fluid -->
+        <!-- /.row -->
     </div>
+    <!--/. container-fluid -->
+</div>
 @endsection
 
 
 
 @section('footer')
-    @include('layouts.main.footer')
+@include('layouts.main.footer')
 @endsection

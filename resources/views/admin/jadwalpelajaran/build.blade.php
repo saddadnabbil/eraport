@@ -37,7 +37,6 @@
         <!-- ============================================================== -->
         <div class="container-fluid">
 
-            {{-- data table --}}
             <!-- ./row -->
             <div class="row">
                 <div class="col-12">
@@ -59,7 +58,8 @@
                                     </div>
                                     <div data-bs-toggle="tooltip" title="Print" class="d-inline-block"
                                         class="d-inline-block">
-                                        <a href="{{ route('jadwalpelajaran.print') }}" class="btn btn-tool btn-sm">
+                                        <a href="{{ route('jadwalpelajaran.print', $kelas->id) }}"
+                                            class="btn btn-tool btn-sm">
                                             <i class="fas fa-download"></i>
                                         </a>
                                     </div>
@@ -111,9 +111,6 @@
                                                             </td>
                                                             @if ($slot->keterangan == 1)
                                                                 @foreach ($dataWeekdays as $day => $weekdays)
-                                                                    {{-- @dd($selected)
-                                                            @dd($selected[$slot->id][$weekdays]) --}}
-
                                                                     <td class="p-3 border ">
                                                                         <select
                                                                             name="mapel[{{ $slot->id }}][{{ $weekdays }}]"

@@ -302,16 +302,17 @@ Route::group(['middleware' => ['auth']], function () {
             // timeslot
             Route::get('timeslot', 'Admin\JadwalPelajaranController@timeSlot')->name('timeslot.index');
             Route::post('timeslot', 'Admin\JadwalPelajaranController@storeTimeSlot')->name('timeslot.store');
+            Route::put('timeslot/update/{id}', 'Admin\JadwalPelajaranController@updateTimeSlot')->name('timeslot.update');
             Route::delete('timeslot/{id}', 'Admin\JadwalPelajaranController@deleteTimeSlot')->name('timeslot.destory');
 
             // jadwal pelajaran -> siswa
             Route::resource('jadwalpelajaran', 'Admin\JadwalPelajaranController', [
-                'only' => ['index', 'create', 'store', 'show', 'edit', 'update', 'destroy'],
+                'only' => ['index', 'create', 'store', 'show'],
             ]);
             Route::get('jadwalpelajaran/{id}/build', 'Admin\JadwalPelajaranController@build')->name('jadwalpelajaran.build');
             Route::post('jadwalpelajaran/manage', 'Admin\JadwalPelajaranController@manage')->name('jadwalpelajaran.manage');
             Route::put('jadwalpelajaran/{id}/manage', 'Admin\JadwalPelajaranController@manageUpdate')->name('jadwalpelajaran.manage.update');
-            Route::get('jadwalpelajaran/print', 'Admin\JadwalPelajaranController@print')->name('jadwalpelajaran.print');
+            Route::get('jadwalpelajaran/{id}/print', 'Admin\JadwalPelajaranController@print')->name('jadwalpelajaran.print');
 
             // jadwal mengajar -> guru
             Route::resource('jadwalmengajar', 'Admin\JadwalMengajarController', [
@@ -320,7 +321,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('jadwalmengajar/{id}/build', 'Admin\JadwalMengajarController@build')->name('jadwalmengajar.build');
             Route::post('jadwalmengajar/manage', 'Admin\JadwalMengajarController@manage')->name('jadwalmengajar.manage');
             Route::put('jadwalmengajar/{id}/manage', 'Admin\JadwalMengajarController@manageUpdate')->name('jadwalmengajar.manage.update');
-            Route::get('jadwalmengajar/print', 'Admin\JadwalPelajaranController@print')->name('jadwalmengajar.print');
+            Route::get('jadwalmengajar/{id}/print', 'Admin\JadwalMengajarController@print')->name('jadwalmengajar.print');
         });
     });
     // End Route User Admin
@@ -338,7 +339,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::group(['middleware' => 'checkAksesGuru:Guru Mapel'], function () {
 
                 // jadwal mengajar -> guru
-                Route::get('jadwalmengajar', 'Admin\JadwalMengajarController@show')->name('guru.jadwalMengajar');
+                Route::get('jadwalmengajar', 'Guru\JadwalMengajarController@index')->name('guru.jadwalMengajar');
 
                 Route::get('kkmguru/import', 'Guru\KM\KkmMapelController@format_import')->name('kkmguru.format_import');
                 Route::post('kkmguru/import', 'Guru\KM\KkmMapelController@import')->name('kkmguru.import');
