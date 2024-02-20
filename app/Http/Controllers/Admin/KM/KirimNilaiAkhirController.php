@@ -36,7 +36,7 @@ class KirimNilaiAkhirController extends Controller
         $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
 
         $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
-        $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
+        $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('kelas_id', 'ASC')->orderBy('mapel_id', 'ASC')->get();
 
         return view('admin.km.kirimnilaiakhirkm.index', compact('title', 'data_pembelajaran', 'data_kelas'));
     }
@@ -84,7 +84,7 @@ class KirimNilaiAkhirController extends Controller
 
                     // $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
                     $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
-                    $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
+                    $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('kelas_id', 'ASC')->orderBy('mapel_id', 'ASC')->get();
 
                     // Interval KKM
                     $kkm->predikat_d =  60.00;

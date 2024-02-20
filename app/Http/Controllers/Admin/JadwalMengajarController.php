@@ -25,7 +25,8 @@ class JadwalMengajarController extends Controller
     {
         $title = 'Select Teacher - Teaching Schedule';
 
-        $dataGuru = Guru::orderBy('id', 'ASC')->get();
+        $guru_ids = Pembelajaran::pluck('guru_id');
+        $dataGuru = Guru::whereIn('id', $guru_ids)->orderBy('id', 'ASC')->get();
 
         return view('admin.jadwalmengajar.pilihkelas', compact('title', 'dataGuru'));
     }

@@ -24,7 +24,8 @@ class UserController extends Controller
     public function index()
     {
         $title = 'Data User';
-        $data_user = User::where('id', '!=', Auth::user()->id)->orderBy('role', 'ASC')->orderBy('username', 'ASC')->get();
+        $data_user = User::orderBy('role', 'ASC')->orderBy('id', 'ASC')->get();
+        // $data_user = User::where('id', '!=', Auth::user()->id)->orderBy('role', 'ASC')->orderBy('id', 'ASC')->get();
         return view('admin.user.index', compact('title', 'data_user'));
     }
 

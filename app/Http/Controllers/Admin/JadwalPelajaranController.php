@@ -50,9 +50,10 @@ class JadwalPelajaranController extends Controller
         }
 
         $pembelajaran = Pembelajaran::where('kelas_id', $request->kelas_id)->first();
+
         $kelas = Kelas::where('id', $request->kelas_id)->first();
 
-        $title = 'Manage Timetable - ' .  $pembelajaran->kelas->nama_kelas;
+        $title = 'Manage Timetable - ' .  $kelas->nama_kelas;
         $tapel = Tapel::where('status', 1)->first();
 
         // Inisialisasi array kosong untuk menyimpan nama hari weekdays
@@ -212,7 +213,7 @@ class JadwalPelajaranController extends Controller
         $kelas = Kelas::where('id', $id)->first();
 
 
-        $title = 'Timetable - ' .  $pembelajaran->kelas->nama_kelas;
+        $title = 'Timetable - ' .  $kelas->nama_kelas;
         $tapel = Tapel::where('status', 1)->first();
 
         // Inisialisasi array kosong untuk menyimpan nama hari weekdays

@@ -91,12 +91,12 @@
                                     <table class="border w-100 my-4 table-auto">
                                         <thead>
                                             <tr>
-                                                <th class="text-center p-1 whitespace-nowrap"
+                                                <th class="text-center p-3 whitespace-nowrap"
                                                     style="background-color: #93acd457; color: #212529">
                                                     <p class="text-center mb-0">Time</p>
                                                 </th>
                                                 @foreach ($dataWeekdays as $weekdays)
-                                                    <th scope="col" class="border p-1 whitespace-nowrap"
+                                                    <th scope="col" class="border p-3 whitespace-nowrap"
                                                         style="background-color: #93acd457; color: #212529">
                                                         <p class="text-center mb-0">
                                                             {{ $weekdays }}
@@ -109,7 +109,7 @@
                                             @if ($dataJadwalPelajaranSlot->isEmpty())
                                                 <tr>
                                                     <td colspan="{{ count($dataWeekdays) + 1 }}"
-                                                        class="text-center border p-1 ">
+                                                        class="text-center border p-3 ">
                                                         Data tidak tersedia</td>
                                                 </tr>
                                             @else
@@ -118,7 +118,7 @@
                                                 @endphp
                                                 @foreach ($dataJadwalPelajaranSlot as $index => $slot)
                                                     <tr>
-                                                        <td scope="col" rowspan="" class="p-1 border">
+                                                        <td scope="col" rowspan="" class="p-3 border">
                                                             <p class="text-center text-dark">
                                                                 {{ \Carbon\Carbon::parse($slot->start_time)->format('H:i') }}
                                                                 -
@@ -146,7 +146,7 @@
                                                                 $isPrimary = isset($selected[$slot->id][$weekdays]) && $selected[$slot->id][$weekdays] && !in_array(['slot_id' => $slot->id, 'days' => $weekdays, 'index' => $index], $skippedCells);
                                                             @endphp
                                                             @if (!in_array(['slot_id' => $slot->id, 'days' => $weekdays, 'index' => $index], $skippedCells))
-                                                                <td class="p-1 border"
+                                                                <td class="p-3 border"
                                                                     style="{{ $isPrimary ? ' background-color: 	#a7d7ff7d; color: #212529' : '' }}"
                                                                     rowspan="{{ $rowspan }}">
                                                                     @foreach ($dataMapel as $mapel)
@@ -161,7 +161,7 @@
                                                         @endforeach
                                                     @else
                                                         <td colspan="{{ count($dataWeekdays) }}"
-                                                            class="border text-center p-1 text-dark">
+                                                            class="border text-center p-3 text-dark">
                                                             <strong>
                                                                 <i>
                                                                     @if ($slot->keterangan == 2)

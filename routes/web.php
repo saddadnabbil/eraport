@@ -26,6 +26,11 @@ Route::fallback(function () {
     return view('errorpage.404', compact('title'));
 });
 
+Route::get('/404', function () {
+    $title = 'Page Not Found';
+    return view('errorpage.404', compact('title'));
+})->name('404');
+
 Route::get('/', 'AuthController@index')
     ->name('login.get')
     ->middleware('guest');

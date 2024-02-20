@@ -59,10 +59,11 @@ class Handler extends ExceptionHandler
      *
      * @param Throwable $e The exception to be captured
      */
-    public function register() {
+    public function register()
+    {
         $this->reportable(function (Throwable $e) {
             if (app()->bound('sentry')) {
-            app('sentry')->captureException($e);
+                app('sentry')->captureException($e);
             }
         });
     }

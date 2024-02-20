@@ -2,21 +2,19 @@
 
 namespace Database\Factories;
 
+use App\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class UserFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array
-     */
+    protected $model = User::class;
+
     public function definition()
     {
         return [
-            'username' => $this->faker->unique()->userName,
-            'password' => bcrypt('123456'), 
-            'role' => '3',
+            'username' => $this->faker->userName,
+            'password' => bcrypt('password'), // You should not store plain passwords, this is just for example
+            'role' => $this->faker->randomElement(['2', '3']),
             'status' => true,
         ];
     }
