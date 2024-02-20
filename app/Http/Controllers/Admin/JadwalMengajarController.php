@@ -50,6 +50,11 @@ class JadwalMengajarController extends Controller
             ->where('guru_id', $request->guru_id)
             ->groupBy('mapel_id')
             ->get();
+
+        if ($dataPembelajaran->isEmpty()) {
+            return back()->with('toast_error', 'Guru belum memiliki jadwal pembelajaran!');
+        }
+
         $guru = Guru::where('id', $request->guru_id)->first();
 
         $title = 'Manage Teacher Schedule - ' . $guru->karyawan->nama_lengkap;
