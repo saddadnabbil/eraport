@@ -16,7 +16,7 @@ class CreateJadwalPelajaranRecordsTable extends Migration
         Schema::create('jadwal_pelajaran_records', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('jadwal_pelajaran_slot_id')->unsigned()->nullable();
-            $table->unsignedBigInteger('kelas_id')->unsigned();
+            $table->unsignedBigInteger('kelas_id')->unsigned()->nullable();
             $table->unsignedBigInteger('mapel_id')->unsigned()->nullable();
             $table->string('hari');
             $table->timestamps();

@@ -37,7 +37,7 @@ class PenilaianKurikulumMerdekaController extends Controller
         $data_kelas = Kelas::where('tapel_id', $tapel->id)->groupBy('tingkatan_id')->orderBy('tingkatan_id', 'ASC')->get();
         $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
 
-        $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
+        $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('kelas_id', 'ASC')->orderBy('mapel_id', 'ASC')->get();
 
         if (count($data_mapel) == 0) {
             return redirect('admin/mapel')->with('toast_warning', 'Mohon isikan data mata pelajaran');
@@ -74,7 +74,7 @@ class PenilaianKurikulumMerdekaController extends Controller
             $semester = Semester::findorfail($pembelajaran->kelas->tingkatan->semester_id);
 
             $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
-            $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
+            $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('kelas_id', 'ASC')->orderBy('mapel_id', 'ASC')->get();
 
             $data_rencana_penilaian_sumatif = RencanaNilaiSumatif::with('nilai_sumatif')->where('term_id', $term->term)->where('semester_id', $semester->id)->where('pembelajaran_id', $request->pembelajaran_id)->get();
             $count_cp_sumatif = count($data_rencana_penilaian_sumatif);

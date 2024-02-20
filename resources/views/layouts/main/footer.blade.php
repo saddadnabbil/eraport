@@ -6,6 +6,8 @@
   <!-- apps -->
   <script src="{{ asset('dist/js/app-style-switcher.js') }}"></script>
   <script src="{{ asset('dist/js/feather.min.js') }}"></script>
+  {{-- Select2 --}}
+  <script src="{{ asset('assets/libs/select2/js/select2.full.min.js') }}"></script>
   <!-- slimscrollbar scrollbar JavaScript -->
   <script src="{{ asset('assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js') }}"></script>
   <script src="{{ asset('assets/extra-libs/sparkline/sparkline.js') }}"></script>
@@ -32,6 +34,43 @@
       var popoverList = popoverTriggerList.map(function(popoverTriggerEl) {
           return new bootstrap.Popover(popoverTriggerEl)
       })
+  </script>
+
+  <script>
+      $(function() {
+          //Initialize Select2 Elements
+          //   $('.select2').select2()
+
+          //   $("#example1").DataTable();
+          //   $('#example2').DataTable({
+          //       "paging": true,
+          //       "lengthChange": true,
+          //       "searching": true,
+          //       "ordering": true,
+          //       "info": true,
+          //       "autoWidth": false,
+          //   });
+          //   $('#example3').DataTable({
+          //       "paging": true,
+          //       "lengthChange": true,
+          //       "searching": true,
+          //       "ordering": true,
+          //       "info": true,
+          //       "autoWidth": false,
+          //   });
+
+          //   $('#example4').DataTable({
+          //       "paging": true,
+          //       "lengthChange": false,
+          //       "searching": false,
+          //       "ordering": true,
+          //       "info": true,
+          //       "autoWidth": false,
+          //   });
+
+          //   //Bootstrap Duallistbox
+          //   $('.duallistbox').bootstrapDualListbox()
+      });
   </script>
 
   {{-- custom script --}}

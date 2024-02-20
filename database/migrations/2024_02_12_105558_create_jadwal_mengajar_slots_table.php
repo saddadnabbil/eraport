@@ -15,7 +15,7 @@ class CreateJadwalMengajarSlotsTable extends Migration
     {
         Schema::create('jadwal_mengajar_slots', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('jadwal_mengajar_id')->unsigned();
+            $table->unsignedBigInteger('tapel_id')->unsigned();
 
             $table->time('start_time');
             $table->time('stop_time');
@@ -23,7 +23,7 @@ class CreateJadwalMengajarSlotsTable extends Migration
 
             $table->timestamps();
 
-            $table->foreign('jadwal_mengajar_id')->references('id')->on('jadwal_mengajars')->onDelete('cascade');
+            $table->foreign('tapel_id')->references('id')->on('tapels')->onDelete('cascade');
 
             // keterangan
             // 1 = jam mengajar

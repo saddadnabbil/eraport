@@ -43,18 +43,16 @@
                             <div class="callout callout-info">
                                 <form action="{{ route('jadwalmengajar.create') }}" method="GET">
                                     @csrf
+
                                     <div class="form-group row">
                                         <label for="pembelajaran_id" class="col-sm-3 col-form-label">Kelas</label>
                                         <div class="col-sm-9">
-                                            <select class="form-control form-select select2" name="pembelajaran_id"
+                                            <select class="form-control form-select select2" name="guru_id"
                                                 style="width: 100%;" required onchange="this.form.submit();">
                                                 <option value="" selected>-- Pilih Kelas --</option>
-                                                @foreach ($data_pembelajaran as $pembelajaran)
-                                                    <option value="{{ $pembelajaran->id }}">
-                                                        {{ $pembelajaran->guru->karyawan->nama_lengkap }} -
-                                                        {{ $pembelajaran->mapel->nama_mapel }} -
-                                                        ({{ $pembelajaran->kelas->nama_kelas }} -
-                                                        {{ $pembelajaran->kelas->tingkatan->nama_tingkatan }})
+                                                @foreach ($dataGuru as $guru)
+                                                    <option value="{{ $guru->id }}">
+                                                        {{ $guru->karyawan->nama_lengkap }}
                                                     </option>
                                                 @endforeach
                                             </select>

@@ -121,7 +121,7 @@
                                     </thead>
                                     <tbody>
                                         <?php $no = 0; ?>
-                                        @foreach ($dataJadwalPelajaran as $ekstrakulikuler)
+                                        @foreach ($data_ekstrakulikuler as $ekstrakulikuler)
                                             <?php $no++; ?>
                                             <tr>
                                                 <td>{{ $no }}</td>

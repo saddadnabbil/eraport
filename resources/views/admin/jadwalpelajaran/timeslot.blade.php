@@ -65,7 +65,7 @@
                                             aria-hidden="true"></button>
                                         </button>
                                     </div>
-                                    <form action="{{ route('jadwalpelajaran.timeslot') }}" method="POST">
+                                    <form action="{{ route('timeslot.store') }}" method="POST">
                                         @csrf
                                         <input type="hidden" name="tapel_id" value="{{ $tapel->id }}">
                                         <div class="modal-body">
@@ -144,22 +144,93 @@
                                                     <td>{{ \Carbon\Carbon::parse($slot->start_time)->format('H:i') }} -
                                                         {{ \Carbon\Carbon::parse($slot->stop_time)->format('H:i') }}</td>
                                                     <td>{{ \Carbon\Carbon::parse($slot->start_time)->format('H:i') }}</td>
-                                                    <td>{{ \Carbon\Carbon::parse($slot->start_time)->format('H:i') }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($slot->stop_time)->format('H:i') }}</td>
                                                     <td>
                                                         {{ $slot->keterangan == '1' ? 'Lesson Hours' : ($slot->keterangan == '2' ? 'Recess' : 'Mealtime') }}
                                                     </td>
                                                     <td class="text-center">
                                                         @include('components.actions.delete-button', [
-                                                            'route' => route(
-                                                                'jadwalpelajaran.deleteTimeSlot',
-                                                                $slot->id),
+                                                            'route' => route('timeslot.destory', $slot->id),
                                                             'id' => $slot->id,
                                                             'isPermanent' => true,
-                                                            'withEdit' => false,
+                                                            'withEdit' => true,
                                                             'withShow' => false,
                                                         ])
                                                     </td>
                                                 </tr>
+
+                                                <!-- Modal edit  -->
+                                                <div class="modal fade" id="modal-edit{{ $slot->id }}">
+                                                    <div class="modal-dialog modal-lg">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">Edit {{ $title }}</h5>
+
+                                                                <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal" aria-hidden="true"></button>
+                                                            </div>
+                                                            <form action="{{ route('timeslot.update', $slot->id) }}"
+                                                                method="POST">
+                                                                @csrf
+                                                                @method('PUT')
+                                                                <div class="modal-body">
+                                                                    <div class="form-group row">
+                                                                        <label for="start_time"
+                                                                            class="col-sm-3 col-form-label">Start
+                                                                            Time</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="time" class="form-control"
+                                                                                id="start_time" name="start_time"
+                                                                                placeholder="Timetable Name"
+                                                                                value="{{ $slot->start_time }}">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group row">
+                                                                        <label for="stop_time"
+                                                                            class="col-sm-3 col-form-label">Stop
+                                                                            Time</label>
+                                                                        <div class="col-sm-9">
+                                                                            <input type="time" class="form-control"
+                                                                                id="stop_time" name="stop_time"
+                                                                                placeholder="Timetable Name"
+                                                                                value="{{ $slot->stop_time }}">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group row">
+                                                                        <label for="stop_time"
+                                                                            class="col-sm-3 col-form-label">Note</label>
+                                                                        <div class="col-sm-9">
+                                                                            <select name="keterangan" id="keterangan"
+                                                                                class="form-control form-select">
+                                                                                <option value="">-- Pilih Keterangan
+                                                                                    --</option>
+                                                                                <option value="1"
+                                                                                    @if ($slot->keterangan == '1') selected @endif>
+                                                                                    Lesson Hours
+                                                                                </option>
+                                                                                <option value="2"
+                                                                                    @if ($slot->keterangan == '2') selected @endif>
+                                                                                    Recess
+                                                                                </option>
+                                                                                <option value="3"
+                                                                                    @if ($slot->keterangan == '3') selected @endif>
+                                                                                    Mealtime
+                                                                                </option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer justify-content-end">
+                                                                    <button type="button" class="btn btn-default"
+                                                                        data-bs-dismiss="modal">Batal</button>
+                                                                    <button type="submit"
+                                                                        class="btn btn-primary">Simpan</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- End Modal edit -->
                                             @endforeach
                                         @endif
                                     </tbody>
@@ -169,7 +240,6 @@
                     </div>
                     <!-- /.card -->
                 </div>
-
             </div>
             <!-- /.row -->
         </div>

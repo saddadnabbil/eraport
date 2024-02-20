@@ -13,7 +13,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton(Faker::class, function () {
+            return Faker::create('id_ID');
+        });
     }
 
     /**

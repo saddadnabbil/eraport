@@ -28,7 +28,7 @@ class NilaiRaportSemesterController extends Controller
         $term = Term::findorfail(session()->get('term_id'));
 
         $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
-        $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
+        $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('kelas_id', 'ASC')->orderBy('mapel_id', 'ASC')->get();
 
         return view('admin.km.nilairaport.pilihkelas', compact('title', 'data_pembelajaran'));
     }

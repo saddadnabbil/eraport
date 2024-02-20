@@ -24,22 +24,24 @@ class PembelajaranTableSeeder extends Seeder
         Pembelajaran::create([
             'kelas_id' => 1,
             'mapel_id' => 2,
-            'guru_id' => 1,
+            'guru_id' => 2,
             'status' => true
         ]);
 
         Pembelajaran::create([
             'kelas_id' => 1,
             'mapel_id' => 3,
-            'guru_id' => 1,
+            'guru_id' => 3,
             'status' => true
         ]);
 
         Pembelajaran::create([
             'kelas_id' => 2,
             'mapel_id' => 1,
-            'guru_id' => 1,
+            'guru_id' => 4,
             'status' => true
         ]);
+
+        // Pembelajaran::factory()->count(10)->create();
     }
 }

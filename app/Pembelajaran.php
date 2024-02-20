@@ -2,12 +2,14 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Pembelajaran extends Model
 {
-    use \Illuminate\Database\Eloquent\SoftDeletes;
-    
+    use HasFactory, SoftDeletes;
+
     protected $table = 'pembelajaran';
     protected $fillable = [
         'kelas_id',
