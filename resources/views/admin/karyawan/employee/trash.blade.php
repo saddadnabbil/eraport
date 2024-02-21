@@ -51,6 +51,8 @@
                                             <th>No</th>
                                             <th>Employee Code</th>
                                             <th>Employee Name</th>
+                                            <th>Join Date</th>
+                                            <th>Resign Date</th>
                                             <th>Sex</th>
                                             <th>Status Employee</th>
                                             <th>Unit</th>
@@ -67,6 +69,8 @@
                                                 <td>{{ $no }}</td>
                                                 <td>{{ $karyawan->kode_karyawan }}</td>
                                                 <td>{{ $karyawan->nama_lengkap }}</td>
+                                                <td>{{ $karyawan->join_date }}</td>
+                                                <td>{{ $karyawan->resign_date }}</td>
                                                 <td>{{ $karyawan->jenis_kelamin }}</td>
                                                 <td>{{ $karyawan->statusKaryawan->status_nama }}</td>
                                                 <td>{{ $karyawan->unitKaryawan->unit_nama }}</td>
@@ -83,10 +87,12 @@
                                                         @include('components.actions.restore-button', [
                                                             'route' => route('karyawan.restore', $karyawan->id),
                                                             'id' => $karyawan->id,
-                                                            'method' => 'POST'
+                                                            'method' => 'POST',
                                                         ])
                                                         @include('components.actions.delete-button', [
-                                                            'route' => route('karyawan.permanent-delete', $karyawan->id),
+                                                            'route' => route(
+                                                                'karyawan.permanent-delete',
+                                                                $karyawan->id),
                                                             'id' => $karyawan->id,
                                                             'isPermanent' => false,
                                                             'withEdit' => false,

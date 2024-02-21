@@ -19,7 +19,8 @@ class CreateKaryawansTable extends Migration
             $table->unsignedBigInteger('status_karyawan_id')->unsigned();
             $table->unsignedBigInteger('unit_karyawan_id')->unsigned();
             $table->unsignedBigInteger('position_karyawan_id')->unsigned();
-            $table->date('join_date')->nullable();;
+            $table->date('join_date');
+            $table->date('resign_date')->nullable();
             $table->date('permanent_date')->nullable();
 
             $table->string('kode_karyawan', 25);

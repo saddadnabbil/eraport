@@ -183,6 +183,12 @@
                                                     <input type="date" class="form-control" id="join_date"
                                                         name="join_date" value="{{ old('join_date') }}" required>
                                                 </div>
+                                                <label for="resign_date" class="col-sm-3 col-form-label ">
+                                                    Resign Date</label>
+                                                <div class="col-sm-3">
+                                                    <input type="date" class="form-control" id="resign_date"
+                                                        name="resign_date" value="{{ old('resign_date') }}">
+                                                </div>
                                             </div>
                                             <h6 class="mt-2"><b>B. Personal Information</b></h6>
                                             <div class="form-group row">

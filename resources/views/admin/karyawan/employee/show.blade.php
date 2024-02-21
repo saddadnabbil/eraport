@@ -159,6 +159,12 @@
                                         <input type="date" class="form-control" value="{{ $karyawan->join_date }}"
                                             disabled>
                                     </div>
+                                    <label for="resign_date" class="col-sm-3 col-form-label ">
+                                        Resign Date</label>
+                                    <div class="col-sm-3">
+                                        <input type="date" class="form-control" value="{{ $karyawan->resign_date }}"
+                                            disabled>
+                                    </div>
                                 </div>
                                 <h6 class="mt-2"><b>B. Personal Information</b></h6>
                                 <div class="form-group row">
@@ -547,6 +553,12 @@
                                                     <input type="date" class="form-control" id="join_date"
                                                         name="join_date" value="{{ $karyawan->join_date }}" required>
                                                 </div>
+                                                <label for="resign_date" class="col-sm-3 col-form-label ">
+                                                    Resign Date</label>
+                                                <div class="col-sm-3">
+                                                    <input type="date" class="form-control" id="resign_date"
+                                                        name="resign_date" value="{{ $karyawan->resign_date }}">
+                                                </div>
                                             </div>
                                             <h6 class="mt-2"><b>B. Personal Information</b></h6>
                                             <div class="form-group row">
@@ -722,7 +734,8 @@
                                                 <label for="kota" class="col-sm-3 col-form-label">City</label>
                                                 <div class="col-sm-3">
                                                     <input type="text" class="form-control" id="kota"
-                                                        name="kota" placeholder="City" value="{{ $karyawan->kota }}">
+                                                        name="kota" placeholder="City"
+                                                        value="{{ $karyawan->kota }}">
                                                 </div>
                                                 <label for="kode_pos" class="col-sm-3 col-form-label ">Pos Code</label>
                                                 <div class="col-sm-3">

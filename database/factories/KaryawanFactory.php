@@ -20,6 +20,7 @@ class KaryawanFactory extends Factory
             'unit_karyawan_id' => 2,
             'position_karyawan_id' => 1,
             'join_date' => '2022-01-01',
+            'resign_date' => null,
             'permanent_date' => '2023-01-01',
 
             'kode_karyawan' => 'K001',
