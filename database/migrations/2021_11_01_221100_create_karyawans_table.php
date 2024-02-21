@@ -25,7 +25,7 @@ class CreateKaryawansTable extends Migration
 
             $table->string('kode_karyawan', 25);
             $table->string('nama_lengkap', 255);
-            $table->string('nik', 16);
+            $table->string('nik', 16)->nullable();
             $table->string('nomor_akun', 255)->nullable();
             $table->string('nomor_fingerprint');
 
@@ -45,8 +45,8 @@ class CreateKaryawansTable extends Migration
             $table->string('kota')->nullable();
             $table->string('kode_pos')->nullable();
             $table->string('nomor_phone')->nullable();
-            $table->string('nomor_hp');
-            $table->string('email');
+            $table->string('nomor_hp')->nullable();
+            $table->string('email')->nullable();
             $table->string('email_sekolah')->nullable();
             $table->string('warga_negara')->nullable();
             $table->enum('status_pernikahan', ['1', '2', '3', '4'])->nullable();
@@ -78,7 +78,7 @@ class CreateKaryawansTable extends Migration
             // 4 = Hindu
             // 5 = Budha
             // 6 = Khonghucu 
-            // 7 = Kepercayaan
+            // 7 = Lainnya
         });
     }
 

@@ -129,7 +129,7 @@
                                             <option value="6" @if ($siswa->agama == 6) selected @endif>
                                                 Khonghucu</option>
                                             <option value="7" @if ($siswa->agama == 7) selected @endif>
-                                                Kepercayaan</option>
+                                                Lainnya</option>
                                         </select>
                                     </div>
                                     <label class="col-sm-2 col-form-label">Anak Ke </label>

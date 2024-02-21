@@ -130,7 +130,7 @@ class CreateSiswasTable extends Migration
         // 4 = Hindu
         // 5 = Budha
         // 6 = Khonghucu 
-        // 7 = Kepercayaan
+        // 7 = Lainnya
 
         // Status Dalam Keluarga 
         // 1 = Anak Kandung 

@@ -18284,7 +18284,7 @@ select .custom-select option {
 
 .product-list-in-card>.item {
   border-radius: 0;
-  border-bottom: 0.5px solid rgba(0,0,0,.125);
+  /* border-bottom: 0.5px solid rgba(0,0,0,.125); */
 }
 
 .products-list>.item {

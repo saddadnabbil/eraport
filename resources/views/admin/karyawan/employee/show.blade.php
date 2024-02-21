@@ -277,7 +277,7 @@
                                                 Khonghucu
                                             </option>
                                             <option value="7" @if ($karyawan->agama == '7') selected @endif>
-                                                Kepercayaan
+                                                Lainnya
                                             </option>
                                         </select>
                                     </div>
@@ -693,7 +693,7 @@
                                                         </option>
                                                         <option value="7"
                                                             @if ($karyawan->agama == '7') selected @endif>
-                                                            Kepercayaan
+                                                            Lainnya
                                                         </option>
                                                     </select>
                                                 </div>

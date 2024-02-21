@@ -41,11 +41,14 @@
                         <div class="card-body box-profile">
                             <div class="text-center">
                                 @if (optional($karyawan)->pas_photo == null)
-                                    <img class="profile-user-img" src="/assets/dist/img/avatar/{{ optional($karyawan->avatar, 'default-avatar.jpg') }}"
+                                    <img class="profile-user-img"
+                                        src="/assets/dist/img/avatar/{{ optional($karyawan->avatar, 'default-avatar.jpg') }}"
                                         alt="Avatar" style="border: none">
                                 @else
-                                    <img class="mb-2" src="{{ optional($karyawan)->pas_photo ? asset('storage/' . $karyawan->pas_photo) : 'fallback_image.jpg' }}"
-                                        alt="{{ optional($karyawan)->pas_photo }}" alt="pas_photo" width="105px" height="144px">
+                                    <img class="mb-2"
+                                        src="{{ optional($karyawan)->pas_photo ? asset('storage/' . $karyawan->pas_photo) : 'fallback_image.jpg' }}"
+                                        alt="{{ optional($karyawan)->pas_photo }}" alt="pas_photo" width="105px"
+                                        height="144px">
                                 @endif
                             </div>
 
@@ -266,7 +269,7 @@
                                                 Khonghucu
                                             </option>
                                             <option value="7" @if ($karyawan->agama == '7') selected @endif>
-                                                Kepercayaan
+                                                Lainnya
                                             </option>
                                         </select>
                                     </div>
@@ -676,7 +679,7 @@
                                                         </option>
                                                         <option value="7"
                                                             @if ($karyawan->agama == '7') selected @endif>
-                                                            Kepercayaan
+                                                            Lainnya
                                                         </option>
                                                     </select>
                                                 </div>

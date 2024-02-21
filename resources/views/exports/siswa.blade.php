@@ -74,7 +74,8 @@
                 <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>Tinggal
                         Bersama</strong></td>
                 <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;">
-                    <strong>Transportasi</strong></td>
+                    <strong>Transportasi</strong>
+                </td>
                 <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>NIK
                         Ayah</strong></td>
                 <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>Nama
@@ -224,7 +225,7 @@
                         @elseif($siswa->agama == 6)
                             Khonghucu
                         @elseif($siswa->agama == 7)
-                            Kepercayaan
+                            Lainnya
                         @endif
                     </td>
                     <td style="border: 1px solid #000000;">{{ $siswa->tempat_lahir }}</td>
@@ -263,7 +264,7 @@
                         @elseif($siswa->agama_ayah == 6)
                             Khonghucu
                         @elseif($siswa->agama_ayah == 7)
-                            Kepercayaan
+                            Lainnya
                         @endif
                     </td>
                     <td style="border: 1px solid #000000;">{{ $siswa->kota_ayah }}</td>
@@ -293,7 +294,7 @@
                         @elseif($siswa->agama_ibu == 6)
                             Khonghucu
                         @elseif($siswa->agama_ibu == 7)
-                            Kepercayaan
+                            Lainnya
                         @endif
                     </td>
                     <td style="border: 1px solid #000000;">{{ $siswa->kota_ibu }}</td>
@@ -323,7 +324,7 @@
                         @elseif($siswa->agama_wali == 6)
                             Khonghucu
                         @elseif($siswa->agama_wali == 7)
-                            Kepercayaan
+                            Lainnya
                         @endif
                     </td>
                     <td style="border: 1px solid #000000;">{{ $siswa->kota_wali }}</td>

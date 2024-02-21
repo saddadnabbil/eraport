@@ -290,7 +290,7 @@
                                                         @if ($siswa->agama == '6') selected @endif>Khonghucu
                                                     </option>
                                                     <option value="7"
-                                                        @if ($siswa->agama == '7') selected @endif>Kepercayaan
+                                                        @if ($siswa->agama == '7') selected @endif>Lainnya
                                                     </option>
                                                 </select>
                                             </div>
@@ -513,7 +513,7 @@
                                                         @if ($siswa->agama_ayah == 6) selected @endif>Khonghucu
                                                     </option>
                                                     <option value="7"
-                                                        @if ($siswa->agama_ayah == 7) selected @endif>Kepercayaan
+                                                        @if ($siswa->agama_ayah == 7) selected @endif>Lainnya
                                                     </option>
                                                 </select>
                                             </div>
@@ -613,7 +613,7 @@
                                                         @if ($siswa->agama_ibu == '6') selected @endif>Khonghucu
                                                     </option>
                                                     <option value="7"
-                                                        @if ($siswa->agama_ibu == '7') selected @endif>Kepercayaan
+                                                        @if ($siswa->agama_ibu == '7') selected @endif>Lainnya
                                                     </option>
                                                 </select>
                                             </div>
@@ -711,7 +711,7 @@
                                                         @if ($siswa->agama_wali == '6') selected @endif>Khonghucu
                                                     </option>
                                                     <option value="7"
-                                                        @if ($siswa->agama_wali == '7') selected @endif>Kepercayaan
+                                                        @if ($siswa->agama_wali == '7') selected @endif>Lainnya
                                                     </option>
                                                 </select>
                                             </div>
@@ -898,7 +898,8 @@
                                                     <div class="col-sm-4">
                                                         <select class="form-control form-select" required disabled>
                                                             <option value=""></option>
-                                                            <option value="{{ $siswa->kelas ? $siswa->kelas->id : 0 }}" selected>
+                                                            <option value="{{ $siswa->kelas ? $siswa->kelas->id : 0 }}"
+                                                                selected>
                                                                 {{ $siswa->kelas ? $siswa->kelas->nama_kelas : '' }}
                                                             </option>
                                                         </select>
@@ -1005,415 +1006,415 @@
                                                         <input type="date" class="form-control"
                                                             id="tanggal_lahir_edit" name="tanggal_lahir"
                                                             value="{{ $siswa->tanggal_lahir ? \Carbon\Carbon::parse($siswa->tanggal_lahir)->format('Y-m-d') : '' }}" " required>
-                                                                                      </div>
-                                                                                    </div>
+                                                                                          </div>
+                                                                                        </div>
 
-                                                                                    <div class="form-group row">
-                                                                                      <label for="agama" class="col-sm-3 col-form-label required">Agama</label>
-                                                                                      <div class="col-sm-3">
-                                                                                        <select class="form-control form-select" name="agama" required>
-                                                                                          <option value="">-- Pilih Agama --</option>
-                                                                                          <option value="1" @if ($siswa->agama == '1') selected @endif>Islam</option>
-                                                                                          <option value="2" @if ($siswa->agama == '2') selected @endif>Protestan</option>
-                                                                                          <option value="3" @if ($siswa->agama == '3') selected @endif>Katolik</option>
-                                                                                          <option value="4" @if ($siswa->agama == '4') selected @endif>Hindu</option>
-                                                                                          <option value="5" @if ($siswa->agama == '5') selected @endif>Budha</option>
-                                                                                          <option value="6" @if ($siswa->agama == '6') selected @endif>Khonghucu</option>
-                                                                                          <option value="7" @if ($siswa->agama == '7') selected @endif>Kepercayaan</option>
-                                                                                        </select>
-                                                                                      </div>
-                                                                                      <label for="warga_negara" class="col-sm-2 col-form-label">Warga Negara</label>
-                                                                                      <div class="col-sm-4">
-                                                                                        <input type="text" class="form-control" id="warga_negara" name="warga_negara" placeholder="Kewarganegaraan" value="{{ $siswa->warga_negara }}" >
-                                                                                      </div>
-                                                                                    </div>
-                                                                
-                                                                                    <div class="form-group row">
-                                                                                      <label for="jml_saudara_kandung" class="col-sm-3 col-form-label">Jumlah Saudara Kandung</label>
-                                                                                      <div class="col-sm-3">
-                                                                                        <input type="number" class="form-control" id="jml_saudara_kandung" name="jml_saudara_kandung"  value="{{ $siswa->jml_saudara_kandung }}" >
-                                                                                      </div>
-                                                                                      <label for="anak_ke" class="col-sm-2 col-form-label">Anak Ke</label>
-                                                                                      <div class="col-sm-4">
-                                                                                        <input type="number" class="form-control" id="anak_ke" name="anak_ke"  value="{{ $siswa->anak_ke }}" >
-                                                                                      </div>
-                                                                                    </div>
+                                                                                        <div class="form-group row">
+                                                                                          <label for="agama" class="col-sm-3 col-form-label required">Agama</label>
+                                                                                          <div class="col-sm-3">
+                                                                                            <select class="form-control form-select" name="agama" required>
+                                                                                              <option value="">-- Pilih Agama --</option>
+                                                                                              <option value="1" @if ($siswa->agama == '1') selected @endif>Islam</option>
+                                                                                              <option value="2" @if ($siswa->agama == '2') selected @endif>Protestan</option>
+                                                                                              <option value="3" @if ($siswa->agama == '3') selected @endif>Katolik</option>
+                                                                                              <option value="4" @if ($siswa->agama == '4') selected @endif>Hindu</option>
+                                                                                              <option value="5" @if ($siswa->agama == '5') selected @endif>Budha</option>
+                                                                                              <option value="6" @if ($siswa->agama == '6') selected @endif>Khonghucu</option>
+                                                                                              <option value="7" @if ($siswa->agama == '7') selected @endif>Lainnya</option>
+                                                                                            </select>
+                                                                                          </div>
+                                                                                          <label for="warga_negara" class="col-sm-2 col-form-label">Warga Negara</label>
+                                                                                          <div class="col-sm-4">
+                                                                                            <input type="text" class="form-control" id="warga_negara" name="warga_negara" placeholder="Kewarganegaraan" value="{{ $siswa->warga_negara }}" >
+                                                                                          </div>
+                                                                                        </div>
+                                                                    
+                                                                                        <div class="form-group row">
+                                                                                          <label for="jml_saudara_kandung" class="col-sm-3 col-form-label">Jumlah Saudara Kandung</label>
+                                                                                          <div class="col-sm-3">
+                                                                                            <input type="number" class="form-control" id="jml_saudara_kandung" name="jml_saudara_kandung"  value="{{ $siswa->jml_saudara_kandung }}" >
+                                                                                          </div>
+                                                                                          <label for="anak_ke" class="col-sm-2 col-form-label">Anak Ke</label>
+                                                                                          <div class="col-sm-4">
+                                                                                            <input type="number" class="form-control" id="anak_ke" name="anak_ke"  value="{{ $siswa->anak_ke }}" >
+                                                                                          </div>
+                                                                                        </div>
 
-                                                                                    <div class="form-group row">
-                                                                                      <label for="pas_photo" class="col-sm-3 col-form-label required">Pas Photo</label>
-                                                                                      <div class="col-sm-4 custom-file">
-                                                                                        <div class="input-group">
-                                                                                            <div class="custom-file">
-                                                                                                <input type="file" name="pas_photo" class="custom-file-input form-control form-control" id="pas_photo" onchange="readURL(this);" >
+                                                                                        <div class="form-group row">
+                                                                                          <label for="pas_photo" class="col-sm-3 col-form-label required">Pas Photo</label>
+                                                                                          <div class="col-sm-4 custom-file">
+                                                                                            <div class="input-group">
+                                                                                                <div class="custom-file">
+                                                                                                    <input type="file" name="pas_photo" class="custom-file-input form-control form-control" id="pas_photo" onchange="readURL(this);" >
+                                                                                                </div>
                                                                                             </div>
+                                                                                          </div>
+                                                                                          <div class="col-sm-5">
+                                                                                            <img src="{{ $siswa->pas_photo ? asset('storage/' . $siswa->pas_photo) : asset('assets/dist/img/3x4.png') }}" alt="" id="pas_photo_preview" width="105px" height="144px">
+                                                                                          </div>
                                                                                         </div>
                                                                                       </div>
-                                                                                      <div class="col-sm-5">
-                                                                                        <img src="{{ $siswa->pas_photo ? asset('storage/' . $siswa->pas_photo) : asset('assets/dist/img/3x4.png') }}" alt="" id="pas_photo_preview" width="105px" height="144px">
-                                                                                      </div>
-                                                                                    </div>
-                                                                                  </div>
 
-                                                                                  {{-- B. Domicile Information --}}
-                                                                                  <div class="border-bottom mt-3 p-2" >
-                                                                                    <h6 class="mt-2"><b>B. Domicile Information</b></h6>
-                                                                                    <div class="form-group row">
-                                                                                      <label for="alamat" class="col-sm-3 col-form-label">Alamat</label>
-                                                                                      <div class="col-sm-9">
-                                                                                        <textarea class="form-control" id="alamat" name="alamat" placeholder="Alamat lengkap">{{ $siswa->alamat }}</textarea>
+                                                                                      {{-- B. Domicile Information --}}
+                                                                                      <div class="border-bottom mt-3 p-2" >
+                                                                                        <h6 class="mt-2"><b>B. Domicile Information</b></h6>
+                                                                                        <div class="form-group row">
+                                                                                          <label for="alamat" class="col-sm-3 col-form-label">Alamat</label>
+                                                                                          <div class="col-sm-9">
+                                                                                            <textarea class="form-control" id="alamat" name="alamat" placeholder="Alamat lengkap">{{ $siswa->alamat }}</textarea>
+                                                                                          </div>
+                                                                                        </div>
+                                                                                        <div class="form-group row">
+                                                                                          <label for="kota" class="col-sm-3 col-form-label">Kota</label>
+                                                                                          <div class="col-sm-4">
+                                                                                            <input type="text" class="form-control" id="kota" name="kota" placeholder="Kota" value="{{ $siswa->kota }}">
+                                                                                          </div>
+                                                                                          <label for="kode_pos" class="col-sm-2 col-form-label">Kode Pos</label>
+                                                                                          <div class="col-sm-3">
+                                                                                            <input type="number" class="form-control" id="kode_pos" name="kode_pos" placeholder="Kode Pos" value="{{ $siswa->kode_pos }}">
+                                                                                          </div>
+                                                                                        </div>
+                                                                                        <div class="form-group row">
+                                                                                          <label for="jarak_rumah_ke_sekolah" class="col-sm-3 col-form-label">Jarak Rumah ke Sekolah (km)</label>
+                                                                                          <div class="col-sm-9">
+                                                                                            <input type="number" name="jarak_rumah_ke_sekolah" id="jarak_rumah_ke_sekolah" placeholder="Jarak Rumah ke Sekola (km)" class="form-control" value="{{ $siswa->jarak_rumah_ke_sekolah }}">
+                                                                                          </div>
+                                                                                        </div>
+                                                                                        <div class="form-group row">
+                                                                                          <label for="email" class="col-sm-3 col-form-label">Email</label>
+                                                                                          <div class="col-sm-9">
+                                                                                            <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{{ $siswa->email }}">
+                                                                                          </div>
+                                                                                        </div>
+                                                                                        <div class="form-group row">
+                                                                                          <label for="email_parent" class="col-sm-3 col-form-label">Email Parent</label>
+                                                                                          <div class="col-sm-9">
+                                                                                            <input type="email" class="form-control" id="email_parent" name="email_parent" placeholder="Email Parent" value="{{ $siswa->email_parent }}">
+                                                                                          </div>
+                                                                                        </div>
+                                                                                        <div class="form-group row">
+                                                                                          <label for="nomor_hp" class="col-sm-3 col-form-label">Nomor HP</label>
+                                                                                          <div class="col-sm-9">
+                                                                                            <input type="number" class="form-control" id="nomor_hp" name="nomor_hp" placeholder="Nomor HP" value="{{ $siswa->nomor_hp }}">
+                                                                                          </div>
+                                                                                        </div>
+                                                                                        <div class="form-group row">
+                                                                                          <label for="tinggal_bersama" class="col-sm-3 col-form-label">Tinggal Bersama</label>
+                                                                                          <div class="col-sm-4">
+                                                                                            <select class="form-control form-select" name="tinggal_bersama">
+                                                                                              <option value="">-- Pilih Tinggal Bersama --</option>
+                                                                                              <option value="Parents" @if ($siswa->tinggal_bersama == 'Parents') selected @endif>Parents</option>
+                                                                                              <option value="Others" @if ($siswa->tinggal_bersama == 'Others') selected @endif>Others</option>
+                                                                                            </select>
+                                                                                          </div>
+                                                                                          <label for="transportasi" class="col-sm-2 col-form-label">Transportasi</label>
+                                                                                          <div class="col-sm-3">
+                                                                                            <input type="text" class="form-control" id="transportasi" name="transportasi" placeholder="Transportasi" value="{{ old('transportasi') }}">
+                                                                                          </div>
+                                                                                        </div>
                                                                                       </div>
-                                                                                    </div>
-                                                                                    <div class="form-group row">
-                                                                                      <label for="kota" class="col-sm-3 col-form-label">Kota</label>
-                                                                                      <div class="col-sm-4">
-                                                                                        <input type="text" class="form-control" id="kota" name="kota" placeholder="Kota" value="{{ $siswa->kota }}">
-                                                                                      </div>
-                                                                                      <label for="kode_pos" class="col-sm-2 col-form-label">Kode Pos</label>
-                                                                                      <div class="col-sm-3">
-                                                                                        <input type="number" class="form-control" id="kode_pos" name="kode_pos" placeholder="Kode Pos" value="{{ $siswa->kode_pos }}">
-                                                                                      </div>
-                                                                                    </div>
-                                                                                    <div class="form-group row">
-                                                                                      <label for="jarak_rumah_ke_sekolah" class="col-sm-3 col-form-label">Jarak Rumah ke Sekolah (km)</label>
-                                                                                      <div class="col-sm-9">
-                                                                                        <input type="number" name="jarak_rumah_ke_sekolah" id="jarak_rumah_ke_sekolah" placeholder="Jarak Rumah ke Sekola (km)" class="form-control" value="{{ $siswa->jarak_rumah_ke_sekolah }}">
-                                                                                      </div>
-                                                                                    </div>
-                                                                                    <div class="form-group row">
-                                                                                      <label for="email" class="col-sm-3 col-form-label">Email</label>
-                                                                                      <div class="col-sm-9">
-                                                                                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{{ $siswa->email }}">
-                                                                                      </div>
-                                                                                    </div>
-                                                                                    <div class="form-group row">
-                                                                                      <label for="email_parent" class="col-sm-3 col-form-label">Email Parent</label>
-                                                                                      <div class="col-sm-9">
-                                                                                        <input type="email" class="form-control" id="email_parent" name="email_parent" placeholder="Email Parent" value="{{ $siswa->email_parent }}">
-                                                                                      </div>
-                                                                                    </div>
-                                                                                    <div class="form-group row">
-                                                                                      <label for="nomor_hp" class="col-sm-3 col-form-label">Nomor HP</label>
-                                                                                      <div class="col-sm-9">
-                                                                                        <input type="number" class="form-control" id="nomor_hp" name="nomor_hp" placeholder="Nomor HP" value="{{ $siswa->nomor_hp }}">
-                                                                                      </div>
-                                                                                    </div>
-                                                                                    <div class="form-group row">
-                                                                                      <label for="tinggal_bersama" class="col-sm-3 col-form-label">Tinggal Bersama</label>
-                                                                                      <div class="col-sm-4">
-                                                                                        <select class="form-control form-select" name="tinggal_bersama">
-                                                                                          <option value="">-- Pilih Tinggal Bersama --</option>
-                                                                                          <option value="Parents" @if ($siswa->tinggal_bersama == 'Parents') selected @endif>Parents</option>
-                                                                                          <option value="Others" @if ($siswa->tinggal_bersama == 'Others') selected @endif>Others</option>
-                                                                                        </select>
-                                                                                      </div>
-                                                                                      <label for="transportasi" class="col-sm-2 col-form-label">Transportasi</label>
-                                                                                      <div class="col-sm-3">
-                                                                                        <input type="text" class="form-control" id="transportasi" name="transportasi" placeholder="Transportasi" value="{{ old('transportasi') }}">
-                                                                                      </div>
-                                                                                    </div>
-                                                                                  </div>
-                                                                                  
-                                                                                  {{-- C. Student Medical Condition --}}
-                                                                                  <div class="border-bottom mt-3 p-2" >
-                                                                                    <h6 class="mt-2"><b>C. Student Medical Condition</b></h6>
+                                                                                      
+                                                                                      {{-- C. Student Medical Condition --}}
+                                                                                      <div class="border-bottom mt-3 p-2" >
+                                                                                        <h6 class="mt-2"><b>C. Student Medical Condition</b></h6>
 
-                                                                                    <div class="form-group row">
-                                                                                      <label for="tinggi_badan" class="col-sm-3 col-form-label">Tinggi Badan</label>
-                                                                                      <div class="col-sm-4">
-                                                                                        <input type="text" class="form-control" id="tinggi_badan" name="tinggi_badan" placeholder="Tinggi Badan" value="{{ $siswa->tinggi_badan }}">
-                                                                                      </div>
-                                                                                      <label for="berat_badan" class="col-sm-2 col-form-label">Berat Badan</label>
-                                                                                      <div class="col-sm-3">
-                                                                                        <input type="text" class="form-control" id="berat_badan" name="berat_badan" placeholder="Berat Badan" value="{{ $siswa->berat_badan }}">
-                                                                                      </div>
-                                                                                    </div>
-                                                                                    <div class="form-group row">
-                                                                                      <label for="spesial_treatment" class="col-sm-3 col-form-label">Spesial Treatment</label>
-                                                                                      <div class="col-sm-9">
-                                                                                        <input type="text" class="form-control" id="spesial_treatment" name="spesial_treatment" placeholder="Spesial Treatment" value="{{ $siswa->spesial_treatment }}">
-                                                                                      </div>
-                                                                                    </div>
-                                                                                    <div class="form-group row">
-                                                                                      <label for="note_kesehatan" class="col-sm-3 col-form-label">Note Kesehatan</label>
-                                                                                      <div class="col-sm-9">
-                                                                                        <input type="text" class="form-control" id="note_kesehatan" name="note_kesehatan" placeholder="Note Kesehatan" value="{{ $siswa->note_kesehatan }}">
-                                                                                      </div>
-                                                                                    </div>
+                                                                                        <div class="form-group row">
+                                                                                          <label for="tinggi_badan" class="col-sm-3 col-form-label">Tinggi Badan</label>
+                                                                                          <div class="col-sm-4">
+                                                                                            <input type="text" class="form-control" id="tinggi_badan" name="tinggi_badan" placeholder="Tinggi Badan" value="{{ $siswa->tinggi_badan }}">
+                                                                                          </div>
+                                                                                          <label for="berat_badan" class="col-sm-2 col-form-label">Berat Badan</label>
+                                                                                          <div class="col-sm-3">
+                                                                                            <input type="text" class="form-control" id="berat_badan" name="berat_badan" placeholder="Berat Badan" value="{{ $siswa->berat_badan }}">
+                                                                                          </div>
+                                                                                        </div>
+                                                                                        <div class="form-group row">
+                                                                                          <label for="spesial_treatment" class="col-sm-3 col-form-label">Spesial Treatment</label>
+                                                                                          <div class="col-sm-9">
+                                                                                            <input type="text" class="form-control" id="spesial_treatment" name="spesial_treatment" placeholder="Spesial Treatment" value="{{ $siswa->spesial_treatment }}">
+                                                                                          </div>
+                                                                                        </div>
+                                                                                        <div class="form-group row">
+                                                                                          <label for="note_kesehatan" class="col-sm-3 col-form-label">Note Kesehatan</label>
+                                                                                          <div class="col-sm-9">
+                                                                                            <input type="text" class="form-control" id="note_kesehatan" name="note_kesehatan" placeholder="Note Kesehatan" value="{{ $siswa->note_kesehatan }}">
+                                                                                          </div>
+                                                                                        </div>
 
-                                                                                    <div class="form-group row">
-                                                                                      <label for="file_document_kesehatan" class="col-sm-3 col-form-label">File Document Kesehatan</label>
-                                                                                      <div class="col-sm-9 custom-file">
-                                                                                        <div class="input-group">
-                                                                                            <div class="custom-file">
-                                                                                                <input type="file" name="file_document_kesehatan" class="custom-file-input form-control form-control" id="file_document_kesehatan">
+                                                                                        <div class="form-group row">
+                                                                                          <label for="file_document_kesehatan" class="col-sm-3 col-form-label">File Document Kesehatan</label>
+                                                                                          <div class="col-sm-9 custom-file">
+                                                                                            <div class="input-group">
+                                                                                                <div class="custom-file">
+                                                                                                    <input type="file" name="file_document_kesehatan" class="custom-file-input form-control form-control" id="file_document_kesehatan">
+                                                                                                </div>
                                                                                             </div>
+                                                                                          </div>
+                                                                                        </div>
+                                                                                        <div class="form-group row">
+                                                                                          <label for="file_list_pertanyaan" class="col-sm-3 col-form-label">File List Pertanyaan</label>
+                                                                                          <div class="col-sm-9 custom-file">
+                                                                                            <div class="input-group">
+                                                                                                <div class="custom-file">
+                                                                                                    <input type="file" name="file_list_pertanyaan" class="custom-file-input form-control form-control" id="file_list_pertanyaan">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                          </div>
+                                                                                        </div>
+                                                                                      </div>
+
+                                                                                     
+                                                                                    </div>
+                                                                                    <div class="tab-pane" id="father2">
+                                                                                      {{-- A. Father --}}
+                                                                                      <div class="border-bottom p-2">
+                                                                                        <h6 class="mt-2"><b>A. Father</b></h6>
+                                                                                        <div class="form-group row">
+                                                                                          <label for="nik_ayah" class="col-sm-3 col-form-label required">NIK</label>
+                                                                                          <div class="col-sm-9">
+                                                                                            <input type="text" class="form-control" id="nik_ayah" name="nik_ayah" placeholder="NIK" value="{{ $siswa->nik_ayah }}" required>
+                                                                                          </div>
+                                                                                        </div>
+                                                                                        <div class="form-group row">
+                                                                                          <label for="nama_ayah" class="col-sm-3 col-form-label required">Nama</label>
+                                                                                          <div class="col-sm-9">
+                                                                                            <input type="text" class="form-control" id="nama_ayah" name="nama_ayah" placeholder="Nama" value="{{ $siswa->nama_ayah }}" required>
+                                                                                          </div>
+                                                                                        </div>
+                                                                                        <div class="form-group row">
+                                                                                          <label for="tempat_lahir_ayah" class="col-sm-3 col-form-label">Tempat Lahir</label>
+                                                                                          <div class="col-sm-3">
+                                                                                            <input type="text" class="form-control" id="tempat_lahir_ayah" name="tempat_lahir_ayah" placeholder="Tempat Lahir" value="{{ $siswa->tempat_lahir_ayah }}">
+                                                                                          </div>
+                                                                                          <label for="tanggal_lahir_ayah" class="col-sm-3 col-form-label">Tanggal Lahir</label>
+                                                                                          <div class="col-sm-3">
+                                                                                            <input type="date" class="form-control" id="tanggal_lahir_ayah" name="tanggal_lahir_ayah" placeholder="Tanggal Lahir" value="{{ $siswa->tanggal_lahir_ayah ? \Carbon\Carbon::parse($siswa->tanggal_lahir_ayah)->format('Y-m-d') : '' }}">
+                                                                                          </div>
+                                                                                        </div>
+                                                                                        <div class="form-group row">
+                                                                                          <label for="alamat_ayah" class="col-sm-3 col-form-label">Alamat</label>
+                                                                                          <div class="col-sm-9">
+                                                                                            <textarea class="form-control" id="alamat_ayah" name="alamat_ayah" placeholder="Alamat">{{ $siswa->alamat_ayah }}</textarea>
+                                                                                          </div>
+                                                                                        </div>
+                                                                                        <div class="form-group row">
+                                                                                          <label for="nomor_hp_ayah" class="col-sm-3 col-form-label">Nomor HP</label>
+                                                                                          <div class="col-sm-9">
+                                                                                            <input type="text" class="form-control" id="nomor_hp_ayah" name="nomor_hp_ayah" placeholder="Nomor HP" value="{{ $siswa->nomor_hp_ayah }}">
+                                                                                          </div>
+                                                                                        </div>
+                                                                                        <div class="form-group row">
+                                                                                          <label for="agama_ayah" class="col-sm-3 col-form-label">Agama</label>
+                                                                                          <div class="col-sm-9">
+                                                                                            <select class="form-control form-select" id="agama_ayah" name="agama_ayah">
+                                                                                              <option selected>-- Pilih Agama --</option>
+                                                                                              <option value="1" @if ($siswa->agama_ayah == 1) selected @endif>Islam</option>
+                                                                                              <option value="2" @if ($siswa->agama_ayah == 2) selected @endif>Kristen</option>
+                                                                                              <option value="3" @if ($siswa->agama_ayah == 3) selected @endif>Katolik</option>
+                                                                                              <option value="4" @if ($siswa->agama_ayah == 4) selected @endif>Hindu</option>
+                                                                                              <option value="5" @if ($siswa->agama_ayah == 5) selected @endif>Budha</option>
+                                                                                              <option value="6" @if ($siswa->agama_ayah == 6) selected @endif>Khonghucu</option>
+                                                                                              <option value="7" @if ($siswa->agama_ayah == 7) selected @endif>Lainnya</option>
+                                                                                            </select>
+                                                                                          </div>
+                                                                                        </div>
+                                                                                        <div class="form-group row">
+                                                                                          <label for="kota_ayah" class="col-sm-3 col-form-label">Kota</label>
+                                                                                          <div class="col-sm-3">
+                                                                                            <input type="text" class="form-control" id="kota_ayah" name="kota_ayah" placeholder="Kota" value="{{ $siswa->kota_ayah }}">
+                                                                                          </div>
+                                                                                          <label for="pendidikan_terakhir_ayah" class="col-sm-3 col-form-label">Pendidikan Terakhir</label>
+                                                                                          <div class="col-sm-3">
+                                                                                            <input type="text" class="form-control" id="pendidikan_terakhir_ayah" name="pendidikan_terakhir_ayah" placeholder="Pendidikan Terakhir" value="{{ $siswa->pendidikan_terakhir_ayah }}">
+                                                                                          </div>
+                                                                                        </div>
+                                                                                        <div class="form-group row">
+                                                                                          <label for="pekerjaan_ayah" class="col-sm-3 col-form-label required">Pekerjaan</label>
+                                                                                          <div class="col-sm-9">
+                                                                                            <input type="text" class="form-control" id="pekerjaan_ayah" name="pekerjaan_ayah" placeholder="Pekerjaan" value="{{ $siswa->pekerjaan_ayah }}" required>
+                                                                                          </div>
+                                                                                        </div>
+                                                                                        <div class="form-group row">
+                                                                                          <label for="penghasil_ayah" class="col-sm-3 col-form-label">Penghasilan</label>
+                                                                                          <div class="col-sm-9">
+                                                                                            <input type="text" class="form-control" id="penghasil_ayah" name="penghasil_ayah" placeholder="Penghasilan" value="{{ $siswa->penghasil_ayah }}">
+                                                                                          </div>
                                                                                         </div>
                                                                                       </div>
                                                                                     </div>
-                                                                                    <div class="form-group row">
-                                                                                      <label for="file_list_pertanyaan" class="col-sm-3 col-form-label">File List Pertanyaan</label>
-                                                                                      <div class="col-sm-9 custom-file">
-                                                                                        <div class="input-group">
-                                                                                            <div class="custom-file">
-                                                                                                <input type="file" name="file_list_pertanyaan" class="custom-file-input form-control form-control" id="file_list_pertanyaan">
-                                                                                            </div>
+                                                                                    <div class="tab-pane" id="mother2">
+                                                                                      {{-- A. Mother --}}
+                                                                                      <div class="border-bottom p-2">
+                                                                                        <h6 class="mt-2"><b>A. Mother</b></h6>
+                                                                                        <div class="form-group row">
+                                                                                          <label for="nik_ibu" class="col-sm-3 col-form-label required">NIK</label>
+                                                                                          <div class="col-sm-9">
+                                                                                            <input type="text" class="form-control" id="nik_ibu" name="nik_ibu" placeholder="NIK" value="{{ $siswa->nik_ibu }}" required>
+                                                                                          </div>
+                                                                                        </div>
+                                                                                        <div class="form-group row">
+                                                                                          <label for="nama_ayah" class="col-sm-3 col-form-label required">Nama</label>
+                                                                                          <div class="col-sm-9">
+                                                                                            <input type="text" class="form-control" id="nama_ibu" name="nama_ibu" placeholder="Nama" value="{{ $siswa->nama_ibu }}" required>
+                                                                                          </div>
+                                                                                        </div>
+                                                                                        <div class="form-group row">
+                                                                                          <label for="tempat_lahir_ibu" class="col-sm-3 col-form-label">Tempat Lahir</label>
+                                                                                          <div class="col-sm-3">
+                                                                                            <input type="text" class="form-control" id="tempat_lahir_ibu" name="tempat_lahir_ibu" placeholder="Tempat Lahir" value="{{ $siswa->tempat_lahir_ibu }}">
+                                                                                          </div>
+                                                                                          <label for="tanggal_lahir_ibu" class="col-sm-3 col-form-label">Tanggal Lahir</label>
+                                                                                          <div class="col-sm-3">
+                                                                                            <input type="date" class="form-control" id="tanggal_lahir_ibu" name="tanggal_lahir_ibu" placeholder="Tanggal Lahir" value="{{ $siswa->tanggal_lahir_ibu ? \Carbon\Carbon::parse($siswa->tanggal_lahir_ibu)->format('Y-m-d') : '' }}">
+                                                                                          </div>
+                                                                                        </div>
+                                                                                        <div class="form-group row">
+                                                                                          <label for="alamat_ibu" class="col-sm-3 col-form-label">Alamat</label>
+                                                                                          <div class="col-sm-9">
+                                                                                            <textarea class="form-control" id="alamat_ibu" name="alamat_ibu" placeholder="Alamat">{{ $siswa->alamat_ibu }}</textarea>
+                                                                                          </div>
+                                                                                        </div>
+                                                                                        <div class="form-group row">
+                                                                                          <label for="nomor_hp_ibu" class="col-sm-3 col-form-label">Nomor HP</label>
+                                                                                          <div class="col-sm-9">
+                                                                                            <input type="text" class="form-control" id="nomor_hp_ibu" name="nomor_hp_ibu" placeholder="Nomor HP" value="{{ $siswa->nomor_hp_ibu }}">
+                                                                                          </div>
+                                                                                        </div>
+                                                                                        <div class="form-group row">
+                                                                                          <label for="agama_ibu" class="col-sm-3 col-form-label">Agama</label>
+                                                                                          <div class="col-sm-9">
+                                                                                            <select class="form-control form-select" id="agama_ibu" name="agama_ibu">
+                                                                                              <option selected>-- Pilih Agama --</option>
+                                                                                              <option value="1" @if ($siswa->agama_ibu == '1') selected @endif>Islam</option>
+                                                                                              <option value="2" @if ($siswa->agama_ibu == '2') selected @endif>Kristen</option>
+                                                                                              <option value="3" @if ($siswa->agama_ibu == '3') selected @endif>Katolik</option>
+                                                                                              <option value="4" @if ($siswa->agama_ibu == '4') selected @endif>Hindu</option>
+                                                                                              <option value="5" @if ($siswa->agama_ibu == '5') selected @endif>Budha</option>
+                                                                                              <option value="6" @if ($siswa->agama_ibu == '6') selected @endif>Khonghucu</option>
+                                                                                              <option value="7" @if ($siswa->agama_ibu == '7') selected @endif>Lainnya</option>
+                                                                                            </select>
+                                                                                          </div>
+                                                                                        </div>
+                                                                                        <div class="form-group row">
+                                                                                          <label for="kota_ibu" class="col-sm-3 col-form-label">Kota</label>
+                                                                                          <div class="col-sm-3">
+                                                                                            <input type="text" class="form-control" id="kota_ibu" name="kota_ibu" placeholder="Kota" value="{{ $siswa->kota_ibu }}">
+                                                                                          </div>
+                                                                                          <label for="pendidikan_terakhir_ibu" class="col-sm-3 col-form-label">Pendidikan Terakhir</label>
+                                                                                          <div class="col-sm-3">
+                                                                                            <input type="text" class="form-control" id="pendidikan_terakhir_ibu" name="pendidikan_terakhir_ibu" placeholder="Pendidikan Terakhir" value="{{ $siswa->pendidikan_terakhir_ibu }}">
+                                                                                          </div>
+                                                                                        </div>
+                                                                                        <div class="form-group row">
+                                                                                          <label for="pekerjaan_ibu" class="col-sm-3 col-form-label required">Pekerjaan</label>
+                                                                                          <div class="col-sm-9">
+                                                                                            <input type="text" class="form-control" id="pekerjaan_ibu" name="pekerjaan_ibu" placeholder="Pekerjaan Ayah" value="{{ $siswa->pekerjaan_ibu }}" required>
+                                                                                          </div>
+                                                                                        </div>
+                                                                                        <div class="form-group row">
+                                                                                          <label for="penghasil_ibu" class="col-sm-3 col-form-label">Penghasilan</label>
+                                                                                          <div class="col-sm-9">
+                                                                                            <input type="text" class="form-control" id="penghasil_ibu" name="penghasil_ibu" placeholder="Penghasilan" value="{{ $siswa->penghasil_ibu }}">
+                                                                                          </div>
+                                                                                        </div>
+                                                                                      </div>
+                                                                                    </div>
+                                                                                    <div class="tab-pane" id="guardian2">
+                                                                                      {{-- A. Guardian --}}
+                                                                                      <div class="border-bottom p-2">
+                                                                                        <h6 class="mt-2"><b>A. Guardian</b></h6>
+                                                                                        <div class="form-group row">
+                                                                                          <label for="nik_wali" class="col-sm-3 col-form-label required">NIK</label>
+                                                                                          <div class="col-sm-9">
+                                                                                            <input type="text" class="form-control" id="nik_wali" name="nik_wali" placeholder="NIK" value="{{ $siswa->nik_wali }}" required>
+                                                                                          </div>
+                                                                                        </div>
+                                                                                        <div class="form-group row">
+                                                                                          <label for="nama_wali" class="col-sm-3 col-form-label required">Nama</label>
+                                                                                          <div class="col-sm-9">
+                                                                                            <input type="text" class="form-control" id="nama_wali" name="nama_wali" placeholder="Nama" value="{{ $siswa->nama_wali }}" required>
+                                                                                          </div>
+                                                                                        </div>
+                                                                                        <div class="form-group row">
+                                                                                          <label for="tempat_lahir_wali" class="col-sm-3 col-form-label">Tempat Lahir</label>
+                                                                                          <div class="col-sm-3">
+                                                                                            <input type="text" class="form-control" id="tempat_lahir_wali" name="tempat_lahir_wali" placeholder="Tempat Lahir" value="{{ $siswa->tempat_lahir_wali }}">
+                                                                                          </div>
+                                                                                          <label for="tanggal_lahir_wali" class="col-sm-3 col-form-label">Tanggal Lahir</label>
+                                                                                          <div class="col-sm-3">
+                                                                                            <input type="date" class="form-control" id="tanggal_lahir_wali" name="tanggal_lahir_wali" placeholder="Tanggal Lahir" value="{{ $siswa->tanggal_lahir_wali ? \Carbon\Carbon::parse($siswa->tanggal_lahir_wali)->format('Y-m-d') : '' }}">
+                                                                                          </div>
+                                                                                        </div>
+                                                                                        <div class="form-group row">
+                                                                                          <label for="alamat_wali" class="col-sm-3 col-form-label">Alamat</label>
+                                                                                          <div class="col-sm-9">
+                                                                                            <textarea class="form-control" id="alamat_wali" name="alamat_wali" placeholder="Alamat">{{ $siswa->alamat_wali }}</textarea>
+                                                                                          </div>
+                                                                                        </div>
+                                                                                        <div class="form-group row">
+                                                                                          <label for="nomor_hp_wali" class="col-sm-3 col-form-label">Nomor HP</label>
+                                                                                          <div class="col-sm-9">
+                                                                                            <input type="text" class="form-control" id="nomor_hp_wali" name="nomor_hp_wali" placeholder="Nomor HP" value="{{ $siswa->nomor_hp_wali }}">
+                                                                                          </div>
+                                                                                        </div>
+                                                                                        <div class="form-group row">
+                                                                                          <label for="agama_wali" class="col-sm-3 col-form-label">Agama</label>
+                                                                                          <div class="col-sm-9">
+                                                                                            <select class="form-control form-select" id="agama_wali" name="agama_wali">
+                                                                                              <option selected>-- Pilih Agama --</option>
+                                                                                              <option value="1" @if ($siswa->agama_wali == '1') selected @endif>Islam</option>
+                                                                                              <option value="2" @if ($siswa->agama_wali == '2') selected @endif>Kristen</option>
+                                                                                              <option value="3" @if ($siswa->agama_wali == '3') selected @endif>Katolik</option>
+                                                                                              <option value="4" @if ($siswa->agama_wali == '4') selected @endif>Hindu</option>
+                                                                                              <option value="5" @if ($siswa->agama_wali == '5') selected @endif>Budha</option>
+                                                                                              <option value="6" @if ($siswa->agama_wali == '6') selected @endif>Khonghucu</option>
+                                                                                              <option value="7" @if ($siswa->agama_wali == '7') selected @endif>Lainnya</option>
+                                                                                            </select>
+                                                                                          </div>
+                                                                                        </div>
+                                                                                        <div class="form-group row">
+                                                                                          <label for="kota_wali" class="col-sm-3 col-form-label">Kota</label>
+                                                                                          <div class="col-sm-3">
+                                                                                            <input type="text" class="form-control" id="kota_wali" name="kota_wali" placeholder="Kota" value="{{ $siswa->kota_wali }}">
+                                                                                          </div>
+                                                                                          <label for="pendidikan_terakhir_wali" class="col-sm-3 col-form-label">Pendidikan Terakhir</label>
+                                                                                          <div class="col-sm-3">
+                                                                                            <input type="text" class="form-control" id="pendidikan_terakhir_wali" name="pendidikan_terakhir_wali" placeholder="Pendidikan Terakhir" value="{{ $siswa->pendidikan_terakhir_wali }}">
+                                                                                          </div>
+                                                                                        </div>
+                                                                                        <div class="form-group row">
+                                                                                          <label for="pekerjaan_wali" class="col-sm-3 col-form-label required">Pekerjaan</label>
+                                                                                          <div class="col-sm-9">
+                                                                                            <input type="text" class="form-control" id="pekerjaan_wali" name="pekerjaan_wali" placeholder="Pekerjaan" value="{{ $siswa->pekerjaan_wali }}" required>
+                                                                                          </div>
+                                                                                        </div>
+                                                                                        <div class="form-group row">
+                                                                                          <label for="penghasil_wali" class="col-sm-3 col-form-label">Penghasilan</label>
+                                                                                          <div class="col-sm-9">
+                                                                                            <input type="text" class="form-control" id="penghasil_wali" name="penghasil_wali" placeholder="Penghasilan" value="{{ $siswa->penghasil_wali }}">
+                                                                                          </div>
                                                                                         </div>
                                                                                       </div>
                                                                                     </div>
                                                                                   </div>
-
-                                                                                 
                                                                                 </div>
-                                                                                <div class="tab-pane" id="father2">
-                                                                                  {{-- A. Father --}}
-                                                                                  <div class="border-bottom p-2">
-                                                                                    <h6 class="mt-2"><b>A. Father</b></h6>
-                                                                                    <div class="form-group row">
-                                                                                      <label for="nik_ayah" class="col-sm-3 col-form-label required">NIK</label>
-                                                                                      <div class="col-sm-9">
-                                                                                        <input type="text" class="form-control" id="nik_ayah" name="nik_ayah" placeholder="NIK" value="{{ $siswa->nik_ayah }}" required>
-                                                                                      </div>
-                                                                                    </div>
-                                                                                    <div class="form-group row">
-                                                                                      <label for="nama_ayah" class="col-sm-3 col-form-label required">Nama</label>
-                                                                                      <div class="col-sm-9">
-                                                                                        <input type="text" class="form-control" id="nama_ayah" name="nama_ayah" placeholder="Nama" value="{{ $siswa->nama_ayah }}" required>
-                                                                                      </div>
-                                                                                    </div>
-                                                                                    <div class="form-group row">
-                                                                                      <label for="tempat_lahir_ayah" class="col-sm-3 col-form-label">Tempat Lahir</label>
-                                                                                      <div class="col-sm-3">
-                                                                                        <input type="text" class="form-control" id="tempat_lahir_ayah" name="tempat_lahir_ayah" placeholder="Tempat Lahir" value="{{ $siswa->tempat_lahir_ayah }}">
-                                                                                      </div>
-                                                                                      <label for="tanggal_lahir_ayah" class="col-sm-3 col-form-label">Tanggal Lahir</label>
-                                                                                      <div class="col-sm-3">
-                                                                                        <input type="date" class="form-control" id="tanggal_lahir_ayah" name="tanggal_lahir_ayah" placeholder="Tanggal Lahir" value="{{ $siswa->tanggal_lahir_ayah ? \Carbon\Carbon::parse($siswa->tanggal_lahir_ayah)->format('Y-m-d') : '' }}">
-                                                                                      </div>
-                                                                                    </div>
-                                                                                    <div class="form-group row">
-                                                                                      <label for="alamat_ayah" class="col-sm-3 col-form-label">Alamat</label>
-                                                                                      <div class="col-sm-9">
-                                                                                        <textarea class="form-control" id="alamat_ayah" name="alamat_ayah" placeholder="Alamat">{{ $siswa->alamat_ayah }}</textarea>
-                                                                                      </div>
-                                                                                    </div>
-                                                                                    <div class="form-group row">
-                                                                                      <label for="nomor_hp_ayah" class="col-sm-3 col-form-label">Nomor HP</label>
-                                                                                      <div class="col-sm-9">
-                                                                                        <input type="text" class="form-control" id="nomor_hp_ayah" name="nomor_hp_ayah" placeholder="Nomor HP" value="{{ $siswa->nomor_hp_ayah }}">
-                                                                                      </div>
-                                                                                    </div>
-                                                                                    <div class="form-group row">
-                                                                                      <label for="agama_ayah" class="col-sm-3 col-form-label">Agama</label>
-                                                                                      <div class="col-sm-9">
-                                                                                        <select class="form-control form-select" id="agama_ayah" name="agama_ayah">
-                                                                                          <option selected>-- Pilih Agama --</option>
-                                                                                          <option value="1" @if ($siswa->agama_ayah == 1) selected @endif>Islam</option>
-                                                                                          <option value="2" @if ($siswa->agama_ayah == 2) selected @endif>Kristen</option>
-                                                                                          <option value="3" @if ($siswa->agama_ayah == 3) selected @endif>Katolik</option>
-                                                                                          <option value="4" @if ($siswa->agama_ayah == 4) selected @endif>Hindu</option>
-                                                                                          <option value="5" @if ($siswa->agama_ayah == 5) selected @endif>Budha</option>
-                                                                                          <option value="6" @if ($siswa->agama_ayah == 6) selected @endif>Khonghucu</option>
-                                                                                          <option value="7" @if ($siswa->agama_ayah == 7) selected @endif>Kepercayaan</option>
-                                                                                        </select>
-                                                                                      </div>
-                                                                                    </div>
-                                                                                    <div class="form-group row">
-                                                                                      <label for="kota_ayah" class="col-sm-3 col-form-label">Kota</label>
-                                                                                      <div class="col-sm-3">
-                                                                                        <input type="text" class="form-control" id="kota_ayah" name="kota_ayah" placeholder="Kota" value="{{ $siswa->kota_ayah }}">
-                                                                                      </div>
-                                                                                      <label for="pendidikan_terakhir_ayah" class="col-sm-3 col-form-label">Pendidikan Terakhir</label>
-                                                                                      <div class="col-sm-3">
-                                                                                        <input type="text" class="form-control" id="pendidikan_terakhir_ayah" name="pendidikan_terakhir_ayah" placeholder="Pendidikan Terakhir" value="{{ $siswa->pendidikan_terakhir_ayah }}">
-                                                                                      </div>
-                                                                                    </div>
-                                                                                    <div class="form-group row">
-                                                                                      <label for="pekerjaan_ayah" class="col-sm-3 col-form-label required">Pekerjaan</label>
-                                                                                      <div class="col-sm-9">
-                                                                                        <input type="text" class="form-control" id="pekerjaan_ayah" name="pekerjaan_ayah" placeholder="Pekerjaan" value="{{ $siswa->pekerjaan_ayah }}" required>
-                                                                                      </div>
-                                                                                    </div>
-                                                                                    <div class="form-group row">
-                                                                                      <label for="penghasil_ayah" class="col-sm-3 col-form-label">Penghasilan</label>
-                                                                                      <div class="col-sm-9">
-                                                                                        <input type="text" class="form-control" id="penghasil_ayah" name="penghasil_ayah" placeholder="Penghasilan" value="{{ $siswa->penghasil_ayah }}">
-                                                                                      </div>
-                                                                                    </div>
-                                                                                  </div>
+                                                                                <div class="modal-footer justify-content-end">
+                                                                                  <button type="button" class="btn btn-default" data-bs-dismiss="modal">Batal</button>
+                                                                                  <button type="submit" class="btn btn-primary">Simpan</button>
                                                                                 </div>
-                                                                                <div class="tab-pane" id="mother2">
-                                                                                  {{-- A. Mother --}}
-                                                                                  <div class="border-bottom p-2">
-                                                                                    <h6 class="mt-2"><b>A. Mother</b></h6>
-                                                                                    <div class="form-group row">
-                                                                                      <label for="nik_ibu" class="col-sm-3 col-form-label required">NIK</label>
-                                                                                      <div class="col-sm-9">
-                                                                                        <input type="text" class="form-control" id="nik_ibu" name="nik_ibu" placeholder="NIK" value="{{ $siswa->nik_ibu }}" required>
-                                                                                      </div>
-                                                                                    </div>
-                                                                                    <div class="form-group row">
-                                                                                      <label for="nama_ayah" class="col-sm-3 col-form-label required">Nama</label>
-                                                                                      <div class="col-sm-9">
-                                                                                        <input type="text" class="form-control" id="nama_ibu" name="nama_ibu" placeholder="Nama" value="{{ $siswa->nama_ibu }}" required>
-                                                                                      </div>
-                                                                                    </div>
-                                                                                    <div class="form-group row">
-                                                                                      <label for="tempat_lahir_ibu" class="col-sm-3 col-form-label">Tempat Lahir</label>
-                                                                                      <div class="col-sm-3">
-                                                                                        <input type="text" class="form-control" id="tempat_lahir_ibu" name="tempat_lahir_ibu" placeholder="Tempat Lahir" value="{{ $siswa->tempat_lahir_ibu }}">
-                                                                                      </div>
-                                                                                      <label for="tanggal_lahir_ibu" class="col-sm-3 col-form-label">Tanggal Lahir</label>
-                                                                                      <div class="col-sm-3">
-                                                                                        <input type="date" class="form-control" id="tanggal_lahir_ibu" name="tanggal_lahir_ibu" placeholder="Tanggal Lahir" value="{{ $siswa->tanggal_lahir_ibu ? \Carbon\Carbon::parse($siswa->tanggal_lahir_ibu)->format('Y-m-d') : '' }}">
-                                                                                      </div>
-                                                                                    </div>
-                                                                                    <div class="form-group row">
-                                                                                      <label for="alamat_ibu" class="col-sm-3 col-form-label">Alamat</label>
-                                                                                      <div class="col-sm-9">
-                                                                                        <textarea class="form-control" id="alamat_ibu" name="alamat_ibu" placeholder="Alamat">{{ $siswa->alamat_ibu }}</textarea>
-                                                                                      </div>
-                                                                                    </div>
-                                                                                    <div class="form-group row">
-                                                                                      <label for="nomor_hp_ibu" class="col-sm-3 col-form-label">Nomor HP</label>
-                                                                                      <div class="col-sm-9">
-                                                                                        <input type="text" class="form-control" id="nomor_hp_ibu" name="nomor_hp_ibu" placeholder="Nomor HP" value="{{ $siswa->nomor_hp_ibu }}">
-                                                                                      </div>
-                                                                                    </div>
-                                                                                    <div class="form-group row">
-                                                                                      <label for="agama_ibu" class="col-sm-3 col-form-label">Agama</label>
-                                                                                      <div class="col-sm-9">
-                                                                                        <select class="form-control form-select" id="agama_ibu" name="agama_ibu">
-                                                                                          <option selected>-- Pilih Agama --</option>
-                                                                                          <option value="1" @if ($siswa->agama_ibu == '1') selected @endif>Islam</option>
-                                                                                          <option value="2" @if ($siswa->agama_ibu == '2') selected @endif>Kristen</option>
-                                                                                          <option value="3" @if ($siswa->agama_ibu == '3') selected @endif>Katolik</option>
-                                                                                          <option value="4" @if ($siswa->agama_ibu == '4') selected @endif>Hindu</option>
-                                                                                          <option value="5" @if ($siswa->agama_ibu == '5') selected @endif>Budha</option>
-                                                                                          <option value="6" @if ($siswa->agama_ibu == '6') selected @endif>Khonghucu</option>
-                                                                                          <option value="7" @if ($siswa->agama_ibu == '7') selected @endif>Kepercayaan</option>
-                                                                                        </select>
-                                                                                      </div>
-                                                                                    </div>
-                                                                                    <div class="form-group row">
-                                                                                      <label for="kota_ibu" class="col-sm-3 col-form-label">Kota</label>
-                                                                                      <div class="col-sm-3">
-                                                                                        <input type="text" class="form-control" id="kota_ibu" name="kota_ibu" placeholder="Kota" value="{{ $siswa->kota_ibu }}">
-                                                                                      </div>
-                                                                                      <label for="pendidikan_terakhir_ibu" class="col-sm-3 col-form-label">Pendidikan Terakhir</label>
-                                                                                      <div class="col-sm-3">
-                                                                                        <input type="text" class="form-control" id="pendidikan_terakhir_ibu" name="pendidikan_terakhir_ibu" placeholder="Pendidikan Terakhir" value="{{ $siswa->pendidikan_terakhir_ibu }}">
-                                                                                      </div>
-                                                                                    </div>
-                                                                                    <div class="form-group row">
-                                                                                      <label for="pekerjaan_ibu" class="col-sm-3 col-form-label required">Pekerjaan</label>
-                                                                                      <div class="col-sm-9">
-                                                                                        <input type="text" class="form-control" id="pekerjaan_ibu" name="pekerjaan_ibu" placeholder="Pekerjaan Ayah" value="{{ $siswa->pekerjaan_ibu }}" required>
-                                                                                      </div>
-                                                                                    </div>
-                                                                                    <div class="form-group row">
-                                                                                      <label for="penghasil_ibu" class="col-sm-3 col-form-label">Penghasilan</label>
-                                                                                      <div class="col-sm-9">
-                                                                                        <input type="text" class="form-control" id="penghasil_ibu" name="penghasil_ibu" placeholder="Penghasilan" value="{{ $siswa->penghasil_ibu }}">
-                                                                                      </div>
-                                                                                    </div>
-                                                                                  </div>
-                                                                                </div>
-                                                                                <div class="tab-pane" id="guardian2">
-                                                                                  {{-- A. Guardian --}}
-                                                                                  <div class="border-bottom p-2">
-                                                                                    <h6 class="mt-2"><b>A. Guardian</b></h6>
-                                                                                    <div class="form-group row">
-                                                                                      <label for="nik_wali" class="col-sm-3 col-form-label required">NIK</label>
-                                                                                      <div class="col-sm-9">
-                                                                                        <input type="text" class="form-control" id="nik_wali" name="nik_wali" placeholder="NIK" value="{{ $siswa->nik_wali }}" required>
-                                                                                      </div>
-                                                                                    </div>
-                                                                                    <div class="form-group row">
-                                                                                      <label for="nama_wali" class="col-sm-3 col-form-label required">Nama</label>
-                                                                                      <div class="col-sm-9">
-                                                                                        <input type="text" class="form-control" id="nama_wali" name="nama_wali" placeholder="Nama" value="{{ $siswa->nama_wali }}" required>
-                                                                                      </div>
-                                                                                    </div>
-                                                                                    <div class="form-group row">
-                                                                                      <label for="tempat_lahir_wali" class="col-sm-3 col-form-label">Tempat Lahir</label>
-                                                                                      <div class="col-sm-3">
-                                                                                        <input type="text" class="form-control" id="tempat_lahir_wali" name="tempat_lahir_wali" placeholder="Tempat Lahir" value="{{ $siswa->tempat_lahir_wali }}">
-                                                                                      </div>
-                                                                                      <label for="tanggal_lahir_wali" class="col-sm-3 col-form-label">Tanggal Lahir</label>
-                                                                                      <div class="col-sm-3">
-                                                                                        <input type="date" class="form-control" id="tanggal_lahir_wali" name="tanggal_lahir_wali" placeholder="Tanggal Lahir" value="{{ $siswa->tanggal_lahir_wali ? \Carbon\Carbon::parse($siswa->tanggal_lahir_wali)->format('Y-m-d') : '' }}">
-                                                                                      </div>
-                                                                                    </div>
-                                                                                    <div class="form-group row">
-                                                                                      <label for="alamat_wali" class="col-sm-3 col-form-label">Alamat</label>
-                                                                                      <div class="col-sm-9">
-                                                                                        <textarea class="form-control" id="alamat_wali" name="alamat_wali" placeholder="Alamat">{{ $siswa->alamat_wali }}</textarea>
-                                                                                      </div>
-                                                                                    </div>
-                                                                                    <div class="form-group row">
-                                                                                      <label for="nomor_hp_wali" class="col-sm-3 col-form-label">Nomor HP</label>
-                                                                                      <div class="col-sm-9">
-                                                                                        <input type="text" class="form-control" id="nomor_hp_wali" name="nomor_hp_wali" placeholder="Nomor HP" value="{{ $siswa->nomor_hp_wali }}">
-                                                                                      </div>
-                                                                                    </div>
-                                                                                    <div class="form-group row">
-                                                                                      <label for="agama_wali" class="col-sm-3 col-form-label">Agama</label>
-                                                                                      <div class="col-sm-9">
-                                                                                        <select class="form-control form-select" id="agama_wali" name="agama_wali">
-                                                                                          <option selected>-- Pilih Agama --</option>
-                                                                                          <option value="1" @if ($siswa->agama_wali == '1') selected @endif>Islam</option>
-                                                                                          <option value="2" @if ($siswa->agama_wali == '2') selected @endif>Kristen</option>
-                                                                                          <option value="3" @if ($siswa->agama_wali == '3') selected @endif>Katolik</option>
-                                                                                          <option value="4" @if ($siswa->agama_wali == '4') selected @endif>Hindu</option>
-                                                                                          <option value="5" @if ($siswa->agama_wali == '5') selected @endif>Budha</option>
-                                                                                          <option value="6" @if ($siswa->agama_wali == '6') selected @endif>Khonghucu</option>
-                                                                                          <option value="7" @if ($siswa->agama_wali == '7') selected @endif>Kepercayaan</option>
-                                                                                        </select>
-                                                                                      </div>
-                                                                                    </div>
-                                                                                    <div class="form-group row">
-                                                                                      <label for="kota_wali" class="col-sm-3 col-form-label">Kota</label>
-                                                                                      <div class="col-sm-3">
-                                                                                        <input type="text" class="form-control" id="kota_wali" name="kota_wali" placeholder="Kota" value="{{ $siswa->kota_wali }}">
-                                                                                      </div>
-                                                                                      <label for="pendidikan_terakhir_wali" class="col-sm-3 col-form-label">Pendidikan Terakhir</label>
-                                                                                      <div class="col-sm-3">
-                                                                                        <input type="text" class="form-control" id="pendidikan_terakhir_wali" name="pendidikan_terakhir_wali" placeholder="Pendidikan Terakhir" value="{{ $siswa->pendidikan_terakhir_wali }}">
-                                                                                      </div>
-                                                                                    </div>
-                                                                                    <div class="form-group row">
-                                                                                      <label for="pekerjaan_wali" class="col-sm-3 col-form-label required">Pekerjaan</label>
-                                                                                      <div class="col-sm-9">
-                                                                                        <input type="text" class="form-control" id="pekerjaan_wali" name="pekerjaan_wali" placeholder="Pekerjaan" value="{{ $siswa->pekerjaan_wali }}" required>
-                                                                                      </div>
-                                                                                    </div>
-                                                                                    <div class="form-group row">
-                                                                                      <label for="penghasil_wali" class="col-sm-3 col-form-label">Penghasilan</label>
-                                                                                      <div class="col-sm-9">
-                                                                                        <input type="text" class="form-control" id="penghasil_wali" name="penghasil_wali" placeholder="Penghasilan" value="{{ $siswa->penghasil_wali }}">
-                                                                                      </div>
-                                                                                    </div>
-                                                                                  </div>
-                                                                                </div>
-                                                                              </div>
+                                                                              </form>
                                                                             </div>
-                                                                            <div class="modal-footer justify-content-end">
-                                                                              <button type="button" class="btn btn-default" data-bs-dismiss="modal">Batal</button>
-                                                                              <button type="submit" class="btn btn-primary">Simpan</button>
-                                                                            </div>
-                                                                          </form>
+                                                                          </div>
                                                                         </div>
-                                                                      </div>
-                                                                    </div>
-                                                                    <!-- End Modal edit -->
-                                                        </div>
-                                                        <!-- /.row -->
+                                                                        <!-- End Modal edit -->
+                                                            </div>
+                                                            <!-- /.row -->
 
+                                                        </div>
+                                                        <!-- ============================================================== -->
+                                                        <!-- End Container fluid  -->
+                                                        <!-- ============================================================== -->
                                                     </div>
-                                                    <!-- ============================================================== -->
-                                                    <!-- End Container fluid  -->
-                                                    <!-- ============================================================== -->
-                                                </div>
 @endsection
 
                                         @push('custom-scripts')
@@ -1432,49 +1433,49 @@
         }
     </script>
 
-                                                <!-- ajax get class id and and jurusan class name-->
-                                                <script type="text/javascript">
-                                                    $(document).ready(function() {
-                                                        $('select[name="tingkatan_id"]').on('change', function() {
-                                                            var tingkatan_id = $(this).val();
-                                                            console.log(tingkatan_id);
-                                                            if (tingkatan_id) {
-                                                                $.ajax({
-                                                                    url: '/admin/getKelasByTingkatan/ajax/' + tingkatan_id,
-                                                                    type: "GET",
-                                                                    dataType: "json",
-                                                                    success: function(response) {
-                                                                        $('select[name="kelas_id"]').empty();
-                                                                        $('select[name="jurusan_id"]').empty();
+                                                    <!-- ajax get class id and and jurusan class name-->
+                                                    <script type="text/javascript">
+                                                        $(document).ready(function() {
+                                                            $('select[name="tingkatan_id"]').on('change', function() {
+                                                                var tingkatan_id = $(this).val();
+                                                                console.log(tingkatan_id);
+                                                                if (tingkatan_id) {
+                                                                    $.ajax({
+                                                                        url: '/admin/getKelasByTingkatan/ajax/' + tingkatan_id,
+                                                                        type: "GET",
+                                                                        dataType: "json",
+                                                                        success: function(response) {
+                                                                            $('select[name="kelas_id"]').empty();
+                                                                            $('select[name="jurusan_id"]').empty();
 
-                                                                        $('select[name="kelas_id"]').append(
-                                                                            '<option value="">-- Select Class Name --</option>'
-                                                                        );
-
-                                                                        $('select[name="jurusan_id"]').append(
-                                                                            '<option value="">-- Select Level Name --</option>'
-                                                                        );
-
-                                                                        $.each(response.data, function(i, item) {
                                                                             $('select[name="kelas_id"]').append(
-                                                                                '<option value="' +
-                                                                                item.id + '">' + item.nama_kelas + '</option>');
-                                                                        });
-
-                                                                        $.each(response.data_jurusan, function(i, item) {
-                                                                            $('select[name="jurusan_id"]').append(
-                                                                                '<option value="' +
-                                                                                item.id + '">' + item.nama_jurusan + '</option>'
+                                                                                '<option value="">-- Select Class Name --</option>'
                                                                             );
-                                                                        });
-                                                                    }
-                                                                });
-                                                            } else {
-                                                                $('select[name="kelas_id"').empty();
-                                                            }
+
+                                                                            $('select[name="jurusan_id"]').append(
+                                                                                '<option value="">-- Select Level Name --</option>'
+                                                                            );
+
+                                                                            $.each(response.data, function(i, item) {
+                                                                                $('select[name="kelas_id"]').append(
+                                                                                    '<option value="' +
+                                                                                    item.id + '">' + item.nama_kelas + '</option>');
+                                                                            });
+
+                                                                            $.each(response.data_jurusan, function(i, item) {
+                                                                                $('select[name="jurusan_id"]').append(
+                                                                                    '<option value="' +
+                                                                                    item.id + '">' + item.nama_jurusan + '</option>'
+                                                                                );
+                                                                            });
+                                                                        }
+                                                                    });
+                                                                } else {
+                                                                    $('select[name="kelas_id"').empty();
+                                                                }
+                                                            });
                                                         });
-                                                    });
-                                                </script>
+                                                    </script>
 @endpush
 
                                         @section('footer')

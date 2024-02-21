@@ -308,7 +308,7 @@
                                                         <option value="4">Hindu</option>
                                                         <option value="5">Budha</option>
                                                         <option value="6">Khonghucu</option>
-                                                        <option value="7">Kepercayaan</option>
+                                                        <option value="7">Lainnya</option>
                                                     </select>
                                                 </div>
                                             </div>

@@ -103,9 +103,8 @@
                                     <label for="kode_karyawan" class="col-sm-3 col-form-label ">
                                         Username</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="username"
-                                            name="username" placeholder="Username"
-                                            value="{{ $karyawan->user->username }}" disabled>
+                                        <input type="text" class="form-control" id="username" name="username"
+                                            placeholder="Username" value="{{ $karyawan->user->username }}" disabled>
                                     </div>
                                 </div>
 
@@ -279,7 +278,7 @@
                                                 Khonghucu
                                             </option>
                                             <option value="7" @if ($karyawan->agama == '7') selected @endif>
-                                                Kepercayaan
+                                                Lainnya
                                             </option>
                                         </select>
                                     </div>
@@ -488,15 +487,13 @@
                                                     Old Password</label>
                                                 <div class="col-sm-3">
                                                     <input type="password" class="form-control" id="old_password"
-                                                        name="old_password" placeholder="Old password"
-                                                        value="" >
+                                                        name="old_password" placeholder="Old password" value="">
                                                 </div>
                                                 <label for="kode_karyawan" class="col-sm-3 col-form-label ">
                                                     Old Password</label>
                                                 <div class="col-sm-3">
                                                     <input type="password" class="form-control" id="new_password"
-                                                        name="new_password" placeholder="New password"
-                                                        value="" >
+                                                        name="new_password" placeholder="New password" value="">
                                                 </div>
                                             </div>
 
@@ -520,7 +517,8 @@
                                                     Date</label>
                                                 <div class="col-sm-3">
                                                     <input type="date" class="form-control" id="permanent_date"
-                                                        name="permanent_date" value="{{ $karyawan->permanent_date }}" disabled>
+                                                        name="permanent_date" value="{{ $karyawan->permanent_date }}"
+                                                        disabled>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -696,7 +694,7 @@
                                                         </option>
                                                         <option value="7"
                                                             @if ($karyawan->agama == '7') selected @endif>
-                                                            Kepercayaan
+                                                            Lainnya
                                                         </option>
                                                     </select>
                                                 </div>
