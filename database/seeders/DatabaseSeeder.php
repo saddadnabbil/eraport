@@ -47,6 +47,7 @@ use Database\Seeders\KmNilaiSumatifTableSeeder;
 use Database\Seeders\StatusKaryawanTableSeeder;
 use UsersTableSeeder as GlobalUsersTableSeeder;
 use Database\Seeders\EkstrakulikulerTableSeeder;
+use Database\Seeders\JadwalPelajaranTableSeeder;
 use Database\Seeders\K13MappingMapelTableSeeder;
 use Database\Seeders\KmNilaiFormatifTableSeeder;
 use Database\Seeders\PositionKaryawanTableSeeder;
@@ -54,6 +55,7 @@ use Database\Seeders\K13NilaiSpiritualTableSeeder;
 use Database\Seeders\KmNilaiAkhirRaportTableSeeder;
 use SekolahTableSeeder as GlobalSekolahTableSeeder;
 use Database\Seeders\CapaianPembelajaranTableSeeder;
+use Database\Seeders\JadwalPelajaranSlotTableSeeder;
 use Database\Seeders\K13NilaiAkhirRaportTableSeeder;
 use Database\Seeders\K13NilaiPengetahuanTableSeeder;
 use Database\Seeders\RencanaNilaiSumatifTableSeeder;
@@ -135,6 +137,9 @@ class DatabaseSeeder extends Seeder
             KmNilaiAkhirTableSeeder::class,
             KmMappingMapelTableSeeder::class,
             KmTglRaportTableSeeder::class,
+
+            // Timetable
+            JadwalPelajaranSlotTableSeeder::class,
         ]);
     }
 }

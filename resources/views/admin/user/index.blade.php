@@ -149,22 +149,22 @@
                                             <tr>
                                                 <td>{{ $no }}</td>
                                                 <td>
-                                                    @if ($user->role == 1)
-                                                        {{ optional($user->karyawan)->nama_lengkap }}
-                                                    @elseif ($user->role == 2)
-                                                        {{ optional($user->karyawan)->nama_lengkap }}
-                                                    @elseif ($user->role == 3)
+                                                    @if ($user->role == 3)
                                                         {{ optional($user->siswa)->nama_lengkap }}
+                                                    @else
+                                                        {{ optional($user->karyawan)->nama_lengkap }}
                                                     @endif
                                                 </td>
                                                 <td>{{ $user->username }}</td>
                                                 <td>
-                                                    @if ($user->role == 1)
-                                                        Administrator
+                                                    @if ($user->role == 3)
+                                                        Student
                                                     @elseif($user->role == 2)
-                                                        Guru
-                                                    @elseif($user->role == 3)
-                                                        Siswa
+                                                        Teacher
+                                                    @elseif($user->role == 0 || $user->role == 1)
+                                                        Administrator
+                                                    @else
+                                                        Employee
                                                     @endif
                                                 </td>
                                                 <td class="text-center">
@@ -207,25 +207,16 @@
                                                                         class="col-sm-3 col-form-label">Nama
                                                                         Lengkap</label>
                                                                     <div class="col-sm-9">
-                                                                        @if ($user->role == 1)
+                                                                        @if ($user->role == 3)
+                                                                            <input type="text" class="form-control"
+                                                                                name="nama_lengkap"
+                                                                                value="{{ optional($user->siswa)->nama_lengkap }}"
+                                                                                readonly>
+                                                                        @else
                                                                             <input type="text" class="form-control"
                                                                                 name="nama_lengkap"
                                                                                 value="{{ optional($user->karyawan)->nama_lengkap }}"
                                                                                 readonly>
-                                                                        @elseif($user->role == 2)
-                                                                            <input type="text" class="form-control"
-                                                                                name="nama_lengkap"
-                                                                                value="{{ optional($user->karyawan)->nama_lengkap }}"
-                                                                                readonly>
-                                                                        @elseif($user->role == 3)
-                                                                            @if ($user->siswa)
-                                                                                <input type="text" class="form-control"
-                                                                                    name="nama_lengkap"
-                                                                                    value="{{ optional($user->siswa)->nama_lengkap }}"
-                                                                                    readonly>
-                                                                            @else
-                                                                                -
-                                                                            @endif
                                                                         @endif
                                                                     </div>
                                                                 </div>
@@ -243,8 +234,7 @@
                                                                         class="col-sm-3 col-form-label">Password</label>
                                                                     <div class="col-sm-9">
                                                                         <input type="password" class="form-control"
-                                                                            name="password" placeholder="Password Baru"
-                                                                            required>
+                                                                            name="password" placeholder="Password Baru">
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group row">

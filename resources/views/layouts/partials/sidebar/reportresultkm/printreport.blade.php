@@ -13,7 +13,7 @@
             break;
         case 2:
             $allowedRoutes = ['kirimnilaiakhirkm.*', 'kirimnilaiakhirkm.*'];
-            
+
             $checkRouteMidSemesterReport = request()->routeIs('statusnilaiguru.*');
             $dynamicRouteMidSemesterReport = route('statusnilaiguru.index');
 
@@ -34,11 +34,13 @@
             'name' => 'Mid-Semester Report',
             'route' => $dynamicRouteMidSemesterReport,
             'isActive' => $checkRouteMidSemesterReport,
+            'childHasArrow' => false,
         ],
         [
             'name' => 'Semester Report',
             'route' => $dynamicRouteSemesterReport,
             'isActive' => $checkRouteSemesterReport,
+            'childHasArrow' => false,
         ],
     ],
 ])

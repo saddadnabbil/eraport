@@ -9,8 +9,11 @@ use App\UnitKaryawan;
 use App\StatusKaryawan;
 use App\PositionKaryawan;
 use Illuminate\Http\Request;
+use App\Imports\KaryawanImport;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 
 class KaryawanController extends Controller
@@ -342,33 +345,20 @@ class KaryawanController extends Controller
                 // Sales
             ];
 
-            $userRole = 11;
-
+            $user = User::findOrFail($karyawan->user_id);
             if (isset($unitRoles[$request->unit_karyawan_id])) {
                 $role = $unitRoles[$request->unit_karyawan_id];
-                $userRole = $role;
-                dd($role, $userRole);
+                $user->role = $role; // update the role
+                $user->status = true; // update the status
+                $user->save(); // save the changes
             }
-
-            $user = new User([
-                'username' => strtolower(str_replace(' ', '', $request->nama_lengkap . $request->kode_karyawan)),
-                'password' => bcrypt('123456'),
-                'role' => $userRole,
-                'status' => true,
-            ]);
-
-            $user->save();
         } catch (\Throwable $th) {
             return back()->with('toast_error', 'Username telah digunakan');
         }
 
-        // Update the associated User model
-        $karyawan->user->update([
-            'username' => strtolower(str_replace(' ', '', $request->nama_lengkap . $request->kode_karyawan)),
-        ]);
-
         // Update the Karyawan instance with the new request data
         $karyawan->update([
+            'user_id' => $user->id,
             'status_karyawan_id' => $request->status_karyawan_id,
             'unit_karyawan_id' => $request->unit_karyawan_id,
             'position_karyawan_id' => $request->position_karyawan_id,
@@ -452,24 +442,25 @@ class KaryawanController extends Controller
     //     return Excel::download(new KaryawanExport, $filename);
     // }
 
-    // public function format_import()
-    // {
-    //     $file = public_path() . "/format_import/format_import_karyawan.xls";
-    //     $headers = array(
-    //         'Content-Type: application/xls',
-    //     );
-    //     return Response::download($file, 'format_import_karyawan ' . date('Y-m-d H_i_s') . '.xls', $headers);
-    // }
+    public function format_import()
+    {
+        $file = public_path() . "/format_import/format_import_karyawan.xls";
+        $headers = array(
+            'Content-Type: application/xls',
+        );
+        return Response::download($file, 'format_import_karyawan ' . date('Y-m-d H_i_s') . '.xls', $headers);
+    }
 
-    // public function import(Request $request)
-    // {
-    //     try {
-    //         Excel::import(new KaryawanImport, $request->file('file_import'));
-    //         return back()->with('toast_success', 'Data karyawan berhasil diimport');
-    //     } catch (\Throwable $th) {
-    //         return back()->with('toast_error', 'Maaf, format data tidak sesuai');
-    //     }
-    // }
+    public function import(Request $request)
+    {
+        try {
+            Excel::import(new KaryawanImport, $request->file('file_import'));
+            return back()->with('toast_success', 'Data karyawan berhasil diimport');
+        } catch (\Throwable $th) {
+            dd($th->getMessage());
+            return back()->with('toast_error', 'Maaf, format data tidak sesuai');
+        }
+    }
 
     public function activate(Request $request)
     {

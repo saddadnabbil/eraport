@@ -10,17 +10,17 @@
 
             $checkRouteLihat = request()->routeIs('nilaiterkirimkmadmin.*');
             $dynamicRouteLihat = route('nilaiterkirimkmadmin.index');
-            
+
             break;
         case 2:
             $allowedRoutes = ['kirimnilaiakhirkm.*', 'kirimnilaiakhirkm.*'];
-            
+
             $checkRouteKirim = request()->routeIs('kirimnilaiakhirkm.*');
             $dynamicRouteKirim = route('kirimnilaiakhirkm.index');
 
             $checkRouteLihat = request()->routeIs('nilaiterkirimkm.*');
             $dynamicRouteLihat = route('nilaiterkirimkm.index');
-            
+
             break;
         default:
     }
@@ -37,11 +37,13 @@
             'name' => 'Kirim Nilai Akhir',
             'route' => $dynamicRouteKirim,
             'isActive' => $checkRouteKirim,
+            'childHasArrow' => false,
         ],
         [
             'name' => 'Lihat Nilai Terkirim',
             'route' => $dynamicRouteLihat,
             'isActive' => $checkRouteLihat,
+            'childHasArrow' => false,
         ],
     ],
 ])

@@ -575,56 +575,6 @@
                                                     ])
                                                 </td>
                                             </tr>
-
-                                            <!-- Modal edit  -->
-                                            <div class="modal fade" id="modal-edit{{ $karyawan->id }}">
-                                                <div class="modal-dialog modal-lg">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title">Edit
-                                                                {{ $title }}</h5>
-
-                                                            <button type="button" class="btn-close"
-                                                                data-bs-dismiss="modal" aria-hidden="true"></button>
-                                                        </div>
-                                                        <form action="{{ route('karyawan.update', $karyawan->id) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            @method('PUT')
-                                                            <div class="modal-body">
-                                                                <div class="form-group row">
-                                                                    <label class="col-sm-3 col-form-label">Position
-                                                                        Code</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control"
-                                                                            id="position_kode" name="position_kode"
-                                                                            placeholder="Position Code"
-                                                                            value="{{ $karyawan->position_kode }}"
-                                                                            disabled>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <label class="col-sm-3 col-form-label">Position
-                                                                        Name</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control"
-                                                                            id="position_nama" name="position_nama"
-                                                                            placeholder="Position Name"
-                                                                            value="{{ $karyawan->position_nama }}">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="modal-footer justify-content-end">
-                                                                <button type="button" class="btn btn-default"
-                                                                    data-bs-dismiss="modal">Batal</button>
-                                                                <button type="submit"
-                                                                    class="btn btn-primary">Simpan</button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- End Modal edit -->
                                         @endforeach
                                     </tbody>
                                 </table>

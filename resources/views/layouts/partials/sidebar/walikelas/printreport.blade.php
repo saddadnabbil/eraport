@@ -20,16 +20,18 @@
     'icon' => 'file',
     'itemName' => 'Print Report',
     'route' => 'javascript:void(0)',
-    'subItems' => [ 
+    'subItems' => [
         [
             'name' => 'Mid-Semester Report',
             'route' => $dynamicRouteMidSemesterReport,
             'isActive' => $checkRouteMidSemesterReport,
+            'childHasArrow' => false,
         ],
         [
             'name' => 'Semester Report',
             'route' => $dynamicRouteSemesterReport,
             'isActive' => $checkRouteSemesterReport,
+            'childHasArrow' => false,
         ],
     ],
 ])

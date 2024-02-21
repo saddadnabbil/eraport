@@ -29,3 +29,12 @@ flush-db-with-seeding:
 	
 dump:
 	composer dump-autoload
+
+fresh-seed:
+	php artisan migrate:fresh --seed
+
+route-clear:
+	php artisan route:clear
+	php artisan cache:clear
+	php artisan config:clear
+	php artisan route:cache

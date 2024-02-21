@@ -26,6 +26,11 @@ Route::fallback(function () {
     return view('errorpage.404', compact('title'));
 });
 
+Route::get('/404', function () {
+    $title = 'Page Not Found';
+    return view('errorpage.404', compact('title'));
+})->name('404');
+
 Route::get('/', 'AuthController@index')
     ->name('login.get')
     ->middleware('guest');
@@ -299,9 +304,29 @@ Route::group(['middleware' => ['auth']], function () {
                 'only' => ['index', 'store', 'update', 'destroy'],
             ]);
 
+            // timeslot
+            Route::get('timeslot', 'Admin\JadwalPelajaranController@timeSlot')->name('timeslot.index');
+            Route::post('timeslot', 'Admin\JadwalPelajaranController@storeTimeSlot')->name('timeslot.store');
+            Route::put('timeslot/update/{id}', 'Admin\JadwalPelajaranController@updateTimeSlot')->name('timeslot.update');
+            Route::delete('timeslot/{id}', 'Admin\JadwalPelajaranController@deleteTimeSlot')->name('timeslot.destory');
+
+            // jadwal pelajaran -> siswa
             Route::resource('jadwalpelajaran', 'Admin\JadwalPelajaranController', [
-                'only' => ['index', 'store', 'update', 'destroy'],
+                'only' => ['index', 'create', 'store', 'show'],
             ]);
+            Route::get('jadwalpelajaran/{id}/build', 'Admin\JadwalPelajaranController@build')->name('jadwalpelajaran.build');
+            Route::post('jadwalpelajaran/manage', 'Admin\JadwalPelajaranController@manage')->name('jadwalpelajaran.manage');
+            Route::put('jadwalpelajaran/{id}/manage', 'Admin\JadwalPelajaranController@manageUpdate')->name('jadwalpelajaran.manage.update');
+            Route::get('jadwalpelajaran/{id}/print', 'Admin\JadwalPelajaranController@print')->name('jadwalpelajaran.print');
+
+            // jadwal mengajar -> guru
+            Route::resource('jadwalmengajar', 'Admin\JadwalMengajarController', [
+                'only' => ['index', 'create', 'store', 'show', 'edit', 'destroy'],
+            ]);
+            Route::get('jadwalmengajar/{id}/build', 'Admin\JadwalMengajarController@build')->name('jadwalmengajar.build');
+            Route::post('jadwalmengajar/manage', 'Admin\JadwalMengajarController@manage')->name('jadwalmengajar.manage');
+            Route::put('jadwalmengajar/{id}/manage', 'Admin\JadwalMengajarController@manageUpdate')->name('jadwalmengajar.manage.update');
+            Route::get('jadwalmengajar/{id}/print', 'Admin\JadwalMengajarController@print')->name('jadwalmengajar.print');
         });
     });
     // End Route User Admin
@@ -317,6 +342,12 @@ Route::group(['middleware' => ['auth']], function () {
 
             // Route Guru Mapel
             Route::group(['middleware' => 'checkAksesGuru:Guru Mapel'], function () {
+
+                // jadwal mengajar -> guru
+                Route::get('jadwalmengajar', 'Guru\JadwalMengajarController@index')->name('guru.jadwalmengajar');
+                Route::get('jadwalmengajar/show', 'Guru\JadwalMengajarController@show')->name('guru.jadwalmengajar.show');
+                Route::get('jadwalmengajar/{id}/print', 'Guru\JadwalMengajarController@print')->name('guru.jadwalmengajar.print');
+
                 Route::get('kkmguru/import', 'Guru\KM\KkmMapelController@format_import')->name('kkmguru.format_import');
                 Route::post('kkmguru/import', 'Guru\KM\KkmMapelController@import')->name('kkmguru.import');
                 Route::resource('kkmguru', 'Guru\KM\KkmMapelController', [
@@ -540,6 +571,11 @@ Route::group(['middleware' => ['auth']], function () {
     // End Route User Guru
 
     // Route User Siswa
+
+    // jadwal pelajaran -> siswa
+    Route::get('jadwalpelajaran', 'Siswa\JadwalPelajaranController@index')->name('siswa.jadwalpelajaran');
+    Route::get('jadwalpelajaran/{id}/print', 'Siswa\JadwalPelajaranController@print')->name('siswa.jadwalpelajaran.print');
+
     Route::resource('profilesiswa', 'Siswa\ProfileController', [
         'uses' => ['update'],
     ]);

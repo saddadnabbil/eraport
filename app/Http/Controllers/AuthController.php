@@ -37,7 +37,7 @@ class AuthController extends Controller
             return view('auth.setting_tapel', compact('title'));
         } else {
             $title = 'Login';
-            return view('auth.login', compact('title', 'data_tapel'));
+            return view('auth.login', compact('title'));
         }
     }
 
@@ -136,7 +136,7 @@ class AuthController extends Controller
 
     protected function handleGuruSession()
     {
-        if(Auth::user()->role == 2) {
+        if (Auth::user()->role == 2) {
             $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
 
             if ($guru && Auth::user()->role == 2) {

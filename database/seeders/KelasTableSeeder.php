@@ -14,20 +14,22 @@ class KelasTableSeeder extends Seeder
      */
     public function run()
     {
-        Kelas::create([
-            'tingkatan_id' => 5,
-            'jurusan_id' => 1,
-            'tapel_id' => 1,
-            'guru_id' => 1,
-            'nama_kelas' => 'SHS1',
-        ]);
+        // Kelas::create([
+        //     'tingkatan_id' => 5,
+        //     'jurusan_id' => 1,
+        //     'tapel_id' => 1,
+        //     'guru_id' => 1,
+        //     'nama_kelas' => 'SHS1',
+        // ]);
 
-        Kelas::create([
-            'tingkatan_id' => 5,
-            'jurusan_id' => 1,
-            'tapel_id' => 1,
-            'guru_id' => 1,
-            'nama_kelas' => 'SHS2',
-        ]);
+        // Kelas::create([
+        //     'tingkatan_id' => 5,
+        //     'jurusan_id' => 1,
+        //     'tapel_id' => 1,
+        //     'guru_id' => 1,
+        //     'nama_kelas' => 'SHS2',
+        // ]);
+
+        Kelas::factory()->count(10)->create();
     }
 }

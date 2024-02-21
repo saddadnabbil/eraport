@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\User;
 use App\Karyawan;
 use Illuminate\Database\Seeder;
 
@@ -23,13 +24,13 @@ class KaryawanTableSeeder extends Seeder
             'permanent_date' => '2023-01-01',
 
             'kode_karyawan' => 'K001',
-            'nama_lengkap' => 'John Doe',
+            'nama_lengkap' => 'Teacher Bros',
             'nik' => '1234567890123456',
             'nomor_akun' => '123456789',
             'nomor_fingerprint' => 123,
 
             'nomor_taxpayer' => '123456789',
-            'nama_taxpayer' => 'John Doe',
+            'nama_taxpayer' => 'Teacher Bros',
             'nomor_bpjs_ketenagakerjaan' => '123456789',
             'iuran_bpjs_ketenagakerjaan' => 'Rp. 100000',
             'nomor_bpjs_yayasan' => '123456789',
@@ -56,5 +57,7 @@ class KaryawanTableSeeder extends Seeder
             'status' => true,
             'avatar' => 'default.png',
         ]);
+
+        Karyawan::factory()->count(10)->create();
     }
 }

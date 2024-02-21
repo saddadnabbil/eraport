@@ -3,33 +3,29 @@
 namespace Database\Factories;
 
 use App\AnggotaKelas;
-use Database\Factories\SiswaFactory;
+use App\Siswa;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-    class AnggotaKelasFactory extends Factory
+class AnggotaKelasFactory extends Factory
+{
+    protected $model = AnggotaKelas::class;
+    protected $siswaAlreadyAssigned = [];
+
+    public function definition()
     {
-        /**
-         * Define the model's default state.
-         *
-         * @return array
-         */
-        public function definition()
-        {
-            // Get a new instance of Siswa using the factory
-            $siswa = SiswaFactory::new()->make();
+        // Ambil semua ID siswa yang belum di-assign ke kelas lain
+        $siswaIds = Siswa::whereNotIn('id', $this->siswaAlreadyAssigned)->pluck('id')->toArray();
 
-            // Use a loop to ensure uniqueness
-            $siswaId = null;
-            do {
-                $siswaId = $siswa->user_id; // Use the user_id as siswa_id
-            } while (AnggotaKelas::where('siswa_id', $siswaId)->exists());
+        // Ambil data siswa dengan ID acak
+        $siswa = Siswa::find($this->faker->randomElement($siswaIds));
 
-            $kelasId = $this->faker->numberBetween(1, 2);
+        // Tandai siswa sebagai sudah di-assign
+        $this->siswaAlreadyAssigned[] = $siswa->id;
 
-            return [
-                'siswa_id' => $siswaId,
-                'kelas_id' => $kelasId,
-                'pendaftaran' => 1
-            ];
-        }
+        return [
+            'siswa_id' => $siswa->id,
+            'kelas_id' => $siswa->kelas_id, // Gunakan kelas_id dari siswa
+            'pendaftaran' => $this->faker->randomElement(['1', '2', '3', '4', '5']),
+        ];
     }
+}

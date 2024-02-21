@@ -30,7 +30,7 @@ class LihatNilaiTerkirimController extends Controller
         $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
 
         $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
-        $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
+        $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('kelas_id', 'ASC')->orderBy('mapel_id', 'ASC')->get();
 
         return view('admin.km.nilaiterkirimkm.index', compact('title', 'data_pembelajaran', 'data_kelas'));
     }
@@ -53,7 +53,7 @@ class LihatNilaiTerkirimController extends Controller
             $tapel = Tapel::where('status', 1)->first();
 
             $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
-            $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
+            $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('kelas_id', 'ASC')->orderBy('mapel_id', 'ASC')->get();
 
             $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
             $term = Term::findorfail($pembelajaran->kelas->tingkatan->term_id);

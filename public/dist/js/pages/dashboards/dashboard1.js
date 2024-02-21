@@ -3,17 +3,12 @@ $(function () {
     // ==============================================================
     // Campaign
     // ==============================================================
+    var siswaData = JSON.parse(document.getElementById('campaign-v2').getAttribute('data-siswa'));
 
     var chart1 = c3.generate({
         bindto: '#campaign-v2',
         data: {
-            columns: [
-                ['Direct Sales', 25],
-                ['Referral Sales', 15],
-                ['Afilliate Sales', 10],
-                ['Indirect Sales', 15]
-            ],
-
+            columns: siswaData,
             type: 'donut',
             tooltip: {
                 show: true
@@ -23,7 +18,7 @@ $(function () {
             label: {
                 show: false
             },
-            title: 'Sales',
+            title: 'Siswa',
             width: 18
         },
 
@@ -33,9 +28,10 @@ $(function () {
         color: {
             pattern: [
                 '#edf2f6',
-                '#5f76e8',
-                '#ff4f70',
-                '#01caf1'
+                'rgb(255,79,112)',
+                'rgb(34,202,128)',
+                'rgb(1,202,241)',
+                'rgb(251,140,0)',
             ]
         }
     });

@@ -143,11 +143,15 @@
                 <div class="col-lg-4 col-md-12">
                     <div class="card">
                         <div class="card-body">
+                            @php
+                                $siswaData = [['Senior High School', $jumlah_siswa_shs], ['Junior High School', $jumlah_siswa_jhs], ['Primary School', $jumlah_siswa_ps], ['Kinder Garten', $jumlah_siswa_kg], ['Playgroup', $jumlah_siswa_pg]];
+                            @endphp
                             <h4 class="card-title">Total Siswa</h4>
-                            <div id="campaign-v2" class="mt-2" style="height: 283px; width: 100%"></div>
+                            <div id="campaign-v2" data-siswa='{{ json_encode($siswaData) }}' class="mt-2"
+                                style="height: 283px; width: 100%"></div>
                             <ul class="list-style-none mb-0">
                                 <li>
-                                    <i class="fas fa-circle text-primary font-10 me-2"></i>
+                                    <i class="fas fa-circle font-10 me-2" style="color: #edf2f6"></i>
                                     <span class="text-muted">Senior High School</span>
                                     <span class="text-dark float-end font-weight-medium">{{ $jumlah_siswa_shs }}</span>
                                 </li>
@@ -157,7 +161,7 @@
                                     <span class="text-dark float-end font-weight-medium">{{ $jumlah_siswa_jhs }}</span>
                                 </li>
                                 <li class="mt-3">
-                                    <i class="fas fa-circle text-cyan font-10 me-2"></i>
+                                    <i class="fas fa-circle text-success font-10 me-2"></i>
                                     <span class="text-muted">Primary School</span>
                                     <span class="text-dark float-end font-weight-medium">{{ $jumlah_siswa_ps }}</span>
                                 </li>
@@ -167,7 +171,7 @@
                                     <span class="text-dark float-end font-weight-medium">{{ $jumlah_siswa_kg }}</span>
                                 </li>
                                 <li class="mt-3">
-                                    <i class="fas fa-circle text-cyan font-10 me-2"></i>
+                                    <i class="fas fa-circle text-orange font-10 me-2"></i>
                                     <span class="text-muted">Playgroup</span>
                                     <span class="text-dark float-end font-weight-medium">{{ $jumlah_siswa_pg }}</span>
                                 </li>

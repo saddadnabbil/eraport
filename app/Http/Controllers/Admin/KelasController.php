@@ -58,7 +58,23 @@ class KelasController extends Controller
             $data_tingkatan = Tingkatan::orderBy('id', 'ASC')->get();
             $data_jurusan = Jurusan::orderBy('id', 'ASC')->get();
 
-            return view('admin.kelas.index', compact('title', 'data_kelas', 'tapel', 'data_guru', 'data_tingkatan', 'data_jurusan'));
+            $jumlah_kelas_play_group = Kelas::where('tapel_id', $tapel->id)
+                ->where('tingkatan_id', '1')
+                ->count();
+            $jumlah_kelas_kinder_garten = Kelas::where('tapel_id', $tapel->id)
+                ->where('tingkatan_id', '2')
+                ->count();
+            $jumlah_kelas_primary_school = Kelas::where('tapel_id', $tapel->id)
+                ->where('tingkatan_id', '3')
+                ->count();
+            $jumlah_kelas_junior_high_school = Kelas::where('tapel_id', $tapel->id)
+                ->where('tingkatan_id', '4')
+                ->count();
+            $jumlah_kelas_senior_high_school = Kelas::where('tapel_id', $tapel->id)
+                ->where('tingkatan_id', '5')
+                ->count();
+
+            return view('admin.kelas.index', compact('title', 'data_kelas', 'tapel', 'data_guru', 'data_tingkatan', 'data_jurusan', 'jumlah_kelas_play_group', 'jumlah_kelas_kinder_garten', 'jumlah_kelas_primary_school', 'jumlah_kelas_junior_high_school', 'jumlah_kelas_senior_high_school'));
         }
     }
 
@@ -123,7 +139,7 @@ class KelasController extends Controller
             ->get();
 
         $siswa_belum_masuk_kelas = Siswa::where('status', 1)->where('kelas_id', null)->get();
-            
+
         foreach ($siswa_belum_masuk_kelas as $belum_masuk_kelas) {
             $kelas_sebelumhya = AnggotaKelas::where('siswa_id', $belum_masuk_kelas->id)->orderBy('id', 'DESC')->first();
             if (is_null($kelas_sebelumhya)) {
@@ -308,7 +324,7 @@ class KelasController extends Controller
     public function delete_anggota($id)
     {
         $anggota_kelas = AnggotaKelas::findOrFail($id);
-    
+
         try {
             // Set kelas_id to null
             $anggota_kelas->siswa->update([
@@ -316,17 +332,17 @@ class KelasController extends Controller
                 'tingkatan_id' => null,
                 'jurusan_id' => null
             ]);
-                        
+
             // Delete the anggota_kelas record
             $anggota_kelas->delete();
-    
+
             return back()->with('toast_success', 'Anggota Kelas berhasil dihapus');
         } catch (\Throwable $th) {
             dd($th->getMessage());
             return back()->with('toast_error', 'Terjadi kesalahan saat menghapus anggota kelas.');
         }
     }
-    
+
 
     /**
      * Permanently remove the specified resource from storage.
@@ -364,11 +380,11 @@ class KelasController extends Controller
             $anggota_kelas_not_trashed->each(function ($anggota) {
                 $anggota->forceDelete();
             });
-    
+
             $anggota_kelas->restoreAnggotaKelas();
 
 
-    
+
             return back()->with('toast_success', 'Anggota Kelas berhasil direstorasi');
         } catch (\Throwable $th) {
             dd($th->getMessage());

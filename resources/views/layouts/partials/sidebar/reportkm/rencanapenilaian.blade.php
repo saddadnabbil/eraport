@@ -25,7 +25,7 @@
 
             $checkRouteSumatif = request()->routeIs('guru.rencanasumatif.*');
             $dynamicRouteSumatif = route('guru.rencanasumatif.index');
-            
+
             break;
         default:
     }
@@ -42,16 +42,19 @@
             'name' => 'Capaian Pembelajaran',
             'route' => $dynamicRouteCP,
             'isActive' => $checkRouteCP,
+            'childHasArrow' => false,
         ],
         [
             'name' => 'Rencana Formatif',
             'route' => $dynamicRouteFormatif,
             'isActive' => $checkRouteFormatif,
+            'childHasArrow' => false,
         ],
         [
             'name' => 'Rencana Sumatif',
             'route' => $dynamicRouteSumatif,
             'isActive' => $checkRouteSumatif,
+            'childHasArrow' => false,
         ],
     ],
 ])

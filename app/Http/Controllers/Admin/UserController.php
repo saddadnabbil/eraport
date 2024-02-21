@@ -24,7 +24,8 @@ class UserController extends Controller
     public function index()
     {
         $title = 'Data User';
-        $data_user = User::where('id', '!=', Auth::user()->id)->orderBy('role', 'ASC')->orderBy('username', 'ASC')->get();
+        $data_user = User::orderBy('role', 'ASC')->orderBy('id', 'ASC')->get();
+        // $data_user = User::where('id', '!=', Auth::user()->id)->orderBy('role', 'ASC')->orderBy('id', 'ASC')->get();
         return view('admin.user.index', compact('title', 'data_user'));
     }
 
@@ -79,7 +80,7 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'password' => 'required',
+            'password' => 'nullable|min:8|max:100',
             'status' => 'required',
         ]);
         if ($validator->fails()) {
@@ -89,8 +90,9 @@ class UserController extends Controller
             $user = User::findorfail($id);
             if (is_null($request->password)) {
                 $data = [
-                    'status' => $request->password
+                    'status' => $request->status
                 ];
+                $user->karyawan->update($data);
             } else {
                 $data = [
                     'password' => bcrypt($request->password),
@@ -107,7 +109,7 @@ class UserController extends Controller
         $filename = 'user_e_raport ' . date('Y-m-d H_i_s') . '.xls';
         return Excel::download(new UserExport, $filename);
     }
-    
+
     public function destroy($id)
     {
         $user = User::findorfail($id);
@@ -121,10 +123,13 @@ class UserController extends Controller
                 $user->siswa->delete();
             }
 
-            if (!is_null($user->guru)) {
-                $user->guru->delete();
-            } 
-            
+            if (!is_null($user->karyawan)) {
+                $user->karyawan->update([
+                    'status' => 0
+                ]);
+                $user->karyawan->delete();
+            }
+
             if (!is_null($user->admin)) {
                 $user->admin->delete();
             }
@@ -144,7 +149,7 @@ class UserController extends Controller
         return back()->with('toast_success', 'User ' . $user->username . ' telah dihapus');
     }
 
-        /**
+    /**
      * Permanently remove the specified resource from storage.
      *
      * @param  int  $id
@@ -157,15 +162,15 @@ class UserController extends Controller
         try {
             // Permanent delete the related Siswa records
             $user->siswa()->forceDelete();
-            $user->guru()->forceDelete();
+            $user->karyawan()->forceDelete();
             $user->admin()->forceDelete();
 
             // Permanent delete the user and its User record
-            $user->user->forceDelete();
             $user->forceDelete();
 
             return back()->with('toast_success', 'User berhasil dihapus secara permanen');
         } catch (\Throwable $th) {
+            dd($th->getMessage());
             return back()->with('toast_error', 'Terjadi kesalahan saat menghapus user secara permanen.');
         }
     }
@@ -182,7 +187,7 @@ class UserController extends Controller
             $user = User::withTrashed()->findOrFail($id);
 
             $user->restoreUser();
-    
+
             return back()->with('toast_success', 'User berhasil direstore');
         } catch (\Throwable $th) {
             dd($th->getMessage());

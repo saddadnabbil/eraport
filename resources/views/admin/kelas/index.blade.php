@@ -31,6 +31,88 @@
         <!-- Container fluid  -->
         <!-- ============================================================== -->
         <div class="container-fluid">
+            <!-- Info boxes -->
+            <div class="row">
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-info elevation-1"><i class="fas fa-layer-group  text-light"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">Playgroup</span>
+                            <span class="info-box-number">{{ $jumlah_kelas_play_group }}
+                                <small>{{ $jumlah_kelas_junior_high_school > 1 ? 'classes' : 'class' }}</small></span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box mb-3">
+                        <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-book  text-light"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">Kindergarten</span>
+                            <span class="info-box-number">{{ $jumlah_kelas_kinder_garten }}
+                                <small>{{ $jumlah_kelas_junior_high_school > 1 ? 'classes' : 'class' }}</small></span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+
+                <!-- fix for small devices only -->
+                {{-- <div class="clearfix hidden-md-up"></div> --}}
+
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box mb-3">
+                        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-users text-light"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">Primary School</span>
+                            <span class="info-box-number">{{ $jumlah_kelas_primary_school }}
+                                <small>{{ $jumlah_kelas_junior_high_school > 1 ? 'classes' : 'class' }}</small></span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box mb-3">
+                        <span class="info-box-icon bg-warning elevation-1"><i
+                                class="fas fa-book-reader text-light"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">Junior High School</span>
+                            <span class="info-box-number">{{ $jumlah_kelas_junior_high_school }}
+                                <small>{{ $jumlah_kelas_junior_high_school > 1 ? 'classes' : 'class' }}</small></span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+                <!-- /.col -->
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box mb-3">
+                        <span class="info-box-icon bg-warning elevation-1"><i
+                                class="fas fa-book-reader  text-light"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">Senior High School</span>
+                            <span class="info-box-number">{{ $jumlah_kelas_senior_high_school }}
+                                <small>{{ $jumlah_kelas_junior_high_school > 1 ? 'class' : 'classes' }}</small></span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+
             <!-- ./row -->
             <div class="row">
                 <div class="col-12">
@@ -95,7 +177,8 @@
                                                         style="width: 100%;" required>
                                                         <option value="">-- Pilih Jurusan Kelas --</option>
                                                         @foreach ($data_jurusan as $jurusan)
-                                                            <option value="{{ $jurusan->id }}">{{ $jurusan->nama_jurusan }}
+                                                            <option value="{{ $jurusan->id }}">
+                                                                {{ $jurusan->nama_jurusan }}
                                                             </option>
                                                         @endforeach
                                                     </select>
@@ -116,8 +199,9 @@
                                                         style="width: 100%;" required>
                                                         <option value="">-- Pilih Wali Kelas --</option>
                                                         @foreach ($data_guru as $guru)
-                                                            <option value="{{ $guru->id }}">{{ $guru->karyawan->nama_lengkap }}
-                                                                </option>
+                                                            <option value="{{ $guru->id }}">
+                                                                {{ $guru->karyawan->nama_lengkap }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -167,7 +251,8 @@
                                                 <td>{{ $kelas->nama_kelas }}</td>
                                                 <td>
                                                     @if ($kelas->guru)
-                                                        {{ $kelas->guru->karyawan->nama_lengkap }} {{ $kelas->guru->gelar }}
+                                                        {{ $kelas->guru->karyawan->nama_lengkap }}
+                                                        {{ $kelas->guru->gelar }}
                                                     @else
                                                         Guru not assigned
                                                     @endif
@@ -179,7 +264,8 @@
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <form action="{{ route('kelas.destroy', $kelas->id) }}" method="POST">
+                                                    <form action="{{ route('kelas.destroy', $kelas->id) }}"
+                                                        method="POST">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="button" class="btn btn-warning btn-sm mt-1"
@@ -263,7 +349,7 @@
                                                                                 <option value="{{ $guru->id }}"
                                                                                     @if ($kelas->guru && $guru->id == $kelas->guru->id) selected @endif>
                                                                                     {{ $guru->karyawan->nama_lengkap }}
-                                                                                    
+
                                                                                 </option>
                                                                             @endforeach
                                                                         </select>
