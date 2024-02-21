@@ -19,14 +19,14 @@ class CreateKaryawansTable extends Migration
             $table->unsignedBigInteger('status_karyawan_id')->unsigned();
             $table->unsignedBigInteger('unit_karyawan_id')->unsigned();
             $table->unsignedBigInteger('position_karyawan_id')->unsigned();
-            $table->date('join_date');
+            $table->date('join_date')->nullable();;
             $table->date('permanent_date')->nullable();
 
             $table->string('kode_karyawan', 25);
             $table->string('nama_lengkap', 255);
             $table->string('nik', 16);
             $table->string('nomor_akun', 255)->nullable();
-            $table->integer('nomor_fingerprint');
+            $table->string('nomor_fingerprint');
 
             $table->string('nomor_taxpayer', 255)->nullable();
             $table->string('nama_taxpayer', 255)->nullable();
@@ -38,11 +38,11 @@ class CreateKaryawansTable extends Migration
             $table->enum('jenis_kelamin', ['MALE', 'FEMALE']);
             $table->enum('agama', ['1', '2', '3', '4', '5', '6', '7']);
             $table->string('tempat_lahir', 50);
-            $table->date('tanggal_lahir');
+            $table->date('tanggal_lahir')->nullable();
             $table->string('alamat')->nullable();
             $table->string('alamat_sekarang')->nullable();
             $table->string('kota')->nullable();
-            $table->unsignedInteger('kode_pos')->nullable();
+            $table->string('kode_pos')->nullable();
             $table->string('nomor_phone')->nullable();
             $table->string('nomor_hp');
             $table->string('email');

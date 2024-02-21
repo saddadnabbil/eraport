@@ -123,8 +123,11 @@ class UserController extends Controller
                 $user->siswa->delete();
             }
 
-            if (!is_null($user->guru)) {
-                $user->guru->delete();
+            if (!is_null($user->karyawan)) {
+                $user->karyawan->update([
+                    'status' => 0
+                ]);
+                $user->karyawan->delete();
             }
 
             if (!is_null($user->admin)) {
@@ -159,15 +162,15 @@ class UserController extends Controller
         try {
             // Permanent delete the related Siswa records
             $user->siswa()->forceDelete();
-            $user->guru()->forceDelete();
+            $user->karyawan()->forceDelete();
             $user->admin()->forceDelete();
 
             // Permanent delete the user and its User record
-            $user->user->forceDelete();
             $user->forceDelete();
 
             return back()->with('toast_success', 'User berhasil dihapus secara permanen');
         } catch (\Throwable $th) {
+            dd($th->getMessage());
             return back()->with('toast_error', 'Terjadi kesalahan saat menghapus user secara permanen.');
         }
     }
