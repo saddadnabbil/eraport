@@ -157,7 +157,9 @@
 
                                                         <?php $i = 0; ?>
                                                         @foreach ($data_rencana_penilaian_formatif as $rencana_penilaian_formatif)
-                                                            @if ($rencana_penilaian_formatif->nilai_formatif->isEmpty())
+                                                            @if (
+                                                                $rencana_penilaian_formatif->nilai_formatif->isEmpty() ||
+                                                                    !$rencana_penilaian_formatif->nilai_formatif->contains('anggota_kelas_id', $anggota_kelas->id))
                                                                 <td>
                                                                     <input type="number"
                                                                         class="form-control nilai_formatif_input"
@@ -168,9 +170,9 @@
                                                                         oninput="setCustomValidity('')"
                                                                         style="text-align: center;">
                                                                 </td>
-                                                            @else
+                                                            @elseif($rencana_penilaian_formatif->nilai_formatif != null)
                                                                 @foreach ($rencana_penilaian_formatif->nilai_formatif as $nilai_formatif)
-                                                                    @if ($nilai_formatif->anggota_kelas_id == $anggota_kelas->id)
+                                                                    @if ($nilai_formatif->anggota_kelas_id == $anggota_kelas->id && $nilai_formatif != null)
                                                                         <td>
                                                                             <input type="number"
                                                                                 class="form-control nilai_formatif_input"
@@ -194,7 +196,9 @@
 
                                                         <?php $i = 0; ?>
                                                         @foreach ($data_rencana_penilaian_sumatif as $rencana_penilaian_sumatif)
-                                                            @if ($rencana_penilaian_sumatif->nilai_sumatif->isEmpty())
+                                                            @if (
+                                                                $rencana_penilaian_sumatif->nilai_sumatif->isEmpty() ||
+                                                                    !$rencana_penilaian_sumatif->nilai_sumatif->contains('anggota_kelas_id', $anggota_kelas->id))
                                                                 <td>
                                                                     <input type="number"
                                                                         class="form-control nilai_sumatif_input"
@@ -207,7 +211,7 @@
                                                                 </td>
                                                             @elseif($rencana_penilaian_sumatif->nilai_sumatif != null)
                                                                 @foreach ($rencana_penilaian_sumatif->nilai_sumatif as $nilai_sumatif)
-                                                                    @if ($nilai_sumatif->anggota_kelas_id == $anggota_kelas->id)
+                                                                    @if ($nilai_sumatif->anggota_kelas_id == $anggota_kelas->id && $nilai_sumatif != null)
                                                                         <td>
                                                                             <input type="number"
                                                                                 class="form-control nilai_sumatif_input"
@@ -224,6 +228,8 @@
                                                             @endif
                                                             <?php $i++; ?>
                                                         @endforeach
+
+
                                                         <td class="red nilai-proses" name="nilaiAkhirSumatif">
                                                             {{ $nilaiAkhirSumatif }}</td>
                                                         <input type="hidden" name="nilaiAkhirSumatif"

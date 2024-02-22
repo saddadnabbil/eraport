@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class AnggotaKelasFactory extends Factory
 {
     protected $model = AnggotaKelas::class;
-    protected $siswaAlreadyAssigned = [];
+    protected $siswaAlreadyAssigned = ['1', '2', '3'];
 
     public function definition()
     {

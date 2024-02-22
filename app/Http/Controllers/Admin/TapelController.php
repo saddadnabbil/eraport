@@ -114,6 +114,7 @@ class TapelController extends Controller
 
     public function setAcademicYear(Request $request): RedirectResponse
     {
+        // dd($request->all());
         try {
             $validator = Validator::make($request->all(), [
                 'select_tapel_id' => 'required|exists:tapels,id',
@@ -143,12 +144,13 @@ class TapelController extends Controller
             $ps = Tingkatan::where('id', '3')->first();
             $jhs = Tingkatan::where('id', '4')->first();
             $shs = Tingkatan::where('id', '5')->first();
+            // dd($pg, $kg);
 
             if (!$sekolah) {
                 throw new \Exception('Data Sekolah tidak ditemukan.');
             }
 
-            if (optional($pg)->count > 0) {
+            if ($pg) {
                 // PG dan KG
                 $data_tingkatan_pg_kg = [
                     'term_id' => $request->select_term_playgroup_id,
@@ -157,7 +159,7 @@ class TapelController extends Controller
                 $kg->update($data_tingkatan_pg_kg);
             }
 
-            if (optional($ps)->count > 0) {
+            if ($ps) {
                 // PS
                 $data_tingkatan_ps = [
                     'term_id' => $request->select_term_primaryschool_id,
@@ -166,7 +168,7 @@ class TapelController extends Controller
                 $ps->update($data_tingkatan_ps);
             }
 
-            if (optional($jhs)->count > 0) {
+            if ($jhs) {
                 // JHS
                 $data_tingkatan_jhs = [
                     'term_id' => $request->select_term_juniorhighschool_id,
@@ -175,7 +177,7 @@ class TapelController extends Controller
                 $jhs->update($data_tingkatan_jhs);
             }
 
-            if (optional($shs)->count > 0) {
+            if ($shs) {
                 // SHS
                 $data_tingkatan_shs = [
                     'term_id' => $request->select_term_seniorhighschool_id,

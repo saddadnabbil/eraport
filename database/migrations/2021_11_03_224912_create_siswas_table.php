@@ -21,40 +21,40 @@ class CreateSiswasTable extends Migration
             $table->unsignedBigInteger('tingkatan_id')->unsigned()->nullable();
             $table->unsignedBigInteger('jurusan_id')->unsigned()->nullable();
             $table->enum('jenis_pendaftaran', ['1', '2']);
-            $table->string('tahun_masuk');
-            $table->string('semester_masuk');
-            $table->string('kelas_masuk');
+            $table->string('tahun_masuk')->nullable();
+            $table->string('semester_masuk')->nullable();
+            $table->string('kelas_masuk')->nullable();
 
             $table->string('nis', 10)->unique();
             $table->string('nisn', 10)->unique()->nullable();
             $table->string('nama_lengkap', 100);
             $table->string('nama_panggilan', 100);
-            $table->string('nik', 16)->unique();
+            $table->string('nik', 16)->unique()->nullable();
             $table->enum('jenis_kelamin', ['MALE', 'FEMALE']);
             $table->enum('blood_type', ['A', 'B', 'AB', 'O'])->nullable();
-            $table->enum('agama', ['1', '2', '3', '4', '5', '6', '7']);
-            $table->string('tempat_lahir', 50);
-            $table->date('tanggal_lahir');
+            $table->enum('agama', ['1', '2', '3', '4', '5', '6', '7'])->nullable();
+            $table->string('tempat_lahir', 50)->nullable();
+            $table->date('tanggal_lahir')->nullable();
             $table->string('anak_ke', 2)->nullable();
             $table->string('jml_saudara_kandung', 2)->nullable();
             $table->string('warga_negara')->nullable();
             $table->string('pas_photo')->nullable();
 
             // domicile information
-            $table->string('alamat');
-            $table->string('kota');
-            $table->unsignedInteger('kode_pos');
-            $table->unsignedInteger('jarak_rumah_ke_sekolah')->nullable();
-            $table->string('email');
+            $table->string('alamat')->nullable();
+            $table->string('kota')->nullable();
+            $table->unsignedInteger('kode_pos')->nullable();
+            $table->string('jarak_rumah_ke_sekolah')->nullable();
+            $table->string('email')->nullable();
             $table->string('email_parent')->nullable();
-            $table->string('nomor_hp', 13)->unique();
+            $table->string('nomor_hp', 13)->nullable();
             $table->enum('tinggal_bersama', ['Parents', 'Others'])->nullable();
             $table->string('transportasi')->nullable();
 
             //// parent information
             // parent information father
-            $table->string('nik_ayah', 16);
-            $table->string('nama_ayah', 100);
+            $table->string('nik_ayah', 16)->nullable();
+            $table->string('nama_ayah', 100)->nullable();
             $table->string('tempat_lahir_ayah', 100)->nullable();
             $table->date('tanggal_lahir_ayah', 10)->nullable();
             $table->string('alamat_ayah', 100)->nullable();
@@ -65,8 +65,8 @@ class CreateSiswasTable extends Migration
             $table->string('pekerjaan_ayah', 100)->nullable();
             $table->string('penghasil_ayah', 100)->nullable();
             // parent information mother
-            $table->string('nik_ibu', 16);
-            $table->string('nama_ibu', 100);
+            $table->string('nik_ibu', 16)->nullable();
+            $table->string('nama_ibu', 100)->nullable();
             $table->string('tempat_lahir_ibu', 100)->nullable();
             $table->date('tanggal_lahir_ibu', 10)->nullable();
             $table->string('alamat_ibu', 100)->nullable();

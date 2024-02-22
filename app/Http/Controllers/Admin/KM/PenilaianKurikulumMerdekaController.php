@@ -254,11 +254,13 @@ class PenilaianKurikulumMerdekaController extends Controller
                         $nilaiRevisi = null;
                     }
 
+
+                    // dd($request->all());
                     $dataNilaiAkhir = [
                         'anggota_kelas_id' => $request->anggota_kelas_id[$count_siswa],
-                        'pembelajaran_id' => $request->pembelajaran_id[$count_siswa],
-                        'term_id' => $request->term_id[$count_siswa],
-                        'semester_id' => $request->semester_id[$count_siswa],
+                        'pembelajaran_id' => $request->pembelajaran_id,
+                        'term_id' => $request->term_id,
+                        'semester_id' => $request->semester_id,
                         'nilai_akhir_formatif' => $nilaiAkhirFormatif,
                         'nilai_akhir_sumatif' => $nilaiAkhirSumatif,
                         'nilai_akhir_raport' => $nilaiAkhir,
@@ -272,7 +274,7 @@ class PenilaianKurikulumMerdekaController extends Controller
                             'anggota_kelas_id' => $dataNilaiAkhir['anggota_kelas_id'],
                             'pembelajaran_id' => $dataNilaiAkhir['pembelajaran_id'],
                             'term_id' => $dataNilaiAkhir['term_id'],
-                            'semester_id' => $request->semester_id[$count_siswa],
+                            'semester_id' => $request->semester_id,
                         ],
                         $dataNilaiAkhir
                     );

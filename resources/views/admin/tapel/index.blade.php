@@ -43,7 +43,7 @@
                                 @csrf
                                 <div class="form-group row border-bottom">
                                     <div class="col-lg-5 col-md-6 form-inline" style="margin-bottom: 14px">
-                                        <label class="me-4 col-lg-6 col-md-6font-weight-normal" for="select_tapel_id">Tahun
+                                        <label class="col-lg-6 col-md-6font-weight-normal" for="select_tapel_id">Tahun
                                             Pelajaran</label>
                                         <div class="col-6">
                                             <select class="custom-select form-control" name="select_tapel_id">
@@ -77,7 +77,7 @@
                                             @if ($tingkatan->nama_tingkatan == 'Playgroup')
                                             @else
                                                 <div class="col-lg-5 col-md-6 form-inline">
-                                                    <label class="col-lg-6 col-md-6me-4 font-weight-normal"
+                                                    <label class="col-lg-6 col-md-6 font-weight-normal"
                                                         for="select_semester_{{ str_replace(' ', '', strtolower($tingkatan->nama_tingkatan)) }}_id">Semester</label>
                                                     <div class="col-6">
                                                         <select class="custom-select form-control  me-3"
@@ -94,7 +94,7 @@
                                             @endif
 
                                             <div class="col-lg-5 col-md-6 form-inline">
-                                                <label class="me-4 col-lg-6 col-md-6 font-weight-normal"
+                                                <label class="col-lg-6 col-md-6 font-weight-normal"
                                                     for="select_term_id">Term</label>
                                                 <div class="col-6">
                                                     <select class="custom-select form-control"

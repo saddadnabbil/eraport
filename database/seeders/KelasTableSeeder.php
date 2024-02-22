@@ -14,22 +14,228 @@ class KelasTableSeeder extends Seeder
      */
     public function run()
     {
-        // Kelas::create([
-        //     'tingkatan_id' => 5,
-        //     'jurusan_id' => 1,
-        //     'tapel_id' => 1,
-        //     'guru_id' => 1,
-        //     'nama_kelas' => 'SHS1',
-        // ]);
+        // Seed data for PG
+        Kelas::create([
+            'tingkatan_id' => 1,
+            'jurusan_id' => 3,
+            'tapel_id' => 1,
+            'guru_id' => 1,
+            'nama_kelas' => 'PG',
+        ]);
 
-        // Kelas::create([
-        //     'tingkatan_id' => 5,
-        //     'jurusan_id' => 1,
-        //     'tapel_id' => 1,
-        //     'guru_id' => 1,
-        //     'nama_kelas' => 'SHS2',
-        // ]);
+        // Seed data for KG
+        Kelas::create([
+            'tingkatan_id' => 2,
+            'jurusan_id' => 3,
+            'tapel_id' => 1,
+            'guru_id' => 1,
+            'nama_kelas' => 'KG-A1',
+        ]);
 
-        Kelas::factory()->count(10)->create();
+        Kelas::create([
+            'tingkatan_id' => 2,
+            'jurusan_id' => 3,
+            'tapel_id' => 1,
+            'guru_id' => 1,
+            'nama_kelas' => 'KG-A2',
+        ]);
+
+        Kelas::create([
+            'tingkatan_id' => 2,
+            'jurusan_id' => 3,
+            'tapel_id' => 1,
+            'guru_id' => 1,
+            'nama_kelas' => 'KG-A3',
+        ]);
+
+
+        // Seed data for P
+        Kelas::create([
+            'tingkatan_id' => 3,
+            'jurusan_id' => 3,
+            'tapel_id' => 1,
+            'guru_id' => 1,
+            'nama_kelas' => 'P-1A',
+        ]);
+
+        Kelas::create([
+            'tingkatan_id' => 3,
+            'jurusan_id' => 3,
+            'tapel_id' => 1,
+            'guru_id' => 1,
+            'nama_kelas' => 'P-1B',
+        ]);
+
+        Kelas::create([
+            'tingkatan_id' => 3,
+            'jurusan_id' => 3,
+            'tapel_id' => 1,
+            'guru_id' => 1,
+            'nama_kelas' => 'P-1C',
+        ]);
+
+        Kelas::create([
+            'tingkatan_id' => 3,
+            'jurusan_id' => 3,
+            'tapel_id' => 1,
+            'guru_id' => 1,
+            'nama_kelas' => 'P-2A',
+        ]);
+
+        Kelas::create([
+            'tingkatan_id' => 3,
+            'jurusan_id' => 3,
+            'tapel_id' => 1,
+            'guru_id' => 1,
+            'nama_kelas' => 'P-2B',
+        ]);
+
+        Kelas::create([
+            'tingkatan_id' => 3,
+            'jurusan_id' => 3,
+            'tapel_id' => 1,
+            'guru_id' => 1,
+            'nama_kelas' => 'P-3A',
+        ]);
+
+        Kelas::create([
+            'tingkatan_id' => 3,
+            'jurusan_id' => 3,
+            'tapel_id' => 1,
+            'guru_id' => 1,
+            'nama_kelas' => 'P-3B',
+        ]);
+
+        Kelas::create([
+            'tingkatan_id' => 3,
+            'jurusan_id' => 3,
+            'tapel_id' => 1,
+            'guru_id' => 1,
+            'nama_kelas' => 'P-4A',
+        ]);
+
+        Kelas::create([
+            'tingkatan_id' => 3,
+            'jurusan_id' => 3,
+            'tapel_id' => 1,
+            'guru_id' => 1,
+            'nama_kelas' => 'P-4B',
+        ]);
+
+        Kelas::create([
+            'tingkatan_id' => 3,
+            'jurusan_id' => 3,
+            'tapel_id' => 1,
+            'guru_id' => 1,
+            'nama_kelas' => 'P-5A',
+        ]);
+
+        Kelas::create([
+            'tingkatan_id' => 3,
+            'jurusan_id' => 3,
+            'tapel_id' => 1,
+            'guru_id' => 1,
+            'nama_kelas' => 'P-6A',
+        ]);
+
+        // Seed data for JHS
+        Kelas::create([
+            'tingkatan_id' => 4,
+            'jurusan_id' => 3,
+            'tapel_id' => 1,
+            'guru_id' => 1,
+            'nama_kelas' => 'JHS-7A',
+        ]);
+
+        Kelas::create([
+            'tingkatan_id' => 4,
+            'jurusan_id' => 3,
+            'tapel_id' => 1,
+            'guru_id' => 1,
+            'nama_kelas' => 'JHS-7B',
+        ]);
+
+        Kelas::create([
+            'tingkatan_id' => 4,
+            'jurusan_id' => 3,
+            'tapel_id' => 1,
+            'guru_id' => 1,
+            'nama_kelas' => 'JHS-8A',
+        ]);
+
+        Kelas::create([
+            'tingkatan_id' => 4,
+            'jurusan_id' => 3,
+            'tapel_id' => 1,
+            'guru_id' => 1,
+            'nama_kelas' => 'JHS-8B',
+        ]);
+
+        Kelas::create([
+            'tingkatan_id' => 4,
+            'jurusan_id' => 3,
+            'tapel_id' => 1,
+            'guru_id' => 1,
+            'nama_kelas' => 'JHS-9A',
+        ]);
+
+        Kelas::create([
+            'tingkatan_id' => 4,
+            'jurusan_id' => 3,
+            'tapel_id' => 1,
+            'guru_id' => 1,
+            'nama_kelas' => 'JHS-9B',
+        ]);
+
+        // Seed data for SHS
+        Kelas::create([
+            'tingkatan_id' => 5,
+            'jurusan_id' => 3,
+            'tapel_id' => 1,
+            'guru_id' => 1,
+            'nama_kelas' => 'SHS-10A',
+        ]);
+
+        Kelas::create([
+            'tingkatan_id' => 5,
+            'jurusan_id' => 3,
+            'tapel_id' => 1,
+            'guru_id' => 1,
+            'nama_kelas' => 'SHS-10B',
+        ]);
+
+        Kelas::create([
+            'tingkatan_id' => 5,
+            'jurusan_id' => 3,
+            'tapel_id' => 1,
+            'guru_id' => 1,
+            'nama_kelas' => 'SHS-11A',
+        ]);
+
+        Kelas::create([
+            'tingkatan_id' => 5,
+            'jurusan_id' => 3,
+            'tapel_id' => 1,
+            'guru_id' => 1,
+            'nama_kelas' => 'SHS-11B',
+        ]);
+
+        Kelas::create([
+            'tingkatan_id' => 5,
+            'jurusan_id' => 1,
+            'tapel_id' => 1,
+            'guru_id' => 1,
+            'nama_kelas' => 'SHS-12IPA',
+        ]);
+
+        Kelas::create([
+            'tingkatan_id' => 5,
+            'jurusan_id' => 2,
+            'tapel_id' => 1,
+            'guru_id' => 1,
+            'nama_kelas' => 'SHS-12IPS',
+        ]);
+
+        // Kelas::factory()->count(10)->create();
     }
 }
