@@ -4,7 +4,6 @@ namespace App;
 
 use App\Kelas;
 use App\Siswa;
-use App\K13KdMapel;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -37,11 +36,6 @@ class Tingkatan extends Model
     public function term()
     {
         return $this->belongsTo(Term::class);
-    }
-
-    public function K13KdMapel()
-    {
-        return $this->hasMany(K13KdMapel::class);
     }
 
     public function capaian_pembelajaran()

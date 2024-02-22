@@ -45,18 +45,6 @@ class Kelas extends Model
         return $this->hasMany('App\Pembelajaran');
     }
 
-    // Relasi K13
-    public function k13_kkm_mapel()
-    {
-        return $this->hasOne('App\KmKkmMapel');
-    }
-
-    // Relasi KTSP
-    public function ktsp_kkm_mapel()
-    {
-        return $this->hasOne('App\KtspKkmMapel');
-    }
-
     // Relasi Tingkatan
     public function tingkatan()
     {

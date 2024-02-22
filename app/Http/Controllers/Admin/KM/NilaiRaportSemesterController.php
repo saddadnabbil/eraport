@@ -8,7 +8,7 @@ use App\Tapel;
 use App\AnggotaKelas;
 use App\Pembelajaran;
 use App\KmNilaiAkhirRaport;
-use App\K13NilaiAkhirRaport;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Term;

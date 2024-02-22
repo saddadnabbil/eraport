@@ -14,7 +14,7 @@ class KmDeskripsiNilaiSiswa extends Model
     protected $fillable = [
         'pembelajaran_id',
         'term_id',
-        'k13_nilai_akhir_raport_id',
+        'km_nilai_akhir_raport_id',
         'deskripsi_raport',
     ];
 

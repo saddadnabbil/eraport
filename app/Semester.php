@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Semester extends Model
 {
     use \Illuminate\Database\Eloquent\SoftDeletes;
-    
+
     protected $table = 'semesters';
     protected $fillable = [
         'semester'
@@ -36,17 +36,5 @@ class Semester extends Model
     public function km_tgl_raport()
     {
         return $this->hasOne('App\KmTglRaport');
-    }
-
-    // Relasi K13
-    public function k13_tgl_raport()
-    {
-        return $this->hasOne('App\K13TglRaport');
-    }
-
-    // Relasi KTSP
-    public function ktsp_tgl_raport()
-    {
-        return $this->hasOne('App\KtspTglRaport');
     }
 }

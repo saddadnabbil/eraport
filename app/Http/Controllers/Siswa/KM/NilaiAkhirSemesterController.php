@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Siswa\K13;
+namespace App\Http\Controllers\Siswa\KM;
 
 use App\Kelas;
 use App\Siswa;
@@ -8,7 +8,7 @@ use App\Tapel;
 use App\AnggotaKelas;
 use App\Pembelajaran;
 use App\KmNilaiAkhirRaport;
-use App\K13NilaiAkhirRaport;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;

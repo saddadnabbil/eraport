@@ -8,24 +8,12 @@ use App\Tapel;
 use App\NilaiSumatif;
 use App\Pembelajaran;
 use App\NilaiFormatif;
-use App\K13NilaiPtsPas;
-use App\K13NilaiSosial;
-use App\K13NilaiSpiritual;
 use App\KmNilaiAkhirRaport;
-use App\K13NilaiAkhirRaport;
-use App\K13NilaiPengetahuan;
 use App\RencanaNilaiSumatif;
 use Illuminate\Http\Request;
-use App\K13NilaiKeterampilan;
 use App\RencanaNilaiFormatif;
-use App\K13RencanaNilaiSosial;
 use App\KmDeskripsiNilaiSiswa;
-use App\K13DeskripsiNilaiSiswa;
-use App\K13RencanaBobotPenilaian;
-use App\K13RencanaNilaiSpiritual;
-use App\K13RencanaNilaiPengetahuan;
 use App\Http\Controllers\Controller;
-use App\K13RencanaNilaiKeterampilan;
 
 class StatusPenilaianController extends Controller
 {

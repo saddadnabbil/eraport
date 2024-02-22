@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin\KM;
 
 use App\Tapel;
 use App\KmTglRaport;
-use App\K13TglRaport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Semester;

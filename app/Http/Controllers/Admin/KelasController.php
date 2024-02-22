@@ -11,20 +11,10 @@ use App\Jurusan;
 use App\Tingkatan;
 use Carbon\Carbon;
 use App\AnggotaKelas;
-use App\Ekstrakulikuler;
-use App\CatatanWaliKelas;
-use App\K13NilaiAkhirRaport;
-use App\K13NilaiPengetahuan;
 use Illuminate\Http\Request;
-use App\K13NilaiKeterampilan;
-use App\NilaiEkstrakulikuler;
-use App\AnggotaEkstrakulikuler;
-use App\K13DeskripsiNilaiSiswa;
-use App\K13DeskripsiSikapSiswa;
 use App\Http\Controllers\Controller;
-use App\K13NilaiPtsPas;
-use App\K13NilaiSosial;
-use App\K13NilaiSpiritual;
+
+
 use Illuminate\Support\Facades\Validator;
 
 class KelasController extends Controller

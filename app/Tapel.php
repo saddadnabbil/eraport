@@ -46,15 +46,4 @@ class Tapel extends Model
         return $this->hasOne('App\KmTglRaport');
     }
 
-    // Relasi K13
-    public function k13_tgl_raport()
-    {
-        return $this->hasOne('App\K13TglRaport');
-    }
-
-    // Relasi KTSP
-    public function ktsp_tgl_raport()
-    {
-        return $this->hasOne('App\KtspTglRaport');
-    }
 }

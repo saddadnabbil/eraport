@@ -9,7 +9,7 @@ use App\Tapel;
 use App\Semester;
 use App\Pembelajaran;
 use App\KmNilaiAkhirRaport;
-use App\K13NilaiAkhirRaport;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;

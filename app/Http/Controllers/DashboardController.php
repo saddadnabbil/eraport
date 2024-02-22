@@ -11,39 +11,17 @@ use App\Sekolah;
 use Carbon\Carbon;
 use App\KmKkmMapel;
 use App\Pengumuman;
-use App\K13KkmMapel;
-use App\KtspNilaiUh;
 use App\AnggotaKelas;
-use App\KtspKkmMapel;
 use App\NilaiSumatif;
 use App\Pembelajaran;
 use App\RiwayatLogin;
 use App\NilaiFormatif;
-use App\K13NilaiPtsPas;
-use App\K13NilaiSosial;
-use App\KtspNilaiTugas;
 use App\Ekstrakulikuler;
-use App\KtspNilaiUtsUas;
-use App\K13NilaiSpiritual;
 use App\KmNilaiAkhirRaport;
-use App\KtspBobotPenilaian;
-use App\K13NilaiAkhirRaport;
-use App\K13NilaiPengetahuan;
 use App\RencanaNilaiSumatif;
-use Illuminate\Http\Request;
-use App\K13NilaiKeterampilan;
-use App\KtspNilaiAkhirRaport;
 use App\RencanaNilaiFormatif;
-use App\K13RencanaNilaiSosial;
 use App\KmDeskripsiNilaiSiswa;
 use App\AnggotaEkstrakulikuler;
-use App\K13DeskripsiNilaiSiswa;
-use App\KtspDeskripsiNilaiSiswa;
-use App\K13RencanaBobotPenilaian;
-use App\K13RencanaNilaiSpiritual;
-use Illuminate\Support\Facades\DB;
-use App\K13RencanaNilaiPengetahuan;
-use App\K13RencanaNilaiKeterampilan;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
@@ -130,25 +108,11 @@ class DashboardController extends Controller
                     $formatif_telah_dinilai = NilaiFormatif::whereIn('rencana_nilai_formatif_id', $rencana_nilai_formatif_id)->groupBy('rencana_nilai_formatif_id')->get();
                     $penilaian->jumlah_formatif_telah_dinilai = count($formatif_telah_dinilai);
 
-                    $nilai_pts_pas = K13NilaiPtsPas::where('pembelajaran_id', $penilaian->id)->get();
-                    $penilaian->nilai_pts_pas = count($nilai_pts_pas);
-
                     $nilai_akhir_raport = KmNilaiAkhirRaport::where('term_id', $term->id)->where('pembelajaran_id', $penilaian->id)->get();
                     $penilaian->kirim_nilai_raport = count($nilai_akhir_raport);
 
                     $deskripsi_nilai_akhir = KmDeskripsiNilaiSiswa::where('term_id', $term->id)->where('pembelajaran_id', $penilaian->id)->get();
                     $penilaian->proses_deskripsi = count($deskripsi_nilai_akhir);
-
-                    $bobot = K13RencanaBobotPenilaian::where('pembelajaran_id', $penilaian->id)->first();
-                    if (is_null($bobot)) {
-                        $penilaian->bobot_ph = null;
-                        $penilaian->bobot_pts = null;
-                        $penilaian->bobot_pas = null;
-                    } else {
-                        $penilaian->bobot_ph = $bobot->bobot_ph;
-                        $penilaian->bobot_pts = $bobot->bobot_pts;
-                        $penilaian->bobot_pas = $bobot->bobot_pas;
-                    }
 
                     if (is_null($kkm)) {
                         $penilaian->kkm = null;
@@ -177,7 +141,6 @@ class DashboardController extends Controller
                 $jumlah_anggota_kelas = count(AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get());
 
                 $id_pembelajaran_kelas = Pembelajaran::whereIn('kelas_id', $id_kelas_diampu)->where('status', 1)->get('id');
-                $jumlah_kirim_nilai = count(K13NilaiAkhirRaport::whereIn('pembelajaran_id', $id_pembelajaran_kelas)->groupBy('pembelajaran_id')->get());
                 $jumlah_proses_deskripsi = count(KmDeskripsiNilaiSiswa::whereIn('pembelajaran_id', $id_pembelajaran_kelas)->groupBy('pembelajaran_id')->get());
 
 

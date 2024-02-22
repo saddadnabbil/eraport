@@ -15,6 +15,7 @@
                 @include('layouts.partials.sidebar.ekstra')
                 @include('layouts.partials.sidebar.reportresultkm.rekapkehadiran')
                 @include('layouts.partials.sidebar.timetable')
+                @include('layouts.partials.sidebar.reportresultkm.leger')
 
                 <li class="list-divider"></li>
                 <li class="nav-small-cap">

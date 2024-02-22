@@ -14,11 +14,9 @@ use App\KmNilaiAkhirRaport;
 use Illuminate\Http\Request;
 use App\NilaiEkstrakulikuler;
 use App\AnggotaEkstrakulikuler;
-use App\K13DeskripsiSikapSiswa;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\AdminKMLegerNilaiExport;
-use App\Exports\AdminK13LegerNilaiExport;
 
 class LegerNilaiSiswaController extends Controller
 {
@@ -83,15 +81,6 @@ class LegerNilaiSiswaController extends Controller
 
             $anggota_kelas->rata_rata_sumatif = round($rt_sumatif, 0);
             $anggota_kelas->rata_rata_formatif = round($rt_formatif, 0);
-
-            // $cek_deskripsi_sikap = K13DeskripsiSikapSiswa::where('anggota_kelas_id', $anggota_kelas->id)->first();
-            // if (is_null($cek_deskripsi_sikap)) {
-            //     $anggota_kelas->nilai_spiritual = '-';
-            //     $anggota_kelas->nilai_sosial = '-';
-            // } else {
-            //     $anggota_kelas->nilai_spiritual = $cek_deskripsi_sikap->nilai_spiritual;
-            //     $anggota_kelas->nilai_sosial = $cek_deskripsi_sikap->nilai_sosial;
-            // }
 
             $anggota_kelas->data_nilai_ekstrakulikuler = Ekstrakulikuler::where('tapel_id', $tapel->id)->get();
 

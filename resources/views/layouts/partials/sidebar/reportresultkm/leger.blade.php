@@ -9,7 +9,10 @@
         case 2:
             $checkRoute = request()->routeIs('leger.*');
             $dynamicRoute = route('leger.index');
-            
+        case 3:
+            $checkRoute = request()->routeIs('nilaiakhir.*');
+            $dynamicRoute = route('nilaiakhir.index');
+
             break;
         default:
     }
@@ -19,6 +22,6 @@
     'isActive' => $checkRoute,
     'hasArrow' => false,
     'icon' => 'home',
-    'itemName' => 'Leger Student Value',
+    'itemName' => $userRole == 3 ? 'Report Leger Student Value' : 'Leger Student Value',
     'route' => $dynamicRoute,
 ])

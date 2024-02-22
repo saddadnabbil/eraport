@@ -6,7 +6,7 @@ use App\AnggotaEkstrakulikuler;
 use App\AnggotaKelas;
 use App\Ekstrakulikuler;
 use App\Guru;
-use App\K13DeskripsiSikapSiswa;
+
 use App\KmMappingMapel;
 use App\KmNilaiAkhirRaport;
 use App\Kelas;
@@ -65,15 +65,6 @@ class AdminKMLegerNilaiExport implements FromView, ShouldAutoSize
 
             $anggota_kelas->rata_rata_sumatif = round($rt_sumatif, 0);
             $anggota_kelas->rata_rata_formatif = round($rt_formatif, 0);
-
-            // $cek_deskripsi_sikap = K13DeskripsiSikapSiswa::where('anggota_kelas_id', $anggota_kelas->id)->first();
-            // if (is_null($cek_deskripsi_sikap)) {
-            //     $anggota_kelas->nilai_spiritual = '-';
-            //     $anggota_kelas->nilai_sosial = '-';
-            // } else {
-            //     $anggota_kelas->nilai_spiritual = $cek_deskripsi_sikap->nilai_spiritual;
-            //     $anggota_kelas->nilai_sosial = $cek_deskripsi_sikap->nilai_sosial;
-            // }
 
             $anggota_kelas->data_nilai_ekstrakulikuler = Ekstrakulikuler::where('tapel_id', $tapel->id)->get();
 

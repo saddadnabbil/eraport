@@ -3,16 +3,12 @@
 namespace App\Http\Controllers\Admin\KM;
 
 use Excel;
-use App\Guru;
 use App\Mapel;
 use App\Tapel;
 use App\KmKkmMapel;
 use App\Pembelajaran;
 use Illuminate\Http\Request;
-use App\Imports\KKMK13Import;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use App\Exports\FormatImportKKMK13Export;
 use Illuminate\Support\Facades\Validator;
 
 class KkmMapelController extends Controller
@@ -109,22 +105,6 @@ class KkmMapelController extends Controller
             return back()->with('toast_success', 'KKM berhasil dihapus');
         } catch (\Throwable $th) {
             return back()->with('toast_warning', 'Data tidak dapat dihapus');
-        }
-    }
-
-    public function format_import()
-    {
-        $filename = 'format_import_kkm_k13 ' . date('Y-m-d H_i_s') . '.xls';
-        return Excel::download(new FormatImportKKMK13Export, $filename);
-    }
-
-    public function import(Request $request)
-    {
-        try {
-            Excel::import(new KKMK13Import, $request->file('file_import'));
-            return back()->with('toast_success', 'Data KKM berhasil diimport');
-        } catch (\Throwable $th) {
-            return back()->with('toast_error', 'Maaf, format data tidak sesuai');
         }
     }
 }

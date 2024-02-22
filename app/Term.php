@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Term extends Model
 {
     use \Illuminate\Database\Eloquent\SoftDeletes;
-    
+
     protected $table = 'terms';
     protected $fillable = [
         'term'
@@ -31,17 +31,5 @@ class Term extends Model
     public function km_tgl_raport()
     {
         return $this->hasOne('App\KmTglRaport');
-    }
-
-    // Relasi K13
-    public function k13_tgl_raport()
-    {
-        return $this->hasOne('App\K13TglRaport');
-    }
-
-    // Relasi KTSP
-    public function ktsp_tgl_raport()
-    {
-        return $this->hasOne('App\KtspTglRaport');
     }
 }
