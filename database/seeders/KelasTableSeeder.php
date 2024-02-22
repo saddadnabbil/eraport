@@ -48,6 +48,29 @@ class KelasTableSeeder extends Seeder
             'nama_kelas' => 'KG-A3',
         ]);
 
+        Kelas::create([
+            'tingkatan_id' => 2,
+            'jurusan_id' => 3,
+            'tapel_id' => 1,
+            'guru_id' => 1,
+            'nama_kelas' => 'KG-B1',
+        ]);
+
+        Kelas::create([
+            'tingkatan_id' => 2,
+            'jurusan_id' => 3,
+            'tapel_id' => 1,
+            'guru_id' => 1,
+            'nama_kelas' => 'KG-B2',
+        ]);
+
+        Kelas::create([
+            'tingkatan_id' => 2,
+            'jurusan_id' => 3,
+            'tapel_id' => 1,
+            'guru_id' => 1,
+            'nama_kelas' => 'KG-B3',
+        ]);
 
         // Seed data for P
         Kelas::create([

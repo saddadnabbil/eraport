@@ -44,11 +44,11 @@
                                         <i class="fas fa-plus"></i>
                                     </button>
                                 </div>
-                                <div data-bs-toggle="tooltip" title="Export" class="d-inline-block">
+                                {{-- <div data-bs-toggle="tooltip" title="Export" class="d-inline-block">
                                     <a href="{{ route('user.export') }}" class="btn btn-tool btn-sm">
                                         <i class="fas fa-download"></i>
                                     </a>
-                                </div>
+                                </div> --}}
                                 <div data-bs-toggle="tooltip" title="Trash" class="d-inline-block" class="d-inline-block">
                                     <a href="{{ route('user.trash') }}" class="btn btn-tool btn-sm">
                                         <i class="fas fa-trash"></i>
@@ -155,6 +155,7 @@
                                                         {{ optional($user->karyawan)->nama_lengkap }}
                                                     @endif
                                                 </td>
+
                                                 <td>{{ $user->username }}</td>
                                                 <td>
                                                     @if ($user->role == 3)
@@ -175,13 +176,20 @@
                                                     @endif
                                                 </td>
                                                 <td class="text-center">
-                                                    @include('components.actions.delete-button', [
-                                                        'route' => route('user.destroy', $user->id),
-                                                        'id' => $user->id,
-                                                        'isPermanent' => false,
-                                                        'withEdit' => true,
-                                                        'withShow' => false,
-                                                    ])
+                                                    @php
+                                                        $cacheKey = 'delete-button-' . $user->id;
+                                                        $deleteButton = Cache::remember($cacheKey, 120, function () use ($user) {
+                                                            return view('components.actions.delete-button', [
+                                                                'route' => route('user.destroy', $user->id),
+                                                                'id' => $user->id,
+                                                                'isPermanent' => false,
+                                                                'withEdit' => true,
+                                                                'withShow' => false,
+                                                            ])->render();
+                                                        });
+                                                    @endphp
+
+                                                    {!! $deleteButton !!}
                                                 </td>
                                             </tr>
 

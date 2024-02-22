@@ -24,10 +24,22 @@ class UserController extends Controller
     public function index()
     {
         $title = 'Data User';
-        $data_user = User::orderBy('role', 'ASC')->orderBy('id', 'ASC')->get();
-        // $data_user = User::where('id', '!=', Auth::user()->id)->orderBy('role', 'ASC')->orderBy('id', 'ASC')->get();
+        $data_user = User::select('id', 'username', 'role', 'status')
+            ->with(['siswa' => function ($query) {
+                $query->select('user_id', 'nama_lengkap');
+            }, 'karyawan' => function ($query) {
+                $query->select('id', 'user_id', 'nama_lengkap',);
+            }])
+            ->where('id', '!=', Auth::user()->id)
+            ->orderBy('role', 'ASC')
+            ->orderBy('id', 'ASC')
+            ->get();
+
         return view('admin.user.index', compact('title', 'data_user'));
     }
+
+
+
 
 
     /**

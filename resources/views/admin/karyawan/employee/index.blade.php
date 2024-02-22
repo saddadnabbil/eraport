@@ -571,14 +571,21 @@
                                                 </td>
 
                                                 <td class="text-center">
-                                                    @include('components.actions.delete-button', [
-                                                        'route' => route('karyawan.destroy', $karyawan->id),
-                                                        'id' => $karyawan->id,
-                                                        'isPermanent' => true,
-                                                        'withEdit' => false,
-                                                        'withShow' => true,
-                                                        'showRoute' => route('karyawan.show', $karyawan->id),
-                                                    ])
+                                                    @php
+                                                        $cacheKey = 'delete-button-' . $karyawan->id;
+                                                        $deleteButton = Cache::remember($cacheKey, 120, function () use ($karyawan) {
+                                                            return view('components.actions.delete-button', [
+                                                                'route' => route('karyawan.destroy', $karyawan->id),
+                                                                'id' => $karyawan->id,
+                                                                'isPermanent' => true,
+                                                                'withEdit' => false,
+                                                                'withShow' => true,
+                                                                'showRoute' => route('karyawan.show', $karyawan->id),
+                                                            ])->render();
+                                                        });
+                                                    @endphp
+
+                                                    {!! $deleteButton !!}
                                                 </td>
                                             </tr>
                                         @endforeach

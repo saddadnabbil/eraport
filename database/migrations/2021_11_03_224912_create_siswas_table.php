@@ -44,7 +44,7 @@ class CreateSiswasTable extends Migration
             $table->string('alamat')->nullable();
             $table->string('kota')->nullable();
             $table->unsignedInteger('kode_pos')->nullable();
-            $table->string('jarak_rumah_ke_sekolah')->nullable();
+            $table->unsignedInteger('jarak_rumah_ke_sekolah')->nullable();
             $table->string('email')->nullable();
             $table->string('email_parent')->nullable();
             $table->string('nomor_hp', 13)->nullable();

@@ -14,6 +14,7 @@ use App\Exports\SiswaExport;
 use App\Imports\SiswaImport;
 use Illuminate\Http\Request;
 use App\AnggotaEkstrakulikuler;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
@@ -30,37 +31,37 @@ class SiswaController extends Controller
     {
         $title = 'Data Siswa';
         $tapel = Tapel::where('status', 1)->first();
+        $tingkatanIds = [1, 2, 3, 4, 5];
+
         $jumlah_kelas = Kelas::where('tapel_id', $tapel->id)->count();
 
         if ($jumlah_kelas == 0) {
             return redirect('admin/kelas')->with('toast_warning', 'Mohon isikan data kelas');
         } else {
 
-            $jumlah_kelas_play_group = Siswa::where('status', 1)
-                ->where('tingkatan_id', '1')
-                ->count();
-            $jumlah_kelas_kinder_garten = Siswa::where('status', 1)
-                ->where('tingkatan_id', '2')
-                ->count();
-            $jumlah_kelas_primary_school = Siswa::where('status', 1)
-                ->where('tingkatan_id', '3')
-                ->count();
-            $jumlah_kelas_junior_high_school = Siswa::where('status', 1)
-                ->where('tingkatan_id', '4')
-                ->count();
-            $jumlah_kelas_senior_high_school = Siswa::where('status', 1)
-                ->where('tingkatan_id', '5')
-                ->count();
+            $jumlah_kelas_per_level = Siswa::select('tingkatan_id', DB::raw('count(*) as total'))
+                ->where('status', 1)
+                ->whereIn('tingkatan_id', $tingkatanIds)
+                ->groupBy('tingkatan_id')
+                ->get()
+                ->pluck('total', 'tingkatan_id');
 
             $data_tingkatan = Tingkatan::orderBy('id', 'ASC')->get();
-
-            $tingkatan_terendah = Kelas::where('tapel_id', $tapel->id)->min('tingkatan_id');
             $tingkatan_akhir = Kelas::where('tapel_id', $tapel->id)->max('tingkatan_id');
-            $data_kelas_terendah = Kelas::where('tapel_id', $tapel->id)->where('tingkatan_id', $tingkatan_terendah)->orderBy('tingkatan_id', 'ASC')->get();
-            $data_kelas_all = Kelas::where('tapel_id', $tapel->id)->orderBy('tingkatan_id', 'ASC')->get();
-            // $data_siswa = Siswa::where('status', 1)->orderBy('nis', 'ASC')->get();
-            $data_siswa = Siswa::orderBy('kelas_id', 'DESC')->orderBy('status', 'DESC')->get();
-            return view('admin.siswa.index', compact('title', 'data_kelas_all', 'data_kelas_terendah', 'data_siswa', 'tingkatan_akhir', 'jumlah_kelas', 'jumlah_kelas_play_group', 'jumlah_kelas_kinder_garten', 'jumlah_kelas_primary_school', 'jumlah_kelas_junior_high_school', 'jumlah_kelas_senior_high_school', 'data_tingkatan'));
+            $tingkatan_terendah = Kelas::where('tapel_id', $tapel->id)->min('tingkatan_id');
+            $data_kelas_all = Kelas::where('tapel_id', $tapel->id)
+                ->orderBy('tingkatan_id', 'ASC')
+                ->with('tingkatan')
+                ->get();
+
+            $data_siswa = Siswa::select('id', 'user_id', 'nama_lengkap', 'jenis_kelamin', 'kelas_id', 'nis', 'nisn', 'status')
+                ->where('status', 1)
+                ->orderBy('kelas_id', 'DESC')
+                ->orderBy('status', 'DESC')
+                ->with(['kelas.tingkatan', 'user'])
+                ->get();
+
+            return view('admin.siswa.index', compact('title', 'data_kelas_all', 'data_siswa', 'jumlah_kelas', 'jumlah_kelas_per_level', 'data_tingkatan', 'tingkatan_terendah', 'tingkatan_akhir'));
         }
     }
 

@@ -34,7 +34,7 @@ class SiswaFactory extends Factory
             'nis' => $this->faker->numerify('##########'),
             'nisn' => $this->faker->numerify('##########'),
             'nama_lengkap' => $this->faker->firstName . ' ' . $this->faker->lastName,
-            'nama_panggilan' => $this->faker->firstName,
+            'nama_panggilan' => 'Dummy ' . $this->faker->firstName,
             'nik' => $this->faker->numerify('################'),
             'jenis_kelamin' => $this->faker->randomElement(['MALE', 'FEMALE']),
             'blood_type' => $this->faker->randomElement(['A', 'B', 'AB', 'O']),

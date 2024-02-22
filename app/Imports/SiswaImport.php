@@ -33,20 +33,29 @@ class SiswaImport implements ToCollection
             ]);
 
             // // Convert date values to Unix timestamp
-            $tanggal_lahir = $row[13] ? gmdate('Y-m-d', Date::excelToTimestamp($row[13])) : null;
-            $tanggal_lahir_ayah = $row[31] ? gmdate('Y-m-d', Date::excelToTimestamp($row[31])) : null;
-            $tanggal_lahir_ibu = $row[42] ? gmdate('Y-m-d', Date::excelToTimestamp($row[42])) : null;
-            $tanggal_lahir_wali = $row[53] ? gmdate('Y-m-d', Date::excelToTimestamp($row[53])) : null;
-            $tanggal_masuk_sekolah_lama = $row[66] ? gmdate('Y-m-d', Date::excelToTimestamp($row[66])) : null;
-            $tanggal_keluar_sekolah_lama = $row[67] ? gmdate('Y-m-d', Date::excelToTimestamp($row[67])) : null;
+            $tanggal_lahir = Date::excelToTimestamp($row[13]);
+            // $tanggal_lahir_ayah = Date::excelToTimestamp($row[31]);
+            // $tanggal_lahir_ibu = Date::excelToTimestamp($row[42]);
+            // $tanggal_lahir_wali = Date::excelToTimestamp($row[53]);
+            // $tanggal_masuk_sekolah_lama =  Date::excelToTimestamp($row[66]);
+            // $tanggal_keluar_sekolah_lama = Date::excelToTimestamp($row[67]);
 
-            // Convert date values to Unix timestamp
-            // $tanggal_lahir =  null;
-            // $tanggal_lahir_ayah = null;
-            // $tanggal_lahir_ibu = null;
-            // $tanggal_lahir_wali = null;
-            // $tanggal_masuk_sekolah_lama = null;
-            // $tanggal_keluar_sekolah_lama = null;
+            $tanggal_lahir = $row[13] ? gmdate('Y-m-d', $tanggal_lahir) : null; //bener 
+            // $tanggal_lahir_ayah = $row[31] ? gmdate('Y-m-d', $tanggal_lahir_ayah) : null;
+            // $tanggal_lahir_ibu = $row[42] ? gmdate('Y-m-d', $tanggal_lahir_ibu) : null;
+            // $tanggal_lahir_wali = $row[53] ? gmdate('Y-m-d', $tanggal_lahir_wali) : null;
+            // $tanggal_masuk_sekolah_lama = $row[66] ? gmdate('Y-m-d', $tanggal_masuk_sekolah_lama) : null;
+            // $tanggal_keluar_sekolah_lama = $row[67] ? gmdate('Y-m-d', $tanggal_keluar_sekolah_lama) : null;
+
+            // dd($tanggal_lahir);
+
+            // // Convert date values to Unix timestamp
+            // $tanggal_lahir = null; 
+            $tanggal_lahir_ayah =  null;
+            $tanggal_lahir_ibu = null;
+            $tanggal_lahir_wali = null;
+            $tanggal_masuk_sekolah_lama = null;
+            $tanggal_keluar_sekolah_lama = null;
 
             // kelas_id, jurusan_id, tingkatan_id
             // Contoh data dari row

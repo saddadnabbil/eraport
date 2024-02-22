@@ -581,7 +581,7 @@
                                             <label class="col-sm-3 col-form-label">Agama</label>
                                             <div class="col-sm-9">
                                                 <select class="form-control form-select" disabled>
-                                                    <option selected>-- Pilih Agama --</option>
+                                                    <option selected></option>
                                                     <option value="1"
                                                         @if ($siswa->agama_ayah == 1) selected @endif>Islam</option>
                                                     <option value="2"
@@ -681,7 +681,7 @@
                                             <label class="col-sm-3 col-form-label">Agama</label>
                                             <div class="col-sm-9">
                                                 <select class="form-control form-select" disabled>
-                                                    <option selected>-- Pilih Agama --</option>
+                                                    <option selected></option>
                                                     <option value="1"
                                                         @if ($siswa->agama_ibu == '1') selected @endif>Islam</option>
                                                     <option value="2"
@@ -779,7 +779,7 @@
                                             <label class="col-sm-3 col-form-label">Agama</label>
                                             <div class="col-sm-9">
                                                 <select class="form-control form-select" disabled>
-                                                    <option selected>-- Pilih Agama --</option>
+                                                    <option selected></option>
                                                     <option value="1"
                                                         @if ($siswa->agama_wali == '1') selected @endif>Islam</option>
                                                     <option value="2"
