@@ -94,7 +94,7 @@
                                                 </a>
                                             </div>
                                             <div class="ms-3 mt-2">
-                                                <h5 class="text-dark font-weight-medium mb-2 text-wrap">
+                                                <h5 class="text-body font-weight-medium mb-2 text-wrap">
                                                     {{ $pengumuman->judul }}
                                                 </h5>
                                                 <div>

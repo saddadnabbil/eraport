@@ -26,14 +26,15 @@ class UserController extends Controller
         $title = 'Data User';
         $data_user = User::select('id', 'username', 'role', 'status')
             ->with(['siswa' => function ($query) {
-                $query->select('user_id', 'nama_lengkap');
+                $query->select('user_id', 'nama_lengkap', 'id');
             }, 'karyawan' => function ($query) {
-                $query->select('id', 'user_id', 'nama_lengkap',);
+                $query->select('id', 'user_id', 'nama_lengkap', 'id');
             }])
             ->where('id', '!=', Auth::user()->id)
             ->orderBy('role', 'ASC')
             ->orderBy('id', 'ASC')
             ->get();
+        // $data_user = User::where('id', '!=', Auth::user()->id)->orderBy('role', 'ASC')->orderBy('id', 'ASC')->get();
 
         return view('admin.user.index', compact('title', 'data_user'));
     }
@@ -104,7 +105,11 @@ class UserController extends Controller
                 $data = [
                     'status' => $request->status
                 ];
-                $user->karyawan->update($data);
+                if ($user->siswa) {
+                    $user->siswa->update($data);
+                } elseif ($user->karyawan) {
+                    $user->karyawan->update($data);
+                }
             } else {
                 $data = [
                     'password' => bcrypt($request->password),

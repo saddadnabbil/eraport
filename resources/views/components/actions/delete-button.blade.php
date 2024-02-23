@@ -3,7 +3,7 @@
 <form action="{{ $route }}" method="POST" id="deleteForm{{ $id }}">
     @csrf
     @method('DELETE')
-    <div class="d-flex gap-2">
+    <div class="d-flex gap-2 justify-content-center">
         @if ($withEdit)
             <div data-bs-toggle="tooltip" data-bs-original-title="Edit">
                 <button type="button" class="btn btn-warning btn-sm mt-1" data-bs-toggle="modal"

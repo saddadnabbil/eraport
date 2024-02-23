@@ -39,7 +39,12 @@
 
                         <div class="info-box-content">
                             <span class="info-box-text">Playgroup</span>
-                            <span class="info-box-number">{{ $jumlah_kelas_per_level['1'] }} <small>students</small></span>
+                            @if (isset($jumlah_kelas_per_level['1']))
+                                <span class="info-box-number">{{ $jumlah_kelas_per_level['1'] }}
+                                    <small>students</small></span>
+                            @else
+                                <span class="info-box-number">0 <small>students</small></span>
+                            @endif
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -52,7 +57,12 @@
 
                         <div class="info-box-content">
                             <span class="info-box-text">Kindergarten</span>
-                            <span class="info-box-number">{{ $jumlah_kelas_per_level['2'] }} <small>students</small></span>
+                            @if (isset($jumlah_kelas_per_level['2']))
+                                <span class="info-box-number">{{ $jumlah_kelas_per_level['2'] }}
+                                    <small>students</small></span>
+                            @else
+                                <span class="info-box-number">0 <small>students</small></span>
+                            @endif
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -69,7 +79,12 @@
 
                         <div class="info-box-content">
                             <span class="info-box-text">Primary School</span>
-                            <span class="info-box-number">{{ $jumlah_kelas_per_level['3'] }} <small>students</small></span>
+                            @if (isset($jumlah_kelas_per_level['3']))
+                                <span class="info-box-number">{{ $jumlah_kelas_per_level['3'] }}
+                                    <small>students</small></span>
+                            @else
+                                <span class="info-box-number">0 <small>students</small></span>
+                            @endif
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -83,8 +98,12 @@
 
                         <div class="info-box-content">
                             <span class="info-box-text">Junior High School</span>
-                            <span class="info-box-number">{{ $jumlah_kelas_per_level['4'] }}
-                                <small>students</small></span>
+                            @if (isset($jumlah_kelas_per_level['4']))
+                                <span class="info-box-number">{{ $jumlah_kelas_per_level['4'] }}
+                                    <small>students</small></span>
+                            @else
+                                <span class="info-box-number">0 <small>students</small></span>
+                            @endif
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -99,8 +118,12 @@
 
                         <div class="info-box-content">
                             <span class="info-box-text">Senior High School</span>
-                            <span class="info-box-number">{{ $jumlah_kelas_per_level['5'] }}
-                                <small>students</small></span>
+                            @if (isset($jumlah_kelas_per_level['5']))
+                                <span class="info-box-number">{{ $jumlah_kelas_per_level['5'] }}
+                                    <small>students</small></span>
+                            @else
+                                <span class="info-box-number">0 <small>students</small></span>
+                            @endif
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -153,7 +176,7 @@
                                             aria-hidden="true"></button>
                                         </button>
                                     </div>
-                                    <form name="contact-form" action="{{ route('siswa.import') }}" method="POST"
+                                    <form name="import-siswa" action="{{ route('siswa.import') }}" method="POST"
                                         enctype="multipart/form-data">
                                         @csrf
                                         <div class="modal-body">
@@ -165,13 +188,15 @@
                                                         class="fas fa-file-download"></i> Download</a>
                                             </div>
                                             <div class="form-group row pt-2">
-                                                <label for="file_import" class="col-sm-2 col-form-label">File Import</label>
+                                                <label for="file_import" class="col-sm-2 col-form-label">File
+                                                    Import</label>
                                                 <div class="col-sm-10">
                                                     <div class="custom-file">
                                                         <input type="file"
                                                             class="custom-file-input form-control form-control"
                                                             name="file_import" id="customFile"
-                                                            accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                                                            accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                                                            required>
 
                                                     </div>
                                                 </div>
@@ -180,7 +205,13 @@
                                         <div class="modal-footer justify-content-end">
                                             <button type="button" class="btn btn-default"
                                                 data-bs-dismiss="modal">Batal</button>
-                                            <button type="submit" class="btn btn-primary">Import</button>
+                                            <button type="submit" class="btn btn-primary position-relative">
+                                                <div class="spinner-border spinner-border-sm" role="status"
+                                                    id="loading" style="display: none">
+                                                    <span class="sr-only">Loading...</span>
+                                                </div>
+                                                Import
+                                            </button>
                                         </div>
                                     </form>
                                 </div>
@@ -1109,7 +1140,9 @@
                                             <?php $no++; ?>
                                             <tr>
                                                 <td>{{ $no }}</td>
-                                                <td>{{ $siswa->nama_lengkap }}</td>
+                                                <td><a class="text-decoration-none text-body"
+                                                        href="{{ route('siswa.show', $siswa->id) }}">{{ $siswa->nama_lengkap }}</a>
+                                                </td>
                                                 <td>
                                                     @if ($siswa->kelas_id == null)
                                                         <span class="badge light bg-warning">Belum terdata</span>
@@ -1137,7 +1170,6 @@
                                                 </td>
 
                                                 <td class="text-center">
-                                                    <!-- resources/views/admin/user.blade.php -->
                                                     @php
                                                         $cacheKey = 'delete-button-' . $siswa->id;
                                                         $deleteButton = Cache::remember($cacheKey, 120, function () use ($siswa) {
@@ -1174,6 +1206,22 @@
 @endsection
 
 @push('custom-scripts')
+    {{-- loading button import  --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.forms['import-siswa'].addEventListener('submit', function() {
+                // Tampilkan ikon/loading GIF
+                document.getElementById('loading').style.display = 'inline-block';
+
+                // Simulasikan proses pengiriman form
+                setTimeout(function() {
+                    // Sembunyikan ikon/loading GIF
+                    document.getElementById('loading').style.display = 'none';
+                }, 40000);
+            });
+        });
+    </script>
+
     <!-- pas_photo preview-->
     <script>
         function readURL(input) {

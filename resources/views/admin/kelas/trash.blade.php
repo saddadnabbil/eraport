@@ -60,13 +60,13 @@
                                         @foreach ($anggotaKelasTrashed as $anggota)
                                             <?php $no++; ?>
                                             <tr>
-                                                @if($anggota->siswa)
-                                                <td>{{ $no }}</td>
+                                                @if ($anggota->siswa)
+                                                    <td>{{ $no }}</td>
                                                     <td>{{ $anggota->siswa->nis ?? '-' }}</td>
                                                     <td>{{ $anggota->siswa->nisn ?? '-' }}</td>
                                                     <td>
-                                                        @if($anggota->siswa->nama_lengkap)
-                                                            <a class="text-decoration-none text-dark"
+                                                        @if ($anggota->siswa->nama_lengkap)
+                                                            <a class="text-decoration-none text-body"
                                                                 href="{{ route('siswa.show', $anggota->siswa->id) }}">
                                                                 {{ $anggota->siswa->nama_lengkap }}
                                                             </a>
@@ -74,46 +74,52 @@
                                                             {{ '-' }}
                                                         @endif
                                                     </td>
-                                                    <td>{{ $anggota->siswa->tanggal_lahir ? $anggota->siswa->tanggal_lahir->format('d-m-Y') : '-' }}</td>
+                                                    <td>{{ $anggota->siswa->tanggal_lahir ? $anggota->siswa->tanggal_lahir->format('d-m-Y') : '-' }}
+                                                    </td>
                                                     <td>{{ $anggota->siswa->jenis_kelamin ?? '-' }}</td>
-                                                <td>
-                                                    @if ($anggota->pendaftaran == 1)
-                                                        Siswa Baru
-                                                    @elseif ($anggota->pendaftaran == 2)
-                                                        Pindahan
-                                                    @elseif ($anggota->pendaftaran == 3)
-                                                        Naik Kelas
-                                                    @elseif ($anggota->pendaftaran == 4)
-                                                        Naik Kelas
-                                                    @elseif ($anggota->pendaftaran == 5)
-                                                        Mengulang
-                                                    @endif
-                                                </td>
-                                                <td>
+                                                    <td>
+                                                        @if ($anggota->pendaftaran == 1)
+                                                            Siswa Baru
+                                                        @elseif ($anggota->pendaftaran == 2)
+                                                            Pindahan
+                                                        @elseif ($anggota->pendaftaran == 3)
+                                                            Naik Kelas
+                                                        @elseif ($anggota->pendaftaran == 4)
+                                                            Naik Kelas
+                                                        @elseif ($anggota->pendaftaran == 5)
+                                                            Mengulang
+                                                        @endif
+                                                    </td>
+                                                    <td>
 
                                                     <td class=" text-center">
                                                         <div class="d-flex gap-2">
-                                                            <div data-bs-toggle="tooltip" data-bs-original-title="Restore" >
-                                                                <form method="POST" action="{{ route('kelas.anggota_kelas.restore', ['id' => $anggota->id]) }}">
+                                                            <div data-bs-toggle="tooltip" data-bs-original-title="Restore">
+                                                                <form method="POST"
+                                                                    action="{{ route('kelas.anggota_kelas.restore', ['id' => $anggota->id]) }}">
                                                                     @csrf
                                                                     @method('PATCH')
-                                                                    <button type="submit" class="btn btn-primary"><i class="fas fa-undo"></i></button>
+                                                                    <button type="submit" class="btn btn-primary"><i
+                                                                            class="fas fa-undo"></i></button>
                                                                 </form>
                                                             </div>
-                                                            <div data-bs-toggle="tooltip" data-bs-original-title="Delete Permanent">
-                                                                <form method="POST" action="{{ route('kelas.anggota_kelas.permanent-delete', ['id' => $anggota->id]) }}">
+                                                            <div data-bs-toggle="tooltip"
+                                                                data-bs-original-title="Delete Permanent">
+                                                                <form method="POST"
+                                                                    action="{{ route('kelas.anggota_kelas.permanent-delete', ['id' => $anggota->id]) }}">
                                                                     @csrf
                                                                     @method('DELETE')
-                                                                    <button type="submit" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
+                                                                    <button type="submit" class="btn btn-danger"><i
+                                                                            class="fas fa-trash-alt"></i></button>
                                                                 </form>
                                                             </div>
                                                         </div>
                                                     </td>
-                                                </td>
+                                                    </td>
                                                 @else
-                                                <!-- Handle the case where $anggota->siswa is null -->
-                                                <td colspan="8" class="text-center">Siswa not available</td>
-                                            @endif
+                                                    <!-- Handle the case where $anggota->siswa is null -->
+                                                    <td colspan="8" class="text-center">Siswa not available</td>
+                                                @endif
                                             </tr>
                                         @endforeach
                                     </tbody>

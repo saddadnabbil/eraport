@@ -215,6 +215,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::resource('adminraportsemesterkm', 'Admin\KM\CetakRaportSemesterController', [
                 'uses' => ['index', 'store', 'show'],
             ]);
+            Route::get('adminraportsemesterkm/export/{id}', 'Admin\KM\CetakRaportSemesterController@export')->name('adminraportsemesterkm.export');
 
             Route::get('getKelas/ekstra/{id}', 'AjaxController@ajax_kelas_ekstra');
             Route::resource('nilaiekstraadmin', 'Admin\NilaiEkstrakulikulerController', [
@@ -384,7 +385,7 @@ Route::group(['middleware' => ['auth']], function () {
             //Route Wali Kelas
             Route::group(['middleware' => 'checkAksesGuru:Wali Kelas'], function () {
                 Route::resource('pesertadidik', 'Walikelas\PesertaDidikController', [
-                    'uses' => ['index'],
+                    'uses' => ['index', 'show'],
                 ]);
                 Route::resource('kehadiran', 'Walikelas\KehadiranSiswaController', [
                     'uses' => ['index', 'store'],
