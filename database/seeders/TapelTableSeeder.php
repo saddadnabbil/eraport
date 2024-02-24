@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Tapel;
+use App\Models\Tapel;
 use Illuminate\Database\Seeder;
 
 class TapelTableSeeder extends Seeder

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Term;
-use App\Tapel;
-use App\Semester;
-use App\Tingkatan;
+use App\Models\Term;
+use App\Models\Tapel;
+use App\Models\Semester;
+use App\Models\Tingkatan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 

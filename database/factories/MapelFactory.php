@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Mapel;
+use App\Models\Mapel;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class MapelFactory extends Factory

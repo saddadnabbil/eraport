@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Admin;
+use App\Models\Admin;
 use Illuminate\Database\Seeder;
 
 class AdminTableSeeder extends Seeder

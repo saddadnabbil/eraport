@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\AnggotaKelas;
+use App\Models\AnggotaKelas;
 use App\Http\Controllers\Controller;
-use App\Kelas;
-use App\Tapel;
+use App\Models\Kelas;
+use App\Models\Tapel;
 use Illuminate\Http\Request;
 
 class RekapKehadiranSiswaController extends Controller

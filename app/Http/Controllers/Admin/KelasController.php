@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Guru;
-use App\Kelas;
-use App\Mapel;
-use App\Siswa;
-use App\Tapel;
-use App\Jurusan;
-use App\Tingkatan;
+use App\Models\Guru;
+use App\Models\Kelas;
+use App\Models\Mapel;
+use App\Models\Siswa;
+use App\Models\Tapel;
+use App\Models\Jurusan;
+use App\Models\Tingkatan;
 use Carbon\Carbon;
-use App\AnggotaKelas;
+use App\Models\AnggotaKelas;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\WaliKelas;
 
-use App\AnggotaKelas;
-use App\CatatanWaliKelas;
-use App\Guru;
+use App\Models\AnggotaKelas;
+use App\Models\CatatanWaliKelas;
+use App\Models\Guru;
 use App\Http\Controllers\Controller;
-use App\Kelas;
-use App\Tapel;
+use App\Models\Kelas;
+use App\Models\Tapel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

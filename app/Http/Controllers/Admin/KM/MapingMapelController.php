@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin\KM;
 
 use App\Http\Controllers\Controller;
-use App\KmMappingMapel;
-use App\Mapel;
-use App\Tapel;
+use App\Models\KmMappingMapel;
+use App\Models\Mapel;
+use App\Models\Tapel;
 use Illuminate\Http\Request;
 
 class MapingMapelController extends Controller

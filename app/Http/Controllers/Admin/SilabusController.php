@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Kelas;
-use App\Mapel;
-use App\Tapel;
-use App\Sekolah;
-use App\Silabus;
-use App\Pembelajaran;
+use App\Models\Kelas;
+use App\Models\Mapel;
+use App\Models\Tapel;
+use App\Models\Sekolah;
+use App\Models\Silabus;
+use App\Models\Pembelajaran;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Crypt;

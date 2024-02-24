@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Kelas;
-use App\Mapel;
-use App\Tapel;
-use App\Pembelajaran;
-use App\JadwalMengajar;
+use App\Models\Kelas;
+use App\Models\Mapel;
+use App\Models\Tapel;
+use App\Models\Pembelajaran;
+use App\Models\JadwalMengajar;
 use App\JadwalPelajaran;
 use PDF;
-use App\JadwalPelajaranSlot;
+use App\Models\JadwalPelajaranSlot;
 use Illuminate\Http\Request;
 use App\JadwalPelajaranRecord;
 use Illuminate\Support\Carbon;

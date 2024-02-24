@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Term;
-use App\Siswa;
-use App\Tapel;
-use App\Sekolah;
-use App\Semester;
-use App\Tingkatan;
+use App\Models\Term;
+use App\Models\Siswa;
+use App\Models\Tapel;
+use App\Models\Sekolah;
+use App\Models\Semester;
+use App\Models\Tingkatan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;

@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\WaliKelas\KM;
 
-use App\Guru;
-use App\Term;
-use App\Kelas;
-use App\Tapel;
-use App\NilaiSumatif;
-use App\Pembelajaran;
-use App\NilaiFormatif;
-use App\KmNilaiAkhirRaport;
-use App\RencanaNilaiSumatif;
-use App\RencanaNilaiFormatif;
-use App\KmDeskripsiNilaiSiswa;
+use App\Models\Guru;
+use App\Models\Term;
+use App\Models\Kelas;
+use App\Models\Tapel;
+use App\Models\NilaiSumatif;
+use App\Models\Pembelajaran;
+use App\Models\NilaiFormatif;
+use App\Models\KmNilaiAkhirRaport;
+use App\Models\RencanaNilaiSumatif;
+use App\Models\RencanaNilaiFormatif;
+use App\Models\KmDeskripsiNilaiSiswa;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 

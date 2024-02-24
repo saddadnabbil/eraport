@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Guru;
-use App\User;
-use App\Karyawan;
-use App\UnitKaryawan;
-use App\StatusKaryawan;
-use App\PositionKaryawan;
+use App\Models\Guru;
+use App\Models\User;
+use App\Models\Karyawan;
+use App\Models\UnitKaryawan;
+use App\Models\StatusKaryawan;
+use App\Models\PositionKaryawan;
 use Illuminate\Http\Request;
 use App\Imports\KaryawanImport;
 use App\Http\Controllers\Controller;

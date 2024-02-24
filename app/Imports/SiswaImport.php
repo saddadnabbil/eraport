@@ -2,10 +2,10 @@
 
 namespace App\Imports;
 
-use App\AnggotaKelas;
-use App\User;
-use App\Kelas;
-use App\Siswa;
+use App\Models\AnggotaKelas;
+use App\Models\User;
+use App\Models\Kelas;
+use App\Models\Siswa;
 use Illuminate\Support\Collection;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Maatwebsite\Excel\Concerns\ToCollection;

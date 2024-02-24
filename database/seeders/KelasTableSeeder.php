@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Kelas;
+use App\Models\Kelas;
 use Illuminate\Database\Seeder;
 
 class KelasTableSeeder extends Seeder

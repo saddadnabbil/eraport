@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Term;
-use App\Tapel;
+use App\Models\Term;
+use App\Models\Tapel;
 use Illuminate\Database\Seeder;
 
 class TermTableSeeder extends Seeder

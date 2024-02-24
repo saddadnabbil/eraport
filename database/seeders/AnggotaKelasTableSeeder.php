@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\AnggotaKelas;
+use App\Models\AnggotaKelas;
 use Illuminate\Database\Seeder;
 
 class AnggotaKelasTableSeeder extends Seeder

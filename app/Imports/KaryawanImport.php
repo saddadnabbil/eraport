@@ -2,9 +2,9 @@
 
 namespace App\Imports;
 
-use App\Guru;
-use App\Karyawan;
-use App\User;
+use App\Models\Guru;
+use App\Models\Karyawan;
+use App\Models\User;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use PhpOffice\PhpSpreadsheet\Shared\Date;

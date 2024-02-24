@@ -2,26 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Guru;
-use App\Term;
-use App\Kelas;
-use App\Siswa;
-use App\Tapel;
-use App\Sekolah;
+use App\Models\Guru;
+use App\Models\Term;
+use App\Models\Kelas;
+use App\Models\Siswa;
+use App\Models\Tapel;
+use App\Models\Sekolah;
 use Carbon\Carbon;
-use App\KmKkmMapel;
-use App\Pengumuman;
-use App\AnggotaKelas;
-use App\NilaiSumatif;
-use App\Pembelajaran;
-use App\RiwayatLogin;
-use App\NilaiFormatif;
-use App\Ekstrakulikuler;
-use App\KmNilaiAkhirRaport;
-use App\RencanaNilaiSumatif;
-use App\RencanaNilaiFormatif;
-use App\KmDeskripsiNilaiSiswa;
-use App\AnggotaEkstrakulikuler;
+use App\Models\KmKkmMapel;
+use App\Models\Pengumuman;
+use App\Models\AnggotaKelas;
+use App\Models\NilaiSumatif;
+use App\Models\Pembelajaran;
+use App\Models\RiwayatLogin;
+use App\Models\NilaiFormatif;
+use App\Models\Ekstrakulikuler;
+use App\Models\KmNilaiAkhirRaport;
+use App\Models\RencanaNilaiSumatif;
+use App\Models\RencanaNilaiFormatif;
+use App\Models\KmDeskripsiNilaiSiswa;
+use App\Models\AnggotaEkstrakulikuler;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller

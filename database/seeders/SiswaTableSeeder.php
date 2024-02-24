@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Siswa;
-use App\Tapel;
+use App\Models\Siswa;
+use App\Models\Tapel;
 use Illuminate\Database\Seeder;
 
 class SiswaTableSeeder extends Seeder

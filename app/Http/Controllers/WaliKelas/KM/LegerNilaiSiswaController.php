@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers\WaliKelas\KM;
 
-use App\Guru;
-use App\Term;
-use App\Kelas;
-use App\Mapel;
-use App\Tapel;
-use App\AnggotaKelas;
-use App\Pembelajaran;
-use App\KmMappingMapel;
-use App\Ekstrakulikuler;
-use App\KmNilaiAkhirRaport;
-use App\NilaiEkstrakulikuler;
-use App\AnggotaEkstrakulikuler;
+use App\Models\Guru;
+use App\Models\Term;
+use App\Models\Kelas;
+use App\Models\Mapel;
+use App\Models\Tapel;
+use App\Models\AnggotaKelas;
+use App\Models\Pembelajaran;
+use App\Models\KmMappingMapel;
+use App\Models\Ekstrakulikuler;
+use App\Models\KmNilaiAkhirRaport;
+use App\Models\NilaiEkstrakulikuler;
+use App\Models\AnggotaEkstrakulikuler;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;

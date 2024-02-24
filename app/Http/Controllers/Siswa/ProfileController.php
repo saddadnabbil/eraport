@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Siswa;
 
-use App\User;
-use App\Siswa;
+use App\Models\User;
+use App\Models\Siswa;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;

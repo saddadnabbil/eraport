@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Guru;
-use App\Admin;
-use App\Kelas;
-use App\Siswa;
-use App\Tapel;
-use App\Karyawan;
-use App\Tingkatan;
-use App\UnitKaryawan;
-use App\StatusKaryawan;
-use App\PositionKaryawan;
+use App\Models\Guru;
+use App\Models\Admin;
+use App\Models\Kelas;
+use App\Models\Siswa;
+use App\Models\Tapel;
+use App\Models\Karyawan;
+use App\Models\Tingkatan;
+use App\Models\UnitKaryawan;
+use App\Models\StatusKaryawan;
+use App\Models\PositionKaryawan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

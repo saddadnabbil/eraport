@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\KmNilaiAkhirRaport;
+use App\Models\KmNilaiAkhirRaport;
 use Illuminate\Database\Seeder;
 
 class KmNilaiAkhirRaportTableSeeder extends Seeder

@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Guru;
-use App\Kelas;
-use App\Tapel;
+use App\Models\Guru;
+use App\Models\Kelas;
+use App\Models\Tapel;
 use Carbon\Carbon;
-use App\AnggotaKelas;
-use App\Pembelajaran;
-use App\KehadiranSiswa;
+use App\Models\AnggotaKelas;
+use App\Models\Pembelajaran;
+use App\Models\KehadiranSiswa;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;

@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\WaliKelas\KM;
 
-use App\Guru;
-use App\Term;
-use App\Kelas;
-use App\Mapel;
-use App\Tapel;
-use App\Sekolah;
-use App\Semester;
-use App\AnggotaKelas;
-use App\Pembelajaran;
-use App\KmMappingMapel;
-use App\KmNilaiAkhirRaport;
+use App\Models\Guru;
+use App\Models\Term;
+use App\Models\Kelas;
+use App\Models\Mapel;
+use App\Models\Tapel;
+use App\Models\Sekolah;
+use App\Models\Semester;
+use App\Models\AnggotaKelas;
+use App\Models\Pembelajaran;
+use App\Models\KmMappingMapel;
+use App\Models\KmNilaiAkhirRaport;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 

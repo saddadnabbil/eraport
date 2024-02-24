@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\KmTglRaport;
+use App\Models\KmTglRaport;
 use Illuminate\Database\Seeder;
 
 class KmTglRaportTableSeeder extends Seeder

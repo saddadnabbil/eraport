@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use Excel;
-use App\User;
-use App\Kelas;
-use App\Siswa;
-use App\Tapel;
-use App\Tingkatan;
+use App\Models\User;
+use App\Models\Kelas;
+use App\Models\Siswa;
+use App\Models\Tapel;
+use App\Models\Tingkatan;
 use App\SiswaKeluar;
-use App\AnggotaKelas;
+use App\Models\AnggotaKelas;
 use App\Exports\SiswaExport;
 use App\Imports\SiswaImport;
 use Illuminate\Http\Request;

@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\NilaiFormatif;
+use App\Models\NilaiFormatif;
 use Illuminate\Database\Seeder;
 
 class KmNilaiFormatifTableSeeder extends Seeder

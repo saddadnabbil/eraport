@@ -1,13 +1,13 @@
 <?php
 
-use App\Kelas;
-use App\Semester;
-use App\AnggotaKelas;
-use App\PrestasiSiswa;
+use App\Models\Kelas;
+use App\Models\Semester;
+use App\Models\AnggotaKelas;
+use App\Models\PrestasiSiswa;
 
 
-use App\KmNilaiAkhirRaport;
-use App\CapaianPembelajaran;
+use App\Models\KmNilaiAkhirRaport;
+use App\Models\CapaianPembelajaran;
 use Illuminate\Database\Seeder;
 use Database\Seeders\SilabusSeeder;
 use Database\Seeders\GuruTableSeeder;

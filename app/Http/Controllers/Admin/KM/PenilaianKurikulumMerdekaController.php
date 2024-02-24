@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers\Admin\KM;
 
-use App\Kelas;
-use App\Mapel;
-use App\Tapel;
+use App\Models\Kelas;
+use App\Models\Mapel;
+use App\Models\Tapel;
 use App\NilaiAkhir;
-use App\AnggotaKelas;
-use App\NilaiSumatif;
-use App\Pembelajaran;
-use App\NilaiFormatif;
-use App\CapaianPembelajaran;
-use App\RencanaNilaiSumatif;
+use App\Models\AnggotaKelas;
+use App\Models\NilaiSumatif;
+use App\Models\Pembelajaran;
+use App\Models\NilaiFormatif;
+use App\Models\CapaianPembelajaran;
+use App\Models\RencanaNilaiSumatif;
 use Illuminate\Http\Request;
-use App\RencanaNilaiFormatif;
+use App\Models\RencanaNilaiFormatif;
 use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
-use App\Semester;
-use App\Term;
+use App\Models\Semester;
+use App\Models\Term;
 use Illuminate\Support\Facades\Validator;
 
 class PenilaianKurikulumMerdekaController extends Controller

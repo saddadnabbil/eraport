@@ -3,16 +3,16 @@
 namespace App\Http\Controllers\Siswa;
 
 use PDF;
-use App\Kelas;
-use App\Mapel;
-use App\Siswa;
-use App\Tapel;
-use App\AnggotaKelas;
-use App\Pembelajaran;
-use App\JadwalMengajar;
-use App\Ekstrakulikuler;
+use App\Models\Kelas;
+use App\Models\Mapel;
+use App\Models\Siswa;
+use App\Models\Tapel;
+use App\Models\AnggotaKelas;
+use App\Models\Pembelajaran;
+use App\Models\JadwalMengajar;
+use App\Models\Ekstrakulikuler;
 use App\JadwalPelajaran;
-use App\JadwalPelajaranSlot;
+use App\Models\JadwalPelajaranSlot;
 use Illuminate\Http\Request;
 use App\JadwalPelajaranRecord;
 use Illuminate\Support\Carbon;

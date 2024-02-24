@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Jurusan;
+use App\Models\Jurusan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Siswa\KM;
 
-use App\Kelas;
-use App\Siswa;
-use App\Tapel;
-use App\AnggotaKelas;
-use App\Pembelajaran;
-use App\KmNilaiAkhirRaport;
+use App\Models\Kelas;
+use App\Models\Siswa;
+use App\Models\Tapel;
+use App\Models\AnggotaKelas;
+use App\Models\Pembelajaran;
+use App\Models\KmNilaiAkhirRaport;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;

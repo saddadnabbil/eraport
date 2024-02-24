@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Guru;
+use App\Models\Guru;
 use Illuminate\Database\Seeder;
 
 class GuruTableSeeder extends Seeder

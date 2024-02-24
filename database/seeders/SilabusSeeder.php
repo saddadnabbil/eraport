@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Silabus;
+use App\Models\Silabus;
 use Illuminate\Database\Seeder;
 
 class SilabusSeeder extends Seeder

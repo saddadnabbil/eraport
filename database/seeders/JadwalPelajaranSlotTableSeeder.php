@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\JadwalPelajaranSlot;
+use App\Models\JadwalPelajaranSlot;
 use Illuminate\Database\Seeder;
 
 class JadwalPelajaranSlotTableSeeder extends Seeder

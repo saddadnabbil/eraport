@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
-use App\User;
-use App\Kelas;
-use App\Siswa;
+use App\Models\User;
+use App\Models\Kelas;
+use App\Models\Siswa;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class SiswaFactory extends Factory
