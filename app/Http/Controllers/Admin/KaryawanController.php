@@ -26,9 +26,12 @@ class KaryawanController extends Controller
     public function index()
     {
         $title = 'Data Karyawan';
-        $dataKaryawan = Karyawan::orderBy('kode_karyawan', 'desc')
+
+        $dataKaryawan = Karyawan::with('statusKaryawan', 'unitKaryawan', 'positionKaryawan')
+            ->orderBy('kode_karyawan', 'desc')
             ->orderBy('status', 'desc')
-            ->get(['id', 'nama_lengkap', 'jenis_kelamin', 'kode_karyawan', 'status_karyawan_id', 'unit_karyawan_id', 'position_karyawan_id', 'status']);
+            ->select('id', 'nama_lengkap', 'jenis_kelamin', 'kode_karyawan', 'status_karyawan_id', 'unit_karyawan_id', 'position_karyawan_id', 'status')
+            ->get();
 
         $dataStatusKaryawan = StatusKaryawan::all();
         $dataUnitKaryawan = UnitKaryawan::all();
@@ -457,11 +460,15 @@ class KaryawanController extends Controller
 
     public function import(Request $request)
     {
+        $request->validate([
+            'file_import' => 'required|mimes:xlsx,xls,csv|max:2048', // Validasi untuk file upload
+        ]);
+
         try {
             Excel::import(new KaryawanImport, $request->file('file_import'));
             return back()->with('toast_success', 'Data karyawan berhasil diimport');
         } catch (\Throwable $th) {
-            dd($th->getMessage());
+            // dd($th->getMessage());
             return back()->with('toast_error', 'Maaf, format data tidak sesuai');
         }
     }

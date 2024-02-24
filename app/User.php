@@ -61,6 +61,11 @@ class User extends Authenticatable
         return $this->hasOne('App\Siswa');
     }
 
+    public function siswaKeluar()
+    {
+        return $this->hasOne('App\SiswaKeluar');
+    }
+
     public function karyawan()
     {
         return $this->hasOne('App\Karyawan');

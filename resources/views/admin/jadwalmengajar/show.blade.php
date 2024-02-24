@@ -83,7 +83,7 @@
                         </div>
 
                         <div class="card-body">
-                            <div class="d-flex justify-content-center mt-3 text-dark">
+                            <div class="d-flex justify-content-center mt-3 text-body">
                                 <h3><strong>{{ strtoupper($pembelajaran->mapel->nama_mapel) }} -
                                         {{ strtoupper($pembelajaran->guru->karyawan->nama_lengkap) }}</strong></h3>
                             </div>
@@ -120,7 +120,7 @@
                                                 @foreach ($dataJadwalPelajaranSlot as $index => $slot)
                                                     <tr>
                                                         <td scope="col" rowspan="" class="p-1 border">
-                                                            <p class="text-center text-dark">
+                                                            <p class="text-center text-body">
                                                                 {{ \Carbon\Carbon::parse($slot->start_time)->format('H:i') }}
                                                                 -
                                                                 {{ \Carbon\Carbon::parse($slot->stop_time)->format('H:i') }}
@@ -162,7 +162,7 @@
                                                         @endforeach
                                                     @else
                                                         <td colspan="{{ count($dataWeekdays) }}"
-                                                            class="border text-center p-1 text-dark">
+                                                            class="border text-center p-1 text-body">
                                                             <strong>
                                                                 <i>
                                                                     @if ($slot->keterangan == 2)

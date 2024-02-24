@@ -28,7 +28,7 @@ class KaryawanImport implements ToCollection
             $user = User::create([
                 'username' => strtolower(str_replace(' ', '', $row[8])),
                 'password' => bcrypt(gmdate('d-m-Y', Date::excelToTimestamp($row[22]))),
-                'role' => 3,
+                'role' => '2',
                 'status' => true
             ]);
 

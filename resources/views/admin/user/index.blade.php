@@ -149,10 +149,12 @@
                                             <tr>
                                                 <td>{{ $no }}</td>
                                                 <td>
-                                                    @if ($user->role == 3)
-                                                        {{ optional($user->siswa)->nama_lengkap }}
-                                                    @else
-                                                        {{ optional($user->karyawan)->nama_lengkap }}
+                                                    @if ($user->role == 3 && $user->siswa)
+                                                        <a class="text-decoration-none text-body"
+                                                            href="{{ route('siswa.show', $user->siswa->id) }}">{{ $user->siswa->nama_lengkap }}</a>
+                                                    @elseif($user->role == 2 && $user->karyawan)
+                                                        <a class="text-decoration-none text-body"
+                                                            href="{{ route('karyawan.show', $user->karyawan->id) }}">{{ $user->karyawan->nama_lengkap }}</a>
                                                     @endif
                                                 </td>
 
@@ -179,12 +181,14 @@
                                                     @php
                                                         $cacheKey = 'delete-button-' . $user->id;
                                                         $deleteButton = Cache::remember($cacheKey, 120, function () use ($user) {
+                                                            $showRoute = $user->role == 3 ? route('siswa.show', $user->siswa->id) : route('karyawan.show', $user->karyawan->id);
                                                             return view('components.actions.delete-button', [
                                                                 'route' => route('user.destroy', $user->id),
                                                                 'id' => $user->id,
                                                                 'isPermanent' => false,
                                                                 'withEdit' => true,
-                                                                'withShow' => false,
+                                                                'withShow' => true,
+                                                                'showRoute' => $showRoute,
                                                             ])->render();
                                                         });
                                                     @endphp

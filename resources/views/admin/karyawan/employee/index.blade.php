@@ -71,7 +71,7 @@
                                             aria-hidden="true"></button>
                                         </button>
                                     </div>
-                                    <form name="contact-form" action="{{ route('karyawan.import') }}" method="POST"
+                                    <form name="import-karyawan" action="{{ route('karyawan.import') }}" method="POST"
                                         enctype="multipart/form-data">
                                         @csrf
                                         <div class="modal-body">
@@ -89,7 +89,7 @@
                                                         <input type="file"
                                                             class="custom-file-input form-control form-control"
                                                             name="file_import" id="customFile"
-                                                            accept="application/vnd.ms-excel">
+                                                            accept="application/vnd.ms-excel" required>
 
                                                     </div>
                                                 </div>
@@ -98,7 +98,13 @@
                                         <div class="modal-footer justify-content-end">
                                             <button type="button" class="btn btn-default"
                                                 data-bs-dismiss="modal">Batal</button>
-                                            <button type="submit" class="btn btn-primary">Import</button>
+                                            <button type="submit" class="btn btn-primary position-relative">
+                                                <div class="spinner-border spinner-border-sm" role="status" id="loading"
+                                                    style="display: none">
+                                                    <span class="sr-only">Loading...</span>
+                                                </div>
+                                                Import
+                                            </button>
                                         </div>
                                     </form>
                                 </div>
@@ -557,7 +563,9 @@
                                             <tr>
                                                 <td>{{ $no }}</td>
                                                 <td>{{ $karyawan->kode_karyawan }}</td>
-                                                <td>{{ $karyawan->nama_lengkap }}</td>
+                                                <td><a class="text-decoration-none text-body"
+                                                        href="{{ route('karyawan.show', $karyawan->id) }}">{{ $karyawan->nama_lengkap }}</a>
+                                                </td>
                                                 <td>{{ $karyawan->jenis_kelamin }}</td>
                                                 <td>{{ $karyawan->statusKaryawan->status_nama }}</td>
                                                 <td>{{ $karyawan->unitKaryawan->unit_nama }}</td>
@@ -605,6 +613,22 @@
 @endsection
 
 @push('custom-scripts')
+    {{-- loading button import  --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.forms['import-karyawan'].addEventListener('submit', function() {
+                // Tampilkan ikon/loading GIF
+                document.getElementById('loading').style.display = 'inline-block';
+
+                // Simulasikan proses pengiriman form
+                setTimeout(function() {
+                    // Sembunyikan ikon/loading GIF
+                    document.getElementById('loading').style.display = 'none';
+                }, 40000);
+            });
+        });
+    </script>
+
     <!-- pas_photo preview-->
     <script>
         function readURLPasPhoto(input) {

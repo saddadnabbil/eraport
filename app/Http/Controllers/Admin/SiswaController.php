@@ -13,7 +13,6 @@ use App\AnggotaKelas;
 use App\Exports\SiswaExport;
 use App\Imports\SiswaImport;
 use Illuminate\Http\Request;
-use App\AnggotaEkstrakulikuler;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
@@ -55,9 +54,8 @@ class SiswaController extends Controller
                 ->get();
 
             $data_siswa = Siswa::select('id', 'user_id', 'nama_lengkap', 'jenis_kelamin', 'kelas_id', 'nis', 'nisn', 'status')
-                ->where('status', 1)
                 ->orderBy('kelas_id', 'DESC')
-                ->orderBy('status', 'DESC')
+                ->orderBy('status', 'ASC')
                 ->with(['kelas.tingkatan', 'user'])
                 ->get();
 
@@ -506,6 +504,10 @@ class SiswaController extends Controller
             $siswa = Siswa::findorfail($request->siswa_id);
             $anggota_kelas = AnggotaKelas::where('siswa_id', $siswa->id)->where('kelas_id', $siswa->kelas_id)->first();
 
+            $siswa_keluar = SiswaKeluar::where('siswa_id', $siswa->id)->first();
+
+            if ($siswa_keluar) {
+            }
 
             $siswa_keluar = new SiswaKeluar([
                 'siswa_id' => $request->input('siswa_id'),
@@ -533,13 +535,17 @@ class SiswaController extends Controller
 
     public function activate(Request $request)
     {
-        $id = $request->input('id');
+        $id = $request->id;
         $siswa = Siswa::findorfail($id);
+        $siswa_keluar = SiswaKeluar::where('siswa_id', $id)->firstOrFail();
+
+        if ($siswa->status == 1) {
+            return back()->with('toast_error', 'Siswa ' . $siswa->nama_lengkap . ' sudah aktif');
+        }
+
         $siswa->update(['status' => 1]);
         $siswa->user->update(['status' => 1]);
-
-        $siswa_keluar = SiswaKeluar::where('siswa_id', $id)->firstOrFail();
-        $siswa_keluar->delete();
+        $siswa_keluar->forceDelete();
 
         return back()->with('toast_success', 'Siswa ' . $siswa->nama_lengkap . ' telah memberhasil diaktifkan');
     }

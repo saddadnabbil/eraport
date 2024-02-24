@@ -53,6 +53,7 @@
                                             <th>Tanggal Lahir</th>
                                             <th>L/P</th>
                                             <th>Kelas</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -63,11 +64,22 @@
                                                 <td>{{ $no }}</td>
                                                 <td>{{ $anggota_kelas->siswa->nis }}</td>
                                                 <td>{{ $anggota_kelas->siswa->nisn }}</td>
-                                                <td>{{ $anggota_kelas->siswa->nama_lengkap }}</td>
+                                                <td><a class="text-decoration-none text-body"
+                                                        href="{{ route('pesertadidik.show', $anggota_kelas->siswa_id) }}">{{ $anggota_kelas->siswa->nama_lengkap }}
+                                                    </a></td>
                                                 <td>{{ $anggota_kelas->siswa->tempat_lahir }}</td>
                                                 <td>{{ $anggota_kelas->siswa->tanggal_lahir->format('d-M-Y') }}</td>
                                                 <td>{{ $anggota_kelas->siswa->jenis_kelamin }}</td>
                                                 <td>{{ $anggota_kelas->kelas->nama_kelas }}</td>
+                                                <td>
+                                                    <div data-bs-toggle="tooltip" data-bs-original-title="Show"
+                                                        class="text-center">
+                                                        <a href="{{ route('pesertadidik.show', $anggota_kelas->siswa_id) }}"
+                                                            class="btn btn-info btn-sm mt-1">
+                                                            <i class="fas fa-eye"></i>
+                                                        </a>
+                                                    </div>
+                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>
