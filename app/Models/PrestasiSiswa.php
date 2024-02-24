@@ -1,0 +1,24 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class PrestasiSiswa extends Model
+{
+    use \Illuminate\Database\Eloquent\SoftDeletes;
+    
+    protected $table = 'prestasi_siswa';
+    protected $fillable = [
+        'anggota_kelas_id',
+        'nama_prestasi',
+        'jenis_prestasi',
+        'tingkat_prestasi',
+        'deskripsi'
+    ];
+
+    public function anggota_kelas()
+    {
+        return $this->belongsTo('App\Models\AnggotaKelas');
+    }
+}

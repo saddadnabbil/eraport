@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Guru;
 
-use App\Kelas;
-use App\Mapel;
-use App\Tapel;
-use App\Pembelajaran;
-use App\JadwalMengajar;
-use App\JadwalMengajarSlot;
+use App\Models\Kelas;
+use App\Models\Mapel;
+use App\Models\Tapel;
+use App\Models\Pembelajaran;
+use App\Models\JadwalMengajar;
+use App\Models\JadwalMengajarSlot;
 use Illuminate\Http\Request;
-use App\JadwalMengajarRecord;
+use App\Models\JadwalMengajarRecord;
 use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;

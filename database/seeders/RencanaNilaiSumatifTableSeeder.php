@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Pembelajaran;
-use App\RencanaNilaiSumatif;
+use App\Models\Pembelajaran;
+use App\Models\RencanaNilaiSumatif;
 use Illuminate\Database\Seeder;
 
 class RencanaNilaiSumatifTableSeeder extends Seeder

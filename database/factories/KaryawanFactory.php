@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\User;
-use App\Karyawan;
+use App\Models\User;
+use App\Models\Karyawan;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class KaryawanFactory extends Factory

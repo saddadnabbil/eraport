@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\StatusKaryawan;
+use App\Models\StatusKaryawan;
 use Illuminate\Database\Seeder;
 
 class StatusKaryawanTableSeeder extends Seeder

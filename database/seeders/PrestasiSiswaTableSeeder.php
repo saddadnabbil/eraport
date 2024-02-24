@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\PrestasiSiswa;
+use App\Models\PrestasiSiswa;
 use Illuminate\Database\Seeder;
 
 class PrestasiSiswaTableSeeder extends Seeder

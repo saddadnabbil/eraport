@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Guru;
 
-use App\Guru;
-use App\User;
-use App\Karyawan;
+use App\Models\Guru;
+use App\Models\User;
+use App\Models\Karyawan;
 use Illuminate\Http\Request;
 use App\Rules\MatchOldPassword;
 use App\Http\Controllers\Controller;

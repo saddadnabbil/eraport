@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Imports\MapelImport;
-use App\Mapel;
-use App\Tapel;
+use App\Models\Mapel;
+use App\Models\Tapel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Excel;

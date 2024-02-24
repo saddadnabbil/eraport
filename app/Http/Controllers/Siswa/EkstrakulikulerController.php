@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Siswa;
 
-use App\Kelas;
-use App\Siswa;
-use App\Tapel;
-use App\AnggotaKelas;
-use App\Ekstrakulikuler;
+use App\Models\Kelas;
+use App\Models\Siswa;
+use App\Models\Tapel;
+use App\Models\AnggotaKelas;
+use App\Models\Ekstrakulikuler;
 use Illuminate\Http\Request;
-use App\NilaiEkstrakulikuler;
-use App\AnggotaEkstrakulikuler;
+use App\Models\NilaiEkstrakulikuler;
+use App\Models\AnggotaEkstrakulikuler;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 

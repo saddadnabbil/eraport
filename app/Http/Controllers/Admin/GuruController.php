@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Exports\GuruExport;
-use App\Guru;
+use App\Models\Guru;
 use App\Http\Controllers\Controller;
 use App\Imports\GuruImport;
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Excel;

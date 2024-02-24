@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Kelas;
-use App\Guru;
+use App\Models\Kelas;
+use App\Models\Guru;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class KelasFactory extends Factory

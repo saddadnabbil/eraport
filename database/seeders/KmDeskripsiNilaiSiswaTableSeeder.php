@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\KmDeskripsiNilaiSiswa;
+use App\Models\KmDeskripsiNilaiSiswa;
 use Illuminate\Database\Seeder;
 
 class KmDeskripsiNilaiSiswaTableSeeder extends Seeder

@@ -2,10 +2,10 @@
 
 namespace Database\Factories;
 
-use App\Pembelajaran;
-use App\Kelas;
-use App\Mapel;
-use App\Guru;
+use App\Models\Pembelajaran;
+use App\Models\Kelas;
+use App\Models\Mapel;
+use App\Models\Guru;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PembelajaranFactory extends Factory

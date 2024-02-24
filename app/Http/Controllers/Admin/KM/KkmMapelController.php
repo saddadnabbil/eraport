@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin\KM;
 
 use Excel;
-use App\Mapel;
-use App\Tapel;
-use App\KmKkmMapel;
-use App\Pembelajaran;
+use App\Models\Mapel;
+use App\Models\Tapel;
+use App\Models\KmKkmMapel;
+use App\Models\Pembelajaran;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;

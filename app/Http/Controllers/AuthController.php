@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Guru;
-use App\Term;
-use App\User;
-use App\Kelas;
-use App\Tapel;
-use App\Sekolah;
-use App\Semester;
+use App\Models\Guru;
+use App\Models\Term;
+use App\Models\User;
+use App\Models\Kelas;
+use App\Models\Tapel;
+use App\Models\Sekolah;
+use App\Models\Semester;
 use Carbon\Carbon;
-use App\RiwayatLogin;
+use App\Models\RiwayatLogin;
 use Illuminate\Http\Request;
 use App\Rules\MatchOldPassword;
 use Illuminate\Support\Facades\Auth;

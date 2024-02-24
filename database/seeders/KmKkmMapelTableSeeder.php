@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\KmKkmMapel;
+use App\Models\KmKkmMapel;
 use Illuminate\Database\Seeder;
 
 class KmKkmMapelTableSeeder extends Seeder

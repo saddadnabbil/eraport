@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Exports\PembelajaranExport;
-use App\Guru;
+use App\Models\Guru;
 use App\Http\Controllers\Controller;
-use App\Kelas;
-use App\Mapel;
-use App\Pembelajaran;
-use App\Tapel;
+use App\Models\Kelas;
+use App\Models\Mapel;
+use App\Models\Pembelajaran;
+use App\Models\Tapel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Excel;

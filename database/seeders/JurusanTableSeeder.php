@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Jurusan;
+use App\Models\Jurusan;
 use Illuminate\Database\Seeder;
 
 class JurusanTableSeeder extends Seeder

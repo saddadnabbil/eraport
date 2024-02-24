@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\RencanaNilaiFormatif;
+use App\Models\RencanaNilaiFormatif;
 use Illuminate\Database\Seeder;
 
 class RencanaNilaiFormatifTableSeeder extends Seeder

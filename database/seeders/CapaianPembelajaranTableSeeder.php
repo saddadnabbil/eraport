@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\CapaianPembelajaran;
+use App\Models\CapaianPembelajaran;
 use Illuminate\Database\Seeder;
 
 class CapaianPembelajaranTableSeeder extends Seeder

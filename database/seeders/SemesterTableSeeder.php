@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Semester;
-use App\Tapel;
+use App\Models\Semester;
+use App\Models\Tapel;
 use Illuminate\Database\Seeder;
 
 class SemesterTableSeeder extends Seeder

@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Guru\KM;
 
-use App\Guru;
-use App\Term;
-use App\Kelas;
-use App\Mapel;
-use App\Tapel;
-use App\Sekolah;
-use App\Semester;
-use App\Pembelajaran;
-use App\CapaianPembelajaran;
+use App\Models\Guru;
+use App\Models\Term;
+use App\Models\Kelas;
+use App\Models\Mapel;
+use App\Models\Tapel;
+use App\Models\Sekolah;
+use App\Models\Semester;
+use App\Models\Pembelajaran;
+use App\Models\CapaianPembelajaran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;

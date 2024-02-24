@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Karyawan;
-use App\Guru;
+use App\Models\Karyawan;
+use App\Models\Guru;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class GuruFactory extends Factory

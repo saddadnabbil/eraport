@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\PositionKaryawan;
+use App\Models\PositionKaryawan;
 use Illuminate\Database\Seeder;
 
 class PositionKaryawanTableSeeder extends Seeder

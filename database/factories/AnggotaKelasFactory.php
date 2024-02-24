@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\AnggotaKelas;
-use App\Siswa;
+use App\Models\AnggotaKelas;
+use App\Models\Siswa;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class AnggotaKelasFactory extends Factory

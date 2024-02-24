@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Guru;
-use App\Kelas;
-use App\Mapel;
-use App\Tapel;
-use App\Jurusan;
-use App\Silabus;
-use App\AnggotaKelas;
-use App\Pembelajaran;
+use App\Models\Guru;
+use App\Models\Kelas;
+use App\Models\Mapel;
+use App\Models\Tapel;
+use App\Models\Jurusan;
+use App\Models\Silabus;
+use App\Models\AnggotaKelas;
+use App\Models\Pembelajaran;
 use Illuminate\Http\Request;
-use App\AnggotaEkstrakulikuler;
+use App\Models\AnggotaEkstrakulikuler;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;

@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers\Admin\KM;
 
-use App\Kelas;
-use App\Tapel;
-use App\Pembelajaran;
-use App\NilaiFormatif;
-use App\CapaianPembelajaran;
+use App\Models\Kelas;
+use App\Models\Tapel;
+use App\Models\Pembelajaran;
+use App\Models\NilaiFormatif;
+use App\Models\CapaianPembelajaran;
 use Illuminate\Http\Request;
-use App\RencanaNilaiFormatif;
+use App\Models\RencanaNilaiFormatif;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Semester;
-use App\Term;
+use App\Models\Semester;
+use App\Models\Term;
 use Illuminate\Validation\Validator;
 
 class RencanaNilaiFormatifController extends Controller

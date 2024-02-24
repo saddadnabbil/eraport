@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use Excel;
-use App\Guru;
-use App\User;
-use App\Admin;
-use App\Siswa;
+use App\Models\Guru;
+use App\Models\User;
+use App\Models\Admin;
+use App\Models\Siswa;
 use App\Exports\UserExport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;

@@ -78,25 +78,25 @@
                                 <div class="customize-input">
                                     <span class="badge bg-success">
                                         @php
-                                            $tapel = App\Tapel::where('status', 1)->first();
-                                            $term = App\Term::find($tapel->term_id);
+                                            $tapel = App\Models\Tapel::where('status', 1)->first();
+                                            $term = App\Models\Term::find($tapel->term_id);
 
-                                            $pg = App\Tingkatan::where('id', 1)->first();
-                                            $kg = App\Tingkatan::where('id', 2)->first();
-                                            $ps = App\Tingkatan::where('id', 3)->first();
-                                            $jhs = App\Tingkatan::where('id', 4)->first();
-                                            $shs = App\Tingkatan::where('id', 5)->first();
+                                            $pg = App\Models\Tingkatan::where('id', 1)->first();
+                                            $kg = App\Models\Tingkatan::where('id', 2)->first();
+                                            $ps = App\Models\Tingkatan::where('id', 3)->first();
+                                            $jhs = App\Models\Tingkatan::where('id', 4)->first();
+                                            $shs = App\Models\Tingkatan::where('id', 5)->first();
                                         @endphp
 
                                         @php
-                                            $tapel = App\Tapel::where('status', 1)->first();
-                                            $term = App\Term::find($tapel->term_id);
+                                            $tapel = App\Models\Tapel::where('status', 1)->first();
+                                            $term = App\Models\Term::find($tapel->term_id);
 
-                                            $pg = App\Tingkatan::where('id', 1)->first();
-                                            $kg = App\Tingkatan::where('id', 2)->first();
-                                            $ps = App\Tingkatan::where('id', 3)->first();
-                                            $jhs = App\Tingkatan::where('id', 4)->first();
-                                            $shs = App\Tingkatan::where('id', 5)->first();
+                                            $pg = App\Models\Tingkatan::where('id', 1)->first();
+                                            $kg = App\Models\Tingkatan::where('id', 2)->first();
+                                            $ps = App\Models\Tingkatan::where('id', 3)->first();
+                                            $jhs = App\Models\Tingkatan::where('id', 4)->first();
+                                            $shs = App\Models\Tingkatan::where('id', 5)->first();
                                         @endphp
 
                                         @if (optional($pg)->count() > 0 &&

@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Admin\KM;
 
-use App\Term;
-use App\Kelas;
-use App\Tapel;
-use App\Semester;
-use App\NilaiSumatif;
-use App\Pembelajaran;
-use App\NilaiFormatif;
-use App\CapaianPembelajaran;
-use App\RencanaNilaiSumatif;
+use App\Models\Term;
+use App\Models\Kelas;
+use App\Models\Tapel;
+use App\Models\Semester;
+use App\Models\NilaiSumatif;
+use App\Models\Pembelajaran;
+use App\Models\NilaiFormatif;
+use App\Models\CapaianPembelajaran;
+use App\Models\RencanaNilaiSumatif;
 use Illuminate\Http\Request;
-use App\RencanaNilaiFormatif;
+use App\Models\RencanaNilaiFormatif;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;

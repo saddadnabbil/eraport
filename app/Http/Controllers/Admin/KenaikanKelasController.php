@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\AnggotaKelas;
-use App\Guru;
+use App\Models\AnggotaKelas;
+use App\Models\Guru;
 use App\Http\Controllers\Controller;
-use App\Kelas;
+use App\Models\Kelas;
 use App\KenaikanKelas;
-use App\Semester;
-use App\Tapel;
+use App\Models\Semester;
+use App\Models\Tapel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

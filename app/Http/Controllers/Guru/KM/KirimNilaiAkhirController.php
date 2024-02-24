@@ -2,23 +2,23 @@
 
 namespace App\Http\Controllers\Guru\KM;
 
-use App\Guru;
-use App\Term;
-use App\Kelas;
-use App\Tapel;
+use App\Models\Guru;
+use App\Models\Term;
+use App\Models\Kelas;
+use App\Models\Tapel;
 use Carbon\Carbon;
-use App\KmKkmMapel;
+use App\Models\KmKkmMapel;
 use App\NilaiAkhir;
-use App\AnggotaKelas;
-use App\NilaiSumatif;
-use App\Pembelajaran;
-use App\NilaiFormatif;
-use App\KmNilaiAkhirRaport;
-use App\RencanaNilaiSumatif;
+use App\Models\AnggotaKelas;
+use App\Models\NilaiSumatif;
+use App\Models\Pembelajaran;
+use App\Models\NilaiFormatif;
+use App\Models\KmNilaiAkhirRaport;
+use App\Models\RencanaNilaiSumatif;
 use Illuminate\Http\Request;
-use App\RencanaNilaiFormatif;
+use App\Models\RencanaNilaiFormatif;
 use App\Http\Controllers\Controller;
-use App\Semester;
+use App\Models\Semester;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 

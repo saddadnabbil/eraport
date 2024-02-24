@@ -3,24 +3,24 @@
 namespace App\Http\Controllers\Admin\KM;
 
 use PDF;
-use App\Kelas;
-use App\Mapel;
-use App\Tapel;
-use App\Sekolah;
-use App\Tingkatan;
-use App\KmTglRaport;
-use App\AnggotaKelas;
-use App\Pembelajaran;
-use App\PrestasiSiswa;
-use App\KehadiranSiswa;
-use App\Ekstrakulikuler;
-use App\CatatanWaliKelas;
-use App\KmNilaiAkhirRaport;
+use App\Models\Kelas;
+use App\Models\Mapel;
+use App\Models\Tapel;
+use App\Models\Sekolah;
+use App\Models\Tingkatan;
+use App\Models\KmTglRaport;
+use App\Models\AnggotaKelas;
+use App\Models\Pembelajaran;
+use App\Models\PrestasiSiswa;
+use App\Models\KehadiranSiswa;
+use App\Models\Ekstrakulikuler;
+use App\Models\CatatanWaliKelas;
+use App\Models\KmNilaiAkhirRaport;
 use Illuminate\Http\Request;
-use App\NilaiEkstrakulikuler;
-use App\AnggotaEkstrakulikuler;
+use App\Models\NilaiEkstrakulikuler;
+use App\Models\AnggotaEkstrakulikuler;
 use App\Http\Controllers\Controller;
-use App\Semester;
+use App\Models\Semester;
 
 class CetakRaportSemesterController extends Controller
 {

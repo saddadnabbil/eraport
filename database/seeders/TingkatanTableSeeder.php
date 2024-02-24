@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Tingkatan;
+use App\Models\Tingkatan;
 use Illuminate\Database\Seeder;
 
 class TingkatanTableSeeder extends Seeder

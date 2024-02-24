@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Siswa;
 
-use App\Kelas;
-use App\Siswa;
-use App\Tapel;
-use App\AnggotaKelas;
-use App\KehadiranSiswa;
+use App\Models\Kelas;
+use App\Models\Siswa;
+use App\Models\Tapel;
+use App\Models\AnggotaKelas;
+use App\Models\KehadiranSiswa;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;

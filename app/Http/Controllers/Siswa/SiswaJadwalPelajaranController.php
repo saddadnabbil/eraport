@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers\Siswa;
 
-use App\Kelas;
-use App\Mapel;
-use App\Tapel;
-use App\Pembelajaran;
+use App\Models\Kelas;
+use App\Models\Mapel;
+use App\Models\Tapel;
+use App\Models\Pembelajaran;
 use App\JadwalPelajaran;
-use App\JadwalPelajaranSlot;
+use App\Models\JadwalPelajaranSlot;
 use Illuminate\Http\Request;
 use App\JadwalPelajaranRecord;
 use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
-use App\JadwalMengajar;
+use App\Models\JadwalMengajar;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 

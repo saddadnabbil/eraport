@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin\KM;
 
-use App\Tapel;
-use App\KmTglRaport;
+use App\Models\Tapel;
+use App\Models\KmTglRaport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Semester;
+use App\Models\Semester;
 use Illuminate\Support\Facades\Validator;
 
 class TglRaportController extends Controller

@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Admin\KM;
 
-use App\Kelas;
-use App\Mapel;
-use App\Tapel;
-use App\AnggotaKelas;
-use App\Pembelajaran;
-use App\KmNilaiAkhirRaport;
+use App\Models\Kelas;
+use App\Models\Mapel;
+use App\Models\Tapel;
+use App\Models\AnggotaKelas;
+use App\Models\Pembelajaran;
+use App\Models\KmNilaiAkhirRaport;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Term;
+use App\Models\Term;
 use Illuminate\Support\Facades\Validator;
 
 class NilaiRaportSemesterController extends Controller

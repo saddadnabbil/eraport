@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\NilaiEkstrakulikuler;
+use App\Models\NilaiEkstrakulikuler;
 use Illuminate\Database\Seeder;
 
 class NilaiEkstrakulikulerTableSeeder extends Seeder

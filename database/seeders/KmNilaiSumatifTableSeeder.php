@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\NilaiSumatif;
-use App\NilaiFormatif;
+use App\Models\NilaiSumatif;
+use App\Models\NilaiFormatif;
 use Illuminate\Database\Seeder;
 
 class KmNilaiSumatifTableSeeder extends Seeder

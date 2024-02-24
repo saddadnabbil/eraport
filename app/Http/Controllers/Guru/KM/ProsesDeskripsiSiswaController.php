@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Guru\KM;
 
-use App\Guru;
-use App\Term;
-use App\Kelas;
-use App\Tapel;
+use App\Models\Guru;
+use App\Models\Term;
+use App\Models\Kelas;
+use App\Models\Tapel;
 use Carbon\Carbon;
-use App\Pembelajaran;
-use App\KmNilaiAkhirRaport;
+use App\Models\Pembelajaran;
+use App\Models\KmNilaiAkhirRaport;
 use Illuminate\Http\Request;
-use App\KmDeskripsiNilaiSiswa;
+use App\Models\KmDeskripsiNilaiSiswa;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;

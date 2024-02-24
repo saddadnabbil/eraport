@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\UnitKaryawan;
+use App\Models\UnitKaryawan;
 use Illuminate\Database\Seeder;
 
 class UnitKaryawanTableSeeder extends Seeder
