@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\NilaiAkhir;
+use App\Models\NilaiAkhir;
 use Illuminate\Database\Seeder;
 
 class KmNilaiAkhirTableSeeder extends Seeder
@@ -238,6 +238,5 @@ class KmNilaiAkhirTableSeeder extends Seeder
             'nilai_akhir_raport' => 90,
             'nilai_akhir_revisi' => null
         ]);
-
     }
 }
