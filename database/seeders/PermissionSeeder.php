@@ -15,8 +15,13 @@ class PermissionSeeder extends Seeder
         $permissions = [
             'admin',
             'guru',
-            'curriculum',
             'siswa',
+            'curriculum',
+            'hrd',
+            'finance',
+            'admission',
+            'it-staff',
+            'staff',
         ];
 
         // Looping and Inserting Array's Permissions into Permission Table

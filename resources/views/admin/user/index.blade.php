@@ -80,18 +80,35 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="email" class="col-sm-3 col-form-label">Email</label>
-                                                <div class="col-sm-9">
-                                                    <input type="email" class="form-control" id="email" name="email"
-                                                        placeholder="Email" value="{{ old('email') }}" required>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
                                                 <label for="password" class="col-sm-3 col-form-label">Password</label>
                                                 <div class="col-sm-9">
                                                     <input type="password" class="form-control" id="password"
                                                         name="password" placeholder="password" value="{{ old('password') }}"
                                                         required>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="role" class="col-sm-3 col-form-label">Role</label>
+                                                <div class="col-sm-9">
+                                                    <select class="form-control form-select " name="role" id=""
+                                                        required>
+                                                        <option value="" selected>-- Select Role --</option>
+                                                        @foreach ($data_roles as $role)
+                                                            <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="permission" class="col-sm-3 col-form-label">Permission</label>
+                                                <div class="col-sm-9">
+                                                    <select class="form-control form-select " name="permission[]"
+                                                        id="" multiple required>
+                                                        @foreach ($data_permission as $permission)
+                                                            <option value="{{ $permission->id }}">{{ $permission->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -126,10 +143,10 @@
                                             <tr>
                                                 <td>{{ $no }}</td>
                                                 <td>
-                                                    @if ($user->role == 3 && $user->siswa)
+                                                    @if ($user->role == 3)
                                                         <a class="text-decoration-none text-body"
                                                             href="{{ route('siswa.show', $user->siswa->id) }}">{{ $user->siswa->nama_lengkap }}</a>
-                                                    @elseif($user->role == 2 && $user->karyawan)
+                                                    @elseif($user->karyawan)
                                                         <a class="text-decoration-none text-body"
                                                             href="{{ route('karyawan.show', $user->karyawan->id) }}">{{ $user->karyawan->nama_lengkap }}</a>
                                                     @endif
@@ -137,11 +154,11 @@
 
                                                 <td>{{ $user->username }}</td>
                                                 <td>
-                                                    @if ($user->role == 3)
+                                                    @if ($user->role == '3')
                                                         Student
-                                                    @elseif($user->role == 2)
+                                                    @elseif($user->role == '2')
                                                         Teacher
-                                                    @elseif($user->role == 0 || $user->role == 1)
+                                                    @elseif($user->role == '0' || $user->role == '1')
                                                         Administrator
                                                     @else
                                                         Employee
@@ -158,7 +175,7 @@
                                                     @php
                                                         $cacheKey = 'delete-button-' . $user->id;
                                                         $deleteButton = Cache::remember($cacheKey, 120, function () use ($user) {
-                                                            if ($user->role == 3 && $user->siswa) {
+                                                            if ($user->role == '3' && $user->siswa) {
                                                                 $showRoute = route('siswa.show', $user->siswa->id);
                                                             } elseif ($user->karyawan) {
                                                                 $showRoute = route('karyawan.show', $user->karyawan->id);
@@ -181,48 +198,28 @@
                                                 </td>
                                             </tr>
 
-                                            <!-- Modal edit  -->
-                                            <div class="modal fade" id="modal-edit{{ $user->id }}" tabindex="-1"
-                                                role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                            <!-- Modal edit -->
+                                            <div class="modal fade" id="modal-edit{{ $user->id }}">
                                                 <div class="modal-dialog modal-lg">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title">Edit {{ $title }}</h5>
-
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                                aria-hidden="true"></button>
-                                                            </button>
+                                                            <h5 class="modal-title">Edit {{ $title }} Admin</h5>
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal" aria-hidden="true"></button>
                                                         </div>
                                                         <form action="{{ route('user.update', $user->id) }}"
                                                             method="POST">
-                                                            {{ method_field('PATCH') }}
                                                             @csrf
+                                                            @method('PUT')
                                                             <div class="modal-body">
-                                                                <div class="form-group row">
-                                                                    <label for="nama_lengkap"
-                                                                        class="col-sm-3 col-form-label">Nama
-                                                                        Lengkap</label>
-                                                                    <div class="col-sm-9">
-                                                                        @if ($user->role == 3)
-                                                                            <input type="text" class="form-control"
-                                                                                name="nama_lengkap"
-                                                                                value="{{ optional($user->siswa)->nama_lengkap }}"
-                                                                                readonly>
-                                                                        @else
-                                                                            <input type="text" class="form-control"
-                                                                                name="nama_lengkap"
-                                                                                value="{{ optional($user->karyawan)->nama_lengkap }}"
-                                                                                readonly>
-                                                                        @endif
-                                                                    </div>
-                                                                </div>
                                                                 <div class="form-group row">
                                                                     <label for="username"
                                                                         class="col-sm-3 col-form-label">Username</label>
                                                                     <div class="col-sm-9">
                                                                         <input type="text" class="form-control"
-                                                                            name="username" value="{{ $user->username }}"
-                                                                            readonly>
+                                                                            id="username" name="username"
+                                                                            placeholder="Username"
+                                                                            value="{{ $user->username }}" required>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group row">
@@ -230,7 +227,37 @@
                                                                         class="col-sm-3 col-form-label">Password</label>
                                                                     <div class="col-sm-9">
                                                                         <input type="password" class="form-control"
-                                                                            name="password" placeholder="Password Baru">
+                                                                            id="password" name="password"
+                                                                            placeholder="Password">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <label for="role"
+                                                                        class="col-sm-3 col-form-label">Role</label>
+                                                                    <div class="col-sm-9">
+                                                                        <select class="form-control form-select "
+                                                                            name="role" id="">
+                                                                            @foreach ($data_roles as $role)
+                                                                                <option value="{{ $role->id }}"
+                                                                                    {{ $user->hasRole($role->name) ? 'selected' : '' }}>
+                                                                                    {{ $role->name }}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <label for="permission"
+                                                                        class="col-sm-3 col-form-label">Permission</label>
+                                                                    <div class="col-sm-9">
+                                                                        <select class="form-control form-select"
+                                                                            name="permission[]" id="permission" multiple>
+                                                                            @foreach ($data_permission as $permission)
+                                                                                <option value="{{ $permission->id }}"
+                                                                                    {{ $user->hasPermissionTo($permission->name) ? 'selected' : '' }}>
+                                                                                    {{ $permission->name }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group row">
@@ -278,8 +305,6 @@
     <!-- ============================================================== -->
     </div>
 @endsection
-
-
 
 @section('footer')
     @include('layouts.main.footer')

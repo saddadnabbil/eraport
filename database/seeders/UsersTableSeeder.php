@@ -28,7 +28,7 @@ class UsersTableSeeder extends Seeder
             'role' => '3',
             'status' => true,
         ]);
-        $siswa->assignRole('Siswa');
+        $siswa->assignRole('Student');
 
         User::create([
             'username' => 'siswa2',
@@ -50,7 +50,7 @@ class UsersTableSeeder extends Seeder
             'role' => '2',
             'status' => true,
         ]);
-        $guru->assignRole('Guru');
+        $guru->assignRole('Teacher');
 
         $curriculum = User::create([
             'username' => 'curriculum',
@@ -58,6 +58,6 @@ class UsersTableSeeder extends Seeder
             'role' => '2',
             'status' => true,
         ]);
-        $curriculum->assignRole('curriculum');
+        $curriculum->assignRole('Curriculum');
     }
 }

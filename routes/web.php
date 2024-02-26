@@ -287,7 +287,7 @@ Route::group(['middleware' => ['auth']], function () {
     // End Route User Admin
 
     // Route User Guru
-    Route::group(['middleware' => 'role:Guru'], function () {
+    Route::group(['middleware' => 'role:Teacher'], function () {
         Route::group(['prefix' => 'guru'], function () {
             Route::resource('profileguru', 'Guru\ProfileController', [
                 'uses' => ['update'],
@@ -434,7 +434,7 @@ Route::group(['middleware' => ['auth']], function () {
     // End Route User Guru
 
     // Route User Siswa
-    Route::group(['middleware' => 'role:Siswa'], function () {
+    Route::group(['middleware' => 'role:Student'], function () {
         // jadwal pelajaran -> siswa
         Route::get('jadwalpelajaran', 'Siswa\JadwalPelajaranController@index')->name('siswa.jadwalpelajaran');
         Route::get('jadwalpelajaran/{id}/print', 'Siswa\JadwalPelajaranController@print')->name('siswa.jadwalpelajaran.print');

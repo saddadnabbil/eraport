@@ -25,7 +25,14 @@ class ProfileUserController extends Controller
     public function index()
     {
         $title = 'Profile';
-        if (Auth::user()->role == 1 ||  Auth::user()->role == 2) {
+        if (Auth::user()->role == 1) {
+            $karyawan = Karyawan::where('user_id', Auth::user()->id)->first();
+            $dataStatusKaryawan = StatusKaryawan::all();
+            $dataUnitKaryawan = UnitKaryawan::all();
+            $dataPositionKaryawan = PositionKaryawan::all();
+
+            return view('admin.profile.show', compact('title', 'karyawan', 'dataStatusKaryawan', 'dataUnitKaryawan', 'dataPositionKaryawan'));
+        } elseif (Auth::user()->role == 2) {
             $karyawan = Karyawan::where('user_id', Auth::user()->id)->first();
             $dataStatusKaryawan = StatusKaryawan::all();
             $dataUnitKaryawan = UnitKaryawan::all();

@@ -46,8 +46,8 @@
                         <div class="card-body box-profile">
                             <div class="text-center">
                                 @if ($karyawan->pas_photo == null)
-                                    <img class="profile-user-img" src="/assets/dist/img/avatar/{{ $karyawan->avatar }}"
-                                        alt="Avatar" style="border: none">
+                                    <img class="profile-user-img" src="/assets/dist/img/avatar/default.png" alt="Avatar"
+                                        style="border: none">
                                 @else
                                     <img class="mb-2" src="{{ asset('storage/' . $karyawan->pas_photo) }}"
                                         alt="{{ $karyawan->pas_photo }}" alt="pas_photo" width="105px" height="144px">
@@ -56,14 +56,15 @@
 
                             <h3 class="profile-username text-center">{{ $karyawan->nama_lengkap }}</h3>
 
-                            <p class="text-muted text-center">
-                                <!-- check for role in roles -->
+                            <p class="text-muted text-center my-2">
                                 @if ($karyawan->user->role == '1')
                                     Admin
-                                @elseif($karyawan->user->role == '2')
+                                @elseif ($karyawan->user->role == '2' && $karyawan->positionKaryawan)
                                     {{ $karyawan->positionKaryawan->position_nama }}
-                                @elseif($karyawan->user->role == '3')
-                                    karyawan
+                                @elseif ($karyawan->user->role == '3' && $karyawan->positionKaryawan)
+                                    Siswa
+                                @else
+                                    <span type="button" class="badge bg-danger">Belum ada jabatan</span>
                                 @endif
                             </p>
 
@@ -734,8 +735,7 @@
                                                 <label for="kota" class="col-sm-3 col-form-label">City</label>
                                                 <div class="col-sm-3">
                                                     <input type="text" class="form-control" id="kota"
-                                                        name="kota" placeholder="City"
-                                                        value="{{ $karyawan->kota }}">
+                                                        name="kota" placeholder="City" value="{{ $karyawan->kota }}">
                                                 </div>
                                                 <label for="kode_pos" class="col-sm-3 col-form-label ">Pos Code</label>
                                                 <div class="col-sm-3">

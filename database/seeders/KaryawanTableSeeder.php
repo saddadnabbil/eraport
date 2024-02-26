@@ -75,6 +75,22 @@ class KaryawanTableSeeder extends Seeder
             'avatar' => 'default.png',
         ]);
 
+        Karyawan::create([
+            'user_id' => 6,
+            'status_karyawan_id' => 1,
+            'unit_karyawan_id' => 2,
+            'position_karyawan_id' => 1,
+            'join_date' => '2022-01-01',
+            'resign_date' => null,
+            'permanent_date' => '2023-01-01',
+
+            'kode_karyawan' => 'K001212',
+            'nama_lengkap' => 'Curriculum',
+            'nik' => '1234567890123412',
+            'nomor_akun' => '123456719',
+            'nomor_fingerprint' => 123,
+        ]);
+
         Karyawan::factory()->count(10)->create();
     }
 }
