@@ -14,7 +14,7 @@ use App\Models\Ekstrakulikuler;
 use App\JadwalPelajaran;
 use App\Models\JadwalPelajaranSlot;
 use Illuminate\Http\Request;
-use App\JadwalPelajaranRecord;
+use App\Models\JadwalPelajaranRecord;
 use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;

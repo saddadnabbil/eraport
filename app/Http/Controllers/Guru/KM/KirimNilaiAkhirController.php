@@ -8,7 +8,7 @@ use App\Models\Kelas;
 use App\Models\Tapel;
 use Carbon\Carbon;
 use App\Models\KmKkmMapel;
-use App\NilaiAkhir;
+use App\Models\NilaiAkhir;
 use App\Models\AnggotaKelas;
 use App\Models\NilaiSumatif;
 use App\Models\Pembelajaran;
