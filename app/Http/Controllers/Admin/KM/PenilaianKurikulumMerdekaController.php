@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin\KM;
 use App\Models\Kelas;
 use App\Models\Mapel;
 use App\Models\Tapel;
-use App\NilaiAkhir;
+use App\Models\NilaiAkhir;
 use App\Models\AnggotaKelas;
 use App\Models\NilaiSumatif;
 use App\Models\Pembelajaran;
