@@ -25,11 +25,7 @@ class ProfileUserController extends Controller
     public function index()
     {
         $title = 'Profile';
-        if (Auth::user()->role == 1) {
-            $admin = Admin::where('user_id', Auth::user()->id)->first();
-
-            return view('admin.profile.index', compact('title', 'admin'));
-        } elseif (Auth::user()->role == 2) {
+        if (Auth::user()->role == 1 ||  Auth::user()->role == 2) {
             $karyawan = Karyawan::where('user_id', Auth::user()->id)->first();
             $dataStatusKaryawan = StatusKaryawan::all();
             $dataUnitKaryawan = UnitKaryawan::all();

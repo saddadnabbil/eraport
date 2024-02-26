@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -34,9 +34,10 @@ class UserController extends Controller
             ->orderBy('role', 'ASC')
             ->orderBy('id', 'ASC')
             ->get();
+        $data_roles = Role::get();
         // $data_user = User::where('id', '!=', Auth::user()->id)->orderBy('role', 'ASC')->orderBy('id', 'ASC')->get();
 
-        return view('admin.user.index', compact('title', 'data_user'));
+        return view('admin.user.index', compact('title', 'data_user', 'data_roles'));
     }
 
 
@@ -53,10 +54,7 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nama_lengkap' => 'required|min:3|max:100',
-            'jenis_kelamin' => 'required',
-            'tanggal_lahir' => 'required',
             'email' => 'required|email|min:5|max:100|unique:admin',
-            'nomor_hp' => 'required|numeric|digits_between:11,13|unique:admin',
         ]);
         if ($validator->fails()) {
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
@@ -69,16 +67,6 @@ class UserController extends Controller
             ]);
             $user->save();
 
-            $admin = new Admin([
-                'user_id' => $user->id,
-                'nama_lengkap' => strtoupper($request->nama_lengkap),
-                'jenis_kelamin' => $request->jenis_kelamin,
-                'tanggal_lahir' => $request->tanggal_lahir,
-                'email' => $request->email,
-                'nomor_hp' => $request->nomor_hp,
-                'avatar' => 'default.png'
-            ]);
-            $admin->save();
             return back()->with('toast_success', 'User berhasil ditambahkan');
         }
     }
@@ -147,10 +135,6 @@ class UserController extends Controller
                 $user->karyawan->delete();
             }
 
-            if (!is_null($user->admin)) {
-                $user->admin->delete();
-            }
-
             $user->update([
                 'status' => 0
             ]);
@@ -180,7 +164,6 @@ class UserController extends Controller
             // Permanent delete the related Siswa records
             $user->siswa()->forceDelete();
             $user->karyawan()->forceDelete();
-            $user->admin()->forceDelete();
 
             // Permanent delete the user and its User record
             $user->forceDelete();

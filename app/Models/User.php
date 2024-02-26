@@ -7,11 +7,12 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     use HasFactory, Notifiable, SoftDeletes;
-
+    use HasRoles;
     /**
      * The attributes that are mass assignable.
      *
@@ -43,12 +44,6 @@ class User extends Authenticatable
     public function sekolah()
     {
         return $this->hasOne('App\Models\Sekolah');
-    }
-
-    // Relasi 
-    public function admin()
-    {
-        return $this->hasOne('App\Models\Admin');
     }
 
     public function guru()
@@ -109,10 +104,10 @@ class User extends Authenticatable
 
         switch ($this->role) {
             case 1:
-                $this->admin()->withTrashed()->restore();
+                $this->karyawan()->withTrashed()->restore();
                 break;
             case 2:
-                $this->guru()->withTrashed()->restore();
+                $this->karyawan()->withTrashed()->restore();
                 break;
             case 3:
                 $this->siswa()->withTrashed()->restore();

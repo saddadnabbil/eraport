@@ -16,6 +16,22 @@ class KaryawanTableSeeder extends Seeder
     public function run()
     {
         Karyawan::create([
+            'user_id' => 1,
+            'status_karyawan_id' => 1,
+            'unit_karyawan_id' => 2,
+            'position_karyawan_id' => 1,
+            'join_date' => '2022-01-01',
+            'resign_date' => null,
+            'permanent_date' => '2023-01-01',
+
+            'kode_karyawan' => 'K002',
+            'nama_lengkap' => 'Administrator',
+            'nik' => '1234567890123412',
+            'nomor_akun' => '123456719',
+            'nomor_fingerprint' => 123,
+        ]);
+
+        Karyawan::create([
             'user_id' => 5,
             'status_karyawan_id' => 1,
             'unit_karyawan_id' => 2,

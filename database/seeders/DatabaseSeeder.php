@@ -6,15 +6,17 @@ use App\Models\AnggotaKelas;
 use App\Models\PrestasiSiswa;
 
 
+use Illuminate\Database\Seeder;
 use App\Models\KmNilaiAkhirRaport;
 use App\Models\CapaianPembelajaran;
-use Illuminate\Database\Seeder;
 use Database\Seeders\SilabusSeeder;
 use Database\Seeders\GuruTableSeeder;
+use Database\Seeders\RoleTableSeeder;
 use Database\Seeders\TermTableSeeder;
 use Database\Seeders\AdminTableSeeder;
 use Database\Seeders\KelasTableSeeder;
 use Database\Seeders\MapelTableSeeder;
+use Database\Seeders\PermissionSeeder;
 use Database\Seeders\SiswaTableSeeder;
 use Database\Seeders\TapelTableSeeder;
 use Database\Seeders\JurusanTableSeeder;
@@ -23,6 +25,7 @@ use Database\Seeders\SemesterTableSeeder;
 use Database\Seeders\TingkatanTableSeeder;
 use Database\Seeders\KmKkmMapelTableSeeder;
 use Database\Seeders\NilaiAkhirTableSeeder;
+use Spatie\Permission\Contracts\Permission;
 use Database\Seeders\KmTglRaportTableSeeder;
 use Database\Seeders\AnggotaKelasTableSeeder;
 use Database\Seeders\KmNilaiAkhirTableSeeder;
@@ -58,6 +61,10 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
+            // Roles
+            PermissionSeeder::class,
+            RoleTableSeeder::class,
+
             // Master Data Seeder
             JurusanTableSeeder::class,
             SemesterTableSeeder::class,
@@ -65,7 +72,7 @@ class DatabaseSeeder extends Seeder
             TapelTableSeeder::class,
             TingkatanTableSeeder::class,
             GlobalUsersTableSeeder::class,
-            AdminTableSeeder::class,
+            // AdminTableSeeder::class,
             StatusKaryawanTableSeeder::class,
             UnitKaryawanTableSeeder::class,
             PositionKaryawanTableSeeder::class,

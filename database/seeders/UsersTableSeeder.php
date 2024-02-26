@@ -13,20 +13,22 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         // admins
-        User::create([
+        $admin = User::create([
             'username' => 'admin',
             'password' => bcrypt('admin123456'),
             'role' => '1',
             'status' => true,
         ]);
+        $admin->assignRole('Admin');
 
         // siswas
-        User::create([
+        $siswa = User::create([
             'username' => 'siswa',
             'password' => bcrypt('123456'),
             'role' => '3',
             'status' => true,
         ]);
+        $siswa->assignRole('Siswa');
 
         User::create([
             'username' => 'siswa2',
@@ -42,11 +44,20 @@ class UsersTableSeeder extends Seeder
             'status' => true,
         ]);
 
-        User::create([
+        $guru = User::create([
             'username' => 'guru',
             'password' => bcrypt('123456'),
             'role' => '2',
             'status' => true,
         ]);
+        $guru->assignRole('Guru');
+
+        $curriculum = User::create([
+            'username' => 'curriculum',
+            'password' => bcrypt('123456'),
+            'role' => '2',
+            'status' => true,
+        ]);
+        $curriculum->assignRole('curriculum');
     }
 }

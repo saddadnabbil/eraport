@@ -72,34 +72,11 @@
                                         @csrf
                                         <div class="modal-body">
                                             <div class="form-group row">
-                                                <label for="nama_lengkap" class="col-sm-3 col-form-label">Nama
-                                                    Lengkap</label>
+                                                <label for="username" class="col-sm-3 col-form-label">Username</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control" id="nama_lengkap"
-                                                        name="nama_lengkap" placeholder="Full name"
-                                                        value="{{ old('nama_lengkap') }}" required>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label for="jenis_kelamin" class="col-sm-3 col-form-label">Jenis
-                                                    Kelamin</label>
-                                                <div class="col-sm-9 pt-1">
-                                                    <label class="radio-inline me-3"><input type="radio"
-                                                            name="jenis_kelamin" value="Male"
-                                                            @if (old('jenis_kelamin') == 'Male') checked @endif required>
-                                                        Male</label>
-                                                    <label class="radio-inline me-3"><input type="radio"
-                                                            name="jenis_kelamin" value="Female"
-                                                            @if (old('jenis_kelamin') == 'Female') checked @endif required>
-                                                        Female</label>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label for="tanggal_lahir" class="col-sm-3 col-form-label">Tanggal
-                                                    Lahir</label>
-                                                <div class="col-sm-9">
-                                                    <input type="date" class="form-control" id="tanggal_lahir"
-                                                        name="tanggal_lahir" value="{{ old('tanggal_lahir') }}" required>
+                                                    <input type="text" class="form-control" id="username"
+                                                        name="username" placeholder="username" value="{{ old('username') }}"
+                                                        required>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -110,10 +87,10 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="nomor_hp" class="col-sm-3 col-form-label">Nomor HP</label>
+                                                <label for="password" class="col-sm-3 col-form-label">Password</label>
                                                 <div class="col-sm-9">
-                                                    <input type="number" class="form-control" id="nomor_hp"
-                                                        name="nomor_hp" placeholder="Nomor HP" value="{{ old('nomor_hp') }}"
+                                                    <input type="password" class="form-control" id="password"
+                                                        name="password" placeholder="password" value="{{ old('password') }}"
                                                         required>
                                                 </div>
                                             </div>
@@ -181,7 +158,14 @@
                                                     @php
                                                         $cacheKey = 'delete-button-' . $user->id;
                                                         $deleteButton = Cache::remember($cacheKey, 120, function () use ($user) {
-                                                            $showRoute = $user->role == 3 ? route('siswa.show', $user->siswa->id) : route('karyawan.show', $user->karyawan->id);
+                                                            if ($user->role == 3 && $user->siswa) {
+                                                                $showRoute = route('siswa.show', $user->siswa->id);
+                                                            } elseif ($user->karyawan) {
+                                                                $showRoute = route('karyawan.show', $user->karyawan->id);
+                                                            } else {
+                                                                $showRoute = '#';
+                                                            }
+
                                                             return view('components.actions.delete-button', [
                                                                 'route' => route('user.destroy', $user->id),
                                                                 'id' => $user->id,
@@ -205,8 +189,8 @@
                                                         <div class="modal-header">
                                                             <h5 class="modal-title">Edit {{ $title }}</h5>
 
-                                                            <button type="button" class="btn-close"
-                                                                data-bs-dismiss="modal" aria-hidden="true"></button>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-hidden="true"></button>
                                                             </button>
                                                         </div>
                                                         <form action="{{ route('user.update', $user->id) }}"

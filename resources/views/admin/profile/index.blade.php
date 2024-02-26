@@ -38,9 +38,14 @@
                     <div class="card card-primary card-outline">
                         <div class="card-body box-profile">
                             <div class="text-center">
-                                <img class="profile-user-img img-fluid img-circle"
-                                    src="/assets/dist/img/avatar/{{ Auth::user()->admin->avatar }}" alt="Avatar"
-                                    style="border: none">
+                                @if (Auth::user()->karyawan && Auth::user()->karyawan->avatar)
+                                    <img class="profile-user-img img-fluid img-circle"
+                                        src="/assets/dist/img/avatar/{{ Auth::user()->karyawan->avatar }}" alt="Avatar"
+                                        style="border: none">
+                                @else
+                                    <img class="profile-user-img img-fluid img-circle"
+                                        src="/assets/dist/img/avatar/default.png" alt="Avatar" style="border: none">
+                                @endif
                             </div>
 
                             <h3 class="profile-username text-center">{{ $admin->nama_lengkap }}</h3>
