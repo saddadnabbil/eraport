@@ -173,13 +173,9 @@ Route::group(['middleware' => ['auth']], function () {
             // Start Raport KM
             Route::delete('/cp/delete/{id}', 'Admin\KM\CapaianPembelajaranController@destroy')->name('admin.cp.destroy');
             Route::resource('cp', 'Admin\KM\CapaianPembelajaranController')->only(['index', 'store', 'update', 'create']);
-
             Route::resource('rencanaformatif', 'Admin\KM\RencanaNilaiFormatifController')->only(['index', 'create', 'store', 'show', 'edit', 'update', 'destroy']);
-
             Route::resource('rencanasumatif', 'Admin\KM\RencanaNilaiSumatifController')->only(['index', 'create', 'store', 'show', 'edit', 'update', 'destroy']);
-
             Route::resource('penilaiankm', 'Admin\KM\PenilaianKurikulumMerdekaController')->only(['index', 'create', 'store', 'show', 'edit', 'update']);
-
             Route::resource('nilaiterkirimkmadmin', 'Admin\KM\LihatNilaiTerkirimController', [
                 'uses' => ['index', 'create'],
             ]);
@@ -282,6 +278,13 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('jadwalmengajar/manage', 'Admin\JadwalMengajarController@manage')->name('jadwalmengajar.manage');
             Route::put('jadwalmengajar/{id}/manage', 'Admin\JadwalMengajarController@manageUpdate')->name('jadwalmengajar.manage.update');
             Route::get('jadwalmengajar/{id}/print', 'Admin\JadwalMengajarController@print')->name('jadwalmengajar.print');
+
+
+            // TK 
+            // input data siswa tk
+            Route::resource('kehadiranadmintk', 'Admin\KehadiranSiswaTkController', [
+                'uses' => ['index', 'store', 'create'],
+            ]);
         });
     });
     // End Route User Admin
