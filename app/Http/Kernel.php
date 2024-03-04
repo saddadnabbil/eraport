@@ -71,5 +71,8 @@ class Kernel extends HttpKernel
         'checkRole' => \App\Http\Middleware\CheckRole::class,
         'checkKurikulum' => \App\Http\Middleware\CheckKurikulum::class,
         'checkAksesGuru' => \App\Http\Middleware\CheckAksesGuru::class,
+        'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
+        'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
+        'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
     ];
 }

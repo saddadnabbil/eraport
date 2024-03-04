@@ -24,6 +24,30 @@ class KaryawanImport implements ToCollection
                 continue;
             }
 
+            // Map unit_kode to role
+            $unitRoles = [
+                // 0 Super Admin
+                // 1 Admin
+                // Teacher
+                '1' => 2, // Extracurricular Teacher
+                '2' => 2, // Playgroup - Kindergarten
+                '3' => 2, // Primary
+                '4' => 2, // Junior High School
+                '5' => 2, // Senior High School
+
+                '6' => 5, // HRD / Personel
+                '7' => 6, // Finance Admin
+                '8' => 7, // Librarian
+                '9' => 8, // Admission
+                // '10' //Security
+                // '11' //Suster
+                // '12' //Sauber
+                // '13' //IT Staff
+                '14' => 9, // General Affair
+                // '15' => 10, // Cleaner
+                // Sales
+            ];
+
             // Create User
             $user = User::create([
                 'username' => strtolower(str_replace(' ', '', $row[8])),
@@ -31,6 +55,7 @@ class KaryawanImport implements ToCollection
                 'role' => '2',
                 'status' => true
             ]);
+            $user->assignRole('karyawan');
 
             // Create Karyawan
             Karyawan::create([

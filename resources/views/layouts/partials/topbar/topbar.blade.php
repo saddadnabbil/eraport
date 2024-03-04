@@ -133,7 +133,7 @@
                             <span class="ms-2 d-none d-lg-inline-block"><span>Hello,</span>
                                 <span class="text-dark">
                                     @if (Auth::user()->role == 1)
-                                        {{ Auth::user()->admin->nama_lengkap }}
+                                        {{ Auth::user()->karyawan->nama_lengkap }}
                                     @elseif(Auth::user()->role == 2)
                                         {{ Auth::user()->karyawan->nama_lengkap }}
                                     @elseif(Auth::user()->role == 3)

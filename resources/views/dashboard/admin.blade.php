@@ -27,7 +27,7 @@
             }
 
             if (Auth::user()->role == 1) {
-                $fullName = Auth::user()->admin->nama_lengkap;
+                $fullName = Auth::user()->karyawan->nama_lengkap;
             } elseif (Auth::user()->role == 2) {
                 $fullName = Auth::user()->karyawan->nama_lengkap;
             } elseif (Auth::user()->role == 3) {

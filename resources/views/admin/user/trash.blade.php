@@ -57,15 +57,6 @@
                                             <?php $no++; ?>
                                             <tr>
                                                 <td>{{ $no }}</td>
-                                                <td>
-                                                    @if ($user->role == 1)
-                                                        {{ $user->username }}
-                                                    @elseif($user->role == 2)
-                                                        {{ $user->username }}
-                                                    @elseif ($user->role == 3)
-                                                        {{ $user->username }}
-                                                    @endif
-                                                </td>
                                                 <td>{{ $user->username }}</td>
                                                 <td>
                                                     @if ($user->role == 1)

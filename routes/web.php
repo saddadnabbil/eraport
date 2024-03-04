@@ -31,6 +31,10 @@ Route::get('/404', function () {
     return view('errorpage.404', compact('title'));
 })->name('404');
 
+Route::get('forbidden', function () {
+    return view('errorpage.403');
+})->name('forbidden');
+
 Route::get('/', 'AuthController@index')
     ->name('login.get')
     ->middleware('guest');
@@ -49,7 +53,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
     // Route User Admin
-    Route::group(['middleware' => 'checkRole:1'], function () {
+    Route::group(['middleware' => 'role:Admin'], function () {
         Route::prefix('admin')->group(function () {
             // Profile Controller
             Route::resource('profileadmin', 'Admin\ProfileController')->only(['update']);
@@ -283,7 +287,7 @@ Route::group(['middleware' => ['auth']], function () {
     // End Route User Admin
 
     // Route User Guru
-    Route::group(['middleware' => 'checkRole:2'], function () {
+    Route::group(['middleware' => 'role:Teacher'], function () {
         Route::group(['prefix' => 'guru'], function () {
             Route::resource('profileguru', 'Guru\ProfileController', [
                 'uses' => ['update'],
@@ -430,29 +434,31 @@ Route::group(['middleware' => ['auth']], function () {
     // End Route User Guru
 
     // Route User Siswa
-    // jadwal pelajaran -> siswa
-    Route::get('jadwalpelajaran', 'Siswa\JadwalPelajaranController@index')->name('siswa.jadwalpelajaran');
-    Route::get('jadwalpelajaran/{id}/print', 'Siswa\JadwalPelajaranController@print')->name('siswa.jadwalpelajaran.print');
+    Route::group(['middleware' => 'role:Student'], function () {
+        // jadwal pelajaran -> siswa
+        Route::get('jadwalpelajaran', 'Siswa\JadwalPelajaranController@index')->name('siswa.jadwalpelajaran');
+        Route::get('jadwalpelajaran/{id}/print', 'Siswa\JadwalPelajaranController@print')->name('siswa.jadwalpelajaran.print');
 
-    Route::resource('profilesiswa', 'Siswa\ProfileController', [
-        'uses' => ['update'],
-    ]);
-    Route::resource('ekstra', 'Siswa\EkstrakulikulerController', [
-        'uses' => ['index'],
-    ]);
-    Route::resource('presensi', 'Siswa\RekapKehadiranController', [
-        'uses' => ['index'],
-    ]);
-
-    Route::resource('silabus', 'Siswa\SilabusController')
-        ->only(['index'])
-        ->names([
-            'index' => 'siswa.silabus.index',
+        Route::resource('profilesiswa', 'Siswa\ProfileController', [
+            'uses' => ['update'],
         ]);
-    Route::get('/pdf/{filename}', 'Admin\PdfController@viewSilabusPDF')->name('silabus.siswa.pdf.view');
+        Route::resource('ekstra', 'Siswa\EkstrakulikulerController', [
+            'uses' => ['index'],
+        ]);
+        Route::resource('presensi', 'Siswa\RekapKehadiranController', [
+            'uses' => ['index'],
+        ]);
 
-    Route::resource('nilaiakhir', 'Siswa\KM\NilaiAkhirSemesterController', [
-        'uses' => ['index'],
-    ]);
+        Route::resource('silabus', 'Siswa\SilabusController')
+            ->only(['index'])
+            ->names([
+                'index' => 'siswa.silabus.index',
+            ]);
+        Route::get('/pdf/{filename}', 'Admin\PdfController@viewSilabusPDF')->name('silabus.siswa.pdf.view');
+
+        Route::resource('nilaiakhir', 'Siswa\KM\NilaiAkhirSemesterController', [
+            'uses' => ['index'],
+        ]);
+    });
     // End Route User Siswa
 });

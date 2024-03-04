@@ -10,9 +10,11 @@ use App\Models\Siswa;
 use App\Exports\UserExport;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Karyawan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -34,14 +36,12 @@ class UserController extends Controller
             ->orderBy('role', 'ASC')
             ->orderBy('id', 'ASC')
             ->get();
+        $data_roles = Role::get();
+        $data_permission = Permission::get();
         // $data_user = User::where('id', '!=', Auth::user()->id)->orderBy('role', 'ASC')->orderBy('id', 'ASC')->get();
 
-        return view('admin.user.index', compact('title', 'data_user'));
+        return view('admin.user.index', compact('title', 'data_user', 'data_roles', 'data_permission'));
     }
-
-
-
-
 
     /**
      * Store a newly created resource in storage.
@@ -52,73 +52,95 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nama_lengkap' => 'required|min:3|max:100',
-            'jenis_kelamin' => 'required',
-            'tanggal_lahir' => 'required',
-            'email' => 'required|email|min:5|max:100|unique:admin',
-            'nomor_hp' => 'required|numeric|digits_between:11,13|unique:admin',
+            'username' => 'required|min:3|max:100|unique:user',
+            'role' => 'required|exists:roles,id',
+            'permission' => 'required|array',
+            'permission.*' => 'exists:permissions,id',
         ]);
         if ($validator->fails()) {
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
         } else {
+            $role = Role::findOrFail($request->role);
+
             $user = new User([
-                'username' => strtolower(str_replace(' ', '', $request->nama_lengkap)),
-                'password' => bcrypt(strtolower(str_replace(' ', '', $request->nama_lengkap))),
-                'role' => 1,
+                'username' => $request->username,
+                'password' => bcrypt($request->password),
+                'role' => $request->role,
                 'status' => true
             ]);
             $user->save();
 
-            $admin = new Admin([
-                'user_id' => $user->id,
-                'nama_lengkap' => strtoupper($request->nama_lengkap),
-                'jenis_kelamin' => $request->jenis_kelamin,
-                'tanggal_lahir' => $request->tanggal_lahir,
-                'email' => $request->email,
-                'nomor_hp' => $request->nomor_hp,
-                'avatar' => 'default.png'
-            ]);
-            $admin->save();
+            if ($role->id == 3) {
+                if ($user->siswa()->first() == null) {
+                    $siswa = new Siswa([
+                        'user_id' => $user->id,
+                        'nama_lengkap' => $request->username,
+                        'nama_panggilan' => $request->username
+                    ]);
+
+                    $user->siswa()->create([
+                        'nama_lengkap' => $request->username,
+                        'nama_panggilan' => $request->username
+                    ]);
+                }
+                dd('siswa2');
+            } else {
+                if ($user->karyawan()->first() == null) {
+                    $karyawan = new Karyawan([
+                        'user_id' => $user->id,
+                        'kode_karyawan' => 'K' . $user->id,
+                        'nama_lengkap' => $request->username
+                    ]);
+
+                    $user->karyawan()->create([
+                        'kode_karyawan' => 'K' . $user->id,
+                        'nama_lengkap' => $request->username
+                    ]);
+                    dd('karyawan');
+                }
+            }
+
+            // Assign each role to the user
+            foreach ($request->permission as $permissionId) {
+                $permission = Permission::findOrFail($permissionId);
+                $user->givePermissionTo($permission);
+            }
+
             return back()->with('toast_success', 'User berhasil ditambahkan');
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'password' => 'nullable|min:8|max:100',
+            'username' => 'nullable|min:3|max:100',
             'status' => 'required',
+            'role' => 'nullable|exists:roles,id',
+            'permission' => 'nullable|array',
+            'permission.*' => 'exists:permissions,id',
         ]);
+
         if ($validator->fails()) {
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
-        } else {
-
-            $user = User::findorfail($id);
-            if (is_null($request->password)) {
-                $data = [
-                    'status' => $request->status
-                ];
-                if ($user->siswa) {
-                    $user->siswa->update($data);
-                } elseif ($user->karyawan) {
-                    $user->karyawan->update($data);
-                }
-            } else {
-                $data = [
-                    'password' => bcrypt($request->password),
-                    'status' => $request->status
-                ];
-            }
-            $user->update($data);
-            return back()->with('toast_success', 'User berhasil diedit');
         }
+
+        $user = User::findOrFail($id);
+        $user->username = $request->username;
+        if ($request->filled('password')) {
+            $user->password = bcrypt($request->password);
+        }
+        $user->role = $request->role;
+        $user->status = $request->status;
+        $user->save();
+
+        if ($request->has('permission')) {
+            $permissions = Permission::whereIn('id', $request->permission)->get();
+            $user->syncPermissions($permissions);
+        } else {
+            $user->syncPermissions([]);
+        }
+
+        return back()->with('toast_success', 'User berhasil diupdate');
     }
 
     public function export()
@@ -145,10 +167,6 @@ class UserController extends Controller
                     'status' => 0
                 ]);
                 $user->karyawan->delete();
-            }
-
-            if (!is_null($user->admin)) {
-                $user->admin->delete();
             }
 
             $user->update([
@@ -180,7 +198,6 @@ class UserController extends Controller
             // Permanent delete the related Siswa records
             $user->siswa()->forceDelete();
             $user->karyawan()->forceDelete();
-            $user->admin()->forceDelete();
 
             // Permanent delete the user and its User record
             $user->forceDelete();
