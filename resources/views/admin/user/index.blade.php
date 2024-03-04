@@ -172,29 +172,25 @@
                                                     @endif
                                                 </td>
                                                 <td class="text-center">
-                                                    @php
-                                                        $cacheKey = 'delete-button-' . $user->id;
-                                                        $deleteButton = Cache::remember($cacheKey, 120, function () use ($user) {
-                                                            if ($user->role == '3' && $user->siswa) {
-                                                                $showRoute = route('siswa.show', $user->siswa->id);
-                                                            } elseif ($user->karyawan) {
-                                                                $showRoute = route('karyawan.show', $user->karyawan->id);
-                                                            } else {
-                                                                $showRoute = '#';
-                                                            }
 
-                                                            return view('components.actions.delete-button', [
-                                                                'route' => route('user.destroy', $user->id),
-                                                                'id' => $user->id,
-                                                                'isPermanent' => false,
-                                                                'withEdit' => true,
-                                                                'withShow' => true,
-                                                                'showRoute' => $showRoute,
-                                                            ])->render();
-                                                        });
+                                                    @php
+                                                        if ($user->role == '3' && $user->siswa) {
+                                                            $showRoute = route('siswa.show', $user->siswa->id);
+                                                        } elseif ($user->karyawan) {
+                                                            $showRoute = route('karyawan.show', $user->karyawan->id);
+                                                        } else {
+                                                            $showRoute = '#';
+                                                        }
                                                     @endphp
 
-                                                    {!! $deleteButton !!}
+                                                    @include('components.actions.delete-button', [
+                                                        'route' => route('user.destroy', $user->id),
+                                                        'id' => $user->id,
+                                                        'isPermanent' => false,
+                                                        'withEdit' => true,
+                                                        'withShow' => true,
+                                                        'showRoute' => $showRoute,
+                                                    ])
                                                 </td>
                                             </tr>
 
