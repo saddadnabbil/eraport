@@ -25,7 +25,7 @@ class CreateSiswasTable extends Migration
             $table->string('semester_masuk')->nullable();
             $table->string('kelas_masuk')->nullable();
 
-            $table->string('nis', 10)->unique();
+            $table->string('nis', 10)->unique()->nullable();
             $table->string('nisn', 10)->unique()->nullable();
             $table->string('nama_lengkap', 100);
             $table->string('nama_panggilan', 100);

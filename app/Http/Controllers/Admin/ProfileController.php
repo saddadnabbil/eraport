@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Admin;
 use App\Http\Controllers\Controller;
+use App\Models\Karyawan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -18,7 +19,7 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $admin = Admin::findorfail($id);
+        $admin = Karyawan::findorfail($id);
 
         $validator = Validator::make($request->all(), [
             'nama_lengkap' => 'required|min:3|max:100',

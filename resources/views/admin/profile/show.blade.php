@@ -42,7 +42,7 @@
                             <div class="text-center">
                                 @if (optional($karyawan)->pas_photo == null)
                                     <img class="profile-user-img"
-                                        src="/assets/dist/img/avatar/{{ optional($karyawan->avatar, 'default-avatar.jpg') }}"
+                                        src="/assets/dist/img/avatar/{{ optional($karyawan)->avatar ?? 'default.png' }}"
                                         alt="Avatar" style="border: none">
                                 @else
                                     <img class="mb-2"
@@ -50,6 +50,7 @@
                                         alt="{{ optional($karyawan)->pas_photo }}" alt="pas_photo" width="105px"
                                         height="144px">
                                 @endif
+
                             </div>
 
                             <h3 class="profile-username text-center">{{ $karyawan->nama_lengkap }}</h3>

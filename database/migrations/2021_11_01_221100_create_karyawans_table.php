@@ -16,18 +16,18 @@ class CreateKaryawansTable extends Migration
         Schema::create('karyawans', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->unsigned();
-            $table->unsignedBigInteger('status_karyawan_id')->unsigned();
-            $table->unsignedBigInteger('unit_karyawan_id')->unsigned();
-            $table->unsignedBigInteger('position_karyawan_id')->unsigned();
-            $table->date('join_date');
+            $table->unsignedBigInteger('status_karyawan_id')->unsigned()->nullable();
+            $table->unsignedBigInteger('unit_karyawan_id')->unsigned()->nullable();
+            $table->unsignedBigInteger('position_karyawan_id')->unsigned()->nullable();
+            $table->date('join_date')->nullable();
             $table->date('resign_date')->nullable();
             $table->date('permanent_date')->nullable();
 
-            $table->string('kode_karyawan', 25);
+            $table->string('kode_karyawan', 25)->nullable();
             $table->string('nama_lengkap', 255);
             $table->string('nik', 16)->nullable();
             $table->string('nomor_akun', 255)->nullable();
-            $table->string('nomor_fingerprint');
+            $table->string('nomor_fingerprint')->nullable();
 
             $table->string('nomor_taxpayer', 255)->nullable();
             $table->string('nama_taxpayer', 255)->nullable();
