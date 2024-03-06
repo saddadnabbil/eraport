@@ -19,8 +19,9 @@
                   <li class="nav-small-cap">
                       <span class="hide-menu">REPORT KM TK</span>
                   </li>
-                  @include('layouts.partials.sidebar.reportkm-tk.inputdata')
+                  @include('layouts.partials.sidebar.reportkm-tk.event')
                   @include('layouts.partials.sidebar.reportkm-tk.rencanapenilaian')
+                  @include('layouts.partials.sidebar.reportkm-tk.inputdata')
 
 
                   <li class="list-divider"></li>
@@ -28,6 +29,11 @@
                       <span class="hide-menu">REPORT KM</span>
                   </li>
                   @include('layouts.partials.sidebar.reportkm.inputdata')
+                  @include('layouts.partials.sidebar.reportkm.rencanapenilaian')
+                  @include('layouts.partials.sidebar.reportkm.penilaian')
+                  @include('layouts.partials.sidebar.reportkm.nilaiekstra')
+                  @include('layouts.partials.sidebar.reportkm.nilaiakhir')
+                  @include('layouts.partials.sidebar.reportkm.prosesdeskripsi')
 
                   <li class="list-divider"></li>
                   <li class="nav-small-cap">

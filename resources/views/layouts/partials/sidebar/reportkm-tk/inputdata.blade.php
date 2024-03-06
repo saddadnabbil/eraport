@@ -14,15 +14,7 @@
 @endphp
 
 @include('layouts.partials.sidebar._sidebar-item', [
-    'isActive' => request()->routeIs([
-        'tglraportkm.*',
-        'kkmadmin.*',
-        'mappingkm.*',
-        'kehadiranadmin.*',
-        'prestasiadmin.*',
-        'catatanadmin.*',
-        'kenaikanadmin.*',
-    ]),
+    'isActive' => request()->routeIs(['kehadiranadmintk.*', 'rekapevent.*', 'catatanadmintk.*']),
     'hasArrow' => true,
     'icon' => 'clipboard',
     'itemName' => 'Input Data',
@@ -36,14 +28,14 @@
         ],
         [
             'name' => 'Event Siswa',
-            'route' => route('prestasiadmin.index'),
-            'isActive' => request()->routeIs('prestasiadmin.*'),
+            'route' => route('rekapevent.index'),
+            'isActive' => request()->routeIs('rekapevent.*'),
             'childHasArrow' => false,
         ],
         [
             'name' => 'Catatan Wali Kelas',
-            'route' => route('catatanadmin.index'),
-            'isActive' => request()->routeIs('catatanadmin.*'),
+            'route' => route('catatanadmintk.index'),
+            'isActive' => request()->routeIs('catatanadmintk.*'),
             'childHasArrow' => false,
         ],
     ],

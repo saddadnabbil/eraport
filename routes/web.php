@@ -282,8 +282,31 @@ Route::group(['middleware' => ['auth']], function () {
 
             // TK 
             // input data siswa tk
-            Route::resource('kehadiranadmintk', 'Admin\KehadiranSiswaTkController', [
+            Route::resource('kehadiranadmintk', 'Admin\TkKehadiranSiswaController', [
                 'uses' => ['index', 'store', 'create'],
+            ]);
+            Route::resource('event', 'Admin\TkEventController', [
+                'uses' => ['index', 'store', 'create', 'update', 'destory'],
+            ]);
+            Route::resource('rekapevent', 'Admin\TkEventAchivementGradeSiswaController', [
+                'uses' => ['index', 'store', 'create'],
+            ]);
+            Route::resource('catatanadmintk', 'Admin\TkCatatanWaliKelasController', [
+                'uses' => ['index', 'store', 'create'],
+            ]);
+
+            // rencana penilaiaan tk
+            Route::resource('tkelement', 'Admin\TkElementController', [
+                'uses' => ['index', 'store', 'create', 'update', 'destory'],
+            ]);
+            Route::resource('tktopic', 'Admin\TkTopicController', [
+                'uses' => ['index', 'store', 'create', 'update', 'destory'],
+            ]);
+            Route::resource('tksubtopic', 'Admin\TkSubtopicController', [
+                'uses' => ['index', 'store', 'create', 'update', 'destory'],
+            ]);
+            Route::resource('tkpoint', 'Admin\TkPointController', [
+                'uses' => ['index', 'store', 'create', 'update', 'destory'],
             ]);
         });
     });

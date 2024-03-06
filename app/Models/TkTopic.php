@@ -10,8 +10,8 @@ class TkTopic extends Model
     use HasFactory;
     protected $guarded = ['id'];
 
-    public function elements()
+    public function element()
     {
-        return $this->hasMany(TkElement::class);
+        return $this->belongsTo(TkElement::class, 'tk_element_id');
     }
 }

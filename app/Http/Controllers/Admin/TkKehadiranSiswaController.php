@@ -11,7 +11,7 @@ use App\Models\KehadiranSiswa;
 use App\Http\Controllers\Controller;
 use App\Models\TkAttendance;
 
-class KehadiranSiswaTkController extends Controller
+class TkKehadiranSiswaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,13 +20,12 @@ class KehadiranSiswaTkController extends Controller
      */
     public function index()
     {
-
         $title = 'Kehadiran Siswa';
         $tapel = Tapel::where('status', 1)->first();
 
         $data_kelas = Kelas::where('tapel_id', $tapel->id)->where('tingkatan_id', [1, 2])->get();
 
-        return view('admin.kehadiran-tk.index', compact('title', 'data_kelas'));
+        return view('admin.tk.kehadiran-tk.index', compact('title', 'data_kelas'));
     }
 
     public function create(Request $request)
@@ -61,7 +60,7 @@ class KehadiranSiswaTkController extends Controller
             }
         }
 
-        return view('admin.kehadiran-tk.create', compact('title', 'data_anggota_kelas'));
+        return view('admin.tk.kehadiran-tk.create', compact('title', 'data_anggota_kelas'));
     }
 
     /**
@@ -91,7 +90,7 @@ class KehadiranSiswaTkController extends Controller
                     $cek_data->update($data);
                 }
             }
-            return redirect(route('kehadiranadmintk.index'))->with('toast_success', 'Kehadiran siswa berhasil disimpan');
+            return back()->with('toast_success', 'Kehadiran siswa berhasil disimpan');
         }
     }
 }

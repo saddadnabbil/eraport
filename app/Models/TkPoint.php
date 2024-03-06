@@ -12,6 +12,16 @@ class TkPoint extends Model
 
     public function subtopic()
     {
-        return $this->belongsTo(TkSubtopic::class);
+        return $this->belongsTo(TkSubtopic::class, 'tk_subtopic_id');
+    }
+
+    public function topic()
+    {
+        return $this->subtopic->topic();
+    }
+
+    public function element()
+    {
+        return $this->topic->element();
     }
 }

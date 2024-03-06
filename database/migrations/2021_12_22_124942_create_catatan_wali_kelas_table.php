@@ -16,10 +16,10 @@ class CreateCatatanWaliKelasTable extends Migration
         Schema::create('catatan_wali_kelas', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('anggota_kelas_id')->unsigned();
-            $table->string('catatan', 200);
+            $table->string('catatan', 200)->nullable();
             $table->timestamps();
-            $table->softDeletes();            
-            
+            $table->softDeletes();
+
             $table->foreign('anggota_kelas_id')->references('id')->on('anggota_kelas')->onDelete('cascade');
         });
     }

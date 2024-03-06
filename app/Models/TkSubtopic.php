@@ -12,6 +12,11 @@ class TkSubtopic extends Model
 
     public function topic()
     {
-        return $this->belongsTo(TkTopic::class);
+        return $this->belongsTo(TkTopic::class, 'tk_topic_id');
+    }
+
+    public function element()
+    {
+        return $this->topic->element();
     }
 }
