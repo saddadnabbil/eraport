@@ -22,6 +22,7 @@
                   @include('layouts.partials.sidebar.reportkm-tk.event')
                   @include('layouts.partials.sidebar.reportkm-tk.rencanapenilaian')
                   @include('layouts.partials.sidebar.reportkm-tk.inputdata')
+                  @include('layouts.partials.sidebar.reportkm-tk.penilaian')
 
 
                   <li class="list-divider"></li>

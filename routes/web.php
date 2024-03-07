@@ -308,6 +308,9 @@ Route::group(['middleware' => ['auth']], function () {
             Route::resource('tkpoint', 'Admin\TkPointController', [
                 'uses' => ['index', 'store', 'create', 'update', 'destory'],
             ]);
+
+            // penilaian tk
+            Route::resource('penilaiantk', 'Admin\KM\PenilaianTkController')->only(['index', 'create', 'store', 'show', 'edit', 'update']);
         });
     });
     // End Route User Admin

@@ -60,7 +60,7 @@
                                             aria-hidden="true"></button>
                                         </button>
                                     </div>
-                                    <form action="{{ route('tkpoint.store') }}" method="POST">
+                                    <form action="{{ route('tktopic.store') }}" method="POST">
                                         @csrf
                                         <div class="modal-body">
                                             <div class="form-group row">
@@ -121,7 +121,7 @@
                                                 <td>{{ $topic->name }}</td>
                                                 <td class="text-center">
                                                     @include('components.actions.delete-button', [
-                                                        'route' => route('tkpoint.destroy', $topic->id),
+                                                        'route' => route('tktopic.destroy', $topic->id),
                                                         'id' => $topic->id,
                                                         'isPermanent' => true,
                                                         'withEdit' => true,
@@ -140,7 +140,7 @@
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                                 aria-hidden="true"></button>
                                                         </div>
-                                                        <form action="{{ route('tkpoint.update', $topic->id) }}"
+                                                        <form action="{{ route('tktopic.update', $topic->id) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('PUT')
