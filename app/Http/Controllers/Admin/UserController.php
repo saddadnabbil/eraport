@@ -7,14 +7,15 @@ use App\Models\Guru;
 use App\Models\User;
 use App\Models\Admin;
 use App\Models\Siswa;
+use App\Models\Karyawan;
 use App\Exports\UserExport;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Models\Karyawan;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
-use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Permission;
+use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -41,6 +42,70 @@ class UserController extends Controller
         // $data_user = User::where('id', '!=', Auth::user()->id)->orderBy('role', 'ASC')->orderBy('id', 'ASC')->get();
 
         return view('admin.user.index', compact('title', 'data_user', 'data_roles', 'data_permission'));
+    }
+
+
+    public function data()
+    {
+        $data_user = User::select('id', 'username', 'role', 'status')
+            ->with(['siswa' => function ($query) {
+                $query->select('user_id', 'nama_lengkap', 'id');
+            }, 'karyawan' => function ($query) {
+                $query->select('id', 'user_id', 'nama_lengkap', 'id');
+            }])
+            ->where('id', '!=', Auth::user()->id)
+            ->orderBy('role', 'ASC')
+            ->orderBy('id', 'ASC')
+            ->get();
+
+        return DataTables::of($data_user)
+            ->addColumn('full_name', function ($user) {
+                if ($user->role == 3 && $user->siswa) {
+                    return $user->siswa->nama_lengkap;
+                } elseif ($user->karyawan) {
+                    return $user->karyawan->nama_lengkap;
+                }
+                return '-';
+            })
+            ->addColumn('level', function ($user) {
+                if ($user->role == 3) {
+                    return 'Student';
+                } elseif ($user->role == 2) {
+                    return 'Teacher';
+                } elseif ($user->role == 0 || $user->role == 1) {
+                    return 'Administrator';
+                } else {
+                    return 'Employee';
+                }
+            })
+            ->addColumn('status_akun', function ($user) {
+                return $user->status ? '<span class="badge bg-success">Aktif</span>' : '<span class="badge bg-danger">Non Aktif</span>';
+            })
+            ->addColumn('action', function ($user) {
+                $showRoute = '#';
+                if ($user->role == 3 && $user->siswa) {
+                    $showRoute = route('siswa.show', $user->siswa->id);
+                } elseif ($user->karyawan) {
+                    $showRoute = route('karyawan.show', $user->karyawan->id);
+                }
+
+                return view('components.actions.delete-button', [
+                    'route' => route('user.destroy', $user->id),
+                    'id' => $user->id,
+                    'isPermanent' => false,
+                    'withEdit' => false,
+                    'withShow' => true,
+                    'showRoute' => $showRoute,
+                ])->render();
+            })
+            ->rawColumns(['status_akun', 'action'])
+            ->toJson();
+    }
+
+    public function getUser($id)
+    {
+        $user = User::findOrFail($id);
+        return response()->json($user);
     }
 
     /**
@@ -83,7 +148,6 @@ class UserController extends Controller
                         'nama_panggilan' => $request->username
                     ]);
                 }
-                dd('siswa2');
             } else {
                 if ($user->karyawan()->first() == null) {
                     $karyawan = new Karyawan([
@@ -96,7 +160,6 @@ class UserController extends Controller
                         'kode_karyawan' => 'K' . $user->id,
                         'nama_lengkap' => $request->username
                     ]);
-                    dd('karyawan');
                 }
             }
 

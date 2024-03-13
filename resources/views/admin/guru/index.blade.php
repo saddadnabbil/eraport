@@ -60,28 +60,6 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php $no = 0; ?>
-                                        @foreach ($data_guru as $guru)
-                                            <?php $no++; ?>
-                                            <tr>
-                                                <td>{{ $no }}</td>
-                                                <td>{{ $guru->karyawan->nama_lengkap }} </td>
-                                                <td>{{ $guru->karyawan->kode_karyawan }}</td>
-                                                <td>{{ $guru->karyawan->nik }}</td>
-                                                <td>{{ $guru->karyawan->nomor_phone }}</td>
-                                                <td>
-                                                    @if ($guru->jenis_kelamin == 'L')
-                                                        Male
-                                                    @else
-                                                        Female
-                                                    @endif
-                                                </td>
-                                                <td class="text-center">
-                                                    <a href="{{ route('karyawan.show', $guru->karyawan->id) }}"
-                                                        class="btn btn-info btn-sm  mt-1"><i class="fas fa-eye"></i></a>
-                                                </td>
-                                            </tr>
-                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -99,6 +77,49 @@
     </div>
 @endsection
 
+@push('custom-scripts')
+    {{-- datatable --}}
+    <script>
+        $(document).ready(function() {
+            if (!$.fn.DataTable.isDataTable('#zero_config')) {
+                $('#zero_config').DataTable({
+                    "processing": true,
+                    "language": {
+                        "processing": '<i class="fas fa-spinner fa-spin"></i> Processing...'
+                    },
+                    "serverSide": true,
+                    "ajax": {
+                        "url": "{{ route('guru.data') }}",
+                    },
+                    "columns": [{
+                            "data": "id"
+                        },
+                        {
+                            "data": "full_name"
+                        },
+                        {
+                            "data": "employee_code"
+                        },
+                        {
+                            "data": "identity_card"
+                        },
+                        {
+                            "data": "number_phone"
+                        },
+                        {
+                            "data": "gender"
+                        },
+                        {
+                            "data": "action",
+                            "orderable": false,
+                            "searchable": false
+                        }
+                    ]
+                });
+            }
+        });
+    </script>
+@endpush
 
 
 @section('footer')

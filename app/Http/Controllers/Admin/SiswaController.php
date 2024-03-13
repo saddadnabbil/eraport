@@ -4,19 +4,20 @@ namespace App\Http\Controllers\Admin;
 
 use Excel;
 use App\Models\User;
+use App\SiswaKeluar;
 use App\Models\Kelas;
 use App\Models\Siswa;
 use App\Models\Tapel;
 use App\Models\Tingkatan;
-use App\SiswaKeluar;
-use App\Models\AnggotaKelas;
 use App\Exports\SiswaExport;
 use App\Imports\SiswaImport;
+use App\Models\AnggotaKelas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
+use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 
 class SiswaController extends Controller
@@ -53,14 +54,38 @@ class SiswaController extends Controller
                 ->with('tingkatan')
                 ->get();
 
-            $data_siswa = Siswa::select('id', 'user_id', 'nama_lengkap', 'jenis_kelamin', 'kelas_id', 'nis', 'nisn', 'status')
-                ->orderBy('kelas_id', 'DESC')
-                ->orderBy('status', 'ASC')
-                ->with(['kelas.tingkatan', 'user'])
-                ->get();
-
-            return view('admin.siswa.index', compact('title', 'data_kelas_all', 'data_siswa', 'jumlah_kelas', 'jumlah_kelas_per_level', 'data_tingkatan', 'tingkatan_terendah', 'tingkatan_akhir'));
+            return view('admin.siswa.index', compact('title', 'data_kelas_all', 'jumlah_kelas', 'jumlah_kelas_per_level', 'data_tingkatan', 'tingkatan_terendah', 'tingkatan_akhir'));
         }
+    }
+
+    public function data()
+    {
+        $data_siswa = Siswa::select('id', 'nama_lengkap', 'kelas_id', 'nis', 'nisn', 'jenis_kelamin', 'status')
+            ->orderBy('kelas_id', 'DESC')
+            ->orderBy('status', 'ASC')
+            ->with(['kelas.tingkatan', 'user'])
+            ->get();
+
+        return DataTables::of($data_siswa)
+            ->addColumn('tingkatan', function ($siswa) {
+                return $siswa->kelas_id ? $siswa->kelas->tingkatan->nama_tingkatan : 'Belum terdata';
+            })
+            ->addColumn('kelas', function ($siswa) {
+                return $siswa->kelas_id ? $siswa->kelas->nama_kelas : 'Belum masuk anggota kelas';
+            })
+            ->addColumn('action', function ($siswa) {
+                $deleteButton = view('components.actions.delete-button', [
+                    'route' => route('siswa.destroy', $siswa->id),
+                    'id' => $siswa->id,
+                    'isPermanent' => false,
+                    'withShow' => true,
+                    'showRoute' => route('siswa.show', $siswa->id),
+                    'withEdit' => false,
+                ])->render();
+
+                return $deleteButton;
+            })
+            ->toJson();
     }
 
     public function show($id)

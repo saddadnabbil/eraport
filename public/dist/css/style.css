@@ -18291,3 +18291,7 @@ select .custom-select option {
 .products-list>.item {
   padding: 10px 0;
 }
+
+div.dataTables_processing div {
+  display: none;
+}

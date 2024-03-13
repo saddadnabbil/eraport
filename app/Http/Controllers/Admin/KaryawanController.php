@@ -6,14 +6,17 @@ use App\Models\Guru;
 use App\Models\User;
 use App\Models\Karyawan;
 use App\Models\UnitKaryawan;
-use App\Models\StatusKaryawan;
-use App\Models\PositionKaryawan;
 use Illuminate\Http\Request;
+use App\Models\StatusKaryawan;
 use App\Imports\KaryawanImport;
+use App\Models\PositionKaryawan;
+use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
+use Spatie\Permission\Models\Permission;
+use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 
 class KaryawanController extends Controller
@@ -41,6 +44,44 @@ class KaryawanController extends Controller
         $totalKaryawanNonActive = Karyawan::where('status', false)->count();
 
         return view('admin.karyawan.employee.index', compact('title', 'dataKaryawan', 'dataStatusKaryawan', 'dataUnitKaryawan', 'dataPositionKaryawan', 'totalKaryawanActive', 'totalKaryawanNonActive'));
+    }
+
+    public function data()
+    {
+        $dataKaryawan = Karyawan::with('statusKaryawan', 'unitKaryawan', 'positionKaryawan')
+            ->orderBy('kode_karyawan', 'desc')
+            ->orderBy('status', 'desc')
+            ->select('id', 'nama_lengkap', 'jenis_kelamin', 'kode_karyawan', 'status_karyawan_id', 'unit_karyawan_id', 'position_karyawan_id', 'status')
+            ->get();
+
+        return DataTables::of($dataKaryawan)
+            ->addColumn('status_karyawan.nama_status_karyawan', function ($karyawan) {
+                return $karyawan->statusKaryawan->status_nama;
+            })
+            ->addColumn('unit_karyawan.nama_unit_karyawan', function ($karyawan) {
+                return $karyawan->unitKaryawan->unit_nama;
+            })
+            ->addColumn('position_karyawan.nama_position_karyawan', function ($karyawan) {
+                return $karyawan->positionKaryawan->position_nama;
+            })
+            ->addColumn('status', function ($karyawan) {
+                $statusBadge = $karyawan->status ? '<span class="badge bg-success">Aktif</span>' : '<span class="badge bg-danger">Non Aktif</span>';
+                return $statusBadge;
+            })
+            ->addColumn('action', function ($karyawan) {
+                $deleteButton = view('components.actions.delete-button', [
+                    'route' => route('karyawan.destroy', $karyawan->id),
+                    'id' => $karyawan->id,
+                    'isPermanent' => true,
+                    'withEdit' => false,
+                    'withShow' => true,
+                    'showRoute' => route('karyawan.show', $karyawan->id),
+                ])->render();
+
+                return $deleteButton;
+            })
+            ->rawColumns(['status', 'action'])
+            ->toJson();
     }
 
     /**
@@ -252,19 +293,10 @@ class KaryawanController extends Controller
         $dataStatusKaryawan = StatusKaryawan::all();
         $dataUnitKaryawan = UnitKaryawan::all();
         $dataPositionKaryawan = PositionKaryawan::all();
+        $dataRoles = Role::get();
+        $dataPermission = Permission::get();
 
-        return view('admin.karyawan.employee.show', compact('title', 'karyawan', 'dataStatusKaryawan', 'dataUnitKaryawan', 'dataPositionKaryawan'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return view('admin.karyawan.employee.show', compact('title', 'karyawan', 'dataStatusKaryawan', 'dataUnitKaryawan', 'dataPositionKaryawan', 'dataRoles', 'dataPermission'));
     }
 
     /**
@@ -276,6 +308,9 @@ class KaryawanController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // Find the Karyawan instance by ID
+        $karyawan = Karyawan::findOrFail($id);
+
         $validator = Validator::make($request->all(), [
             'status_karyawan_id' => 'required|exists:status_karyawans,id',
             'unit_karyawan_id' => 'required|exists:unit_karyawans,id',
@@ -318,98 +353,120 @@ class KaryawanController extends Controller
             'other_document' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
         if ($validator->fails()) {
-            return back()
-                ->with('toast_error', $validator->messages()->all()[0])
-                ->withInput();
-        }
+            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+        } else {
+            $password_baru = bcrypt($request->password_baru);
+            $password_lama = bcrypt($request->password_lama);
 
-        // Find the Karyawan instance by ID
-        $karyawan = Karyawan::findOrFail($id);
+            if ($password_baru != $karyawan->user->password && $request->password_baru != null || $request->username != null) {
+                if ($password_lama != $karyawan->user->password && $request->password_lama != null) {
+                    return back()->with('toast_error', 'Password lama tidak sesuai');
+                } else {
+                    $user = User::findOrFail($karyawan->user_id);
 
-        try {
-            // Map unit_kode to role
-            $unitRoles = [
-                // 0 Super Admin
-                // 1 Admin
-                // Teacher
-                '1' => 2, // Extracurricular Teacher
-                '2' => 2, // Playgroup - Kindergarten
-                '3' => 2, // Primary
-                '4' => 2, // Junior High School
-                '5' => 2, // Senior High School
-
-                '6' => 5, // HRD / Personel
-                '7' => 6, // Finance Admin
-                '8' => 7, // Librarian
-                '9' => 8, // Admission
-                // '10' //Security
-                // '11' //Suster
-                // '12' //Sauber
-                // '13' //IT Staff
-                '14' => 9, // General Affair
-                // '15' => 10, // Cleaner
-                // Sales
-            ];
-
-            $user = User::findOrFail($karyawan->user_id);
-            if (isset($unitRoles[$request->unit_karyawan_id])) {
-                $role = $unitRoles[$request->unit_karyawan_id];
-                $user->role = $role; // update the role
-                $user->status = true; // update the status
-                $user->save(); // save the changes
+                    $user->password = $password_baru;
+                    $user->username = $request->username;
+                    $user->save();
+                }
             }
-        } catch (\Throwable $th) {
-            return back()->with('toast_error', 'Username telah digunakan');
+
+            // Mengupdate role
+            $role = Role::findOrFail($request->role);
+            $karyawan->user->syncRoles([$role->id]);
+
+            // Mengupdate permission
+            $permissions = Permission::findOrFail($request->permission);
+            $karyawan->user->syncPermissions($permissions->pluck('id')->toArray());
+
+            // Mengupdate status
+            $karyawan->user->status = $request->status;
+            $karyawan->user->save();
+
+            try {
+                // Map unit_kode to role
+                $unitRoles = [
+                    // 0 Super Admin
+                    // 1 Admin
+                    // Teacher
+                    '1' => 2, // Extracurricular Teacher
+                    '2' => 2, // Playgroup - Kindergarten
+                    '3' => 2, // Primary
+                    '4' => 2, // Junior High School
+                    '5' => 2, // Senior High School
+
+                    '6' => 5, // HRD / Personel
+                    '7' => 6, // Finance Admin
+                    '8' => 7, // Librarian
+                    '9' => 8, // Admission
+                    // '10' //Security
+                    // '11' //Suster
+                    // '12' //Sauber
+                    // '13' //IT Staff
+                    '14' => 9, // General Affair
+                    // '15' => 10, // Cleaner
+                    // Sales
+                ];
+
+                $user = User::findOrFail($karyawan->user_id);
+                if (isset($unitRoles[$request->unit_karyawan_id])) {
+                    $role = $unitRoles[$request->unit_karyawan_id];
+                    $user->role = $role; // update the role
+                    $user->status = true; // update the status
+                    $user->save(); // save the changes
+                }
+            } catch (\Throwable $th) {
+                return back()->with('toast_error', 'Username telah digunakan');
+            }
+
+            // Update the Karyawan instance with the new request data
+            $karyawan->update([
+                'user_id' => $user->id,
+                'status_karyawan_id' => $request->status_karyawan_id,
+                'unit_karyawan_id' => $request->unit_karyawan_id,
+                'position_karyawan_id' => $request->position_karyawan_id,
+                'resign_date' => $request->resign_date,
+                'join_date' => $request->join_date,
+                'permanent_date' => $request->permanent_date,
+                'kode_karyawan' => $request->kode_karyawan,
+                'nama_lengkap' => $request->nama_lengkap,
+                'nik' => $request->nik,
+                'nomor_akun' => $request->nomor_akun,
+                'nomor_fingerprint' => $request->nomor_fingerprint,
+                'nomor_taxpayer' => $request->nomor_taxpayer,
+                'nama_taxpayer' => $request->nama_taxpayer,
+                'nomor_bpjs_ketenagakerjaan' => $request->nomor_bpjs_ketenagakerjaan,
+                'iuran_bpjs_ketenagakerjaan' => $request->iuran_bpjs_ketenagakerjaan,
+                'nomor_bpjs_yayasan' => $request->nomor_bpjs_yayasan,
+                'nomor_bpjs_pribadi' => $request->nomor_bpjs_pribadi,
+                'jenis_kelamin' => $request->jenis_kelamin,
+                'agama' => $request->agama,
+                'tempat_lahir' => $request->tempat_lahir,
+                'tanggal_lahir' => $request->tanggal_lahir,
+                'alamat' => $request->alamat,
+                'alamat_sekarang' => $request->alamat_sekarang,
+                'kota' => $request->kota,
+                'kode_pos' => $request->kode_pos,
+                'nomor_phone' => $request->nomor_phone,
+                'nomor_hp' => $request->nomor_hp,
+                'email' => $request->email,
+                'email_sekolah' => $request->email_sekolah,
+                'warga_negara' => $request->warga_negara,
+                'status_pernikahan' => $request->status_pernikahan,
+                'nama_pasangan' => $request->nama_pasangan,
+                'jumlah_anak' => $request->jumlah_anak,
+                'keterangan' => $request->keterangan,
+            ]);
+
+
+            // Optionally, you can update and save any uploaded files to the model
+            $this->updateUploadedFiles($request, $karyawan);
+
+            // Save the Karyawan instance to the database
+            $karyawan->save();
+
+            // Redirect or return a response as needed
+            return back()->with('toast_success', 'Karyawan ' . $request->nama_lengkap . ' berhasil diperbarui');
         }
-
-        // Update the Karyawan instance with the new request data
-        $karyawan->update([
-            'user_id' => $user->id,
-            'status_karyawan_id' => $request->status_karyawan_id,
-            'unit_karyawan_id' => $request->unit_karyawan_id,
-            'position_karyawan_id' => $request->position_karyawan_id,
-            'resign_date' => $request->resign_date,
-            'join_date' => $request->join_date,
-            'permanent_date' => $request->permanent_date,
-            'kode_karyawan' => $request->kode_karyawan,
-            'nama_lengkap' => $request->nama_lengkap,
-            'nik' => $request->nik,
-            'nomor_akun' => $request->nomor_akun,
-            'nomor_fingerprint' => $request->nomor_fingerprint,
-            'nomor_taxpayer' => $request->nomor_taxpayer,
-            'nama_taxpayer' => $request->nama_taxpayer,
-            'nomor_bpjs_ketenagakerjaan' => $request->nomor_bpjs_ketenagakerjaan,
-            'iuran_bpjs_ketenagakerjaan' => $request->iuran_bpjs_ketenagakerjaan,
-            'nomor_bpjs_yayasan' => $request->nomor_bpjs_yayasan,
-            'nomor_bpjs_pribadi' => $request->nomor_bpjs_pribadi,
-            'jenis_kelamin' => $request->jenis_kelamin,
-            'agama' => $request->agama,
-            'tempat_lahir' => $request->tempat_lahir,
-            'tanggal_lahir' => $request->tanggal_lahir,
-            'alamat' => $request->alamat,
-            'alamat_sekarang' => $request->alamat_sekarang,
-            'kota' => $request->kota,
-            'kode_pos' => $request->kode_pos,
-            'nomor_phone' => $request->nomor_phone,
-            'nomor_hp' => $request->nomor_hp,
-            'email' => $request->email,
-            'email_sekolah' => $request->email_sekolah,
-            'warga_negara' => $request->warga_negara,
-            'status_pernikahan' => $request->status_pernikahan,
-            'nama_pasangan' => $request->nama_pasangan,
-            'jumlah_anak' => $request->jumlah_anak,
-            'keterangan' => $request->keterangan,
-        ]);
-
-
-        // Optionally, you can update and save any uploaded files to the model
-        $this->updateUploadedFiles($request, $karyawan);
-
-        // Save the Karyawan instance to the database
-        $karyawan->save();
-
-        // Redirect or return a response as needed
-        return back()->with('toast_success', 'Karyawan ' . $request->nama_lengkap . ' berhasil diperbarui');
     }
 
     private function updateUploadedFiles(Request $request, Karyawan $karyawan)

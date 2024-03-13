@@ -137,154 +137,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php $no = 0; ?>
-                                        @foreach ($data_user as $user)
-                                            <?php $no++; ?>
-                                            <tr>
-                                                <td>{{ $no }}</td>
-                                                <td>
-                                                    @if ($user->role == 3)
-                                                        <a class="text-decoration-none text-body"
-                                                            href="{{ route('siswa.show', $user->siswa->id) }}">{{ $user->siswa->nama_lengkap }}</a>
-                                                    @elseif($user->karyawan)
-                                                        <a class="text-decoration-none text-body"
-                                                            href="{{ route('karyawan.show', $user->karyawan->id) }}">{{ $user->karyawan->nama_lengkap }}</a>
-                                                    @endif
-                                                </td>
 
-                                                <td>{{ $user->username }}</td>
-                                                <td>
-                                                    @if ($user->role == '3')
-                                                        Student
-                                                    @elseif($user->role == '2')
-                                                        Teacher
-                                                    @elseif($user->role == '0' || $user->role == '1')
-                                                        Administrator
-                                                    @else
-                                                        Employee
-                                                    @endif
-                                                </td>
-                                                <td class="text-center">
-                                                    @if ($user->status == true)
-                                                        <span class="badge bg-success">Aktif</span>
-                                                    @else
-                                                        <span class="badge bg-danger">Non Aktif</span>
-                                                    @endif
-                                                </td>
-                                                <td class="text-center">
-
-                                                    @php
-                                                        if ($user->role == '3' && $user->siswa) {
-                                                            $showRoute = route('siswa.show', $user->siswa->id);
-                                                        } elseif ($user->karyawan) {
-                                                            $showRoute = route('karyawan.show', $user->karyawan->id);
-                                                        } else {
-                                                            $showRoute = '#';
-                                                        }
-                                                    @endphp
-
-                                                    @include('components.actions.delete-button', [
-                                                        'route' => route('user.destroy', $user->id),
-                                                        'id' => $user->id,
-                                                        'isPermanent' => false,
-                                                        'withEdit' => true,
-                                                        'withShow' => true,
-                                                        'showRoute' => $showRoute,
-                                                    ])
-                                                </td>
-                                            </tr>
-
-                                            <!-- Modal edit -->
-                                            <div class="modal fade" id="modal-edit{{ $user->id }}">
-                                                <div class="modal-dialog modal-lg">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title">Edit {{ $title }} Admin</h5>
-                                                            <button type="button" class="btn-close"
-                                                                data-bs-dismiss="modal" aria-hidden="true"></button>
-                                                        </div>
-                                                        <form action="{{ route('user.update', $user->id) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            @method('PUT')
-                                                            <div class="modal-body">
-                                                                <div class="form-group row">
-                                                                    <label for="username"
-                                                                        class="col-sm-3 col-form-label">Username</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="text" class="form-control"
-                                                                            id="username" name="username"
-                                                                            placeholder="Username"
-                                                                            value="{{ $user->username }}" required>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <label for="password"
-                                                                        class="col-sm-3 col-form-label">Password</label>
-                                                                    <div class="col-sm-9">
-                                                                        <input type="password" class="form-control"
-                                                                            id="password" name="password"
-                                                                            placeholder="Password">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <label for="role"
-                                                                        class="col-sm-3 col-form-label">Role</label>
-                                                                    <div class="col-sm-9">
-                                                                        <select class="form-control form-select "
-                                                                            name="role" id="">
-                                                                            @foreach ($data_roles as $role)
-                                                                                <option value="{{ $role->id }}"
-                                                                                    {{ $user->hasRole($role->name) ? 'selected' : '' }}>
-                                                                                    {{ $role->name }}</option>
-                                                                            @endforeach
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <label for="permission"
-                                                                        class="col-sm-3 col-form-label">Permission</label>
-                                                                    <div class="col-sm-9">
-                                                                        <select class="form-control form-select"
-                                                                            name="permission[]" id="permission" multiple>
-                                                                            @foreach ($data_permission as $permission)
-                                                                                <option value="{{ $permission->id }}"
-                                                                                    {{ $user->hasPermissionTo($permission->name) ? 'selected' : '' }}>
-                                                                                    {{ $permission->name }}
-                                                                                </option>
-                                                                            @endforeach
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="form-group row">
-                                                                    <label for="status"
-                                                                        class="col-sm-3 col-form-label">Status Akun</label>
-                                                                    <div class="col-sm-9 pt-1">
-                                                                        <label class="radio-inline me-3"><input
-                                                                                type="radio" name="status"
-                                                                                value="1"
-                                                                                @if ($user->status == 1) checked @endif
-                                                                                required> Aktif</label>
-                                                                        <label class="radio-inline me-3"><input
-                                                                                type="radio" name="status"
-                                                                                value="0"
-                                                                                @if ($user->status == 0) checked @endif
-                                                                                required> Non Aktif</label>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="modal-footer justify-content-end">
-                                                                <button type="button" class="btn btn-default"
-                                                                    data-bs-dismiss="modal">Batal</button>
-                                                                <button type="submit"
-                                                                    class="btn btn-primary">Simpan</button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- End Modal edit -->
-                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -301,6 +154,44 @@
     <!-- ============================================================== -->
     </div>
 @endsection
+
+@push('custom-scripts')
+    <script>
+        $(document).ready(function() {
+            $('#zero_config').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    "url": "{{ route('user.data') }}",
+                },
+                "columns": [{
+                        "data": "id"
+                    },
+                    {
+                        "data": "full_name"
+                    },
+                    {
+                        "data": "username"
+                    },
+                    {
+                        "data": "level"
+                    },
+                    {
+                        "data": "status_akun"
+                    },
+                    {
+                        "data": "action",
+                        "orderable": false,
+                        "searchable": false
+                    }
+                ],
+                "language": {
+                    "processing": "<div class='spinner-border text-primary' role='status'><span class='visually-hidden'>Loading...</span></div>"
+                }
+            });
+        });
+    </script>
+@endpush
 
 @section('footer')
     @include('layouts.main.footer')
