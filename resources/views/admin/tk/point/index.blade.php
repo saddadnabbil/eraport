@@ -117,44 +117,11 @@
                                         <?php $no = 0; ?>
                                         @foreach ($data_point as $key => $point)
                                             <?php $no++; ?>
-                                            @if ($key == 0 || $point->element->name != $data_point[$key - 1]->element->name)
-                                                <?php $elementColspan = 1; ?>
-                                            @else
-                                                <?php $elementColspan++; ?>
-                                            @endif
-
-                                            @if ($key == 0 || $point->topic->name != $data_point[$key - 1]->topic->name)
-                                                <?php $topicColspan = 1; ?>
-                                            @else
-                                                <?php $topicColspan++; ?>
-                                            @endif
-
-                                            @if ($key == 0 || $point->subtopic->name != $data_point[$key - 1]->subtopic->name)
-                                                <?php $subtopicColspan = 1; ?>
-                                            @else
-                                                <?php $subtopicColspan++; ?>
-                                            @endif
-
                                             <tr>
                                                 <td>{{ $no }}</td>
-                                                @if ($elementColspan > 1)
-                                                    <td colspan="{{ $elementColspan }}">{{ $point->element->name }}</td>
-                                                @else
-                                                    <td>{{ $point->element->name }}</td>
-                                                @endif
-
-                                                @if ($topicColspan > 1)
-                                                    <td colspan="{{ $topicColspan }}">{{ $point->topic->name }}</td>
-                                                @else
-                                                    <td>{{ $point->topic->name }}</td>
-                                                @endif
-
-                                                @if ($subtopicColspan > 1)
-                                                    <td colspan="{{ $subtopicColspan }}">{{ $point->subtopic->name }}</td>
-                                                @else
-                                                    <td>{{ $point->subtopic->name }}</td>
-                                                @endif
-
+                                                <td>{{ $point->element->name }}</td>
+                                                <td>{{ $point->topic->name }}</td>
+                                                <td>{{ $point->subtopic->name }}</td>
                                                 <td>{{ $point->name }}</td>
                                                 <td class="text-center">
                                                     @include('components.actions.delete-button', [
