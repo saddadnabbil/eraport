@@ -19,9 +19,10 @@ class TkPointController extends Controller
     {
         $title = 'Point';
         $data_subtopic = TkSubtopic::get();
+        $data_topic = TkSubtopic::get();
         $data_point = TkPoint::get();
 
-        return view('admin.tk.point.index', compact('title', 'data_point', 'data_subtopic'));
+        return view('admin.tk.point.index', compact('title', 'data_point', 'data_subtopic', 'data_topic'));
     }
 
     /**

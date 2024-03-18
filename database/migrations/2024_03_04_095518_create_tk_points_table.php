@@ -15,7 +15,8 @@ class CreateTkPointsTable extends Migration
     {
         Schema::create('tk_points', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('tk_subtopic_id');
+            $table->unsignedBigInteger('tk_topic_id');
+            $table->unsignedBigInteger('tk_subtopic_id')->nullable();
             $table->string('name');
             $table->timestamps();
 

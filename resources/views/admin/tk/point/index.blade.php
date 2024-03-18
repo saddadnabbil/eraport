@@ -64,6 +64,22 @@
                                         @csrf
                                         <div class="modal-body">
                                             <div class="form-group row">
+                                                <label for="tk_topic_id" class="col-sm-3 col-form-label">Topic
+                                                </label>
+                                                <div class="col-sm-9">
+                                                    <select class="form-control form-select select2" name="tk_topic_id"
+                                                        id="tk_topic_id">
+                                                        <option value="">-- Pilih Topic --
+                                                        </option>
+                                                        @foreach ($data_topic as $topic)
+                                                            <option value="{{ $topic->id }}">
+                                                                {{ $topic->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
                                                 <label for="tk_subtopic_id" class="col-sm-3 col-form-label">Subtopic
                                                 </label>
                                                 <div class="col-sm-9">
@@ -119,9 +135,9 @@
                                             <?php $no++; ?>
                                             <tr>
                                                 <td>{{ $no }}</td>
-                                                <td>{{ $point->element->name }}</td>
+                                                <td>{{ $point->topic->element->name }}</td>
                                                 <td>{{ $point->topic->name }}</td>
-                                                <td>{{ $point->subtopic->name }}</td>
+                                                <td>{{ $point->subtopic ? $point->subtopic->name : '' }}</td>
                                                 <td>{{ $point->name }}</td>
                                                 <td class="text-center">
                                                     @include('components.actions.delete-button', [
@@ -148,6 +164,24 @@
                                                             @csrf
                                                             @method('PUT')
                                                             <div class="modal-body">
+                                                                <div class="form-group row">
+                                                                    <label for="tk_element_id"
+                                                                        class="col-sm-3 col-form-label">Topic
+                                                                    </label>
+                                                                    <div class="col-sm-9">
+                                                                        <select class="form-control form-select select2"
+                                                                            name="tk_element_id" id="tk_element_id">
+                                                                            <option value="">-- Pilih Topic --
+                                                                            </option>
+                                                                            @foreach ($data_topic as $topic)
+                                                                                <option value="{{ $topic->id }}"
+                                                                                    {{ $point->tk_topic_id == $topic->id ? 'selected' : '' }}>
+                                                                                    {{ $topic->name }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
                                                                 <div class="form-group row">
                                                                     <label for="tk_element_id"
                                                                         class="col-sm-3 col-form-label">Sub Topic
@@ -180,7 +214,8 @@
                                                             <div class="modal-footer justify-content-end">
                                                                 <button type="button" class="btn btn-default"
                                                                     data-bs-dismiss="modal">Cancel</button>
-                                                                <button type="submit" class="btn btn-primary">Save</button>
+                                                                <button type="submit"
+                                                                    class="btn btn-primary">Save</button>
                                                             </div>
                                                         </form>
                                                     </div>

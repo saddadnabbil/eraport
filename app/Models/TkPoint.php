@@ -17,11 +17,11 @@ class TkPoint extends Model
 
     public function topic()
     {
-        return $this->subtopic->topic();
+        return $this->belongsTo(TkTopic::class, 'tk_topic_id');
     }
 
     public function element()
     {
-        return $this->topic->element();
+        return $this->belongsTo(TkElement::class, 'tk_element_id');
     }
 }

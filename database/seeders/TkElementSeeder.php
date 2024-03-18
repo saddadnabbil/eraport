@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\TkElement;
 use Illuminate\Database\Seeder;
 
 class TkElementSeeder extends Seeder
@@ -13,6 +14,14 @@ class TkElementSeeder extends Seeder
      */
     public function run()
     {
-        //
+        TkElement::create([
+            'name' => 'COMMUNICATION, LANGUAGES AND LITERACY',
+        ]);
+        TkElement::create([
+            'name' => 'PROBLEM SOLVING, REASONING AND NUMERACY',
+        ]);
+        TkElement::create([
+            'name' => 'KNOWLEDGE AND UNDERSTANDING OF THE WORLD',
+        ]);
     }
 }

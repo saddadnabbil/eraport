@@ -46,7 +46,7 @@
                                     <div class="form-group row">
                                         <label for="pembelajaran_id" class="col-sm-3 col-form-label">Kelas</label>
                                         <div class="col-sm-9">
-                                            <select class="form-control form-select select2" name="pembelajaran_id"
+                                            <select class="form-control form-select select2" name="kelas_id"
                                                 style="width: 100%;" required onchange="this.form.submit();">
                                                 <option value="">-- Pilih Kelas --</option>
                                                 @foreach ($data_kelas as $kelas)
