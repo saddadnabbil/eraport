@@ -1,24 +1,30 @@
 <?php
 
 use App\Models\Kelas;
+use App\Models\TkPoint;
 use App\Models\Semester;
+use App\Models\TkElement;
+
+
 use App\Models\AnggotaKelas;
 use App\Models\PrestasiSiswa;
-
-
 use Illuminate\Database\Seeder;
 use App\Models\KmNilaiAkhirRaport;
 use App\Models\CapaianPembelajaran;
 use Database\Seeders\SilabusSeeder;
+use Database\Seeders\TkPointSeeder;
+use Database\Seeders\TkTopicSeeder;
 use Database\Seeders\GuruTableSeeder;
 use Database\Seeders\RoleTableSeeder;
 use Database\Seeders\TermTableSeeder;
+use Database\Seeders\TkElementSeeder;
 use Database\Seeders\AdminTableSeeder;
 use Database\Seeders\KelasTableSeeder;
 use Database\Seeders\MapelTableSeeder;
 use Database\Seeders\PermissionSeeder;
 use Database\Seeders\SiswaTableSeeder;
 use Database\Seeders\TapelTableSeeder;
+use Database\Seeders\TkSubtopicSeeder;
 use Database\Seeders\JurusanTableSeeder;
 use Database\Seeders\KaryawanTableSeeder;
 use Database\Seeders\SemesterTableSeeder;
@@ -106,6 +112,12 @@ class DatabaseSeeder extends Seeder
 
             // Timetable
             JadwalPelajaranSlotTableSeeder::class,
+
+            // Tk report
+            TkElementSeeder::class,
+            TkTopicSeeder::class,
+            TkSubtopicSeeder::class,
+            TkPointSeeder::class,
         ]);
     }
 }

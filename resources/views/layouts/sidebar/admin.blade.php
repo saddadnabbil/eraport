@@ -16,7 +16,16 @@
                   @include('layouts.partials.sidebar.admin.masterdata')
 
                   <li class="list-divider"></li>
+                  <li class="nav-small-cap">
+                      <span class="hide-menu">REPORT KM TK</span>
+                  </li>
+                  @include('layouts.partials.sidebar.reportkm-tk.event')
+                  @include('layouts.partials.sidebar.reportkm-tk.rencanapenilaian')
+                  @include('layouts.partials.sidebar.reportkm-tk.inputdata')
+                  @include('layouts.partials.sidebar.reportkm-tk.penilaian')
 
+
+                  <li class="list-divider"></li>
                   <li class="nav-small-cap">
                       <span class="hide-menu">REPORT KM</span>
                   </li>
@@ -31,11 +40,9 @@
                   <li class="nav-small-cap">
                       <span class="hide-menu">REPORT RESULTS KM</span>
                   </li>
-                  @include('layouts.partials.sidebar.reportresultkm.statuspenilaian')
                   @include('layouts.partials.sidebar.reportresultkm.rekapkehadiran')
                   @include('layouts.partials.sidebar.reportresultkm.leger')
                   @include('layouts.partials.sidebar.reportresultkm.printreport')
-
 
                   <li class="list-divider"></li>
                   <li class="nav-small-cap">

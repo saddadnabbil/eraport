@@ -25,7 +25,7 @@ class CatatanWaliKelasController extends Controller
         $title = 'Catatan Wali Kelas';
         $tapel = Tapel::where('status', 1)->first();
 
-        $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
+        $data_kelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2])->get();
 
         return view('admin.catatan.index', compact('title', 'data_kelas'));
     }
@@ -35,7 +35,7 @@ class CatatanWaliKelasController extends Controller
         $title = 'Input Catatan Wali Kelas';
         $tapel = Tapel::where('status', 1)->first();
 
-        $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)->where('id', $request->kelas_id)->get('id');
+        $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)->where('id', $request->kelas_id)->whereNotIn('tingkatan_id', [1, 2])->get('id');
 
         $id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('id');
         $kelas_id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('kelas_id');

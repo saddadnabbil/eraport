@@ -1134,61 +1134,7 @@
                                             <th>Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <?php $no = 0; ?>
-                                        @foreach ($data_siswa as $siswa)
-                                            <?php $no++; ?>
-                                            <tr>
-                                                <td>{{ $no }}</td>
-                                                <td><a class="text-decoration-none text-body"
-                                                        href="{{ route('siswa.show', $siswa->id) }}">{{ $siswa->nama_lengkap }}</a>
-                                                </td>
-                                                <td>
-                                                    @if ($siswa->kelas_id == null)
-                                                        <span class="badge light bg-warning">Belum terdata</span>
-                                                    @else
-                                                        {{ $siswa->kelas->tingkatan->nama_tingkatan }}
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    @if ($siswa->kelas_id == null)
-                                                        <span class="badge light bg-warning">Belum masuk anggota
-                                                            kelas</span>
-                                                    @else
-                                                        {{ $siswa->kelas->nama_kelas }}
-                                                    @endif
-                                                </td>
-                                                <td>{{ $siswa->nis }}</td>
-                                                <td>{{ $siswa->nisn }}</td>
-                                                <td>{{ $siswa->jenis_kelamin }}</td>
-                                                <td>
-                                                    @if ($siswa->user->status == true && $siswa->status == true)
-                                                        <span class="badge bg-success">Active</span>
-                                                    @else
-                                                        <span class="badge bg-danger">Non Active</span>
-                                                    @endif
-                                                </td>
-
-                                                <td class="text-center">
-                                                    @php
-                                                        $cacheKey = 'delete-button-' . $siswa->id;
-                                                        $deleteButton = Cache::remember($cacheKey, 120, function () use ($siswa) {
-                                                            return view('components.actions.delete-button', [
-                                                                'route' => route('siswa.destroy', $siswa->id),
-                                                                'id' => $siswa->id,
-                                                                'isPermanent' => false,
-                                                                'withShow' => true,
-                                                                'showRoute' => route('siswa.show', $siswa->id),
-                                                                'withEdit' => false,
-                                                            ])->render();
-                                                        });
-                                                    @endphp
-
-                                                    {!! $deleteButton !!}
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
+                                    <tbody></tbody>
                                 </table>
                             </div>
                         </div>
@@ -1279,6 +1225,51 @@
                     $('select[name="kelas_id"').empty();
                 }
             });
+        });
+    </script>
+
+    {{-- datatable --}}
+    <script>
+        $(document).ready(function() {
+            if (!$.fn.DataTable.isDataTable('#zero_config')) {
+                $('#zero_config').DataTable({
+                    "processing": true,
+                    "serverSide": true,
+                    "ajax": {
+                        "url": "{{ route('siswa.data') }}",
+                    },
+                    "columns": [{
+                            "data": "id"
+                        },
+                        {
+                            "data": "nama_lengkap"
+                        },
+                        {
+                            "data": "tingkatan"
+                        },
+                        {
+                            "data": "kelas"
+                        },
+                        {
+                            "data": "nis"
+                        },
+                        {
+                            "data": "nisn"
+                        },
+                        {
+                            "data": "jenis_kelamin"
+                        },
+                        {
+                            "data": "status"
+                        },
+                        {
+                            "data": "action",
+                            "orderable": false,
+                            "searchable": false
+                        }
+                    ]
+                });
+            }
         });
     </script>
 @endpush

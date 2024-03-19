@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Exports\GuruExport;
-use App\Models\Guru;
-use App\Http\Controllers\Controller;
-use App\Imports\GuruImport;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Excel;
+use App\Models\Guru;
+use App\Models\User;
+use App\Exports\GuruExport;
+use App\Imports\GuruImport;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Response;
+use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Validator;
 
 class GuruController extends Controller
 {
@@ -24,6 +25,33 @@ class GuruController extends Controller
         $title = 'Data Guru';
         $data_guru = Guru::orderBy('id', 'ASC')->get();
         return view('admin.guru.index', compact('title', 'data_guru'));
+    }
+
+    public function data()
+    {
+        $dataGuru = Guru::orderBy('id', 'ASC')->get();
+
+        return DataTables::of($dataGuru)
+            ->addColumn('full_name', function ($guru) {
+                return $guru->karyawan->nama_lengkap;
+            })
+            ->addColumn('employee_code', function ($guru) {
+                return $guru->karyawan->kode_karyawan;
+            })
+            ->addColumn('identity_card', function ($guru) {
+                return $guru->karyawan->nik;
+            })
+            ->addColumn('number_phone', function ($guru) {
+                return $guru->karyawan->nomor_phone;
+            })
+            ->addColumn('gender', function ($guru) {
+                return $guru->jenis_kelamin == 'L' ? 'Male' : 'Female';
+            })
+            ->addColumn('action', function ($guru) {
+                return '<a href="' . route('karyawan.show', $guru->karyawan->id) . '" class="btn btn-info btn-sm mt-1"><i class="fas fa-eye"></i></a>';
+            })
+            ->rawColumns(['action']) // Untuk menginterpretasikan HTML dalam kolom action
+            ->toJson();
     }
 
     /**

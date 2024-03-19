@@ -16,7 +16,7 @@ class TingkatanController extends Controller
         $title = 'Data Tingkatan';
         $tapel = Tapel::where('status', 1)->first();
 
-        $data_tingkatan = Tingkatan::orderBy('id', 'DESC')->get();
+        $data_tingkatan = Tingkatan::orderBy('id', 'ASC')->get();
 
         return view('admin.tingkatan.index', compact('title', 'data_tingkatan', 'tapel'));
     }

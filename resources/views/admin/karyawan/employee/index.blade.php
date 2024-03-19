@@ -557,46 +557,6 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php $no = 0; ?>
-                                        @foreach ($dataKaryawan as $karyawan)
-                                            <?php $no++; ?>
-                                            <tr>
-                                                <td>{{ $no }}</td>
-                                                <td>{{ $karyawan->kode_karyawan }}</td>
-                                                <td><a class="text-decoration-none text-body"
-                                                        href="{{ route('karyawan.show', $karyawan->id) }}">{{ $karyawan->nama_lengkap }}</a>
-                                                </td>
-                                                <td>{{ $karyawan->jenis_kelamin }}</td>
-                                                <td>{{ $karyawan->statusKaryawan->status_nama }}</td>
-                                                <td>{{ $karyawan->unitKaryawan->unit_nama }}</td>
-                                                <td>{{ $karyawan->positionKaryawan->position_nama }}</td>
-                                                <td>
-                                                    @if ($karyawan->status == true)
-                                                        <span class="badge bg-success">Aktif</span>
-                                                    @else
-                                                        <span class="badge bg-danger">Non Aktif</span>
-                                                    @endif
-                                                </td>
-
-                                                <td class="text-center">
-                                                    @php
-                                                        $cacheKey = 'delete-button-' . $karyawan->id;
-                                                        $deleteButton = Cache::remember($cacheKey, 120, function () use ($karyawan) {
-                                                            return view('components.actions.delete-button', [
-                                                                'route' => route('karyawan.destroy', $karyawan->id),
-                                                                'id' => $karyawan->id,
-                                                                'isPermanent' => true,
-                                                                'withEdit' => false,
-                                                                'withShow' => true,
-                                                                'showRoute' => route('karyawan.show', $karyawan->id),
-                                                            ])->render();
-                                                        });
-                                                    @endphp
-
-                                                    {!! $deleteButton !!}
-                                                </td>
-                                            </tr>
-                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -695,6 +655,51 @@
                 reader.readAsDataURL(input.files[0]);
             }
         }
+    </script>
+
+    {{-- datatable --}}
+    <script>
+        $(document).ready(function() {
+            if (!$.fn.DataTable.isDataTable('#zero_config')) {
+                $('#zero_config').DataTable({
+                    "processing": true,
+                    "serverSide": true,
+                    "ajax": {
+                        "url": "{{ route('karyawan.data') }}",
+                    },
+                    "columns": [{
+                            "data": "id"
+                        },
+                        {
+                            "data": "kode_karyawan"
+                        },
+                        {
+                            "data": "nama_lengkap"
+                        },
+                        {
+                            "data": "jenis_kelamin"
+                        },
+                        {
+                            "data": "status_karyawan.nama_status_karyawan"
+                        },
+                        {
+                            "data": "unit_karyawan.nama_unit_karyawan"
+                        },
+                        {
+                            "data": "position_karyawan.nama_position_karyawan"
+                        },
+                        {
+                            "data": "status"
+                        },
+                        {
+                            "data": "action",
+                            "orderable": false,
+                            "searchable": false
+                        }
+                    ]
+                });
+            }
+        });
     </script>
 @endpush
 

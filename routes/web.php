@@ -64,6 +64,8 @@ Route::group(['middleware' => ['auth']], function () {
             // User Controller
             Route::get('user/export', 'Admin\UserController@export')->name('user.export');
             Route::resource('user', 'Admin\UserController')->only(['index', 'store', 'update', 'destroy']);
+            Route::get('user/data', 'Admin\UserController@data')->name('user.data');
+            Route::get('user/{id}', 'UserController@getUser')->name('user.get');
             Route::get('user/trash', 'Admin\UserController@showTrash')->name('user.trash');
             Route::delete('user/{id}/permanent-delete', 'Admin\UserController@destroyPermanent')->name('user.permanent-delete');
             Route::patch('user/{id}/restore', 'Admin\UserController@restore')->name('user.restore');
@@ -72,6 +74,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::resource('sekolah', 'Admin\SekolahController')->only(['index', 'update']);
 
             // Guru Controller
+            Route::get('guru/data', 'Admin\GuruController@data')->name('guru.data');
             Route::get('guru/export', 'Admin\GuruController@export')->name('guru.export');
             Route::get('guru/import', 'Admin\GuruController@format_import')->name('guru.format_import');
             Route::post('guru/import', 'Admin\GuruController@import')->name('guru.import');
@@ -114,6 +117,7 @@ Route::group(['middleware' => ['auth']], function () {
             ]);
 
             Route::get('siswa/export', 'Admin\SiswaController@export')->name('siswa.export');
+            Route::get('siswa/data', 'Admin\SiswaController@data')->name('siswa.data');
             Route::get('siswa/import', 'Admin\SiswaController@format_import')->name('siswa.format_import');
             Route::post('siswa/import', 'Admin\SiswaController@import')->name('siswa.import');
             Route::post('siswa/registrasi', 'Admin\SiswaController@registrasi')->name('siswa.registrasi');
@@ -173,13 +177,9 @@ Route::group(['middleware' => ['auth']], function () {
             // Start Raport KM
             Route::delete('/cp/delete/{id}', 'Admin\KM\CapaianPembelajaranController@destroy')->name('admin.cp.destroy');
             Route::resource('cp', 'Admin\KM\CapaianPembelajaranController')->only(['index', 'store', 'update', 'create']);
-
             Route::resource('rencanaformatif', 'Admin\KM\RencanaNilaiFormatifController')->only(['index', 'create', 'store', 'show', 'edit', 'update', 'destroy']);
-
             Route::resource('rencanasumatif', 'Admin\KM\RencanaNilaiSumatifController')->only(['index', 'create', 'store', 'show', 'edit', 'update', 'destroy']);
-
             Route::resource('penilaiankm', 'Admin\KM\PenilaianKurikulumMerdekaController')->only(['index', 'create', 'store', 'show', 'edit', 'update']);
-
             Route::resource('nilaiterkirimkmadmin', 'Admin\KM\LihatNilaiTerkirimController', [
                 'uses' => ['index', 'create'],
             ]);
@@ -244,6 +244,7 @@ Route::group(['middleware' => ['auth']], function () {
                 'uses' => ['index', 'update', 'destroy'],
             ]);
 
+            Route::get('karyawan/data', 'Admin\KaryawanController@data')->name('karyawan.data');
             Route::get('karyawan/export', 'Admin\KaryawanController@export')->name('karyawan.export');
             Route::get('karyawan/import', 'Admin\KaryawanController@format_import')->name('karyawan.format_import');
             Route::post('karyawan/import', 'Admin\KaryawanController@import')->name('karyawan.import');
@@ -282,6 +283,39 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('jadwalmengajar/manage', 'Admin\JadwalMengajarController@manage')->name('jadwalmengajar.manage');
             Route::put('jadwalmengajar/{id}/manage', 'Admin\JadwalMengajarController@manageUpdate')->name('jadwalmengajar.manage.update');
             Route::get('jadwalmengajar/{id}/print', 'Admin\JadwalMengajarController@print')->name('jadwalmengajar.print');
+
+
+            // TK 
+            // input data siswa tk
+            Route::resource('kehadiranadmintk', 'Admin\TkKehadiranSiswaController', [
+                'uses' => ['index', 'store', 'create'],
+            ]);
+            Route::resource('event', 'Admin\TkEventController', [
+                'uses' => ['index', 'store', 'create', 'update', 'destory'],
+            ]);
+            Route::resource('rekapevent', 'Admin\TkEventAchivementGradeSiswaController', [
+                'uses' => ['index', 'store', 'create'],
+            ]);
+            Route::resource('catatanadmintk', 'Admin\TkCatatanWaliKelasController', [
+                'uses' => ['index', 'store', 'create'],
+            ]);
+
+            // rencana penilaiaan tk
+            Route::resource('tkelement', 'Admin\TkElementController', [
+                'uses' => ['index', 'store', 'create', 'update', 'destory'],
+            ]);
+            Route::resource('tktopic', 'Admin\TkTopicController', [
+                'uses' => ['index', 'store', 'create', 'update', 'destory'],
+            ]);
+            Route::resource('tksubtopic', 'Admin\TkSubtopicController', [
+                'uses' => ['index', 'store', 'create', 'update', 'destory'],
+            ]);
+            Route::resource('tkpoint', 'Admin\TkPointController', [
+                'uses' => ['index', 'store', 'create', 'update', 'destory'],
+            ]);
+
+            // penilaian tk
+            Route::resource('penilaiantk', 'Admin\KM\PenilaianTkController')->only(['index', 'create', 'store', 'show', 'edit', 'update']);
         });
     });
     // End Route User Admin

@@ -69,7 +69,7 @@
                                                         </td>
                                                         <td class="text-center">{{ $anggota_kelas->kelas->nama_kelas }}</td>
                                                         <td>
-                                                            <textarea class="form-control" name="catatan_wali_kelas[]" rows="3" minlength="30" maxlength="200" required
+                                                            <textarea class="form-control" name="catatan_wali_kelas[]" rows="3" minlength="30" maxlength="200"
                                                                 oninvalid="this.setCustomValidity('Catatan harus berisi antara 20 s/d 100 karekter')"
                                                                 oninput="setCustomValidity('')">{{ $anggota_kelas->catatan_wali_kelas }}</textarea>
                                                         </td>

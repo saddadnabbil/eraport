@@ -1,0 +1,56 @@
+@php
+    $userRole = Auth::user()->role;
+
+    switch ($userRole) {
+        case 1:
+            $checkRoute = route('user.index');
+            $dynamicRoute = route('user.index');
+            break;
+        case 2:
+            $checkRoute = route('user.index');
+            $dynamicRoute = route('user.index');
+            break;
+    }
+@endphp
+
+@include('layouts.partials.sidebar._sidebar-item', [
+    'isActive' => request()->routeIs([
+        'tglraportkm.*',
+        'kkmadmin.*',
+        'mappingkm.*',
+        'tkelement.*',
+        'prestasiadmin.*',
+        'catatanadmin.*',
+        'kenaikanadmin.*',
+    ]),
+    'hasArrow' => true,
+    'icon' => 'clipboard',
+    'itemName' => 'Rencana Penilaian',
+    'route' => 'javascript:void(0)',
+    'subItems' => [
+        [
+            'name' => 'Elements',
+            'route' => route('tkelement.index'),
+            'isActive' => request()->routeIs('tkelement.*'),
+            'childHasArrow' => false,
+        ],
+        [
+            'name' => 'Topics',
+            'route' => route('tktopic.index'),
+            'isActive' => request()->routeIs('tktopic.*'),
+            'childHasArrow' => false,
+        ],
+        [
+            'name' => 'Subtopics',
+            'route' => route('tksubtopic.index'),
+            'isActive' => request()->routeIs('tksubtopic.*'),
+            'childHasArrow' => false,
+        ],
+        [
+            'name' => 'Points',
+            'route' => route('tkpoint.index'),
+            'isActive' => request()->routeIs('tkpoint.*'),
+            'childHasArrow' => false,
+        ],
+    ],
+])

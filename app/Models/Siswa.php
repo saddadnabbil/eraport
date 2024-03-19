@@ -26,7 +26,7 @@ class Siswa extends Model
 
     public function tingkatan()
     {
-        return $this->belongsTo('App\Models\Tingkat');
+        return $this->belongsTo('App\Models\Tingkatan');
     }
 
     public function anggota_kelas()
