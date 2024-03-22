@@ -105,6 +105,7 @@
                                                 optional($jhs)->count() > 0 &&
                                                 optional($shs)->count() > 0)
                                             School Year {{ str_replace('-', ' / ', $tapel->tahun_pelajaran) }} -
+                                            (Term PG/KG - {{ optional($ps)->term_id }}) -
                                             (Semester PS
                                             {{ optional($ps)->semester_id . '-' . optional($ps)->term_id }}) -
                                             (Semester JHS

@@ -20,7 +20,7 @@ class TkPointController extends Controller
         $title = 'Point';
         $data_subtopic = TkSubtopic::get();
         $data_topic = TkSubtopic::get();
-        $data_point = TkPoint::get();
+        $data_point = TkPoint::orderBy('tk_topic_id')->orderBy('id')->get();
 
         return view('admin.tk.point.index', compact('title', 'data_point', 'data_subtopic', 'data_topic'));
     }
@@ -34,7 +34,7 @@ class TkPointController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'tk_subtopic_id' => 'required|exists:tk_subtopics,id',
+            'tk_topic_id' => 'required|exists:tk_subtopics,id',
             'name' => 'required|string|max:255',
         ]);
 
@@ -52,7 +52,7 @@ class TkPointController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'tk_subtopic_id' => 'required|exists:tk_subtopics,id',
+            'tk_topic_id' => 'required|exists:tk_subtopics,id',
             'name' => 'required|string|max:255',
         ]);
 
@@ -65,6 +65,8 @@ class TkPointController extends Controller
         $tkPoint = TkPoint::findOrFail($id);
 
         $tkPoint->update([
+            'tk_topic_id' => $request->tk_topic_id,
+            'tk_subtopic_id' => $request->tk_subtopic_id,
             'name' => $request->name,
         ]);
 

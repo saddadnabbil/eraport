@@ -59,7 +59,7 @@ class TkPointSeeder extends Seeder
         TkPoint::create([
             'tk_topic_id' => 2,
             'tk_subtopic_id' => 3,
-            'name' => 'Performs Show and Tell confidently',
+            'name' => 'Performs Show and Tell confidently (Topic 2)',
         ]);
         TkPoint::create([
             'tk_topic_id' => 2,

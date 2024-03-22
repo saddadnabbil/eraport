@@ -48,15 +48,22 @@
                             <div class="callout callout-info">
                                 <form action="{{ route('penilaiantk.create') }}" method="GET">
                                     @csrf
-                                    {{-- <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Term</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" value="{{ $term->term }}" disabled>
-                                        </div>
-                                    </div> --}}
                                     <div class="form-group row">
+                                        <label for="term_id" class="col-sm-2 col-form-label">Term</label>
+                                        <div class="col-sm-4">
+                                            <select class="form-control form-select select2" name="term_id"
+                                                style="width: 100%;" required onchange="this.form.submit();">
+                                                <option value="">-- Pilih Term --</option>
+                                                @foreach ($data_term as $term_item)
+                                                    <option value="{{ $term_item->id }}"
+                                                        @if ($term_item->id == $term->id) selected @endif>
+                                                        {{ $term_item->term }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                         <label class="col-sm-2 col-form-label">Kelas</label>
-                                        <div class="col-sm-10">
+                                        <div class="col-sm-4">
                                             <select class="form-control form-select select2" name="kelas_id"
                                                 style="width: 100%;" required onchange="this.form.submit();">
                                                 <option value="" disabled>-- Pilih Kelas --</option>
@@ -85,19 +92,37 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($data_anggota_kelas as $anggota_kelas)
+                                                @if ($data_anggota_kelas->count() == 0)
                                                     <tr>
-                                                        <td>{{ $loop->iteration }}</td>
-                                                        <td>{{ $anggota_kelas->siswa->nama_lengkap }}</td>
-                                                        <td class="text-center">
-                                                            <form action="{{ route('penilaiantk.show') }}" method="post">
-                                                            </form>
-                                                            <a href="{{ route('penilaiantk.show', $anggota_kelas->id) }}"
-                                                                class="btn btn-primary btn-sm"><i
-                                                                    class="fas fa-search"></i></a>
-                                                        </td>
+                                                        <td colspan="3" class="text-center">Tidak ada data</td>
                                                     </tr>
-                                                @endforeach
+                                                @else
+                                                    @foreach ($data_anggota_kelas as $anggota_kelas)
+                                                        <tr>
+                                                            <td>{{ $loop->iteration }}</td>
+                                                            <td>{{ $anggota_kelas->siswa->nama_lengkap }}</td>
+                                                            <td class="text-center">
+                                                                <form
+                                                                    action="{{ route('penilaiantk.show', $anggota_kelas->siswa_id) }}"
+                                                                    method="get">
+                                                                    @csrf
+                                                                    <input type="hidden" name="kelas_id"
+                                                                        value="{{ $kelas->id }}">
+                                                                    <input type="hidden" name="term_id"
+                                                                        value="{{ $term->id }}">
+                                                                    <input type="hidden" name="anggota_kelas_id"
+                                                                        value="{{ $anggota_kelas->id }}">
+                                                                    <input type="hidden" name="term_id"
+                                                                        value="{{ $term->id }}">
+
+                                                                    <button class="btn btn-primary btn-sm" type="submit">
+                                                                        <i class="fas fa-search"></i>
+                                                                    </button>
+                                                                </form>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                @endif
                                             </tbody>
                                         </table>
                                     </div>

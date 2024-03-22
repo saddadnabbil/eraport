@@ -20,7 +20,15 @@ class TermTableSeeder extends Seeder
         ]);
 
         Term::create([
-            'term' => 2,    
+            'term' => 2,
+        ]);
+
+        Term::create([
+            'term' => 3,
+        ]);
+
+        Term::create([
+            'term' => 4,
         ]);
     }
 }

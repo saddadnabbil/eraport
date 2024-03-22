@@ -56,6 +56,7 @@ use Database\Seeders\NilaiEkstrakulikulerTableSeeder;
 use Database\Seeders\RencanaNilaiFormatifTableSeeder;
 use Database\Seeders\KmDeskripsiNilaiSiswaTableSeeder;
 use Database\Seeders\AnggotaEkstrakulikulerTableSeeder;
+use Database\Seeders\TkEventSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -118,6 +119,8 @@ class DatabaseSeeder extends Seeder
             TkTopicSeeder::class,
             TkSubtopicSeeder::class,
             TkPointSeeder::class,
+
+            TkEventSeeder::class,
         ]);
     }
 }

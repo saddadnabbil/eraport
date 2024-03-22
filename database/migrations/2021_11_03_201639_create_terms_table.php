@@ -15,7 +15,7 @@ class CreateTermsTable extends Migration
     {
         Schema::create('terms', function (Blueprint $table) {
             $table->id();
-            $table->enum('term', ['1', '2']);
+            $table->enum('term', ['1', '2', '3', '4']);
             $table->timestamps();
             $table->softDeletes();
         });

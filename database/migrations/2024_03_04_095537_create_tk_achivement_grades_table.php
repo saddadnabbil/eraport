@@ -17,11 +17,13 @@ class CreateTkAchivementGradesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('anggota_kelas_id');
             $table->unsignedBigInteger('tk_point_id');
-            $table->integer('grade');
+            $table->unsignedBigInteger('term_id');
+            $table->enum('achivement', ['C', 'ME', 'I', 'NI']);
             $table->timestamps();
 
-            $table->foreign('tk_point_id')->references('id')->on('tk_points')->onDelete('cascade');
             $table->foreign('anggota_kelas_id')->references('id')->on('anggota_kelas')->onDelete('cascade');
+            $table->foreign('tk_point_id')->references('id')->on('tk_points')->onDelete('cascade');
+            $table->foreign('term_id')->references('id')->on('terms')->onDelete('cascade');
         });
     }
 

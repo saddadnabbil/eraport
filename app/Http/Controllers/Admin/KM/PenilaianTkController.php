@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin\Km;
 use App\Models\Term;
 use App\Models\Kelas;
 use App\Models\Mapel;
+use App\Models\Siswa;
 use App\Models\Tapel;
+use App\Models\TkEvent;
 use App\Models\TkPoint;
 use App\Models\TkTopic;
 use App\Models\TkElement;
@@ -13,7 +15,10 @@ use App\Models\TkSubtopic;
 use App\Models\AnggotaKelas;
 use App\Models\Pembelajaran;
 use Illuminate\Http\Request;
+use App\Models\TkAchivementGrade;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
+
 
 class PenilaianTkController extends Controller
 {
@@ -29,7 +34,14 @@ class PenilaianTkController extends Controller
 
         $data_mapel = Mapel::where('tapel_id', $tapel->id)->orderBy('nama_mapel', 'ASC')->get();
 
-        $data_kelas = Kelas::where('tapel_id', $tapel->id)->where('tingkatan_id', [1, 2])->orderBy('tingkatan_id', 'ASC')->get();
+        $data_kelas = Kelas::where('tapel_id', $tapel->id)
+            ->whereIn('tingkatan_id', [1, 2])
+            ->get();
+
+        $term = $data_kelas->first()->tingkatan->term_id;
+
+        $data_term = Term::orderBy('id', 'ASC')->get();
+
         $id_kelas = Kelas::where('tapel_id', $tapel->id)->where('tingkatan_id', [1, 2])->get('id');
 
         if (count($data_mapel) == 0) {
@@ -38,7 +50,7 @@ class PenilaianTkController extends Controller
             return redirect('admin/kelas')->with('toast_warning', 'Mohon isikan data kelas');
         }
 
-        return view('admin.km.penilaiantk.pilihkelas', compact('title', 'data_mapel', 'data_kelas', 'tapel'));
+        return view('admin.km.penilaiantk.pilihkelas', compact('title', 'data_mapel', 'data_kelas', 'tapel', 'data_term', 'term'));
     }
 
     /**
@@ -51,8 +63,9 @@ class PenilaianTkController extends Controller
         $title = 'Penilaian Raport TK';
         $kelas = Kelas::where('id', $request->kelas_id)->first();
         $tapel = Tapel::where('status', 1)->first();
-        $term = Term::where('id', $kelas->tingkatan->term_id)->first();
+        $term = Term::where('id', $request->term_id)->first();
 
+        $data_term = Term::orderBy('id', 'ASC')->get();
         $data_kelas = Kelas::where('tapel_id', $tapel->id)
             ->whereIn('tingkatan_id', [1, 2])
             ->get();
@@ -71,7 +84,7 @@ class PenilaianTkController extends Controller
             ->where('siswa.status', 1)
             ->get();
 
-        return view('admin.km.penilaiantk.create', compact('title', 'data_anggota_kelas', 'kelas', 'data_kelas', 'tapel', 'term'));
+        return view('admin.km.penilaiantk.create', compact('title', 'data_anggota_kelas', 'kelas', 'data_kelas', 'tapel', 'term', 'data_term'));
     }
 
     /**
@@ -82,7 +95,34 @@ class PenilaianTkController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'term_id' => 'required|exists:terms,id',
+            'anggota_kelas_id' => 'required|exists:anggota_kelas,id',
+            'achivement.*' => 'nullable|min:0|max:100',
+        ]);
+
+        if ($validator->fails()) {
+            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+        }
+
+        $achivements = $request->input('achivement');
+
+        foreach ($achivements as $key => $achivement) {
+            if (!empty($achivement)) {
+                TkAchivementGrade::updateOrCreate(
+                    [
+                        'term_id' => $request->input('term_id'),
+                        'anggota_kelas_id' => $request->input('anggota_kelas_id'),
+                        'tk_point_id' => $request->input('tk_point_id')[$key],
+                    ],
+                    [
+                        'achivement' => $achivement
+                    ]
+                );
+            }
+        }
+
+        return back()->with('toast_success', 'Achievements saved successfully.');
     }
 
     /**
@@ -91,13 +131,17 @@ class PenilaianTkController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
         $title = 'Penilaian Raport TK';
         $kelas = Kelas::where('id', $request->kelas_id)->first();
         $tapel = Tapel::where('status', 1)->first();
-        $term = Term::where('id', $kelas->tingkatan->term_id)->first();
+        $term = Term::where('id', $request->term_id)->first();
 
+        $anggotaKelas = AnggotaKelas::where('id', $request->anggota_kelas_id)->first();
+        $siswa = Siswa::where('id', $id)->first();
+
+        $data_term = Term::orderBy('id', 'ASC')->get();
         $data_kelas = Kelas::where('tapel_id', $tapel->id)
             ->whereIn('tingkatan_id', [1, 2])
             ->get();
@@ -109,7 +153,6 @@ class PenilaianTkController extends Controller
 
         $id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('id');
         $kelas_id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('kelas_id');
-
 
         $data_anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
             ->whereIn('anggota_kelas.id', $id_anggota_kelas)
@@ -122,7 +165,13 @@ class PenilaianTkController extends Controller
         $dataTkSubtopics = TkSubtopic::all();
         $dataTkPoints = TkPoint::all();
 
-        return view('admin.km.penilaiantk.create', compact('title', 'data_anggota_kelas', 'kelas', 'data_kelas', 'tapel', 'term', 'dataTkElements', 'dataTkTopics', 'dataTkSubtopics', 'dataTkPoints',));
+        // Achivements
+        $dataAchivements = TkAchivementGrade::get(['anggota_kelas_id', 'tk_point_id', 'achivement']);
+
+        // EVENTS
+        $dataEvents = TkEvent::where('tapel_id', $tapel->id)->get();
+
+        return view('admin.km.penilaiantk.show', compact('title', 'data_anggota_kelas', 'kelas', 'data_kelas', 'tapel', 'term', 'data_term', 'dataTkElements', 'dataTkTopics', 'dataTkSubtopics', 'dataTkPoints', 'siswa', 'dataEvents', 'dataAchivements', 'anggotaKelas'));
     }
 
     /**

@@ -165,12 +165,12 @@
                                                             @method('PUT')
                                                             <div class="modal-body">
                                                                 <div class="form-group row">
-                                                                    <label for="tk_element_id"
+                                                                    <label for="tk_topic_id"
                                                                         class="col-sm-3 col-form-label">Topic
                                                                     </label>
                                                                     <div class="col-sm-9">
                                                                         <select class="form-control form-select select2"
-                                                                            name="tk_element_id" id="tk_element_id">
+                                                                            name="tk_topic_id" id="tk_topic_id">
                                                                             <option value="">-- Pilih Topic --
                                                                             </option>
                                                                             @foreach ($data_topic as $topic)
@@ -183,12 +183,12 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group row">
-                                                                    <label for="tk_element_id"
+                                                                    <label for="tk_subtopic_id"
                                                                         class="col-sm-3 col-form-label">Sub Topic
                                                                     </label>
                                                                     <div class="col-sm-9">
                                                                         <select class="form-control form-select select2"
-                                                                            name="tk_element_id" id="tk_element_id">
+                                                                            name="tk_subtopic_id" id="tk_subtopic_id">
                                                                             <option value="">-- Pilih Sub Topic --
                                                                             </option>
                                                                             @foreach ($data_subtopic as $subtopic)

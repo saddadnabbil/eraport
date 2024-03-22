@@ -36,36 +36,35 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">{{ $title }}</h3>
+                            <h3 class="card-title"><i class="fas fa-print"></i> {{ $title }}</h3>
                         </div>
 
                         <div class="card-body">
                             <div class="callout callout-info">
-                                <form action="{{ route('penilaiantk.create') }}" method="GET">
+                                <form action="{{ route('adminraporttk.store') }}" method="POST">
                                     @csrf
                                     <div class="form-group row">
-                                        <label for="term_id" class="col-sm-2 col-form-label">Term</label>
+                                        <label class="col-sm-2 col-form-label">Semester</label>
                                         <div class="col-sm-4">
-                                            <select class="form-control form-select select2" name="term_id"
-                                                style="width: 100%;" required>
-                                                <option value="">-- Pilih Term --</option>
-                                                @foreach ($data_term as $term_item)
-                                                    <option value="{{ $term_item->id }}"
-                                                        @if ($term_item->id == $term) selected @endif>
-                                                        {{ $term_item->term }}
-                                                    </option>
-                                                @endforeach
+                                            <select class="form-control form-select" name="semester_id" style="width: 100%;"
+                                                required>
+                                                <option value="1" @if ($tapel->semester_id == '1') selected @endif>1
+                                                </option>
+                                                <option value="2" @if ($tapel->semester_id == '2') selected @endif>2
+                                                </option>
+                                                <option value="2" @if ($tapel->semester_id == '3') selected @endif>3
+                                                </option>
+                                                <option value="2" @if ($tapel->semester_id == '4') selected @endif>4
+                                                </option>
                                             </select>
                                         </div>
-                                        <label for="kelas_id" class="col-sm-2 col-form-label">Kelas</label>
+                                        <label class="col-sm-2 col-form-label">Kelas</label>
                                         <div class="col-sm-4">
                                             <select class="form-control form-select select2" name="kelas_id"
                                                 style="width: 100%;" required onchange="this.form.submit();">
                                                 <option value="">-- Pilih Kelas --</option>
-                                                @foreach ($data_kelas as $kelas)
-                                                    <option value="{{ $kelas->id }}">
-                                                        {{ $kelas->nama_kelas }}
-                                                    </option>
+                                                @foreach ($data_kelas->sortBy('tingkatan_id') as $kls)
+                                                    <option value="{{ $kls->id }}">{{ $kls->nama_kelas }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -73,19 +72,18 @@
                                 </form>
                             </div>
                         </div>
+                        <!-- /.card -->
                     </div>
-                    <!-- /.card -->
+
                 </div>
-
+                <!-- /.row -->
             </div>
-            <!-- /.row -->
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
         </div>
-        <!-- ============================================================== -->
-        <!-- End Container fluid  -->
-        <!-- ============================================================== -->
-    </div>
-@endsection
+    @endsection
 
-@section('footer')
-    @include('layouts.main.footer')
-@endsection
+    @section('footer')
+        @include('layouts.main.footer')
+    @endsection

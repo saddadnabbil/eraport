@@ -316,6 +316,11 @@ Route::group(['middleware' => ['auth']], function () {
 
             // penilaian tk
             Route::resource('penilaiantk', 'Admin\KM\PenilaianTkController')->only(['index', 'create', 'store', 'show', 'edit', 'update']);
+
+            Route::resource('adminraporttk', 'Admin\KM\CetakRaportTKController', [
+                'uses' => ['index', 'store', 'show'],
+            ]);
+            Route::get('adminraporttk/export/{id}', 'Admin\KM\CetakRaportTKController@export')->name('adminraporttk.export');
         });
     });
     // End Route User Admin
