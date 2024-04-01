@@ -198,7 +198,7 @@ return array(
          *
          * @var bool
          */
-        "enable_php" => false,
+        "enable_php" => true,
 
         /**
          * Enable inline Javascript
@@ -228,6 +228,7 @@ return array(
          * @var bool
          */
         "enable_remote" => true,
+
 
         /**
          * A ratio applied to the fonts height to be more like browsers' line height

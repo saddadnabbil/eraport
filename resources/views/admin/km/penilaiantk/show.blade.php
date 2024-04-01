@@ -352,8 +352,67 @@
                                                     @foreach ($dataEvents as $event)
                                                         <tr>
                                                             <td>{{ $event->name }}</td>
-                                                            <td><input type="text" class="form-control"
-                                                                    name="event[]">
+                                                            <td>
+                                                                @forelse ($dataAchivementEvents->where('anggota_kelas_id', $anggotaKelas->id) as $achivementEvent)
+                                                                    @if ($achivementEvent->tk_event_id == $event->id)
+                                                                        <input type="hidden" name="tk_event_id[]"
+                                                                            value="{{ $event->id }}">
+                                                                        <select class="form-control"
+                                                                            name="achivement_event[]"
+                                                                            id="achivement_event">
+                                                                            <option value="">
+                                                                                -- Pilih --
+                                                                            </option>
+                                                                            <option value="C"
+                                                                                @if ($achivementEvent->achivement_event == 'C') selected @endif>
+                                                                                C</option>
+                                                                            <option value="ME"
+                                                                                @if ($achivementEvent->achivement_event == 'ME') selected @endif>
+                                                                                ME</option>
+                                                                            <option value="I"
+                                                                                @if ($achivementEvent->achivement_event == 'I') selected @endif>
+                                                                                I</option>
+                                                                            <option value="NI"
+                                                                                @if ($achivementEvent->achivement_event == 'NI') selected @endif>
+                                                                                NI</option>
+                                                                        </select>
+                                                                    @else
+                                                                        <input type="hidden" name="tk_event_id[]"
+                                                                            value="{{ $event->id }}">
+                                                                        <select class="form-control"
+                                                                            name="achivement_event[]"
+                                                                            id="achivement_event">
+                                                                            <option value="">
+                                                                                -- Pilih --
+                                                                            </option>
+                                                                            <option value="C">
+                                                                                C</option>
+                                                                            <option value="ME">
+                                                                                ME</option>
+                                                                            <option value="I">
+                                                                                I</option>
+                                                                            <option value="NI">
+                                                                                NI</option>
+                                                                        </select>
+                                                                    @endif
+                                                                @empty
+                                                                    <input type="hidden" name="tk_event_id[]"
+                                                                        value="{{ $event->id }}">
+                                                                    <select class="form-control" name="achivement_event[]"
+                                                                        id="achivement_event">
+                                                                        <option value="">
+                                                                            -- Pilih --
+                                                                        </option>
+                                                                        <option value="C">
+                                                                            C</option>
+                                                                        <option value="ME">
+                                                                            ME</option>
+                                                                        <option value="I">
+                                                                            I</option>
+                                                                        <option value="NI">
+                                                                            NI</option>
+                                                                    </select>
+                                                                @endforelse
                                                             </td>
                                                         </tr>
                                                     @endforeach
@@ -364,19 +423,22 @@
                                                     </tr>
                                                     <tr>
                                                         <td>No. of School Days</td>
-                                                        <td><input type="text" class="form-control"
-                                                                name="no_school_days"></td>
+                                                        <td><input type="number" class="form-control"
+                                                                name="no_school_days"
+                                                                value="{{ isset($dataAttendance) && $dataAttendance->no_school_days ? $dataAttendance->no_school_days : '' }}">
+                                                        </td>
                                                     </tr>
                                                     <tr>
                                                         <td>Days Attended</td>
-                                                        <td><input type="text" class="form-control"
-                                                                name="days_attended">
+                                                        <td><input type="number" class="form-control"
+                                                                name="days_attended"
+                                                                value="{{ isset($dataAttendance) && $dataAttendance->days_attended ? $dataAttendance->days_attended : '' }}">
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td>Days Absent</td>
-                                                        <td><input type="text" class="form-control"
-                                                                name="days_absent">
+                                                        <td><input type="number" class="form-control" name="days_absent"
+                                                                value="{{ isset($dataAttendance) && $dataAttendance->days_absent ? $dataAttendance->days_absent : '' }}">
                                                         </td>
                                                     </tr>
                                                 </tbody>

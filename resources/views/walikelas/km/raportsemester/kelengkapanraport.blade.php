@@ -125,15 +125,15 @@
                         <div style="position: relative; left: -27px;">
                             <h1>
                                 GLOBAL INDONESIA
-                                @if ($anggota_kelas->kelas->id == '1')
+                                @if ($anggota_kelas->kelas->tingkatan_id == '5')
                                     SENIOR HIGH SCHOOL
-                                @elseif($anggota_kelas->kelas->id == '2')
+                                @elseif($anggota_kelas->kelas->tingkatan_id == '4')
                                     JUNIOR HIGH SCHOOL
-                                @elseif($anggota_kelas->kelas->id == '3')
+                                @elseif($anggota_kelas->kelas->tingkatan_id == '3')
                                     PRIMARY SCHOOL
-                                @elseif($anggota_kelas->kelas->id == '4')
+                                @elseif($anggota_kelas->kelas->tingkatan_id == '2')
                                     KINDERGARTEN
-                                @elseif($anggota_kelas->kelas->id == '5')
+                                @elseif($anggota_kelas->kelas->tingkatan_id == '1')
                                     PLAYGROUP
                                 @endif
                                 <br>

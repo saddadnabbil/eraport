@@ -46,11 +46,15 @@
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Semester</label>
                                         <div class="col-sm-4">
-                                            <select class="form-control form-select" name="semester_id" style="width: 100%;"
+                                            <select class="form-control form-select" name="term_id" style="width: 100%;"
                                                 required onchange="this.form.submit();">
-                                                <option value="1" @if ($semester->id == '1') selected @endif>1
+                                                <option value="1" @if ($tapel->term_id == '1') selected @endif>1
                                                 </option>
-                                                <option value="2" @if ($semester->id == '2') selected @endif>2
+                                                <option value="2" @if ($tapel->term_id == '2') selected @endif>2
+                                                </option>
+                                                <option value="2" @if ($tapel->term_id == '3') selected @endif>3
+                                                </option>
+                                                <option value="2" @if ($tapel->term_id == '4') selected @endif>4
                                                 </option>
                                             </select>
                                         </div>
@@ -69,14 +73,25 @@
                                     </div>
                                 </form>
                             </div>
-
-                            <div class="d-flex justify-content-end my-3">
-                                <form action="{{ route('adminraporttk.export', $kelas->id) }}" method="get">
+                            <div class="d-flex justify-content-end my-3 gap-2">
+                                <form action="{{ route('adminraporttk.export', $kelas->id) }}" target="_black"
+                                    method="GET">
+                                    @csrf
+                                    <input type="hidden" name="data_type" value="1">
+                                    <input type="hidden" name="paper_size" value="{{ $paper_size }}">
+                                    <input type="hidden" name="orientation" value="{{ $orientation }}">
+                                    <input type="hidden" name="term_id" value="{{ $term->id }}">
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-print"></i> Print All Data
+                                    </button>
+                                </form>
+                                <form action="{{ route('adminraporttk.export', $kelas->id) }}" target="_black"
+                                    method="get">
                                     @csrf
                                     <input type="hidden" name="data_type" value="2">
                                     <input type="hidden" name="paper_size" value="{{ $paper_size }}">
                                     <input type="hidden" name="orientation" value="{{ $orientation }}">
-                                    <input type="hidden" name="semester_id" value="{{ $semester->id }}">
+                                    <input type="hidden" name="term_id" value="{{ $term->id }}">
 
                                     <button type="submit" class="btn btn-primary btn-sm">
                                         <i class="fas fa-download"></i> Print All Report Data
@@ -99,49 +114,57 @@
                                     </thead>
                                     <tbody>
                                         <?php $no = 0; ?>
-                                        @foreach ($data_anggota_kelas->sortBy('siswa.nama_lengkap') as $anggota_kelas)
-                                            <?php $no++; ?>
+                                        @if ($data_anggota_kelas->count() == 0)
                                             <tr>
-                                                <input type="hidden" name="anggota_kelas_id[]"
-                                                    value="{{ $anggota_kelas->id }}">
-                                                <td class="text-center">{{ $no }}</td>
-                                                <td class="text-center">{{ $anggota_kelas->siswa->nis }}</td>
-                                                <td>{{ $anggota_kelas->siswa->nama_lengkap }}</td>
-                                                <td class="text-center">{{ $anggota_kelas->siswa->jenis_kelamin }}</td>
-                                                <td class="text-center">
-                                                    <form action="{{ route('adminraporttk.show', $anggota_kelas->id) }}"
-                                                        target="_black" method="GET">
-                                                        @csrf
-                                                        <input type="hidden" name="data_type" value="1">
-                                                        <input type="hidden" name="paper_size"
-                                                            value="{{ $paper_size }}">
-                                                        <input type="hidden" name="orientation"
-                                                            value="{{ $orientation }}">
-                                                        <input type="hidden" name="semester_id"
-                                                            value="{{ $semester->id }}">
-                                                        <button type="submit" class="btn btn-danger btn-sm">
-                                                            <i class="fas fa-print"></i> Cetak Data
-                                                        </button>
-                                                    </form>
-                                                </td>
-                                                <td class="text-center">
-                                                    <form action="{{ route('adminraporttk.show', $anggota_kelas->id) }}"
-                                                        target="_black" method="GET">
-                                                        @csrf
-                                                        <input type="hidden" name="data_type" value="2">
-                                                        <input type="hidden" name="paper_size"
-                                                            value="{{ $paper_size }}">
-                                                        <input type="hidden" name="orientation"
-                                                            value="{{ $orientation }}">
-                                                        <input type="hidden" name="semester_id"
-                                                            value="{{ $semester->id }}">
-                                                        <button type="submit" class="btn btn-primary btn-sm">
-                                                            <i class="fas fa-print"></i> Cetak Raport
-                                                        </button>
-                                                    </form>
-                                                </td>
+                                                <td colspan="6" class="text-center">Tidak ada data</td>
                                             </tr>
-                                        @endforeach
+                                        @else
+                                            @foreach ($data_anggota_kelas as $anggota_kelas)
+                                                <?php $no++; ?>
+                                                <tr>
+                                                    <input type="hidden" name="anggota_kelas_id[]"
+                                                        value="{{ $anggota_kelas->id }}">
+                                                    <td class="text-center">{{ $no }}</td>
+                                                    <td class="text-center">{{ $anggota_kelas->siswa->nis }}</td>
+                                                    <td>{{ $anggota_kelas->siswa->nama_lengkap }}</td>
+                                                    <td class="text-center">{{ $anggota_kelas->siswa->jenis_kelamin }}</td>
+                                                    <td class="text-center">
+                                                        <form
+                                                            action="{{ route('adminraporttk.show', $anggota_kelas->id) }}"
+                                                            target="_black" method="GET">
+                                                            @csrf
+                                                            <input type="hidden" name="data_type" value="1">
+                                                            <input type="hidden" name="paper_size"
+                                                                value="{{ $paper_size }}">
+                                                            <input type="hidden" name="orientation"
+                                                                value="{{ $orientation }}">
+                                                            <input type="hidden" name="term_id"
+                                                                value="{{ $term->id }}">
+                                                            <button type="submit" class="btn btn-danger btn-sm">
+                                                                <i class="fas fa-print"></i> Cetak Data
+                                                            </button>
+                                                        </form>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <form
+                                                            action="{{ route('adminraporttk.show', $anggota_kelas->id) }}"
+                                                            target="_black" method="GET">
+                                                            @csrf
+                                                            <input type="hidden" name="data_type" value="2">
+                                                            <input type="hidden" name="paper_size"
+                                                                value="{{ $paper_size }}">
+                                                            <input type="hidden" name="orientation"
+                                                                value="{{ $orientation }}">
+                                                            <input type="hidden" name="term_id"
+                                                                value="{{ $term->id }}">
+                                                            <button type="submit" class="btn btn-primary btn-sm">
+                                                                <i class="fas fa-print"></i> Cetak Raport
+                                                            </button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
                                     </tbody>
                                 </table>
                             </div>

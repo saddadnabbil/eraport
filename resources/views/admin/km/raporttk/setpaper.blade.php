@@ -44,17 +44,17 @@
                                 <form action="{{ route('adminraporttk.store') }}" method="POST">
                                     @csrf
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Semester</label>
+                                        <label class="col-sm-2 col-form-label">Term</label>
                                         <div class="col-sm-4">
-                                            <select class="form-control form-select" name="semester_id" style="width: 100%;"
+                                            <select class="form-control form-select" name="term_id" style="width: 100%;"
                                                 required>
-                                                <option value="1" @if ($tapel->semester_id == '1') selected @endif>1
+                                                <option value="1" @if ($tapel->term_id == '1') selected @endif>1
                                                 </option>
-                                                <option value="2" @if ($tapel->semester_id == '2') selected @endif>2
+                                                <option value="2" @if ($tapel->term_id == '2') selected @endif>2
                                                 </option>
-                                                <option value="2" @if ($tapel->semester_id == '3') selected @endif>3
+                                                <option value="2" @if ($tapel->term_id == '3') selected @endif>3
                                                 </option>
-                                                <option value="2" @if ($tapel->semester_id == '4') selected @endif>4
+                                                <option value="2" @if ($tapel->term_id == '4') selected @endif>4
                                                 </option>
                                             </select>
                                         </div>

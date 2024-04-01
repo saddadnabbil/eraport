@@ -17,7 +17,7 @@ class CreateTkAchivementEventGradesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('anggota_kelas_id');
             $table->unsignedBigInteger('tk_event_id');
-            $table->enum('grade', ['C', 'ME', 'I', 'NI']);
+            $table->enum('achivement_event', ['C', 'ME', 'I', 'NI'])->nullable();
             $table->timestamps();
 
             $table->foreign('tk_event_id')->references('id')->on('tk_events')->onDelete('cascade');

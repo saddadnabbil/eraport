@@ -17,6 +17,8 @@ use App\Models\Pembelajaran;
 use Illuminate\Http\Request;
 use App\Models\TkAchivementGrade;
 use App\Http\Controllers\Controller;
+use App\Models\TkAchivementEventGrade;
+use App\Models\TkAttendance;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -98,7 +100,10 @@ class PenilaianTkController extends Controller
         $validator = Validator::make($request->all(), [
             'term_id' => 'required|exists:terms,id',
             'anggota_kelas_id' => 'required|exists:anggota_kelas,id',
+            'tk_point_id.*' => 'required|exists:tk_points,id',
             'achivement.*' => 'nullable|min:0|max:100',
+            'tk_event_id.*' => 'required|exists:tk_events,id',
+            'achivement_event.*' => 'nullable|min:0|max:100',
         ]);
 
         if ($validator->fails()) {
@@ -122,6 +127,34 @@ class PenilaianTkController extends Controller
             }
         }
 
+        $achivement_events = $request->input('achivement_event');
+
+        foreach ($achivement_events as $key => $event) {
+            if (!empty($event)) {
+                TkAchivementEventGrade::updateOrCreate(
+                    [
+                        'anggota_kelas_id' => $request->input('anggota_kelas_id'),
+                        'tk_event_id' => $request->input('tk_event_id')[$key],
+                    ],
+                    [
+                        'achivement_event' => $event
+                    ]
+                );
+            }
+        }
+
+        $no_school_days = $request->input('no_school_days');
+        $days_attended = $request->input('days_attended');
+        $days_absent = $request->input('days_absent');
+
+        TkAttendance::updateOrCreate(
+            ['anggota_kelas_id' => $request->input('anggota_kelas_id')],
+            [
+                'no_school_days' => $no_school_days ?? null,
+                'days_attended' => $days_attended ?? null,
+                'days_absent' => $days_absent ?? null,
+            ]
+        );
         return back()->with('toast_success', 'Achievements saved successfully.');
     }
 
@@ -167,11 +200,13 @@ class PenilaianTkController extends Controller
 
         // Achivements
         $dataAchivements = TkAchivementGrade::get(['anggota_kelas_id', 'tk_point_id', 'achivement']);
+        $dataAchivementEvents = TkAchivementEventGrade::get(['anggota_kelas_id', 'tk_event_id', 'achivement_event']);
+        $dataAttendance = TkAttendance::where('anggota_kelas_id', $request->anggota_kelas_id)->first(['anggota_kelas_id', 'no_school_days', 'days_attended', 'days_absent']);
 
         // EVENTS
         $dataEvents = TkEvent::where('tapel_id', $tapel->id)->get();
 
-        return view('admin.km.penilaiantk.show', compact('title', 'data_anggota_kelas', 'kelas', 'data_kelas', 'tapel', 'term', 'data_term', 'dataTkElements', 'dataTkTopics', 'dataTkSubtopics', 'dataTkPoints', 'siswa', 'dataEvents', 'dataAchivements', 'anggotaKelas'));
+        return view('admin.km.penilaiantk.show', compact('title', 'data_anggota_kelas', 'kelas', 'data_kelas', 'tapel', 'term', 'data_term', 'dataTkElements', 'dataTkTopics', 'dataTkSubtopics', 'dataTkPoints', 'siswa', 'dataEvents', 'dataAchivements', 'anggotaKelas', 'dataAchivementEvents', 'dataAttendance'));
     }
 
     /**
