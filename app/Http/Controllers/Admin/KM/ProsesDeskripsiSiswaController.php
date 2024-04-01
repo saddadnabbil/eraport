@@ -26,7 +26,7 @@ class ProsesDeskripsiSiswaController extends Controller
         $title = 'Deskripsi Nilai Siswa';
         $tapel = Tapel::where('status', 1)->first();
 
-        $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
+        $id_kelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->get('id');
         $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('kelas_id', 'ASC')->orderBy('mapel_id', 'ASC')->get();
 
         return view('admin.km.prosesdeskripsi.index', compact('title', 'data_pembelajaran'));
@@ -48,7 +48,7 @@ class ProsesDeskripsiSiswaController extends Controller
             $title = 'Input Deskripsi Nilai Siswa';
             $tapel = Tapel::where('status', 1)->first();
 
-            $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
+            $id_kelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->get('id');
             $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('kelas_id', 'ASC')->orderBy('mapel_id', 'ASC')->get();
 
             $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);

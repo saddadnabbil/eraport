@@ -27,9 +27,9 @@ class LihatNilaiTerkirimController extends Controller
         $title = 'Lihat Nilai Akhir Terkirim';
         $tapel = Tapel::where('status', 1)->first();
 
-        $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
+        $data_kelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->get();
 
-        $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
+        $id_kelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->get('id');
         $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('kelas_id', 'ASC')->orderBy('mapel_id', 'ASC')->get();
 
         return view('admin.km.nilaiterkirimkm.index', compact('title', 'data_pembelajaran', 'data_kelas'));

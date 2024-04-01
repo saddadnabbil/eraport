@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\KM;
 
 use Excel;
+use App\Models\Kelas;
 use App\Models\Mapel;
 use App\Models\Tapel;
 use App\Models\KmKkmMapel;
@@ -22,12 +23,13 @@ class KkmMapelController extends Controller
     {
         $title = 'KKM Mata Pelajaran';
         $tapel = Tapel::where('status', 1)->first();
-        // $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
 
         $data_mapel = Mapel::where('tapel_id', $tapel->id)->orderBy('nama_mapel', 'ASC')->get();
         $id_mapel = Mapel::where('tapel_id', $tapel->id)->get('id');
 
-        $cek_pembelajaran = Pembelajaran::whereIn('mapel_id', $id_mapel)->whereNotNull('guru_id')->where('status', 1)->get();
+        $id_kelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->get('id');
+
+        $cek_pembelajaran = Pembelajaran::whereIn('mapel_id', $id_mapel)->whereNotNull('guru_id')->whereIn('kelas_id', $id_kelas)->where('status', 1)->get();
         if (count($cek_pembelajaran) == 0) {
             return redirect('admin/pembelajaran')->with('toast_warning', 'data pembelajaran untuk mapel ini belum tersedia');
         } else {

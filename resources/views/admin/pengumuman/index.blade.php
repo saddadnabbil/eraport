@@ -103,7 +103,7 @@
                                                     </p>
                                                 </div>
                                                 <span
-                                                    class="font-weight-light font-14 mb-1 d-block text-muted">{{ $pengumuman->user->admin->nama_lengkap }}
+                                                    class="font-weight-light font-14 mb-1 d-block text-muted">{{ $pengumuman->user->karyawan->nama_lengkap }}
                                                     -
                                                     {{ \Carbon\Carbon::parse($pengumuman->created_at)->diffForHumans() }}</span>
                                                 @if (Auth::user()->id == $pengumuman->user_id)

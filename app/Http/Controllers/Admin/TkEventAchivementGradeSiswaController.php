@@ -28,7 +28,7 @@ class TkEventAchivementGradeSiswaController extends Controller
         $title = 'Input Nilai Event Siswa';
         $tapel = Tapel::where('status', 1)->first();
 
-        $data_kelas = Kelas::where('tapel_id', $tapel->id)->where('tingkatan_id', [1, 2])->get();
+        $data_kelas = Kelas::where('tapel_id', $tapel->id)->where('tingkatan_id', [1, 2, 3])->get();
 
         return view('admin.tk.event.create', compact('title', 'data_kelas'));
     }

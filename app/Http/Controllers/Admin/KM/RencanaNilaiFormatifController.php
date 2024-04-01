@@ -28,9 +28,9 @@ class RencanaNilaiFormatifController extends Controller
         $title = 'Rencana Nilai Formatif';
         $tapel = Tapel::where('status', 1)->first();
 
-        $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
+        $id_kelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->get('id');
 
-        $data_rencana_penilaian = Pembelajaran::where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
+        $data_rencana_penilaian = Pembelajaran::where('status', 1)->whereIn('kelas_id', $id_kelas)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
         foreach ($data_rencana_penilaian as $penilaian) {
             $term = Term::findorfail($penilaian->kelas->tingkatan->term_id);
             $semester = Semester::findorfail($penilaian->kelas->tingkatan->semester_id);

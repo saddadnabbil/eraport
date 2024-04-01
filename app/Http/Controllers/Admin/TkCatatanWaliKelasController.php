@@ -25,7 +25,7 @@ class TkCatatanWaliKelasController extends Controller
         $title = 'Catatan Wali Kelas TK';
         $tapel = Tapel::where('status', 1)->first();
 
-        $data_kelas = Kelas::where('tapel_id', $tapel->id)->where('tingkatan_id', [1, 2])->get();
+        $data_kelas = Kelas::where('tapel_id', $tapel->id)->where('tingkatan_id', [1, 2, 3])->get();
 
         return view('admin.tk.catatan.index', compact('title', 'data_kelas'));
     }

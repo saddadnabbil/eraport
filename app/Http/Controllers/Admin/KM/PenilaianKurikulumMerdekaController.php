@@ -34,8 +34,8 @@ class PenilaianKurikulumMerdekaController extends Controller
 
         $data_mapel = Mapel::where('tapel_id', $tapel->id)->orderBy('nama_mapel', 'ASC')->get();
 
-        $data_kelas = Kelas::where('tapel_id', $tapel->id)->groupBy('tingkatan_id')->orderBy('tingkatan_id', 'ASC')->get();
-        $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
+        $data_kelas = Kelas::where('tapel_id', $tapel->id)->groupBy('tingkatan_id')->orderBy('tingkatan_id', 'ASC')->whereNotIn('tingkatan_id', [1, 2, 3])->get();
+        $id_kelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->get('id');
 
         $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('kelas_id', 'ASC')->orderBy('mapel_id', 'ASC')->get();
 
@@ -74,6 +74,7 @@ class PenilaianKurikulumMerdekaController extends Controller
             $semester = Semester::findorfail($pembelajaran->kelas->tingkatan->semester_id);
 
             $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
+            $id_kelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->get('id');
             $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('kelas_id', 'ASC')->orderBy('mapel_id', 'ASC')->get();
 
             $data_rencana_penilaian_sumatif = RencanaNilaiSumatif::with('nilai_sumatif')->where('term_id', $term->term)->where('semester_id', $semester->id)->where('pembelajaran_id', $request->pembelajaran_id)->get();

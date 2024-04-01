@@ -43,12 +43,12 @@ class DashboardController extends Controller
             $jumlah_guru = Guru::all()->count();
             $jumlah_siswa = Siswa::where('status', 1)->count();
 
-            $jumlah_siswa_shs = Siswa::where('status', 1)->where('tingkatan_id', 5)->count();
-            $jumlah_siswa_jhs = Siswa::where('status', 1)->where('tingkatan_id', 4)->count();
-            $jumlah_siswa_ps = Siswa::where('status', 1)->where('tingkatan_id', 3)->count();
-            $jumlah_siswa_kg = Siswa::where('status', 1)->where('tingkatan_id', 2)->count();
-            $jumlah_siswa_pg = Siswa::where('status', 1)->where('tingkatan_id', 2)->count();
-
+            $jumlah_siswa_shs = Siswa::where('status', 1)->where('tingkatan_id', 6)->count();
+            $jumlah_siswa_jhs = Siswa::where('status', 1)->where('tingkatan_id', 5)->count();
+            $jumlah_siswa_ps = Siswa::where('status', 1)->where('tingkatan_id', 4)->count();
+            $jumlah_siswa_kg_b = Siswa::where('status', 1)->where('tingkatan_id', 3)->count();
+            $jumlah_siswa_kg_a = Siswa::where('status', 1)->where('tingkatan_id', 2)->count();
+            $jumlah_siswa_pg = Siswa::where('status', 1)->where('tingkatan_id', 1)->count();
 
             $jumlah_kelas = Kelas::where('tapel_id', $tapel->id)->count();
 
@@ -65,12 +65,14 @@ class DashboardController extends Controller
                 'jumlah_siswa_shs',
                 'jumlah_siswa_jhs',
                 'jumlah_siswa_ps',
-                'jumlah_siswa_kg',
+                'jumlah_siswa_kg_a',
+                'jumlah_siswa_kg_b',
                 'jumlah_siswa_pg',
                 'jumlah_kelas',
                 'jumlah_ekstrakulikuler',
             ));
         } elseif (Auth::user()->role == 2) {
+
             $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
 
             // Dashboard Guru Mapel
@@ -136,7 +138,6 @@ class DashboardController extends Controller
                     'data_capaian_penilaian',
                 ));
             } elseif (session()->get('akses_sebagai') == 'Wali Kelas') {
-
                 $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)->where('guru_id', $guru->id)->pluck('id')->toArray();
                 $jumlah_anggota_kelas = count(AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get());
                 $id_pembelajaran_kelas = Pembelajaran::whereIn('kelas_id', $id_kelas_diampu)->where('status', 1)->get('id');

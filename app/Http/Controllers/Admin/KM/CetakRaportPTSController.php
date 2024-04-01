@@ -31,7 +31,7 @@ class CetakRaportPTSController extends Controller
     {
         $title = 'Raport Tengah Semester';
         $tapel = Tapel::where('status', 1)->first();
-        $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
+        $data_kelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->get();
         return view('admin.km.raportpts.setpaper', compact('title', 'data_kelas', 'tapel'));
     }
 
@@ -49,7 +49,7 @@ class CetakRaportPTSController extends Controller
         $semester = Semester::findorfail($request->semester_id);
         $term = Term::findorfail($request->term_id);
 
-        $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
+        $data_kelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->get();
         $data_anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
             ->orderBy('siswa.nama_lengkap', 'ASC')
             ->where('anggota_kelas.kelas_id', $kelas->id)

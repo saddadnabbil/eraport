@@ -16,21 +16,25 @@ class TkEventSeeder extends Seeder
     {
         TkEvent::create([
             'tapel_id' => 1,
+            'term_id' => 1,
             'name' => 'Event 1',
         ]);
 
         TkEvent::create([
             'tapel_id' => 1,
+            'term_id' => 1,
             'name' => 'Event 2',
         ]);
 
         TkEvent::create([
             'tapel_id' => 1,
+            'term_id' => 1,
             'name' => 'Event 3',
         ]);
 
         TkEvent::create([
             'tapel_id' => 1,
+            'term_id' => 1,
             'name' => 'Event 4',
         ]);
     }

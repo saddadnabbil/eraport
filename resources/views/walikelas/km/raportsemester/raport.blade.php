@@ -291,15 +291,15 @@
                     <h1 class="center-align pad-179 pad-5 no-indent">
                         <span style="font-size: 12pt">
                             GLOBAL INDONESIA
-                            @if ($anggota_kelas->kelas->tingkatan_id == '1')
+                            @if ($anggota_kelas->kelas->tingkatan_id == '6')
                                 SENIOR HIGH SCHOOL
-                            @elseif($anggota_kelas->kelas->tingkatan_id == '2')
-                                JUNIOR HIGH SCHOOL
-                            @elseif($anggota_kelas->kelas->tingkatan_id == '3')
-                                PRIMARY SCHOOL
-                            @elseif($anggota_kelas->kelas->tingkatan_id == '4')
-                                KINDERGARTEN
                             @elseif($anggota_kelas->kelas->tingkatan_id == '5')
+                                JUNIOR HIGH SCHOOL
+                            @elseif($anggota_kelas->kelas->tingkatan_id == '4')
+                                PRIMARY SCHOOL
+                            @elseif($anggota_kelas->kelas->tingkatan_id == '2' || $anggota_kelas->kelas->tingkatan_id == '3')
+                                KINDERGARTEN
+                            @elseif($anggota_kelas->kelas->tingkatan_id == '1')
                                 PLAYGROUP
                             @endif
                         </span>

@@ -25,8 +25,8 @@ class CapaianPembelajaranController extends Controller
         $data_mapel = Mapel::where('tapel_id', $tapel->id)->orderBy('nama_mapel', 'ASC')->get();
         $id_mapel = Mapel::where('tapel_id', $tapel->id)->get('id');
 
-        $data_kelas = Kelas::where('tapel_id', $tapel->id)->groupBy('tingkatan_id')->orderBy('tingkatan_id', 'ASC')->get();
-        $id_kelas = Kelas::where('tapel_id', $tapel->id)->groupBy('tingkatan_id')->orderBy('tingkatan_id', 'ASC')->get('id');
+        $data_kelas = Kelas::where('tapel_id', $tapel->id)->groupBy('tingkatan_id')->orderBy('tingkatan_id', 'ASC')->whereNotIn('tingkatan_id', [1, 2, 3])->get();
+        $id_kelas = Kelas::where('tapel_id', $tapel->id)->groupBy('tingkatan_id')->orderBy('tingkatan_id', 'ASC')->whereNotIn('tingkatan_id', [1, 2, 3])->get('id');
 
         $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('kelas_id', 'ASC')->orderBy('mapel_id', 'ASC')->get();
 
@@ -58,7 +58,7 @@ class CapaianPembelajaranController extends Controller
             $semester = Semester::findorfail($pembelajaran->kelas->tingkatan->semester_id);
 
             $pembelajaran_id = $request->pembelajaran_id;
-            $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
+            $id_kelas = Kelas::where('tapel_id', $tapel->id)->groupBy('tingkatan_id')->orderBy('tingkatan_id', 'ASC')->whereNotIn('tingkatan_id', [1, 2, 3])->get('id');
             $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('kelas_id', 'ASC')->orderBy('mapel_id', 'ASC')->get();
             $mapel_id = $pembelajaran->mapel->id;
             $tingkatan_id = $pembelajaran->kelas->tingkatan->id;

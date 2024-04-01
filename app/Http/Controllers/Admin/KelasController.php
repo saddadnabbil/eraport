@@ -51,17 +51,20 @@ class KelasController extends Controller
             $jumlah_kelas_play_group = Kelas::where('tapel_id', $tapel->id)
                 ->where('tingkatan_id', '1')
                 ->count();
-            $jumlah_kelas_kinder_garten = Kelas::where('tapel_id', $tapel->id)
+            $jumlah_kelas_kinder_garten_a = Kelas::where('tapel_id', $tapel->id)
                 ->where('tingkatan_id', '2')
                 ->count();
-            $jumlah_kelas_primary_school = Kelas::where('tapel_id', $tapel->id)
+            $jumlah_kelas_kinder_garten_b = Kelas::where('tapel_id', $tapel->id)
                 ->where('tingkatan_id', '3')
                 ->count();
-            $jumlah_kelas_junior_high_school = Kelas::where('tapel_id', $tapel->id)
+            $jumlah_kelas_primary_school = Kelas::where('tapel_id', $tapel->id)
                 ->where('tingkatan_id', '4')
                 ->count();
-            $jumlah_kelas_senior_high_school = Kelas::where('tapel_id', $tapel->id)
+            $jumlah_kelas_junior_high_school = Kelas::where('tapel_id', $tapel->id)
                 ->where('tingkatan_id', '5')
+                ->count();
+            $jumlah_kelas_senior_high_school = Kelas::where('tapel_id', $tapel->id)
+                ->where('tingkatan_id', '6')
                 ->count();
 
             return view('admin.kelas.index', compact('title', 'data_kelas', 'tapel', 'data_guru', 'data_tingkatan', 'data_jurusan', 'jumlah_kelas_play_group', 'jumlah_kelas_kinder_garten', 'jumlah_kelas_primary_school', 'jumlah_kelas_junior_high_school', 'jumlah_kelas_senior_high_school'));

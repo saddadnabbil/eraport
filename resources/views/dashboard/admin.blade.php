@@ -144,7 +144,14 @@
                     <div class="card">
                         <div class="card-body">
                             @php
-                                $siswaData = [['Senior High School', $jumlah_siswa_shs], ['Junior High School', $jumlah_siswa_jhs], ['Primary School', $jumlah_siswa_ps], ['Kinder Garten', $jumlah_siswa_kg], ['Playgroup', $jumlah_siswa_pg]];
+                                $siswaData = [
+                                    ['Senior High School', $jumlah_siswa_shs],
+                                    ['Junior High School', $jumlah_siswa_jhs],
+                                    ['Primary School', $jumlah_siswa_ps],
+                                    ['Kinder Garten A', $jumlah_siswa_kg_a],
+                                    ['Kinder Garten B', $jumlah_siswa_kg_b],
+                                    ['Playgroup', $jumlah_siswa_pg],
+                                ];
                             @endphp
                             <h4 class="card-title">Total Siswa</h4>
                             <div id="campaign-v2" data-siswa='{{ json_encode($siswaData) }}' class="mt-2"
@@ -167,8 +174,13 @@
                                 </li>
                                 <li class="mt-3">
                                     <i class="fas fa-circle text-cyan font-10 me-2"></i>
-                                    <span class="text-muted">Kinder Garten</span>
-                                    <span class="text-dark float-end font-weight-medium">{{ $jumlah_siswa_kg }}</span>
+                                    <span class="text-muted">Kinder Garten A</span>
+                                    <span class="text-dark float-end font-weight-medium">{{ $jumlah_siswa_kg_a }}</span>
+                                </li>
+                                <li class="mt-3">
+                                    <i class="fas fa-circle text-cyan font-10 me-2"></i>
+                                    <span class="text-muted">Kinder Garten B</span>
+                                    <span class="text-dark float-end font-weight-medium">{{ $jumlah_siswa_kg_b }}</span>
                                 </li>
                                 <li class="mt-3">
                                     <i class="fas fa-circle text-orange font-10 me-2"></i>
@@ -203,7 +215,7 @@
                                                     </p>
                                                 </div>
                                                 <span
-                                                    class="font-weight-light font-14 mb-1 d-block text-muted">{{ $pengumuman->user->admin->nama_lengkap }}
+                                                    class="font-weight-light font-14 mb-1 d-block text-muted">{{ $pengumuman->user->karyawan->nama_lengkap }}
                                                     -
                                                     {{ \Carbon\Carbon::parse($pengumuman->created_at)->diffForHumans() }}</span>
                                                 @if (Auth::user()->id == $pengumuman->user_id)
@@ -280,7 +292,7 @@
                                     <li class="item">
                                         <div class="product-img">
                                             @if ($riwayat_login->user->role == 1)
-                                                <img src="assets/dist/img/avatar/{{ $riwayat_login->user->admin->avatar }}"
+                                                <img src="assets/dist/img/avatar/{{ $riwayat_login->user->karyawan->avatar }}"
                                                     alt="Avatar" class="img-size-50">
                                             @elseif($riwayat_login->user->role == 2)
                                                 <img src="assets/dist/img/avatar/{{ $riwayat_login->user->karyawan->avatar }}"
@@ -294,7 +306,7 @@
                                         <div class="product-info">
                                             <a href="javascript:void(0)" class="product-title">
                                                 @if ($riwayat_login->user->role == 1)
-                                                    {{ $riwayat_login->user->admin->nama_lengkap }}
+                                                    {{ $riwayat_login->user->karyawan->nama_lengkap }}
                                                 @elseif($riwayat_login->user->role == 2)
                                                     {{ $riwayat_login->user->karyawan->nama_lengkap }}
                                                 @elseif($riwayat_login->user->role == 3)

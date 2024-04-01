@@ -29,7 +29,7 @@ class LegerNilaiSiswaController extends Controller
     {
         $title = 'Leger Nilai Siswa';
         $tapel = Tapel::where('status', 1)->first();
-        $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
+        $data_kelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->get();
         return view('admin.km.leger.pilihkelas', compact('title', 'data_kelas'));
     }
 
@@ -45,7 +45,7 @@ class LegerNilaiSiswaController extends Controller
         $tapel = Tapel::where('status', 1)->first();
         $kelas = Kelas::findorfail($request->kelas_id);
         $term = Term::findorfail($kelas->tingkatan->term_id);
-        $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
+        $data_kelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->get();
 
         $data_id_mapel_semester_ini = Mapel::where('tapel_id', $tapel->id)->get('id');
 

@@ -14,15 +14,7 @@
 @endphp
 
 @include('layouts.partials.sidebar._sidebar-item', [
-    'isActive' => request()->routeIs([
-        'tglraportkm.*',
-        'kkmadmin.*',
-        'mappingkm.*',
-        'tkelement.*',
-        'prestasiadmin.*',
-        'catatanadmin.*',
-        'kenaikanadmin.*',
-    ]),
+    'isActive' => request()->routeIs(['tkelement.*', 'tktopic.*', 'tksubtopic.*', 'tkpoint.*']),
     'hasArrow' => true,
     'icon' => 'clipboard',
     'itemName' => 'Rencana Penilaian',

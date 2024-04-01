@@ -40,11 +40,16 @@ class PenilaianTkController extends Controller
             ->whereIn('tingkatan_id', [1, 2])
             ->get();
 
+        // handle if kelas null
+        if (count($data_kelas) == 0) {
+            return redirect(route('kelas.index'))->with('toast_warning', 'Kelas Tingkatan TK Belum tersedia');
+        }
+
         $term = $data_kelas->first()->tingkatan->term_id;
 
         $data_term = Term::orderBy('id', 'ASC')->get();
 
-        $id_kelas = Kelas::where('tapel_id', $tapel->id)->where('tingkatan_id', [1, 2])->get('id');
+        $id_kelas = Kelas::where('tapel_id', $tapel->id)->where('tingkatan_id', [1, 2, 3])->get('id');
 
         if (count($data_mapel) == 0) {
             return redirect('admin/mapel')->with('toast_warning', 'Mohon isikan data mata pelajaran');
@@ -129,17 +134,19 @@ class PenilaianTkController extends Controller
 
         $achivement_events = $request->input('achivement_event');
 
-        foreach ($achivement_events as $key => $event) {
-            if (!empty($event)) {
-                TkAchivementEventGrade::updateOrCreate(
-                    [
-                        'anggota_kelas_id' => $request->input('anggota_kelas_id'),
-                        'tk_event_id' => $request->input('tk_event_id')[$key],
-                    ],
-                    [
-                        'achivement_event' => $event
-                    ]
-                );
+        if ($achivement_events) {
+            foreach ($achivement_events as $key => $event) {
+                if (!empty($event)) {
+                    TkAchivementEventGrade::updateOrCreate(
+                        [
+                            'anggota_kelas_id' => $request->input('anggota_kelas_id'),
+                            'tk_event_id' => $request->input('tk_event_id')[$key],
+                        ],
+                        [
+                            'achivement_event' => $event
+                        ]
+                    );
+                }
             }
         }
 
@@ -199,12 +206,12 @@ class PenilaianTkController extends Controller
         $dataTkPoints = TkPoint::all();
 
         // Achivements
-        $dataAchivements = TkAchivementGrade::get(['anggota_kelas_id', 'tk_point_id', 'achivement']);
+        $dataAchivements = TkAchivementGrade::where('term_id', $term->id)->get(['anggota_kelas_id', 'tk_point_id', 'achivement']);
         $dataAchivementEvents = TkAchivementEventGrade::get(['anggota_kelas_id', 'tk_event_id', 'achivement_event']);
         $dataAttendance = TkAttendance::where('anggota_kelas_id', $request->anggota_kelas_id)->first(['anggota_kelas_id', 'no_school_days', 'days_attended', 'days_absent']);
 
         // EVENTS
-        $dataEvents = TkEvent::where('tapel_id', $tapel->id)->get();
+        $dataEvents = TkEvent::where('tapel_id', $tapel->id)->where('term_id', $term->id)->get();
 
         return view('admin.km.penilaiantk.show', compact('title', 'data_anggota_kelas', 'kelas', 'data_kelas', 'tapel', 'term', 'data_term', 'dataTkElements', 'dataTkTopics', 'dataTkSubtopics', 'dataTkPoints', 'siswa', 'dataEvents', 'dataAchivements', 'anggotaKelas', 'dataAchivementEvents', 'dataAttendance'));
     }

@@ -16,6 +16,7 @@ class CreateTkEventsTable extends Migration
         Schema::create('tk_events', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('tapel_id');
+            $table->unsignedBigInteger('term_id');
             $table->string('name');
             $table->timestamps();
 

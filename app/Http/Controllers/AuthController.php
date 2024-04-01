@@ -223,10 +223,18 @@ class AuthController extends Controller
         if (session()->get('akses_sebagai') == 'Guru Mapel') {
             $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
             $cek_wali_kelas = Kelas::where('guru_id', $guru->id)->first();
+            $cek_wali_kelas_tk = Kelas::where('guru_id', $guru->id)->whereIn('tingkatan_id', [1, 2])->first();
             if (!is_null($cek_wali_kelas)) {
-                session()->put([
-                    'akses_sebagai' => 'Wali Kelas',
-                ]);
+                if (!is_null($cek_wali_kelas_tk)) {
+                    session()->put([
+                        'akses_sebagai' => 'Wali Kelas',
+                        'akses_sebagai_tk' => 'Wali Kelas TK',
+                    ]);
+                } else {
+                    session()->put([
+                        'akses_sebagai' => 'Wali Kelas',
+                    ]);
+                }
                 return redirect('/dashboard')->with('toast_success', 'Homeroom access successful');
             } else {
                 return back()->with('toast_error', 'You do not have access as homeroom teacher');

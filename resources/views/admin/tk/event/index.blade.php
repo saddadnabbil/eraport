@@ -62,10 +62,35 @@
                                     </div>
                                     <form action="{{ route('event.store') }}" method="POST">
                                         @csrf
-                                        <input type="hidden" name="tapel_id" value="{{ $tapel->id }}">
                                         <div class="modal-body">
                                             <div class="form-group row">
-                                                <label for="tahun_pelajaran" class="col-sm-3 col-form-label">Event Name
+                                                <label for="tapel_id" class="col-sm-3 col-form-label">Tahun Pelajaran
+                                                </label>
+                                                <div class="col-sm-9">
+                                                    <select name="tapel_id" id="tapel_id" class="form-control form-select">
+                                                        <option value="">=== Pilih Tahun Pelajaran ===</option>
+                                                        @foreach ($data_tapel as $tapel)
+                                                            <option value="{{ $tapel->id }}">
+                                                                {{ $tapel->tahun_pelajaran }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="term_id" class="col-sm-3 col-form-label">Term
+                                                </label>
+                                                <div class="col-sm-9">
+                                                    <select name="term_id" id="term_id">
+                                                        <option value=""> === Pilih Term ===</option>
+                                                        @foreach ($data_term as $term)
+                                                            <option value="{{ $term->id }}">
+                                                                {{ $term->term }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="name" class="col-sm-3 col-form-label">Event Name
                                                 </label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control" id="name" name="name"
@@ -92,6 +117,8 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Event Name</th>
+                                            <th>Tahun Pelajaran</th>
+                                            <th>Term</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -102,6 +129,8 @@
                                             <tr>
                                                 <td>{{ $no }}</td>
                                                 <td>{{ $event->name }}</td>
+                                                <td>{{ $event->tapel->tahun_pelajaran }}</td>
+                                                <td>{{ $event->term->term }}</td>
                                                 <td class="text-center">
                                                     @include('components.actions.delete-button', [
                                                         'route' => route('event.destroy', $event->id),
@@ -112,7 +141,6 @@
                                                     ])
                                                 </td>
                                             </tr>
-
 
                                             <!-- Modal edit  -->
                                             <div class="modal fade" id="modal-edit{{ $event->id }}">
@@ -128,8 +156,39 @@
                                                             method="POST">
                                                             @csrf
                                                             @method('PUT')
-                                                            <input type="hidden" name="tapel_id"
-                                                                value="{{ $event->tapel_id }}">
+
+                                                            <div class="form-group row">
+                                                                <label for="tapel_id" class="col-sm-3 col-form-label">Tahun
+                                                                    Pelajaran
+                                                                </label>
+                                                                <div class="col-sm-9">
+                                                                    <select name="tapel_id" id="tapel_id"
+                                                                        class="form-control form-select">
+                                                                        <option value="">=== Pilih Tahun Pelajaran ===
+                                                                        </option>
+                                                                        @foreach ($data_tapel as $tapel)
+                                                                            <option value="{{ $tapel->id }}"
+                                                                                {{ $tapel->id == $event->tapel_id ? 'selected' : '' }}>
+                                                                                {{ $tapel->tahun_pelajaran }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label for="term_id" class="col-sm-3 col-form-label">Term
+                                                                </label>
+                                                                <div class="col-sm-9">
+                                                                    <select name="term_id" id="term_id">
+                                                                        <option value=""> === Pilih Term ===</option>
+                                                                        @foreach ($data_term as $term)
+                                                                            <option value="{{ $term->id }}"
+                                                                                {{ $term->id == $event->term_id ? 'selected' : '' }}>
+                                                                                {{ $term->term }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
                                                             <div class="modal-body">
                                                                 <div class="form-group row">
                                                                     <label for="tahun_pelajaran"
@@ -145,7 +204,8 @@
                                                             <div class="modal-footer justify-content-end">
                                                                 <button type="button" class="btn btn-default"
                                                                     data-bs-dismiss="modal">Cancel</button>
-                                                                <button type="submit" class="btn btn-primary">Save</button>
+                                                                <button type="submit"
+                                                                    class="btn btn-primary">Save</button>
                                                             </div>
                                                         </form>
                                                     </div>

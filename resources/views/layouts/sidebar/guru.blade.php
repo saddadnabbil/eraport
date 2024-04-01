@@ -14,6 +14,15 @@
                 @include('layouts.partials.sidebar.silabus')
                 @include('layouts.partials.sidebar.timetable')
 
+                {{-- check if have session "Wali Kelas Tk" --}}
+                @if (session()->has('Wali Kelas TK'))
+                    @include('layouts.partials.sidebar.reportkm-tk.event')
+                    @include('layouts.partials.sidebar.reportkm-tk.rencanapenilaian')
+                    @include('layouts.partials.sidebar.reportkm-tk.inputdata')
+                    @include('layouts.partials.sidebar.reportkm-tk.penilaian')
+                    @include('layouts.partials.sidebar.reportresultkm.printreport_tk')
+                @endif
+
                 <li class="list-divider"></li>
                 <li class="nav-small-cap">
                     <span class="hide-menu">REPORT KM</span>

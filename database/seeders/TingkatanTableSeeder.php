@@ -16,7 +16,8 @@ class TingkatanTableSeeder extends Seeder
     {
         $nama_tingkatan = [
             "Playgroup",
-            "Kindergarten",
+            "Kindergarten A",
+            "Kindergarten B",
             "Primary School",
             "Junior High School",
             "Senior High School"

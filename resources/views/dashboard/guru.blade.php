@@ -300,7 +300,7 @@
                                                     </p>
                                                 </div>
                                                 <span
-                                                    class="font-weight-light font-14 mb-1 d-block text-muted">{{ $pengumuman->user->admin->nama_lengkap }}
+                                                    class="font-weight-light font-14 mb-1 d-block text-muted">{{ $pengumuman->user->karyawan->nama_lengkap }}
                                                     -
                                                     {{ \Carbon\Carbon::parse($pengumuman->created_at)->diffForHumans() }}</span>
                                                 @if (Auth::user()->id == $pengumuman->user_id)
@@ -379,13 +379,13 @@
                                     <li class="item">
                                         <div class="product-img">
                                             @if ($riwayat_login->user->role == 1)
-                                                <img src="assets/dist/img/avatar/{{ $riwayat_login->user->admin->avatar }}"
+                                                <img src="assets/dist/img/avatar/{{ $riwayat_login->user->karyawan->admin->avatar ?? 'default.png' }}"
                                                     alt="Avatar" class="img-size-50">
                                             @elseif($riwayat_login->user->role == 2)
-                                                <img src="assets/dist/img/avatar/{{ $riwayat_login->user->karyawan->avatar }}"
+                                                <img src="assets/dist/img/avatar/{{ $riwayat_login->user->karyawan->avatar ?? 'default.png' }}"
                                                     alt="Avatar" class="img-size-50">
                                             @elseif($riwayat_login->user->role == 3)
-                                                <img src="assets/dist/img/avatar/{{ $riwayat_login->user->siswa->avatar }}"
+                                                <img src="assets/dist/img/avatar/{{ $riwayat_login->user->siswa->avatar ?? 'default.png' }}"
                                                     alt="Avatar" class="img-size-50">
                                             @endif
                                         </div>
@@ -393,7 +393,7 @@
                                         <div class="product-info">
                                             <a href="javascript:void(0)" class="product-title">
                                                 @if ($riwayat_login->user->role == 1)
-                                                    {{ $riwayat_login->user->admin->nama_lengkap }}
+                                                    {{ $riwayat_login->user->karyawan->nama_lengkap }}
                                                 @elseif($riwayat_login->user->role == 2)
                                                     {{ $riwayat_login->user->karyawan->nama_lengkap }}
                                                 @elseif($riwayat_login->user->role == 3)
