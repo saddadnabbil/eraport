@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\TkTopic;
+use App\Models\Tingkatan;
+use App\Models\TkElement;
 use App\Models\TkSubtopic;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -15,13 +17,28 @@ class TkSubtopicController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
+    {
+        $title = 'Pilih tingkatan';
+        $data_tingkatan = Tingkatan::whereIn('id', [1, 2, 3])->get();
+
+        return view('admin.tk.subtopic.pilihtingkatan', compact('title', 'data_tingkatan'));
+    }
+
+    public function create(Request $request)
     {
         $title = 'Sub Topic';
         $data_topic = TkTopic::get();
-        $data_subtopic = TkSubtopic::get();
+        $data_element = TkElement::where('tingkatan_id', $request->tingkatan_id)->get();
+        $data_topic = TkTopic::whereIn('tk_element_id', $data_element->pluck('id'))->get();
+        $data_subtopic = TkSubtopic::WhereIn('tk_topic_id', $data_topic->pluck('id'))->get();
 
-        return view('admin.tk.subtopic.index', compact('title', 'data_topic', 'data_subtopic'));
+        $data_tingkatan = Tingkatan::whereIn('id', [1, 2, 3])->get();
+        $tingkatan_id = Tingkatan::findorfail($request->tingkatan_id)->id;
+
+
+        return view('admin.tk.subtopic.index', compact('title', 'data_topic', 'data_subtopic', 'data_tingkatan', 'tingkatan_id'));
     }
 
     /**

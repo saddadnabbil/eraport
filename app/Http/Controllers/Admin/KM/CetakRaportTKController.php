@@ -43,7 +43,7 @@ class CetakRaportTKController extends Controller
         $title = 'Cetak Raport TK';
         $tapel = Tapel::where('status', 1)->first();
         $data_kelas = Kelas::where('tapel_id', $tapel->id)
-            ->whereIn('tingkatan_id', [1, 2])
+            ->whereIn('tingkatan_id', [1, 2, 3])
             ->get();
 
         return view('admin.km.raporttk.setpaper', compact('title', 'data_kelas', 'tapel'));
@@ -63,7 +63,7 @@ class CetakRaportTKController extends Controller
         $term = Term::findorfail($request->term_id);
 
         $data_kelas = Kelas::where('tapel_id', $tapel->id)
-            ->whereIn('tingkatan_id', [1, 2])
+            ->whereIn('tingkatan_id', [1, 2, 3])
             ->get();
 
         $data_anggota_kelas = AnggotaKelas::where('kelas_id', $request->kelas_id)->get();
@@ -91,11 +91,11 @@ class CetakRaportTKController extends Controller
         $nisn = $anggota_kelas->siswa->nisn;
 
         if ($request->data_type == 1) {
-            $title = 'Kelengkapan Raport';
+            $title = 'Kelengkapan Raport TK';
             $kelengkapan_raport = PDF::loadview('walikelas.km.raporttk.kelengkapanraport', compact('title', 'sekolah', 'anggota_kelas', 'term'))->setPaper($request->paper_size, $request->orientation);
             return $kelengkapan_raport->stream('KELENGKAPAN RAPORT ' . $anggota_kelas->siswa->nama_lengkap . ' (' . $anggota_kelas->kelas->nama_kelas . ').pdf');
         } elseif ($request->data_type == 2) {
-            $title = 'Raport Semester';
+            $title = 'Raport TK';
             $data_id_pembelajaran = Pembelajaran::where('kelas_id', $anggota_kelas->kelas_id)->get('id');
 
             $dataTkElements = TkElement::all();
@@ -152,11 +152,11 @@ class CetakRaportTKController extends Controller
         $term = Term::findorfail($request->term_id);
 
         if ($request->data_type == 1) {
-            $title = 'Kelengkapan Raport';
+            $title = 'Kelengkapan Raport TK';
             $kelengkapan_raport = PDF::loadview('walikelas.km.raporttk.kelengkapanraport-all-data', compact('title', 'sekolah', 'kelas', 'tapel', 'data_anggota_kelas', 'term'))->setPaper($request->paper_size, $request->orientation);
             return $kelengkapan_raport->stream('KELENGKAPAN RAPORT  (' . $kelas->nama_kelas . ').pdf');
         } elseif ($request->data_type == 2) {
-            $title = 'Raport Semester';
+            $title = 'Raport TK';
 
             $dataTkElements = TkElement::all();
             $dataTkTopics = TkTopic::all();
@@ -199,7 +199,7 @@ class CetakRaportTKController extends Controller
             // Add "Page {PAGE_NUM} / {PAGE_COUNT}" text to the bottom right corner
             $dompdf->get_canvas()->page_text($x, $y, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, $font_size, $font_color, 0, 0, 0, 'R');
 
-            return $raport->stream('RAPORT ' . $kelas->nama_kelas . ').pdf');
+            return $raport->stream('RAPORT ' . $kelas->nama_kelas . '.pdf');
         }
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\TkTopic;
+use App\Models\Tingkatan;
 use App\Models\TkElement;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -17,11 +18,21 @@ class TkTopicController extends Controller
      */
     public function index()
     {
-        $title = 'Topic';
-        $data_topic = TkTopic::get();
-        $data_element = TkElement::get();
+        $title = 'Pilih tingkatan';
+        $data_tingkatan = Tingkatan::whereIn('id', [1, 2, 3])->get();
 
-        return view('admin.tk.topic.index', compact('title', 'data_topic', 'data_element'));
+        return view('admin.tk.topic.pilihtingkatan', compact('title', 'data_tingkatan'));
+    }
+
+    public function create(Request $request)
+    {
+        $title = 'Topic';
+        $data_element = TkElement::where('tingkatan_id', $request->tingkatan_id)->get();
+        $data_topic = TkTopic::whereIn('tk_element_id', $data_element->pluck('id'))->get();
+        $data_tingkatan = Tingkatan::whereIn('id', [1, 2, 3])->get();
+        $tingkatan_id = Tingkatan::findorfail($request->tingkatan_id)->id;
+
+        return view('admin.tk.topic.index', compact('title', 'data_topic', 'data_element', 'data_tingkatan', 'tingkatan_id'));
     }
 
     /**

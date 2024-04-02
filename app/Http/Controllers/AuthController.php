@@ -223,7 +223,7 @@ class AuthController extends Controller
         if (session()->get('akses_sebagai') == 'Guru Mapel') {
             $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
             $cek_wali_kelas = Kelas::where('guru_id', $guru->id)->first();
-            $cek_wali_kelas_tk = Kelas::where('guru_id', $guru->id)->whereIn('tingkatan_id', [1, 2])->first();
+            $cek_wali_kelas_tk = Kelas::where('guru_id', $guru->id)->whereIn('tingkatan_id', [1, 2, 3])->first();
             if (!is_null($cek_wali_kelas)) {
                 if (!is_null($cek_wali_kelas_tk)) {
                     session()->put([

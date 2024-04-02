@@ -37,7 +37,7 @@ class PenilaianTkController extends Controller
         $data_mapel = Mapel::where('tapel_id', $tapel->id)->orderBy('nama_mapel', 'ASC')->get();
 
         $data_kelas = Kelas::where('tapel_id', $tapel->id)
-            ->whereIn('tingkatan_id', [1, 2])
+            ->whereIn('tingkatan_id', [1, 2, 3])
             ->get();
 
         // handle if kelas null
@@ -74,11 +74,11 @@ class PenilaianTkController extends Controller
 
         $data_term = Term::orderBy('id', 'ASC')->get();
         $data_kelas = Kelas::where('tapel_id', $tapel->id)
-            ->whereIn('tingkatan_id', [1, 2])
+            ->whereIn('tingkatan_id', [1, 2, 3])
             ->get();
 
         $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)
-            ->whereIn('tingkatan_id', [1, 2])
+            ->whereIn('tingkatan_id', [1, 2, 3])
             ->where('id', $request->kelas_id)
             ->get('id');
 
@@ -183,11 +183,11 @@ class PenilaianTkController extends Controller
 
         $data_term = Term::orderBy('id', 'ASC')->get();
         $data_kelas = Kelas::where('tapel_id', $tapel->id)
-            ->whereIn('tingkatan_id', [1, 2])
+            ->whereIn('tingkatan_id', [1, 2, 3])
             ->get();
 
         $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)
-            ->whereIn('tingkatan_id', [1, 2])
+            ->whereIn('tingkatan_id', [1, 2, 3])
             ->where('id', $request->kelas_id)
             ->get('id');
 
@@ -200,10 +200,10 @@ class PenilaianTkController extends Controller
             ->where('siswa.status', 1)
             ->get();
 
-        $dataTkElements = TkElement::all();
-        $dataTkTopics = TkTopic::all();
-        $dataTkSubtopics = TkSubtopic::all();
-        $dataTkPoints = TkPoint::all();
+        $dataTkElements = TkElement::where('tingkatan_id', $kelas->tingkatan_id)->get();
+        $dataTkTopics = TkTopic::whereIn('tk_element_id', $dataTkElements->pluck('id'))->get();
+        $dataTkSubtopics = TkSubtopic::whereIn('tk_topic_id', $dataTkTopics->pluck('id'))->get();
+        $dataTkPoints = TkPoint::whereIn('tk_subtopic_id', $dataTkSubtopics->pluck('id'))->get();
 
         // Achivements
         $dataAchivements = TkAchivementGrade::where('term_id', $term->id)->get(['anggota_kelas_id', 'tk_point_id', 'achivement']);

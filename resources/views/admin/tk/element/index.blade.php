@@ -64,7 +64,21 @@
                                         @csrf
                                         <div class="modal-body">
                                             <div class="form-group row">
-                                                <label for="tahun_pelajaran" class="col-sm-3 col-form-label">Element Name
+                                                <label for="tingkatan_id" class="col-sm-3 col-form-label">Tingkatan
+                                                </label>
+                                                <div class="col-sm-9">
+                                                    <select class="form-control form-select select2" name="tingkatan_id"
+                                                        required">
+                                                        <option value="">-- Pilih Tingkatan --</option>
+                                                        @foreach ($data_tingkatan as $tingkatan)
+                                                            <option value="{{ $tingkatan->id }}">
+                                                                {{ $tingkatan->nama_tingkatan }}
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="name" class="col-sm-3 col-form-label">Element Name
                                                 </label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control" id="name" name="name"
@@ -84,6 +98,27 @@
                         <!-- End Modal tambah -->
 
                         <div class="card-body">
+
+                            <div class="callout callout-info">
+                                <form action="{{ route('tkelement.create') }}" method="GET">
+                                    @csrf
+                                    <div class="form-group row">
+                                        <label for="tingkatan_id" class="col-sm-3 col-form-label">Tingkatan</label>
+                                        <div class="col-sm-9">
+                                            <select class="form-control form-select select2" name="tingkatan_id"
+                                                style="width: 100%;" required onchange="this.form.submit();">
+                                                <option value="">-- Pilih Tingkatan --</option>
+                                                @foreach ($data_tingkatan as $tingkatan)
+                                                    <option value="{{ $tingkatan->id }}"
+                                                        {{ $tingkatan->id == $tingkatan_id ? 'selected' : '' }}>
+                                                        {{ $tingkatan->nama_tingkatan }}
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
                             <div class="table-responsive">
 
                                 <table id="zero_config" class="table table-striped table-valign-middle ">
@@ -91,6 +126,7 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Element Name</th>
+                                            <th>Tapel</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -101,6 +137,7 @@
                                             <tr>
                                                 <td>{{ $no }}</td>
                                                 <td>{{ $element->name }}</td>
+                                                <td>{{ $element->tingkatan->nama_tingkatan }}</td>
                                                 <td class="text-center">
                                                     @include('components.actions.delete-button', [
                                                         'route' => route('tkelement.destroy', $element->id),
@@ -131,6 +168,23 @@
                                                                 value="{{ $element->tapel_id }}">
                                                             <div class="modal-body">
                                                                 <div class="form-group row">
+                                                                    <label for="tingkatan_id"
+                                                                        class="col-sm-3 col-form-label">Tingkatan
+                                                                    </label>
+                                                                    <div class="col-sm-9">
+                                                                        <select class="form-control form-select select2"
+                                                                            name="tingkatan_id" required">
+                                                                            <option value="">-- Pilih Tingkatan --
+                                                                            </option>
+                                                                            @foreach ($data_tingkatan as $tingkatan)
+                                                                                <option value="{{ $tingkatan->id }}"
+                                                                                    {{ $tingkatan->id == $element->tingkatan_id ? 'selected' : '' }}>
+                                                                                    {{ $tingkatan->nama_tingkatan }}
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
                                                                     <label for="tahun_pelajaran"
                                                                         class="col-sm-3 col-form-label">Name</label>
                                                                     <div class="col-sm-9">
@@ -144,7 +198,8 @@
                                                             <div class="modal-footer justify-content-end">
                                                                 <button type="button" class="btn btn-default"
                                                                     data-bs-dismiss="modal">Cancel</button>
-                                                                <button type="submit" class="btn btn-primary">Save</button>
+                                                                <button type="submit"
+                                                                    class="btn btn-primary">Save</button>
                                                             </div>
                                                         </form>
                                                     </div>

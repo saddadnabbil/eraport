@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\TkPoint;
+use App\Models\TkTopic;
+use App\Models\Tingkatan;
+use App\Models\TkElement;
 use App\Models\TkSubtopic;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -17,12 +20,24 @@ class TkPointController extends Controller
      */
     public function index()
     {
-        $title = 'Point';
-        $data_subtopic = TkSubtopic::get();
-        $data_topic = TkSubtopic::get();
-        $data_point = TkPoint::orderBy('tk_topic_id')->orderBy('id')->get();
+        $title = 'Pilih tingkatan';
+        $data_tingkatan = Tingkatan::whereIn('id', [1, 2, 3])->get();
 
-        return view('admin.tk.point.index', compact('title', 'data_point', 'data_subtopic', 'data_topic'));
+        return view('admin.tk.point.pilihtingkatan', compact('title', 'data_tingkatan'));
+    }
+
+    public function create(Request $request)
+    {
+        $title = 'Point';
+        $data_element = TkElement::where('tingkatan_id', $request->tingkatan_id)->get();
+        $data_topic = TkTopic::whereIn('tk_element_id', $data_element->pluck('id'))->get();
+        $data_subtopic = TkSubtopic::WhereIn('tk_topic_id', $data_topic->pluck('id'))->get();
+        $data_point = TkPoint::WhereIn('tk_subtopic_id', $data_subtopic->pluck('id'))->orderBy('tk_topic_id')->orderBy('id')->get();
+
+        $data_tingkatan = Tingkatan::whereIn('id', [1, 2, 3])->get();
+        $tingkatan_id = Tingkatan::findorfail($request->tingkatan_id)->id;
+
+        return view('admin.tk.point.index', compact('title', 'data_point', 'data_subtopic', 'data_topic', 'data_tingkatan', 'tingkatan_id'));
     }
 
     /**

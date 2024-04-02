@@ -15,12 +15,15 @@ class TkElementSeeder extends Seeder
     public function run()
     {
         TkElement::create([
+            'tingkatan_id' => 1,
             'name' => 'COMMUNICATION, LANGUAGES AND LITERACY',
         ]);
         TkElement::create([
+            'tingkatan_id' => 1,
             'name' => 'PROBLEM SOLVING, REASONING AND NUMERACY',
         ]);
         TkElement::create([
+            'tingkatan_id' => 1,
             'name' => 'KNOWLEDGE AND UNDERSTANDING OF THE WORLD',
         ]);
     }

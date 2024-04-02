@@ -35,7 +35,7 @@ class TkCatatanWaliKelasController extends Controller
         $title = 'Input Catatan Wali Kelas TK';
         $tapel = Tapel::where('status', 1)->first();
 
-        $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)->whereIn('tingkatan_id', [1, 2])->where('id', $request->kelas_id)->get('id');
+        $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)->whereIn('tingkatan_id', [1, 2, 3])->where('id', $request->kelas_id)->get('id');
 
         $id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('id');
         $kelas_id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('kelas_id');

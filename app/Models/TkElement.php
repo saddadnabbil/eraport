@@ -11,4 +11,9 @@ class TkElement extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
+    public function tingkatan()
+    {
+        return $this->belongsTo(Tingkatan::class, 'tingkatan_id');
+    }
 }

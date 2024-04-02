@@ -15,8 +15,11 @@ class CreateTkElementsTable extends Migration
     {
         Schema::create('tk_elements', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('tingkatan_id');
             $table->string('name');
             $table->timestamps();
+
+            $table->foreign('tingkatan_id')->references('id')->on('tingkatans')->onDelete('cascade');
         });
     }
 

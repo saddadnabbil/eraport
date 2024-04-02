@@ -40,7 +40,7 @@ class TkEventAchivementGradeSiswaController extends Controller
         $tapel = Tapel::where('status', 1)->first();
 
         $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)
-            ->whereIn('tingkatan_id', [1, 2])
+            ->whereIn('tingkatan_id', [1, 2, 3])
             ->where('id', $request->kelas_id)
             ->get('id');
 

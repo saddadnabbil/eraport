@@ -6,6 +6,7 @@ use App\Models\Tapel;
 use App\Models\TkElement;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Tingkatan;
 use Illuminate\Support\Facades\Validator;
 
 class TkElementController extends Controller
@@ -17,10 +18,21 @@ class TkElementController extends Controller
      */
     public function index()
     {
-        $title = 'Element ';
-        $data_element = TkElement::get();
+        $title = 'Pilih tingkatan';
+        $data_tingkatan = Tingkatan::whereIn('id', [1, 2, 3])->get();
 
-        return view('admin.tk.element.index', compact('title', 'data_element'));
+        return view('admin.tk.element.pilihtingkatan', compact('title', 'data_tingkatan'));
+    }
+
+    public function create(Request $request)
+    {
+        $title = 'Element ';
+        $data_element = TkElement::where('tingkatan_id', $request->tingkatan_id)->get();
+        $data_tingkatan = Tingkatan::whereIn('id', [1, 2, 3])->get();
+        $tingkatan_id = Tingkatan::findorfail($request->tingkatan_id)->id;
+
+
+        return view('admin.tk.element.index', compact('title', 'data_element', 'data_tingkatan', 'tingkatan_id'));
     }
 
     /**
@@ -33,6 +45,7 @@ class TkElementController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
+            'tingkatan_id' => 'required|exists:tingkatans,id',
         ]);
 
         if ($validator->fails()) {
@@ -50,6 +63,7 @@ class TkElementController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
+            'tingkatan_id' => 'required|exists:tingkatans,id',
         ]);
 
         if ($validator->fails()) {
@@ -63,6 +77,7 @@ class TkElementController extends Controller
 
         $tkElement->update([
             'name' => $request->name,
+            'tingkatan_id' => $request->tingkatan_id,
         ]);
 
         return back()->with('success', 'Element berhasil diperbarui.');
