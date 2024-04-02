@@ -68,7 +68,6 @@
                                                 </label>
                                                 <div class="col-sm-9">
                                                     <select name="tapel_id" id="tapel_id" class="form-control form-select">
-                                                        <option value="">=== Pilih Tahun Pelajaran ===</option>
                                                         @foreach ($data_tapel as $tapel)
                                                             <option value="{{ $tapel->id }}">
                                                                 {{ $tapel->tahun_pelajaran }}</option>
@@ -80,8 +79,7 @@
                                                 <label for="term_id" class="col-sm-3 col-form-label">Term
                                                 </label>
                                                 <div class="col-sm-9">
-                                                    <select name="term_id" id="term_id">
-                                                        <option value=""> === Pilih Term ===</option>
+                                                    <select name="term_id" id="term_id" class="form-control form-select">
                                                         @foreach ($data_term as $term)
                                                             <option value="{{ $term->id }}">
                                                                 {{ $term->term }}</option>
@@ -156,42 +154,37 @@
                                                             method="POST">
                                                             @csrf
                                                             @method('PUT')
-
-                                                            <div class="form-group row">
-                                                                <label for="tapel_id" class="col-sm-3 col-form-label">Tahun
-                                                                    Pelajaran
-                                                                </label>
-                                                                <div class="col-sm-9">
-                                                                    <select name="tapel_id" id="tapel_id"
-                                                                        class="form-control form-select">
-                                                                        <option value="">=== Pilih Tahun Pelajaran ===
-                                                                        </option>
-                                                                        @foreach ($data_tapel as $tapel)
-                                                                            <option value="{{ $tapel->id }}"
-                                                                                {{ $tapel->id == $event->tapel_id ? 'selected' : '' }}>
-                                                                                {{ $tapel->tahun_pelajaran }}</option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <label for="term_id" class="col-sm-3 col-form-label">Term
-                                                                </label>
-                                                                <div class="col-sm-9">
-                                                                    <select name="term_id" id="term_id">
-                                                                        <option value=""> === Pilih Term ===</option>
-                                                                        @foreach ($data_term as $term)
-                                                                            <option value="{{ $term->id }}"
-                                                                                {{ $term->id == $event->term_id ? 'selected' : '' }}>
-                                                                                {{ $term->term }}</option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-
                                                             <div class="modal-body">
                                                                 <div class="form-group row">
-                                                                    <label for="tahun_pelajaran"
+                                                                    <label for="tapel_id" class="col-sm-3 col-form-label">Tahun
+                                                                        Pelajaran
+                                                                    </label>
+                                                                    <div class="col-sm-9">
+                                                                        <select name="tapel_id" id="tapel_id"
+                                                                            class="form-control form-select">
+                                                                            @foreach ($data_tapel as $tapel)
+                                                                                <option value="{{ $tapel->id }}"
+                                                                                    {{ $tapel->id == $event->tapel_id ? 'selected' : '' }}>
+                                                                                    {{ $tapel->tahun_pelajaran }}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <label for="term_id" class="col-sm-3 col-form-label">Term
+                                                                    </label>
+                                                                    <div class="col-sm-9">
+                                                                        <select name="term_id" id="term_id" class="form-control form-select">
+                                                                            @foreach ($data_term as $term)
+                                                                                <option value="{{ $term->id }}"
+                                                                                    {{ $term->id == $event->term_id ? 'selected' : '' }}>
+                                                                                    {{ $term->term }}</option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <label for="name"
                                                                         class="col-sm-3 col-form-label">Name</label>
                                                                     <div class="col-sm-9">
                                                                         <input type="text" class="form-control"
