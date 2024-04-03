@@ -52,6 +52,7 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Full name</th>
+                                            <th>Unit</th>
                                             <th>Employee Code</th>
                                             <th>Identity Card</th>
                                             <th>Number Phone</th>
@@ -96,6 +97,9 @@
                         },
                         {
                             "data": "full_name"
+                        },
+                        {
+                            "data": "unit_nama"
                         },
                         {
                             "data": "employee_code"

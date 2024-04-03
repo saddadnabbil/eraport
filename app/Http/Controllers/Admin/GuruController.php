@@ -35,6 +35,9 @@ class GuruController extends Controller
             ->addColumn('full_name', function ($guru) {
                 return $guru->karyawan->nama_lengkap;
             })
+            ->addColumn('unit_nama', function ($guru) {
+                return $guru->karyawan->unitKaryawan->unit_nama;
+            })
             ->addColumn('employee_code', function ($guru) {
                 return $guru->karyawan->kode_karyawan;
             })

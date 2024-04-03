@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Km;
+namespace App\Http\Controllers\Guru\Km;
 
 use App\Models\Term;
 use App\Models\Kelas;
@@ -36,8 +36,6 @@ class PenilaianTkController extends Controller
 
         $data_mapel = Mapel::where('tapel_id', $tapel->id)->orderBy('nama_mapel', 'ASC')->get();
 
-        // $data_element = TkElement::where('tingkatan_id', $request->tingkatan_id)->get();
-        // $data_topic = TkTopic::whereIn('tk_element_id', $data_element->pluck('id'))->get();
         $data_kelas = Kelas::where('tapel_id', $tapel->id)
             ->whereIn('tingkatan_id', [1, 2, 3])
             ->get();
@@ -59,7 +57,7 @@ class PenilaianTkController extends Controller
             return redirect('admin/kelas')->with('toast_warning', 'Mohon isikan data kelas');
         }
 
-        return view('admin.km.penilaiantk.pilihkelas', compact('title', 'data_mapel', 'data_kelas', 'tapel', 'data_term', 'term'));
+        return view('guru.km.penilaiantk.pilihkelas', compact('title', 'data_mapel', 'data_kelas', 'tapel', 'data_term', 'term'));
     }
 
     /**
@@ -93,7 +91,7 @@ class PenilaianTkController extends Controller
             ->where('siswa.status', 1)
             ->get();
 
-        return view('admin.km.penilaiantk.create', compact('title', 'data_anggota_kelas', 'kelas', 'data_kelas', 'tapel', 'term', 'data_term'));
+        return view('guru.km.penilaiantk.create', compact('title', 'data_anggota_kelas', 'kelas', 'data_kelas', 'tapel', 'term', 'data_term'));
     }
 
     /**
@@ -215,7 +213,7 @@ class PenilaianTkController extends Controller
         // EVENTS
         $dataEvents = TkEvent::where('tapel_id', $tapel->id)->where('term_id', $term->id)->get();
 
-        return view('admin.km.penilaiantk.show', compact('title', 'data_anggota_kelas', 'kelas', 'data_kelas', 'tapel', 'term', 'data_term', 'dataTkElements', 'dataTkTopics', 'dataTkSubtopics', 'dataTkPoints', 'siswa', 'dataEvents', 'dataAchivements', 'anggotaKelas', 'dataAchivementEvents', 'dataAttendance'));
+        return view('guru.km.penilaiantk.show', compact('title', 'data_anggota_kelas', 'kelas', 'data_kelas', 'tapel', 'term', 'data_term', 'dataTkElements', 'dataTkTopics', 'dataTkSubtopics', 'dataTkPoints', 'siswa', 'dataEvents', 'dataAchivements', 'anggotaKelas', 'dataAchivementEvents', 'dataAttendance'));
     }
 
     /**

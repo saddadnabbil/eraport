@@ -14,4 +14,9 @@ class TkTopic extends Model
     {
         return $this->belongsTo(TkElement::class, 'tk_element_id');
     }
+
+    public function guru()
+    {
+        return $this->belongsTo(Guru::class, 'guru_id');
+    }
 }

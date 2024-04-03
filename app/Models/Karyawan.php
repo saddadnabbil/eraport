@@ -36,7 +36,6 @@ class Karyawan extends Model
         return $this->belongsTo('App\Models\Guru')->withTrashed();
     }
 
-
     /**
      * Trash the Karyawan record.
      */

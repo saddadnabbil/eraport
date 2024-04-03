@@ -86,6 +86,40 @@
     </div>
 @endsection
 
+@push('custom-scripts')
+    <!-- ajax get class id and show class name-->
+    {{-- <script type="text/javascript">
+        $(document).ready(function() {
+            $('select[name="term_id"]').on('change', function() {
+                var term_id = $(this).val();
+                if (term_id) {
+                    $.ajax({
+                        url: '/admin/getKelas/penilaian-tk/' + term_id,
+                        type: "GET",
+                        dataType: "json",
+                        success: function(data) {
+                            $('select[name="kelas_id"').empty();
+
+                            $('select[name="kelas_id"]').append(
+                                '<option value="">-- Select Class Name --</option>'
+                            );
+
+                            $.each(data, function(i, data) {
+                                $('select[name="kelas_id"]').append(
+                                    '<option value="' +
+                                    data.kelas_id + '">' + data.nama_kelas +
+                                    '</option>');
+                            });
+                        }
+                    });
+                } else {
+                    $('select[name="kelas_id"').empty();
+                }
+            });
+        });
+    </script> --}}
+@endpush
+
 @section('footer')
     @include('layouts.main.footer')
 @endsection

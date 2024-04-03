@@ -6,10 +6,10 @@
             $checkRoute = request()->routeIs('penilaiantk.*');
             $dynamicRoute = route('penilaiantk.index');
             break;
-        // case 2:
-        //     $checkRoute = request()->routeIs('guru.silabus.*');
-        //     $dynamicRoute = route('guru.silabus.index');
-        //     break;
+        case 2:
+            $checkRoute = request()->routeIs('guru.penilaiantk.*');
+            $dynamicRoute = route('guru.penilaiantk.index');
+            break;
         // case 3:
         //     $checkRoute = request()->routeIs('siswa.silabus.*');
         //     $dynamicRoute = route('siswa.silabus.index');

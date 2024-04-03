@@ -170,6 +170,7 @@ Route::group(['middleware' => ['auth']], function () {
             ]);
 
             Route::get('getKelas/ajax/{id}', 'AjaxController@ajax_kelas');
+            Route::get('getKelas/penilaian-tk/{id}', 'AjaxController@getClassByTkTopic');
             Route::get('getKelasByTingkatan/ajax/{id}', 'AjaxController@ajax_kelas_by_tingkatan_id');
             Route::get('getAllSilabus/ajax/{id}', 'AjaxController@getAllSilabus')->name('admin.get.all.silabus');
             Route::get('getPembelajaranId/', 'AjaxController@getPembelajaranId')->name('get.pembelajaran.id');
@@ -290,7 +291,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::resource('kehadiranadmintk', 'Admin\TkKehadiranSiswaController', [
                 'uses' => ['index', 'store', 'create'],
             ]);
-            Route::resource('event', 'Admin\TkEventController', [
+            Route::resource('eventtk', 'Admin\TkEventController', [
                 'uses' => ['index', 'store', 'create', 'update', 'destory'],
             ]);
             Route::resource('rekapevent', 'Admin\TkEventAchivementGradeSiswaController', [
@@ -385,6 +386,17 @@ Route::group(['middleware' => ['auth']], function () {
                     'update' => 'guru.penilaiankm.update',
                     'destroy' => 'guru.penilaiankm.destroy',
                 ]);
+
+                Route::resource('penilaiantk', 'Guru\KM\PenilaianTkController')->names([
+                    'index' => 'guru.penilaiantk.index',
+                    'create' => 'guru.penilaiantk.create',
+                    'store' => 'guru.penilaiantk.store',
+                    'show' => 'guru.penilaiantk.show',
+                    'edit' => 'guru.penilaiantk.edit',
+                    'update' => 'guru.penilaiantk.update',
+                    'destroy' => 'guru.penilaiantk.destroy',
+                ]);
+
 
                 Route::resource('prosesdeskripsikm', 'Guru\KM\ProsesDeskripsiSiswaController', [
                     'uses' => ['index', 'create', 'store'],

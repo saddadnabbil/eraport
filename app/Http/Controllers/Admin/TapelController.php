@@ -140,11 +140,11 @@ class TapelController extends Controller
             $tapelLama = Tapel::where('status', 1)->first();
 
             $pg = Tingkatan::where('id', '1')->first();
-            $kg = Tingkatan::where('id', '2')->first();
-            $ps = Tingkatan::where('id', '3')->first();
-            $jhs = Tingkatan::where('id', '4')->first();
-            $shs = Tingkatan::where('id', '5')->first();
-            // dd($pg, $kg);
+            $kg_a = Tingkatan::where('id', '2')->first();
+            $kg_b = Tingkatan::where('id', '3')->first();
+            $ps = Tingkatan::where('id', '4')->first();
+            $jhs = Tingkatan::where('id', '5')->first();
+            $shs = Tingkatan::where('id', '6')->first();
 
             if (!$sekolah) {
                 throw new \Exception('Data Sekolah tidak ditemukan.');
@@ -156,7 +156,8 @@ class TapelController extends Controller
                     'term_id' => $request->select_term_playgroup_id,
                 ];
                 $pg->update($data_tingkatan_pg_kg);
-                $kg->update($data_tingkatan_pg_kg);
+                $kg_a->update($data_tingkatan_pg_kg);
+                $kg_b->update($data_tingkatan_pg_kg);
             }
 
             if ($ps) {

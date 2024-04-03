@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Guru;
 use App\Models\TkTopic;
 use App\Models\Tingkatan;
 use App\Models\TkElement;
@@ -20,6 +21,9 @@ class TkTopicController extends Controller
     {
         $title = 'Pilih tingkatan';
         $data_tingkatan = Tingkatan::whereIn('id', [1, 2, 3])->get();
+        $data_guru = Guru::join('karyawans', 'karyawans.id', '=', 'guru.karyawan_id')
+            ->join('unit_karyawans', 'unit_karyawans.id', '=', 'karyawans.unit_karyawan_id')
+            ->where('unit_karyawans.unit_kode', 'G01')->get();
 
         return view('admin.tk.topic.pilihtingkatan', compact('title', 'data_tingkatan'));
     }
@@ -32,7 +36,13 @@ class TkTopicController extends Controller
         $data_tingkatan = Tingkatan::whereIn('id', [1, 2, 3])->get();
         $tingkatan_id = Tingkatan::findorfail($request->tingkatan_id)->id;
 
-        return view('admin.tk.topic.index', compact('title', 'data_topic', 'data_element', 'data_tingkatan', 'tingkatan_id'));
+        $data_guru = Guru::with(['karyawan' => function ($query) {
+            $query->whereHas('unitKaryawan', function ($subquery) {
+                $subquery->where('unit_kode', 'G01');
+            });
+        }])->where('deleted_at', null)->get();
+
+        return view('admin.tk.topic.index', compact('title', 'data_topic', 'data_element', 'data_tingkatan', 'tingkatan_id', 'data_guru'));
     }
 
     /**
@@ -45,6 +55,7 @@ class TkTopicController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'tk_element_id' => 'required|exists:tk_elements,id',
+            'guru_id' => 'required|exists:guru,id',
             'name' => 'required|string|max:255',
         ]);
 
@@ -63,6 +74,7 @@ class TkTopicController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'tk_element_id' => 'required|exists:tk_elements,id',
+            'guru_id' => 'required|exists:guru,id',
             'name' => 'required|string|max:255',
         ]);
 
@@ -76,6 +88,8 @@ class TkTopicController extends Controller
 
         $tkTopic->update([
             'name' => $request->name,
+            'tk_element_id' => $request->tk_element_id,
+            'guru_id' => $request->guru_id,
         ]);
 
         return back()->with('success', 'Topic berhasil diperbarui.');

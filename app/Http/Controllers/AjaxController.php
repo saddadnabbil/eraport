@@ -8,13 +8,16 @@ use App\Models\Mapel;
 use App\Models\Tapel;
 use App\Models\Jurusan;
 use App\Models\Silabus;
+use App\Models\TkTopic;
+use App\Models\Tingkatan;
+use App\Models\TkElement;
 use App\Models\AnggotaKelas;
 use App\Models\Pembelajaran;
 use Illuminate\Http\Request;
-use App\Models\AnggotaEkstrakulikuler;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Models\AnggotaEkstrakulikuler;
 
 class AjaxController extends Controller
 {
@@ -131,6 +134,23 @@ class AjaxController extends Controller
         try {
             $silabus = Silabus::findOrFail($id);
             return response()->json(['success' => true, 'data' => $silabus]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function getClassByTkTopic($id)
+    {
+        try {
+            $kelas = Kelas::where('tingkatan_id', [1, 2, 3])->get();
+            // check tk topic if have 
+            $data_element = TkElement::whereIn('tingkatan_id', [1, 2, 3])->get();
+            $data_topic = TkTopic::whereIn('tk_element_id', $data_element->pluck('id'))->get();
+
+            $karyawan = Auth::user()->karyawan;
+            $guru = Guru::where('karyawan_id', $karyawan->id)->first();
+
+            return response()->json(['success' => true, 'data' => $kelas]);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()]);
         }

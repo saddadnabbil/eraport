@@ -14,24 +14,27 @@
                 @include('layouts.partials.sidebar.silabus')
                 @include('layouts.partials.sidebar.timetable')
 
-                {{-- check if have session "Wali Kelas Tk" --}}
-                @if (session()->has('Wali Kelas TK'))
-                    @include('layouts.partials.sidebar.reportkm-tk.event')
+                @if (Auth::user()->karyawan->unitKaryawan->unit_kode == 'G01')
+                    <li class="list-divider"></li>
+                    <li class="nav-small-cap">
+                        <span class="hide-menu">REPORT TK</span>
+                    </li>
                     @include('layouts.partials.sidebar.reportkm-tk.rencanapenilaian')
-                    @include('layouts.partials.sidebar.reportkm-tk.inputdata')
                     @include('layouts.partials.sidebar.reportkm-tk.penilaian')
                     @include('layouts.partials.sidebar.reportresultkm.printreport_tk')
                 @endif
 
-                <li class="list-divider"></li>
-                <li class="nav-small-cap">
-                    <span class="hide-menu">REPORT KM</span>
-                </li>
-                @include('layouts.partials.sidebar.reportkm.rencanapenilaian')
-                @include('layouts.partials.sidebar.reportkm.penilaian')
-                @include('layouts.partials.sidebar.reportkm.nilaiekstra')
-                @include('layouts.partials.sidebar.reportkm.nilaiakhir')
-                @include('layouts.partials.sidebar.reportkm.prosesdeskripsi')
+                @if (Auth::user()->karyawan->unitKaryawan->unit_kode != 'G01')
+                    <li class="list-divider"></li>
+                    <li class="nav-small-cap">
+                        <span class="hide-menu">REPORT KM</span>
+                    </li>
+                    @include('layouts.partials.sidebar.reportkm.rencanapenilaian')
+                    @include('layouts.partials.sidebar.reportkm.penilaian')
+                    @include('layouts.partials.sidebar.reportkm.nilaiekstra')
+                    @include('layouts.partials.sidebar.reportkm.nilaiakhir')
+                    @include('layouts.partials.sidebar.reportkm.prosesdeskripsi')
+                @endif
 
                 <li class="list-divider"></li>
                 <li class="nav-small-cap">

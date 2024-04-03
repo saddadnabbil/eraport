@@ -92,20 +92,22 @@
                                             $tapel = App\Models\Tapel::where('status', 1)->first();
                                             $term = App\Models\Term::find($tapel->term_id);
 
+                                            $pg_kg = App\Models\Tingkatan::whereIn('id', [1, 2, 3])->first();
                                             $pg = App\Models\Tingkatan::where('id', 1)->first();
                                             $kg = App\Models\Tingkatan::where('id', 2)->first();
-                                            $ps = App\Models\Tingkatan::where('id', 3)->first();
-                                            $jhs = App\Models\Tingkatan::where('id', 4)->first();
-                                            $shs = App\Models\Tingkatan::where('id', 5)->first();
+                                            $ps = App\Models\Tingkatan::where('id', 4)->first();
+                                            $jhs = App\Models\Tingkatan::where('id', 5)->first();
+                                            $shs = App\Models\Tingkatan::where('id', 6)->first();
                                         @endphp
 
                                         @if (optional($pg)->count() > 0 &&
                                                 optional($kg)->count() > 0 &&
+                                                optional($pg_kg)->count() > 0 &&
                                                 optional($ps)->count() > 0 &&
                                                 optional($jhs)->count() > 0 &&
                                                 optional($shs)->count() > 0)
                                             School Year {{ str_replace('-', ' / ', $tapel->tahun_pelajaran) }} -
-                                            (Term PG/KG - {{ optional($ps)->term_id }}) -
+                                            (Term PG/KG - {{ optional($pg_kg)->term_id }}) -
                                             (Semester PS
                                             {{ optional($ps)->semester_id . '-' . optional($ps)->term_id }}) -
                                             (Semester JHS

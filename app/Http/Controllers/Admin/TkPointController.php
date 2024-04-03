@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Term;
 use App\Models\TkPoint;
 use App\Models\TkTopic;
 use App\Models\Tingkatan;
@@ -22,8 +23,9 @@ class TkPointController extends Controller
     {
         $title = 'Pilih tingkatan';
         $data_tingkatan = Tingkatan::whereIn('id', [1, 2, 3])->get();
+        $data_term = Term::orderBy('id', 'ASC')->get();
 
-        return view('admin.tk.point.pilihtingkatan', compact('title', 'data_tingkatan'));
+        return view('admin.tk.point.pilihtingkatan', compact('title', 'data_tingkatan', 'data_term'));
     }
 
     public function create(Request $request)
@@ -32,12 +34,14 @@ class TkPointController extends Controller
         $data_element = TkElement::where('tingkatan_id', $request->tingkatan_id)->get();
         $data_topic = TkTopic::whereIn('tk_element_id', $data_element->pluck('id'))->get();
         $data_subtopic = TkSubtopic::WhereIn('tk_topic_id', $data_topic->pluck('id'))->get();
-        $data_point = TkPoint::WhereIn('tk_topic_id', $data_topic->pluck('id'))->orderBy('tk_topic_id')->orderBy('id')->get();
+        $data_point = TkPoint::WhereIn('tk_topic_id', $data_topic->pluck('id'))->orderBy('tk_topic_id')->where('term_id', $request->term_id)->orderBy('id')->get();
 
         $data_tingkatan = Tingkatan::whereIn('id', [1, 2, 3])->get();
         $tingkatan_id = Tingkatan::findorfail($request->tingkatan_id)->id;
+        $data_term = Term::orderBy('id', 'ASC')->get();
+        $term_id = Term::findorfail($request->term_id)->id;
 
-        return view('admin.tk.point.index', compact('title', 'data_point', 'data_subtopic', 'data_topic', 'data_tingkatan', 'tingkatan_id'));
+        return view('admin.tk.point.index', compact('title', 'data_point', 'data_subtopic', 'data_topic', 'data_tingkatan', 'tingkatan_id', 'data_term', 'term_id'));
     }
 
     /**
@@ -49,7 +53,8 @@ class TkPointController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'tk_topic_id' => 'required|exists:tk_subtopics,id',
+            'tk_topic_id' => 'required|exists:tk_topics,id',
+            'tk_subtopic_id' => 'nullable|exists:tk_subtopics,id',
             'name' => 'required|string|max:255',
         ]);
 
@@ -68,6 +73,7 @@ class TkPointController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'tk_topic_id' => 'required|exists:tk_subtopics,id',
+            'tk_subtopic_id' => 'nullable|exists:tk_subtopics,id',
             'name' => 'required|string|max:255',
         ]);
 

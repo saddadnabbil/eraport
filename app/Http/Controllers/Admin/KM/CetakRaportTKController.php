@@ -98,10 +98,10 @@ class CetakRaportTKController extends Controller
             $title = 'Raport TK';
             $data_id_pembelajaran = Pembelajaran::where('kelas_id', $anggota_kelas->kelas_id)->get('id');
 
-            $dataTkElements = TkElement::all();
-            $dataTkTopics = TkTopic::all();
-            $dataTkSubtopics = TkSubtopic::all();
-            $dataTkPoints = TkPoint::all();
+            $dataTkElements = TkElement::where('tingkatan_id', $anggota_kelas->kelas->tingkatan_id)->get();
+            $dataTkTopics = TkTopic::whereIn('tk_element_id', $dataTkElements->pluck('id'))->get();
+            $dataTkSubtopics = TkSubtopic::whereIn('tk_topic_id', $dataTkTopics->pluck('id'))->get();
+            $dataTkPoints = TkPoint::whereIn('tk_topic_id', $dataTkTopics->pluck('id'))->where('term_id', $term->id)->get();
 
             // Achivements
             $dataAchivements = TkAchivementGrade::get(['anggota_kelas_id', 'tk_point_id', 'achivement']);

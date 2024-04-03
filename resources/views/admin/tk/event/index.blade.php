@@ -60,7 +60,7 @@
                                             aria-hidden="true"></button>
                                         </button>
                                     </div>
-                                    <form action="{{ route('event.store') }}" method="POST">
+                                    <form action="{{ route('eventtk.store') }}" method="POST">
                                         @csrf
                                         <div class="modal-body">
                                             <div class="form-group row">
@@ -131,7 +131,7 @@
                                                 <td>{{ $event->term->term }}</td>
                                                 <td class="text-center">
                                                     @include('components.actions.delete-button', [
-                                                        'route' => route('event.destroy', $event->id),
+                                                        'route' => route('eventtk.destroy', $event->id),
                                                         'id' => $event->id,
                                                         'isPermanent' => true,
                                                         'withEdit' => true,
@@ -150,13 +150,14 @@
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                                 aria-hidden="true"></button>
                                                         </div>
-                                                        <form action="{{ route('event.update', $event->id) }}"
+                                                        <form action="{{ route('eventtk.update', $event->id) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('PUT')
                                                             <div class="modal-body">
                                                                 <div class="form-group row">
-                                                                    <label for="tapel_id" class="col-sm-3 col-form-label">Tahun
+                                                                    <label for="tapel_id"
+                                                                        class="col-sm-3 col-form-label">Tahun
                                                                         Pelajaran
                                                                     </label>
                                                                     <div class="col-sm-9">
@@ -171,10 +172,12 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group row">
-                                                                    <label for="term_id" class="col-sm-3 col-form-label">Term
+                                                                    <label for="term_id"
+                                                                        class="col-sm-3 col-form-label">Term
                                                                     </label>
                                                                     <div class="col-sm-9">
-                                                                        <select name="term_id" id="term_id" class="form-control form-select">
+                                                                        <select name="term_id" id="term_id"
+                                                                            class="form-control form-select">
                                                                             @foreach ($data_term as $term)
                                                                                 <option value="{{ $term->id }}"
                                                                                     {{ $term->id == $event->term_id ? 'selected' : '' }}>

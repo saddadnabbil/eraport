@@ -61,7 +61,7 @@
 
                                 @foreach ($data_tingkatan as $tingkatan)
                                     @php
-                                        if ($tingkatan->nama_tingkatan == 'Kindergarten') {
+                                        if ($tingkatan->id == '2' || $tingkatan->id == '3') {
                                             continue;
                                         }
                                     @endphp

@@ -87,6 +87,19 @@
                                                         placeholder="Topic Name" value="{{ old('name') }}">
                                                 </div>
                                             </div>
+                                            <div class="form-group row">
+                                                <label for="guru_id" class="col-sm-3 col-form-label">Guru</label>
+                                                <div class="col-sm-9">
+                                                    <select class="form-control form-select select2" name="guru_id">
+                                                        <option value="">-- Pilih Guru --</option>
+                                                        @foreach ($data_guru as $guru)
+                                                            <option value="{{ $guru->id }}">
+                                                                {{ $guru->karyawan->nama_lengkap }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="modal-footer justify-content-end">
                                             <button type="button" class="btn btn-default"
@@ -126,6 +139,7 @@
                                             <th>No</th>
                                             <th>Element</th>
                                             <th>Topic</th>
+                                            <th>Guru Subject</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -137,6 +151,7 @@
                                                 <td>{{ $no }}</td>
                                                 <td>{{ $topic->element->name }}</td>
                                                 <td>{{ $topic->name }}</td>
+                                                <td>{{ $topic->guru->karyawan->nama_lengkap }}</td>
                                                 <td class="text-center">
                                                     @include('components.actions.delete-button', [
                                                         'route' => route('tktopic.destroy', $topic->id),
@@ -189,6 +204,21 @@
                                                                             id="name" name="name"
                                                                             placeholder="Topic Name"
                                                                             value="{{ $topic->name }}"">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <label for="guru_id"
+                                                                        class="col-sm-3 col-form-label">Guru</label>
+                                                                    <div class="col-sm-9">
+                                                                        <select class="form-control form-select select2"
+                                                                            name="guru_id" id="guru_id">
+                                                                            @foreach ($data_guru as $guru)
+                                                                                <option value="{{ $guru->id }}"
+                                                                                    {{ $topic->guru_id == $guru->id ? 'selected' : '' }}>
+                                                                                    {{ $guru->karyawan->nama_lengkap }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
                                                                     </div>
                                                                 </div>
                                                             </div>

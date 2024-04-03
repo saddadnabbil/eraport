@@ -17,12 +17,15 @@ class CreateTkPointsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('tk_topic_id');
             $table->unsignedBigInteger('tk_subtopic_id')->nullable();
+            $table->unsignedBigInteger('term_id')->nullable();
             $table->string('name');
             $table->timestamps();
 
             $table->softDeletes();
 
             $table->foreign('tk_subtopic_id')->references('id')->on('tk_subtopics')->onDelete('cascade');
+            $table->foreign('tk_topic_id')->references('id')->on('tk_topics')->onDelete('cascade');
+            $table->foreign('term_id')->references('id')->on('terms')->onDelete('cascade');
         });
     }
 
