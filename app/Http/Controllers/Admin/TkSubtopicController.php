@@ -37,7 +37,6 @@ class TkSubtopicController extends Controller
         $data_tingkatan = Tingkatan::whereIn('id', [1, 2, 3])->get();
         $tingkatan_id = Tingkatan::findorfail($request->tingkatan_id)->id;
 
-
         return view('admin.tk.subtopic.index', compact('title', 'data_topic', 'data_subtopic', 'data_tingkatan', 'tingkatan_id'));
     }
 

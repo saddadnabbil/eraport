@@ -203,7 +203,7 @@ class PenilaianTkController extends Controller
         $dataTkElements = TkElement::where('tingkatan_id', $kelas->tingkatan_id)->get();
         $dataTkTopics = TkTopic::whereIn('tk_element_id', $dataTkElements->pluck('id'))->get();
         $dataTkSubtopics = TkSubtopic::whereIn('tk_topic_id', $dataTkTopics->pluck('id'))->get();
-        $dataTkPoints = TkPoint::whereIn('tk_subtopic_id', $dataTkSubtopics->pluck('id'))->get();
+        $dataTkPoints = TkPoint::whereIn('tk_topic_id', $dataTkTopics->pluck('id'))->get();
 
         // Achivements
         $dataAchivements = TkAchivementGrade::where('term_id', $term->id)->get(['anggota_kelas_id', 'tk_point_id', 'achivement']);

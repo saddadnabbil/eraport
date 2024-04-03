@@ -32,7 +32,7 @@ class TkPointController extends Controller
         $data_element = TkElement::where('tingkatan_id', $request->tingkatan_id)->get();
         $data_topic = TkTopic::whereIn('tk_element_id', $data_element->pluck('id'))->get();
         $data_subtopic = TkSubtopic::WhereIn('tk_topic_id', $data_topic->pluck('id'))->get();
-        $data_point = TkPoint::WhereIn('tk_subtopic_id', $data_subtopic->pluck('id'))->orderBy('tk_topic_id')->orderBy('id')->get();
+        $data_point = TkPoint::WhereIn('tk_topic_id', $data_topic->pluck('id'))->orderBy('tk_topic_id')->orderBy('id')->get();
 
         $data_tingkatan = Tingkatan::whereIn('id', [1, 2, 3])->get();
         $tingkatan_id = Tingkatan::findorfail($request->tingkatan_id)->id;
