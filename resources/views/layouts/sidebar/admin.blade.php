@@ -20,7 +20,7 @@
                       <span class="hide-menu">REPORT KM TK</span>
                   </li>
                   @include('layouts.partials.sidebar.reportkm-tk.event')
-                  @include('layouts.partials.sidebar.reportkm-tk.rencanapenilaian')
+                  @include('layouts.partials.sidebar.reportkm-tk.area-of-learning')
                   @include('layouts.partials.sidebar.reportkm-tk.penilaian')
                   @include('layouts.partials.sidebar.reportresultkm.printreport_tk')
 

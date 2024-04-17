@@ -16,29 +16,29 @@ class TkTopicSeeder extends Seeder
     {
         TkTopic::create([
             'tk_element_id' => 1,
-            'guru_id' => 1,
             'name' => 'ENGLISH LANGUAGE',
         ]);
         TkTopic::create([
             'tk_element_id' => 1,
-            'guru_id' => 1,
             'name' => 'ENGLISH LITERACY',
         ]);
         TkTopic::create([
             'tk_element_id' => 1,
-            'guru_id' => 1,
             'name' => 'BAHASA INDONESIA',
         ]);
 
         TkTopic::create([
             'tk_element_id' => 2,
-            'guru_id' => 1,
             'name' => 'NUMERACY',
         ]);
 
         TkTopic::create([
             'tk_element_id' => 3,
-            'guru_id' => 1,
+            'name' => 'SCIENCE',
+        ]);
+
+        TkTopic::create([
+            'tk_element_id' => 4,
             'name' => 'SCIENCE',
         ]);
     }

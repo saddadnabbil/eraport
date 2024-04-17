@@ -139,7 +139,6 @@
                                             <th>No</th>
                                             <th>Element</th>
                                             <th>Topic</th>
-                                            <th>Guru Subject</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -151,7 +150,6 @@
                                                 <td>{{ $no }}</td>
                                                 <td>{{ $topic->element->name }}</td>
                                                 <td>{{ $topic->name }}</td>
-                                                <td>{{ $topic->guru->karyawan->nama_lengkap }}</td>
                                                 <td class="text-center">
                                                     @include('components.actions.delete-button', [
                                                         'route' => route('tktopic.destroy', $topic->id),

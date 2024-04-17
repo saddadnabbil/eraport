@@ -314,6 +314,11 @@ Route::group(['middleware' => ['auth']], function () {
             Route::resource('tkpoint', 'Admin\TkPointController', [
                 'uses' => ['index', 'store', 'create', 'update', 'destory'],
             ]);
+            Route::get('tkpembelajaran/export', 'Admin\TkPembelajaranController@export')->name('tkpembelajaran.export');
+            Route::post('tkpembelajaran/settings', 'Admin\TkPembelajaranController@settings')->name('tkpembelajaran.settings');
+            Route::resource('tkpembelajaran', 'Admin\TkPembelajaranController', [
+                'uses' => ['index', 'store'],
+            ]);
 
             // penilaian tk
             Route::resource('penilaiantk', 'Admin\KM\PenilaianTkController')->only(['index', 'create', 'store', 'show', 'edit', 'update']);

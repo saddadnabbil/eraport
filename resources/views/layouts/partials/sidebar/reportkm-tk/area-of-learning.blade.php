@@ -14,10 +14,16 @@
 @endphp
 
 @include('layouts.partials.sidebar._sidebar-item', [
-    'isActive' => request()->routeIs(['tkelement.*', 'tktopic.*', 'tksubtopic.*', 'tkpoint.*']),
+    'isActive' => request()->routeIs([
+        'tkelement.*',
+        'tktopic.*',
+        'tksubtopic.*',
+        'tkpoint.*',
+        'tkpembelajaran.*',
+    ]),
     'hasArrow' => true,
     'icon' => 'clipboard',
-    'itemName' => 'Rencana Penilaian',
+    'itemName' => 'Area Of Learning & Development',
     'route' => 'javascript:void(0)',
     'subItems' => [
         [
@@ -42,6 +48,12 @@
             'name' => 'Points',
             'route' => route('tkpoint.index'),
             'isActive' => request()->routeIs('tkpoint.*'),
+            'childHasArrow' => false,
+        ],
+        [
+            'name' => 'Set Teacher Topic',
+            'route' => route('tkpembelajaran.index'),
+            'isActive' => request()->routeIs('tkpembelajaran.*'),
             'childHasArrow' => false,
         ],
     ],

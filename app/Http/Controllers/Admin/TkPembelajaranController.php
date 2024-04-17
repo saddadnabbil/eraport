@@ -2,18 +2,21 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Exports\PembelajaranExport;
+use Excel;
+use Carbon\Carbon;
 use App\Models\Guru;
-use App\Http\Controllers\Controller;
 use App\Models\Kelas;
 use App\Models\Mapel;
-use App\Models\Pembelajaran;
 use App\Models\Tapel;
-use Carbon\Carbon;
+use App\Models\Pembelajaran;
 use Illuminate\Http\Request;
-use Excel;
+use App\Models\TkPembelajaran;
+use App\Exports\PembelajaranExport;
+use App\Http\Controllers\Controller;
+use App\Models\Tingkatan;
+use App\Models\TkTopic;
 
-class PembelajaranController extends Controller
+class TkPembelajaranController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,33 +26,38 @@ class PembelajaranController extends Controller
     public function index()
     {
         $tapel = Tapel::where('status', 1)->first();
-        $data_mapel = Mapel::where('tapel_id', $tapel->id)->orderBy('nama_mapel', 'ASC')->get();
-        $data_kelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->orderBy('tingkatan_id', 'ASC')->get();
+        $data_topic = TkTopic::get();
+        $data_tingkatan = Tingkatan::whereIn('id', [1, 2, 3])->get();
 
-        if (count($data_mapel) == 0) {
+        if (count($data_topic) == 0) {
             return redirect('admin/mapel')->with('toast_warning', 'Mohon isikan data mata pelajaran');
-        } elseif (count($data_kelas) == 0) {
+        } elseif (count($data_tingkatan) == 0) {
             return redirect('admin/kelas')->with('toast_warning', 'Mohon isikan data kelas');
         } else {
-            $title = 'Data Pembelajaran';
-            $id_kelas = Kelas::where('tapel_id', $tapel->id)->orderBy('tingkatan_id', 'ASC')->get('id');
-            $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->whereNotNull('guru_id')->where('status', 1)->orderBy('kelas_id', 'ASC')->get();
-            return view('admin.pembelajaran.index', compact('title', 'data_kelas', 'data_pembelajaran'));
+            $title = 'Data Pembelajaran TK';
+            $id_tingkatan = Tingkatan::whereIn('id', [1, 2, 3])->get('id');
+            $data_pembelajaran = TkPembelajaran::whereIn('tingkatan_id', $id_tingkatan)->whereNotNull('guru_id')->orderBy('tingkatan_id', 'ASC')->get();
+            return view('admin.tk.pembelajaran.index', compact('title', 'data_tingkatan', 'data_pembelajaran'));
         }
     }
 
     public function settings(Request $request)
     {
-        $title = 'Setting Pembelajaran';
+        $title = 'Setting Pembelajaran TK';
         $tapel = Tapel::where('status', 1)->first();
-        $kelas = Kelas::findorfail($request->kelas_id);
-        $data_kelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->orderBy('tingkatan_id', 'ASC')->get();
+        $tingkatan = Tingkatan::findorfail($request->tingkatan_id);
+        $data_tingkatan = Tingkatan::whereIn('id', [1, 2, 3])->get();
 
-        $data_pembelajaran_kelas = Pembelajaran::where('kelas_id', $request->kelas_id)->get();
-        $mapel_id_pembelajaran_kelas = Pembelajaran::where('kelas_id', $request->kelas_id)->get('mapel_id');
-        $data_mapel = Mapel::whereNotIn('id', $mapel_id_pembelajaran_kelas)->get();
+        $data_pembelajaran_tingkatan = TkPembelajaran::where('tingkatan_id', $request->tingkatan_id)->get();
+        $topic_id_pembelajaran_tingkatan = TkPembelajaran::where('tingkatan_id', $request->tingkatan_id)->get('tk_topic_id');
+        $data_topic = TkTopic::whereNotIn('id', $topic_id_pembelajaran_tingkatan)
+            ->whereHas('element', function ($query) use ($request) {
+                $query->where('tingkatan_id', $request->tingkatan_id);
+            })
+            ->with('element')
+            ->get();
         $data_guru = Guru::orderBy('id', 'ASC')->get();
-        return view('admin.pembelajaran.settings', compact('title', 'tapel', 'kelas', 'data_kelas', 'data_pembelajaran_kelas', 'data_mapel', 'data_guru'));
+        return view('admin.tk.pembelajaran.settings', compact('title', 'tapel', 'tingkatan', 'data_tingkatan', 'data_pembelajaran_tingkatan', 'data_topic', 'data_guru'));
     }
 
 
@@ -64,7 +72,7 @@ class PembelajaranController extends Controller
         // dd($request->all());
         if (!is_null($request->pembelajaran_id)) {
             for ($count = 0; $count < count($request->pembelajaran_id); $count++) {
-                $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id[$count]);
+                $pembelajaran = TkPembelajaran::findorfail($request->pembelajaran_id[$count]);
                 $update_data = array(
                     'guru_id'  => $request->update_guru_id[$count],
                     'status'  => $request->update_status[$count],

@@ -26,5 +26,9 @@ class TkElementSeeder extends Seeder
             'tingkatan_id' => 1,
             'name' => 'KNOWLEDGE AND UNDERSTANDING OF THE WORLD',
         ]);
+        TkElement::create([
+            'tingkatan_id' => 2,
+            'name' => 'KNOWLEDGE AND UNDERSTANDING OF THE WORLD',
+        ]);
     }
 }
