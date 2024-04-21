@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Excel;
 use Carbon\Carbon;
 use App\Models\Guru;
 use App\Models\Kelas;
 use App\Models\Mapel;
 use App\Models\Tapel;
+use App\Models\TkTopic;
+use App\Models\Tingkatan;
 use App\Models\Pembelajaran;
 use Illuminate\Http\Request;
 use App\Models\TkPembelajaran;
 use App\Exports\PembelajaranExport;
 use App\Http\Controllers\Controller;
-use App\Models\Tingkatan;
-use App\Models\TkTopic;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\TkPembelajaranExport;
 
 class TkPembelajaranController extends Controller
 {
@@ -75,44 +76,41 @@ class TkPembelajaranController extends Controller
                 $pembelajaran = TkPembelajaran::findorfail($request->pembelajaran_id[$count]);
                 $update_data = array(
                     'guru_id'  => $request->update_guru_id[$count],
-                    'status'  => $request->update_status[$count],
                 );
                 $pembelajaran->update($update_data);
             }
-            if (!is_null($request->mapel_id)) {
-                for ($count = 0; $count < count($request->mapel_id); $count++) {
+            if (!is_null($request->tk_topic_id)) {
+                for ($count = 0; $count < count($request->tk_topic_id); $count++) {
                     $data_baru = array(
-                        'kelas_id'  => $request->kelas_id[$count],
-                        'mapel_id'  => $request->mapel_id[$count],
+                        'tingkatan_id'  => $request->tingkatan_id[$count],
+                        'tk_topic_id'  => $request->tk_topic_id[$count],
                         'guru_id'  => $request->guru_id[$count],
-                        'status'  => $request->status[$count],
                         'created_at'  => Carbon::now(),
                         'updated_at'  => Carbon::now(),
                     );
                     $store_data_baru[] = $data_baru;
                 }
-                Pembelajaran::insert($store_data_baru);
+                TkPembelajaran::insert($store_data_baru);
             }
         } else {
-            for ($count = 0; $count < count($request->mapel_id); $count++) {
+            for ($count = 0; $count < count($request->tk_topic_id); $count++) {
                 $data_baru = array(
-                    'kelas_id'  => $request->kelas_id[$count],
-                    'mapel_id'  => $request->mapel_id[$count],
+                    'tingkatan_id'  => $request->tingkatan_id[$count],
+                    'tk_topic_id'  => $request->tk_topic_id[$count],
                     'guru_id'  => $request->guru_id[$count],
-                    'status'  => $request->status[$count],
                     'created_at'  => Carbon::now(),
                     'updated_at'  => Carbon::now(),
                 );
                 $store_data_baru[] = $data_baru;
             }
-            Pembelajaran::insert($store_data_baru);
+            TkPembelajaran::insert($store_data_baru);
         }
-        return redirect('admin/pembelajaran')->with('toast_success', 'Setting pembelajaran berhasil');
+        return redirect(route('tkpembelajaran.index'))->with('toast_success', 'Setting pembelajaran berhasil');
     }
 
     public function export()
     {
         $filename = 'data_pembelajaran ' . date('Y-m-d H_i_s') . '.xls';
-        return Excel::download(new PembelajaranExport, $filename);
+        return Excel::download(new TkPembelajaranExport, $filename);
     }
 }

@@ -15,6 +15,9 @@ class GuruTableSeeder extends Seeder
     public function run()
     {
         Guru::create([
+            'karyawan_id' => 1,
+        ]);
+        Guru::create([
             'karyawan_id' => 2,
         ]);
 

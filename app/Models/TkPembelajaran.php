@@ -12,7 +12,7 @@ class TkPembelajaran extends Model
 
     public function topic()
     {
-        return $this->belongsTo(TkElement::class, 'tk_topic_id');
+        return $this->belongsTo(TkTopic::class, 'tk_topic_id');
     }
 
     public function guru()

@@ -19,9 +19,10 @@
                     <li class="nav-small-cap">
                         <span class="hide-menu">REPORT TK</span>
                     </li>
-                    @include('layouts.partials.sidebar.reportkm-tk.rencanapenilaian')
                     @include('layouts.partials.sidebar.reportkm-tk.penilaian')
-                    @include('layouts.partials.sidebar.reportresultkm.printreport_tk')
+                    @if (session('cek_wali_kelas_tk') == true)
+                        @include('layouts.partials.sidebar.reportresultkm.printreport_tk')
+                    @endif
                 @endif
 
                 @if (Auth::user()->karyawan->unitKaryawan->unit_kode != 'G01')

@@ -19,7 +19,7 @@
                 ],
                 [
                     'title' => 'Data Pembelajaran',
-                    'url' => route('pembelajaran.index'),
+                    'url' => route('tkpembelajaran.index'),
                     'active' => false,
                 ],
                 [
@@ -47,7 +47,7 @@
                                 <div class="col-sm-10">
                                     <form action="{{ route('tkpembelajaran.settings') }}" method="POST">
                                         @csrf
-                                        <select class="form-control form-select select2" name="kelas_id"
+                                        <select class="form-control form-select select2" name="tingkatan_id"
                                             style="width: 100%;" required onchange="this.form.submit();">
                                             <option value="" disabled> -- Pilih Tingkatan --</option>
                                             <option value="" selected>{{ $tingkatan->nama_tingkatan }}
@@ -62,7 +62,7 @@
                                     </form>
                                 </div>
                             </div>
-                            <form action="{{ route('pembelajaran.store') }}" method="POST">
+                            <form action="{{ route('tkpembelajaran.store') }}" method="POST">
                                 @csrf
                                 <div class="table-responsive">
                                     <table class="table table-bordered">

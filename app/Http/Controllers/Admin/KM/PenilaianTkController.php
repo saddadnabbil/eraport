@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Km;
 
+use App\Models\Guru;
 use App\Models\Term;
 use App\Models\Kelas;
 use App\Models\Mapel;
@@ -14,11 +15,13 @@ use App\Models\TkElement;
 use App\Models\TkSubtopic;
 use App\Models\AnggotaKelas;
 use App\Models\Pembelajaran;
+use App\Models\TkAttendance;
 use Illuminate\Http\Request;
+use App\Models\TkPembelajaran;
 use App\Models\TkAchivementGrade;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Models\TkAchivementEventGrade;
-use App\Models\TkAttendance;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -175,11 +178,12 @@ class PenilaianTkController extends Controller
      */
     public function show($id, Request $request)
     {
+        $user = Auth::user();
         $kelas = Kelas::where('id', $request->kelas_id)->first();
         $tapel = Tapel::where('status', 1)->first();
         $term = Term::where('id', $request->term_id)->first();
         $title = 'Penilaian Raport TK' . ' - ' . $kelas->nama_kelas . ' - Term ' . $term->term;
-
+        $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
         $anggotaKelas = AnggotaKelas::where('id', $request->anggota_kelas_id)->first();
         $siswa = Siswa::where('id', $id)->first();
 

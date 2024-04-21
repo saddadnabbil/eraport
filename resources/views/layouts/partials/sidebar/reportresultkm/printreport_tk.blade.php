@@ -8,10 +8,10 @@
             $checkRouteTKReport = request()->routeIs('adminraporttk.*');
             $dynamicRouteTKReport = route('adminraporttk.index');
         case 2:
-            $allowedRoutes = ['adminraporttk.*', 'adminraporttk.*'];
+            $allowedRoutes = ['guru.raporttk.*', 'guru.raporttk.*'];
 
-            $checkRouteTKReport = request()->routeIs('adminraporttk.*');
-            $dynamicRouteTKReport = route('adminraporttk.index');
+            $checkRouteTKReport = request()->routeIs('guru.raporttk.*');
+            $dynamicRouteTKReport = route('guru.raporttk.index');
     }
 @endphp
 

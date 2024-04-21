@@ -44,11 +44,11 @@
                                         <i class="fas fa-cog"></i>
                                     </button>
                                 </div>
-                                <div data-bs-toggle="tooltip" title="Export" class="d-inline-block" class="d-inline-block">
+                                {{-- <div data-bs-toggle="tooltip" title="Export" class="d-inline-block" class="d-inline-block">
                                     <a href="{{ route('tkpembelajaran.export') }}" class="btn btn-tool btn-sm">
                                         <i class="fas fa-download"></i>
                                     </a>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
 

@@ -401,6 +401,12 @@ Route::group(['middleware' => ['auth']], function () {
                     'update' => 'guru.penilaiantk.update',
                     'destroy' => 'guru.penilaiantk.destroy',
                 ]);
+                Route::resource('raporttk', 'Guru\KM\CetakRaportTKController')->names([
+                    'index' => 'guru.raporttk.index',
+                    'show' => 'guru.raporttk.show',
+                    'store' => 'guru.raporttk.store',
+                ]);
+                Route::get('raporttk/export/{id}', 'Guru\KM\CetakRaportTKController@export')->name('guru.raporttk.export');
 
 
                 Route::resource('prosesdeskripsikm', 'Guru\KM\ProsesDeskripsiSiswaController', [

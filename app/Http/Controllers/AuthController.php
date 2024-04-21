@@ -141,13 +141,24 @@ class AuthController extends Controller
 
             if ($guru && Auth::user()->role == 2) {
                 $cek_wali_kelas = Kelas::where('guru_id', $guru->id)->first();
-
-                session([
-                    'akses_sebagai' => 'Guru Mapel',
-                    'cek_wali_kelas' => $cek_wali_kelas != null,
-                ]);
+                $cek_wali_kelas_tk = Kelas::where('guru_id', $guru->id)->where('tingkatan_id', [1, 2, 3])->first();
+                
+                if (!is_null($cek_wali_kelas_tk)){
+                    session([
+                        'akses_sebagai' => 'Guru Mapel',
+                        'cek_wali_kelas_tk' => $cek_wali_kelas_tk != null,
+                    ]);
+                } else {
+                    session([
+                        'akses_sebagai' => 'Guru Mapel',
+                        'cek_wali_kelas' => $cek_wali_kelas != null,
+                    ]);
+                }
             }
         }
+
+        // dd session
+        // dd(session()->all());
     }
 
     public function logout(Request $request)
@@ -224,6 +235,7 @@ class AuthController extends Controller
             $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
             $cek_wali_kelas = Kelas::where('guru_id', $guru->id)->first();
             $cek_wali_kelas_tk = Kelas::where('guru_id', $guru->id)->whereIn('tingkatan_id', [1, 2, 3])->first();
+
             if (!is_null($cek_wali_kelas)) {
                 if (!is_null($cek_wali_kelas_tk)) {
                     session()->put([

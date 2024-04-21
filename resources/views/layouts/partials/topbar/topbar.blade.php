@@ -37,7 +37,7 @@
                 <!-- ============================================================== -->
 
                 <ul class="navbar-nav float-left me-auto ms-3 ps-1">
-                    @if (Auth::user()->role == 2)
+                    @if (Auth::user()->role == 2 && session()->get('cek_wali_kelas') == true)
                         <div style="padding: 0 15px; margin-left: 1rem;">
                             <li class="nav-item d-none d-md-block">
                                 <a class="nav-link" href="javascript:void(0)">

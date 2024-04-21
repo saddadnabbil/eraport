@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Guru\Km;
 
+use App\Models\Guru;
 use App\Models\Term;
 use App\Models\Kelas;
 use App\Models\Mapel;
@@ -14,11 +15,13 @@ use App\Models\TkElement;
 use App\Models\TkSubtopic;
 use App\Models\AnggotaKelas;
 use App\Models\Pembelajaran;
+use App\Models\TkAttendance;
 use Illuminate\Http\Request;
+use App\Models\TkPembelajaran;
 use App\Models\TkAchivementGrade;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Models\TkAchivementEventGrade;
-use App\Models\TkAttendance;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -36,6 +39,8 @@ class PenilaianTkController extends Controller
 
         $data_mapel = Mapel::where('tapel_id', $tapel->id)->orderBy('nama_mapel', 'ASC')->get();
 
+        // $data_element = TkElement::where('tingkatan_id', $request->tingkatan_id)->get();
+        // $data_topic = TkTopic::whereIn('tk_element_id', $data_element->pluck('id'))->get();
         $data_kelas = Kelas::where('tapel_id', $tapel->id)
             ->whereIn('tingkatan_id', [1, 2, 3])
             ->get();
@@ -177,7 +182,7 @@ class PenilaianTkController extends Controller
         $tapel = Tapel::where('status', 1)->first();
         $term = Term::where('id', $request->term_id)->first();
         $title = 'Penilaian Raport TK' . ' - ' . $kelas->nama_kelas . ' - Term ' . $term->term;
-
+        $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
         $anggotaKelas = AnggotaKelas::where('id', $request->anggota_kelas_id)->first();
         $siswa = Siswa::where('id', $id)->first();
 
@@ -201,17 +206,30 @@ class PenilaianTkController extends Controller
             ->get();
 
         $dataTkElements = TkElement::where('tingkatan_id', $kelas->tingkatan_id)->get();
-        $dataTkTopics = TkTopic::whereIn('tk_element_id', $dataTkElements->pluck('id'))->get();
+        $dataTkTopics = TkTopic::whereIn('tk_element_id', $dataTkElements->pluck('id'))
+            ->whereIn('id', function ($query) use ($guru) {
+                $query->select('tk_topic_id')
+                    ->from(with(new TkPembelajaran)->getTable())
+                    ->where('guru_id', $guru->id);
+            })
+            ->get();
         $dataTkSubtopics = TkSubtopic::whereIn('tk_topic_id', $dataTkTopics->pluck('id'))->get();
         $dataTkPoints = TkPoint::whereIn('tk_topic_id', $dataTkTopics->pluck('id'))->where('term_id', $term->id)->get();
-
-        // Achivements
         $dataAchivements = TkAchivementGrade::where('term_id', $term->id)->get(['anggota_kelas_id', 'tk_point_id', 'achivement']);
-        $dataAchivementEvents = TkAchivementEventGrade::get(['anggota_kelas_id', 'tk_event_id', 'achivement_event']);
-        $dataAttendance = TkAttendance::where('anggota_kelas_id', $request->anggota_kelas_id)->first(['anggota_kelas_id', 'no_school_days', 'days_attended', 'days_absent']);
 
-        // EVENTS
-        $dataEvents = TkEvent::where('tapel_id', $tapel->id)->where('term_id', $term->id)->get();
+        if($kelas->guru->karyawan_id == Auth::user()->karyawan->id){
+            // Achivements
+            $dataAchivementEvents = TkAchivementEventGrade::get(['anggota_kelas_id', 'tk_event_id', 'achivement_event']);
+            $dataAttendance = TkAttendance::where('anggota_kelas_id', $request->anggota_kelas_id)->first(['anggota_kelas_id', 'no_school_days', 'days_attended', 'days_absent']);
+            // EVENTS
+            $dataEvents = TkEvent::where('tapel_id', $tapel->id)->where('term_id', $term->id)->get();
+        } else {
+            // give null value
+            $dataEvents = [];
+            // $dataAchivements = [];
+            $dataAchivementEvents = [];
+            $dataAttendance = [];
+        }
 
         return view('guru.km.penilaiantk.show', compact('title', 'data_anggota_kelas', 'kelas', 'data_kelas', 'tapel', 'term', 'data_term', 'dataTkElements', 'dataTkTopics', 'dataTkSubtopics', 'dataTkPoints', 'siswa', 'dataEvents', 'dataAchivements', 'anggotaKelas', 'dataAchivementEvents', 'dataAttendance'));
     }
