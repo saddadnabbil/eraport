@@ -231,15 +231,15 @@ class CetakRaportSemesterController extends Controller
     public function export(Request $request, $id)
     {
         $sekolah = Sekolah::first();
-        $kelas_id = Kelas::findorfail($id);
-        $kelas_id = AnggotaKelas::findorfail($id);
+        $kelas = Kelas::findorfail($id);
+        $data_anggota_kelas = AnggotaKelas::where('kelas_id', $id)->get();
         $tapel = Tapel::where('status', 1)->first();
         $semester = Semester::findorfail($request->semester_id);
 
         $title = 'Raport Semester';
         $data_id_mapel_semester_ini = Mapel::where('tapel_id', $tapel->id)->get('id');
 
-        $data_id_pembelajaran = Pembelajaran::where('kelas_id', $kelas_id)->get('id');
+        $data_id_pembelajaran = Pembelajaran::where('kelas_id', $kelas->id)->get('id');
 
         // Inisialisasi array untuk nilai akhir total
         $data_nilai_akhir_total = [];
@@ -251,7 +251,7 @@ class CetakRaportSemesterController extends Controller
 
             for ($term = 1; $term <= 2; $term++) {
                 // Ambil data nilai untuk term dan semester tertentu
-                $data_nilai = KmNilaiAkhirRaport::where('term_id', $term)->where('semester_id', $semester_id)->whereIn('pembelajaran_id', $data_id_pembelajaran)->where('anggota_kelas_id', $anggota_kelas->id)->get();
+                $data_nilai = KmNilaiAkhirRaport::where('term_id', $term)->where('semester_id', $semester_id)->whereIn('pembelajaran_id', $data_id_pembelajaran)->get();
 
                 $nilai_akhir = [];
                 foreach ($data_nilai as $nilai) {
@@ -348,10 +348,10 @@ class CetakRaportSemesterController extends Controller
 
         // Sekarang, $data_nilai_akhir_total berisi nilai akhir untuk masing-masing term dan semester dengan 'semester_id'.
 
-        $data_nilai = KmNilaiAkhirRaport::whereIn('pembelajaran_id', $data_id_pembelajaran)->where('anggota_kelas_id', $anggota_kelas->id)->get();
+        $data_nilai = KmNilaiAkhirRaport::whereIn('pembelajaran_id', $data_id_pembelajaran)->get();
 
         $data_id_ekstrakulikuler = Ekstrakulikuler::where('tapel_id', $tapel->id)->get('id');
-        $data_anggota_ekstrakulikuler = AnggotaEkstrakulikuler::whereIn('ekstrakulikuler_id', $data_id_ekstrakulikuler)->where('anggota_kelas_id', $anggota_kelas->id)->get();
+        $data_anggota_ekstrakulikuler = AnggotaEkstrakulikuler::whereIn('ekstrakulikuler_id', $data_id_ekstrakulikuler)->get();
         foreach ($data_anggota_ekstrakulikuler as $anggota_ekstrakulikuler) {
             $cek_nilai_ekstra = NilaiEkstrakulikuler::where('anggota_ekstrakulikuler_id', $anggota_ekstrakulikuler->id)->first();
             if (is_null($cek_nilai_ekstra)) {
@@ -363,16 +363,22 @@ class CetakRaportSemesterController extends Controller
             }
         }
 
-        $data_prestasi_siswa = PrestasiSiswa::where('anggota_kelas_id', $anggota_kelas->id)->get();
-        $kehadiran_siswa = KehadiranSiswa::where('anggota_kelas_id', $anggota_kelas->id)->first();
-        $catatan_wali_kelas = CatatanWaliKelas::where('anggota_kelas_id', $anggota_kelas->id)->first();
+        $data_prestasi_siswa = PrestasiSiswa::join('anggota_kelas', 'prestasi_siswa.anggota_kelas_id', '=', 'anggota_kelas.id')
+            ->where('anggota_kelas.kelas_id', $kelas->id)
+            ->get();
+        $data_kehadiran_siswa = KehadiranSiswa::join('anggota_kelas', 'kehadiran_siswa.anggota_kelas_id', '=', 'anggota_kelas.id')
+            ->where('anggota_kelas.kelas_id', $kelas->id)
+            ->get();
+        $data_catatan_wali_kelas = CatatanWaliKelas::join('anggota_kelas', 'catatan_wali_kelas.anggota_kelas_id', '=', 'anggota_kelas.id')
+            ->where('anggota_kelas.kelas_id', $kelas->id)
+            ->get();
 
         $cek_tanggal_raport = KmTglRaport::where('tapel_id', $tapel->id)->first();
         if (is_null($cek_tanggal_raport)) {
             return back()->with('toast_warning', 'Tanggal raport belum disetting oleh admin');
         } else {
-            $raport = PDF::loadview('walikelas.km.raportsemester.raport', compact('title', 'sekolah', 'anggota_kelas',  'data_anggota_ekstrakulikuler', 'data_prestasi_siswa', 'kehadiran_siswa', 'catatan_wali_kelas', 'data_nilai', 'data_nilai_akhir_total', 'semester'))->setPaper($request->paper_size, $request->orientation);
-            return $raport->stream('RAPORT ' . $kelas->nama_lengkap . ' (' . $anggota_kelas->kelas->nama_kelas . ').pdf');
+            $raport = PDF::loadview('walikelas.km.raportsemester.raport-all-data', compact('title', 'sekolah', 'data_anggota_ekstrakulikuler', 'data_prestasi_siswa', 'data_kehadiran_siswa', 'data_catatan_wali_kelas', 'data_nilai', 'data_nilai_akhir_total', 'semester', 'kelas', 'data_anggota_kelas'))->setPaper($request->paper_size, $request->orientation);
+            return $raport->stream('RAPORT ' . $kelas->nama_lengkap . '.pdf');
         }
     }
 }

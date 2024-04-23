@@ -549,15 +549,15 @@
                 @endforeach
 
                 <!-- ATTENDANCE -->
+                <tr style="height:25pt; background-color: #999999">
+                    <td style="width:647px; border: 1px solid black">
+                        <p class="s2" style="text-align: center; padding: 5px;">
+                            ATTENDANCE</p>
+                    </td>
+                    <td style="width:74px; border: 1px solid black">
+                    </td>
+                </tr>
                 @foreach ($dataAttendance->where('anggota_kelas_id', $anggota_kelas->id) as $Attendance)
-                    <tr style="height:25pt; background-color: #999999">
-                        <td style="width:647px; border: 1px solid black">
-                            <p class="s2" style="text-align: center; padding: 5px;">
-                                ATTENDANCE</p>
-                        </td>
-                        <td style="width:74px; border: 1px solid black">
-                        </td>
-                    </tr>
                     <tr style="height:25pt">
                         <td style="width:74px;border: 1px solid black">
                             <p class="s2" style="padding: 3px;">
@@ -588,6 +588,30 @@
                         <td style="width:74px;border: 1px solid black">
                             <p class="s2" style="padding: 3px; text-align: center;">
                                 {{ isset($Attendance) && $Attendance->days_absent ? $Attendance->days_absent : '' }}
+                            </p>
+                        </td>
+                    </tr>
+                @endforeach
+            </table>
+
+            <p>
+                <br />
+            </p>
+
+            {{-- catatan walikelas --}}
+            <table style="border-collapse:collapse;" cellspacing="0">
+                <!-- ATTENDANCE -->
+                <tr style="height:25pt; background-color: #dddddd" colspan="2">
+                    <td style="width:728px; border: 1px solid black">
+                        <p class="s1" style="text-align: center; padding: 5px;">
+                            REMARKS</p>
+                    </td>
+                </tr>
+                @foreach ($dataCatatanWalikelas->where('anggota_kelas_id', $anggota_kelas->id) as $CatatanWalikelas)
+                    <tr style="height:25pt">
+                        <td style="width:728px;border: 1px solid black">
+                            <p class="s2" style="padding: 3px;">
+                                {{ isset($CatatanWalikelas) && $CatatanWalikelas->catatan ? $CatatanWalikelas->catatan : '' }}
                             </p>
                         </td>
                     </tr>

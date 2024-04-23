@@ -107,11 +107,12 @@ class CetakRaportTKController extends Controller
             $dataAchivements = TkAchivementGrade::get(['anggota_kelas_id', 'tk_point_id', 'achivement']);
             $dataAchivementEvents = TkAchivementEventGrade::get(['anggota_kelas_id', 'tk_event_id', 'achivement_event']);
             $dataAttendance = TkAttendance::where('anggota_kelas_id', $anggota_kelas->id)->first(['anggota_kelas_id', 'no_school_days', 'days_attended', 'days_absent']);
+            $dataCatatanWalikelas = CatatanWalikelas::where('anggota_kelas_id', $anggota_kelas->id)->first(['anggota_kelas_id', 'catatan']);
 
             // EVENTS
             $dataEvents = TkEvent::where('tapel_id', $tapel->id)->where('term_id', $term->id)->get();
 
-            $raport = PDF::loadview('walikelas.km.raporttk.raport', compact('title', 'sekolah', 'anggota_kelas',  'term', 'data_id_pembelajaran', 'dataTkElements', 'dataTkTopics', 'dataTkSubtopics', 'dataTkPoints', 'dataAchivements', 'dataEvents', 'dataAchivementEvents', 'dataAttendance'))->setPaper($request->paper_size, $request->orientation);
+            $raport = PDF::loadview('walikelas.km.raporttk.raport', compact('title', 'sekolah', 'anggota_kelas',  'term', 'data_id_pembelajaran', 'dataTkElements', 'dataTkTopics', 'dataTkSubtopics', 'dataTkPoints', 'dataAchivements', 'dataEvents', 'dataAchivementEvents', 'dataAttendance', 'dataCatatanWalikelas'))->setPaper($request->paper_size, $request->orientation);
 
             $raport->render();
             $dompdf = $raport->getDomPDF();
@@ -167,11 +168,12 @@ class CetakRaportTKController extends Controller
             $dataAchivements = TkAchivementGrade::get(['anggota_kelas_id', 'tk_point_id', 'achivement']);
             $dataAchivementEvents = TkAchivementEventGrade::get(['anggota_kelas_id', 'tk_event_id', 'achivement_event']);
             $dataAttendance = TkAttendance::get(['anggota_kelas_id', 'no_school_days', 'days_attended', 'days_absent']);
+            $dataCatatanWalikelas = CatatanWalikelas::get(['anggota_kelas_id', 'catatan']);
 
             // EVENTS
             $dataEvents = TkEvent::where('tapel_id', $tapel->id)->where('term_id', $term->id)->get();
 
-            $raport = PDF::loadview('walikelas.km.raporttk.raport-all-data', compact('title', 'sekolah', 'data_anggota_kelas',  'term', 'dataTkElements', 'dataTkTopics', 'dataTkSubtopics', 'dataTkPoints', 'dataAchivements', 'dataEvents', 'dataAchivementEvents', 'dataAttendance', 'kelas'))->setPaper($request->paper_size, $request->orientation);
+            $raport = PDF::loadview('walikelas.km.raporttk.raport-all-data', compact('title', 'sekolah', 'data_anggota_kelas',  'term', 'dataTkElements', 'dataTkTopics', 'dataTkSubtopics', 'dataTkPoints', 'dataAchivements', 'dataEvents', 'dataAchivementEvents', 'dataAttendance', 'kelas', 'dataCatatanWalikelas'))->setPaper($request->paper_size, $request->orientation);
 
             $raport->render();
             $dompdf = $raport->getDomPDF();

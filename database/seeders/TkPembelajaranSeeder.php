@@ -18,6 +18,7 @@ class TkPembelajaranSeeder extends Seeder
             'tk_topic_id' => 1,
             'guru_id' => 1,
             'tingkatan_id' => 1,
+            'kelas_id' => 1,
         ]);
     }
 }

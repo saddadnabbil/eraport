@@ -36,18 +36,23 @@ class PenilaianTkController extends Controller
     {
         $title = 'Penilaian Raport TK';
         $tapel = Tapel::where('status', 1)->first();
-
         $data_mapel = Mapel::where('tapel_id', $tapel->id)->orderBy('nama_mapel', 'ASC')->get();
+        $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
 
-        // $data_element = TkElement::where('tingkatan_id', $request->tingkatan_id)->get();
-        // $data_topic = TkTopic::whereIn('tk_element_id', $data_element->pluck('id'))->get();
+        $kelas_id = TkPembelajaran::where('guru_id', $guru->id)->get('kelas_id');
+
         $data_kelas = Kelas::where('tapel_id', $tapel->id)
             ->whereIn('tingkatan_id', [1, 2, 3])
+            ->whereIn('id', $kelas_id)
+            ->union(
+                Kelas::where('tapel_id', $tapel->id)
+                    ->whereIn('tingkatan_id', [1, 2, 3])
+                    ->where('guru_id', $guru->id)
+            )
             ->get();
 
-        // handle if kelas null
         if (count($data_kelas) == 0) {
-            return redirect(route('kelas.index'))->with('toast_warning', 'Kelas Tingkatan TK Belum tersedia');
+            return back()->with('toast_warning', 'Kelas Tingkatan TK Belum tersedia');
         }
 
         $term = $data_kelas->first()->tingkatan->term_id;
@@ -76,10 +81,20 @@ class PenilaianTkController extends Controller
         $kelas = Kelas::where('id', $request->kelas_id)->first();
         $tapel = Tapel::where('status', 1)->first();
         $term = Term::where('id', $request->term_id)->first();
+        $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
 
         $data_term = Term::orderBy('id', 'ASC')->get();
+
+        $kelas_id = TkPembelajaran::where('guru_id', $guru->id)->get('kelas_id');
+
         $data_kelas = Kelas::where('tapel_id', $tapel->id)
             ->whereIn('tingkatan_id', [1, 2, 3])
+            ->whereIn('id', $kelas_id)
+            ->union(
+                Kelas::where('tapel_id', $tapel->id)
+                    ->whereIn('tingkatan_id', [1, 2, 3])
+                    ->where('guru_id', $guru->id)
+            )
             ->get();
 
         $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)
@@ -121,19 +136,21 @@ class PenilaianTkController extends Controller
         }
 
         $achivements = $request->input('achivement');
-
-        foreach ($achivements as $key => $achivement) {
-            if (!empty($achivement)) {
-                TkAchivementGrade::updateOrCreate(
-                    [
-                        'term_id' => $request->input('term_id'),
-                        'anggota_kelas_id' => $request->input('anggota_kelas_id'),
-                        'tk_point_id' => $request->input('tk_point_id')[$key],
-                    ],
-                    [
-                        'achivement' => $achivement
-                    ]
-                );
+        dd($achivements);
+        if ($achivements) {
+            foreach ($achivements as $key => $achivement) {
+                if (!empty($achivement)) {
+                    TkAchivementGrade::updateOrCreate(
+                        [
+                            'term_id' => $request->input('term_id'),
+                            'anggota_kelas_id' => $request->input('anggota_kelas_id'),
+                            'tk_point_id' => $request->input('tk_point_id')[$key],
+                        ],
+                        [
+                            'achivement' => $achivement
+                        ]
+                    );
+                }
             }
         }
 
@@ -187,8 +204,16 @@ class PenilaianTkController extends Controller
         $siswa = Siswa::where('id', $id)->first();
 
         $data_term = Term::orderBy('id', 'ASC')->get();
+        $kelas_id = TkPembelajaran::where('guru_id', $guru->id)->get('kelas_id');
+
         $data_kelas = Kelas::where('tapel_id', $tapel->id)
             ->whereIn('tingkatan_id', [1, 2, 3])
+            ->whereIn('id', $kelas_id)
+            ->union(
+                Kelas::where('tapel_id', $tapel->id)
+                    ->whereIn('tingkatan_id', [1, 2, 3])
+                    ->where('guru_id', $guru->id)
+            )
             ->get();
 
         $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)
@@ -217,7 +242,7 @@ class PenilaianTkController extends Controller
         $dataTkPoints = TkPoint::whereIn('tk_topic_id', $dataTkTopics->pluck('id'))->where('term_id', $term->id)->get();
         $dataAchivements = TkAchivementGrade::where('term_id', $term->id)->get(['anggota_kelas_id', 'tk_point_id', 'achivement']);
 
-        if($kelas->guru->karyawan_id == Auth::user()->karyawan->id){
+        if ($kelas->guru->karyawan_id == Auth::user()->karyawan->id) {
             // Achivements
             $dataAchivementEvents = TkAchivementEventGrade::get(['anggota_kelas_id', 'tk_event_id', 'achivement_event']);
             $dataAttendance = TkAttendance::where('anggota_kelas_id', $request->anggota_kelas_id)->first(['anggota_kelas_id', 'no_school_days', 'days_attended', 'days_absent']);

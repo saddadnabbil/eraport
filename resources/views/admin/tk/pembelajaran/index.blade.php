@@ -65,16 +65,16 @@
                                     </div>
                                     <div class="modal-body">
                                         <div class="form-group row">
-                                            <label for="tingkatan_id" class="col-sm-2 col-form-label">Tingkatan</label>
+                                            <label for="kelas_id" class="col-sm-2 col-form-label">Kelas</label>
                                             <div class="col-sm-10">
                                                 <form action="{{ route('tkpembelajaran.settings') }}" method="POST">
                                                     @csrf
-                                                    <select class="form-control form-select select2" name="tingkatan_id"
+                                                    <select class="form-control form-select select2" name="kelas_id"
                                                         style="width: 100%;" required onchange="this.form.submit();">
-                                                        <option value="">-- Pilih Tingkatan --</option>
-                                                        @foreach ($data_tingkatan as $tingkatan)
-                                                            <option value="{{ $tingkatan->id }}">
-                                                                {{ $tingkatan->nama_tingkatan }}
+                                                        <option value="">-- Pilih Kelas --</option>
+                                                        @foreach ($data_kelas as $kelas)
+                                                            <option value="{{ $kelas->id }}">
+                                                                {{ $kelas->nama_kelas }}
                                                             </option>
                                                         @endforeach
                                                     </select>
@@ -93,8 +93,8 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Semester</th>
                                             <th>Tingkatan</th>
+                                            <th>Kelas</th>
                                             <th>Topic</th>
                                             <th>Guru</th>
                                         </tr>
@@ -105,12 +105,7 @@
                                             <?php $no++; ?>
                                             <tr>
                                                 <td>{{ $no }}</td>
-                                                <td>{{ $pembelajaran->tingkatan->tahun_pelajaran }}
-                                                    @if ($pembelajaran->tingkatan->semester_id == 1)
-                                                        Ganjil
-                                                    @else
-                                                        Genap
-                                                    @endif
+                                                <td>{{ $pembelajaran->kelas->nama_kelas }}
                                                 </td>
                                                 <td>{{ $pembelajaran->tingkatan->nama_tingkatan }}</td>
                                                 <td>{{ $pembelajaran->topic->name }}</td>

@@ -336,8 +336,9 @@
                                                             @endforeach
                                                         @endforeach
                                                     @endforeach
-                                                    <!-- EVENTS -->
+
                                                     @if ($kelas->guru->karyawan_id == Auth::user()->karyawan->id)
+                                                        <!-- EVENTS -->
                                                         <tr
                                                             style="background-color: rgba(148, 148, 148, 0.384); text-align: center; font-weight: bold;">
                                                             <td colspan="2">EVENTS</td>
@@ -391,7 +392,8 @@
                                                                     @empty
                                                                         <input type="hidden" name="tk_event_id[]"
                                                                             value="{{ $event->id }}">
-                                                                        <select class="form-control" name="achivement_event[]"
+                                                                        <select class="form-control"
+                                                                            name="achivement_event[]"
                                                                             id="achivement_event">
                                                                             <option value="">
                                                                                 -- Pilih --
@@ -409,10 +411,8 @@
                                                                 </td>
                                                             </tr>
                                                         @endforeach
-                                                    @endif
-                                                    
-                                                    <!-- ATTENDANCE -->
-                                                    @if ($kelas->guru->karyawan_id == Auth::user()->karyawan->id)
+
+                                                        <!-- ATTENDANCE -->
                                                         <tr
                                                             style="background-color: rgba(148, 148, 148, 0.384); text-align: center; font-weight: bold;">
                                                             <td colspan="2">ATTENDANCE</td>
@@ -433,12 +433,26 @@
                                                         </tr>
                                                         <tr>
                                                             <td>Days Absent</td>
-                                                            <td><input type="number" class="form-control" name="days_absent"
+                                                            <td><input type="number" class="form-control"
+                                                                    name="days_absent"
                                                                     value="{{ isset($dataAttendance) && $dataAttendance->days_absent ? $dataAttendance->days_absent : '' }}">
                                                             </td>
-                                                        </tr> 
+                                                        </tr>
+
+                                                        <!-- CATATAN WALIKELAS -->
+                                                        <tr
+                                                            style="background-color: rgba(148, 148, 148, 0.384); text-align: center; font-weight: bold;">
+                                                            <td colspan="2">CATATAN WALIKELAS</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="2">
+                                                                <textarea class="form-control" name="catatan_wali_kelas" rows="3" minlength="30" maxlength="200"
+                                                                    oninvalid="this.setCustomValidity('Catatan harus berisi antara 20 s/d 100 karekter')"
+                                                                    oninput="setCustomValidity('')">{{ isset($dataCatatanWalikelas) && $dataCatatanWalikelas->catatan ? $dataCatatanWalikelas->catatan : '' }}</textarea>
+                                                            </td>
+                                                        </tr>
                                                     @endif
-                                                    
+
                                                 </tbody>
                                             </table>
                                             <div class="d-flex justify-content-end">

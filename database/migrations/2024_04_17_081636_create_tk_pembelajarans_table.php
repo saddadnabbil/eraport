@@ -16,13 +16,15 @@ class CreateTkPembelajaransTable extends Migration
         Schema::create('tk_pembelajarans', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('tk_topic_id');
+            $table->unsignedBigInteger('kelas_id');
             $table->unsignedBigInteger('tingkatan_id');
             $table->unsignedBigInteger('guru_id')->nullable();
-            
+
             $table->timestamps();
 
             $table->foreign('guru_id')->references('id')->on('guru')->onDelete('cascade');
             $table->foreign('tk_topic_id')->references('id')->on('tk_topics')->onDelete('cascade');
+            $table->foreign('kelas_id')->references('id')->on('kelas')->onDelete('cascade');
             $table->foreign('tingkatan_id')->references('id')->on('tingkatans')->onDelete('cascade');
         });
     }

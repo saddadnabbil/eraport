@@ -7,11 +7,13 @@
 
             $checkRouteTKReport = request()->routeIs('adminraporttk.*');
             $dynamicRouteTKReport = route('adminraporttk.index');
+            break;
         case 2:
             $allowedRoutes = ['guru.raporttk.*', 'guru.raporttk.*'];
 
             $checkRouteTKReport = request()->routeIs('guru.raporttk.*');
             $dynamicRouteTKReport = route('guru.raporttk.index');
+            break;
     }
 @endphp
 

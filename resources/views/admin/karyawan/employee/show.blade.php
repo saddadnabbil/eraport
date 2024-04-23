@@ -578,7 +578,7 @@
                                                             </option>
                                                             @foreach ($dataStatusKaryawan as $status)
                                                                 <option value="{{ $status->id }}"
-                                                                    {{ $karyawan->position_karyawan_id == $status->id ? 'selected' : '' }}>
+                                                                    {{ $karyawan->status_karyawan_id == $status->id ? 'selected' : '' }}>
                                                                     {{ $status->status_nama }}</option>
                                                             @endforeach
                                                         </select>

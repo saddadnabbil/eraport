@@ -56,6 +56,11 @@
         font-size: 8pt;
     }
 
+    .s1.element,
+    .s1.topic {
+        font-size: 7.5pt;
+    }
+
     .s3 {
         color: black;
         font-family: Arial, sans-serif;
@@ -382,18 +387,18 @@
             <?php $no = 0; ?>
             <?php $no++; ?>
             @foreach ($dataTkElements as $element)
-                <tr style="height:25pt; background-color: #999999">
+                <tr style="height:25pt; background-color: #dddddd">
                     <td style="width:647px; border: 1px solid black">
-                        <p class="s1" style="text-align: center; padding: 4px;">
+                        <p class="s1 element" style="text-align: center; padding: 4px;">
                             {{ $element->name }}</p>
                     </td>
                     <td style="width:74px; border: 1px solid black">
                     </td>
                 </tr>
                 @foreach ($dataTkTopics->where('tk_element_id', $element->id) as $topic)
-                    <tr style="height:25pt; background-color: #dfdfdf">
+                    <tr style="height:25pt; background-color: #e0dddd">
                         <td style="width:647px; border: 1px solid black">
-                            <p class="s1" style="padding: 3px;">
+                            <p class="s1 topic" style="padding: 3px;">
                                 {{ $topic->name }}</p>
                         </td>
                         <td style="width:74px; border: 1px solid black;">
@@ -517,9 +522,9 @@
             @endforeach
 
             <!-- EVENTS -->
-            <tr style="height:25pt; background-color: #999999">
+            <tr style="height:25pt; background-color: #dddddd">
                 <td style="width:647px; border: 1px solid black">
-                    <p class="s2" style="text-align: center; padding: 5px;">
+                    <p class="s1" style="text-align: center; padding: 5px;">
                         EVENTS</p>
                 </td>
                 <td style="width:74px; border: 1px solid black">
@@ -528,7 +533,7 @@
             @foreach ($dataEvents as $event)
                 <tr style="height:25pt">
                     <td style="width:74px;border: 1px solid black">
-                        <p class="s2" style="padding: 3px;">
+                        <p class="s1" style="padding: 3px;">
                             {{ $event->name }}</p>
                     </td>
                     <td style="width:74px;border: 1px solid black">
@@ -544,9 +549,9 @@
             @endforeach
 
             <!-- ATTENDANCE -->
-            <tr style="height:25pt; background-color: #999999">
+            <tr style="height:25pt; background-color: #dddddd">
                 <td style="width:647px; border: 1px solid black">
-                    <p class="s2" style="text-align: center; padding: 5px;">
+                    <p class="s1" style="text-align: center; padding: 5px;">
                         ATTENDANCE</p>
                 </td>
                 <td style="width:74px; border: 1px solid black">
@@ -585,7 +590,27 @@
                     </p>
                 </td>
             </tr>
+        </table>
 
+        <p>
+            <br />
+        </p>
+
+        {{-- catatan walikelas --}}
+        <table style="border-collapse:collapse;" cellspacing="0">
+            <tr style="height:25pt; background-color: #dddddd" colspan="2">
+                <td style="width:728px; border: 1px solid black">
+                    <p class="s1" style="text-align: center; padding: 5px;">
+                        REMARKS</p>
+                </td>
+            </tr>
+            <tr style="height:25pt">
+                <td style="width:728px;border: 1px solid black">
+                    <p class="s2" style="padding: 3px;">
+                        {{ isset($dataCatatanWalikelas) && $dataCatatanWalikelas->catatan ? $dataCatatanWalikelas->catatan : '' }}
+                    </p>
+                </td>
+            </tr>
         </table>
 
         <p>

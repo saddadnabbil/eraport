@@ -11,9 +11,6 @@
                     <a class="sidebar-link sidebar-link" href="{{ route('dashboard') }}" aria-expanded="false"><i
                             data-feather="home" class="feather-icon"></i><span class="hide-menu"> Dashboard </span></a>
                 </li>
-                @include('layouts.partials.sidebar.silabus')
-                @include('layouts.partials.sidebar.timetable')
-
                 @if (Auth::user()->karyawan->unitKaryawan->unit_kode == 'G01')
                     <li class="list-divider"></li>
                     <li class="nav-small-cap">
@@ -21,11 +18,14 @@
                     </li>
                     @include('layouts.partials.sidebar.reportkm-tk.penilaian')
                     @if (session('cek_wali_kelas_tk') == true)
-                        @include('layouts.partials.sidebar.reportresultkm.printreport_tk')
+                        @include('layouts.partials.sidebar.reportkm-tk.printreport_tk')
                     @endif
                 @endif
 
                 @if (Auth::user()->karyawan->unitKaryawan->unit_kode != 'G01')
+                    @include('layouts.partials.sidebar.silabus')
+                    @include('layouts.partials.sidebar.timetable')
+
                     <li class="list-divider"></li>
                     <li class="nav-small-cap">
                         <span class="hide-menu">REPORT KM</span>

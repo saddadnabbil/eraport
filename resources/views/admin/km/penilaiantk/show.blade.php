@@ -430,6 +430,19 @@
                                                                 value="{{ isset($dataAttendance) && $dataAttendance->days_absent ? $dataAttendance->days_absent : '' }}">
                                                         </td>
                                                     </tr>
+
+                                                    <!-- CATATAN WALIKELAS -->
+                                                    <tr
+                                                        style="background-color: rgba(148, 148, 148, 0.384); text-align: center; font-weight: bold;">
+                                                        <td colspan="2">CATATAN WALIKELAS</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2">
+                                                            <textarea class="form-control" name="catatan_wali_kelas" rows="3" minlength="30" maxlength="200"
+                                                                oninvalid="this.setCustomValidity('Catatan harus berisi antara 20 s/d 100 karekter')"
+                                                                oninput="setCustomValidity('')">{{ isset($dataCatatanWalikelas) && $dataCatatanWalikelas->catatan ? $dataCatatanWalikelas->catatan : '' }}</textarea>
+                                                        </td>
+                                                    </tr>
                                                 </tbody>
                                             </table>
                                             <div class="d-flex justify-content-end">

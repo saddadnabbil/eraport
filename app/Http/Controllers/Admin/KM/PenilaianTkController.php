@@ -18,6 +18,7 @@ use App\Models\Pembelajaran;
 use App\Models\TkAttendance;
 use Illuminate\Http\Request;
 use App\Models\TkPembelajaran;
+use App\Models\CatatanWaliKelas;
 use App\Models\TkAchivementGrade;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -90,10 +91,12 @@ class PenilaianTkController extends Controller
         $id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('id');
         $kelas_id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('kelas_id');
 
-        $data_anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
-            ->whereIn('anggota_kelas.id', $id_anggota_kelas)
+        $data_anggota_kelas = AnggotaKelas::whereIn('anggota_kelas.id', $id_anggota_kelas)
             ->whereIn('anggota_kelas.kelas_id', $kelas_id_anggota_kelas)
-            ->where('siswa.status', 1)
+            ->whereHas('siswa', function ($query) {
+                // Memeriksa bahwa status siswa adalah 1
+                $query->where('status', 1);
+            })
             ->get();
 
         return view('admin.km.penilaiantk.create', compact('title', 'data_anggota_kelas', 'kelas', 'data_kelas', 'tapel', 'term', 'data_term'));
@@ -122,18 +125,20 @@ class PenilaianTkController extends Controller
 
         $achivements = $request->input('achivement');
 
-        foreach ($achivements as $key => $achivement) {
-            if (!empty($achivement)) {
-                TkAchivementGrade::updateOrCreate(
-                    [
-                        'term_id' => $request->input('term_id'),
-                        'anggota_kelas_id' => $request->input('anggota_kelas_id'),
-                        'tk_point_id' => $request->input('tk_point_id')[$key],
-                    ],
-                    [
-                        'achivement' => $achivement
-                    ]
-                );
+        if ($achivements) {
+            foreach ($achivements as $key => $achivement) {
+                if (!empty($achivement)) {
+                    TkAchivementGrade::updateOrCreate(
+                        [
+                            'term_id' => $request->input('term_id'),
+                            'anggota_kelas_id' => $request->input('anggota_kelas_id'),
+                            'tk_point_id' => $request->input('tk_point_id')[$key],
+                        ],
+                        [
+                            'achivement' => $achivement
+                        ]
+                    );
+                }
             }
         }
 
@@ -158,6 +163,7 @@ class PenilaianTkController extends Controller
         $no_school_days = $request->input('no_school_days');
         $days_attended = $request->input('days_attended');
         $days_absent = $request->input('days_absent');
+        $catatan_wali_kelas = $request->input('catatan_wali_kelas');
 
         TkAttendance::updateOrCreate(
             ['anggota_kelas_id' => $request->input('anggota_kelas_id')],
@@ -165,6 +171,13 @@ class PenilaianTkController extends Controller
                 'no_school_days' => $no_school_days ?? null,
                 'days_attended' => $days_attended ?? null,
                 'days_absent' => $days_absent ?? null,
+            ]
+        );
+
+        CatatanWaliKelas::updateOrCreate(
+            ['anggota_kelas_id' => $request->input('anggota_kelas_id')],
+            [
+                'catatan' => $catatan_wali_kelas
             ]
         );
         return back()->with('toast_success', 'Achievements saved successfully.');
@@ -215,11 +228,11 @@ class PenilaianTkController extends Controller
         $dataAchivements = TkAchivementGrade::where('term_id', $term->id)->get(['anggota_kelas_id', 'tk_point_id', 'achivement']);
         $dataAchivementEvents = TkAchivementEventGrade::get(['anggota_kelas_id', 'tk_event_id', 'achivement_event']);
         $dataAttendance = TkAttendance::where('anggota_kelas_id', $request->anggota_kelas_id)->first(['anggota_kelas_id', 'no_school_days', 'days_attended', 'days_absent']);
-
+        $dataCatatanWalikelas = CatatanWaliKelas::where('anggota_kelas_id', $request->anggota_kelas_id)->first(['anggota_kelas_id', 'catatan']);
         // EVENTS
         $dataEvents = TkEvent::where('tapel_id', $tapel->id)->where('term_id', $term->id)->get();
 
-        return view('admin.km.penilaiantk.show', compact('title', 'data_anggota_kelas', 'kelas', 'data_kelas', 'tapel', 'term', 'data_term', 'dataTkElements', 'dataTkTopics', 'dataTkSubtopics', 'dataTkPoints', 'siswa', 'dataEvents', 'dataAchivements', 'anggotaKelas', 'dataAchivementEvents', 'dataAttendance'));
+        return view('admin.km.penilaiantk.show', compact('title', 'data_anggota_kelas', 'kelas', 'data_kelas', 'tapel', 'term', 'data_term', 'dataTkElements', 'dataTkTopics', 'dataTkSubtopics', 'dataTkPoints', 'siswa', 'dataEvents', 'dataAchivements', 'anggotaKelas', 'dataAchivementEvents', 'dataAttendance', 'dataCatatanWalikelas'));
     }
 
     /**

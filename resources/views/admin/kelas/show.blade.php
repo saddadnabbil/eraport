@@ -67,10 +67,17 @@
                                         <i class="fas fa-plus"></i>
                                     </button>
                                 </div>
+                                {{-- get form trash --}}
                                 <div data-bs-toggle="tooltip" title="Trash" class="d-inline-block" class="d-inline-block">
-                                    <a href="{{ route('kelas.anggota_kelas.trash') }}" class="btn btn-tool btn-sm">
-                                        <i class="fas fa-trash"></i>
-                                    </a>
+                                    {{-- Form untuk mengirimkan permintaan POST dengan menyertakan nilai $kelas->id --}}
+                                    <form action="{{ route('kelas.anggota_kelas.trash', ['id' => $kelas->id]) }}"
+                                        method="get">
+                                        @csrf
+                                        <button type="submit" class="btn btn-tool btn-sm" data-bs-toggle="tooltip"
+                                            title="Trash">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>

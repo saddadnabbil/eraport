@@ -16,8 +16,28 @@
 
 @include('layouts.partials.sidebar._sidebar-item', [
     'isActive' => request()->routeIs('user.*'),
-    'hasArrow' => false,
+    'hasArrow' => true,
     'icon' => 'user',
     'itemName' => 'User Data',
     'route' => route('user.index'),
+    'subItems' => [
+        [
+            'name' => 'Status',
+            'route' => route('user.index'),
+            'isActive' => request()->routeIs('user.*'),
+            'childHasArrow' => false,
+        ],
+        [
+            'name' => 'Role',
+            'route' => route('role.index'),
+            'isActive' => request()->routeIs('role.*'),
+            'childHasArrow' => false,
+        ],
+        [
+            'name' => 'Permission',
+            'route' => route('permission.index'),
+            'isActive' => request()->routeIs('permission.*'),
+            'childHasArrow' => false,
+        ],
+    ],
 ])

@@ -93,9 +93,9 @@ class KelasController extends Controller
             return back()->with('toast_error', $tingkatan->nama_tingkatan . ' Tidak boleh mengambil jurusan ' . $jurusan->nama_jurusan)->withInput();
         }
 
-        if (!preg_match('/[a-zA-Z]/', $request->nama_kelas) || !preg_match('/\d/', $request->nama_kelas)) {
-            return back()->with('toast_error', 'Nama kelas harus mengandung setidaknya satu huruf dan satu angka')->withInput();
-        }
+        // if (!preg_match('/[a-zA-Z]/', $request->nama_kelas) || !preg_match('/\d/', $request->nama_kelas)) {
+        //     return back()->with('toast_error', 'Nama kelas harus mengandung setidaknya satu huruf dan satu angka')->withInput();
+        // }
 
         if ($validator->fails()) {
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
@@ -167,9 +167,9 @@ class KelasController extends Controller
             return back()->with('toast_error', $tingkatan->nama_tingkatan . ' Tidak boleh mengambil jurusan ' . $jurusan->nama_jurusan)->withInput();
         }
 
-        if (!preg_match('/[a-zA-Z]/', $request->nama_kelas) || !preg_match('/\d/', $request->nama_kelas)) {
-            return back()->with('toast_error', 'Nama kelas harus mengandung setidaknya satu huruf dan satu angka')->withInput();
-        }
+        // if (!preg_match('/[a-zA-Z]/', $request->nama_kelas) || !preg_match('/\d/', $request->nama_kelas)) {
+        //     return back()->with('toast_error', 'Nama kelas harus mengandung setidaknya satu huruf dan satu angka')->withInput();
+        // }
 
         if ($validator->fails()) {
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
@@ -331,7 +331,6 @@ class KelasController extends Controller
 
             return back()->with('toast_success', 'Anggota Kelas berhasil dihapus');
         } catch (\Throwable $th) {
-            dd($th->getMessage());
             return back()->with('toast_error', 'Terjadi kesalahan saat menghapus anggota kelas.');
         }
     }
@@ -380,15 +379,14 @@ class KelasController extends Controller
 
             return back()->with('toast_success', 'Anggota Kelas berhasil direstorasi');
         } catch (\Throwable $th) {
-            dd($th->getMessage());
             return back()->with('toast_error', 'Terjadi kesalahan saat merestorasi Anggota Kelas.');
         }
     }
 
-    public function showTrash()
+    public function showTrash($id)
     {
         $title = "Data Trash Anggota Kelas";
-        $anggotaKelasTrashed = AnggotaKelas::onlyTrashed()->get();
+        $anggotaKelasTrashed = AnggotaKelas::where('kelas_id', $id)->onlyTrashed()->get();
 
         return view('admin.kelas.trash', compact('title', 'anggotaKelasTrashed'));
     }

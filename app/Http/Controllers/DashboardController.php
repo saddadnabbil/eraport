@@ -75,6 +75,8 @@ class DashboardController extends Controller
 
             $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
 
+            $unit_kode = Auth::user()->karyawan->unitKaryawan->unit_kode;
+
             // Dashboard Guru Mapel
             if (session()->get('akses_sebagai') == 'Guru Mapel') {
                 $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
@@ -136,6 +138,7 @@ class DashboardController extends Controller
                     'jumlah_ekstrakulikuler_diampu',
                     'data_capaian_penilaian_km',
                     'data_capaian_penilaian',
+                    'unit_kode',
                 ));
             } elseif (session()->get('akses_sebagai') == 'Wali Kelas') {
                 $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)->where('guru_id', $guru->id)->pluck('id')->toArray();
@@ -156,6 +159,7 @@ class DashboardController extends Controller
                     'jumlah_kirim_nilai',
                     'jumlah_proses_deskripsi',
                     'id_kelas_diampu',
+                    'unit_kode',
                 ));
             }
         } elseif (Auth::user()->role == 3) {

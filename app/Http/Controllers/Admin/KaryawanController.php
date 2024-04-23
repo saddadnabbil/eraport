@@ -9,15 +9,18 @@ use App\Models\UnitKaryawan;
 use Illuminate\Http\Request;
 use App\Models\StatusKaryawan;
 use App\Imports\KaryawanImport;
+use App\Rules\MatchOldPassword;
 use App\Models\PositionKaryawan;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
 use Spatie\Permission\Models\Permission;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\Password;
 
 class KaryawanController extends Controller
 {
@@ -170,12 +173,11 @@ class KaryawanController extends Controller
             if (isset($unitRoles[$request->unit_karyawan_id])) {
                 $role = $unitRoles[$request->unit_karyawan_id];
                 $userRole = $role;
-                dd($role, $userRole);
             }
 
             $user = new User([
-                'username' => strtolower(str_replace(' ', '', $request->nama_lengkap . $request->kode_karyawan)),
-                'password' => bcrypt('123456'),
+                'username' => $request->kode_karyawan,
+                'password' => bcrypt(date('d-m-Y', strtotime($request->tanggal_lahir))),
                 'role' => $userRole,
                 'status' => true,
             ]);
@@ -312,6 +314,9 @@ class KaryawanController extends Controller
         $karyawan = Karyawan::findOrFail($id);
 
         $validator = Validator::make($request->all(), [
+            'password_lama' => ['nullable', new MatchOldPassword],
+            'password_baru' => ['nullable', Password::min(8)
+                ->numbers()],
             'status_karyawan_id' => 'required|exists:status_karyawans,id',
             'unit_karyawan_id' => 'required|exists:unit_karyawans,id',
             'position_karyawan_id' => 'required|exists:position_karyawans,id',
@@ -355,28 +360,26 @@ class KaryawanController extends Controller
         if ($validator->fails()) {
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
         } else {
-            $password_baru = bcrypt($request->password_baru);
-            $password_lama = bcrypt($request->password_lama);
+            $user = User::findOrFail($karyawan->user_id);
 
-            if ($password_baru != $karyawan->user->password && $request->password_baru != null || $request->username != null) {
-                if ($password_lama != $karyawan->user->password && $request->password_lama != null) {
-                    return back()->with('toast_error', 'Password lama tidak sesuai');
-                } else {
-                    $user = User::findOrFail($karyawan->user_id);
+            $user->username = $request->username;
 
-                    $user->password = $password_baru;
-                    $user->username = $request->username;
-                    $user->save();
-                }
+            if ($request->password_baru && $request->password_lama) {
+                $user->password = Hash::make($request->password_baru);
             }
+            $user->save();
 
             // Mengupdate role
             $role = Role::findOrFail($request->role);
             $karyawan->user->syncRoles([$role->id]);
+            // update role in user 
 
             // Mengupdate permission
             $permissions = Permission::findOrFail($request->permission);
-            $karyawan->user->syncPermissions($permissions->pluck('id')->toArray());
+            $karyawan->user->permissions()->detach(); // Hapus semua permission yang ada
+            $karyawan->user->syncPermissions($permissions);
+            $userPermissions = $karyawan->user->permissions()->pluck('name'); // Change 'name' to the attribute you want to inspect
+            // dd($userPermissions->toArray());
 
             // Mengupdate status
             $karyawan->user->status = $request->status;

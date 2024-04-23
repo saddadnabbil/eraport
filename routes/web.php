@@ -70,6 +70,10 @@ Route::group(['middleware' => ['auth']], function () {
             Route::delete('user/{id}/permanent-delete', 'Admin\UserController@destroyPermanent')->name('user.permanent-delete');
             Route::patch('user/{id}/restore', 'Admin\UserController@restore')->name('user.restore');
 
+            // Role Controller
+            Route::resource('role', 'Admin\RoleController')->only(['index', 'store', 'update', 'destroy']);
+            Route::resource('permission', 'Admin\PermissionController')->only(['index', 'store', 'update', 'destroy']);
+
             // Sekolah Controller
             Route::resource('sekolah', 'Admin\SekolahController')->only(['index', 'update']);
 
@@ -109,7 +113,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('kelas/anggota', 'Admin\KelasController@store_anggota')->name('kelas.anggota');
             Route::delete('kelas/anggota/{anggota}', 'Admin\KelasController@delete_anggota')->name('kelas.anggota.delete');
             Route::post('kelas/anggota/{anggota}', 'Admin\KelasController@pindah_kelas')->name('kelas.anggota.pindah_kelas');
-            Route::get('kelas/trash', 'Admin\KelasController@showTrash')->name('kelas.anggota_kelas.trash');
+            Route::get('kelas/{id}/trash', 'Admin\KelasController@showTrash')->name('kelas.anggota_kelas.trash');
             Route::delete('kelas/{id}/permanent-delete', 'Admin\KelasController@destroyPermanent')->name('kelas.anggota_kelas.permanent-delete');
             Route::patch('kelas/{id}/restore', 'Admin\KelasController@restore')->name('kelas.anggota_kelas.restore');
             Route::resource('kelas', 'Admin\KelasController', [

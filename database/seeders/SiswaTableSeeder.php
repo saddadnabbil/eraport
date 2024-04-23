@@ -90,13 +90,13 @@ class SiswaTableSeeder extends Seeder
 
         Siswa::create([
             'user_id' => 3,
-            'kelas_id' => 2,
-            'tingkatan_id' => 5,
-            'jurusan_id' => 1,
+            'kelas_id' => 1,
+            'tingkatan_id' => 1,
+            'jurusan_id' => 3,
             'jenis_pendaftaran' => '1',
             'tahun_masuk' => '2022',
             'semester_masuk' => '1',
-            'kelas_masuk' => 'PA1',
+            'kelas_masuk' => 'PG',
 
             'nik' => '1234567890123457',
             'nis' => '1234567891',

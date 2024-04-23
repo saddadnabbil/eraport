@@ -24,4 +24,9 @@ class TkPembelajaran extends Model
     {
         return $this->belongsTo('App\Models\Tingkatan');
     }
+
+    public function kelas()
+    {
+        return $this->belongsTo('App\Models\Kelas');
+    }
 }

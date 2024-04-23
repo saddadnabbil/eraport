@@ -23,7 +23,7 @@
     ]),
     'hasArrow' => true,
     'icon' => 'clipboard',
-    'itemName' => 'Area Of Learning & Development',
+    'itemName' => 'Area Of Learning',
     'route' => 'javascript:void(0)',
     'subItems' => [
         [

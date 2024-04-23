@@ -29,16 +29,18 @@ class TkPembelajaranController extends Controller
         $tapel = Tapel::where('status', 1)->first();
         $data_topic = TkTopic::get();
         $data_tingkatan = Tingkatan::whereIn('id', [1, 2, 3])->get();
+        $data_kelas = Kelas::where('tapel_id', $tapel->id)->whereIn('tingkatan_id', [1, 2, 3])->get();
 
         if (count($data_topic) == 0) {
             return redirect('admin/mapel')->with('toast_warning', 'Mohon isikan data mata pelajaran');
-        } elseif (count($data_tingkatan) == 0) {
+        } elseif (count($data_kelas) == 0) {
             return redirect('admin/kelas')->with('toast_warning', 'Mohon isikan data kelas');
         } else {
             $title = 'Data Pembelajaran TK';
             $id_tingkatan = Tingkatan::whereIn('id', [1, 2, 3])->get('id');
-            $data_pembelajaran = TkPembelajaran::whereIn('tingkatan_id', $id_tingkatan)->whereNotNull('guru_id')->orderBy('tingkatan_id', 'ASC')->get();
-            return view('admin.tk.pembelajaran.index', compact('title', 'data_tingkatan', 'data_pembelajaran'));
+            $id_kelas = Kelas::where('tapel_id', $tapel->id)->whereIn('tingkatan_id', [1, 2, 3])->get('id');
+            $data_pembelajaran = TkPembelajaran::whereIn('kelas_id', $id_kelas)->whereNotNull('guru_id')->get();
+            return view('admin.tk.pembelajaran.index', compact('title', 'data_kelas', 'data_pembelajaran'));
         }
     }
 
@@ -46,19 +48,27 @@ class TkPembelajaranController extends Controller
     {
         $title = 'Setting Pembelajaran TK';
         $tapel = Tapel::where('status', 1)->first();
-        $tingkatan = Tingkatan::findorfail($request->tingkatan_id);
+        $kelas = Kelas::findorfail($request->kelas_id);
         $data_tingkatan = Tingkatan::whereIn('id', [1, 2, 3])->get();
+        $data_kelas = Kelas::where('tapel_id', $tapel->id)->whereIn('tingkatan_id', [1, 2, 3])->get();
 
-        $data_pembelajaran_tingkatan = TkPembelajaran::where('tingkatan_id', $request->tingkatan_id)->get();
-        $topic_id_pembelajaran_tingkatan = TkPembelajaran::where('tingkatan_id', $request->tingkatan_id)->get('tk_topic_id');
-        $data_topic = TkTopic::whereNotIn('id', $topic_id_pembelajaran_tingkatan)
-            ->whereHas('element', function ($query) use ($request) {
-                $query->where('tingkatan_id', $request->tingkatan_id);
+        $data_pembelajaran_kelas = TkPembelajaran::where('kelas_id', $request->kelas_id)->get();
+        $topic_id_pembelajaran_kelas = TkPembelajaran::where('kelas_id', $request->kelas_id)->get('tk_topic_id');
+        $data_topic = TkTopic::whereNotIn('id', $topic_id_pembelajaran_kelas)
+            ->whereHas('element', function ($query) use ($kelas) {
+                $query->where('tingkatan_id', $kelas->tingkatan->id);
             })
             ->with('element')
             ->get();
-        $data_guru = Guru::orderBy('id', 'ASC')->get();
-        return view('admin.tk.pembelajaran.settings', compact('title', 'tapel', 'tingkatan', 'data_tingkatan', 'data_pembelajaran_tingkatan', 'data_topic', 'data_guru'));
+        $data_guru = Guru::orderBy('id', 'ASC')
+            ->whereHas('karyawan', function ($query) {
+                $query->whereHas('unitKaryawan', function ($subquery) {
+                    $subquery->where('unit_kode', 'G01');
+                });
+            })
+            ->get();
+
+        return view('admin.tk.pembelajaran.settings', compact('title', 'tapel', 'kelas', 'data_kelas', 'data_pembelajaran_kelas', 'data_topic', 'data_guru'));
     }
 
 
@@ -83,6 +93,7 @@ class TkPembelajaranController extends Controller
                 for ($count = 0; $count < count($request->tk_topic_id); $count++) {
                     $data_baru = array(
                         'tingkatan_id'  => $request->tingkatan_id[$count],
+                        'kelas_id'  => $request->kelas_id[$count],
                         'tk_topic_id'  => $request->tk_topic_id[$count],
                         'guru_id'  => $request->guru_id[$count],
                         'created_at'  => Carbon::now(),
@@ -96,6 +107,7 @@ class TkPembelajaranController extends Controller
             for ($count = 0; $count < count($request->tk_topic_id); $count++) {
                 $data_baru = array(
                     'tingkatan_id'  => $request->tingkatan_id[$count],
+                    'kelas_id'  => $request->kelas_id[$count],
                     'tk_topic_id'  => $request->tk_topic_id[$count],
                     'guru_id'  => $request->guru_id[$count],
                     'created_at'  => Carbon::now(),

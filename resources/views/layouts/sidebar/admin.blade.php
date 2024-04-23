@@ -22,8 +22,7 @@
                   @include('layouts.partials.sidebar.reportkm-tk.event')
                   @include('layouts.partials.sidebar.reportkm-tk.area-of-learning')
                   @include('layouts.partials.sidebar.reportkm-tk.penilaian')
-                  @include('layouts.partials.sidebar.reportresultkm.printreport_tk')
-
+                  @include('layouts.partials.sidebar.reportkm-tk.printreport_tk')
 
                   <li class="list-divider"></li>
                   <li class="nav-small-cap">

@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
+use Spatie\Permission\Models\Role;
+use App\Http\Controllers\Controller;
+use Spatie\Permission\Models\Permission;
 
 class RoleController extends Controller
 {
@@ -14,17 +17,10 @@ class RoleController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $title = 'Data Role';
+        $roles = Role::with('permissions')->get();
+        $permissions = Permission::all(); // Fetch all permissions
+        return view('admin.role.index', compact('title', 'roles', 'permissions'));
     }
 
     /**
@@ -35,29 +31,19 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'name' => 'required|unique:roles|max:255',
+        ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+        $role = Role::create([
+            'name' => $request->name,
+        ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        if ($request->has('permissions')) {
+            $role->permissions()->attach($request->permissions);
+        }
+
+        return redirect()->route('role.index')->with('toast_success', 'Role created successfully.');
     }
 
     /**
@@ -69,7 +55,22 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|unique:roles,name,' . $id . '|max:255',
+        ]);
+
+        $role = Role::findOrFail($id);
+        $role->update($request->all());
+
+        // Sync permissions
+        if ($request->has('permissions')) {
+            $role->permissions()->sync($request->permissions);
+        } else {
+            $role->permissions()->detach();
+        }
+
+        return redirect()->route('role.index')
+            ->with('toast_success', 'Role updated successfully.');
     }
 
     /**
@@ -80,6 +81,8 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Role::find($id)->delete();
+        return redirect()->route('role.index')
+            ->with('toast_success', 'Role deleted successfully');
     }
 }

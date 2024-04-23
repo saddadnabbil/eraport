@@ -43,18 +43,18 @@
 
                         <div class="card-body">
                             <div class="form-group row callout callout-info mx-1">
-                                <label for="kelas_id" class="col-sm-2 col-form-label">Tingkatan</label>
+                                <label for="kelas_id" class="col-sm-2 col-form-label">Kelas</label>
                                 <div class="col-sm-10">
                                     <form action="{{ route('tkpembelajaran.settings') }}" method="POST">
                                         @csrf
-                                        <select class="form-control form-select select2" name="tingkatan_id"
+                                        <select class="form-control form-select select2" name="kelas_id"
                                             style="width: 100%;" required onchange="this.form.submit();">
-                                            <option value="" disabled> -- Pilih Tingkatan --</option>
-                                            <option value="" selected>{{ $tingkatan->nama_tingkatan }}
-                                                @foreach ($data_tingkatan as $d_tingkatan)
-                                                    @if ($d_tingkatan->id != $tingkatan->id)
-                                            <option value="{{ $d_tingkatan->id }}">
-                                                {{ $d_tingkatan->nama_tingkatan }}
+                                            <option value="" disabled> -- Pilih Kelas --</option>
+                                            <option value="" selected>{{ $kelas->nama_kelas }}
+                                                @foreach ($data_kelas as $d_kelas)
+                                                    @if ($d_kelas->id != $kelas->id)
+                                            <option value="{{ $d_kelas->id }}">
+                                                {{ $d_kelas->nama_kelas }}
                                             </option>
                                             @endif
                                             @endforeach
@@ -69,14 +69,17 @@
                                         <thead>
                                             <tr>
                                                 <th>Tingkatan</th>
+                                                <th>Kelas</th>
                                                 <th>Topic</th>
                                                 <th>Guru</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($data_pembelajaran_tingkatan as $pembelajaran)
+                                            @foreach ($data_pembelajaran_kelas as $pembelajaran)
                                                 <tr>
                                                     <td>{{ $pembelajaran->tingkatan->nama_tingkatan }}
+                                                    </td>
+                                                    <td>{{ $pembelajaran->kelas->nama_kelas }}
                                                     </td>
                                                     <td>{{ $pembelajaran->topic->name }}
                                                         <input type="hidden" name="pembelajaran_id[]"
@@ -99,9 +102,13 @@
 
                                             @foreach ($data_topic as $topic)
                                                 <tr>
-                                                    <td>{{ $tingkatan->nama_tingkatan }}
+                                                    <td>{{ $kelas->tingkatan->nama_tingkatan }}
                                                         <input type="hidden" name="tingkatan_id[]"
-                                                            value="{{ $tingkatan->id }}">
+                                                            value="{{ $kelas->tingkatan->id }}">
+                                                    </td>
+                                                    <td>{{ $kelas->nama_kelas }}
+                                                        <input type="hidden" name="kelas_id[]"
+                                                            value="{{ $kelas->id }}">
                                                     </td>
                                                     <td>
                                                         {{ $topic->name }}
