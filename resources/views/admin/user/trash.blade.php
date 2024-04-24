@@ -59,11 +59,11 @@
                                                 <td>{{ $no }}</td>
                                                 <td>{{ $user->username }}</td>
                                                 <td>
-                                                    @if ($user->role == 1)
+                                                    @if ($user->hasRole('Admin'))
                                                         Administrator
-                                                    @elseif($user->role == 2)
+                                                    @elseif($user->hasRole('Teacher'))
                                                         Guru
-                                                    @elseif($user->role == 3)
+                                                    @elseif($user->hasRole('Siswa'))
                                                         Siswa
                                                     @endif
                                                 </td>

@@ -146,9 +146,9 @@ class SiswaController extends Controller
                 $user = new User([
                     'username' => strtolower(str_replace(' ', '', $request->nama_lengkap . $request->nis)),
                     'password' => bcrypt('123456'),
-                    'role' => 3,
                     'status' => true
                 ]);
+                $user->assignRole('Student');
                 $user->save();
             } catch (\Throwable $th) {
                 return back()->with('toast_error', 'Username telah digunakan');

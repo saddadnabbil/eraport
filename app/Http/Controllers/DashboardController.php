@@ -38,8 +38,9 @@ class DashboardController extends Controller
         $tapel = Tapel::where('status', 1)->first();
         $data_pengumuman = Pengumuman::latest()->take(3)->get();
         $data_riwayat_login = RiwayatLogin::where('user_id', '!=', Auth::user()->id)->where('updated_at', '>=', Carbon::today())->orderBy('status_login', 'DESC')->orderBy('updated_at', 'DESC')->get();
+        $user = Auth::user();
 
-        if (Auth::user()->role == 1) {
+        if ($user->hasRole('Admin')) {
             $jumlah_guru = Guru::all()->count();
             $jumlah_siswa = Siswa::where('status', 1)->count();
 
@@ -71,7 +72,7 @@ class DashboardController extends Controller
                 'jumlah_kelas',
                 'jumlah_ekstrakulikuler',
             ));
-        } elseif (Auth::user()->role == 2) {
+        } elseif ($user->hasRole('Teacher')) {
 
             $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
 
@@ -162,7 +163,7 @@ class DashboardController extends Controller
                     'unit_kode',
                 ));
             }
-        } elseif (Auth::user()->role == 3) {
+        } elseif ($user->hasRole('Siswa')) {
             $siswa = Siswa::where('user_id', Auth::user()->id)->first();
 
             $data_id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');

@@ -1,12 +1,12 @@
 @php
-    $userRole = Auth::user()->role;
+    $userRole = Auth::user()->getRoleNames()->first();
 
     switch ($userRole) {
-        case 1:
+        case 'Admin':
             $checkRoute = request()->routeIs('user.*');
             $dynamicRoute = route('user.index');
             break;
-        case 2:
+        case 'Teacher':
             $checkRoute = request()->routeIs('user..*');
             $dynamicRoute = route('user.index');
             break;
@@ -22,7 +22,7 @@
     'route' => route('user.index'),
     'subItems' => [
         [
-            'name' => 'Status',
+            'name' => 'User',
             'route' => route('user.index'),
             'isActive' => request()->routeIs('user.*'),
             'childHasArrow' => false,

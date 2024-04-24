@@ -20,7 +20,7 @@ class User extends Authenticatable
      */
     protected $table = 'user';
     protected $fillable = [
-        'username', 'password', 'role', 'status',
+        'username', 'password', 'status',
     ];
 
     /**
@@ -102,14 +102,14 @@ class User extends Authenticatable
             'status' => 1
         ]);
 
-        switch ($this->role) {
-            case 1:
+        switch ($this->getRoleNames()->first()) {
+            case 'Admin':
                 $this->karyawan()->withTrashed()->restore();
                 break;
-            case 2:
+            case 'Teacher':
                 $this->karyawan()->withTrashed()->restore();
                 break;
-            case 3:
+            case 'Teacher':
                 $this->siswa()->withTrashed()->restore();
                 $this->siswa()->update([
                     'status' => 1

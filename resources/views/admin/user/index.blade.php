@@ -131,7 +131,7 @@
                                             <th>No</th>
                                             <th>Full name</th>
                                             <th>Username</th>
-                                            <th>Level</th>
+                                            <th>Role</th>
                                             <th>Status Akun</th>
                                             <th>Aksi</th>
                                         </tr>
@@ -174,7 +174,7 @@
                         "data": "username"
                     },
                     {
-                        "data": "level"
+                        "data": "role"
                     },
                     {
                         "data": "status_akun"

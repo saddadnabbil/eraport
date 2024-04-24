@@ -26,11 +26,12 @@
                 $greeting = 'Good evening, ';
             }
 
-            if (Auth::user()->role == 1) {
+            $user = Auth::user();
+            if ($user->hasRole('Admin')) {
                 $fullName = optional(Auth::user()->admin)->nama_lengkap ?? 'Admin not available';
-            } elseif (Auth::user()->role == 2) {
+            } elseif ($user->hasRole('Teacher')) {
                 $fullName = optional(Auth::user()->karyawan)->nama_lengkap ?? 'Guru not available';
-            } elseif (Auth::user()->role == 3) {
+            } elseif ($user->hasRole('Student')) {
                 $fullName = optional(Auth::user()->siswa)->nama_lengkap ?? 'Siswa not available';
             }
 
@@ -204,13 +205,13 @@
                                 @foreach ($data_riwayat_login as $riwayat_login)
                                     <li class="item">
                                         <div class="product-img">
-                                            @if ($riwayat_login->user->role == 1)
+                                            @if ($riwayat_login->user->hasRole('Admin'))
                                                 <img src="assets/dist/img/avatar/{{ $riwayat_login->user->karyawan->admin->avatar ?? 'default.png' }}"
                                                     alt="Avatar" class="img-size-50">
-                                            @elseif($riwayat_login->user->role == 2)
+                                            @elseif($riwayat_login->user->hasRole('Teacher'))
                                                 <img src="assets/dist/img/avatar/{{ $riwayat_login->user->karyawan->avatar ?? 'default.png' }}"
                                                     alt="Avatar" class="img-size-50">
-                                            @elseif($riwayat_login->user->role == 3)
+                                            @elseif($riwayat_login->user->hasRole('Student'))
                                                 <img src="assets/dist/img/avatar/{{ $riwayat_login->user->siswa->avatar ?? 'default.png' }}"
                                                     alt="Avatar" class="img-size-50">
                                             @endif
@@ -218,11 +219,11 @@
 
                                         <div class="product-info">
                                             <a href="javascript:void(0)" class="product-title">
-                                                @if ($riwayat_login->user->role == 1)
+                                                @if ($riwayat_login->user->hasRole('Admin'))
                                                     {{ $riwayat_login->user->karyawan->nama_lengkap }}
-                                                @elseif($riwayat_login->user->role == 2)
+                                                @elseif($riwayat_login->user->hasRole('Teacher'))
                                                     {{ $riwayat_login->user->karyawan->nama_lengkap }}
-                                                @elseif($riwayat_login->user->role == 3)
+                                                @elseif($riwayat_login->user->hasRole('Student'))
                                                     {{ $riwayat_login->user->siswa->nama_lengkap }}
                                                 @endif
 
@@ -233,11 +234,11 @@
                                                 @endif
                                             </a>
                                             <span class="product-description">
-                                                @if ($riwayat_login->user->role == 1)
+                                                @if ($riwayat_login->user->hasRole('Admin'))
                                                     Administrator
-                                                @elseif($riwayat_login->user->role == 2)
+                                                @elseif($riwayat_login->user->hasRole('Teacher'))
                                                     Guru
-                                                @elseif($riwayat_login->user->role == 3)
+                                                @elseif($riwayat_login->user->hasRole('Student'))
                                                     Siswa
                                                 @endif
 

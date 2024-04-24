@@ -136,10 +136,11 @@ class AuthController extends Controller
 
     protected function handleGuruSession()
     {
-        if (Auth::user()->role == 2) {
+        $user = Auth::user();
+        if ($user->hasRole('Teacher')) {
             $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
 
-            if ($guru && Auth::user()->role == 2) {
+            if ($guru) {
                 $cek_wali_kelas = Kelas::where('guru_id', $guru->id)->whereNotIn('tingkatan_id', [1, 2, 3])->first();
                 $cek_wali_kelas_tk = Kelas::where('guru_id', $guru->id)->whereIn('tingkatan_id', [1, 2, 3])->get();
 

@@ -1,8 +1,8 @@
 @php
-    $userRole = Auth::user()->role;
+    $userRole = Auth::user()->getRoleNames()->first();
 
     switch ($userRole) {
-        case 1:
+        case 'Admin':
             $allowedRoutes = ['kirimnilaiakhirkmadmin.*', 'nilaiterkirimkmadmin.*'];
 
             $checkRouteKirim = request()->routeIs('kirimnilaiakhirkmadmin.*');
@@ -12,7 +12,7 @@
             $dynamicRouteLihat = route('nilaiterkirimkmadmin.index');
 
             break;
-        case 2:
+        case 'Teacher':
             $allowedRoutes = ['kirimnilaiakhirkm.*', 'kirimnilaiakhirkm.*'];
 
             $checkRouteKirim = request()->routeIs('kirimnilaiakhirkm.*');

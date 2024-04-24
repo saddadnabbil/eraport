@@ -14,7 +14,7 @@ class SiswaFactory extends Factory
     public function definition()
     {
 
-        $user = User::factory()->create(['role' => '3']);
+        $user = User::factory()->create();
         $kelas = Kelas::inRandomOrder()->first();
 
         return [

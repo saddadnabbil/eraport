@@ -34,7 +34,6 @@ class UserController extends Controller
                 $query->select('id', 'user_id', 'nama_lengkap', 'id');
             }])
             ->where('id', '!=', Auth::user()->id)
-            ->orderBy('role', 'ASC')
             ->orderBy('id', 'ASC')
             ->get();
         $data_roles = Role::get();
@@ -47,43 +46,34 @@ class UserController extends Controller
 
     public function data()
     {
-        $data_user = User::select('id', 'username', 'role', 'status')
+        $data_user = User::select('id', 'username', 'status')
             ->with(['siswa' => function ($query) {
                 $query->select('user_id', 'nama_lengkap', 'id');
             }, 'karyawan' => function ($query) {
                 $query->select('id', 'user_id', 'nama_lengkap', 'id');
             }])
             ->where('id', '!=', Auth::user()->id)
-            ->orderBy('role', 'ASC')
             ->orderBy('id', 'ASC')
             ->get();
 
         return DataTables::of($data_user)
             ->addColumn('full_name', function ($user) {
-                if ($user->role == 3 && $user->siswa) {
+                if ($user->hasRole('Student') && $user->siswa) {
                     return $user->siswa->nama_lengkap;
                 } elseif ($user->karyawan) {
                     return $user->karyawan->nama_lengkap;
                 }
                 return '-';
             })
-            ->addColumn('level', function ($user) {
-                if ($user->role == 3) {
-                    return 'Student';
-                } elseif ($user->role == 2) {
-                    return 'Teacher';
-                } elseif ($user->role == 0 || $user->role == 1) {
-                    return 'Administrator';
-                } else {
-                    return 'Employee';
-                }
+            ->addColumn('role', function ($user) {
+                return  $user->getRoleNames()->first();
             })
             ->addColumn('status_akun', function ($user) {
                 return $user->status ? '<span class="badge bg-success">Aktif</span>' : '<span class="badge bg-danger">Non Aktif</span>';
             })
             ->addColumn('action', function ($user) {
                 $showRoute = '#';
-                if ($user->role == 3 && $user->siswa) {
+                if ($user->hasRole('Student') && $user->siswa) {
                     $showRoute = route('siswa.show', $user->siswa->id);
                 } elseif ($user->karyawan) {
                     $showRoute = route('karyawan.show', $user->karyawan->id);
@@ -126,16 +116,16 @@ class UserController extends Controller
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
         } else {
             $role = Role::findOrFail($request->role);
+            dd($role->name);
 
             $user = new User([
                 'username' => $request->username,
                 'password' => bcrypt($request->password),
-                'role' => $request->role,
                 'status' => true
             ]);
             $user->save();
 
-            if ($role->id == 3) {
+            if ($role->name == 'Student') {
                 if ($user->siswa()->first() == null) {
                     $siswa = new Siswa([
                         'user_id' => $user->id,

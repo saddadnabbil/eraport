@@ -37,7 +37,7 @@
                 <!-- ============================================================== -->
 
                 <ul class="navbar-nav float-left me-auto ms-3 ps-1">
-                    @if (Auth::user()->role == 2 && session()->get('cek_wali_kelas') == true)
+                    @if (Auth::user()->hasRole('Teacher') && session()->get('cek_wali_kelas') == true)
                         <div style="padding: 0 15px; margin-left: 1rem;">
                             <li class="nav-item d-none d-md-block">
                                 <a class="nav-link" href="javascript:void(0)">
@@ -73,7 +73,7 @@
                     <div class="d-flex align-items-center justify-content-center"
                         style="padding: 0 15px; margin-left: 1rem;">
                         <li class="nav-item d-none d-md-block">
-                            <a href="{{ Auth::user()->role == 1 ? route('tapel.index') : 'javascript:void(0)' }}"
+                            <a href="{{ Auth::user()->hasRole('Admin') ? route('tapel.index') : 'javascript:void(0)' }}"
                                 style="line-height: 1">
                                 <div class="customize-input">
                                     <span class="badge bg-success">
@@ -135,11 +135,11 @@
                                 class="rounded-circle" width="40" />
                             <span class="ms-2 d-none d-lg-inline-block"><span>Hello,</span>
                                 <span class="text-dark">
-                                    @if (Auth::user()->role == 1)
+                                    @if (Auth::user()->hasRole('Admin'))
                                         {{ Auth::user()->karyawan->nama_lengkap }}
-                                    @elseif(Auth::user()->role == 2)
+                                    @elseif(Auth::user()->hasRole('Teacher'))
                                         {{ Auth::user()->karyawan->nama_lengkap }}
-                                    @elseif(Auth::user()->role == 3)
+                                    @elseif(Auth::user()->hasRole('Student'))
                                         {{ Auth::user()->siswa->nama_lengkap }}
                                     @endif
                                 </span>
@@ -151,7 +151,7 @@
                             <a class="dropdown-item" href="{{ route('gantipassword') }}"><i data-feather="settings"
                                     class="svg-icon me-2 ms-1"></i>Change Password</a>
 
-                            @if (Auth::user()->role == 2)
+                            @if (Auth::user()->hasRole('Teacher'))
                                 @if (session()->get('akses_sebagai') == 'Guru Mapel' && session()->get('cek_wali_kelas') == true)
                                     <a class="dropdown-item" href="{{ route('akses') }}"><i data-feather="toggle-right"
                                             class="svg-icon me-2 ms-1"></i> Change to Homeroom</a>

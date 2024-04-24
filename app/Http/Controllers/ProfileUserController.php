@@ -25,21 +25,22 @@ class ProfileUserController extends Controller
     public function index()
     {
         $title = 'Profile';
-        if (Auth::user()->role == 1) {
+        $user = Auth::user();
+        if ($user->hasRole('Admin')) {
             $karyawan = Karyawan::where('user_id', Auth::user()->id)->first();
             $dataStatusKaryawan = StatusKaryawan::all();
             $dataUnitKaryawan = UnitKaryawan::all();
             $dataPositionKaryawan = PositionKaryawan::all();
 
             return view('admin.profile.show', compact('title', 'karyawan', 'dataStatusKaryawan', 'dataUnitKaryawan', 'dataPositionKaryawan'));
-        } elseif (Auth::user()->role == 2) {
+        } elseif ($user->hasRole('Teacher')) {
             $karyawan = Karyawan::where('user_id', Auth::user()->id)->first();
             $dataStatusKaryawan = StatusKaryawan::all();
             $dataUnitKaryawan = UnitKaryawan::all();
             $dataPositionKaryawan = PositionKaryawan::all();
 
             return view('guru.profile.show', compact('title', 'karyawan', 'dataStatusKaryawan', 'dataUnitKaryawan', 'dataPositionKaryawan'));
-        } elseif (Auth::user()->role == 3) {
+        } elseif ($user->hasRole('Student')) {
             $siswa = Siswa::where('user_id', Auth::user()->id)->first();
             $tapel = Tapel::where('status', 1)->first();
             $data_tingkatan = Tingkatan::orderBy('id', 'ASC')->get();

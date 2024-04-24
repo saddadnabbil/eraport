@@ -1,8 +1,8 @@
 @php
-    $userRole = Auth::user()->role;
+    $userRole = Auth::user()->getRoleNames()->first();
 
     switch ($userRole) {
-        case 1:
+        case 'Admin':
             $allowedRoutes = ['adminraportptskm.*', 'adminraportsemesterkm.*'];
 
             $checkRouteMidSemesterReport = request()->routeIs('adminraportptskm.*');
@@ -11,7 +11,7 @@
             $checkRouteSemesterReport = request()->routeIs('adminraportsemesterkm.*');
             $dynamicRouteSemesterReport = route('adminraportsemesterkm.index');
             break;
-        case 2:
+        case 'Teacher':
             $allowedRoutes = ['kirimnilaiakhirkm.*', 'kirimnilaiakhirkm.*'];
 
             $checkRouteMidSemesterReport = request()->routeIs('statusnilaiguru.*');

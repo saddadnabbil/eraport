@@ -144,41 +144,9 @@ class KaryawanController extends Controller
         }
 
         try {
-            // Map unit_kode to role
-            $unitRoles = [
-                // 0 Super Admin
-                // 1 Admin
-                // Teacher
-                '1' => 2, // Extracurricular Teacher
-                '2' => 2, // Playgroup - Kindergarten
-                '3' => 2, // Primary
-                '4' => 2, // Junior High School
-                '5' => 2, // Senior High School
-
-                '6' => 5, // HRD / Personel
-                '7' => 6, // Finance Admin
-                '8' => 7, // Librarian
-                '9' => 8, // Admission
-                // '10' //Security
-                // '11' //Suster
-                // '12' //Sauber
-                // '13' //IT Staff
-                '14' => 9, // General Affair
-                // '15' => 10, // Cleaner
-                // Sales
-            ];
-
-            $userRole = 11;
-
-            if (isset($unitRoles[$request->unit_karyawan_id])) {
-                $role = $unitRoles[$request->unit_karyawan_id];
-                $userRole = $role;
-            }
-
             $user = new User([
                 'username' => $request->kode_karyawan,
                 'password' => bcrypt(date('d-m-Y', strtotime($request->tanggal_lahir))),
-                'role' => $userRole,
                 'status' => true,
             ]);
 
@@ -378,48 +346,10 @@ class KaryawanController extends Controller
             $permissions = Permission::findOrFail($request->permission);
             $karyawan->user->permissions()->detach(); // Hapus semua permission yang ada
             $karyawan->user->syncPermissions($permissions);
-            $userPermissions = $karyawan->user->permissions()->pluck('name'); // Change 'name' to the attribute you want to inspect
-            // dd($userPermissions->toArray());
 
             // Mengupdate status
             $karyawan->user->status = $request->status;
             $karyawan->user->save();
-
-            try {
-                // Map unit_kode to role
-                $unitRoles = [
-                    // 0 Super Admin
-                    // 1 Admin
-                    // Teacher
-                    '1' => 2, // Extracurricular Teacher
-                    '2' => 2, // Playgroup - Kindergarten
-                    '3' => 2, // Primary
-                    '4' => 2, // Junior High School
-                    '5' => 2, // Senior High School
-
-                    '6' => 5, // HRD / Personel
-                    '7' => 6, // Finance Admin
-                    '8' => 7, // Librarian
-                    '9' => 8, // Admission
-                    // '10' //Security
-                    // '11' //Suster
-                    // '12' //Sauber
-                    // '13' //IT Staff
-                    '14' => 9, // General Affair
-                    // '15' => 10, // Cleaner
-                    // Sales
-                ];
-
-                $user = User::findOrFail($karyawan->user_id);
-                if (isset($unitRoles[$request->unit_karyawan_id])) {
-                    $role = $unitRoles[$request->unit_karyawan_id];
-                    $user->role = $role; // update the role
-                    $user->status = true; // update the status
-                    $user->save(); // save the changes
-                }
-            } catch (\Throwable $th) {
-                return back()->with('toast_error', 'Username telah digunakan');
-            }
 
             // Update the Karyawan instance with the new request data
             $karyawan->update([

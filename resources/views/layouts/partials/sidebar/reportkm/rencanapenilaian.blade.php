@@ -1,8 +1,8 @@
 @php
-    $userRole = Auth::user()->role;
+    $userRole = Auth::user()->getRoleNames()->first();
 
     switch ($userRole) {
-        case 1:
+        case 'Admin':
             $allowedRoutes = ['cp.*', 'rencanaformatif.*', 'rencanasumatif.*'];
 
             $checkRouteCP = request()->routeIs('cp.*');
@@ -14,7 +14,7 @@
             $checkRouteSumatif = request()->routeIs('rencanasumatif.*');
             $dynamicRouteSumatif = route('rencanasumatif.index');
             break;
-        case 2:
+        case 'Teacher':
             $allowedRoutes = ['guru.cp.*', 'guru.rencanaformatif.*', 'guru.rencanasumatif.*'];
 
             $checkRouteCP = request()->routeIs('guru.cp.*');

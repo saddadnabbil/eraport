@@ -12,7 +12,9 @@ class KaryawanFactory extends Factory
 
     public function definition()
     {
-        $user = User::factory()->create(['role' => '2']);
+        $user = User::factory()->create();
+
+        // assign role spatie and permission
 
         return [
             'user_id' => $user->id,

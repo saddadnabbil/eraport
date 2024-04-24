@@ -22,7 +22,7 @@ class SiswaImport implements ToCollection
         $chunkSize = 100; // Set the batch size
         $chunks = $collection->chunk($chunkSize);
 
-        foreach ($chunks as $chunk) {   
+        foreach ($chunks as $chunk) {
             foreach ($chunk as $key => $row) {
                 try {
                     if ($key < 8) {
@@ -33,10 +33,14 @@ class SiswaImport implements ToCollection
                     $dataUser = [
                         'username' => strtolower(str_replace(' ', '', $row[1])),
                         'password' => bcrypt(gmdate('d-m-Y', Date::excelToTimestamp($row[13]))),
-                        'role' => '3',
                         'status' => true
                     ];
 
+                    
+
+                    // assign role and permission student
+                    $user->assignRole('Student');
+                    $user->givePermissionTo('student');
                     $user = User::create($dataUser);
 
                     $tanggal_lahir = $row[13] ? gmdate('Y-m-d', Date::excelToTimestamp($row[13])) : null;

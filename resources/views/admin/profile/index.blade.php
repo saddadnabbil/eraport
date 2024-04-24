@@ -54,13 +54,10 @@
                             <h3 class="profile-username text-center">{{ $karyawan->nama_lengkap }}</h3>
 
                             <p class="text-muted text-center">
-                                <!-- check for role in roles -->
-                                @if ($karyawan->user->role == '1')
-                                    Admin
-                                @elseif($karyawan->user->role == '2')
+                                @if ($karyawan->user->hasRole('Admin') || $karyawan->user->getRoleNames()->first())
+                                    {{ $karyawan->user->getRoleNames()->first() }}
+                                @elseif ($karyawan->hasRole('Teacher') && $karyawan->positionKaryawan)
                                     {{ $karyawan->positionKaryawan->position_nama }}
-                                @elseif($karyawan->user->role == '3')
-                                    Siswa
                                 @endif
                             </p>
 

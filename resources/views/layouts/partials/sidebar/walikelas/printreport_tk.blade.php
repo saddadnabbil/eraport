@@ -1,8 +1,8 @@
 @php
-    $userRole = Auth::user()->role;
+    $userRole = Auth::user()->getRoleNames()->first();
 
     switch ($userRole) {
-        case 2:
+        case 'Teacher':
             $allowedRoutes = ['raportptskm.*', 'raportsemesterkm.*'];
 
             $checkRouteMidSemesterReport = request()->routeIs('raportptskm.*');

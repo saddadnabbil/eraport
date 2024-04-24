@@ -57,14 +57,10 @@
                             <h3 class="profile-username text-center">{{ $karyawan->nama_lengkap }}</h3>
 
                             <p class="text-muted text-center my-2">
-                                @if ($karyawan->user->role == '1')
-                                    Admin
-                                @elseif ($karyawan->user->role == '2' && $karyawan->positionKaryawan)
+                                @if ($karyawan->user->hasRole('Admin') || $karyawan->user->getRoleNames()->first())
+                                    {{ $karyawan->user->getRoleNames()->first() }}
+                                @elseif ($karyawan->hasRole('Teacher') && $karyawan->positionKaryawan)
                                     {{ $karyawan->positionKaryawan->position_nama }}
-                                @elseif ($karyawan->user->role == '3' && $karyawan->positionKaryawan)
-                                    Siswa
-                                @else
-                                    <span type="button" class="badge bg-danger">Belum ada jabatan</span>
                                 @endif
                             </p>
 
@@ -80,6 +76,20 @@
                                 </li>
                                 <li class="list-group-item">
                                     <b>Username</b> <a class="float-right">{{ $karyawan->user->username }}</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Role</b> <a class="float-right">{{ $karyawan->user->getRoleNames()->first() }}</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Permission</b>
+                                    <a class="float-right">
+                                        @foreach ($karyawan->user->getPermissionNames() as $index => $permission)
+                                            {{ $permission }}
+                                            @if ($index < count($karyawan->user->getPermissionNames()) - 1)
+                                                ,
+                                            @endif
+                                        @endforeach
+                                    </a>
                                 </li>
                                 <li class="list-group-item">
                                     <b>Email</b> <a class="float-right">{{ $karyawan->email }}</a>

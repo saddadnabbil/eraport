@@ -53,12 +53,10 @@
 
                             <p class="text-muted text-center">
                                 <!-- check for role in roles -->
-                                @if ($siswa->user->role == '1')
-                                    Admin
-                                @elseif($siswa->user->role == '2')
-                                    Guru
-                                @elseif($siswa->user->role == '3')
-                                    Siswa
+                                @if ($siswa->user->hasRole('Admin') || $siswa->user->getRoleNames()->first())
+                                    {{ $siswa->user->getRoleNames()->first() }}
+                                @elseif ($siswa->hasRole('Student') && $siswa->positionKaryawan)
+                                    {{ $siswa->positionKaryawan->position_nama }}
                                 @endif
                             </p>
 

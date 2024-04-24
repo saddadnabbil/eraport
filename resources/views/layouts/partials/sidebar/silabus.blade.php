@@ -1,18 +1,18 @@
 @php
-    $userRole = Auth::user()->role;
+    $userRole = Auth::user()->getRoleNames()->first();
 
     switch ($userRole) {
-        case 1:
+        case 'Admin':
             $checkRoute = request()->routeIs('admin.silabus.*');
             $dynamicRoute = route('admin.silabus.index');
             break;
-        case 2:
+        case 'Teacher':
             $checkRoute = request()->routeIs('guru.silabus.*');
             $dynamicRoute = route('guru.silabus.index');
             break;
-        case 3:
+        case 'Student':
             $checkRoute = request()->routeIs('siswa.silabus.*');
-            $dynamicRoute = route('siswa.silabus.index');  
+            $dynamicRoute = route('siswa.silabus.index');
             break;
     }
 @endphp

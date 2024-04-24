@@ -1,12 +1,12 @@
 @php
-    $userRole = Auth::user()->role;
+    $userRole = Auth::user()->getRoleNames()->first();
 
     switch ($userRole) {
-        case 2:
+        case 'Teacher':
             $checkRoute = request()->routeIs('guru.jadwalmengajar.*');
             $dynamicRoute = route('guru.jadwalmengajar');
             break;
-        case 3:
+        case 'Student':
             $checkRoute = request()->routeIs('siswa.jadwalpelajaran.*');
             $dynamicRoute = route('siswa.jadwalpelajaran');
             break;

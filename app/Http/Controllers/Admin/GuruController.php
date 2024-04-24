@@ -84,9 +84,11 @@ class GuruController extends Controller
                 $user = new User([
                     'username' => strtolower(str_replace(' ', '', $request->nama_lengkap)),
                     'password' => bcrypt('123456'),
-                    'role' => 2,
                     'status' => true,
                 ]);
+                // assign role with spatie
+                $user->assignRole('Teacher');
+                $user->assignPermission('teacher');
                 $user->save();
             } catch (\Throwable $th) {
                 return back()->with('toast_error', 'Username telah digunakan');

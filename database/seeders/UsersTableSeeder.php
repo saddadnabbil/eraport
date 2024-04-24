@@ -16,7 +16,6 @@ class UsersTableSeeder extends Seeder
         $admin = User::create([
             'username' => 'admin',
             'password' => bcrypt('admin123456'),
-            'role' => '1',
             'status' => true,
         ]);
         $admin->assignRole('Admin');
@@ -25,7 +24,6 @@ class UsersTableSeeder extends Seeder
         $siswa = User::create([
             'username' => 'siswa',
             'password' => bcrypt('123456'),
-            'role' => '3',
             'status' => true,
         ]);
         $siswa->assignRole('Student');
@@ -33,21 +31,18 @@ class UsersTableSeeder extends Seeder
         User::create([
             'username' => 'siswa2',
             'password' => bcrypt('123456'),
-            'role' => '3',
             'status' => true,
         ]);
 
         User::create([
             'username' => 'siswa3',
             'password' => bcrypt('123456'),
-            'role' => '3',
             'status' => true,
         ]);
 
         $guru = User::create([
             'username' => 'guru',
             'password' => bcrypt('123456'),
-            'role' => '2',
             'status' => true,
         ]);
         $guru->assignRole('Teacher');
@@ -55,7 +50,6 @@ class UsersTableSeeder extends Seeder
         $curriculum = User::create([
             'username' => 'curriculum',
             'password' => bcrypt('123456'),
-            'role' => '2',
             'status' => true,
         ]);
         $curriculum->assignRole('Curriculum');

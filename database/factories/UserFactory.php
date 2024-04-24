@@ -14,7 +14,6 @@ class UserFactory extends Factory
         return [
             'username' => $this->faker->userName,
             'password' => bcrypt('password'), // You should not store plain passwords, this is just for example
-            'role' => $this->faker->randomElement(['2', '3']),
             'status' => true,
         ];
     }

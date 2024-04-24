@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="{{ asset('assets/libs/bootstrap4-duallistbox/bootstrap-duallistbox.min.css') }}">
     {{-- Select2 --}}
     <link rel="stylesheet" href="{{ asset('assets/libs/select2/css/select2.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/libs/select2-bootstrap-theme/select2-bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/libs/select2-bootstrap-theme4/select2-bootstrap.min.css') }}">
     {{-- datatables --}}
     <!-- <link href="../assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="{{ asset('assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css') }}">
@@ -41,12 +41,12 @@
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->
     <!-- ============================================================== -->
-    <div class="preloader">
+    {{-- <div class="preloader">
         <div class="lds-ripple">
             <div class="lds-pos"></div>
             <div class="lds-pos"></div>
         </div>
-    </div>
+    </div> --}}
     <!-- ============================================================== -->
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
