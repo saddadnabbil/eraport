@@ -163,7 +163,7 @@ class DashboardController extends Controller
                     'unit_kode',
                 ));
             }
-        } elseif ($user->hasRole('Siswa')) {
+        } elseif ($user->hasRole('Student')) {
             $siswa = Siswa::where('user_id', Auth::user()->id)->first();
 
             $data_id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');

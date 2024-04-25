@@ -63,7 +63,7 @@
                                                         Administrator
                                                     @elseif($user->hasRole('Teacher'))
                                                         Guru
-                                                    @elseif($user->hasRole('Siswa'))
+                                                    @elseif($user->hasRole('Student'))
                                                         Siswa
                                                     @endif
                                                 </td>
