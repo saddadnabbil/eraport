@@ -1,16 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\TK;
 
-use App\Models\Guru;
+use App\Models\Term;
+use App\Models\TkPoint;
 use App\Models\TkTopic;
 use App\Models\Tingkatan;
 use App\Models\TkElement;
+use App\Models\TkSubtopic;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
-class TkTopicController extends Controller
+class TkPointController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,28 +23,25 @@ class TkTopicController extends Controller
     {
         $title = 'Pilih tingkatan';
         $data_tingkatan = Tingkatan::whereIn('id', [1, 2, 3])->get();
-        $data_guru = Guru::join('karyawans', 'karyawans.id', '=', 'guru.karyawan_id')
-            ->join('unit_karyawans', 'unit_karyawans.id', '=', 'karyawans.unit_karyawan_id')
-            ->where('unit_karyawans.unit_kode', 'G01')->get();
+        $data_term = Term::orderBy('id', 'ASC')->get();
 
-        return view('admin.tk.topic.pilihtingkatan', compact('title', 'data_tingkatan'));
+        return view('admin.tk.point.pilihtingkatan', compact('title', 'data_tingkatan', 'data_term'));
     }
 
     public function create(Request $request)
     {
-        $title = 'Topic';
+        $title = 'Point';
         $data_element = TkElement::where('tingkatan_id', $request->tingkatan_id)->get();
         $data_topic = TkTopic::whereIn('tk_element_id', $data_element->pluck('id'))->get();
+        $data_subtopic = TkSubtopic::WhereIn('tk_topic_id', $data_topic->pluck('id'))->get();
+        $data_point = TkPoint::WhereIn('tk_topic_id', $data_topic->pluck('id'))->orderBy('tk_topic_id')->where('term_id', $request->term_id)->orderBy('id')->get();
+
         $data_tingkatan = Tingkatan::whereIn('id', [1, 2, 3])->get();
         $tingkatan_id = Tingkatan::findorfail($request->tingkatan_id)->id;
+        $data_term = Term::orderBy('id', 'ASC')->get();
+        $term_id = Term::findorfail($request->term_id)->id;
 
-        $data_guru = Guru::with(['karyawan' => function ($query) {
-            $query->whereHas('unitKaryawan', function ($subquery) {
-                $subquery->where('unit_kode', 'G01');
-            });
-        }])->where('deleted_at', null)->get();
-
-        return view('admin.tk.topic.index', compact('title', 'data_topic', 'data_element', 'data_tingkatan', 'tingkatan_id', 'data_guru'));
+        return view('admin.tk.point.index', compact('title', 'data_point', 'data_subtopic', 'data_topic', 'data_tingkatan', 'tingkatan_id', 'data_term', 'term_id'));
     }
 
     /**
@@ -54,8 +53,8 @@ class TkTopicController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'tk_element_id' => 'required|exists:tk_elements,id',
-            'guru_id' => 'required|exists:guru,id',
+            'tk_topic_id' => 'required|exists:tk_topics,id',
+            'tk_subtopic_id' => 'nullable|exists:tk_subtopics,id',
             'name' => 'required|string|max:255',
         ]);
 
@@ -65,16 +64,16 @@ class TkTopicController extends Controller
                 ->withInput();
         }
 
-        TkTopic::create($request->all());
+        TkPoint::create($request->all());
 
-        return back()->with('success', 'Topic berhasil ditambahkan.');
+        return back()->with('success', 'Point berhasil ditambahkan.');
     }
 
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'tk_element_id' => 'required|exists:tk_elements,id',
-            'guru_id' => 'required|exists:guru,id',
+            'tk_topic_id' => 'required|exists:tk_subtopics,id',
+            'tk_subtopic_id' => 'nullable|exists:tk_subtopics,id',
             'name' => 'required|string|max:255',
         ]);
 
@@ -84,25 +83,25 @@ class TkTopicController extends Controller
                 ->withInput();
         }
 
-        $tkTopic = TkTopic::findOrFail($id);
+        $tkPoint = TkPoint::findOrFail($id);
 
-        $tkTopic->update([
+        $tkPoint->update([
+            'tk_topic_id' => $request->tk_topic_id,
+            'tk_subtopic_id' => $request->tk_subtopic_id,
             'name' => $request->name,
-            'tk_element_id' => $request->tk_element_id,
-            'guru_id' => $request->guru_id,
         ]);
 
-        return back()->with('success', 'Topic berhasil diperbarui.');
+        return back()->with('success', 'Point berhasil diperbarui.');
     }
 
     public function destroy($id)
     {
-        $tkTopic = TkTopic::findorfail($id);
+        $tkPoint = TkPoint::findorfail($id);
         try {
-            $tkTopic->forceDelete();
-            return back()->with('toast_success', 'Topic berhasil dihapus');
+            $tkPoint->forceDelete();
+            return back()->with('toast_success', 'Point berhasil dihapus');
         } catch (\Throwable $th) {
-            return back()->with('toast_warning', 'Topic ini gagal dihapus karena memiliki relasi dengan data kelas');
+            return back()->with('toast_warning', 'Point ini gagal dihapus karena memiliki relasi dengan data kelas');
         }
     }
 }

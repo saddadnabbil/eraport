@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\TK;
 
 use App\Models\Term;
 use App\Models\Tapel;

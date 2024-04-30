@@ -19,10 +19,11 @@ class CreateKelasTable extends Migration
             $table->unsignedBigInteger('jurusan_id')->unsigned();
             $table->unsignedBigInteger('tapel_id')->unsigned();
             $table->unsignedBigInteger('guru_id')->unsigned();
+            // $table->numeric('kelas');
             $table->string('nama_kelas', 30);
             $table->timestamps();
-            $table->softDeletes();            
-            
+            $table->softDeletes();
+
             $table->foreign('tingkatan_id')->references('id')->on('tingkatans')->onDelete('cascade');
             $table->foreign('jurusan_id')->references('id')->on('jurusans')->onDelete('cascade');;
             $table->foreign('tapel_id')->references('id')->on('tapels')->onDelete('cascade');

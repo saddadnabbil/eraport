@@ -292,45 +292,80 @@ Route::group(['middleware' => ['auth']], function () {
 
             // TK 
             // input data siswa tk
-            Route::resource('kehadiranadmintk', 'Admin\TkKehadiranSiswaController', [
+            Route::resource('kehadiranadmintk', 'Admin\TK\TkKehadiranSiswaController', [
                 'uses' => ['index', 'store', 'create'],
             ]);
-            Route::resource('eventtk', 'Admin\TkEventController', [
+            Route::resource('eventtk', 'Admin\TK\TkEventController', [
                 'uses' => ['index', 'store', 'create', 'update', 'destory'],
             ]);
-            Route::resource('rekapevent', 'Admin\TkEventAchivementGradeSiswaController', [
+            Route::resource('rekapevent', 'Admin\TK\TkEventAchivementGradeSiswaController', [
                 'uses' => ['index', 'store', 'create'],
             ]);
-            Route::resource('catatanadmintk', 'Admin\TkCatatanWaliKelasController', [
+            Route::resource('catatanadmintk', 'Admin\TK\TkCatatanWaliKelasController', [
                 'uses' => ['index', 'store', 'create'],
             ]);
 
             // rencana penilaiaan tk
-            Route::resource('tkelement', 'Admin\TkElementController', [
+            Route::resource('tkelement', 'Admin\TK\TkElementController', [
                 'uses' => ['index', 'store', 'create', 'update', 'destory'],
             ]);
-            Route::resource('tktopic', 'Admin\TkTopicController', [
+            Route::resource('tktopic', 'Admin\TK\TkTopicController', [
                 'uses' => ['index', 'store', 'create', 'update', 'destory'],
             ]);
-            Route::resource('tksubtopic', 'Admin\TkSubtopicController', [
+            Route::resource('tksubtopic', 'Admin\TK\TkSubtopicController', [
                 'uses' => ['index', 'store', 'create', 'update', 'destory'],
             ]);
-            Route::resource('tkpoint', 'Admin\TkPointController', [
+            Route::resource('tkpoint', 'Admin\TK\TkPointController', [
                 'uses' => ['index', 'store', 'create', 'update', 'destory'],
             ]);
-            Route::get('tkpembelajaran/export', 'Admin\TkPembelajaranController@export')->name('tkpembelajaran.export');
-            Route::post('tkpembelajaran/settings', 'Admin\TkPembelajaranController@settings')->name('tkpembelajaran.settings');
-            Route::resource('tkpembelajaran', 'Admin\TkPembelajaranController', [
+            Route::get('tkpembelajaran/export', 'Admin\TK\TkPembelajaranController@export')->name('tkpembelajaran.export');
+            Route::post('tkpembelajaran/settings', 'Admin\TK\TkPembelajaranController@settings')->name('tkpembelajaran.settings');
+            Route::resource('tkpembelajaran', 'Admin\TK\TkPembelajaranController', [
                 'uses' => ['index', 'store'],
             ]);
 
             // penilaian tk
-            Route::resource('penilaiantk', 'Admin\KM\PenilaianTkController')->only(['index', 'create', 'store', 'show', 'edit', 'update']);
+            Route::resource('penilaiantk', 'Admin\TK\PenilaianTkController')->only(['index', 'create', 'store', 'show', 'edit', 'update']);
 
-            Route::resource('adminraporttk', 'Admin\KM\CetakRaportTKController', [
+            Route::resource('adminraporttk', 'Admin\TK\CetakRaportTKController', [
                 'uses' => ['index', 'store', 'show'],
             ]);
-            Route::get('adminraporttk/export/{id}', 'Admin\KM\CetakRaportTKController@export')->name('adminraporttk.export');
+            Route::get('adminraporttk/export/{id}', 'Admin\TK\CetakRaportTKController@export')->name('adminraporttk.export');
+
+            // P5BK
+            Route::resource('p5/dimensi', 'Admin\P5\P5DimensiController')->only(['index', 'store', 'update', 'destroy'])->names([
+                'index' => 'p5.dimensi.index',
+                'store' => 'p5.dimensi.store',
+                'update' => 'p5.dimensi.update',
+                'destroy' => 'p5.dimensi.destroy',
+            ]);
+            Route::resource('p5/element', 'Admin\P5\P5ElementController')->only(['index', 'store', 'update', 'destroy'])->names([
+                'index' => 'p5.element.index',
+                'store' => 'p5.element.store',
+                'update' => 'p5.element.update',
+                'destroy' => 'p5.element.destroy',
+            ]);
+            Route::resource('p5/subelement', 'Admin\P5\P5SubelementController')->only(['index', 'store', 'update', 'destroy'])->names([
+                'index' => 'p5.subelement.index',
+                'store' => 'p5.subelement.store',
+                'update' => 'p5.subelement.update',
+                'destroy' => 'p5.subelement.destroy',
+            ]);
+            Route::get('p5/subelement/data', 'Admin\P5\P5SubelementController@data')->name('p5.subelement.data');
+
+            Route::resource('p5/tema', 'Admin\P5\P5TemaController')->only(['index', 'store', 'update', 'destroy'])->names([
+                'index' => 'p5.tema.index',
+                'store' => 'p5.tema.store',
+                'update' => 'p5.tema.update',
+                'destroy' => 'p5.tema.destroy',
+            ]);
+            Route::resource('p5/project', 'Admin\P5\P5ProjectController')->only(['index', 'store', 'update', 'destroy', 'edit'])->names([
+                'index' => 'p5.project.index',
+                'store' => 'p5.project.store',
+                'update' => 'p5.project.update',
+                'edit' => 'p5.project.edit',
+                'destroy' => 'p5.project.destroy',
+            ]);
         });
     });
     // End Route User Admin

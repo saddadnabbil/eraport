@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\KM;
+namespace App\Http\Controllers\Admin\TK;
 
 use PDF;
 use App\Models\Term;

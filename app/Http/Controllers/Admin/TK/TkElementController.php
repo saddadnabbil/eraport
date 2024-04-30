@@ -1,43 +1,38 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\TK;
 
-use App\Models\TkTopic;
-use App\Models\Tingkatan;
+use App\Models\Tapel;
 use App\Models\TkElement;
-use App\Models\TkSubtopic;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Tingkatan;
 use Illuminate\Support\Facades\Validator;
 
-class TkSubtopicController extends Controller
+class TkElementController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
     public function index()
     {
         $title = 'Pilih tingkatan';
         $data_tingkatan = Tingkatan::whereIn('id', [1, 2, 3])->get();
 
-        return view('admin.tk.subtopic.pilihtingkatan', compact('title', 'data_tingkatan'));
+        return view('admin.tk.element.pilihtingkatan', compact('title', 'data_tingkatan'));
     }
 
     public function create(Request $request)
     {
-        $title = 'Sub Topic';
-        $data_topic = TkTopic::get();
+        $title = 'Element ';
         $data_element = TkElement::where('tingkatan_id', $request->tingkatan_id)->get();
-        $data_topic = TkTopic::whereIn('tk_element_id', $data_element->pluck('id'))->get();
-        $data_subtopic = TkSubtopic::WhereIn('tk_topic_id', $data_topic->pluck('id'))->get();
-
         $data_tingkatan = Tingkatan::whereIn('id', [1, 2, 3])->get();
         $tingkatan_id = Tingkatan::findorfail($request->tingkatan_id)->id;
 
-        return view('admin.tk.subtopic.index', compact('title', 'data_topic', 'data_subtopic', 'data_tingkatan', 'tingkatan_id'));
+
+        return view('admin.tk.element.index', compact('title', 'data_element', 'data_tingkatan', 'tingkatan_id'));
     }
 
     /**
@@ -49,8 +44,8 @@ class TkSubtopicController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'tk_topic_id' => 'required|exists:tk_topics,id',
             'name' => 'required|string|max:255',
+            'tingkatan_id' => 'required|exists:tingkatans,id',
         ]);
 
         if ($validator->fails()) {
@@ -59,16 +54,16 @@ class TkSubtopicController extends Controller
                 ->withInput();
         }
 
-        TkSubtopic::create($request->all());
+        TkElement::create($request->all());
 
-        return back()->with('success', 'Sub Topic berhasil ditambahkan.');
+        return back()->with('success', 'Element berhasil ditambahkan.');
     }
 
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-            'tk_topic_id' => 'required|exists:tk_topics,id',
             'name' => 'required|string|max:255',
+            'tingkatan_id' => 'required|exists:tingkatans,id',
         ]);
 
         if ($validator->fails()) {
@@ -77,23 +72,25 @@ class TkSubtopicController extends Controller
                 ->withInput();
         }
 
-        $tkTopic = TkSubtopic::findOrFail($id);
+        // Find the Karyawan instance by ID
+        $tkElement = TkElement::findOrFail($id);
 
-        $tkTopic->update([
+        $tkElement->update([
             'name' => $request->name,
+            'tingkatan_id' => $request->tingkatan_id,
         ]);
 
-        return back()->with('success', 'Sub Topic berhasil diperbarui.');
+        return back()->with('success', 'Element berhasil diperbarui.');
     }
 
     public function destroy($id)
     {
-        $tkTopic = TkSubtopic::findorfail($id);
+        $tkElement = TkElement::findorfail($id);
         try {
-            $tkTopic->forceDelete();
-            return back()->with('toast_success', 'Sub Topic berhasil dihapus');
+            $tkElement->forceDelete();
+            return back()->with('toast_success', 'Element berhasil dihapus');
         } catch (\Throwable $th) {
-            return back()->with('toast_warning', 'Sub Topic ini gagal dihapus karena memiliki relasi dengan data kelas');
+            return back()->with('toast_warning', 'Element ini gagal dihapus karena memiliki relasi dengan data kelas');
         }
     }
 }

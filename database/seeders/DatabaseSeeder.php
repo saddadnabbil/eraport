@@ -1,23 +1,27 @@
 <?php
 
 use App\Models\Kelas;
+use App\Models\P5Tema;
 use App\Models\TkPoint;
 use App\Models\Semester;
+
+
 use App\Models\TkElement;
-
-
 use App\Models\AnggotaKelas;
 use App\Models\TkSetTeacher;
 use App\Models\PrestasiSiswa;
 use App\Models\TkPembelajaran;
 use Illuminate\Database\Seeder;
 use App\Models\KmNilaiAkhirRaport;
+use Database\Seeders\P5TemaSeeder;
 use App\Models\CapaianPembelajaran;
 use Database\Seeders\SilabusSeeder;
 use Database\Seeders\TkEventSeeder;
 use Database\Seeders\TkPointSeeder;
 use Database\Seeders\TkTopicSeeder;
 use Database\Seeders\GuruTableSeeder;
+use Database\Seeders\P5DimensiSeeder;
+use Database\Seeders\P5ElementSeeder;
 use Database\Seeders\RoleTableSeeder;
 use Database\Seeders\TermTableSeeder;
 use Database\Seeders\TkElementSeeder;
@@ -29,6 +33,7 @@ use Database\Seeders\SiswaTableSeeder;
 use Database\Seeders\TapelTableSeeder;
 use Database\Seeders\TkSubtopicSeeder;
 use Database\Seeders\JurusanTableSeeder;
+use Database\Seeders\P5SubelementSeeder;
 use Database\Seeders\TkSetTeacherSeeder;
 use Database\Seeders\KaryawanTableSeeder;
 use Database\Seeders\SemesterTableSeeder;
@@ -61,6 +66,7 @@ use Database\Seeders\NilaiEkstrakulikulerTableSeeder;
 use Database\Seeders\RencanaNilaiFormatifTableSeeder;
 use Database\Seeders\KmDeskripsiNilaiSiswaTableSeeder;
 use Database\Seeders\AnggotaEkstrakulikulerTableSeeder;
+use Database\Seeders\P5ProjectSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -125,6 +131,14 @@ class DatabaseSeeder extends Seeder
             TkPointSeeder::class,
             TkPembelajaranSeeder::class,
             TkEventSeeder::class,
+
+
+            // P5BK
+            P5DimensiSeeder::class,
+            P5ElementSeeder::class,
+            P5SubelementSeeder::class,
+            P5TemaSeeder::class,
+            P5ProjectSeeder::class,
         ]);
     }
 }

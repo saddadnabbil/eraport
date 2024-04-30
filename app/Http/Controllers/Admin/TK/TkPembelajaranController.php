@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\TK;
 
 use Carbon\Carbon;
 use App\Models\Guru;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Km;
+namespace App\Http\Controllers\Admin\TK;
 
 use App\Models\Guru;
 use App\Models\Term;

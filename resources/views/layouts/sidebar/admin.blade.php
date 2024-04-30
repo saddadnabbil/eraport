@@ -17,7 +17,7 @@
 
                   <li class="list-divider"></li>
                   <li class="nav-small-cap">
-                      <span class="hide-menu">REPORT KM TK</span>
+                      <span class="hide-menu">REPORT TK</span>
                   </li>
                   @include('layouts.partials.sidebar.reportkm-tk.event')
                   @include('layouts.partials.sidebar.reportkm-tk.area-of-learning')
@@ -34,6 +34,13 @@
                   @include('layouts.partials.sidebar.reportkm.nilaiekstra')
                   @include('layouts.partials.sidebar.reportkm.nilaiakhir')
                   @include('layouts.partials.sidebar.reportkm.prosesdeskripsi')
+
+                  <li class="list-divider"></li>
+                  <li class="nav-small-cap">
+                      <span class="hide-menu">REPORT P5BK</span>
+                  </li>
+                  @include('layouts.partials.sidebar.report-p5.inputdata')
+                  @include('layouts.partials.sidebar.report-p5.manajemen')
 
                   <li class="list-divider"></li>
                   <li class="nav-small-cap">
