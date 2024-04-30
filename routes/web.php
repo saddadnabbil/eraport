@@ -359,11 +359,12 @@ Route::group(['middleware' => ['auth']], function () {
                 'update' => 'p5.tema.update',
                 'destroy' => 'p5.tema.destroy',
             ]);
-            Route::resource('p5/project', 'Admin\P5\P5ProjectController')->only(['index', 'store', 'update', 'destroy', 'edit'])->names([
+            Route::resource('p5/project', 'Admin\P5\P5ProjectController')->only(['index', 'store', 'update', 'destroy', 'edit', 'show'])->names([
                 'index' => 'p5.project.index',
                 'store' => 'p5.project.store',
                 'update' => 'p5.project.update',
                 'edit' => 'p5.project.edit',
+                'show' => 'p5.project.show',
                 'destroy' => 'p5.project.destroy',
             ]);
         });

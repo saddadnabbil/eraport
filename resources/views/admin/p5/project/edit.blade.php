@@ -19,7 +19,7 @@
                 [
                     'title' => 'Manajemen P5BK',
                     'url' => route('p5.project.index'),
-                    'active' => false,
+                    'active' => true,
                 ],
                 [
                     'title' => $title,
@@ -59,7 +59,7 @@
                             <form action="{{ route('p5.project.update', $project->id) }}" method="POST">
                                 @csrf
                                 @method('PATCH')
-
+                                <input type="hidden" name="kelas_id" value="{{ $project->kelas_id }}">
                                 <div class="form-group row">
                                     <div class="col-sm-4">
                                         <label for="guru_id" class="col-sm-3 col-form-label">Pembina Projek</label>
@@ -100,8 +100,9 @@
                                             @foreach ($dataSubelement as $subelement)
                                                 <tr>
                                                     <td class="text-center">
-                                                        <input class="form-check-input" type="checkbox"
-                                                            name="subelement_id[]"
+                                                        <input type="hidden" name="subelement_id[]"
+                                                            value="{{ $subelement->id }}">
+                                                        <input class="form-check-input" type="checkbox" name="has_active[]"
                                                             @if ($subelement->has_active == true) checked @endif </td>
                                                     <td>{{ $subelement->element->dimensi->name }}</td>
                                                     <td>{{ $subelement->element->name }}</td>
@@ -110,6 +111,12 @@
                                             @endforeach
                                         </tbody>
                                     </table>
+                                </div>
+
+                                <div class="form-group row">
+                                    <div class="col-sm-12">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
                                 </div>
                             </form>
                         </div>

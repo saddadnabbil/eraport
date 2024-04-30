@@ -64,10 +64,47 @@
                                         @csrf
                                         <div class="modal-body">
                                             <div class="form-group row">
-                                                <label for="name" class="col-sm-3 col-form-label">Name</label>
+                                                <label for="pt_tema_id" class="col-sm-3 col-form-label">Tema Projek</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" class="form-control" id="name" name="name"
-                                                        placeholder="Name" value="{{ old('name') }}">
+                                                    <select class="form-control form-select select2" name="pt_tema_id"
+                                                        id="pt_tema_id">
+                                                        <option value="">Pilih Tema Projek</option>
+                                                        @foreach ($dataTema as $tema)
+                                                            <option value="{{ $tema->id }}">
+                                                                {{ $tema->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="guru_id" class="col-sm-3 col-form-label">Pembina Projek</label>
+                                                <div class="col-sm-9">
+                                                    <select class="form-control form-select select2" name="guru_id"
+                                                        id="guru_id">
+                                                        <option value="">Pilih Pembina Projek</option>
+                                                        @foreach ($dataGuru as $guru)
+                                                            <option value="{{ $guru->id }}">
+                                                                {{ $guru->karyawan->nama_lengkap }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-group row">
+                                                <label for="kelas_id" class="col-sm-3 col-form-label">Kelas</label>
+                                                <div class="col-sm-9">
+                                                    <select class="form-control form-select select2" name="Kelas"
+                                                        id="Kelas">
+                                                        <option value="">Pilih Kelas</option>
+                                                        @foreach ($dataKelas as $kelas)
+                                                            <option value="{{ $guru->id }}">
+                                                                {{ $kelas->nama_kelas }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -110,13 +147,17 @@
                                                 <td>{{ $project->kelas->anggota_kelas->count() }}</td>
                                                 <td class="text-center d-flex gap-2 justify-content-center">
                                                     <div data-bs-toggle="tooltip" data-bs-original-title="Edit">
+                                                        <a href="{{ route('p5.project.show', $project->id) }}"
+                                                            class="btn btn-success btn-sm mt-1"><i
+                                                                class="fas
+                                                            fa-cog"></i></a>
+                                                    </div>
+                                                    <div data-bs-toggle="tooltip" data-bs-original-title="Edit">
                                                         <a href="{{ route('p5.project.edit', $project->id) }}"
                                                             class="btn btn-info btn-sm mt-1"><i
                                                                 class="fas
                                                             fa-eye"></i></a>
                                                     </div>
-
-                                                    {{-- <a href="{{ route('p5.project.show', $project->id) }}"></a> --}}
                                                     @include('components.actions.delete-button', [
                                                         'route' => route('p5.project.destroy', $project->id),
                                                         'id' => $project->id,
