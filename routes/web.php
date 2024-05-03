@@ -367,6 +367,7 @@ Route::group(['middleware' => ['auth']], function () {
                 'show' => 'p5.project.show',
                 'destroy' => 'p5.project.destroy',
             ]);
+            Route::post('p5/project/nilai', 'Admin\P5\P5ProjectController@nilai')->name('p5.project.nilai');
         });
     });
     // End Route User Admin

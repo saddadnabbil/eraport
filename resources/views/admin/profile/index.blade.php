@@ -56,7 +56,7 @@
                             <p class="text-muted text-center">
                                 @if ($karyawan->user->hasRole('Admin') || $karyawan->user->getRoleNames()->first())
                                     {{ $karyawan->user->getRoleNames()->first() }}
-                                @elseif ($karyawan->hasRole('Teacher') && $karyawan->positionKaryawan)
+                                @elseif ($karyawan->user->hasRole('Teacher') && $karyawan->positionKaryawan)
                                     {{ $karyawan->positionKaryawan->position_nama }}
                                 @endif
                             </p>

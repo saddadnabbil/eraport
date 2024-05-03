@@ -42,15 +42,15 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-header d-flex align-items-center">
                             <h3 class="card-title">{{ $title }}</h3>
-                            <div class="card-tools">
-                                <div data-bs-toggle="tooltip" title="Tambah" class="d-inline-block">
-                                    <button type="button" class="btn btn-tool btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#modal-tambah">
-                                        <i class="fas fa-plus"></i>
-                                    </button>
-                                </div>
+                            <div class="card-tools ms-auto">
+                                <a href="{{ route('p5.project.show', $project->id) }}" class="btn btn-success btn-sm ">
+                                    Nilai Project
+                                </a>
+                                <a href="#" class="btn btn-sm btn-primary disabled">
+                                    Edit Project
+                                </a>
                             </div>
                         </div>
 

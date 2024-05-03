@@ -18295,3 +18295,17 @@ select .custom-select option {
 div.dataTables_processing div {
   display: none;
 }
+
+td.blue {
+  text-align: center;
+  vertical-align: middle;
+  background-color: #B9E2E6;
+  color: white !important;
+  border: 1px solid white;
+  font-weight: 400;
+}
+
+th.orange {
+  background-color: #F58561;
+  color: white !important;
+}

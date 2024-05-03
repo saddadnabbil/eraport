@@ -143,10 +143,10 @@
                                                 <td>{{ $project->kelas->nama_kelas }}</td>
                                                 <td>{{ $project->p5_tema->name }}</td>
                                                 <td>{{ $project->subelement_active_count }}</td>
-                                                <td>{{ $project->kelas->guru->karyawan->nama_lengkap }}</td>
+                                                <td>{{ $project->guru->karyawan->nama_lengkap }}</td>
                                                 <td>{{ $project->kelas->anggota_kelas->count() }}</td>
                                                 <td class="text-center d-flex gap-2 justify-content-center">
-                                                    <div data-bs-toggle="tooltip" data-bs-original-title="Edit">
+                                                    <div data-bs-toggle="tooltip" data-bs-original-title="Nilai">
                                                         <a href="{{ route('p5.project.show', $project->id) }}"
                                                             class="btn btn-success btn-sm mt-1"><i
                                                                 class="fas

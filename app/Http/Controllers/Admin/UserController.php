@@ -27,7 +27,7 @@ class UserController extends Controller
     public function index()
     {
         $title = 'Data User';
-        $data_user = User::select('id', 'username', 'role', 'status')
+        $data_user = User::select('id', 'username', 'status')
             ->with(['siswa' => function ($query) {
                 $query->select('user_id', 'nama_lengkap', 'id');
             }, 'karyawan' => function ($query) {
@@ -116,7 +116,6 @@ class UserController extends Controller
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
         } else {
             $role = Role::findOrFail($request->role);
-            dd($role->name);
 
             $user = new User([
                 'username' => $request->username,
@@ -153,11 +152,13 @@ class UserController extends Controller
                 }
             }
 
-            // Assign each role to the user
+            // Assign each permission to the user
             foreach ($request->permission as $permissionId) {
                 $permission = Permission::findOrFail($permissionId);
                 $user->givePermissionTo($permission);
             }
+
+            $user->assignRole($role->name);
 
             return back()->with('toast_success', 'User berhasil ditambahkan');
         }
@@ -230,7 +231,6 @@ class UserController extends Controller
 
             return back()->with('toast_success', 'User berhasil dihapus');
         } catch (\Throwable $th) {
-            dd($th->getMessage());
             return back()->with('toast_error', 'Terjadi kesalahan saat menghapus user.');
         }
 
@@ -257,7 +257,6 @@ class UserController extends Controller
 
             return back()->with('toast_success', 'User berhasil dihapus secara permanen');
         } catch (\Throwable $th) {
-            dd($th->getMessage());
             return back()->with('toast_error', 'Terjadi kesalahan saat menghapus user secara permanen.');
         }
     }
@@ -277,7 +276,6 @@ class UserController extends Controller
 
             return back()->with('toast_success', 'User berhasil direstore');
         } catch (\Throwable $th) {
-            dd($th->getMessage());
             return back()->with('toast_error', 'Terjadi kesalahan saat merestorasi user.');
         }
     }

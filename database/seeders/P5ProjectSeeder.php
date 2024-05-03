@@ -18,12 +18,10 @@ class P5ProjectSeeder extends Seeder
             [
                 'subelement_id' => 1,
                 'has_active' => false,
-                'grade' => 85,
             ],
             [
                 'subelement_id' => 2,
                 'has_active' => true,
-                'grade' => 70,
             ],
         ];
 
