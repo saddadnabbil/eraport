@@ -20,6 +20,9 @@ class CreateP5NilaiProjectsTable extends Migration
             $table->json('grade_data')->nullable();
             $table->text('catatan_proses')->nullable();
             $table->timestamps();
+
+            $table->foreign('anggota_kelas_id')->references('id')->on('anggota_kelas')->onDelete('cascade');
+            $table->foreign('p5_project_id')->references('id')->on('p5_projects')->onDelete('cascade');
         });
     }
 

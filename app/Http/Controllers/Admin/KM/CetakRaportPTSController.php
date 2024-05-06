@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\KM;
 
 use PDF;
+use App\Models\Term;
 use App\Models\Kelas;
 use App\Models\Mapel;
 use App\Models\Tapel;
@@ -10,15 +11,15 @@ use App\Models\Sekolah;
 use App\Models\Semester;
 use App\Models\AnggotaKelas;
 use App\Models\Pembelajaran;
+use Illuminate\Http\Request;
 use App\Models\KehadiranSiswa;
 use App\Models\Ekstrakulikuler;
 use App\Models\CatatanWaliKelas;
 use App\Models\KmNilaiAkhirRaport;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Models\NilaiEkstrakulikuler;
 use App\Models\AnggotaEkstrakulikuler;
-use App\Http\Controllers\Controller;
-use App\Models\Term;
+use Illuminate\Support\Facades\Validator;
 
 class CetakRaportPTSController extends Controller
 {
@@ -43,6 +44,17 @@ class CetakRaportPTSController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'kelas_id' => 'required|exists:kelas,id',
+            'semester_id' => 'required|exists:semesters,id',
+            'term_id' => 'required|exists:terms,id',
+        ]);
+        if ($validator->fails()) {
+            return back()
+                ->with('toast_error', $validator->messages()->all()[0])
+                ->withInput();
+        }
+
         $title = 'Raport Tengah Semester';
         $kelas = Kelas::findorfail($request->kelas_id);
         $tapel = Tapel::where('status', 1)->first();

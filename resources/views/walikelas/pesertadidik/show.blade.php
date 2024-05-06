@@ -55,7 +55,7 @@
                                 <!-- check for role in roles -->
                                 @if ($siswa->user->hasRole('Admin') || $siswa->user->getRoleNames()->first())
                                     {{ $siswa->user->getRoleNames()->first() }}
-                                @elseif ($siswa->hasRole('Student') && $siswa->positionKaryawan)
+                                @elseif ($siswa->user->hasRole('Student') && $siswa->positionKaryawan)
                                     {{ $siswa->positionKaryawan->position_nama }}
                                 @endif
                             </p>

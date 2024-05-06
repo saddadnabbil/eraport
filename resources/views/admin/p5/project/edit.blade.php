@@ -44,13 +44,19 @@
                     <div class="card">
                         <div class="card-header d-flex align-items-center">
                             <h3 class="card-title">{{ $title }}</h3>
-                            <div class="card-tools ms-auto">
-                                <a href="{{ route('p5.project.show', $project->id) }}" class="btn btn-success btn-sm ">
-                                    Nilai Project
-                                </a>
-                                <a href="#" class="btn btn-sm btn-primary disabled">
-                                    Edit Project
-                                </a>
+                            <div class="card-tools ms-auto d-flex gap-2 justify-content-center">
+                                <div data-bs-toggle="tooltip"
+                                    data-bs-original-title=" {{ isset($project) && $project->subelement_active_count > 0 ? 'Nilai' : 'Belum ada Subelemen Projek, tekan tombol Edit untuk menambahkan.' }}">
+                                    <a href="{{ isset($project) && $project->subelement_active_count > 0 ? route('p5.project.show', $project->id) : '#' }}"
+                                        class="btn btn-success btn-sm {{ isset($project) && $project->subelement_active_count <= 0 ? ' disabled' : '' }}"
+                                        role="button"
+                                        aria-disabled="{{ isset($project) && $project->subelement_active_count <= 0 ? 'true' : 'false' }}">
+                                        Nilai Project
+                                    </a>
+                                </div>
+                                <div data-bs-toggle="tooltip" data-bs-original-title="Edit">
+                                    <a href="#" class="btn btn-primary btn-sm disabled">Edit Project</a>
+                                </div>
                             </div>
                         </div>
 
@@ -66,7 +72,8 @@
                                         <select name="guru_id" id="guru_id" class="form-control form-select select2">
                                             @foreach ($dataGuru as $guru)
                                                 <option value="{{ $guru->id }}"
-                                                    {{ $project->guru_id == $guru->id ? 'selected' : '' }}>
+                                                    {{ $project->guru_id == $guru->id ? 'selected' : '' }}
+                                                    {{ old('guru_id') == $guru->id ? 'selected' : '' }}>
                                                     {{ $guru->karyawan->nama_lengkap }}</option>
                                             @endforeach
                                         </select>
@@ -74,13 +81,13 @@
                                     <div class="col-sm-8">
                                         <label for="name" class="col-sm-3 col-form-label">Judul Projek</label>
                                         <input type="text" class="form-control" id="name" name="name"
-                                            value="{{ $project->name }}">
+                                            value="{{ old('name', $project->name) }}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-12">
                                         <label for="description" class="col-sm-3 col-form-label">Deskripsi Projek</label>
-                                        <textarea class="form-control" name="description" id="description" cols="120" rows="5">{{ $project->description }}</textarea>
+                                        <textarea class="form-control" name="description" id="description" cols="120" rows="5">{{ old('description', $project->description) }}</textarea>
                                     </div>
                                 </div>
 
@@ -97,13 +104,15 @@
                                         </thead>
                                         <tbody>
                                             <?php $no = 0; ?>
-                                            @foreach ($dataSubelement as $subelement)
+                                            @foreach ($dataSubelement as $index => $subelement)
                                                 <tr>
                                                     <td class="text-center">
                                                         <input type="hidden" name="subelement_id[]"
                                                             value="{{ $subelement->id }}">
-                                                        <input class="form-check-input" type="checkbox" name="has_active[]"
-                                                            @if ($subelement->has_active == true) checked @endif </td>
+                                                        <input class="form-check-input" type="checkbox"
+                                                            name="has_active[{{ $index }}]"
+                                                            {{ $subelement->has_active ? 'checked' : '' }}>
+                                                    </td>
                                                     <td>{{ $subelement->element->dimensi->name }}</td>
                                                     <td>{{ $subelement->element->name }}</td>
                                                     <td>{{ $subelement->name }}</td>
@@ -115,7 +124,7 @@
 
                                 <div class="form-group row">
                                     <div class="col-sm-12">
-                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <button type="submit" class="btn btn-primary">Update</button>
                                     </div>
                                 </div>
                             </form>

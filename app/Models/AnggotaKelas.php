@@ -63,6 +63,11 @@ class AnggotaKelas extends Model
         return $this->hasOne('App\Models\NilaiSumatif');
     }
 
+    public function nilai_projects()
+    {
+        return $this->hasMany('App\Models\P5NilaiProject');
+    }
+
     public function anggota_kelas()
     {
         return $this->hasOne('App\Models\AnggotaKelas');

@@ -66,11 +66,12 @@
                                             <div class="form-group row">
                                                 <label for="pt_tema_id" class="col-sm-3 col-form-label">Tema Projek</label>
                                                 <div class="col-sm-9">
-                                                    <select class="form-control form-select select2" name="pt_tema_id"
+                                                    <select class="form-control form-select select2" name="p5_tema_id"
                                                         id="pt_tema_id">
                                                         <option value="">Pilih Tema Projek</option>
                                                         @foreach ($dataTema as $tema)
-                                                            <option value="{{ $tema->id }}">
+                                                            <option value="{{ $tema->id }}"
+                                                                @if (old('p5_tema_id') == $tema->id) selected @endif>
                                                                 {{ $tema->name }}
                                                             </option>
                                                         @endforeach
@@ -84,7 +85,8 @@
                                                         id="guru_id">
                                                         <option value="">Pilih Pembina Projek</option>
                                                         @foreach ($dataGuru as $guru)
-                                                            <option value="{{ $guru->id }}">
+                                                            <option value="{{ $guru->id }}"
+                                                                @if (old('guru_id') == $guru->id) selected @endif>
                                                                 {{ $guru->karyawan->nama_lengkap }}
                                                             </option>
                                                         @endforeach
@@ -96,11 +98,12 @@
                                             <div class="form-group row">
                                                 <label for="kelas_id" class="col-sm-3 col-form-label">Kelas</label>
                                                 <div class="col-sm-9">
-                                                    <select class="form-control form-select select2" name="Kelas"
-                                                        id="Kelas">
+                                                    <select class="form-control form-select select2" name="kelas_id"
+                                                        id="kelas_id">
                                                         <option value="">Pilih Kelas</option>
                                                         @foreach ($dataKelas as $kelas)
-                                                            <option value="{{ $guru->id }}">
+                                                            <option value="{{ $kelas->id }}"
+                                                                @if (old('kelas_id') == $kelas->id) selected @endif>
                                                                 {{ $kelas->nama_kelas }}
                                                             </option>
                                                         @endforeach
@@ -146,11 +149,14 @@
                                                 <td>{{ $project->guru->karyawan->nama_lengkap }}</td>
                                                 <td>{{ $project->kelas->anggota_kelas->count() }}</td>
                                                 <td class="text-center d-flex gap-2 justify-content-center">
-                                                    <div data-bs-toggle="tooltip" data-bs-original-title="Nilai">
-                                                        <a href="{{ route('p5.project.show', $project->id) }}"
-                                                            class="btn btn-success btn-sm mt-1"><i
-                                                                class="fas
-                                                            fa-cog"></i></a>
+                                                    <div data-bs-toggle="tooltip"
+                                                        data-bs-original-title=" {{ isset($project) && $project->subelement_active_count > 0 ? 'Nilai' : 'Belum ada Subelemen Projek, tekan tombol Edit untuk menambahkan.' }}">
+                                                        <a href="{{ isset($project) && $project->subelement_active_count > 0 ? route('p5.project.show', $project->id) : '#' }}"
+                                                            class="btn btn-success btn-sm mt-1{{ isset($project) && $project->subelement_active_count <= 0 ? ' disabled' : '' }}"
+                                                            role="button"
+                                                            aria-disabled="{{ isset($project) && $project->subelement_active_count <= 0 ? 'true' : 'false' }}">
+                                                            <i class="fas fa-cog"></i>
+                                                        </a>
                                                     </div>
                                                     <div data-bs-toggle="tooltip" data-bs-original-title="Edit">
                                                         <a href="{{ route('p5.project.edit', $project->id) }}"
@@ -188,7 +194,8 @@
                                                                         class="col-sm-3 col-form-label">Name</label>
                                                                     <div class="col-sm-9">
                                                                         <input type="text" class="form-control"
-                                                                            id="name" name="name" placeholder="Name"
+                                                                            id="name" name="name"
+                                                                            placeholder="Name"
                                                                             value="{{ $project->name }}">
                                                                     </div>
                                                                 </div>

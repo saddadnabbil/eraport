@@ -25,4 +25,9 @@ class P5Project extends Model
     {
         return $this->belongsTo(Kelas::class, 'kelas_id');
     }
+
+    public function nilai_projects()
+    {
+        return $this->hasMany(P5NilaiProject::class, 'p5_project_id');
+    }
 }

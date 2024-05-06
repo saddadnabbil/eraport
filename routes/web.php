@@ -65,7 +65,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('user/export', 'Admin\UserController@export')->name('user.export');
             Route::resource('user', 'Admin\UserController')->only(['index', 'store', 'update', 'destroy']);
             Route::get('user/data', 'Admin\UserController@data')->name('user.data');
-            Route::get('user/{id}', 'UserController@getUser')->name('user.get');
+            Route::get('user/{id}', 'Admin\UserController@getUser')->name('user.get');
             Route::get('user/trash', 'Admin\UserController@showTrash')->name('user.trash');
             Route::delete('user/{id}/permanent-delete', 'Admin\UserController@destroyPermanent')->name('user.permanent-delete');
             Route::patch('user/{id}/restore', 'Admin\UserController@restore')->name('user.restore');
@@ -367,7 +367,7 @@ Route::group(['middleware' => ['auth']], function () {
                 'show' => 'p5.project.show',
                 'destroy' => 'p5.project.destroy',
             ]);
-            Route::post('p5/project/nilai', 'Admin\P5\P5ProjectController@nilai')->name('p5.project.nilai');
+            Route::post('p5/project/nilai/{id}', 'Admin\P5\P5ProjectController@nilai')->name('p5.project.nilai');
         });
     });
     // End Route User Admin

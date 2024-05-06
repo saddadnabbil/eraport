@@ -36,53 +36,52 @@
         <!-- Container fluid  -->
         <!-- ============================================================== -->
         <div class="container-fluid">
-
             {{-- data table --}}
             <!-- ./row -->
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <form action="{{ route('p5.nilai.project.update', $project->id) }}" method="POST">
-                            @csrf
-                            @method('PATCH')
-
-                            <div class="card-header d-flex align-items-center">
-                                <h3 class="card-title">{{ $title }}</h3>
-                                <div class="card-tools ms-auto">
-                                    <a href="#" class="btn btn-success btn-sm disabled">
+                        <div class="card-header d-flex align-items-center">
+                            <h3 class="card-title">{{ $title }}</h3>
+                            <div class="card-tools ms-auto d-flex gap-2 justify-content-center">
+                                <div data-bs-toggle="tooltip" data-bs-original-title="Nilai">
+                                    <a href="#" class="btn btn-success btn-sm disabled" role="button">
                                         Nilai Project
                                     </a>
-                                    <a href="{{ route('p5.project.edit', $project->id) }}" class="btn btn-sm btn-primary">
-                                        Edit Project
-                                    </a>
+                                </div>
+                                <div data-bs-toggle="tooltip" data-bs-original-title="Edit">
+                                    <a href="{{ route('p5.project.edit', $project->id) }}"
+                                        class="btn btn-primary btn-sm ">Edit Project</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="col-md-12 mb-3">
+                                <h6>Petunjuk Penilaian</h6>
+                                <div class="table-responsive">
+                                    <table id="example2" class="table table-striped table-bordered dataTable">
+                                        <tbody>
+                                            <tr>
+                                                <td class="blue" style="text-align:center"><b>SB</b> - Sangat
+                                                    Berkembang
+                                                </td>
+                                                <td class="blue" style="text-align:center"><b>BSH</b> - Berkembang
+                                                    Sesuai
+                                                    Harapan</td>
+                                                <td class="blue" style="text-align:center"><b>MB</b> - Mulai
+                                                    Berkembang
+                                                </td>
+                                                <td class="blue" style="text-align:center"><b>BB</b> - Belum
+                                                    Berkembang
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
 
-                            <div class="card-body">
-                                <div class="col-md-12 mb-3">
-                                    <h6>Petunjuk Penilaian</h6>
-                                    <div class="table-responsive">
-                                        <table id="example2" class="table table-striped table-bordered dataTable">
-                                            <tbody>
-                                                <tr>
-                                                    <td class="blue" style="text-align:center"><b>SB</b> - Sangat
-                                                        Berkembang
-                                                    </td>
-                                                    <td class="blue" style="text-align:center"><b>BSH</b> - Berkembang
-                                                        Sesuai
-                                                        Harapan</td>
-                                                    <td class="blue" style="text-align:center"><b>MB</b> - Mulai
-                                                        Berkembang
-                                                    </td>
-                                                    <td class="blue" style="text-align:center"><b>BB</b> - Belum
-                                                        Berkembang
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-
+                            <form action="{{ route('p5.project.nilai', $project->id) }}" method="POST">
+                                @csrf
                                 <div class="col-md-12">
                                     <div class="table-responsive">
                                         <table id="zero_config"
@@ -108,20 +107,51 @@
                                             <tbody>
                                                 @foreach ($dataSiswa as $siswa)
                                                     <tr>
-                                                        <td class="text-left ">{{ $siswa->nama_lengkap }}</td>
+                                                        <td class="text-left">{{ $siswa->nama_lengkap }}</td>
                                                         @foreach ($dataSubelement->where('has_active', true) as $subelement)
                                                             <td class="text-center">
-                                                                <input type="text" name="subelement_id[]"
-                                                                    value="{{ $subelement->id }}" hidden>
-                                                                <input type="text" name="anggota_kelas_id[]"
-                                                                    value="{{ $siswa->anggota_kelas_id }}" hidden>
-                                                                <select name="grade[]" id="grade"
-                                                                    class="form-control form-select">
-                                                                    <option value="SB">SB</option>
-                                                                    <option value="BSH">BSH</option>
-                                                                    <option value="MB">MB</option>
-                                                                    <option value="BB">BB</option>
-                                                                </select>
+                                                                <input type="hidden"
+                                                                    name="subelement_id[{{ $siswa->id }}][]"
+                                                                    value="{{ $subelement->id }}">
+                                                                <input type="hidden"
+                                                                    name="anggota_kelas_id[{{ $siswa->id }}]"
+                                                                    value="{{ $siswa->anggota_kelas->first()->id }}">
+                                                                @php $found = false; @endphp
+                                                                @if (isset($gradeData[$siswa->anggota_kelas->first()->id]))
+                                                                    @foreach ($gradeData[$siswa->anggota_kelas->first()->id] as $grade)
+                                                                        @if ($grade['subelement_id'] == $subelement->id)
+                                                                            @php $found = true; @endphp
+                                                                            <select
+                                                                                name="grade[{{ $siswa->anggota_kelas->first()->id }}][{{ $subelement->id }}]"
+                                                                                class="form-control form-select">
+                                                                                <option value="">-</option>
+                                                                                <option value="SB"
+                                                                                    {{ $grade['grade'] == 'SB' ? 'selected' : '' }}>
+                                                                                    SB</option>
+                                                                                <option value="BSH"
+                                                                                    {{ $grade['grade'] == 'BSH' ? 'selected' : '' }}>
+                                                                                    BSH</option>
+                                                                                <option value="MB"
+                                                                                    {{ $grade['grade'] == 'MB' ? 'selected' : '' }}>
+                                                                                    MB</option>
+                                                                                <option value="BB"
+                                                                                    {{ $grade['grade'] == 'BB' ? 'selected' : '' }}>
+                                                                                    BB</option>
+                                                                            </select>
+                                                                        @endif
+                                                                    @endforeach
+                                                                @endif
+                                                                @if (!$found)
+                                                                    <select
+                                                                        name="grade[{{ $siswa->anggota_kelas->first()->id }}][{{ $subelement->id }}]"
+                                                                        class="form-control form-select">
+                                                                        <option value="" selected>-</option>
+                                                                        <option value="SB">SB</option>
+                                                                        <option value="BSH">BSH</option>
+                                                                        <option value="MB">MB</option>
+                                                                        <option value="BB">BB</option>
+                                                                    </select>
+                                                                @endif
                                                             </td>
                                                         @endforeach
                                                     </tr>
@@ -132,12 +162,14 @@
                                                         </td>
                                                         <td
                                                             colspan="{{ $dataSubelement->where('has_active', true)->count() }}">
-                                                            <textarea name="catatan[]" class="form-control" id="" cols="30" rows="3" placeholder="Catatan">
-                                                                {{ $siswa->catatan_project }}
-                                                            </textarea>
+                                                            <textarea name="catatan[{{ $siswa->anggota_kelas->first()->id }}]" class="form-control" cols="30" rows="3"
+                                                                placeholder="Catatan Proses">{{ isset($catatanProses[$siswa->anggota_kelas->first()->id]) ? $catatanProses[$siswa->anggota_kelas->first()->id] : '' }}</textarea>
+
                                                         </td>
                                                     </tr>
                                                 @endforeach
+
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -145,12 +177,11 @@
 
                                 <div class="form-group row">
                                     <div class="col-sm-12">
-                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <button type="submit" class="btn btn-primary">Save</button>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
-
+                            </form>
+                        </div>
                     </div>
                     <!-- /.card -->
                 </div>
