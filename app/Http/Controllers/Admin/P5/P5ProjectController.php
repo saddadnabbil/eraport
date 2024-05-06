@@ -5,12 +5,13 @@ namespace App\Http\Controllers\Admin\P5;
 use App\Models\Guru;
 use App\Models\Kelas;
 use App\Models\Siswa;
+use App\Models\Tapel;
 use App\Models\P5Tema;
 use App\Models\P5Project;
 use App\Models\P5Subelement;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\P5NilaiProject;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -24,8 +25,12 @@ class P5ProjectController extends Controller
     public function index()
     {
         $title = 'P5 Project';
-
-        $dataProject = P5Project::orderBy('kelas_id', 'ASC')->get();
+        $tapel = Tapel::where('status', 1)->first();
+        $dataKelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->orderBy('id', 'ASC')->get();
+        if (count($dataKelas) == 0) {
+            return redirect()->route('kelas.index')->with('toast_warning', 'Mohon isikan data kelas');
+        }
+        $dataProject = P5Project::where('semester_id', $tapel->semester_id)->orderBy('kelas_id', 'ASC')->get();
         $dataProject->each(function ($project) {
             $subelement_data_array = json_decode($project->subelement_data, true);
 
@@ -38,9 +43,8 @@ class P5ProjectController extends Controller
 
         $dataTema = P5Tema::orderBy('id', 'ASC')->get();
         $dataGuru = Guru::orderBy('id', 'ASC')->get();
-        $dataKelas = Kelas::whereNotIn('tingkatan_id', [1, 2, 3])->orderBy('id', 'ASC')->get();
 
-        return view('admin.p5.project.index', compact('title', 'dataProject', 'dataTema', 'dataGuru', 'dataKelas'));
+        return view('admin.p5.project.index', compact('title', 'tapel', 'dataProject', 'dataTema', 'dataGuru', 'dataKelas'));
     }
 
 

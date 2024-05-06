@@ -15,6 +15,8 @@ class CreateP5ProjectsTable extends Migration
     {
         Schema::create('p5_projects', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('tapel_id');
+            $table->unsignedBigInteger('semester_id');
             $table->unsignedBigInteger('p5_tema_id');
             $table->unsignedBigInteger('kelas_id');
             $table->unsignedBigInteger('guru_id');
@@ -23,6 +25,7 @@ class CreateP5ProjectsTable extends Migration
             $table->json('subelement_data');
             $table->timestamps();
 
+            $table->foreign('semester_id')->references('id')->on('semesters')->onDelete('cascade');
             $table->foreign('p5_tema_id')->references('id')->on('p5_temas')->onDelete('cascade');
             $table->foreign('kelas_id')->references('id')->on('kelas')->onDelete('cascade');
             $table->foreign('guru_id')->references('id')->on('guru')->onDelete('cascade');

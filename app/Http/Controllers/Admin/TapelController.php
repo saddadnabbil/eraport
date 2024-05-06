@@ -114,114 +114,62 @@ class TapelController extends Controller
 
     public function setAcademicYear(Request $request): RedirectResponse
     {
-        // dd($request->all());
         try {
             $validator = Validator::make($request->all(), [
                 'select_tapel_id' => 'required|exists:tapels,id',
-
-                'select_semester_playgroup_id' => 'required|exists:semesters,id',
                 'select_term_playgroup_id' => 'required|exists:terms,id',
-
-                'select_semester_kindergarten_id' => 'required|exists:semesters,id',
-                'select_term_kindergarten_id' => 'required|exists:terms,id',
-
                 'select_semester_primaryschool_id' => 'required|exists:semesters,id',
                 'select_term_primaryschool_id' => 'required|exists:terms,id',
-
                 'select_semester_juniorhighschool_id' => 'required|exists:semesters,id',
                 'select_term_juniorhighschool_id' => 'required|exists:terms,id',
-
                 'select_semester_seniorhighschool_id' => 'required|exists:semesters,id',
                 'select_term_seniorhighschool_id' => 'required|exists:terms,id',
             ]);
 
+            if ($validator->fails()) {
+                throw new \Exception($validator->messages()->first());
+            }
+
             $sekolah = Sekolah::first();
-            $tapel = Tapel::where('id', $request->select_tapel_id)->first();
-            $tapelLama = Tapel::where('status', 1)->first();
-
-            $pg = Tingkatan::where('id', '1')->first();
-            $kg_a = Tingkatan::where('id', '2')->first();
-            $kg_b = Tingkatan::where('id', '3')->first();
-            $ps = Tingkatan::where('id', '4')->first();
-            $jhs = Tingkatan::where('id', '5')->first();
-            $shs = Tingkatan::where('id', '6')->first();
-
             if (!$sekolah) {
                 throw new \Exception('Data Sekolah tidak ditemukan.');
             }
 
-            if ($pg) {
-                // PG dan KG
-                $data_tingkatan_pg_kg = [
-                    'term_id' => $request->select_term_playgroup_id,
-                ];
-                $pg->update($data_tingkatan_pg_kg);
-                $kg_a->update($data_tingkatan_pg_kg);
-                $kg_b->update($data_tingkatan_pg_kg);
+            $tapel = Tapel::findOrFail($request->select_tapel_id);
+            $tapelLama = Tapel::where('status', 1)->first();
+
+            $tingkatanUpdates = [
+                ['id' => 1, 'term_id' => $request->select_term_playgroup_id],
+                ['id' => 2, 'term_id' => $request->select_term_playgroup_id],
+                ['id' => 3, 'term_id' => $request->select_term_playgroup_id],
+                ['id' => 4, 'term_id' => $request->select_term_primaryschool_id, 'semester_id' => $request->select_semester_primaryschool_id],
+                ['id' => 5, 'term_id' => $request->select_term_juniorhighschool_id, 'semester_id' => $request->select_semester_juniorhighschool_id],
+                ['id' => 6, 'term_id' => $request->select_term_seniorhighschool_id, 'semester_id' => $request->select_semester_seniorhighschool_id],
+            ];
+
+            foreach ($tingkatanUpdates as $tingkatanUpdate) {
+                Tingkatan::where('id', $tingkatanUpdate['id'])->update($tingkatanUpdate);
             }
 
-            if ($ps) {
-                // PS
-                $data_tingkatan_ps = [
-                    'term_id' => $request->select_term_primaryschool_id,
-                    'semester_id' => $request->select_semester_primaryschool_id,
-                ];
-                $ps->update($data_tingkatan_ps);
-            }
+            $semesterCounts = [
+                1 => Tingkatan::whereIn('id', [4, 5, 6])->where('semester_id', 1)->count(),
+                2 => Tingkatan::whereIn('id', [4, 5, 6])->where('semester_id', 2)->count(),
+            ];
 
-            if ($jhs) {
-                // JHS
-                $data_tingkatan_jhs = [
-                    'term_id' => $request->select_term_juniorhighschool_id,
-                    'semester_id' => $request->select_semester_juniorhighschool_id,
-                ];
-                $jhs->update($data_tingkatan_jhs);
-            }
+            $termCounts = [
+                1 => Tingkatan::whereIn('id', [1, 2, 3])->where('term_id', 1)->count(),
+                2 => Tingkatan::whereIn('id', [1, 2, 3])->where('term_id', 2)->count(),
+                3 => Tingkatan::whereIn('id', [4, 5, 6])->where('term_id', 1)->count(),
+                4 => Tingkatan::whereIn('id', [4, 5, 6])->where('term_id', 2)->count(),
+            ];
 
-            if ($shs) {
-                // SHS
-                $data_tingkatan_shs = [
-                    'term_id' => $request->select_term_seniorhighschool_id,
-                    'semester_id' => $request->select_semester_seniorhighschool_id,
-                ];
-                $shs->update($data_tingkatan_shs);
-            }
+            $maxSemesterId = array_keys($semesterCounts, max($semesterCounts))[0];
+            $maxTermId = array_keys($termCounts, max($termCounts))[0];
 
-            $data_term_1 = Tingkatan::whereHas('term', function ($query) {
-                $query->where('term_id', 1);
-            })->pluck('id');
-
-            $data_term_2 = Tingkatan::whereHas('term', function ($query) {
-                $query->where('term_id', 2);
-            })->pluck('id');
-
-            $data_term_semester_1 = Tingkatan::whereHas('term', function ($query) {
-                $query->where('semester_id', 1);
-            })->pluck('id');
-
-            $data_term_semester_2 = Tingkatan::whereHas('term', function ($query) {
-                $query->where('semester_id', 2);
-            })->pluck('id');
-
-            if ($data_term_1->count() === count($data_term_1) && $data_term_1->count() >= 3) {
-                $tapel->update([
-                    'term_id' => 1,
-                ]);
-            } elseif ($data_term_2->count() === count($data_term_2) && $data_term_2->count() >= 3) {
-                $tapel->update([
-                    'term_id' => 2,
-                ]);
-            }
-
-            if ($data_term_semester_1->count() === count($data_term_semester_1)  && $data_term_semester_1->count() >= 3) {
-                $tapel->update([
-                    'semester_id' => 1,
-                ]);
-            } elseif ($data_term_semester_2->count() === count($data_term_semester_2) && $data_term_semester_2->count() >= 3) {
-                $tapel->update([
-                    'semester_id' => 2,
-                ]);
-            }
+            $tapel->update([
+                'semester_id' => $maxSemesterId,
+                'term_id' => $maxTermId,
+            ]);
 
             if ($tapelLama->id == $request->select_tapel_id) {
                 $tapelLama->update(['status' => 1]);
@@ -229,14 +177,9 @@ class TapelController extends Controller
                 $tapelLama->update(['status' => 0]);
             }
 
-            $tapel->update([
-                'status' => 1,
-            ]);
+            $tapel->update(['status' => 1]);
 
-            $data_sekolah = [
-                'tapel_id' => $request->select_tapel_id,
-            ];
-            $sekolah->update($data_sekolah);
+            $sekolah->update(['tapel_id' => $request->select_tapel_id]);
 
             session(['tapel_id' => $request->select_tapel_id]);
             session(['semester_id' => $tapel->semester_id]);

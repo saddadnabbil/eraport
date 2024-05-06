@@ -29,46 +29,42 @@ class KelasController extends Controller
         $tapel = Tapel::where('status', 1)->first();
         $data_mapel = Mapel::where('tapel_id', $tapel->id)->get();
 
-        if (count($data_mapel) == 0) {
-            return redirect('admin/mapel')->with('toast_warning', 'Mohon isikan data mata pelajaran');
-        } else {
-            $title = 'Data Kelas';
-            $data_kelas = Kelas::where('tapel_id', $tapel->id)->orderBy('tingkatan_id', 'ASC')->get();
+        $title = 'Data Kelas';
+        $data_kelas = Kelas::where('tapel_id', $tapel->id)->orderBy('tingkatan_id', 'ASC')->get();
 
-            foreach ($data_kelas as $kelas) {
-                $jumlah_anggota =  AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
-                    ->where('anggota_kelas.kelas_id', $kelas->id)
-                    ->where('siswa.status', 1)
-                    ->orderBy('siswa.nama_lengkap', 'ASC')
-                    ->count();
-                $kelas->jumlah_anggota = $jumlah_anggota;
-            }
-
-            $data_guru = Guru::orderBy('id', 'ASC')->get();
-            $data_tingkatan = Tingkatan::orderBy('id', 'ASC')->get();
-            $data_jurusan = Jurusan::orderBy('id', 'ASC')->get();
-
-            $jumlah_kelas_play_group = Kelas::where('tapel_id', $tapel->id)
-                ->where('tingkatan_id', '1')
+        foreach ($data_kelas as $kelas) {
+            $jumlah_anggota =  AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
+                ->where('anggota_kelas.kelas_id', $kelas->id)
+                ->where('siswa.status', 1)
+                ->orderBy('siswa.nama_lengkap', 'ASC')
                 ->count();
-            $jumlah_kelas_kinder_garten_a = Kelas::where('tapel_id', $tapel->id)
-                ->where('tingkatan_id', '2')
-                ->count();
-            $jumlah_kelas_kinder_garten_b = Kelas::where('tapel_id', $tapel->id)
-                ->where('tingkatan_id', '3')
-                ->count();
-            $jumlah_kelas_primary_school = Kelas::where('tapel_id', $tapel->id)
-                ->where('tingkatan_id', '4')
-                ->count();
-            $jumlah_kelas_junior_high_school = Kelas::where('tapel_id', $tapel->id)
-                ->where('tingkatan_id', '5')
-                ->count();
-            $jumlah_kelas_senior_high_school = Kelas::where('tapel_id', $tapel->id)
-                ->where('tingkatan_id', '6')
-                ->count();
-
-            return view('admin.kelas.index', compact('title', 'data_kelas', 'tapel', 'data_guru', 'data_tingkatan', 'data_jurusan', 'jumlah_kelas_play_group', 'jumlah_kelas_kinder_garten_a', 'jumlah_kelas_kinder_garten_b', 'jumlah_kelas_primary_school', 'jumlah_kelas_junior_high_school', 'jumlah_kelas_senior_high_school'));
+            $kelas->jumlah_anggota = $jumlah_anggota;
         }
+
+        $data_guru = Guru::orderBy('id', 'ASC')->get();
+        $data_tingkatan = Tingkatan::orderBy('id', 'ASC')->get();
+        $data_jurusan = Jurusan::orderBy('id', 'ASC')->get();
+
+        $jumlah_kelas_play_group = Kelas::where('tapel_id', $tapel->id)
+            ->where('tingkatan_id', '1')
+            ->count();
+        $jumlah_kelas_kinder_garten_a = Kelas::where('tapel_id', $tapel->id)
+            ->where('tingkatan_id', '2')
+            ->count();
+        $jumlah_kelas_kinder_garten_b = Kelas::where('tapel_id', $tapel->id)
+            ->where('tingkatan_id', '3')
+            ->count();
+        $jumlah_kelas_primary_school = Kelas::where('tapel_id', $tapel->id)
+            ->where('tingkatan_id', '4')
+            ->count();
+        $jumlah_kelas_junior_high_school = Kelas::where('tapel_id', $tapel->id)
+            ->where('tingkatan_id', '5')
+            ->count();
+        $jumlah_kelas_senior_high_school = Kelas::where('tapel_id', $tapel->id)
+            ->where('tingkatan_id', '6')
+            ->count();
+
+        return view('admin.kelas.index', compact('title', 'data_kelas', 'tapel', 'data_guru', 'data_tingkatan', 'data_jurusan', 'jumlah_kelas_play_group', 'jumlah_kelas_kinder_garten_a', 'jumlah_kelas_kinder_garten_b', 'jumlah_kelas_primary_school', 'jumlah_kelas_junior_high_school', 'jumlah_kelas_senior_high_school'));
     }
 
     /**

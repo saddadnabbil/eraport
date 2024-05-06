@@ -30,6 +30,7 @@ use App\Http\Controllers\Controller;
 use App\Models\NilaiEkstrakulikuler;
 use App\Models\AnggotaEkstrakulikuler;
 use App\Models\TkAchivementEventGrade;
+use Illuminate\Support\Facades\Validator;
 
 class CetakRaportTKController extends Controller
 {
@@ -57,6 +58,16 @@ class CetakRaportTKController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'kelas_id' => 'required|exists:kelas,id',
+            'term_id' => 'required|exists:terms,id',
+        ]);
+        if ($validator->fails()) {
+            return back()
+                ->with('toast_error', $validator->messages()->all()[0])
+                ->withInput();
+        }
+
         $title = 'Cetak Raport TK';
         $kelas = Kelas::findorfail($request->kelas_id);
         $tapel = Tapel::where('status', 1)->first();

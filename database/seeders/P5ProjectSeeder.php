@@ -27,6 +27,7 @@ class P5ProjectSeeder extends Seeder
 
         $projects = [
             [
+                'semester_id' => 1,
                 'p5_tema_id' => 1,
                 'kelas_id' => 1,
                 'guru_id' => 1,
@@ -34,6 +35,7 @@ class P5ProjectSeeder extends Seeder
                 'description' => 'Description of Project 1',
             ],
             [
+                'semester_id' => 2,
                 'p5_tema_id' => 2,
                 'kelas_id' => 2,
                 'guru_id' => 2,
@@ -45,6 +47,7 @@ class P5ProjectSeeder extends Seeder
         foreach ($projects as $project) {
             P5Project::create([
                 'p5_tema_id' => $project['p5_tema_id'],
+                'semester_id' => $project['semester_id'],
                 'kelas_id' => $project['kelas_id'],
                 'guru_id' => $project['guru_id'],
                 'name' => $project['name'],

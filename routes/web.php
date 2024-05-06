@@ -368,6 +368,12 @@ Route::group(['middleware' => ['auth']], function () {
                 'destroy' => 'p5.project.destroy',
             ]);
             Route::post('p5/project/nilai/{id}', 'Admin\P5\P5ProjectController@nilai')->name('p5.project.nilai');
+            Route::resource('p5/raport', 'Admin\P5\CetakRaportP5Controller')->only(['index', 'store', 'show'])->names([
+                'index' => 'p5.raport.index',
+                'store' => 'p5.raport.store',
+                'show' => 'p5.raport.show',
+            ]);
+            Route::get('p5/raport/export/{id}', 'Admin\KM\CetakRaportSemesterController@export')->name('p5.raport.export');
         });
     });
     // End Route User Admin
