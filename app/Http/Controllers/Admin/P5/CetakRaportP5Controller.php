@@ -3,12 +3,17 @@
 namespace App\Http\Controllers\Admin\P5;
 
 use PDF;
+use App\Models\Guru;
 use App\Models\Kelas;
 use App\Models\Tapel;
 use App\Models\Sekolah;
 use App\Models\Semester;
+use App\Models\P5Element;
+use App\Models\P5Project;
 use App\Models\AnggotaKelas;
+use App\Models\P5Subelement;
 use Illuminate\Http\Request;
+use App\Models\P5NilaiProject;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
@@ -57,11 +62,7 @@ class CetakRaportP5Controller extends Controller
             ->whereNotIn('tingkatan_id', [1, 2, 3])
             ->get();
 
-        $data_anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
-            ->orderBy('siswa.nama_lengkap', 'ASC')
-            ->where('anggota_kelas.kelas_id', $kelas->id)
-            ->where('siswa.status', 1)
-            ->get();
+        $data_anggota_kelas = AnggotaKelas::where('kelas_id', $request->kelas_id)->get();
 
         $paper_size = 'A4';
         $orientation = 'potrait';
@@ -77,13 +78,64 @@ class CetakRaportP5Controller extends Controller
      */
     public function show(Request $request, $id)
     {
+        $validator = Validator::make($request->all(), [
+            'paper_size' => 'required',
+            'orientation' => 'required',
+            'semester_id' => 'required|exists:semesters,id',
+        ]);
+
+        if ($validator->fails()) {
+            return back()
+                ->with('toast_error', $validator->messages()->all()[0])
+                ->withInput();
+        }
+
         $sekolah = Sekolah::first();
         $anggota_kelas = AnggotaKelas::findorfail($id);
         $tapel = Tapel::where('status', 1)->first();
         $semester = Semester::findorfail($request->semester_id);
 
         $title = 'Kelengkapan Raport';
-        $kelengkapan_raport = PDF::loadview('admin.p5.raportp5.raport', compact('title', 'sekolah', 'anggota_kelas', 'semester'))->setPaper($request->paper_size, $request->orientation);
+
+        $tapel = Tapel::where('status', 1)->first();
+        $dataNilaiProject = P5NilaiProject::where('anggota_kelas_id', $id)->get();
+        $dataProject = P5Project::with('kelas', 'p5_tema')->whereIn('id', $dataNilaiProject->pluck('p5_project_id'))->get();
+        $dataSubelement = P5Subelement::orderBy('p5_element_id', 'ASC')->get();
+
+        // Langkah 1: Loop melalui setiap proyek
+        foreach ($dataProject as $project) {
+            // Langkah 2: Mendekode data JSON menjadi array PHP
+            $subelements = json_decode($project->subelement_data, true);
+
+            // Langkah 3: Menyaring hanya elemen-elemen yang memiliki "has_active" => true
+            $activeSubelements = array_filter($subelements, function ($subelement) {
+                return $subelement['has_active'] == true;
+            });
+
+            // Langkah 4: Mengumpulkan subelemen yang sesuai dari model P5Subelement
+            $project->subelement = P5Subelement::whereIn('id', array_column($activeSubelements, 'subelement_id'))->get();
+            foreach ($project->subelement as $subelement) {
+                $project->subelement = [
+                    'element' => $subelement->element,
+                    'subelement' => $subelement
+                ];
+            }
+        }
+
+
+        // $dataProject sekarang memiliki properti tambahan 'subelement' untuk setiap proyek
+
+        foreach ($dataNilaiProject as $nilai) {
+            $dataGrade = json_decode($nilai->grade_data);
+            foreach ($dataGrade as $key => $value) {
+                $dataSubelement = $dataSubelement->where('id', $value->subelement_id)->first();
+                $value->subelement = $dataSubelement;
+            }
+        }
+
+
+        $kelengkapan_raport = PDF::loadview('admin.p5.raportp5.raport', compact('title', 'sekolah', 'anggota_kelas', 'semester', 'tapel', 'dataProject', 'dataSubelement'))->setPaper($request->paper_size, $request->orientation);
+
         return $kelengkapan_raport->stream('KELENGKAPAN RAPORT ' . $anggota_kelas->siswa->nama_lengkap . ' (' . $anggota_kelas->kelas->nama_kelas . ').pdf');
     }
 

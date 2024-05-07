@@ -19,7 +19,7 @@ class AnggotaKelas extends Model
 
     public function siswa()
     {
-        return $this->belongsTo('App\Models\Siswa');
+        return $this->belongsTo('App\Models\Siswa', 'siswa_id');
     }
 
     public function kelas()
@@ -66,11 +66,6 @@ class AnggotaKelas extends Model
     public function nilai_projects()
     {
         return $this->hasMany('App\Models\P5NilaiProject');
-    }
-
-    public function anggota_kelas()
-    {
-        return $this->hasOne('App\Models\AnggotaKelas');
     }
 
     public function trash()

@@ -11,8 +11,8 @@
             $checkRouteSemesterReport = request()->routeIs('adminraportsemesterkm.*');
             $dynamicRouteSemesterReport = route('adminraportsemesterkm.index');
 
-            $checkRouteSemesterReport = request()->routeIs('p5.raport.*');
-            $dynamicRouteSemesterReport = route('p5.raport.index');
+            $checkRouteP5Report = request()->routeIs('p5.raport.*');
+            $dynamicRouteP5Report = route('p5.raport.index');
             break;
         case 'Teacher':
             $allowedRoutes = ['kirimnilaiakhirkm.*', 'kirimnilaiakhirkm.*'];
@@ -23,8 +23,8 @@
             $checkRouteSemesterReport = request()->routeIs('adminraportsemesterkm.*');
             $dynamicRouteSemesterReport = route('adminraportsemesterkm.index');
 
-            $checkRouteSemesterReport = request()->routeIs('p5.raport.*');
-            $dynamicRouteSemesterReport = route('p5.raport.*');
+            $checkRouteP5Report = request()->routeIs('p5.raport.*');
+            $dynamicRouteP5Report = route('p5.raport.*');
             break;
     }
 @endphp
@@ -50,8 +50,8 @@
         ],
         [
             'name' => 'P5BK Report',
-            'route' => $dynamicRouteSemesterReport,
-            'isActive' => $checkRouteSemesterReport,
+            'route' => $dynamicRouteP5Report,
+            'isActive' => $checkRouteP5Report,
             'childHasArrow' => false,
         ],
     ],

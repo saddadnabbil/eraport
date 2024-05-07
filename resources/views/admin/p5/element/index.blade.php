@@ -103,7 +103,7 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Dimensi</th>
-                                            <th>Name</th>
+                                            <th>Element</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>

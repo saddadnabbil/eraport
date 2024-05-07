@@ -60,6 +60,7 @@ class P5ProjectController extends Controller
         $validator = Validator::make($request->all(), [
             'p5_tema_id' => 'required|exists:p5_temas,id',
             'guru_id' => 'required|exists:guru,id',
+            'semester_id' => 'required|exists:semesters,id',
             'kelas_id' => 'required|exists:kelas,id',
         ]);
 
@@ -156,6 +157,7 @@ class P5ProjectController extends Controller
 
     public function show($id)
     {
+        $tapel = Tapel::where('status', 1)->first();
         $project = P5Project::with('kelas', 'p5_tema')->findOrFail($id);
         $title = 'Nilai P5 Project - ' . $project->kelas->nama_kelas . ' - ' . $project->p5_tema->name;
         $dataGuru = Guru::orderBy('id', 'ASC')->get();
@@ -184,7 +186,7 @@ class P5ProjectController extends Controller
             return $subelement->has_active ? 0 : 1;
         })->values();
 
-        return view('admin.p5.project.show', compact('title', 'project', 'dataGuru', 'dataSiswa', 'dataSubelement', 'gradeData', 'catatanProses'));
+        return view('admin.p5.project.show', compact('title', 'tapel', 'project', 'dataGuru', 'dataSiswa', 'dataSubelement', 'gradeData', 'catatanProses'));
     }
 
     public function nilai(Request $request, $id)

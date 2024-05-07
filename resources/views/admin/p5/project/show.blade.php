@@ -157,8 +157,9 @@
                                                     </tr>
                                                     <tr>
                                                         <td class="text-center">
-                                                            <a href="{{ route('p5.project.show', $project->id) }}"
-                                                                class="btn btn-danger px-5">Rapor <br> P5BK</a>
+                                                            <button id="printReportBtn" class="btn btn-danger px-5">
+                                                                Rapor <br> P5BK
+                                                            </button>
                                                         </td>
                                                         <td
                                                             colspan="{{ $dataSubelement->where('has_active', true)->count() }}">
@@ -193,7 +194,16 @@
     </div>
 @endsection
 
-
+@push('custom-scripts')
+    <!-- JavaScript untuk membuka halaman Print Report -->
+    <script>
+        document.getElementById("printReportBtn").addEventListener("click", function() {
+            var printReportUrl = "{{ route('p5.raport.show', $siswa->anggota_kelas->first()->id) }}" +
+                "?paper_size=A4&orientation=potrait&semester_id={{ $tapel->semester_id }}";
+            window.open(printReportUrl, "_blank");
+        });
+    </script>
+@endpush
 
 @section('footer')
     @include('layouts.main.footer')

@@ -101,7 +101,7 @@
     }
 
     .pad-2-1 {
-        padding-top: 2pt;
+        padding-top: 3pt;
         padding-bottom: 1pt;
     }
 

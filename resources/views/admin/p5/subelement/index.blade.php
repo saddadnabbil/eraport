@@ -125,7 +125,7 @@
                                             <th>No</th>
                                             <th>Dimensi</th>
                                             <th>Element</th>
-                                            <th>Name</th>
+                                            <th>Subelement</th>
                                             <th>Description</th>
                                             <th>Action</th>
                                         </tr>

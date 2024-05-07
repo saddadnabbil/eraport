@@ -31,7 +31,7 @@ class Siswa extends Model
 
     public function anggota_kelas()
     {
-        return $this->hasMany('App\Models\AnggotaKelas')->withTrashed();
+        return $this->hasMany('App\Models\AnggotaKelas', 'siswa_id')->withTrashed();
     }
 
     public function siswa_keluar()

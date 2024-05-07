@@ -62,6 +62,7 @@
                                     </div>
                                     <form action="{{ route('p5.project.store') }}" method="POST">
                                         @csrf
+                                        <input type="hidden" name="semester_id" value="{{ $tapel->semester_id }}">
                                         <div class="modal-body">
                                             <div class="form-group row">
                                                 <label for="pt_tema_id" class="col-sm-3 col-form-label">Tema Projek</label>

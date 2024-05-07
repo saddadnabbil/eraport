@@ -6,26 +6,39 @@
     <title>{{ $title }} | {{ $anggota_kelas->siswa->nama_lengkap }} ({{ $anggota_kelas->siswa->nis }})</title>
     <link rel="icon" type="image/png" href="./assets/dist/img/logo.png">
     <style>
-        /* Reset CSS */
-        body,
-        h1,
-        h2,
-        h3,
-        p,
-        td {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-        }
-
-        /* Main styles */
+        /* main */
         body {
             padding: 30px;
+            font-family: Arial, sans-serif;
+            color: black;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            text-indent: 0;
+        }
+
+        .w-100 {
+            width: 100%
+        }
+
+        h1,
+        .h2,
+        h3 {
+            color: black;
+            font-family: Arial, sans-serif;
+            font-style: normal;
+            font-weight: bold;
+            text-decoration: none;
         }
 
         h1 {
-            font-size: 11pt;
-            font-weight: bold;
+            font-size: 15px;
+        }
+
+        h2 {
+            font-size: 11px;
         }
 
         h3 {
@@ -33,42 +46,49 @@
         }
 
         p {
+            font-style: normal;
             font-size: 6pt;
+            line-height: 1.5;
         }
 
-        table {
-            border-collapse: collapse;
-            width: 100%;
+        p.deskripsi-project {
+            font-size: 10px;
         }
 
-        td,
-        th {
-            border: 1px solid black;
-            padding: 2pt;
+        .header .title {
+            font-size: 16px;
         }
 
-        .center-align {
+        .header .sub-title {
+            font-size: 14px;
+        }
+
+        .text-align-center {
             text-align: center;
         }
 
-        .left-align {
+        .text-align-left {
             text-align: left;
         }
 
-        .right-align {
+        .text-align-right {
             text-align: right;
         }
 
-        .no-indent {
-            text-indent: 0;
+        .p-0 {
+            padding: 0;
         }
 
-        .pad-179 {
-            padding: 0 20pt;
+        .mt-15 {
+            margin-top: 15px;
         }
 
-        .line-height-123 {
-            line-height: 123%;
+        .mb-15 {
+            margin-bottom: 15px;
+        }
+
+        .mb-5 {
+            margin-bottom: 5px;
         }
 
         .watermarked {
@@ -93,24 +113,158 @@
         @media print {
             td {
                 -webkit-print-color-adjust: exact;
+                /* For Chrome */
                 print-color-adjust: exact;
+                /* For other browsers */
             }
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 12px;
+            color: #333;
+            padding: 10px 0;
+            background-color: #f9f9f9;
+            border-top: 1px solid #ccc;
+        }
+
+        .pentunjuk-penilaian th,
+        .pentunjuk-penilaian td {
+            text-align: left;
+            width: 70%;
         }
     </style>
 </head>
 
 <body>
     <div class="raport watermarked">
-        <table class="header-table">
-            <!-- Header table content -->
-            
+        <table style="width: 100%; border-collapse: collapse;">
+            <tr>
+                <td>
+                    <img src="./assets/dist/img/logo-with-text.png" alt="" width="135" height="60">
+                </td>
+
+                <td>
+                    <h1 class="text-align-center header">
+                        <span class="title">GLOBAL INDONESIA SCHOOL
+                        </span>
+                        <br>
+
+                        <span class="sub-title">
+                            RAPOR PROJEK PENGUATAN PROFIL PELAJAR PANCASILA
+                            <br>
+                            {{ str_replace('-', ' / ', $anggota_kelas->kelas->tapel->tahun_pelajaran) }}
+                        </span>
+                    </h1>
+                    <p class="text-align-center pad-126 line-height-123" style="padding: 0 60pt">
+                        Address : {{ $sekolah->alamat }} Phone: {{ $sekolah->nomor_telpon }}
+                    </p>
+                </td>
+
+                <td>
+                    <img src="{{ public_path() . '/assets/dist/img/tut-wuri-handayani.png' }}" alt=""
+                        width="80px" height="80px">
+                </td>
+            </tr>
         </table>
-        <table class="information-container">
-            <!-- Information container content -->
+
+        <!-- information name -->
+        <table class="w-100">
+            <tr>
+                <td style="width: 6%">
+                    <h3>Name</h3>
+                </td>
+                <td style="width: 64%">
+                    <h3>: {{ $anggota_kelas->siswa->nama_lengkap }}</h3>
+                </td>
+                <td style="width: 12%">
+                    <h3>Homeroom</h3>
+                </td>
+                <td style="width: 24%">
+                    <h3>: {{ $anggota_kelas->kelas->nama_kelas }}</h3>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 6%">
+                    <h3>NISN</h3>
+                </td>
+                <td style="width: 73%">
+                    <h3>: {{ $anggota_kelas->siswa->nisn }}</h3>
+                </td>
+                <td style="width: 19%">
+                    <h3>Homeroom Teacher</h3>
+                </td>
+                <td style="width: 19%">
+                    <h3>: {{ $anggota_kelas->kelas->guru->karyawan->nama_lengkap }}</h3>
+                </td>
+            </tr>
         </table>
-        <table>
-            <!-- Table content -->
+
+        <div style="margin: 15px 2px">
+            @foreach ($dataProject as $key => $project)
+                <div class="mb-5">
+                    <h3>Projek {{ $key + 1 }} | {{ $project->name }}</h3>
+                    <p class="deskripsi-project">
+                        {{ $project->description }}
+                    </p>
+                </div>
+            @endforeach
+        </div>
+
+        <table class="pentunjuk-penilaian mt-15 p-0" style="padding: 0;">
+            <tr>
+                <th>
+                    <h3>BB. Belum Berkembang</h3>
+                </th>
+                <th>
+                    <h3>MB. Mulai Berkembang</h3>
+                </th>
+                <th>
+                    <h3>BSH. Berkembang Sesuai Harapan</h3>
+                </th>
+                <th>
+                    <h3>SB. Sangat Berkembang</h3>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <p class="deskripsi-project">Siswa masih membutuhkan bimbingan dalam mengembangkan kemampuan</p>
+                </td>
+                <td>
+                    <p class="deskripsi-project">Siswa mulai mengembangkan kemampuan namun masih belum ajek</p>
+                </td>
+                <td>
+                    <p class="deskripsi-project">Siswa telah mengembangkan kemampuan hingga berada dalam tahap ajek</p>
+                </td>
+                <td>
+                    <p class="deskripsi-project">Siswa mengembangkan kemampuannya melampaui harapan</p>
+                </td>
+            </tr>
         </table>
+
+        @foreach ($dataProject as $key => $project)
+            <h2>{{ $key + 1 }}. {{ $project->name }}</h2>
+            <table class="w-100">
+                <tr>
+                    <td style="width: 60px"></td>
+                    <td style="width: 10px">
+                        <p>BB</p>
+                    </td>
+                    <td style="width: 10px">
+                        <p>MB</p>
+                    </td>
+                    <td style="width: 10px">
+                        <p>BSH</p>
+                    </td>
+                    <td style="width: 10px">
+                        <p>SB</p>
+                    </td>
+                </tr>
+            </table>
+        @endforeach
     </div>
 </body>
 

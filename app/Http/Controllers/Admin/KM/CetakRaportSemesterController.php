@@ -68,11 +68,7 @@ class CetakRaportSemesterController extends Controller
             ->whereNotIn('tingkatan_id', [1, 2, 3])
             ->get();
 
-        $data_anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
-            ->orderBy('siswa.nama_lengkap', 'ASC')
-            ->where('anggota_kelas.kelas_id', $kelas->id)
-            ->where('siswa.status', 1)
-            ->get();
+        $data_anggota_kelas = AnggotaKelas::where('kelas_id', $request->kelas_id)->get();
 
         $paper_size = 'A4';
         $orientation = 'potrait';
