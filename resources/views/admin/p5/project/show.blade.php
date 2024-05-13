@@ -111,7 +111,7 @@
                                                         @foreach ($dataSubelement->where('has_active', true) as $subelement)
                                                             <td class="text-center">
                                                                 <input type="hidden"
-                                                                    name="subelement_id[{{ $siswa->id }}][]"
+                                                                    name="subelement_id[{{ $siswa->anggota_kelas->first()->id }}][]"
                                                                     value="{{ $subelement->id }}">
                                                                 <input type="hidden"
                                                                     name="anggota_kelas_id[{{ $siswa->id }}]"
@@ -125,18 +125,18 @@
                                                                                 name="grade[{{ $siswa->anggota_kelas->first()->id }}][{{ $subelement->id }}]"
                                                                                 class="form-control form-select">
                                                                                 <option value="">-</option>
-                                                                                <option value="SB"
-                                                                                    {{ $grade['grade'] == 'SB' ? 'selected' : '' }}>
-                                                                                    SB</option>
-                                                                                <option value="BSH"
-                                                                                    {{ $grade['grade'] == 'BSH' ? 'selected' : '' }}>
-                                                                                    BSH</option>
-                                                                                <option value="MB"
-                                                                                    {{ $grade['grade'] == 'MB' ? 'selected' : '' }}>
-                                                                                    MB</option>
                                                                                 <option value="BB"
                                                                                     {{ $grade['grade'] == 'BB' ? 'selected' : '' }}>
                                                                                     BB</option>
+                                                                                <option value="MB"
+                                                                                    {{ $grade['grade'] == 'MB' ? 'selected' : '' }}>
+                                                                                    MB</option>
+                                                                                <option value="BSH"
+                                                                                    {{ $grade['grade'] == 'BSH' ? 'selected' : '' }}>
+                                                                                    BSH</option>
+                                                                                <option value="SB"
+                                                                                    {{ $grade['grade'] == 'SB' ? 'selected' : '' }}>
+                                                                                    SB</option>
                                                                             </select>
                                                                         @endif
                                                                     @endforeach

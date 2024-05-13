@@ -128,27 +128,22 @@ class CetakRaportTKController extends Controller
             $raport->render();
             $dompdf = $raport->getDomPDF();
             $font = $dompdf->getFontMetrics()->get_font("Arial", "bold");
-            $width = 193.8; // A4 width in mm
-            $height = 290; // A4 height in mm
-            $margin = 10; // Adjust the margin as needed
+            $width = 193.8;
+            $height = 290;
+            $margin = 10;
             $left = 22.5;
 
-            // Convert mm to points (1 mm = approximately 2.83 points)
             $width *= 2.83;
             $height *= 2.83;
 
-            // Calculate the x and y coordinates for the bottom right corner
             $x = $width - $margin;
             $y = $height - $margin;
 
-            // Set font size and color for the "Siswa / Nisn" text
             $font_size = 6;
-            $font_color = array(0, 0, 0); // Black
+            $font_color = array(0, 0, 0);
 
-            // Add "Siswa / Nisn" text to the bottom left corner
             $dompdf->get_canvas()->page_text($left, $y, $nama . " ( "  . $nisn . ' ' . $kelas . " ) " . $tapel->tahun_pelajaran, $font, $font_size, $font_color, 0, 0, 0, 'L');
 
-            // Add "Page {PAGE_NUM} / {PAGE_COUNT}" text to the bottom right corner
             $dompdf->get_canvas()->page_text($x, $y, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, $font_size, $font_color, 0, 0, 0, 'R');
 
             return $raport->stream('RAPORT ' . $anggota_kelas->siswa->nama_lengkap . ' (' . $anggota_kelas->kelas->nama_kelas . ').pdf');
@@ -189,28 +184,20 @@ class CetakRaportTKController extends Controller
             $raport->render();
             $dompdf = $raport->getDomPDF();
             $font = $dompdf->getFontMetrics()->get_font("Arial", "bold");
-            $width = 193.8; // A4 width in mm
-            $height = 290; // A4 height in mm
-            $margin = 10; // Adjust the margin as needed
-            $left = 22.5;
+            $margin = 10; // margin in points
+            $width = 193.8 * 2.83; // width of the page in points
+            $height = 290 * 2.83; // height of the page in points
 
-            // Convert mm to points (1 mm = approximately 2.83 points)
-            $width *= 2.83;
-            $height *= 2.83;
-
-            // Calculate the x and y coordinates for the bottom right corner
             $x = $width - $margin;
             $y = $height - $margin;
+            $left = 22.5;
 
-            // Set font size and color for the "Siswa / Nisn" text
             $font_size = 6;
-            $font_color = array(0, 0, 0); // Black
+            $font_color_black = array(0, 0, 0); // RGB for black color
 
-            // Add "Siswa / Nisn" text to the bottom left corner
-            $dompdf->get_canvas()->page_text($left, $y,   $kelas->nama_kelas . $tapel->tahun_pelajaran, $font, $font_size, $font_color, 0, 0, 0, 'L');
+            $dompdf->get_canvas()->page_text($left, $y, $kelas->nama_kelas . $tapel->tahun_pelajaran, $font, $font_size, $font_color_black, 0, 0, 0, 'L');
 
-            // Add "Page {PAGE_NUM} / {PAGE_COUNT}" text to the bottom right corner
-            $dompdf->get_canvas()->page_text($x, $y, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, $font_size, $font_color, 0, 0, 0, 'R');
+            $dompdf->get_canvas()->page_text($x, $y, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, $font_size, $font_color_black, 0, 0, 0, 'R');
 
             return $raport->stream('RAPORT ' . $kelas->nama_kelas . '.pdf');
         }

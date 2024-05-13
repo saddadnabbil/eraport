@@ -30,6 +30,14 @@ class TkPointController extends Controller
 
     public function create(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'tingkatan_id' => 'required|exists:tingkatans,id',
+            'term_id' => 'required|exists:terms,id',
+        ]);
+
+        if ($validator->fails()) {
+            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+        }
         $title = 'Point';
         $data_element = TkElement::where('tingkatan_id', $request->tingkatan_id)->get();
         $data_topic = TkTopic::whereIn('tk_element_id', $data_element->pluck('id'))->get();

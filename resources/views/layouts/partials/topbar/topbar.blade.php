@@ -30,8 +30,7 @@
             <!-- ============================================================== -->
             <!-- End Logo -->
             <!-- ============================================================== -->
-            <div class="navbar-collapse collapse d-flex align-items-center justify-content-center"
-                id="navbarSupportedContent">
+            <div class="navbar-collapse collapse " id="navbarSupportedContent">
                 <!-- ============================================================== -->
                 <!-- toggle and nav items -->
                 <!-- ============================================================== -->
@@ -128,6 +127,79 @@
                 <!-- Right side toggle and nav items -->
                 <!-- ============================================================== -->
                 <ul class="navbar-nav float-end">
+                    <!-- Notification -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle pl-md-3 position-relative" href="javascript:void(0)"
+                            id="bell" role="button" data-bs-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                            <span><i data-feather="bell" class="svg-icon"></i></span>
+                            <span class="badge text-bg-primary notify-no rounded-circle">5</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-center mailbox animated bounceInDown">
+                            <ul class="list-style-none">
+                                <li>
+                                    <div class="message-center notifications position-relative">
+                                        <!-- Message -->
+                                        <a href="javascript:void(0)"
+                                            class="message-item d-flex align-items-center border-bottom px-3 py-2">
+                                            <div class="btn btn-danger rounded-circle btn-circle"><i
+                                                    data-feather="airplay" class="text-white"></i></div>
+                                            <div class="w-75 d-inline-block v-middle ps-2">
+                                                <h6 class="message-title mb-0 mt-1">Luanch Admin</h6>
+                                                <span class="font-12 text-nowrap d-block text-muted">Just see
+                                                    the my new
+                                                    admin!</span>
+                                                <span class="font-12 text-nowrap d-block text-muted">9:30 AM</span>
+                                            </div>
+                                        </a>
+                                        <!-- Message -->
+                                        <a href="javascript:void(0)"
+                                            class="message-item d-flex align-items-center border-bottom px-3 py-2">
+                                            <span class="btn btn-success text-white rounded-circle btn-circle"><i
+                                                    data-feather="calendar" class="text-white"></i></span>
+                                            <div class="w-75 d-inline-block v-middle ps-2">
+                                                <h6 class="message-title mb-0 mt-1">Event today</h6>
+                                                <span class="font-12 text-nowrap d-block text-muted text-truncate">Just
+                                                    a reminder that you have event</span>
+                                                <span class="font-12 text-nowrap d-block text-muted">9:10 AM</span>
+                                            </div>
+                                        </a>
+                                        <!-- Message -->
+                                        <a href="javascript:void(0)"
+                                            class="message-item d-flex align-items-center border-bottom px-3 py-2">
+                                            <span class="btn btn-info rounded-circle btn-circle"><i
+                                                    data-feather="settings" class="text-white"></i></span>
+                                            <div class="w-75 d-inline-block v-middle ps-2">
+                                                <h6 class="message-title mb-0 mt-1">Settings</h6>
+                                                <span class="font-12 text-nowrap d-block text-muted text-truncate">You
+                                                    can customize this template
+                                                    as you want</span>
+                                                <span class="font-12 text-nowrap d-block text-muted">9:08 AM</span>
+                                            </div>
+                                        </a>
+                                        <!-- Message -->
+                                        <a href="javascript:void(0)"
+                                            class="message-item d-flex align-items-center border-bottom px-3 py-2">
+                                            <span class="btn btn-primary rounded-circle btn-circle"><i
+                                                    data-feather="box" class="text-white"></i></span>
+                                            <div class="w-75 d-inline-block v-middle ps-2">
+                                                <h6 class="message-title mb-0 mt-1">Pavan kumar</h6> <span
+                                                    class="font-12 text-nowrap d-block text-muted">Just
+                                                    see the my admin!</span>
+                                                <span class="font-12 text-nowrap d-block text-muted">9:02 AM</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a class="nav-link pt-3 text-center text-dark" href="javascript:void(0);">
+                                        <strong>Check all notifications</strong>
+                                        <i class="fa fa-angle-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-bs-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
@@ -153,11 +225,13 @@
 
                             @if (Auth::user()->hasRole('Teacher'))
                                 @if (session()->get('akses_sebagai') == 'Guru Mapel' && session()->get('cek_wali_kelas') == true)
-                                    <a class="dropdown-item" href="{{ route('akses') }}"><i data-feather="toggle-right"
-                                            class="svg-icon me-2 ms-1"></i> Change to Homeroom</a>
+                                    <a class="dropdown-item" href="{{ route('akses') }}"><i
+                                            data-feather="toggle-right" class="svg-icon me-2 ms-1"></i> Change to
+                                        Homeroom</a>
                                 @elseif (session()->get('akses_sebagai') == 'Wali Kelas')
-                                    <a class="dropdown-item" href="{{ route('akses') }}"><i data-feather="toggle-left"
-                                            class="svg-icon me-2 ms-1"></i> Change to Teacher</a>
+                                    <a class="dropdown-item" href="{{ route('akses') }}"><i
+                                            data-feather="toggle-left" class="svg-icon me-2 ms-1"></i> Change to
+                                        Teacher</a>
                                 @endif
                             @endif
                             <div class="dropdown-divider"></div>

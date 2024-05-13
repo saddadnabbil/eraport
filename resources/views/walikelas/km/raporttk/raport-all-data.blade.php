@@ -293,11 +293,39 @@
     .page-break {
         page-break-after: always;
     }
+
+    #content {
+        display: table;
+    }
+
+    #pageFooter {
+        display: table-footer-group;
+    }
+
+    #pageFooter:after {
+        counter-increment: page;
+        content: "Page " counter(page);
+        font-size: 12px;
+        /* Adjust font size as needed */
+        color: #555;
+        /* Adjust color as needed */
+        position: fixed;
+        /* Ensures it stays at the bottom of the page */
+        bottom: 20px;
+        /* Adjust distance from bottom as needed */
+        left: 50%;
+        /* Positions it horizontally at the center */
+        transform: translateX(-50%);
+        /* Centers it horizontally */
+    }
 </style>
 
 <body>
-    @foreach ($data_anggota_kelas as $anggota_kelas)
+    @foreach ($data_anggota_kelas as $key => $anggota_kelas)
         <div class="raport watermarked">
+            <div id="content">
+                <div id="pageFooter"></div>
+            </div>
             <table class="header-table" style="width: 100%; border-collapse: collapse">
                 <tr>
                     <td class="no-indent left-align" style="vertical-align: middle">
@@ -667,7 +695,9 @@
 
         </div>
         {{-- page break --}}
-        <div class="page-break"></div>
+        @if ($key !== count($data_anggota_kelas) - 1)
+            <div class="page-break"></div>
+        @endif
     @endforeach
 
 </body>

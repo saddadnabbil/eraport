@@ -102,28 +102,20 @@ class CetakRaportP5Controller extends Controller
         $dataProject = P5Project::with('kelas', 'p5_tema')->whereIn('id', $dataNilaiProject->pluck('p5_project_id'))->get();
         $dataSubelement = P5Subelement::orderBy('p5_element_id', 'ASC')->get();
 
-        // Langkah 1: Loop melalui setiap proyek
         foreach ($dataProject as $project) {
-            // Langkah 2: Mendekode data JSON menjadi array PHP
             $subelements = json_decode($project->subelement_data, true);
 
-            // Langkah 3: Menyaring hanya elemen-elemen yang memiliki "has_active" => true
             $activeSubelements = array_filter($subelements, function ($subelement) {
                 return $subelement['has_active'] == true;
             });
 
-            // Langkah 4: Mengumpulkan subelemen yang sesuai dari model P5Subelement
-            $project->subelement = P5Subelement::whereIn('id', array_column($activeSubelements, 'subelement_id'))->get();
-            foreach ($project->subelement as $subelement) {
-                $project->subelement = [
-                    'element' => $subelement->element,
-                    'subelement' => $subelement
-                ];
+
+            $project->active_subelement = P5Subelement::whereIn('id', array_column($activeSubelements, 'subelement_id'))->get();
+            foreach ($project->active_subelement as $subelement) {
+                $subelement->element_name = $subelement->element->name;
+                $subelement->dimensi_name = $subelement->element->dimensi->name;
             }
         }
-
-
-        // $dataProject sekarang memiliki properti tambahan 'subelement' untuk setiap proyek
 
         foreach ($dataNilaiProject as $nilai) {
             $dataGrade = json_decode($nilai->grade_data);
@@ -133,8 +125,7 @@ class CetakRaportP5Controller extends Controller
             }
         }
 
-
-        $kelengkapan_raport = PDF::loadview('admin.p5.raportp5.raport', compact('title', 'sekolah', 'anggota_kelas', 'semester', 'tapel', 'dataProject', 'dataSubelement'))->setPaper($request->paper_size, $request->orientation);
+        $kelengkapan_raport = PDF::loadview('admin.p5.raportp5.raport', compact('title', 'sekolah', 'anggota_kelas', 'semester', 'tapel', 'dataProject', 'dataSubelement', 'dataNilaiProject'))->setPaper($request->paper_size, $request->orientation);
 
         return $kelengkapan_raport->stream('KELENGKAPAN RAPORT ' . $anggota_kelas->siswa->nama_lengkap . ' (' . $anggota_kelas->kelas->nama_kelas . ').pdf');
     }

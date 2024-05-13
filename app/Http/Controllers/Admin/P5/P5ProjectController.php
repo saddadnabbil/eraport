@@ -191,6 +191,7 @@ class P5ProjectController extends Controller
 
     public function nilai(Request $request, $id)
     {
+        // dd($request->all());
         // Validasi input
         $validator = Validator::make($request->all(), [
             'subelement_id' => 'required|array',
@@ -208,10 +209,10 @@ class P5ProjectController extends Controller
                 ->withInput();
         }
 
-        foreach ($request->anggota_kelas_id as $key => $anggotaKelasId) {
-            $subelements = $request->subelement_id[$key] ?? [];
-            $grades = $request->grade[$key] ?? [];
-            $catatan = $request->catatan[$key] ?? '';
+        foreach ($request->anggota_kelas_id as $anggotaKelasId) {
+            $subelements = $request->subelement_id[$anggotaKelasId] ?? [];
+            $grades = $request->grade[$anggotaKelasId] ?? [];
+            $catatan = $request->catatan[$anggotaKelasId] ?? '';
 
             $grade_data = [];
 

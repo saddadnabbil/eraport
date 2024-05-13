@@ -44,25 +44,25 @@
                                 <form action="{{ route('tkpoint.create') }}" method="GET">
                                     @csrf
                                     <div class="form-group row">
-                                        <label for="tingkatan_id" class="col-sm-2 col-form-label">Tingkatan</label>
-                                        <div class="col-sm-4">
-                                            <select class="form-control form-select select2" name="tingkatan_id"
-                                                style="width: 100%;" required">
-                                                <option value="">-- Pilih Tingkatan --</option>
-                                                @foreach ($data_tingkatan as $tingkatan)
-                                                    <option value="{{ $tingkatan->id }}">
-                                                        {{ $tingkatan->nama_tingkatan }}
-                                                @endforeach
-                                            </select>
-                                        </div>
                                         <label for="term_id" class="col-sm-2 col-form-label">Term</label>
                                         <div class="col-sm-4">
                                             <select class="form-control form-select select2" name="term_id"
-                                                style="width: 100%;" required onchange="this.form.submit();">
+                                                style="width: 100%;" required>
                                                 <option value="">-- Pilih Term --</option>
                                                 @foreach ($data_term as $term)
                                                     <option value="{{ $term->id }}">
                                                         {{ $term->term }}
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <label for="tingkatan_id" class="col-sm-2 col-form-label">Tingkatan</label>
+                                        <div class="col-sm-4">
+                                            <select class="form-control form-select select2" name="tingkatan_id"
+                                                style="width: 100%;" required" onchange="this.form.submit();">
+                                                <option value="">-- Pilih Tingkatan --</option>
+                                                @foreach ($data_tingkatan as $tingkatan)
+                                                    <option value="{{ $tingkatan->id }}">
+                                                        {{ $tingkatan->nama_tingkatan }}
                                                 @endforeach
                                             </select>
                                         </div>
