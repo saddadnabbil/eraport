@@ -99,9 +99,9 @@
                                     <div class="d-inline-flex align-items-center">
                                         <h2 class="text-dark mb-1 font-weight-medium">{{ $jumlah_kelas }}</h2>
                                         {{-- <span
-                      class="badge bg-danger font-12 text-white font-weight-medium rounded-pill ms-2 d-md-none d-lg-block"
-                      >-18.33%</span
-                    > --}}
+                                        class="badge bg-danger font-12 text-white font-weight-medium rounded-pill ms-2 d-md-none d-lg-block"
+                                        >-18.33%</span
+                                        > --}}
                                     </div>
                                     <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">
                                         Jumlah Kelas

@@ -65,6 +65,9 @@ class UserController extends Controller
                 }
                 return '-';
             })
+            ->addColumn('permission', function ($user) {
+                return  $user->getPermissionsViaRoles()->pluck('name')->implode(', ');
+            })
             ->addColumn('role', function ($user) {
                 return  $user->getRoleNames()->first();
             })

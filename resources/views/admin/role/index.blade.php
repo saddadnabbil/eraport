@@ -71,8 +71,10 @@
                                             <div class="form-group row">
                                                 <label for="permission" class="col-sm-3 col-form-label">Permission</label>
                                                 <div class="col-sm-9">
-                                                    <select class="form-control form-select " name="permissions[]"
-                                                        id="" multiple required>
+                                                    <select class="form-control form-select select2" name="permissions[]"
+                                                        id="" multiple="multiple" required>
+                                                        <option value="" disabled>-- Pilih Permission --
+                                                        </option>
                                                         @foreach ($permissions as $permission)
                                                             <option value="{{ $permission->id }}">{{ $permission->name }}
                                                             </option>
@@ -160,9 +162,9 @@
                                                                         <label for="permission"
                                                                             class="col-sm-3 col-form-label">Permission</label>
                                                                         <div class="col-sm-9">
-                                                                            <select class="form-control form-select"
-                                                                                name="permissions[]" id="" multiple
-                                                                                required>
+                                                                            <select class="form-control form-select select2"
+                                                                                name="permissions[]" id=""
+                                                                                multiple="multiple" multiple required>
                                                                                 @foreach ($permissions as $permission)
                                                                                     <option value="{{ $permission->id }}"
                                                                                         @if (isset($role) && $role->permissions->contains($permission->id)) selected @endif>

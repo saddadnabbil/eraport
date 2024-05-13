@@ -24,7 +24,7 @@
             $dynamicRouteSemesterReport = route('adminraportsemesterkm.index');
 
             $checkRouteP5Report = request()->routeIs('p5.raport.*');
-            $dynamicRouteP5Report = route('p5.raport.*');
+            $dynamicRouteP5Report = route('p5.raport.index');
             break;
     }
 @endphp

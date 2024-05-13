@@ -533,7 +533,7 @@
                                                 <div class="form-group row">
                                                     <label for="role" class="col-sm-3 col-form-label">Role</label>
                                                     <div class="col-sm-9">
-                                                        <select class="form-control form-select " name="role"
+                                                        <select class="form-control form-select select2" name="role"
                                                             id="">
                                                             @foreach ($dataRoles as $role)
                                                                 <option value="{{ $role->id }}"
@@ -547,8 +547,8 @@
                                                     <label for="permission"
                                                         class="col-sm-3 col-form-label">Permission</label>
                                                     <div class="col-sm-9">
-                                                        <select class="form-control form-select" name="permission[]"
-                                                            id="permission" multiple>
+                                                        <select class="form-control form-select select2"
+                                                            name="permission[]" id="permission" multiple="multiple">
                                                             @foreach ($dataPermission as $permission)
                                                                 <option value="{{ $permission->id }}"
                                                                     {{ $karyawan->user->hasPermissionTo($permission->name) ? 'selected' : '' }}>

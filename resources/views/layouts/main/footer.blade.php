@@ -7,7 +7,7 @@
   <script src="{{ asset('dist/js/app-style-switcher.js') }}"></script>
   <script src="{{ asset('dist/js/feather.min.js') }}"></script>
   {{-- Select2 --}}
-  <script src="{{ asset('assets/libs/select2/js/select2.full.min.js') }}"></script>
+  {{-- <script src="{{ asset('assets/libs/select2/js/select2.full.min.js') }}"></script> --}}
   <!-- slimscrollbar scrollbar JavaScript -->
   <script src="{{ asset('assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js') }}"></script>
   <script src="{{ asset('assets/extra-libs/sparkline/sparkline.js') }}"></script>
@@ -36,7 +36,31 @@
       })
   </script>
 
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
   <script>
+      $(document).ready(function() {
+          // Select2 for elements inside any modal
+          $(".modal").on('shown.bs.modal', function() {
+              $(this).find('.select2').select2({
+                  dropdownParent: $(this).find('.modal-content'),
+                  width: '100%'
+              });
+          });
+
+          // Initialize Select2 for existing modals on page load
+          $(".modal:visible").each(function() {
+              $(this).find('.select2').select2({
+                  dropdownParent: $(this).find('.modal-content'),
+                  width: '100%'
+              });
+          });
+
+          // Select2 for elements outside any modal
+          $('.select2:not(.modal .select2)').select2({
+              width: '100%'
+          });
+      });
+
       $(function() {
           //Initialize Select2 Elements
           //   $('.select2').select2()

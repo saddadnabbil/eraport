@@ -53,6 +53,14 @@
                                     <a href="{{ route('p5.project.edit', $project->id) }}"
                                         class="btn btn-primary btn-sm ">Edit Project</a>
                                 </div>
+                                <form action="{{ route('p5.raport.store') }}" method="post">
+                                    @csrf
+                                    <input type="hidden" name="kelas_id" value="{{ $project->kelas_id }}">
+                                    <input type="hidden" name="semester_id" value="{{ $tapel->semester_id }}">
+                                    <div data-bs-toggle="tooltip" data-bs-original-title="Download Raport">
+                                        <button type="submit" class="btn btn-danger btn-sm ">Download Raport P5</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                         <div class="card-body">
@@ -157,9 +165,6 @@
                                                     </tr>
                                                     <tr>
                                                         <td class="text-center">
-                                                            <button id="printReportBtn" class="btn btn-danger px-5">
-                                                                Rapor <br> P5BK
-                                                            </button>
                                                         </td>
                                                         <td
                                                             colspan="{{ $dataSubelement->where('has_active', true)->count() }}">
@@ -169,8 +174,6 @@
                                                         </td>
                                                     </tr>
                                                 @endforeach
-
-
                                             </tbody>
                                         </table>
                                     </div>
@@ -195,14 +198,6 @@
 @endsection
 
 @push('custom-scripts')
-    <!-- JavaScript untuk membuka halaman Print Report -->
-    <script>
-        document.getElementById("printReportBtn").addEventListener("click", function() {
-            var printReportUrl = "{{ route('p5.raport.show', $siswa->anggota_kelas->first()->id) }}" +
-                "?paper_size=A4&orientation=potrait&semester_id={{ $tapel->semester_id }}";
-            window.open(printReportUrl, "_blank");
-        });
-    </script>
 @endpush
 
 @section('footer')

@@ -77,9 +77,9 @@
                                     <input type="hidden" name="orientation" value="{{ $orientation }}">
                                     <input type="hidden" name="semester_id" value="{{ $semester->id }}">
 
-                                    <button type="submit" class="btn btn-primary btn-sm">
+                                    {{-- <button type="submit" class="btn btn-primary btn-sm">
                                         <i class="fas fa-download"></i> Print All Report Data
-                                    </button>
+                                    </button> --}}
 
                                 </form>
                             </div>

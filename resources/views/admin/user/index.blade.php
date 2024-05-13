@@ -90,8 +90,8 @@
                                             <div class="form-group row">
                                                 <label for="role" class="col-sm-3 col-form-label">Role</label>
                                                 <div class="col-sm-9">
-                                                    <select class="form-control form-select " name="role" id=""
-                                                        required>
+                                                    <select class="form-control form-select select2" name="role"
+                                                        id="" required>
                                                         <option value="" selected>-- Select Role --</option>
                                                         @foreach ($data_roles as $role)
                                                             <option value="{{ $role->id }}">{{ $role->name }}</option>
@@ -102,8 +102,9 @@
                                             <div class="form-group row">
                                                 <label for="permission" class="col-sm-3 col-form-label">Permission</label>
                                                 <div class="col-sm-9">
-                                                    <select class="form-control form-select " name="permission[]"
-                                                        id="" multiple required>
+                                                    <select class="form-control form-select select2" name="permission[]"
+                                                        id="" multiple="multiple" required>
+                                                        <option value="">-- Select Permission --</option>
                                                         @foreach ($data_permission as $permission)
                                                             <option value="{{ $permission->id }}">{{ $permission->name }}
                                                             </option>
@@ -132,6 +133,7 @@
                                             <th>Full name</th>
                                             <th>Username</th>
                                             <th>Role</th>
+                                            <th>Permission</th>
                                             <th>Status Akun</th>
                                             <th>Aksi</th>
                                         </tr>
@@ -175,6 +177,9 @@
                     },
                     {
                         "data": "role"
+                    },
+                    {
+                        "data": "permission"
                     },
                     {
                         "data": "status_akun"
