@@ -30,7 +30,6 @@ use Database\Seeders\TkElementSeeder;
 use Database\Seeders\AdminTableSeeder;
 use Database\Seeders\KelasTableSeeder;
 use Database\Seeders\MapelTableSeeder;
-use Database\Seeders\PermissionSeeder;
 use Database\Seeders\SiswaTableSeeder;
 use Database\Seeders\TapelTableSeeder;
 use Database\Seeders\TkSubtopicSeeder;
@@ -44,6 +43,7 @@ use Database\Seeders\TingkatanTableSeeder;
 use Database\Seeders\TkPembelajaranSeeder;
 use Database\Seeders\KmKkmMapelTableSeeder;
 use Database\Seeders\NilaiAkhirTableSeeder;
+use Database\Seeders\PermissionTableSeeder;
 use Spatie\Permission\Contracts\Permission;
 use Database\Seeders\KmTglRaportTableSeeder;
 use Database\Seeders\AnggotaKelasTableSeeder;
@@ -81,7 +81,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             // Roles
-            PermissionSeeder::class,
+            PermissionTableSeeder::class,
             RoleTableSeeder::class,
 
             // Master Data Seeder

@@ -260,9 +260,5 @@ class KelasTableSeeder extends Seeder
             'guru_id' => 1,
             'nama_kelas' => 'P-6A',
         ]);
-
-
-
-        // Kelas::factory()->count(10)->create();
     }
 }

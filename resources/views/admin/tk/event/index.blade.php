@@ -13,7 +13,7 @@
             'breadcrumbs' => [
                 [
                     'title' => 'Dashboard',
-                    'url' => route('dashboard'),
+                    'url' => route('admin.dashboard'),
                     'active' => true,
                 ],
                 [
@@ -60,7 +60,7 @@
                                             aria-hidden="true"></button>
                                         </button>
                                     </div>
-                                    <form action="{{ route('eventtk.store') }}" method="POST">
+                                    <form action="{{ route('tk.event.store') }}" method="POST">
                                         @csrf
                                         <div class="modal-body">
                                             <div class="form-group row">
@@ -131,7 +131,7 @@
                                                 <td>{{ $event->term->term }}</td>
                                                 <td class="text-center">
                                                     @include('components.actions.delete-button', [
-                                                        'route' => route('eventtk.destroy', $event->id),
+                                                        'route' => route('tk.event.destroy', $event->id),
                                                         'id' => $event->id,
                                                         'isPermanent' => true,
                                                         'withEdit' => true,
@@ -150,7 +150,7 @@
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                                 aria-hidden="true"></button>
                                                         </div>
-                                                        <form action="{{ route('eventtk.update', $event->id) }}"
+                                                        <form action="{{ route('tk.event.update', $event->id) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('PUT')

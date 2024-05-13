@@ -13,12 +13,12 @@
             'breadcrumbs' => [
                 [
                     'title' => 'Dashboard',
-                    'url' => route('dashboard'),
+                    'url' => route('admin.dashboard'),
                     'active' => true,
                 ],
                 [
                     'title' => 'Penilaian TK',
-                    'url' => route('penilaiantk.index'),
+                    'url' => route('tk.penilaian.index'),
                     'active' => true,
                 ],
                 [
@@ -46,7 +46,7 @@
 
                         <div class="card-body">
                             <div class="callout callout-info">
-                                <form action="{{ route('penilaiantk.show', $anggotaKelas->id) }}" method="GET">
+                                <form action="{{ route('tk.penilaian.show', $anggotaKelas->id) }}" method="GET">
                                     @csrf
                                     <input type="hidden" name="kelas_id" value="{{ $kelas->id }}">
                                     <input type="hidden" name="anggota_kelas_id" value="{{ $anggotaKelas->id }}">
@@ -87,7 +87,7 @@
                                                         <td>{{ $anggota_kelas->siswa->nama_lengkap }}</td>
                                                         <td class="text-center">
                                                             <form
-                                                                action="{{ route('penilaiantk.show', $anggota_kelas->id) }}"
+                                                                action="{{ route('tk.penilaian.show', $anggota_kelas->id) }}"
                                                                 method="get">
                                                                 @csrf
                                                                 <input type="hidden" name="kelas_id"
@@ -112,7 +112,7 @@
                                 </div>
                                 <div class="col-sm-12 col-md-12 col-lg-8">
                                     <div class="table-responsive p-2">
-                                        <form action="{{ route('penilaiantk.store') }}" method="post">
+                                        <form action="{{ route('tk.penilaian.store') }}" method="post">
                                             @csrf
                                             <input type="hidden" name="anggota_kelas_id" value="{{ $anggotaKelas->id }}">
                                             <input type="hidden" name="term_id" value="{{ $term->id }}">

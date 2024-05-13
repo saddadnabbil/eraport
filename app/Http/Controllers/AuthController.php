@@ -28,7 +28,13 @@ class AuthController extends Controller
     {
         // If user is already authenticated, redirect to dashboard
         if (Auth::check()) {
-            return redirect()->route('dashboard');
+            if (Auth::user()->hasRole('Admin')) {
+                return redirect()->route('admin.dashboard');
+            } elseif (Auth::user()->hasRole('Teacher')) {
+                return redirect()->route('guru.dashboard');
+            } elseif (Auth::user()->hasRole('Student')) {
+                return redirect()->route('siswa.dashboard');
+            }
         }
 
         $data_tapel = Tapel::orderBy('id', 'DESC')->get();
@@ -108,9 +114,13 @@ class AuthController extends Controller
             $this->handleGuruSession();
 
             // Redirect to the dashboard
-            return redirect()
-                ->route('dashboard')
-                ->with('toast_success', 'Login berhasil');
+            if (Auth::user()->hasRole('Admin')) {
+                return redirect()->route('admin.dashboard')->with('toast_success', 'Login berhasil');
+            } elseif (Auth::user()->hasRole('Teacher')) {
+                return redirect()->route('guru.dashboard')->with('toast_success', 'Login berhasil');
+            } elseif (Auth::user()->hasRole('Student')) {
+                return redirect()->route('siswa.dashboard')->with('toast_success', 'Login berhasil');
+            }
         } else {
             return redirect()
                 ->back()

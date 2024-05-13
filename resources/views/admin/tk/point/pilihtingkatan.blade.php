@@ -13,7 +13,7 @@
             'breadcrumbs' => [
                 [
                     'title' => 'Dashboard',
-                    'url' => route('dashboard'),
+                    'url' => route('admin.dashboard'),
                     'active' => true,
                 ],
                 [
@@ -41,7 +41,7 @@
 
                         <div class="card-body">
                             <div class="callout callout-info">
-                                <form action="{{ route('tkpoint.create') }}" method="GET">
+                                <form action="{{ route('tk.point.create') }}" method="GET">
                                     @csrf
                                     <div class="form-group row">
                                         <label for="term_id" class="col-sm-2 col-form-label">Term</label>

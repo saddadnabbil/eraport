@@ -40,7 +40,7 @@
             'breadcrumbs' => [
                 [
                     'title' => 'Dashboard',
-                    'url' => route('dashboard'),
+                    'url' => route('guru.dashboard'),
                     'active' => false,
                 ],
             ],

@@ -33,14 +33,11 @@ class UserController extends Controller
             }, 'karyawan' => function ($query) {
                 $query->select('id', 'user_id', 'nama_lengkap', 'id');
             }])
-            ->where('id', '!=', Auth::user()->id)
+
             ->orderBy('id', 'ASC')
             ->get();
-        $data_roles = Role::get();
-        $data_permission = Permission::get();
-        // $data_user = User::where('id', '!=', Auth::user()->id)->orderBy('role', 'ASC')->orderBy('id', 'ASC')->get();
 
-        return view('admin.user.index', compact('title', 'data_user', 'data_roles', 'data_permission'));
+        return view('admin.user.index', compact('title', 'data_user'));
     }
 
 
@@ -52,13 +49,13 @@ class UserController extends Controller
             }, 'karyawan' => function ($query) {
                 $query->select('id', 'user_id', 'nama_lengkap', 'id');
             }])
-            ->where('id', '!=', Auth::user()->id)
+            // ->where('id', '!=', Auth::user()->id)
             ->orderBy('id', 'ASC')
             ->get();
 
         return DataTables::of($data_user)
             ->addColumn('full_name', function ($user) {
-                if ($user->hasRole('Student') && $user->siswa) {
+                if ($user->hasRole('Student') || $user->siswa) {
                     return $user->siswa->nama_lengkap;
                 } elseif ($user->karyawan) {
                     return $user->karyawan->nama_lengkap;
@@ -66,7 +63,7 @@ class UserController extends Controller
                 return '-';
             })
             ->addColumn('permission', function ($user) {
-                return  $user->getPermissionsViaRoles()->pluck('name')->implode(', ');
+                return  $user->getPermissionNames()->implode(', ');
             })
             ->addColumn('role', function ($user) {
                 return  $user->getRoleNames()->first();
@@ -76,7 +73,7 @@ class UserController extends Controller
             })
             ->addColumn('action', function ($user) {
                 $showRoute = '#';
-                if ($user->hasRole('Student') && $user->siswa) {
+                if ($user->hasRole('Student') || $user->siswa) {
                     $showRoute = route('siswa.show', $user->siswa->id);
                 } elseif ($user->karyawan) {
                     $showRoute = route('karyawan.show', $user->karyawan->id);
@@ -86,6 +83,7 @@ class UserController extends Controller
                     'route' => route('user.destroy', $user->id),
                     'id' => $user->id,
                     'isPermanent' => false,
+                    'withDelete' => false,
                     'withEdit' => false,
                     'withShow' => true,
                     'showRoute' => $showRoute,

@@ -13,7 +13,7 @@
             'breadcrumbs' => [
                 [
                     'title' => 'Dashboard',
-                    'url' => route('dashboard'),
+                    'url' => route('admin.dashboard'),
                     'active' => true,
                 ],
                 [
@@ -60,7 +60,7 @@
                                             aria-hidden="true"></button>
                                         </button>
                                     </div>
-                                    <form action="{{ route('tktopic.store') }}" method="POST">
+                                    <form action="{{ route('tk.topic.store') }}" method="POST">
                                         @csrf
                                         <div class="modal-body">
                                             <div class="form-group row">
@@ -114,7 +114,7 @@
 
                         <div class="card-body">
                             <div class="callout callout-info">
-                                <form action="{{ route('tktopic.create') }}" method="GET">
+                                <form action="{{ route('tk.topic.create') }}" method="GET">
                                     @csrf
                                     <div class="form-group row">
                                         <label for="tingkatan_id" class="col-sm-3 col-form-label">Tingkatan</label>
@@ -152,7 +152,7 @@
                                                 <td>{{ $topic->name }}</td>
                                                 <td class="text-center">
                                                     @include('components.actions.delete-button', [
-                                                        'route' => route('tktopic.destroy', $topic->id),
+                                                        'route' => route('tk.topic.destroy', $topic->id),
                                                         'id' => $topic->id,
                                                         'isPermanent' => true,
                                                         'withEdit' => true,
@@ -171,7 +171,7 @@
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                                 aria-hidden="true"></button>
                                                         </div>
-                                                        <form action="{{ route('tktopic.update', $topic->id) }}"
+                                                        <form action="{{ route('tk.topic.update', $topic->id) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('PUT')

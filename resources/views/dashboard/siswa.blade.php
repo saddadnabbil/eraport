@@ -41,7 +41,7 @@
             'breadcrumbs' => [
                 [
                     'title' => 'Dashboard',
-                    'url' => route('dashboard'),
+                    'url' => route('siswa.dashboard'),
                     'active' => false,
                 ],
             ],

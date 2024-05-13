@@ -3,16 +3,16 @@
 
     switch ($userRole) {
         case 'Admin':
-            $allowedRoutes = ['adminraporttk.*'];
+            $allowedRoutes = ['tk.raport.*'];
 
-            $checkRouteTKReport = request()->routeIs('adminraporttk.*');
-            $dynamicRouteTKReport = route('adminraporttk.index');
+            $checkRouteTKReport = request()->routeIs('tk.raport.*');
+            $dynamicRouteTKReport = route('tk.raport.index');
             break;
         case 'Teacher':
-            $allowedRoutes = ['guru.raporttk.*', 'guru.raporttk.*'];
+            $allowedRoutes = ['guru.raport.*', 'guru.raport.*'];
 
-            $checkRouteTKReport = request()->routeIs('guru.raporttk.*');
-            $dynamicRouteTKReport = route('guru.raporttk.index');
+            $checkRouteTKReport = request()->routeIs('guru.raport.*');
+            $dynamicRouteTKReport = route('guru.raport.index');
             break;
     }
 @endphp

@@ -8,7 +8,16 @@
         <nav class="sidebar-nav">
             <ul id="sidebarnav">
                 <li class="sidebar-item">
-                    <a class="sidebar-link sidebar-link" href="{{ route('dashboard') }}" aria-expanded="false"><i
+                    @php
+                        if (Auth::user()->hasRole('Admin')) {
+                            $dashboard = route('admin.dashboard');
+                        } elseif (Auth::user()->hasRole('Teacher')) {
+                            $dashboard = route('guru.dashboard');
+                        } elseif (Auth::user()->hasRole('Student')) {
+                            $dashboard = route('siswa.dashboard');
+                        }
+                    @endphp
+                    <a class="sidebar-link sidebar-link" href="{{ $dashboard }}" aria-expanded="false"><i
                             data-feather="home" class="feather-icon"></i><span class="hide-menu"> Dashboard </span></a>
                 </li>
                 @if (Auth::user()->karyawan->unitKaryawan->unit_kode == 'G01')

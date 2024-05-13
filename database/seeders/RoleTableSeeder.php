@@ -16,47 +16,27 @@ class RoleTableSeeder extends Seeder
     {
         $admin = Role::create(['name' => 'Admin']);
         $admin->givePermissionTo([
-            'admin'
+            'admin-access'
         ]);
 
         $guru = Role::create(['name' => 'Teacher']);
         $guru->givePermissionTo([
-            'guru'
+            'teacher-km', 'homeroom-km'
+        ]);
+
+        $guru = Role::create(['name' => 'Co-Teacher']);
+        $guru->givePermissionTo([
+            'teacher-km', 'homeroom-km'
         ]);
 
         $siswa = Role::create(['name' => 'Student']);
         $siswa->givePermissionTo([
-            'siswa'
+            'student-access'
         ]);
 
         $curriculum = Role::create(['name' => 'Curriculum']);
         $curriculum->givePermissionTo([
-            'curriculum'
-        ]);
-
-        $hrd = Role::create(['name' => 'HRD']);
-        $hrd->givePermissionTo([
-            'hrd'
-        ]);
-
-        $finance = Role::create(['name' => 'Finance']);
-        $finance->givePermissionTo([
-            'finance'
-        ]);
-
-        $admission = Role::create(['name' => 'Admission']);
-        $admission->givePermissionTo([
-            'admission'
-        ]);
-
-        $itStaff = Role::create(['name' => 'IT Staff']);
-        $itStaff->givePermissionTo([
-            'it-staff'
-        ]);
-
-        $staff = Role::create(['name' => 'Staff']);
-        $staff->givePermissionTo([
-            'staff'
+            'masterdata-management'
         ]);
     }
 }

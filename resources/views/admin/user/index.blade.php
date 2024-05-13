@@ -14,7 +14,7 @@
             'breadcrumbs' => [
                 [
                     'title' => 'Dashboard',
-                    'url' => route('dashboard'),
+                    'url' => route('admin.dashboard'),
                     'active' => true,
                 ],
                 [
@@ -32,33 +32,26 @@
         <!-- Container fluid  -->
         <!-- ============================================================== -->
         <div class="container-fluid">
+            <div class="callout callout-info">
+                <h5>Add, edit, and delete {{ $title }}</h5>
+                <p>Please go through the Employee menu or click the button below.</p>
+                <a href="{{ route('karyawan.index') }}" class="btn btn-primary text-white mt-2" style="text-decoration:none">
+                    Employee</a>
+                <a href="{{ route('siswa.index') }}" class="btn btn-success text-white mt-2" style="text-decoration:none">
+                    Student</a>
+            </div>
+
             <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title"><i class="fas fa-user-friends"></i> {{ $title }}</h3>
                             <div class="card-tools">
-                                <div data-bs-toggle="tooltip" title="Tambah" class="d-inline-block">
-                                    <button type="button" class="btn btn-tool btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#modal-tambah">
-                                        <i class="fas fa-plus"></i>
-                                    </button>
-                                </div>
-                                {{-- <div data-bs-toggle="tooltip" title="Export" class="d-inline-block">
-                                    <a href="{{ route('user.export') }}" class="btn btn-tool btn-sm">
-                                        <i class="fas fa-download"></i>
-                                    </a>
-                                </div> --}}
-                                <div data-bs-toggle="tooltip" title="Trash" class="d-inline-block" class="d-inline-block">
-                                    <a href="{{ route('user.trash') }}" class="btn btn-tool btn-sm">
-                                        <i class="fas fa-trash"></i>
-                                    </a>
-                                </div>
                             </div>
                         </div>
 
                         <!-- Modal tambah  -->
-                        <div class="modal fade" id="modal-tambah">
+                        {{-- <div class="modal fade" id="modal-tambah">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -121,7 +114,7 @@
                                     </form>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                         <!-- End Modal tambah -->
 
                         <div class="card-body">

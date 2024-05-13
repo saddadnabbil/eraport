@@ -13,7 +13,7 @@
             'breadcrumbs' => [
                 [
                     'title' => 'Dashboard',
-                    'url' => route('dashboard'),
+                    'url' => route('admin.dashboard'),
                     'active' => true,
                 ],
                 [
@@ -45,7 +45,7 @@
                                     </button>
                                 </div>
                                 {{-- <div data-bs-toggle="tooltip" title="Export" class="d-inline-block" class="d-inline-block">
-                                    <a href="{{ route('tkpembelajaran.export') }}" class="btn btn-tool btn-sm">
+                                    <a href="{{ route('tk.pembelajaran.export') }}" class="btn btn-tool btn-sm">
                                         <i class="fas fa-download"></i>
                                     </a>
                                 </div> --}}
@@ -67,7 +67,7 @@
                                         <div class="form-group row">
                                             <label for="kelas_id" class="col-sm-2 col-form-label">Kelas</label>
                                             <div class="col-sm-10">
-                                                <form action="{{ route('tkpembelajaran.settings') }}" method="POST">
+                                                <form action="{{ route('tk.pembelajaran.settings') }}" method="POST">
                                                     @csrf
                                                     <select class="form-control form-select select2" name="kelas_id"
                                                         style="width: 100%;" required onchange="this.form.submit();">

@@ -13,13 +13,13 @@
             'breadcrumbs' => [
                 [
                     'title' => 'Dashboard',
-                    'url' => route('dashboard'),
+                    'url' => route('admin.dashboard'),
                     'active' => true,
                 ],
                 [
                     'title' => 'Data Karyawan',
                     'url' => route('karyawan.index'),
-                    'active' => false,
+                    'active' => true,
                 ],
                 [
                     'title' => $title,
@@ -117,7 +117,7 @@
                                     <label for="status_karyawan_id" class="col-sm-3 col-form-label ">Status
                                     </label>
                                     <div class="col-sm-3">
-                                        <select class="form-control form-select" disabled>
+                                        <select class="form-control form-select select2" disabled>
                                             <option value="">
                                             </option>
                                             @foreach ($dataStatusKaryawan as $status)
@@ -138,7 +138,7 @@
                                     <label for="unit_karyawan_id" class="col-sm-3 col-form-label ">Unit
                                     </label>
                                     <div class="col-sm-3">
-                                        <select class="form-control form-select" disabled>
+                                        <select class="form-control form-select select2" disabled>
                                             <option value="">
                                             </option>
                                             @foreach ($dataUnitKaryawan as $unit)
@@ -151,7 +151,7 @@
                                     <label for="position_karyawan_id" class="col-sm-3 col-form-label ">Position
                                     </label>
                                     <div class="col-sm-3">
-                                        <select class="form-control form-select" disabled>
+                                        <select class="form-control form-select select2" disabled>
                                             <option value="">
 
                                             </option>
@@ -271,7 +271,7 @@
                                     </div>
                                     <label for="agama" class="col-sm-3 col-form-label disabled">Religion</label>
                                     <div class="col-sm-3">
-                                        <select class="form-control form-select" name="agama" disabled>
+                                        <select class="form-control form-select select2" name="agama" disabled>
                                             <option value=""></option>
                                             <option value="1" @if ($karyawan->agama == '1') selected @endif>Islam
                                             </option>
@@ -363,7 +363,7 @@
                                     <label for="warga_negara" class="col-sm-3 col-form-label">Marital
                                         Status</label>
                                     <div class="col-sm-3">
-                                        <select class="form-control form-select" name="status_pernikahan"
+                                        <select class="form-control form-select select2" name="status_pernikahan"
                                             id="status_pernikahan" disabled>
                                             <option value=""></option>
                                             <option value="1" @if ($karyawan->status_pernikahan == 1) selected @endif>
@@ -535,6 +535,7 @@
                                                     <div class="col-sm-9">
                                                         <select class="form-control form-select select2" name="role"
                                                             id="">
+                                                            <option value="">=== Select Role ===</option>
                                                             @foreach ($dataRoles as $role)
                                                                 <option value="{{ $role->id }}"
                                                                     {{ $karyawan->user->hasRole($role->name) ? 'selected' : '' }}>
@@ -582,8 +583,8 @@
                                                         class="col-sm-3 col-form-label ">Status
                                                     </label>
                                                     <div class="col-sm-3">
-                                                        <select class="form-control form-select" id="status_karyawan_id"
-                                                            name="status_karyawan_id" required>
+                                                        <select class="form-control form-select select2"
+                                                            id="status_karyawan_id" name="status_karyawan_id" required>
                                                             <option value="">-- Select Status --
                                                             </option>
                                                             @foreach ($dataStatusKaryawan as $status)
@@ -606,8 +607,8 @@
                                                     <label for="unit_karyawan_id" class="col-sm-3 col-form-label ">Unit
                                                     </label>
                                                     <div class="col-sm-3">
-                                                        <select class="form-control form-select" id="unit_karyawan_id"
-                                                            name="unit_karyawan_id" required>
+                                                        <select class="form-control form-select select2"
+                                                            id="unit_karyawan_id" name="unit_karyawan_id" required>
                                                             <option value="">-- Select Unit --
                                                             </option>
                                                             @foreach ($dataUnitKaryawan as $unit)
@@ -621,8 +622,9 @@
                                                         class="col-sm-3 col-form-label ">Position
                                                     </label>
                                                     <div class="col-sm-3">
-                                                        <select class="form-control form-select" id="position_karyawan_id"
-                                                            name="position_karyawan_id" required>
+                                                        <select class="form-control form-select select2"
+                                                            id="position_karyawan_id" name="position_karyawan_id"
+                                                            required>
                                                             <option value="">
                                                                 -- Select Position --
                                                             </option>
@@ -762,7 +764,8 @@
                                                     <label for="agama"
                                                         class="col-sm-3 col-form-label required">Religion</label>
                                                     <div class="col-sm-3">
-                                                        <select class="form-control form-select" name="agama" required>
+                                                        <select class="form-control form-select select2" name="agama"
+                                                            required>
                                                             <option value="">-- Select Religion --</option>
                                                             <option value="1"
                                                                 @if ($karyawan->agama == '1') selected @endif>Islam
@@ -873,8 +876,8 @@
                                                     <label for="warga_negara" class="col-sm-3 col-form-label">Marital
                                                         Status</label>
                                                     <div class="col-sm-3">
-                                                        <select class="form-control form-select" name="status_pernikahan"
-                                                            id="status_pernikahan">
+                                                        <select class="form-control form-select select2"
+                                                            name="status_pernikahan" id="status_pernikahan">
                                                             <option value="">-- Select Marital Status --</option>
                                                             <option value="1"
                                                                 @if ($karyawan->status_pernikahan == 1) selected @endif>Single

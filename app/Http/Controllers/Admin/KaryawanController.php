@@ -42,11 +42,13 @@ class KaryawanController extends Controller
         $dataStatusKaryawan = StatusKaryawan::all();
         $dataUnitKaryawan = UnitKaryawan::all();
         $dataPositionKaryawan = PositionKaryawan::all();
+        $dataRoles = Role::get();
+        $dataPermission = Permission::get();
 
         $totalKaryawanActive = Karyawan::where('status', true)->count();
         $totalKaryawanNonActive = Karyawan::where('status', false)->count();
 
-        return view('admin.karyawan.employee.index', compact('title', 'dataKaryawan', 'dataStatusKaryawan', 'dataUnitKaryawan', 'dataPositionKaryawan', 'totalKaryawanActive', 'totalKaryawanNonActive'));
+        return view('admin.karyawan.employee.index', compact('title', 'dataKaryawan', 'dataStatusKaryawan', 'dataUnitKaryawan', 'dataPositionKaryawan', 'dataRoles', 'dataPermission', 'totalKaryawanActive', 'totalKaryawanNonActive'));
     }
 
     public function data()
@@ -96,6 +98,8 @@ class KaryawanController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            'role' => 'required|exists:roles,id',
+            'permission' => 'required|array|exists:permissions,id',
             'status_karyawan_id' => 'required|exists:status_karyawans,id',
             'unit_karyawan_id' => 'required|exists:unit_karyawans,id',
             'position_karyawan_id' => 'required|exists:position_karyawans,id',
@@ -151,6 +155,10 @@ class KaryawanController extends Controller
             ]);
 
             $user->save();
+
+            // add role and permission
+            $user->assignRole($request->role);
+            $user->givePermissionTo($request->permission);
         } catch (\Throwable $th) {
             return back()->with('toast_error', 'Username telah digunakan');
         }

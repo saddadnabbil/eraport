@@ -19,6 +19,7 @@ class UsersTableSeeder extends Seeder
             'status' => true,
         ]);
         $admin->assignRole('Admin');
+        $admin->givePermissionTo('admin-access');
 
         // siswas
         $siswa = User::create([
@@ -27,18 +28,23 @@ class UsersTableSeeder extends Seeder
             'status' => true,
         ]);
         $siswa->assignRole('Student');
+        $admin->givePermissionTo('student-access');
 
         User::create([
             'username' => 'siswa2',
             'password' => bcrypt('123456'),
             'status' => true,
         ]);
+        $siswa->assignRole('Student');
+        $admin->givePermissionTo('student-access');
 
         User::create([
             'username' => 'siswa3',
             'password' => bcrypt('123456'),
             'status' => true,
         ]);
+        $siswa->assignRole('Student');
+        $admin->givePermissionTo('student-access');
 
         $guru = User::create([
             'username' => 'guru',
@@ -46,6 +52,7 @@ class UsersTableSeeder extends Seeder
             'status' => true,
         ]);
         $guru->assignRole('Teacher');
+        $admin->givePermissionTo(['homeroom-pg-kg', 'teacher-pg-kg']);
 
         $curriculum = User::create([
             'username' => 'curriculum',
@@ -53,5 +60,6 @@ class UsersTableSeeder extends Seeder
             'status' => true,
         ]);
         $curriculum->assignRole('Curriculum');
+        $curriculum->givePermissionTo('masterdata-management');
     }
 }

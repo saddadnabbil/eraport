@@ -117,7 +117,7 @@ class TkPembelajaranController extends Controller
             }
             TkPembelajaran::insert($store_data_baru);
         }
-        return redirect(route('tkpembelajaran.index'))->with('toast_success', 'Setting pembelajaran berhasil');
+        return redirect(route('tk.pembelajaran.index'))->with('toast_success', 'Setting pembelajaran berhasil');
     }
 
     public function export()

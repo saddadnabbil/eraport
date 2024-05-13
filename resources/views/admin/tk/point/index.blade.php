@@ -13,7 +13,7 @@
             'breadcrumbs' => [
                 [
                     'title' => 'Dashboard',
-                    'url' => route('dashboard'),
+                    'url' => route('admin.dashboard'),
                     'active' => true,
                 ],
                 [
@@ -60,7 +60,7 @@
                                             aria-hidden="true"></button>
                                         </button>
                                     </div>
-                                    <form action="{{ route('tkpoint.store') }}" method="POST">
+                                    <form action="{{ route('tk.point.store') }}" method="POST">
                                         @csrf
                                         <div class="modal-body">
                                             <div class="form-group row">
@@ -117,7 +117,7 @@
 
                         <div class="card-body">
                             <div class="callout callout-info">
-                                <form action="{{ route('tkpoint.create') }}" method="GET">
+                                <form action="{{ route('tk.point.create') }}" method="GET">
                                     @csrf
                                     <div class="form-group row">
                                         <label for="tingkatan_id" class="col-sm-2 col-form-label">Tingkatan</label>
@@ -173,7 +173,7 @@
                                                 <td>{{ $point->name }}</td>
                                                 <td class="text-center">
                                                     @include('components.actions.delete-button', [
-                                                        'route' => route('tkpoint.destroy', $point->id),
+                                                        'route' => route('tk.point.destroy', $point->id),
                                                         'id' => $point->id,
                                                         'isPermanent' => true,
                                                         'withEdit' => true,
@@ -191,7 +191,7 @@
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                                 aria-hidden="true"></button>
                                                         </div>
-                                                        <form action="{{ route('tkpoint.update', $point->id) }}"
+                                                        <form action="{{ route('tk.point.update', $point->id) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('PUT')

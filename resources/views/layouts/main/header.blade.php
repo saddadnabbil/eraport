@@ -54,7 +54,7 @@
 
         @include('layouts.partials.topbar.topbar')
 
-        @yield('sidebar')
+        @include('layouts.sidebar.index')
         <!-- ============================================================== -->
         <!-- End Topbar header -->
         <!-- ============================================================== -->

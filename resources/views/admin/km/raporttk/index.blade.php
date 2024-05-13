@@ -13,7 +13,7 @@
             'breadcrumbs' => [
                 [
                     'title' => 'Dashboard',
-                    'url' => route('dashboard'),
+                    'url' => route('admin.dashboard'),
                     'active' => true,
                 ],
                 [
@@ -41,7 +41,7 @@
 
                         <div class="card-body">
                             <div class="callout callout-info">
-                                <form action="{{ route('adminraporttk.store') }}" method="POST">
+                                <form action="{{ route('tk.raport.store') }}" method="POST">
                                     @csrf
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Term</label>
@@ -74,8 +74,7 @@
                                 </form>
                             </div>
                             <div class="d-flex justify-content-end my-3 gap-2">
-                                <form action="{{ route('adminraporttk.export', $kelas->id) }}" target="_black"
-                                    method="GET">
+                                <form action="{{ route('tk.raport.export', $kelas->id) }}" target="_black" method="GET">
                                     @csrf
                                     <input type="hidden" name="data_type" value="1">
                                     <input type="hidden" name="paper_size" value="{{ $paper_size }}">
@@ -85,8 +84,7 @@
                                         <i class="fas fa-print"></i> Print All Data
                                     </button>
                                 </form>
-                                <form action="{{ route('adminraporttk.export', $kelas->id) }}" target="_black"
-                                    method="get">
+                                <form action="{{ route('tk.raport.export', $kelas->id) }}" target="_black" method="get">
                                     @csrf
                                     <input type="hidden" name="data_type" value="2">
                                     <input type="hidden" name="paper_size" value="{{ $paper_size }}">
@@ -129,8 +127,7 @@
                                                     <td>{{ $anggota_kelas->siswa->nama_lengkap }}</td>
                                                     <td class="text-center">{{ $anggota_kelas->siswa->jenis_kelamin }}</td>
                                                     <td class="text-center">
-                                                        <form
-                                                            action="{{ route('adminraporttk.show', $anggota_kelas->id) }}"
+                                                        <form action="{{ route('tk.raport.show', $anggota_kelas->id) }}"
                                                             target="_black" method="GET">
                                                             @csrf
                                                             <input type="hidden" name="data_type" value="1">
@@ -146,8 +143,7 @@
                                                         </form>
                                                     </td>
                                                     <td class="text-center">
-                                                        <form
-                                                            action="{{ route('adminraporttk.show', $anggota_kelas->id) }}"
+                                                        <form action="{{ route('tk.raport.show', $anggota_kelas->id) }}"
                                                             target="_black" method="GET">
                                                             @csrf
                                                             <input type="hidden" name="data_type" value="2">

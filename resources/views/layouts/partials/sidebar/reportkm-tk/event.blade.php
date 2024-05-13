@@ -3,12 +3,12 @@
 
     switch ($userRole) {
         case 'Admin':
-            $checkRoute = request()->routeIs('event.*');
-            $dynamicRoute = route('eventtk.index');
+            $checkRoute = request()->routeIs('tk.event.*');
+            $dynamicRoute = route('tk.event.index');
             break;
         case 'Teacher':
-            $checkRoute = request()->routeIs('event.*');
-            $dynamicRoute = route('eventtk.index');
+            $checkRoute = request()->routeIs('tk.event.*');
+            $dynamicRoute = route('tk.event.index');
             break;
         case 'Student':
             $checkRoute = request()->routeIs('siswa.silabus.*');

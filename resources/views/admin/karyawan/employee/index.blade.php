@@ -13,7 +13,7 @@
             'breadcrumbs' => [
                 [
                     'title' => 'Dashboard',
-                    'url' => route('dashboard'),
+                    'url' => route('admin.dashboard'),
                     'active' => true,
                 ],
                 [
@@ -127,18 +127,60 @@
                                         enctype="multipart/form-data">
                                         @csrf
                                         <div class="modal-body">
-                                            <h6 class="mt-2"><b>A. Employee Information</b></h6>
+                                            <h6 class="mt-2"><b>A. User Information</b></h6>
+                                            <div class="form-group row">
+                                                <label for="username" class="col-sm-3 col-form-label">Username</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control" id="username"
+                                                        name="username" placeholder="username" value="{{ old('username') }}"
+                                                        required>
+                                                </div>
+                                                <label for="password" class="col-sm-3 col-form-label">Password</label>
+                                                <div class="col-sm-3">
+                                                    <input type="password" class="form-control" id="password"
+                                                        name="password" placeholder="password"
+                                                        value="{{ old('password') }}" required>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="role" class="col-sm-3 col-form-label">Role</label>
+                                                <div class="col-sm-3">
+                                                    <select class="form-control form-select select2" name="role"
+                                                        id="" required>
+                                                        <option value="" selected>-- Select Role --</option>
+                                                        @foreach ($dataRoles as $role)
+                                                            <option value="{{ $role->id }}"
+                                                                @if (old('role') == $role->id) selected @endif>
+                                                                {{ $role->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <label for="permission" class="col-sm-3 col-form-label">Permission</label>
+                                                <div class="col-sm-3">
+                                                    <select class="form-control form-select select2" name="permission[]"
+                                                        id="" multiple="multiple" required>
+                                                        <option value="">-- Select Permission --</option>
+                                                        @foreach ($dataPermission as $permission)
+                                                            <option value="{{ $permission->id }}"
+                                                                @if (in_array($permission->id, old('permission', []))) selected @endif>
+                                                                {{ $permission->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <h6 class="mt-4"><b>A. Employee Information</b></h6>
                                             <div class="form-group row">
                                                 <label for="status_karyawan_id" class="col-sm-3 col-form-label ">Status
                                                 </label>
                                                 <div class="col-sm-3">
-                                                    <select class="form-control form-select" id="status_karyawan_id"
-                                                        name="status_karyawan_id" required>
+                                                    <select class="form-control form-select select2"
+                                                        id="status_karyawan_id" name="status_karyawan_id" required>
                                                         <option value="">-- Select Status --
                                                         </option>
                                                         @foreach ($dataStatusKaryawan as $status)
                                                             <option value="{{ $status->id }}"
-                                                                {{ old('position_karyawan_id') == $status->id ? 'selected' : '' }}>
+                                                                {{ old('status_karyawan_id') == $status->id ? 'selected' : '' }}>
                                                                 {{ $status->status_nama }}</option>
                                                         @endforeach
                                                     </select>
@@ -154,13 +196,13 @@
                                                 <label for="unit_karyawan_id" class="col-sm-3 col-form-label ">Unit
                                                 </label>
                                                 <div class="col-sm-3">
-                                                    <select class="form-control form-select" id="unit_karyawan_id"
+                                                    <select class="form-control form-select select2" id="unit_karyawan_id"
                                                         name="unit_karyawan_id" required>
                                                         <option value="">-- Select Unit --
                                                         </option>
                                                         @foreach ($dataUnitKaryawan as $unit)
                                                             <option value="{{ $unit->id }}"
-                                                                {{ old('position_karyawan_id') == $unit->id ? 'selected' : '' }}>
+                                                                {{ old('unit_karyawan_id') == $unit->id ? 'selected' : '' }}>
                                                                 {{ $unit->unit_nama }}</option>
                                                         @endforeach
                                                     </select>
@@ -169,8 +211,8 @@
                                                     class="col-sm-3 col-form-label ">Position
                                                 </label>
                                                 <div class="col-sm-3">
-                                                    <select class="form-control form-select" id="position_karyawan_id"
-                                                        name="position_karyawan_id" required>
+                                                    <select class="form-control form-select select2"
+                                                        id="position_karyawan_id" name="position_karyawan_id" required>
                                                         <option value="">
                                                             -- Select Position --
                                                         </option>
@@ -196,7 +238,7 @@
                                                         name="resign_date" value="{{ old('resign_date') }}">
                                                 </div>
                                             </div>
-                                            <h6 class="mt-2"><b>B. Personal Information</b></h6>
+                                            <h6 class="mt-4"><b>B. Personal Information</b></h6>
                                             <div class="form-group row">
                                                 <label for="kode_karyawan" class="col-sm-3 col-form-label ">
                                                     Employee Code</label>
@@ -217,9 +259,9 @@
                                                 <label for="nik" class="col-sm-3 col-form-label ">
                                                     Identity Card</label>
                                                 <div class="col-sm-3">
-                                                    <input type="text" class="form-control" id="nik"
+                                                    <input type="number" class="form-control" id="nik"
                                                         name="nik" placeholder="Identity Card"
-                                                        value="{{ old('nik') }}" required>
+                                                        value="{{ old('nik') }}" pattern="[0-9]{16}" required>
                                                 </div>
                                                 <label for="nomor_akun" class="col-sm-3 col-form-label ">
                                                     Account No.</label>
@@ -306,15 +348,27 @@
                                                 <label for="agama"
                                                     class="col-sm-3 col-form-label required">Religion</label>
                                                 <div class="col-sm-3">
-                                                    <select class="form-control form-select" name="agama" required>
+                                                    <select class="form-control form-select select2" name="agama"
+                                                        required>
                                                         <option value="">-- Select Religion --</option>
-                                                        <option value="1">Islam</option>
-                                                        <option value="2">Protestan</option>
-                                                        <option value="3">Katolik</option>
-                                                        <option value="4">Hindu</option>
-                                                        <option value="5">Budha</option>
-                                                        <option value="6">Khonghucu</option>
-                                                        <option value="7">Lainnya</option>
+                                                        <option value="1"
+                                                            @if (old('agama') == '1') selected @endif>Islam</option>
+                                                        <option value="2"
+                                                            @if (old('agama') == '2') selected @endif>Protestan
+                                                        </option>
+                                                        <option value="3"
+                                                            @if (old('agama') == '3') selected @endif>Katolik
+                                                        </option>
+                                                        <option value="4"
+                                                            @if (old('agama') == '4') selected @endif>Hindu</option>
+                                                        <option value="5"
+                                                            @if (old('agama') == '5') selected @endif>Budha</option>
+                                                        <option value="6"
+                                                            @if (old('agama') == '6') selected @endif>Khonghucu
+                                                        </option>
+                                                        <option value="7"
+                                                            @if (old('agama') == '7') selected @endif>Lainnya
+                                                        </option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -357,7 +411,7 @@
                                                 </div>
                                                 <label for="kode_pos" class="col-sm-3 col-form-label ">Pos Code</label>
                                                 <div class="col-sm-3">
-                                                    <input type="text" class="form-control" id="kode_pos"
+                                                    <input type="number" class="form-control" id="kode_pos"
                                                         name="kode_pos" value="{{ old('kode_pos') }}"
                                                         placeholder="Pos Code" required>
                                                 </div>
@@ -395,8 +449,8 @@
                                                 <label for="warga_negara" class="col-sm-3 col-form-label">Marital
                                                     Status</label>
                                                 <div class="col-sm-3">
-                                                    <select class="form-control form-select" name="status_pernikahan"
-                                                        id="status_pernikahan">
+                                                    <select class="form-control form-select select2"
+                                                        name="status_pernikahan" id="status_pernikahan">
                                                         <option value="">-- Select Marital Status --</option>
                                                         <option value="1"
                                                             @if (old('status_pernikahan') == 1) selected @endif>Single

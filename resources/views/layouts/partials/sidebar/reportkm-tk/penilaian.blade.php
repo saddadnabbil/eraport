@@ -3,12 +3,12 @@
 
     switch ($userRole) {
         case 'Admin':
-            $checkRoute = request()->routeIs('penilaiantk.*');
-            $dynamicRoute = route('penilaiantk.index');
+            $checkRoute = request()->routeIs('tk.penilaian.*');
+            $dynamicRoute = route('tk.penilaian.index');
             break;
         case 'Teacher':
-            $checkRoute = request()->routeIs('guru.penilaiantk.*');
-            $dynamicRoute = route('guru.penilaiantk.index');
+            $checkRoute = request()->routeIs('tk.guru.penilaian.*');
+            $dynamicRoute = route('tk.guru.penilaian.index');
             break;
         // case 'Student':
         //     $checkRoute = request()->routeIs('siswa.silabus.*');

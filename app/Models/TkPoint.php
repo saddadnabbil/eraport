@@ -22,6 +22,6 @@ class TkPoint extends Model
 
     public function element()
     {
-        return $this->belongsTo(TkElement::class, 'tk_element_id');
+        return $this->belongsTo(tk . element::class, 'tk_element_id');
     }
 }

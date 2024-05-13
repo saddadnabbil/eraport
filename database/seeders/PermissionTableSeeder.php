@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 
-class PermissionSeeder extends Seeder
+class PermissionTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,15 +13,24 @@ class PermissionSeeder extends Seeder
     public function run(): void
     {
         $permissions = [
-            'admin',
-            'guru',
-            'siswa',
-            'curriculum',
-            'hrd',
-            'finance',
-            'admission',
-            'it-staff',
-            'staff',
+            // admin
+            'admin-access',
+            'user-management',
+            'employee-management',
+
+            // kurikulum
+            'masterdata-management',
+
+            // guru
+            'teacher-pg-kg',
+            'teacher-km',
+
+            // wali kelas
+            'homeroom-pg-kg',
+            'homeroom-km',
+
+            // siswa
+            'student-access'
         ];
 
         // Looping and Inserting Array's Permissions into Permission Table

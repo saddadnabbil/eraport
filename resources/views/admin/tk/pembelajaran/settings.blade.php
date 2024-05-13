@@ -14,12 +14,12 @@
             'breadcrumbs' => [
                 [
                     'title' => 'Dashboard',
-                    'url' => route('dashboard'),
+                    'url' => route('admin.dashboard'),
                     'active' => true,
                 ],
                 [
                     'title' => 'Data Pembelajaran',
-                    'url' => route('tkpembelajaran.index'),
+                    'url' => route('tk.pembelajaran.index'),
                     'active' => false,
                 ],
                 [
@@ -45,7 +45,7 @@
                             <div class="form-group row callout callout-info mx-1">
                                 <label for="kelas_id" class="col-sm-2 col-form-label">Kelas</label>
                                 <div class="col-sm-10">
-                                    <form action="{{ route('tkpembelajaran.settings') }}" method="POST">
+                                    <form action="{{ route('tk.pembelajaran.settings') }}" method="POST">
                                         @csrf
                                         <select class="form-control form-select select2" name="kelas_id"
                                             style="width: 100%;" required onchange="this.form.submit();">
@@ -62,7 +62,7 @@
                                     </form>
                                 </div>
                             </div>
-                            <form action="{{ route('tkpembelajaran.store') }}" method="POST">
+                            <form action="{{ route('tk.pembelajaran.store') }}" method="POST">
                                 @csrf
                                 <div class="table-responsive">
                                     <table class="table table-bordered">
