@@ -10,13 +10,13 @@
 
 @include('layouts.partials.sidebar._sidebar-item', [
     'isActive' => request()->routeIs([
-        'tglraportkm.*',
-        'kkmadmin.*',
-        'mappingkm.*',
-        'kehadiranadmin.*',
-        'prestasiadmin.*',
-        'catatanadmin.*',
-        'kenaikanadmin.*',
+        'km.tglraport.*',
+        'km.kkm.*',
+        'km.mapping.*',
+        'km.kehadiran.*',
+        'km.prestasi.*',
+        'km.catatan.*',
+        'km.kenaikan.*',
     ]),
     'hasArrow' => true,
     'icon' => 'clipboard',

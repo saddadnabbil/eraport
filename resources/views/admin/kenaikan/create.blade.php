@@ -18,7 +18,7 @@
                 ],
                 [
                     'title' => 'Kenaikan Kelas',
-                    'url' => route('kenaikanadmin.index'),
+                    'url' => route('km.kenaikan.index'),
                     'active' => true,
                 ],
                 [
@@ -43,7 +43,7 @@
                         <div class="card-header">
                             <h3 class="card-title"><i class="fas fa-layer-group"></i> {{ $title }}</h3>
                         </div>
-                        <form action="{{ route('kenaikanadmin.store') }}" method="POST">
+                        <form action="{{ route('km.kenaikan.store') }}" method="POST">
                             @csrf
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -115,7 +115,7 @@
                             </div>
                             <div class="card-footer clearfix">
                                 <button type="submit" class="btn btn-primary float-right">Simpan</button>
-                                <a href="{{ route('kenaikanadmin.index') }}"
+                                <a href="{{ route('km.kenaikan.index') }}"
                                     class="btn btn-default float-right me-2">Batal</a>
                             </div>
                         </form>

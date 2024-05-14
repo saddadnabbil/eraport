@@ -68,7 +68,7 @@ class PengelolaanNilaiController extends Controller
             $data_nilai_kelompok_b = KmNilaiAkhirRaport::whereIn('pembelajaran_id', $data_id_pembelajaran_b)->where('term_id', $term->id)->where('semester_id', $semester->id)->get();
 
             if ($data_nilai_kelompok_a->count() == 0 && $data_nilai_kelompok_b->count() == 0) {
-                return redirect(route('penilaiankm.index'))->with('toast_error', 'Belum ada data penilaian. Silahkan input penilaian!');
+                return redirect(route('km.penilaian.index'))->with('toast_error', 'Belum ada data penilaian. Silahkan input penilaian!');
             }
 
             $anggota_kelas->data_nilai_kelompok_a = $data_nilai_kelompok_a;

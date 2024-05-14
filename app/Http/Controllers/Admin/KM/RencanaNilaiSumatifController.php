@@ -90,7 +90,7 @@ class RencanaNilaiSumatifController extends Controller
         $data_rencana_penilaian = RencanaNilaiSumatif::where('pembelajaran_id', $pembelajaran->id)->where('term_id', $term->id)->where('semester_id', $semester->id)->get();
 
         if (count($data_rencana_penilaian) >= 3) {
-            return redirect(route('rencanasumatif.index'))->with('toast_error', 'Data sudah tersedia');
+            return redirect(route('km.rencanasumatif.index'))->with('toast_error', 'Data sudah tersedia');
         }
 
         $jumlah_penilaian = $request->jumlah_penilaian;
@@ -130,7 +130,7 @@ class RencanaNilaiSumatifController extends Controller
 
             $data_penilaian_permapel[] = $data_penilaian;
         }
-        return redirect(route('rencanasumatif.index'))->with('toast_success', 'Rencana nilai Formatif berhasil disimpan.');
+        return redirect(route('km.rencanasumatif.index'))->with('toast_success', 'Rencana nilai Formatif berhasil disimpan.');
     }
 
     public function update(Request $request, $id)

@@ -41,7 +41,7 @@
 
                         <div class="card-body">
                             <div class="callout callout-info">
-                                <form action="{{ route('kehadiranadmintk.create') }}" method="GET">
+                                <form action="{{ route('km.kehadirantk.create') }}" method="GET">
                                     @csrf
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Kelas</label>

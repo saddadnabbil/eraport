@@ -41,7 +41,7 @@
 
                         <div class="card-body">
                             <div class="callout callout-info">
-                                <form action="{{ route('catatanadmin.create') }}" method="GET">
+                                <form action="{{ route('km.catatan.create') }}" method="GET">
                                     @csrf
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Kelas</label>

@@ -108,7 +108,7 @@ class NilaiEkstrakulikulerController extends Controller
                     $cek_data->update($data_nilai);
                 }
             }
-            return redirect(route('nilaiekstraadmin.index'))->with('toast_success', 'Nilai ekstrakulikuler berhasil disimpan');
+            return redirect(route('km.nilaiekstra.index'))->with('toast_success', 'Nilai ekstrakulikuler berhasil disimpan');
         }
     }
 }

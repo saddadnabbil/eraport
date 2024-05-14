@@ -85,9 +85,9 @@ class PenilaianKurikulumMerdekaController extends Controller
             $count_cp_formatif = count($data_rencana_penilaian_formatif);
 
             if ($count_cp_sumatif == null) {
-                return redirect(route('rencanasumatif.index'))->with('toast_error', 'Belum ada rencana penilaian sumatif ' .  $pembelajaran->mapel->nama_mapel . ' ' . $pembelajaran->kelas->nama_kelas . ', silahkan tambah rencana nilai sumatif ' . $pembelajaran->mapel->nama_mapel . ' ' .  $pembelajaran->kelas->nama_kelas . ' terlebih dahulu!');
+                return redirect(route('km.rencanasumatif.index'))->with('toast_error', 'Belum ada rencana penilaian sumatif ' .  $pembelajaran->mapel->nama_mapel . ' ' . $pembelajaran->kelas->nama_kelas . ', silahkan tambah rencana nilai sumatif ' . $pembelajaran->mapel->nama_mapel . ' ' .  $pembelajaran->kelas->nama_kelas . ' terlebih dahulu!');
             } elseif ($count_cp_formatif == null) {
-                return redirect(route('rencanaformatif.index'))->with('toast_error', 'Belum ada rencana penilaian formatif ' .  $pembelajaran->mapel->nama_mapel . ' ' . $pembelajaran->kelas->nama_kelas . ', silahkan tambah rencana nilai formatif ' . $pembelajaran->mapel->nama_mapel . ' ' .  $pembelajaran->kelas->nama_kelas . ' terlebih dahulu!');
+                return redirect(route('km.rencanaformatif.index'))->with('toast_error', 'Belum ada rencana penilaian formatif ' .  $pembelajaran->mapel->nama_mapel . ' ' . $pembelajaran->kelas->nama_kelas . ', silahkan tambah rencana nilai formatif ' . $pembelajaran->mapel->nama_mapel . ' ' .  $pembelajaran->kelas->nama_kelas . ' terlebih dahulu!');
             }
 
             $rencana_penilaian_data_sumatif = [];

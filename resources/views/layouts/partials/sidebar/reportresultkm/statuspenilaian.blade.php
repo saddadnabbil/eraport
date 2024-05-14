@@ -1,32 +1,16 @@
 @php
     $userRole = Auth::user()->getRoleNames()->first();
 
-    switch ($userRole) {
-        case 'Admin':
-            $allowedRoutes = ['raportstatuspenilaiankm.*', 'pengelolaannilaikm.*', 'nilairaportkm.*'];
+    $allowedRoutes = ['raportstatuskm.penilaian.*', 'pengelolaannilaikm.*', 'nilairaportkm.*'];
 
-            $checkRouteAssesmentStatus = request()->routeIs('raportstatuspenilaiankm.*');
-            $dynamicRouteAssesmentStatus = route('raportstatuspenilaiankm.index');
+    $checkRouteAssesmentStatus = request()->routeIs('raportstatuskm.penilaian.*');
+    $dynamicRouteAssesmentStatus = route('raportstatuskm.penilaian.index');
 
-            $checkRouteHasilPengelolaan = request()->routeIs('pengelolaannilaikm.*');
-            $dynamicRouteHasilPengelolaan = route('pengelolaannilaikm.index');
+    $checkRouteHasilPengelolaan = request()->routeIs('pengelolaannilaikm.*');
+    $dynamicRouteHasilPengelolaan = route('pengelolaannilaikm.index');
 
-            $checkRouteSemesterReportValue = request()->routeIs('nilairaportkm.*');
-            $dynamicRouteSemesterReportValue = route('nilairaportkm.index');
-            break;
-        case 'Teacher':
-            $allowedRoutes = ['kirimnilaiakhirkm.*', 'kirimnilaiakhirkm.*', 'nilairaportkmwalas.*'];
-
-            $checkRouteAssesmentStatus = request()->routeIs('statusnilaiguru.*');
-            $dynamicRouteAssesmentStatus = route('statusnilaiguru.index');
-
-            $checkRouteHasilPengelolaan = request()->routeIs('hasilnilai.*');
-            $dynamicRouteHasilPengelolaan = route('hasilnilai.index');
-
-            $checkRouteSemesterReportValue = request()->routeIs('nilairaportkmwalas.*');
-            $dynamicRouteSemesterReportValue = route('nilairaportkmwalas.index');
-            break;
-    }
+    $checkRouteSemesterReportValue = request()->routeIs('nilairaportkm.*');
+    $dynamicRouteSemesterReportValue = route('nilairaportkm.index');
 @endphp
 
 @include('layouts.partials.sidebar._sidebar-item', [

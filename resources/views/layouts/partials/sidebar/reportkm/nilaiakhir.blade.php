@@ -3,13 +3,13 @@
 
     switch ($userRole) {
         case 'Admin':
-            $allowedRoutes = ['kirimnilaiakhirkmadmin.*', 'nilaiterkirimkmadmin.*'];
+            $allowedRoutes = ['km.kirimnilaiakhir.*', 'km.nilaiterkirim.*'];
 
-            $checkRouteKirim = request()->routeIs('kirimnilaiakhirkmadmin.*');
-            $dynamicRouteKirim = route('kirimnilaiakhirkmadmin.index');
+            $checkRouteKirim = request()->routeIs('km.kirimnilaiakhir.*');
+            $dynamicRouteKirim = route('km.kirimnilaiakhir.index');
 
-            $checkRouteLihat = request()->routeIs('nilaiterkirimkmadmin.*');
-            $dynamicRouteLihat = route('nilaiterkirimkmadmin.index');
+            $checkRouteLihat = request()->routeIs('km.nilaiterkirim.*');
+            $dynamicRouteLihat = route('km.nilaiterkirim.index');
 
             break;
         case 'Teacher':

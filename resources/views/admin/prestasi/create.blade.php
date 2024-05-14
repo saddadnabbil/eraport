@@ -18,7 +18,7 @@
                 ],
                 [
                     'title' => 'Prestasi Siswa',
-                    'url' => route('prestasiadmin.index'),
+                    'url' => route('km.prestasi.index'),
                     'active' => true,
                 ],
                 [
@@ -63,7 +63,7 @@
                                             aria-hidden="true"></button>
                                         </button>
                                     </div>
-                                    <form action="{{ route('prestasiadmin.store') }}" method="POST">
+                                    <form action="{{ route('km.prestasi.store') }}" method="POST">
                                         @csrf
                                         <div class="modal-body">
                                             <div class="form-group row">
@@ -217,7 +217,7 @@
                                                             <button type="button" class="btn-close"
                                                                 data-bs-dismiss="modal" aria-hidden="true"></button>
                                                         </div>
-                                                        <form action="{{ route('prestasiadmin.update', $prestasi->id) }}"
+                                                        <form action="{{ route('km.prestasi.update', $prestasi->id) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('PUT')

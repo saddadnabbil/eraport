@@ -70,7 +70,8 @@
                                                 </td>
                                                 <td>
                                                     @if ($penilaian->jumlah_rencana_penilaian == 0)
-                                                        <form action="{{ route('rencanasumatif.create', $penilaian->id) }}"
+                                                        <form
+                                                            action="{{ route('km.rencanasumatif.create', $penilaian->id) }}"
                                                             method="GET">
                                                             @csrf
                                                             <input type="hidden" name="pembelajaran_id"
@@ -82,7 +83,7 @@
                                                                     class="{{ $penilaian->jumlah_rencana_penilaian == 0 ? 'fas fa-plus' : 'fas fa-pen' }}"></i></button>
                                                         </form>
                                                     @else
-                                                        <a href="{{ route('rencanasumatif.show', $penilaian->id) }}"
+                                                        <a href="{{ route('km.rencanasumatif.show', $penilaian->id) }}"
                                                             class="btn btn-sm btn-success"><i class="fas fa-eye"></i></a>
                                                     @endif
                                                 </td>

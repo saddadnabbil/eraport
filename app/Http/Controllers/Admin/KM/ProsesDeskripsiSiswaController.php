@@ -58,7 +58,7 @@ class ProsesDeskripsiSiswaController extends Controller
             $data_nilai_siswa = KmNilaiAkhirRaport::where('pembelajaran_id', $pembelajaran->id)->where('term_id', $term->id)->where('semester_id', $semester->id)->get();
 
             if ($data_nilai_siswa->count() == 0) {
-                return redirect(route('penilaiankm.index'))->with('toast_error', 'Belum ada data penilaian untuk ' . $pembelajaran->mapel->nama_mapel . ' ' . $pembelajaran->kelas->nama_kelas . '. Silahkan input penilaian!');
+                return redirect(route('km.penilaian.index'))->with('toast_error', 'Belum ada data penilaian untuk ' . $pembelajaran->mapel->nama_mapel . ' ' . $pembelajaran->kelas->nama_kelas . '. Silahkan input penilaian!');
             } else {
                 foreach ($data_nilai_siswa as $nilai_siswa) {
                     $nilai_siswa->deskripsi_nilai_siswa = KmDeskripsiNilaiSiswa::where('pembelajaran_id', $pembelajaran->id)->where('km_nilai_akhir_raport_id', $nilai_siswa->id)->first();
@@ -97,7 +97,7 @@ class ProsesDeskripsiSiswaController extends Controller
                     $cek_data->update($data_deskripsi);
                 }
             }
-            return redirect(route('prosesdeskripsikmadmin.index'))->with('toast_success', 'Deskripsi nilai siswa berhasil disimpan');
+            return redirect(route('km.prosesdeskripsi.index'))->with('toast_success', 'Deskripsi nilai siswa berhasil disimpan');
         }
     }
 }

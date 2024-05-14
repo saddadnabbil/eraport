@@ -18,7 +18,7 @@
                 ],
                 [
                     'title' => 'Rencana Formatif',
-                    'url' => route('rencanaformatif.index'),
+                    'url' => route('km.rencanaformatif.index'),
                     'active' => true,
                 ],
                 [
@@ -96,7 +96,7 @@
                                                     </td>
                                                     <td class="text-center">
                                                         <form
-                                                            action="{{ route('rencanaformatif.destroy', $rencana_penilaian->id) }}"
+                                                            action="{{ route('km.rencanaformatif.destroy', $rencana_penilaian->id) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')
@@ -128,7 +128,7 @@
                                                                 </div>
                                                                 <div class="modal-body">
                                                                     <form
-                                                                        action="{{ route('rencanaformatif.update', $rencana_penilaian->id) }}"
+                                                                        action="{{ route('km.rencanaformatif.update', $rencana_penilaian->id) }}"
                                                                         method="POST">
                                                                         @csrf
                                                                         @method('PUT')

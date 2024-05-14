@@ -90,7 +90,7 @@ class KehadiranSiswaController extends Controller
                     $cek_data->update($data);
                 }
             }
-            return redirect(route('kehadiranadmin.index'))->with('toast_success', 'Kehadiran siswa berhasil disimpan');
+            return redirect(route('km.kehadiran.index'))->with('toast_success', 'Kehadiran siswa berhasil disimpan');
         }
     }
 }

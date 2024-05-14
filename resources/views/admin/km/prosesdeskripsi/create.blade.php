@@ -18,7 +18,7 @@
                 ],
                 [
                     'title' => 'Deskripsi Nilai Siswa',
-                    'url' => route('prosesdeskripsikmadmin.index'),
+                    'url' => route('km.prosesdeskripsi.index'),
                     'active' => true,
                 ],
                 [
@@ -45,7 +45,7 @@
                         </div>
                         <div class="card-body">
                             <div class="callout callout-info">
-                                <form action="{{ route('prosesdeskripsikmadmin.create') }}" method="GET">
+                                <form action="{{ route('km.prosesdeskripsi.create') }}" method="GET">
                                     @csrf
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Semester</label>
@@ -82,7 +82,7 @@
                                 <div class="card-header bg-primary">
                                     <h3 class="card-title">Deskripsi Nilai Siswa</h3>
                                 </div>
-                                <form action="{{ route('prosesdeskripsikmadmin.store') }}" method="POST">
+                                <form action="{{ route('km.prosesdeskripsi.store') }}" method="POST">
                                     @csrf
                                     <input type="hidden" name="term_id" value="{{ $term->id }}">
                                     <input type="hidden" name="semester_id" value="{{ $semester->id }}">
@@ -140,7 +140,7 @@
                                     </div>
                                     <div class="card-footer clearfix">
                                         <button type="submit" class="btn btn-primary float-right">Simpan</button>
-                                        <a href="{{ route('prosesdeskripsikmadmin.index') }}"
+                                        <a href="{{ route('km.prosesdeskripsi.index') }}"
                                             class="btn btn-default float-right me-2">Batal</a>
                                     </div>
                                 </form>

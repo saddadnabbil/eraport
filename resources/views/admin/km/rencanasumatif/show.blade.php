@@ -18,7 +18,7 @@
                 ],
                 [
                     'title' => 'Rencana Sumatif',
-                    'url' => route('rencanasumatif.index'),
+                    'url' => route('km.rencanasumatif.index'),
                     'active' => true,
                 ],
                 [
@@ -93,7 +93,7 @@
                                                     </td>
                                                     <td class="text-center">
                                                         <form
-                                                            action="{{ route('rencanasumatif.destroy', $rencana_penilaian->id) }}"
+                                                            action="{{ route('km.rencanasumatif.destroy', $rencana_penilaian->id) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')
@@ -125,7 +125,7 @@
                                                                 </div>
                                                                 <div class="modal-body">
                                                                     <form
-                                                                        action="{{ route('rencanasumatif.update', $rencana_penilaian->id) }}"
+                                                                        action="{{ route('km.rencanasumatif.update', $rencana_penilaian->id) }}"
                                                                         method="POST">
                                                                         @csrf
                                                                         @method('PUT')

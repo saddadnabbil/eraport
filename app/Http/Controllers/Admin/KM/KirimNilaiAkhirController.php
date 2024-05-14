@@ -99,7 +99,7 @@ class KirimNilaiAkhirController extends Controller
                         ->get();
 
                     if (count($data_anggota_kelas) == 0) {
-                        return redirect(route('penilaiankm.index'))->with('toast_error', 'Data anggota kelas tidak ditemukan');
+                        return redirect(route('km.penilaian.index'))->with('toast_error', 'Data anggota kelas tidak ditemukan');
                     }
 
                     foreach ($data_anggota_kelas as $anggota_kelas) {
@@ -118,7 +118,7 @@ class KirimNilaiAkhirController extends Controller
                             $nilai_akhir_keterampilan = 0;
                             $nilai_akhir_raport = 0;
 
-                            return redirect(route('penilaiankm.index'))->with('toast_error', 'Belum ada data penilaian untuk ' . $pembelajaran->mapel->nama_mapel . ' ' . $pembelajaran->kelas->nama_kelas . '. Silahkan input penilaian!');
+                            return redirect(route('km.penilaian.index'))->with('toast_error', 'Belum ada data penilaian untuk ' . $pembelajaran->mapel->nama_mapel . ' ' . $pembelajaran->kelas->nama_kelas . '. Silahkan input penilaian!');
                         }
 
                         $anggota_kelas->nilai_pengetahuan = round($nilai_akhir_pengetahuan, 0);

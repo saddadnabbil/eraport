@@ -1,18 +1,9 @@
 @php
     $userRole = Auth::user()->getRoleNames()->first();
 
-    switch ($userRole) {
-        case 'Admin':
-            $checkRoute = request()->routeIs('penilaiankm.*');
-            $dynamicRoute = route('penilaiankm.index');
-            break;
-        case 'Teacher':
-            $checkRoute = request()->routeIs('guru.penilaiankm.*');
-            $dynamicRoute = route('guru.penilaiankm.index');
+    $checkRoute = request()->routeIs('km.penilaian.*');
+    $dynamicRoute = route('km.penilaian.index');
 
-            break;
-        default:
-    }
 @endphp
 
 @include('layouts.partials.sidebar._sidebar-item', [

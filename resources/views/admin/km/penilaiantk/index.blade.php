@@ -18,7 +18,7 @@
                 ],
                 [
                     'title' => 'Penilaian',
-                    'url' => route('penilaiankm.index'),
+                    'url' => route('km.penilaian.index'),
                     'active' => true,
                 ],
                 [
@@ -46,7 +46,7 @@
 
                         <div class="card-body">
                             <div class="callout callout-info">
-                                <form action="{{ route('penilaiankm.create') }}" method="GET">
+                                <form action="{{ route('km.penilaian.create') }}" method="GET">
                                     @csrf
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Semester</label>
@@ -78,7 +78,7 @@
                                 </form>
                             </div>
 
-                            <form action="{{ route('penilaiankm.store') }}" method="POST">
+                            <form action="{{ route('km.penilaian.store') }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="pembelajaran_id" value="{{ $pembelajaran_id }}">
                                 <input type="hidden" name="term_id" value="{{ $term->id }}">
@@ -265,7 +265,8 @@
 
                         <div class="card-footer clearfix">
                             <button type="submit" class="btn btn-primary float-right">Simpan</button>
-                            <a href="{{ route('penilaiankm.index') }}" class="btn btn-default float-right me-2">Batal</a>
+                            <a href="{{ route('km.penilaian.index') }}"
+                                class="btn btn-default float-right me-2">Batal</a>
                         </div>
                         </form>
                     </div>

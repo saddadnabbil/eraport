@@ -94,7 +94,7 @@
                 var term_id = $(this).val();
                 if (term_id) {
                     $.ajax({
-                        url: '/admin/getKelas/penilaian-tk/' + term_id,
+                        url: '/getKelas/penilaian-tk/' + term_id,
                         type: "GET",
                         dataType: "json",
                         success: function(data) {

@@ -18,7 +18,7 @@
                 ],
                 [
                     'title' => 'Kehadiran Siswa',
-                    'url' => route('kehadiranadmintk.index'),
+                    'url' => route('km.kehadirantk.index'),
                     'active' => true,
                 ],
                 [
@@ -43,7 +43,7 @@
                         <div class="card-header">
                             <h3 class="card-title"><i class="fas fa-user-check"></i> {{ $title }}</h3>
                         </div>
-                        <form action="{{ route('kehadiranadmintk.store') }}" method="POST">
+                        <form action="{{ route('km.kehadirantk.store') }}" method="POST">
                             @csrf
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -107,8 +107,7 @@
                             </div>
                             <div class="card-footer clearfix">
                                 <button type="submit" class="btn btn-primary float-right ml-2">Simpan</button>
-                                <a href="{{ route('kehadiranadmintk.index') }}"
-                                    class="btn btn-default float-right">Batal</a>
+                                <a href="{{ route('km.kehadirantk.index') }}" class="btn btn-default float-right">Batal</a>
                             </div>
                         </form>
                     </div>

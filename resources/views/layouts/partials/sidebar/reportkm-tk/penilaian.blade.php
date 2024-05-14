@@ -1,20 +1,8 @@
 @php
     $userRole = Auth::user()->getRoleNames()->first();
 
-    switch ($userRole) {
-        case 'Admin':
-            $checkRoute = request()->routeIs('tk.penilaian.*');
-            $dynamicRoute = route('tk.penilaian.index');
-            break;
-        case 'Teacher':
-            $checkRoute = request()->routeIs('tk.guru.penilaian.*');
-            $dynamicRoute = route('tk.guru.penilaian.index');
-            break;
-        // case 'Student':
-        //     $checkRoute = request()->routeIs('siswa.silabus.*');
-        //     $dynamicRoute = route('siswa.silabus.index');
-        //     break;
-    }
+    $checkRoute = request()->routeIs('tk.penilaian.*');
+    $dynamicRoute = route('tk.penilaian.index');
 @endphp
 
 @include('layouts.partials.sidebar._sidebar-item', [

@@ -82,7 +82,7 @@ class CatatanWaliKelasController extends Controller
                     $cek_data->update($data);
                 }
             }
-            return redirect(route('catatanadmin.index'))->with('toast_success', 'Catatan wali kelas berhasil disimpan');
+            return redirect(route('km.catatan.index'))->with('toast_success', 'Catatan wali kelas berhasil disimpan');
         }
     }
 }

@@ -499,7 +499,7 @@
                 var mapel_id = $(this).val();
                 if (mapel_id) {
                     $.ajax({
-                        url: '/admin/getKelas/ajax/' + mapel_id,
+                        url: '/getKelas/ajax/' + mapel_id,
                         type: "GET",
                         dataType: "json",
                         success: function(data) {

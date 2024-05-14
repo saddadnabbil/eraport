@@ -41,7 +41,7 @@
 
                         <div class="card-body">
                             <div class="callout callout-info">
-                                <form action="{{ route('penilaiankm.create') }}" method="GET">
+                                <form action="{{ route('km.penilaian.create') }}" method="GET">
                                     @csrf
                                     <div class="form-group row">
                                         <label for="pembelajaran_id" class="col-sm-3 col-form-label">Kelas</label>
@@ -53,7 +53,8 @@
                                                     <option value="{{ $pembelajaran->id }}">
                                                         {{ $pembelajaran->mapel->nama_mapel }}
                                                         ({{ $pembelajaran->kelas->nama_kelas }} -
-                                                        {{ $pembelajaran->kelas->tingkatan->nama_tingkatan }})</option>
+                                                        {{ $pembelajaran->kelas->tingkatan->nama_tingkatan }})
+                                                    </option>
                                                 @endforeach
                                             </select>
                                         </div>

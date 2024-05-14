@@ -58,7 +58,7 @@
                                             aria-hidden="true"></button>
                                         </button>
                                     </div>
-                                    <form action="{{ route('tglraportkm.store') }}" method="POST">
+                                    <form action="{{ route('km.tglraport.store') }}" method="POST">
                                         @csrf
                                         <div class="modal-body">
                                             <div class="form-group row">
@@ -131,7 +131,7 @@
                                                 <td>{{ $tgl_raport->tempat_penerbitan }}</td>
                                                 <td>{{ date('d-M-Y', strtotime($tgl_raport->tanggal_pembagian)) }}</td>
                                                 <td>
-                                                    <form action="{{ route('tglraportkm.destroy', $tgl_raport->id) }}"
+                                                    <form action="{{ route('km.tglraport.destroy', $tgl_raport->id) }}"
                                                         method="POST">
                                                         @csrf
                                                         @method('DELETE')
@@ -157,7 +157,7 @@
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                                 aria-hidden="true"></button>
                                                         </div>
-                                                        <form action="{{ route('tglraportkm.update', $tgl_raport->id) }}"
+                                                        <form action="{{ route('km.tglraport.update', $tgl_raport->id) }}"
                                                             method="POST">
                                                             {{ method_field('PATCH') }}
                                                             @csrf

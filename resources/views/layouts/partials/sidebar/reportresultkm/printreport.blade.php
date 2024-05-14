@@ -1,32 +1,17 @@
 @php
     $userRole = Auth::user()->getRoleNames()->first();
 
-    switch ($userRole) {
-        case 'Admin':
-            $allowedRoutes = ['adminraportptskm.*', 'adminraportsemesterkm.*'];
+    $allowedRoutes = ['km.raportpts.*', 'km.raportsemester.*'];
 
-            $checkRouteMidSemesterReport = request()->routeIs('adminraportptskm.*');
-            $dynamicRouteMidSemesterReport = route('adminraportptskm.index');
+    $checkRouteMidSemesterReport = request()->routeIs('km.raportpts.*');
+    $dynamicRouteMidSemesterReport = route('km.raportpts.index');
 
-            $checkRouteSemesterReport = request()->routeIs('adminraportsemesterkm.*');
-            $dynamicRouteSemesterReport = route('adminraportsemesterkm.index');
+    $checkRouteSemesterReport = request()->routeIs('km.raportsemester.*');
+    $dynamicRouteSemesterReport = route('km.raportsemester.index');
 
-            $checkRouteP5Report = request()->routeIs('p5.raport.*');
-            $dynamicRouteP5Report = route('p5.raport.index');
-            break;
-        case 'Teacher':
-            $allowedRoutes = ['kirimnilaiakhirkm.*', 'kirimnilaiakhirkm.*'];
+    $checkRouteP5Report = request()->routeIs('p5.raport.*');
+    $dynamicRouteP5Report = route('p5.raport.index');
 
-            $checkRouteMidSemesterReport = request()->routeIs('statusnilaiguru.*');
-            $dynamicRouteMidSemesterReport = route('statusnilaiguru.index');
-
-            $checkRouteSemesterReport = request()->routeIs('adminraportsemesterkm.*');
-            $dynamicRouteSemesterReport = route('adminraportsemesterkm.index');
-
-            $checkRouteP5Report = request()->routeIs('p5.raport.*');
-            $dynamicRouteP5Report = route('p5.raport.index');
-            break;
-    }
 @endphp
 
 @include('layouts.partials.sidebar._sidebar-item', [

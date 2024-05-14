@@ -278,6 +278,15 @@ class AuthController extends Controller
 
     public function redirect()
     {
-        return redirect('/dashboard');
+        // If user is already authenticated, redirect to dashboard
+        if (Auth::check()) {
+            if (Auth::user()->hasRole('Admin')) {
+                return redirect()->route('admin.dashboard');
+            } elseif (Auth::user()->hasRole('Teacher')) {
+                return redirect()->route('guru.dashboard');
+            } elseif (Auth::user()->hasRole('Student')) {
+                return redirect()->route('siswa.dashboard');
+            }
+        }
     }
 }

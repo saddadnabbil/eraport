@@ -4,29 +4,47 @@
         <!-- Sidebar navigation-->
         <nav class="sidebar-nav">
             <ul id="sidebarnav">
-                <li class="sidebar-item">
-                    @php
-                        if (Auth::user()->hasRole('Admin')) {
-                            $dashboard = route('admin.dashboard');
-                        } elseif (Auth::user()->hasRole('Teacher')) {
-                            $dashboard = route('guru.dashboard');
-                        } elseif (Auth::user()->hasRole('Student')) {
-                            $dashboard = route('siswa.dashboard');
-                        }
-                    @endphp
-                    <a class="sidebar-link sidebar-link" href="{{ $dashboard }}" aria-expanded="false"><i
-                            data-feather="home" class="feather-icon"></i><span class="hide-menu"> Dashboard
-                        </span></a>
-                </li>
-                @if (auth()->user()->hasPermissionTo('admin-access') && request()->is('admin/*'))
+                @if (
+                    (auth()->user()->hasAnyRole(['Admin', 'Curriculum', 'Teacher', 'Student']) &&
+                        auth()->user()->hasAnyPermission(['admin-access', 'homeroom-pg-kg', 'teacher-pg-kg', 'teacher-km', 'homeroom-km']) &&
+                        request()->is('admin/*')) ||
+                        request()->is('guru/*') ||
+                        request()->is('siswa/*'))
+                    <li class="sidebar-item">
+                        @php
+                            if (Auth::user()->hasRole('Admin')) {
+                                $dashboard = route('admin.dashboard');
+                            } elseif (Auth::user()->hasRole('Teacher')) {
+                                $dashboard = route('guru.dashboard');
+                            } elseif (Auth::user()->hasRole('Student')) {
+                                $dashboard = route('siswa.dashboard');
+                            }
+                        @endphp
+                        <a class="sidebar-link sidebar-link" href="{{ $dashboard }}" aria-expanded="false"><i
+                                data-feather="home" class="feather-icon"></i><span class="hide-menu"> Dashboard
+                            </span></a>
+                    </li>
+                @endif
+                @if (auth()->user()->hasAnyRole(['Admin', 'Curriculum']) &&
+                        auth()->user()->hasAnyPermission(['admin-access']) &&
+                        request()->is('admin/*'))
                     @include('layouts.partials.sidebar.admin.user')
                     @include('layouts.partials.sidebar.admin.karyawan')
-                    @include('layouts.partials.sidebar.admin.pengumuman')
-                    @include('layouts.partials.sidebar.admin.masterdata')
+                    <li class="list-divider"></li>
                 @endif
 
-                @if (auth()->user()->hasAnyPermission(['admin-access', 'homeroom-pg-kg', 'teacher-pg-kg']) && request()->is('admin/tk/*'))
+                @if (auth()->user()->hasAnyRole(['Admin', 'Curriculum']) &&
+                        auth()->user()->hasAnyPermission(['admin-access', 'masterdata-management']) &&
+                        request()->is('master-data/*'))
+                    @include('layouts.partials.sidebar.admin.pengumuman')
+                    @include('layouts.partials.sidebar.admin.masterdata')
                     <li class="list-divider"></li>
+                @endif
+
+
+                @if (auth()->user()->hasAnyRole(['Admin', 'Teacher', 'Curriculum']) &&
+                        auth()->user()->hasAnyPermission(['admin-access', 'homeroom-pg-kg', 'teacher-pg-kg']) &&
+                        request()->is('tk/*'))
                     <li class="nav-small-cap">
                         <span class="hide-menu">REPORT TK</span>
                     </li>
@@ -34,10 +52,16 @@
                     @include('layouts.partials.sidebar.reportkm-tk.area-of-learning')
                     @include('layouts.partials.sidebar.reportkm-tk.penilaian')
                     @include('layouts.partials.sidebar.reportkm-tk.printreport_tk')
+                    <li class="list-divider"></li>
                 @endif
 
-                @if (auth()->user()->hasAnyPermission(['admin-access', 'homeroom-pg-kg', 'teacher-pg-kg']) && request()->is('admin/km/*'))
-                    <li class="list-divider"></li>
+                @if (
+                    (auth()->user()->hasAnyRole(['Admin', 'Teacher', 'Curriculum']) &&
+                        auth()->user()->hasAnyPermission(['admin-access', 'homeroom-pg-kg', 'teacher-pg-kg', 'teacher-km', 'homeroom-km']) &&
+                        request()->is('km/*')) ||
+                        request()->is('admin/dashbaord') ||
+                        request()->is('guru/dashboard') ||
+                        request()->is('siswa'))
                     <li class="nav-small-cap">
                         <span class="hide-menu">REPORT KM</span>
                     </li>
@@ -47,8 +71,8 @@
                     @include('layouts.partials.sidebar.reportkm.nilaiekstra')
                     @include('layouts.partials.sidebar.reportkm.nilaiakhir')
                     @include('layouts.partials.sidebar.reportkm.prosesdeskripsi')
-
                     <li class="list-divider"></li>
+
                     <li class="nav-small-cap">
                         <span class="hide-menu">REPORT P5BK</span>
                     </li>
@@ -62,11 +86,11 @@
                     @include('layouts.partials.sidebar.reportresultkm.rekapkehadiran')
                     @include('layouts.partials.sidebar.reportresultkm.leger')
                     @include('layouts.partials.sidebar.reportresultkm.printreport')
+                    <li class="list-divider"></li>
                 @endif
 
 
-                <li class="list-divider"></li>
-                <li class="nav-small-cap">
+                {{-- <li class="nav-small-cap">
                     <span class="hide-menu">AUTHTENTICATION</span>
                 </li>
                 <li class="sidebar-item">
@@ -77,7 +101,7 @@
                             class="text-decoration-none border-0 bg-transparent btn-link text-danger"> <i
                                 data-feather="log-out" class="feather-icon text-danger"></i>Logout</button>
                     </form>
-                </li>
+                </li> --}}
         </nav>
         <!-- End Sidebar navigation -->
     </div>

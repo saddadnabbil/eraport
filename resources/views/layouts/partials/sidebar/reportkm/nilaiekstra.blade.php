@@ -3,8 +3,8 @@
 
     switch ($userRole) {
         case 'Admin':
-            $checkRoute = request()->routeIs('nilaiekstraadmin.*');
-            $dynamicRoute = route('nilaiekstraadmin.index');
+            $checkRoute = request()->routeIs('km.nilaiekstra.*');
+            $dynamicRoute = route('km.nilaiekstra.index');
             break;
         case 'Teacher':
             $checkRoute = request()->routeIs('nilaiekstra.*');

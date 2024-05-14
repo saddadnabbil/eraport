@@ -18,7 +18,7 @@
                 ],
                 [
                     'title' => 'Catatan Wali Kelas',
-                    'url' => route('catatanadmin.index'),
+                    'url' => route('km.catatan.index'),
                     'active' => true,
                 ],
                 [
@@ -43,7 +43,7 @@
                         <div class="card-header">
                             <h3 class="card-title"><i class="fas fa-edit"></i> {{ $title }}</h3>
                         </div>
-                        <form action="{{ route('catatanadmintk.store') }}" method="POST">
+                        <form action="{{ route('km.catatantk.store') }}" method="POST">
                             @csrf
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -90,7 +90,7 @@
                             </div>
                             <div class="card-footer clearfix">
                                 <button type="submit" class="btn btn-primary float-right">Simpan</button>
-                                <a href="{{ route('catatanadmintk.index') }}"
+                                <a href="{{ route('km.catatantk.index') }}"
                                     class="btn btn-default float-right me-2">Batal</a>
                             </div>
                         </form>

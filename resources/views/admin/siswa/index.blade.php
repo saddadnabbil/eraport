@@ -1192,7 +1192,7 @@
                 console.log(tingkatan_id);
                 if (tingkatan_id) {
                     $.ajax({
-                        url: '/admin/getKelasByTingkatan/ajax/' + tingkatan_id,
+                        url: '/getKelasByTingkatan/ajax/' + tingkatan_id,
                         type: "GET",
                         dataType: "json",
                         success: function(response) {

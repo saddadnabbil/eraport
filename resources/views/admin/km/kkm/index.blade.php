@@ -46,16 +46,16 @@
                                         aria-hidden="true"></button>
                                     </button>
                                 </div>
-                                <form name="contact-form" action="{{ route('kkmadmin.import') }}" method="POST"
+                                <form name="contact-form" action="{{ route('km.kkm.import') }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
                                     <div class="modal-body">
                                         <div class="callout callout-info">
                                             <h5>Download format import</h5>
                                             <p>Silahkan download file format import melalui tombol dibawah ini.</p>
-                                            <a href="{{ route('kkmadmin.format_import') }}"
-                                                class="btn btn-primary text-white" style="text-decoration:none"><i
-                                                    class="fas fa-file-download"></i> Download</a>
+                                            <a href="{{ route('km.kkm.format_import') }}" class="btn btn-primary text-white"
+                                                style="text-decoration:none"><i class="fas fa-file-download"></i>
+                                                Download</a>
                                         </div>
                                         <div class="form-group row pt-2">
                                             <label for="file_import" class="col-sm-2 col-form-label">File Import</label>
@@ -91,7 +91,7 @@
                                         aria-hidden="true"></button>
                                     </button>
                                 </div>
-                                <form action="{{ route('kkmadmin.store') }}" method="POST">
+                                <form action="{{ route('km.kkm.store') }}" method="POST">
                                     @csrf
                                     <div class="modal-body">
                                         <div class="form-group row">
@@ -184,7 +184,7 @@
                                                 <td>{{ $kkm->kkm }}</td>
                                                 <td>
                                                     @include('components.actions.delete-button', [
-                                                        'route' => route('kkmadmin.destroy', $kkm->id),
+                                                        'route' => route('km.kkm.destroy', $kkm->id),
                                                         'id' => $kkm->id,
                                                         'isPermanent' => true,
                                                         'withEdit' => true,
@@ -202,7 +202,7 @@
                                                             <button type="button" class="btn-close"
                                                                 data-bs-dismiss="modal" aria-hidden="true"></button>
                                                         </div>
-                                                        <form action="{{ route('kkmadmin.update', $kkm->id) }}"
+                                                        <form action="{{ route('km.kkm.update', $kkm->id) }}"
                                                             method="POST">
                                                             {{ method_field('PATCH') }}
                                                             @csrf
@@ -275,7 +275,7 @@
                 var mapel_id = $(this).val();
                 if (mapel_id) {
                     $.ajax({
-                        url: '/admin/getKelas/ajax/' + mapel_id,
+                        url: '/getKelas/ajax/' + mapel_id,
                         type: "GET",
                         dataType: "json",
                         success: function(data) {

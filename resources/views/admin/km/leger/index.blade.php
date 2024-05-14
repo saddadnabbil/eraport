@@ -38,7 +38,7 @@
                         <div class="card-header">
                             <h3 class="card-title">{{ $title }}</h3>
                             <div class="card-tools">
-                                <a href="{{ route('adminlegerkm.show', $kelas->id) }}" class="btn btn-tool btn-sm">
+                                <a href="{{ route('km.leger.show', $kelas->id) }}" class="btn btn-tool btn-sm">
                                     <i class="fas fa-download"></i>
                                 </a>
                             </div>
@@ -46,7 +46,7 @@
 
                         <div class="card-body">
                             <div class="callout callout-info">
-                                <form action="{{ route('adminlegerkm.store') }}" method="POST">
+                                <form action="{{ route('km.leger.store') }}" method="POST">
                                     @csrf
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Kelas</label>

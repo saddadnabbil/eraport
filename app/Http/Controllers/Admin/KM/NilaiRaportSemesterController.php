@@ -75,7 +75,7 @@ class NilaiRaportSemesterController extends Controller
                     $anggota_kelas->nilai_raport = KmNilaiAkhirRaport::where('pembelajaran_id', $pembelajaran->id)->where('anggota_kelas_id', $anggota_kelas->id)->where('term_id', $term->id)->first();
 
                     if (is_null($anggota_kelas->nilai_raport)) {
-                        return redirect(route('penilaiankm.index'))->with('toast_error', 'Data raport kelas ' . $anggota_kelas->kelas->nama_kelas . ' tidak ditemukan');
+                        return redirect(route('km.penilaian.index'))->with('toast_error', 'Data raport kelas ' . $anggota_kelas->kelas->nama_kelas . ' tidak ditemukan');
                     }
                 }
 

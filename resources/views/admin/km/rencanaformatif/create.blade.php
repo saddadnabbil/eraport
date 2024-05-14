@@ -18,7 +18,7 @@
                 ],
                 [
                     'title' => 'Rencana Formatif',
-                    'url' => route('rencanaformatif.index'),
+                    'url' => route('km.rencanaformatif.index'),
                     'active' => true,
                 ],
                 [
@@ -46,7 +46,7 @@
 
                         <div class="card-body">
                             <div class="callout callout-info">
-                                <form action="{{ route('rencanaformatif.create') }}" method="GET">
+                                <form action="{{ route('km.rencanaformatif.create') }}" method="GET">
                                     @csrf
                                     <div class="form-group row">
                                         <label for="pembelajaran_id" class="col-sm-2 col-form-label">Mata Pelajaran</label>
@@ -69,7 +69,7 @@
                                 </form>
                             </div>
 
-                            <form action="{{ route('rencanaformatif.store') }}" method="POST">
+                            <form action="{{ route('km.rencanaformatif.store') }}" method="POST">
                                 @csrf
 
                                 <input type="hidden" name="pembelajaran_id" value="{{ $pembelajaran->id }}">
@@ -144,7 +144,7 @@
 
                         <div class="card-footer clearfix">
                             <button type="submit" class="btn btn-primary float-right">Simpan</button>
-                            <a href="{{ route('rencanaformatif.index') }}"
+                            <a href="{{ route('km.rencanaformatif.index') }}"
                                 class="btn btn-default float-right me-2">Batal</a>
                         </div>
                         </form>

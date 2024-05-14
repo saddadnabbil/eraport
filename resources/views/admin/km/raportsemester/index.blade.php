@@ -41,7 +41,7 @@
 
                         <div class="card-body">
                             <div class="callout callout-info">
-                                <form action="{{ route('adminraportsemesterkm.store') }}" method="POST">
+                                <form action="{{ route('km.raportsemester.store') }}" method="POST">
                                     @csrf
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Semester</label>
@@ -71,7 +71,7 @@
                             </div>
 
                             <div class="d-flex justify-content-end my-3">
-                                <form action="{{ route('adminraportsemesterkm.export', $kelas->id) }}" method="get">
+                                <form action="{{ route('km.raportsemester.export', $kelas->id) }}" method="get">
                                     @csrf
                                     <input type="hidden" name="data_type" value="2">
                                     <input type="hidden" name="paper_size" value="{{ $paper_size }}">
@@ -110,7 +110,7 @@
                                                 <td class="text-center">{{ $anggota_kelas->siswa->jenis_kelamin }}</td>
                                                 <td class="text-center">
                                                     <form
-                                                        action="{{ route('adminraportsemesterkm.show', $anggota_kelas->id) }}"
+                                                        action="{{ route('km.raportsemester.show', $anggota_kelas->id) }}"
                                                         target="_black" method="GET">
                                                         @csrf
                                                         <input type="hidden" name="data_type" value="1">
@@ -127,7 +127,7 @@
                                                 </td>
                                                 <td class="text-center">
                                                     <form
-                                                        action="{{ route('adminraportsemesterkm.show', $anggota_kelas->id) }}"
+                                                        action="{{ route('km.raportsemester.show', $anggota_kelas->id) }}"
                                                         target="_black" method="GET">
                                                         @csrf
                                                         <input type="hidden" name="data_type" value="2">

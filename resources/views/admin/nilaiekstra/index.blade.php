@@ -41,7 +41,7 @@
 
                         <div class="card-body">
                             <div class="callout callout-info">
-                                <form action="{{ route('nilaiekstraadmin.create') }}" method="GET">
+                                <form action="{{ route('km.nilaiekstra.create') }}" method="GET">
                                     @csrf
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Ekstrakulikuler</label>
@@ -89,7 +89,7 @@
                 var ekstrakulikuler_id = $(this).val();
                 if (ekstrakulikuler_id) {
                     $.ajax({
-                        url: '/admin/getKelas/ekstra/' + ekstrakulikuler_id,
+                        url: '/getKelas/ekstra/' + ekstrakulikuler_id,
                         type: "GET",
                         dataType: "json",
                         success: function(data) {

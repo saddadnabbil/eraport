@@ -41,7 +41,7 @@
 
                         <div class="card-body">
                             <div class="callout callout-info">
-                                <form action="{{ route('adminraportptskm.store') }}" method="POST">
+                                <form action="{{ route('km.raportpts.store') }}" method="POST">
                                     @csrf
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Term</label>
@@ -105,7 +105,7 @@
                                                 <td>{{ $anggota_kelas->siswa->nama_lengkap }}</td>
                                                 <td class="text-center">{{ $anggota_kelas->siswa->jenis_kelamin }}</td>
                                                 <td class="text-center">
-                                                    <form action="{{ route('adminraportptskm.show', $anggota_kelas->id) }}"
+                                                    <form action="{{ route('km.raportpts.show', $anggota_kelas->id) }}"
                                                         target="_black" method="GET">
                                                         @csrf
                                                         <input type="hidden" name="paper_size"

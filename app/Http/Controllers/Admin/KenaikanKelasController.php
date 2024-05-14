@@ -112,7 +112,7 @@ class KenaikanKelasController extends Controller
                     }
                 }
             }
-            return redirect(route('kenaikanadmin.index'))->with('toast_success', 'Kenaikan kelas berhasil disimpan');
+            return redirect(route('km.kenaikan.index'))->with('toast_success', 'Kenaikan kelas berhasil disimpan');
         }
     }
 }

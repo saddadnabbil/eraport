@@ -18,7 +18,7 @@
                 ],
                 [
                     'title' => 'Nilai Ekstrakulikuler',
-                    'url' => route('nilaiekstraadmin.index'),
+                    'url' => route('km.nilaiekstra.index'),
                     'active' => true,
                 ],
                 [
@@ -46,7 +46,7 @@
 
                         <div class="card-body">
                             <div class="callout callout-info">
-                                <form action="{{ route('nilaiekstraadmin.create') }}" method="GET">
+                                <form action="{{ route('km.nilaiekstra.create') }}" method="GET">
                                     @csrf
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Ekstrakulikuler</label>
@@ -85,7 +85,7 @@
                                 <div class="card-header bg-primary">
                                     <h3 class="card-title"> Nilai Ekstrakulikuler</h3>
                                 </div>
-                                <form action="{{ route('nilaiekstraadmin.store') }}" method="POST">
+                                <form action="{{ route('km.nilaiekstra.store') }}" method="POST">
                                     @csrf
                                     <div class="card-body">
                                         <div class="table-responsive">
@@ -168,7 +168,7 @@
                                     </div>
                                     <div class="card-footer clearfix">
                                         <button type="submit" class="btn btn-primary float-right">Simpan</button>
-                                        <a href="{{ route('nilaiekstraadmin.index') }}"
+                                        <a href="{{ route('km.nilaiekstra.index') }}"
                                             class="btn btn-default float-right me-2">Batal</a>
                                     </div>
                                 </form>
@@ -196,7 +196,7 @@
                 var ekstrakulikuler_id = $(this).val();
                 if (ekstrakulikuler_id) {
                     $.ajax({
-                        url: '/admin/getKelas/ekstra/' + ekstrakulikuler_id,
+                        url: '/getKelas/ekstra/' + ekstrakulikuler_id,
                         type: "GET",
                         dataType: "json",
                         success: function(data) {

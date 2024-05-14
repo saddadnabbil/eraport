@@ -1,27 +1,20 @@
 @php
     $userRole = Auth::user()->getRoleNames()->first();
 
-    switch ($userRole) {
-        case 'Admin':
-            $checkRoute = route('user.index');
-            $dynamicRoute = route('user.index');
-            break;
-        case 'Teacher':
-            $checkRoute = route('user.index');
-            $dynamicRoute = route('user.index');
-            break;
-    }
+    $checkRoute = route('user.index');
+    $dynamicRoute = route('user.index');
+
 @endphp
 
 @include('layouts.partials.sidebar._sidebar-item', [
     'isActive' => request()->routeIs([
-        'tglraportkm.*',
-        'kkmadmin.*',
-        'mappingkm.*',
-        'kehadiranadmin.*',
-        'prestasiadmin.*',
-        'catatanadmin.*',
-        'kenaikanadmin.*',
+        'km.tglraport.*',
+        'km.kkm.*',
+        'km.mapping.*',
+        'km.kehadiran.*',
+        'km.prestasi.*',
+        'km.catatan.*',
+        'km.kenaikan.*',
     ]),
     'hasArrow' => true,
     'icon' => 'clipboard',
@@ -30,44 +23,44 @@
     'subItems' => [
         [
             'name' => 'Minimum Criteria',
-            'route' => route('kkmadmin.index'),
-            'isActive' => request()->routeIs('kkmadmin.*'),
+            'route' => route('km.kkm.index'),
+            'isActive' => request()->routeIs('km.kkm.*'),
             'childHasArrow' => false,
         ],
         [
             'name' => 'Mapping Subject',
-            'route' => route('mappingkm.index'),
-            'isActive' => request()->routeIs('mappingkm.*'),
+            'route' => route('km.mapping.index'),
+            'isActive' => request()->routeIs('km.mapping.*'),
             'childHasArrow' => false,
         ],
         [
             'name' => 'Kehadiran Siswa',
-            'route' => route('kehadiranadmin.index'),
-            'isActive' => request()->routeIs('kehadiranadmin.*'),
+            'route' => route('km.kehadiran.index'),
+            'isActive' => request()->routeIs('km.kehadiran.*'),
             'childHasArrow' => false,
         ],
         [
             'name' => 'Prestasi Siswa',
-            'route' => route('prestasiadmin.index'),
-            'isActive' => request()->routeIs('prestasiadmin.*'),
+            'route' => route('km.prestasi.index'),
+            'isActive' => request()->routeIs('km.prestasi.*'),
             'childHasArrow' => false,
         ],
         [
             'name' => 'Catatan Wali Kelas',
-            'route' => route('catatanadmin.index'),
-            'isActive' => request()->routeIs('catatanadmin.*'),
+            'route' => route('km.catatan.index'),
+            'isActive' => request()->routeIs('km.catatan.*'),
             'childHasArrow' => false,
         ],
         [
             'name' => 'Tanggal Raport',
-            'route' => route('tglraportkm.index'),
-            'isActive' => request()->routeIs('tglraportkm.*'),
+            'route' => route('km.tglraport.index'),
+            'isActive' => request()->routeIs('km.tglraport.*'),
             'childHasArrow' => false,
         ],
         [
             'name' => 'Kenaikan Kelas',
-            'route' => route('kenaikanadmin.index'),
-            'isActive' => request()->routeIs('kenaikanadmin.*'),
+            'route' => route('km.kenaikan.index'),
+            'isActive' => request()->routeIs('km.kenaikan.*'),
             'childHasArrow' => false,
         ],
     ],

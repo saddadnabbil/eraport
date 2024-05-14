@@ -18,7 +18,7 @@
                 ],
                 [
                     'title' => 'Kehadiran Siswa',
-                    'url' => route('kehadiranadmintk.index'),
+                    'url' => route('km.kehadirantk.index'),
                     'active' => true,
                 ],
                 [

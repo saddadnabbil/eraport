@@ -45,7 +45,8 @@
                 <!-- ============================================================== -->
 
                 <ul class="navbar-nav float-left me-auto ms-3 ps-1">
-                    @if (Auth::user()->hasRole('Teacher') && session()->get('cek_wali_kelas') == true)
+                    @if (Auth::user()->hasAnyRole(['Teacher', 'Co-Teacher', 'Curriculum']) &&
+                            Auth::user()->hasAnyPermission(['homeroom-km', 'homeroom-pg-kg']))
                         <div style="padding: 0 15px; margin-left: 1rem;">
                             <li class="nav-item d-none d-md-block">
                                 <a class="nav-link" href="javascript:void(0)">
@@ -81,7 +82,7 @@
                     <div class="d-flex align-items-center justify-content-center"
                         style="padding: 0 15px; margin-left: 1rem;">
                         <li class="nav-item d-none d-md-block">
-                            <a href="{{ Auth::user()->hasRole('Admin') ? route('tapel.index') : 'javascript:void(0)' }}"
+                            <a href="{{ Auth::user()->hasAnyRole(['Admin', 'Curriculum']) ? route('tapel.index') : 'javascript:void(0)' }}"
                                 style="line-height: 1">
                                 <div class="customize-input">
                                     <span class="badge bg-success">
@@ -149,13 +150,27 @@
                             <ul class="list-style-none">
                                 <li>
                                     <div class="message-center notifications position-relative">
-                                        @if (auth()->user()->hasAnyPermission(['admin-access', 'homeroom-pg-kg', 'teacher-pg-kg']))
-                                            <a href="{{ auth()->user()->hasRole('Admin') ? route('admin.dashboard') : 'javascript:void(0)' }}"
+                                        @if (auth()->user()->hasAnyPermission(['admin-access']))
+                                            <a href="{{ auth()->user()->hasRole('Admin') && !request()->is('admin/*') ? route('admin.dashboard') : 'javascript:void(0)' }}"
+                                                @if (auth()->user()->hasRole('Admin') && request()->is('admin/*')) disabled style="background: #e8eaec;" @endif
                                                 class="message-item d-flex align-items-center border-bottom px-3 py-2">
                                                 <div class="btn btn-danger rounded-circle btn-circle"><i
                                                         data-feather="airplay" class="text-white"></i></div>
                                                 <div class="w-75 d-inline-block v-middle ps-2">
-                                                    <h6 class="message-title mb-0 mt-1 text-nowrap">Admin Access
+                                                    <h6 class="message-title mb-0 mt-1 text-nowrap">Admin
+                                                    </h6>
+                                                </div>
+                                            </a>
+                                        @endif
+
+                                        @if (auth()->user()->hasAnyPermission(['admin-access', 'masterdata-management']))
+                                            <a href="{{ (auth()->user()->hasAnyRole(['Admin', 'Curriculum']) ||auth()->user()->hasAnyPermission(['masterdata-management'])) &&!request()->is('master-data/*')? route('sekolah.index'): 'javascript:void(0)' }}"
+                                                @if (auth()->user()->hasAnyRole(['Admin', 'Curriculum']) && request()->is('master-data/*')) disabled style="background: #e8eaec;" @endif
+                                                class="message-item d-flex align-items-center border-bottom px-3 py-2">
+                                                <div class="btn btn-danger rounded-circle btn-circle"><i
+                                                        data-feather="airplay" class="text-white"></i></div>
+                                                <div class="w-75 d-inline-block v-middle ps-2">
+                                                    <h6 class="message-title mb-0 mt-1 text-nowrap">Panel Kurikulum
                                                     </h6>
                                                 </div>
                                             </a>
@@ -167,20 +182,19 @@
                                                 <div class="btn btn-danger rounded-circle btn-circle"><i
                                                         data-feather="airplay" class="text-white"></i></div>
                                                 <div class="w-75 d-inline-block v-middle ps-2">
-                                                    <h6 class="message-title mb-0 mt-1 text-nowrap">TK Access
+                                                    <h6 class="message-title mb-0 mt-1 text-nowrap">Panel Raport TK
                                                     </h6>
                                                 </div>
                                             </a>
                                         @endif
 
                                         @if (auth()->user()->hasAnyPermission(['admin-access', 'homeroom-km', 'teacher-km']))
-                                            <a href="{{ route('tk.penilaian.index') }}"
+                                            <a href="{{ route('km.kkm.index') }}"
                                                 class="message-item d-flex align-items-center border-bottom px-3 py-2">
                                                 <div class="btn btn-danger rounded-circle btn-circle"><i
                                                         data-feather="airplay" class="text-white"></i></div>
                                                 <div class="w-75 d-inline-block v-middle ps-2">
-                                                    <h6 class="message-title mb-0 mt-1 text-nowrap">Kurikulum Merdeka
-                                                        Access
+                                                    <h6 class="message-title mb-0 mt-1 text-nowrap">Panel Raport KM
                                                     </h6>
                                                 </div>
                                             </a>

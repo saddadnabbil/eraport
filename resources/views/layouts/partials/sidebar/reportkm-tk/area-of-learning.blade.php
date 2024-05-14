@@ -1,16 +1,8 @@
 @php
     $userRole = Auth::user()->getRoleNames()->first();
 
-    switch ($userRole) {
-        case 'Admin':
-            $checkRoute = route('user.index');
-            $dynamicRoute = route('user.index');
-            break;
-        case 'Teacher':
-            $checkRoute = route('user.index');
-            $dynamicRoute = route('user.index');
-            break;
-    }
+    $checkRoute = route('user.index');
+    $dynamicRoute = route('user.index');
 @endphp
 
 @include('layouts.partials.sidebar._sidebar-item', [

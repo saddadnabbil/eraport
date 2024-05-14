@@ -86,7 +86,7 @@ class RencanaNilaiFormatifController extends Controller
         $data_rencana_penilaian = RencanaNilaiFormatif::where('pembelajaran_id', $pembelajaran->id)->where('term_id', $term->id)->where('semester_id', $semester->id)->get();
 
         if (count($data_rencana_penilaian) >= 3) {
-            return redirect(route('rencanaformatif.index'))->with('toast_error', 'Data sudah tersedia');
+            return redirect(route('km.rencanaformatif.index'))->with('toast_error', 'Data sudah tersedia');
         }
 
         $jumlah_penilaian = $request->jumlah_penilaian;
@@ -129,7 +129,7 @@ class RencanaNilaiFormatifController extends Controller
             $data_penilaian_permapel[] = $data_penilaian;
         }
 
-        return redirect(route('rencanaformatif.index'))->with('toast_success', 'Rencana nilai Formatif berhasil disimpan.');
+        return redirect(route('km.rencanaformatif.index'))->with('toast_success', 'Rencana nilai Formatif berhasil disimpan.');
     }
 
     /**

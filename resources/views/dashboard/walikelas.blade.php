@@ -231,13 +231,13 @@
 
                                         <div class="product-img">
                                             @if ($riwayat_login->user->hasRole('Admin'))
-                                                <img src="assets/dist/img/avatar/{{ $riwayat_login->user->karyawan->avatar }}"
+                                                <img src="{{ asset('assets/dist/img/avatar/' . $riwayat_login->user->karyawan->avatar) }}"
                                                     alt="Avatar" class="img-size-50">
                                             @elseif($riwayat_login->user->hasRole('Teacher'))
-                                                <img src="assets/dist/img/avatar/{{ $riwayat_login->user->karyawan->avatar }}"
+                                                <img src="{{ asset('assets/dist/img/avatar/' . $riwayat_login->user->karyawan->avatar) }}"
                                                     alt="Avatar" class="img-size-50">
                                             @elseif($riwayat_login->user->hasRole('Student'))
-                                                <img src="assets/dist/img/avatar/{{ $riwayat_login->user->siswa->avatar }}"
+                                                <img src="{{ asset('assets/dist/img/avatar/' . $riwayat_login->user->siswa->avatar) }}"
                                                     alt="Avatar" class="img-size-50">
                                             @endif
                                         </div>
