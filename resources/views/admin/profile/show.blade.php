@@ -42,7 +42,7 @@
                             <div class="text-center">
                                 @if (optional($karyawan)->pas_photo == null)
                                     <img class="profile-user-img"
-                                        src="/assets/dist/img/avatar/{{ optional($karyawan)->avatar ?? 'default.png' }}"
+                                    src="{{ asset('/assets/dist/img/avatar/' . (optional($karyawan)->avatar ? : 'default.png')) }}"
                                         alt="Avatar" style="border: none">
                                 @else
                                     <img class="mb-2"

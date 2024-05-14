@@ -1,26 +1,5 @@
 @php
-    $userRole = Auth::user()->getRoleNames()->first();
-
-    $checkRoute = route('user.index');
-    $dynamicRoute = route('user.index');
-
-@endphp
-
-@include('layouts.partials.sidebar._sidebar-item', [
-    'isActive' => request()->routeIs([
-        'km.tglraport.*',
-        'km.kkm.*',
-        'km.mapping.*',
-        'km.kehadiran.*',
-        'km.prestasi.*',
-        'km.catatan.*',
-        'km.kenaikan.*',
-    ]),
-    'hasArrow' => true,
-    'icon' => 'clipboard',
-    'itemName' => 'Input Data',
-    'route' => 'javascript:void(0)',
-    'subItems' => [
+    $inputDataSubItems = [
         [
             'name' => 'Minimum Criteria',
             'route' => route('km.kkm.index'),
@@ -52,16 +31,40 @@
             'childHasArrow' => false,
         ],
         [
-            'name' => 'Tanggal Raport',
-            'route' => route('km.tglraport.index'),
-            'isActive' => request()->routeIs('km.tglraport.*'),
-            'childHasArrow' => false,
-        ],
-        [
             'name' => 'Kenaikan Kelas',
             'route' => route('km.kenaikan.index'),
             'isActive' => request()->routeIs('km.kenaikan.*'),
             'childHasArrow' => false,
         ],
-    ],
+        [
+            'name' => 'Tanggal Raport',
+            'route' => route('km.tglraport.index'),
+            'isActive' => request()->routeIs('km.tglraport.*'),
+            'childHasArrow' => false,
+        ],
+    ];
+@endphp
+
+@if(auth()->user()->hasAnyPermission(['homeroom-km']) && session('akses_sebagai') == 'homeroom-km')
+    @php
+        $inputDataSubItems = array_slice($inputDataSubItems, 2, 4);
+    @endphp
+@endif
+
+@include('layouts.partials.sidebar._sidebar-item', [
+    'isActive' => request()->routeIs([
+        'km.tglraport.*',
+        'km.kkm.*',
+        'km.mapping.*',
+        'km.kehadiran.*',
+        'km.prestasi.*',
+        'km.catatan.*',
+        'km.kenaikan.*',
+    ]),
+    'hasArrow' => true,
+    'icon' => 'clipboard',
+    'itemName' => 'Input Data',
+    'route' => 'javascript:void(0)',
+    'subItems' => $inputDataSubItems,
 ])
+

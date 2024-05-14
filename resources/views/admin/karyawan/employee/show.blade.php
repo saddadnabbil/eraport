@@ -46,7 +46,7 @@
                         <div class="card-body box-profile">
                             <div class="text-center">
                                 @if ($karyawan->pas_photo == null)
-                                    <img class="profile-user-img" src="/assets/dist/img/avatar/default.png" alt="Avatar"
+                                    <img class="profile-user-img" src="{{ asset('/assets/dist/img/avatar/default.png') }}" alt="Avatar"
                                         style="border: none">
                                 @else
                                     <img class="mb-2" src="{{ asset('storage/' . $karyawan->pas_photo) }}"

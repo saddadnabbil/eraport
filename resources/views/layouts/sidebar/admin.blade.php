@@ -8,7 +8,7 @@
                       @php
                           if (Auth::user()->hasRole('Admin')) {
                               $dashboard = route('admin.dashboard');
-                          } elseif (Auth::user()->hasRole('Teacher')) {
+                          } elseif (Auth::user()->hasAnyRole(['Teacher', 'Curriculum'])) {
                               $dashboard = route('guru.dashboard');
                           } elseif (Auth::user()->hasRole('Student')) {
                               $dashboard = route('siswa.dashboard');

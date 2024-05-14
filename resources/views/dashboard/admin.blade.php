@@ -1,47 +1,39 @@
 @extends('layouts.main.header')
 
 @section('styles')
-    <link href="{{ asset('assets/extra-libs/c3/c3.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/libs/chartist/dist/chartist.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css') }}" rel="stylesheet" />
+<link href="{{ asset('assets/extra-libs/c3/c3.min.css') }}" rel="stylesheet" />
+<link href="{{ asset('assets/libs/chartist/dist/chartist.min.css') }}" rel="stylesheet" />
+<link href="{{ asset('assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css') }}" rel="stylesheet" />
 @endsection
 
 @section('sidebar')
-    @include('layouts.sidebar.index')
+@include('layouts.sidebar.index')
 @endsection
 
 @section('content')
-    <!-- ============================================================== -->
-    <!-- Page wrapper  -->
-    <!-- ============================================================== -->
-    <div class="page-wrapper">
-        @php
-            $time = date('H');
-            $greeting = '';
-            if ($time < '12') {
-                $greeting = 'Good morning, ';
-            } elseif ($time < '18') {
-                $greeting = 'Good afternoon, ';
-            } else {
-                $greeting = 'Good evening, ';
-            }
-
-            $user = Auth::user();
-            if ($user->hasRole('Admin')) {
-                $fullName = optional(Auth::user()->karyawan)->nama_lengkap ?? 'Guru not available';
-            } elseif ($user->hasRole('Teacher')) {
-                $fullName = Auth::user()->siswa->nama_lengkap;
-            }
+<!-- ============================================================== -->
+<!-- Page wrapper  -->
+<!-- ============================================================== -->
+<div class="page-wrapper">
+    @php
+    $time = date('H');
+    $greeting = '';
+    if ($time < '12' ) { $greeting='Good morning, ' ; } elseif ($time < '18' ) { $greeting='Good afternoon, ' ; } else {
+        $greeting='Good evening, ' ; } $user=Auth::user(); if ($user->hasAnyRole(['Admin', 'Teacher', 'Curriculum'])) {
+        $fullName = optional(Auth::user()->karyawan)->nama_lengkap ?? 'Guru not available';
+        } elseif ($user->hasRole('Student')) {
+        $fullName = Auth::user()->siswa->nama_lengkap;
+        }
         @endphp
         @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
-            'titleBreadCrumb' => $greeting . $fullName . '!',
-            'breadcrumbs' => [
-                [
-                    'title' => 'Dashboard',
-                    'url' => route('admin.dashboard'),
-                    'active' => false,
-                ],
-            ],
+        'titleBreadCrumb' => $greeting . $fullName . '!',
+        'breadcrumbs' => [
+        [
+        'title' => 'Dashboard',
+        'url' => route('admin.dashboard'),
+        'active' => false,
+        ],
+        ],
         ])
         <!-- ============================================================== -->
         <!-- Container fluid  -->
@@ -58,7 +50,9 @@
                                 <div class="w-80">
                                     <div class="d-inline-flex align-items-center">
                                         <h2 class="text-dark mb-1 font-weight-medium">{{ $jumlah_guru }} </h2>
-                                        {{-- <span class="badge bg-primary font-12 text-white font-weight-medium rounded-pill ms-2 d-lg-block d-md-none">+18.33%</span> --}}
+                                        {{-- <span
+                                            class="badge bg-primary font-12 text-white font-weight-medium rounded-pill ms-2 d-lg-block d-md-none">+18.33%</span>
+                                        --}}
                                     </div>
                                     <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">
                                         Jumlah Guru
@@ -99,9 +93,8 @@
                                     <div class="d-inline-flex align-items-center">
                                         <h2 class="text-dark mb-1 font-weight-medium">{{ $jumlah_kelas }}</h2>
                                         {{-- <span
-                                        class="badge bg-danger font-12 text-white font-weight-medium rounded-pill ms-2 d-md-none d-lg-block"
-                                        >-18.33%</span
-                                        > --}}
+                                            class="badge bg-danger font-12 text-white font-weight-medium rounded-pill ms-2 d-md-none d-lg-block">-18.33%</span>
+                                        --}}
                                     </div>
                                     <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">
                                         Jumlah Kelas
@@ -143,14 +136,14 @@
                     <div class="card">
                         <div class="card-body">
                             @php
-                                $siswaData = [
-                                    ['Senior High School', $jumlah_siswa_shs],
-                                    ['Junior High School', $jumlah_siswa_jhs],
-                                    ['Primary School', $jumlah_siswa_ps],
-                                    ['Kinder Garten A', $jumlah_siswa_kg_a],
-                                    ['Kinder Garten B', $jumlah_siswa_kg_b],
-                                    ['Playgroup', $jumlah_siswa_pg],
-                                ];
+                            $siswaData = [
+                            ['Senior High School', $jumlah_siswa_shs],
+                            ['Junior High School', $jumlah_siswa_jhs],
+                            ['Primary School', $jumlah_siswa_ps],
+                            ['Kinder Garten A', $jumlah_siswa_kg_a],
+                            ['Kinder Garten B', $jumlah_siswa_kg_b],
+                            ['Playgroup', $jumlah_siswa_pg],
+                            ];
                             @endphp
                             <h4 class="card-title">Total Siswa</h4>
                             <div id="campaign-v2" data-siswa='{{ json_encode($siswaData) }}' class="mt-2"
@@ -198,81 +191,82 @@
                                 <h4 class="card-title">Recent Announcement</h4>
                                 <div class="mt-4 activity">
                                     @foreach ($data_pengumuman->sortByDesc('created_at') as $pengumuman)
-                                        <div class="d-flex align-items-start border-left-line">
-                                            <div>
-                                                <a href="javascript:void(0)" class="btn btn-cyan btn-circle mb-2 btn-item">
-                                                    <i data-feather="bell"></i>
-                                                </a>
-                                            </div>
-                                            <div class="ms-3 mt-2">
-                                                <h5 class="text-dark font-weight-medium mb-2 text-wrap">
-                                                    {{ $pengumuman->judul }}
-                                                </h5>
-                                                <div>
-                                                    <p class="font-14 mb-2 text-muted text-wrap text-break note-editable">
-                                                        {!! $pengumuman->isi !!}
-                                                    </p>
-                                                </div>
-                                                <span
-                                                    class="font-weight-light font-14 mb-1 d-block text-muted">{{ $pengumuman->user->karyawan->nama_lengkap }}
-                                                    -
-                                                    {{ \Carbon\Carbon::parse($pengumuman->created_at)->diffForHumans() }}</span>
-                                                @if (Auth::user()->id == $pengumuman->user_id)
-                                                    <form action="{{ route('pengumuman.destroy', $pengumuman->id) }}"
-                                                        method="POST">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="button"
-                                                            class="font-14 border-bottom text-info pb-1 border-info border-0 bg-transparent"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#modal-edit{{ $pengumuman->id }}">Edit</button>
-                                                        <button type="submit"
-                                                            class="font-14 border-bottom pb-1 text-danger border-danger border-0 bg-transparent"
-                                                            onclick="return confirm('Hapus pengumuman ?')">Hapus
-                                                        </button>
-                                                    </form>
-                                                @endif
-                                            </div>
-                                            <!-- Modal edit  -->
-                                            <div class="modal fade" id="modal-edit{{ $pengumuman->id }}">
-                                                <div class="modal-dialog modal-xl">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title">Edit {{ $title }}</h5>
-
-                                                            <button type="button" class="btn-close"
-                                                                data-bs-dismiss="modal" aria-hidden="true"></button>
-                                                            </button>
-                                                        </div>
-                                                        <form action="{{ route('pengumuman.update', $pengumuman->id) }}"
-                                                            method="POST">
-                                                            {{ method_field('PATCH') }}
-                                                            @csrf
-                                                            <div class="modal-body">
-                                                                <div class="form-group">
-                                                                    <label>Judul Pengumuman</label>
-                                                                    <input type="text" class="form-control"
-                                                                        name="judul" value="{{ $pengumuman->judul }}"
-                                                                        readonly>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label>Isi Pengumuman</label>
-                                                                    <textarea class="textarea" name="isi"
-                                                                        style="width: 100%; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 5px;" required>{!! $pengumuman->isi !!}</textarea>
-                                                                </div>
-                                                            </div>
-                                                            <div class="modal-footer justify-content-end">
-                                                                <button type="button" class="btn btn-default"
-                                                                    data-bs-dismiss="modal">Batal</button>
-                                                                <button type="submit"
-                                                                    class="btn btn-primary">Simpan</button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- End Modal edit -->
+                                    <div class="d-flex align-items-start border-left-line">
+                                        <div>
+                                            <a href="javascript:void(0)" class="btn btn-cyan btn-circle mb-2 btn-item">
+                                                <i data-feather="bell"></i>
+                                            </a>
                                         </div>
+                                        <div class="ms-3 mt-2">
+                                            <h5 class="text-dark font-weight-medium mb-2 text-wrap">
+                                                {{ $pengumuman->judul }}
+                                            </h5>
+                                            <div>
+                                                <p class="font-14 mb-2 text-muted text-wrap text-break note-editable">
+                                                    {!! $pengumuman->isi !!}
+                                                </p>
+                                            </div>
+                                            <span class="font-weight-light font-14 mb-1 d-block text-muted">{{
+                                                $pengumuman->user->karyawan->nama_lengkap }}
+                                                -
+                                                {{ \Carbon\Carbon::parse($pengumuman->created_at)->diffForHumans()
+                                                }}</span>
+                                            @if (Auth::user()->id == $pengumuman->user_id)
+                                            <form action="{{ route('pengumuman.destroy', $pengumuman->id) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="button"
+                                                    class="font-14 border-bottom text-info pb-1 border-info border-0 bg-transparent"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#modal-edit{{ $pengumuman->id }}">Edit</button>
+                                                <button type="submit"
+                                                    class="font-14 border-bottom pb-1 text-danger border-danger border-0 bg-transparent"
+                                                    onclick="return confirm('Hapus pengumuman ?')">Hapus
+                                                </button>
+                                            </form>
+                                            @endif
+                                        </div>
+                                        <!-- Modal edit  -->
+                                        <div class="modal fade" id="modal-edit{{ $pengumuman->id }}">
+                                            <div class="modal-dialog modal-xl">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Edit {{ $title }}</h5>
+
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-hidden="true"></button>
+                                                        </button>
+                                                    </div>
+                                                    <form action="{{ route('pengumuman.update', $pengumuman->id) }}"
+                                                        method="POST">
+                                                        {{ method_field('PATCH') }}
+                                                        @csrf
+                                                        <div class="modal-body">
+                                                            <div class="form-group">
+                                                                <label>Judul Pengumuman</label>
+                                                                <input type="text" class="form-control" name="judul"
+                                                                    value="{{ $pengumuman->judul }}" readonly>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>Isi Pengumuman</label>
+                                                                <textarea class="textarea" name="isi"
+                                                                    style="width: 100%; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 5px;"
+                                                                    required>{!! $pengumuman->isi !!}</textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer justify-content-end">
+                                                            <button type="button" class="btn btn-default"
+                                                                data-bs-dismiss="modal">Batal</button>
+                                                            <button type="submit"
+                                                                class="btn btn-primary">Simpan</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Modal edit -->
+                                    </div>
                                     @endforeach
                                 </div>
                             </div>
@@ -288,55 +282,55 @@
                             <h4 class="card-title">Login History</h4>
                             <ul class="products-list product-list-in-card">
                                 @foreach ($data_riwayat_login as $riwayat_login)
-                                    <li class="item">
-                                        <div class="product-img">
+                                <li class="item">
+                                    <div class="product-img">
+                                        @if ($riwayat_login->user->hasRole('Admin'))
+                                        <img src="{{ asset('assets/dist/img/avatar/' . ($riwayat_login->user->karyawan->avatar ?? 'default.png')) }}"
+                                            alt="Avatar" class="img-size-50">
+                                        @elseif($riwayat_login->user->hasAnyRole(['Teacher', 'Curriculum']))
+                                        <img src="{{ asset('assets/dist/img/avatar/' . ($riwayat_login->user->karyawan->avatar ?? 'default.png')) }}"
+                                            alt="Avatar" class="img-size-50">
+                                        @elseif($riwayat_login->user->hasRole('Student'))
+                                        <img src="{{ asset('assets/dist/img/avatar/' . ($riwayat_login->user->siswa->avatar ?? 'default.png')) }}"
+                                            alt="Avatar" class="img-size-50">
+                                        @endif
+                                    </div>
+
+                                    <div class="product-info">
+                                        <a href="javascript:void(0)" class="product-title">
                                             @if ($riwayat_login->user->hasRole('Admin'))
-                                                <img src="{{ asset('assets/dist/img/avatar/' . $riwayat_login->user->karyawan->avatar) }}"
-                                                    alt="Avatar" class="img-size-50">
+                                            {{ $riwayat_login->user->karyawan->nama_lengkap }}
                                             @elseif($riwayat_login->user->hasRole('Teacher'))
-                                                <img src="{{ asset('assets/dist/img/avatar/' . $riwayat_login->user->karyawan->avatar) }}"
-                                                    alt="Avatar" class="img-size-50">
+                                            {{ $riwayat_login->user->karyawan->nama_lengkap }}
                                             @elseif($riwayat_login->user->hasRole('Student'))
-                                                <img src="{{ asset('assets/dist/img/avatar/' . $riwayat_login->user->siswa->avatar) }}"
-                                                    alt="Avatar" class="img-size-50">
+                                            {{ $riwayat_login->user->siswa->nama_lengkap }}
                                             @endif
-                                        </div>
 
-                                        <div class="product-info">
-                                            <a href="javascript:void(0)" class="product-title">
-                                                @if ($riwayat_login->user->hasRole('Admin'))
-                                                    {{ $riwayat_login->user->karyawan->nama_lengkap }}
-                                                @elseif($riwayat_login->user->hasRole('Teacher'))
-                                                    {{ $riwayat_login->user->karyawan->nama_lengkap }}
-                                                @elseif($riwayat_login->user->hasRole('Student'))
-                                                    {{ $riwayat_login->user->siswa->nama_lengkap }}
-                                                @endif
+                                            @if ($riwayat_login->status_login == true)
+                                            <span class="badge bg-success float-right">Online</span>
+                                            @else
+                                            <span class="badge bg-warning float-right">Offline</span>
+                                            @endif
+                                        </a>
+                                        <span class="product-description">
+                                            @if ($riwayat_login->user->hasRole('Admin'))
+                                            Administrator
+                                            @elseif($riwayat_login->user->hasRole('Teacher'))
+                                            Guru
+                                            @elseif($riwayat_login->user->hasRole('Student'))
+                                            Siswa
+                                            @endif
 
-                                                @if ($riwayat_login->status_login == true)
-                                                    <span class="badge bg-success float-right">Online</span>
-                                                @else
-                                                    <span class="badge bg-warning float-right">Offline</span>
-                                                @endif
-                                            </a>
-                                            <span class="product-description">
-                                                @if ($riwayat_login->user->hasRole('Admin'))
-                                                    Administrator
-                                                @elseif($riwayat_login->user->hasRole('Teacher'))
-                                                    Guru
-                                                @elseif($riwayat_login->user->hasRole('Student'))
-                                                    Siswa
-                                                @endif
-
-                                                @if ($riwayat_login->status_login == false)
-                                                    <span class="time float-right"><i class="far fa-clock"></i>
-                                                        {{ $riwayat_login->updated_at->diffForHumans() }}</span>
-                                                @endif
-                                            </span>
-                                        </div>
-                                    </li>
-                                    @if (!$loop->last)
-                                        <hr>
-                                    @endif
+                                            @if ($riwayat_login->status_login == false)
+                                            <span class="time float-right"><i class="far fa-clock"></i>
+                                                {{ $riwayat_login->updated_at->diffForHumans() }}</span>
+                                            @endif
+                                        </span>
+                                    </div>
+                                </li>
+                                @if (!$loop->last)
+                                <hr>
+                                @endif
                                 @endforeach
                             </ul>
                         </div>
@@ -353,23 +347,23 @@
         <!-- ============================================================== -->
         <!-- End ontainer fluid  -->
         <!-- ============================================================== -->
-    </div>
-    <!-- ============================================================== -->
-    <!-- End Page wrapper  -->
-    <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- End Page wrapper  -->
+<!-- ============================================================== -->
 @endsection
 
 @push('custom-scripts')
-    <!--This page JavaScript -->
-    <script src="{{ asset('assets/extra-libs/c3/d3.min.js') }}"></script>
-    <script src="{{ asset('assets/extra-libs/c3/c3.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/chartist/dist/chartist.min.js') }}"></script>
-    <script src="{{ asset('assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js') }}"></script>
-    <script src="{{ asset('assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js') }}"></script>
-    <script src="{{ asset('assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js') }}"></script>
-    <script src="{{ asset('dist/js/pages/dashboards/dashboard1.min.js') }}"></script>
+<!--This page JavaScript -->
+<script src="{{ asset('assets/extra-libs/c3/d3.min.js') }}"></script>
+<script src="{{ asset('assets/extra-libs/c3/c3.min.js') }}"></script>
+<script src="{{ asset('assets/libs/chartist/dist/chartist.min.js') }}"></script>
+<script src="{{ asset('assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js') }}"></script>
+<script src="{{ asset('assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js') }}"></script>
+<script src="{{ asset('assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js') }}"></script>
+<script src="{{ asset('dist/js/pages/dashboards/dashboard1.min.js') }}"></script>
 @endpush
 
 @section('footer')
-    @include('layouts.main.footer')
+@include('layouts.main.footer')
 @endsection

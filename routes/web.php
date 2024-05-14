@@ -51,7 +51,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/profile', 'ProfileUserController@index')->name('profile');
 
 
-    Route::group(['middleware' => 'role:Admin'], function () {
+    Route::group(['middleware' => 'role_or_permission:Admin|masterdata-management'], function () {
         Route::prefix('admin')->group(function () {
             Route::get('dashboard', 'DashboardController@index')->name('admin.dashboard');
 
@@ -274,7 +274,7 @@ Route::group(['middleware' => ['auth']], function () {
         ]);
 
         // Start Raport KM
-        Route::delete('cp/delete/{id}', 'Admin\KM\CapaianPembelajaranController@destroy')->name('admin.km.cp.destroy');
+        Route::delete('cp/delete/{id}', 'Admin\KM\CapaianPembelajaranController@destroy')->name('km.cp.destroy');
         Route::resource('cp', 'Admin\KM\CapaianPembelajaranController')->only(['index', 'store', 'update', 'create'])->names([
             'index' => 'km.cp.index',
             'store' => 'km.cp.store',
@@ -550,7 +550,7 @@ Route::group(['middleware' => ['auth']], function () {
     // End Route User Admin
 
     // Route User Guru
-    Route::group(['middleware' => 'role:Teacher'], function () {
+    Route::group(['middleware' => 'role:Teacher|Curriculum'], function () {
         Route::group(['prefix' => 'guru'], function () {
             Route::get('dashboard', 'DashboardController@index')->name('guru.dashboard');
 
@@ -561,7 +561,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('akses', 'AuthController@ganti_akses')->name('akses');
 
             // Route Guru Mapel
-            Route::group(['middleware' => 'checkAksesGuru:Guru Mapel'], function () {
+            Route::group(['middleware' => 'checkAksesGuru:teacher-km'], function () {
 
                 // jadwal mengajar -> guru
                 Route::get('jadwalmengajar', 'Guru\JadwalMengajarController@index')->name('guru.jadwalmengajar');
@@ -671,7 +671,7 @@ Route::group(['middleware' => ['auth']], function () {
             // End Route Guru Mapel
 
             //Route Wali Kelas
-            Route::group(['middleware' => 'checkAksesGuru:Wali Kelas'], function () {
+            Route::group(['middleware' => 'checkAksesGuru:homeroom-km'], function () {
                 Route::resource('pesertadidik', 'Walikelas\PesertaDidikController')->only(['index', 'show'])->names([
                     'index' => 'walikelas.pesertadidik.index',
                     'show' => 'walikelas.pesertadidik.show',

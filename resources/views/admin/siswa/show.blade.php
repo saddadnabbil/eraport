@@ -38,10 +38,10 @@
                         <div class="card-body box-profile">
                             <div class="text-center">
                                 @if ($siswa->pas_photo == null)
-                                    <img class="profile-user-img" src="/assets/dist/img/avatar/default.png" alt="Avatar"
+                                    <img class="profile-user-img" src="{{ asset('/assets/dist/img/avatar/default.png') }}" alt="Avatar"
                                         style="border: none">
                                 @elseif ($siswa->pas_photo == 'default.png')
-                                    <img class="profile-user-img" src="/assets/dist/img/avatar/default.png" alt="Avatar"
+                                    <img class="profile-user-img" src="{{ asset('/assets/dist/img/avatar/default.png') }}" alt="Avatar"
                                         style="border: none">
                                 @else
                                     <img class="mb-2" src="{{ asset('storage/' . $siswa->pas_photo) }}"

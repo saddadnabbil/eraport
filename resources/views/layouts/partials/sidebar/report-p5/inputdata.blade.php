@@ -1,38 +1,20 @@
 @php
     $userRole = Auth::user()->getRoleNames()->first();
 
-    switch ($userRole) {
-        case 'Admin':
-            $allowedRoutes = ['p5.dimensi.*', 'p5.element.*', 'p5.subelement.*'];
+    $allowedRoutes = ['p5.dimensi.*', 'p5.element.*', 'p5.subelement.*'];
 
-            $checkRouteDimensi = request()->routeIs('p5.dimensi.*');
-            $dynamicRouteDimensi = route('p5.dimensi.index');
+    $checkRouteDimensi = request()->routeIs('p5.dimensi.*');
+    $dynamicRouteDimensi = route('p5.dimensi.index');
 
-            $checkRouteElement = request()->routeIs('p5.element.*');
-            $dynamicRouteElement = route('p5.element.index');
+    $checkRouteElement = request()->routeIs('p5.element.*');
+    $dynamicRouteElement = route('p5.element.index');
 
-            $checkRouteSubelement = request()->routeIs('p5.subelement.*');
-            $dynamicRouteSubelement = route('p5.subelement.index');
+    $checkRouteSubelement = request()->routeIs('p5.subelement.*');
+    $dynamicRouteSubelement = route('p5.subelement.index');
 
-            $checkRouteTema = request()->routeIs('p5.tema.*');
-            $dynamicRouteTema = route('p5.tema.index');
-            break;
-        case 'Teacher':
-            $allowedRoutes = ['p5.dimensi.*', 'p5.element.*', 'p5.subelement.*'];
+    $checkRouteTema = request()->routeIs('p5.tema.*');
+    $dynamicRouteTema = route('p5.tema.index');
 
-            $checkRouteDimensi = request()->routeIs('p5.dimensi.*');
-            $dynamicRouteDimensi = route('p5.dimensi.index');
-
-            $checkRouteElement = request()->routeIs('p5.element.*');
-            $dynamicRouteElement = route('p5.element.index');
-
-            $checkRouteSubelement = request()->routeIs('p5.subelement.*');
-            $dynamicRouteSubelement = route('p5.subelement.index');
-
-            $checkRouteTema = request()->routeIs('p5.tema.*');
-            $dynamicRouteTema = route('p5.tema.index');
-            break;
-    }
 @endphp
 
 @include('layouts.partials.sidebar._sidebar-item', [

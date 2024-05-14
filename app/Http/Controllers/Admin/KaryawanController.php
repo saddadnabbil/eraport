@@ -265,6 +265,11 @@ class KaryawanController extends Controller
      */
     public function show($id)
     {
+        // return back if not have admin-access permission with alert
+        if (!auth()->user()->can('admin-access')) {
+            return redirect()->back()->with('toast_error', 'Anda tidak punya akses, silahkan hubungi admin');
+        }
+
         $title = 'Detail Karyawan';
         $karyawan = Karyawan::findorfail($id);
 

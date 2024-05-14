@@ -15,7 +15,7 @@
                     @php
                         if (Auth::user()->hasRole('Admin')) {
                             $dashboard = route('admin.dashboard');
-                        } elseif (Auth::user()->hasRole('Teacher')) {
+                        } elseif (Auth::user()->hasAnyRole(['Teacher', 'Curriculum'])) {
                             $dashboard = route('guru.dashboard');
                         } elseif (Auth::user()->hasRole('Student')) {
                             $dashboard = route('siswa.dashboard');
@@ -53,18 +53,18 @@
                                     <div class="customize-input">
                                         <select id="roleSelect"
                                             class="custom-select form-control bg-white custom-radius custom-shadow border-0">
-                                            <option value="1" @if (session()->get('akses_sebagai') == 'Guru Mapel' && session()->get('cek_wali_kelas') == true) selected @endif><a
+                                            <option value="1" @if (session()->get('akses_sebagai') == 'homeroom-km' && session()->get('cek_homeroom') == 'homeroom-km') selected @endif><a
                                                     class="dropdown-item" href="{{ route('akses') }}">
-                                                    @if (session()->get('akses_sebagai') == 'Guru Mapel' && session()->get('cek_wali_kelas') == true)
+                                                    @if (session()->get('akses_sebagai') == 'teacher-km' && session()->get('cek_homeroom') == 'homeroom-km')
                                                         Teacher
                                                     @else
                                                         Change
                                                         to Teacher
                                                     @endif
                                                 </a></option>
-                                            <option value="2" @if (session()->get('akses_sebagai') == 'Wali Kelas') selected @endif>
+                                            <option value="2" @if (session()->get('akses_sebagai') == 'homeroom-km') selected @endif>
                                                 <a class="dropdown-item" href="{{ route('akses') }}">
-                                                    @if (session()->get('akses_sebagai') == 'Wali Kelas')
+                                                    @if (session()->get('akses_sebagai') == 'homeroom-km')
                                                         Homeroom
                                                     @else
                                                         Change
@@ -185,7 +185,8 @@
                                             @endif
 
                                             @if (auth()->user()->hasAnyPermission(['admin-access', 'homeroom-pg-kg', 'teacher-pg-kg']))
-                                                <a href="{{ route('tk.penilaian.index') }}"
+                                                <a href="{{ (auth()->user()->hasAnyRole(['Admin', 'Curriculum', 'Teacher']) ||auth()->user()->hasAnyPermission(['admin-access', 'homeroom-pg-kg', 'teacher-pg-kg', 'homeroom-km', 'teacher-km', 'masterdata-management'])) && !request()->is('tk/*')? route('tk.penilaian.index'): 'javascript:void(0)' }}"
+                                                    @if (auth()->user()->hasAnyRole(['Admin', 'Curriculum', 'Teacher']) && request()->is('tk/*')) disabled style="background: #e8eaec;" @endif
                                                     class="message-item d-flex align-items-center border-bottom px-3 py-2">
                                                     <div class="btn btn-danger rounded-circle btn-circle"><i
                                                             data-feather="airplay" class="text-white"></i></div>
@@ -197,12 +198,13 @@
                                             @endif
 
                                             @if (auth()->user()->hasAnyPermission(['admin-access', 'homeroom-km', 'teacher-km']))
-                                                <a href="{{ route('km.kkm.index') }}"
+                                                    <a href="{{ (auth()->user()->hasAnyRole(['Admin', 'Curriculum', 'Teacher']) ||auth()->user()->hasAnyPermission(['admin-access', 'homeroom-pg-kg', 'teacher-pg-kg', 'homeroom-km', 'teacher-km', 'masterdata-management'])) && !request()->is('km/*') && session()->get('akses_sebagai') == 'teacher-km' ? route('km.kkm.index'): 'javascript:void(0)' }}"
+                                                        @if (auth()->user()->hasAnyRole(['Admin', 'Curriculum', 'Teacher']) && request()->is('km/*')) disabled style="background: #e8eaec;" @endif
                                                     class="message-item d-flex align-items-center border-bottom px-3 py-2">
                                                     <div class="btn btn-danger rounded-circle btn-circle"><i
                                                             data-feather="airplay" class="text-white"></i></div>
                                                     <div class="w-75 d-inline-block v-middle ps-2">
-                                                        <h6 class="message-title mb-0 mt-1 text-nowrap"> Raport KM
+                                                        <h6 class="message-title mb-0 mt-1 text-nowrap">Raport KM
                                                         </h6>
                                                     </div>
                                                 </a>
@@ -222,7 +224,7 @@
                                 <span class="text-dark">
                                     @if (Auth::user()->hasRole('Admin'))
                                         {{ Auth::user()->karyawan->nama_lengkap }}
-                                    @elseif(Auth::user()->hasRole('Teacher'))
+                                    @elseif (Auth::user()->hasAnyRole(['Teacher', 'Curriculum']))
                                         {{ Auth::user()->karyawan->nama_lengkap }}
                                     @elseif(Auth::user()->hasRole('Student'))
                                         {{ Auth::user()->siswa->nama_lengkap }}

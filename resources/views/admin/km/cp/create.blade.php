@@ -18,7 +18,7 @@
                 ],
                 [
                     'title' => 'Capaian Pembelajaran',
-                    'url' => route('cp.index'),
+                    'url' => route('km.cp.index'),
                     'active' => true,
                 ],
                 [
@@ -46,7 +46,7 @@
 
                         <div class="card-body">
                             <div class="callout callout-info">
-                                <form action="{{ route('cp.create') }}" method="GET">
+                                <form action="{{ route('km.cp.create') }}" method="GET">
                                     @csrf
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Semester</label>
@@ -78,7 +78,7 @@
                                 </form>
                             </div>
 
-                            <form id="dynamic_form" action="{{ route('cp.store') }}" method="POST">
+                            <form id="dynamic_form" action="{{ route('km.cp.store') }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="mapel_id" value="{{ $mapel_id }}">
                                 <input type="hidden" name="tingkatan_id" value="{{ $tingkatan_id }}">
@@ -167,7 +167,7 @@
 
                         <div class="card-footer clearfix">
                             <button type="submit" class="btn btn-primary float-right">Simpan</button>
-                            <a href="{{ route('cp.index') }}" class="btn btn-default float-right me-2">Batal</a>
+                            <a href="{{ route('km.cp.index') }}" class="btn btn-default float-right me-2">Batal</a>
                         </div>
                         </form>
                     </div>
@@ -251,7 +251,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "{{ route('admin.cp.destroy', ':id') }}".replace(':id', id),
+                        url: "{{ route('km.cp.destroy', ':id') }}".replace(':id', id),
                         type: 'DELETE',
                         data: {
                             _token: '{{ csrf_token() }}'

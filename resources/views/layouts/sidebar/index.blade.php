@@ -6,12 +6,19 @@
             <ul id="sidebarnav">
                 <!-- Logo icon -->
                 @if (auth()->user()->hasAnyRole(['Admin', 'Curriculum', 'Teacher', 'Student']) &&
-                        auth()->user()->hasAnyPermission(['admin-access', 'homeroom-pg-kg', 'teacher-pg-kg', 'teacher-km', 'homeroom-km']))
+                        auth()->user()->hasAnyPermission([
+                                'admin-access',
+                                'masterdata-management',
+                                'homeroom-pg-kg',
+                                'teacher-pg-kg',
+                                'teacher-km',
+                                'homeroom-km',
+                            ]))
                     <li class="sidebar-item">
                         @php
                             if (Auth::user()->hasRole('Admin')) {
                                 $dashboard = route('admin.dashboard');
-                            } elseif (Auth::user()->hasRole('Teacher')) {
+                            } elseif (Auth::user()->hasAnyRole(['Teacher', 'Curriculum'])) {
                                 $dashboard = route('guru.dashboard');
                             } elseif (Auth::user()->hasRole('Student')) {
                                 $dashboard = route('siswa.dashboard');
@@ -23,7 +30,7 @@
                     </li>
                     <li class="list-divider"></li>
                 @endif
-                @if (auth()->user()->hasAnyRole(['Admin', 'Curriculum']) &&
+                @if (auth()->user()->hasAnyRole(['Admin']) &&
                         auth()->user()->hasAnyPermission(['admin-access']) &&
                         request()->is('admin/*'))
                     <li class="nav-small-cap">
@@ -34,9 +41,11 @@
                     <li class="list-divider"></li>
                 @endif
 
-                @if (auth()->user()->hasAnyRole(['Admin', 'Curriculum']) &&
+                @if (
+                    (auth()->user()->hasAnyRole(['Admin', 'Curriculum']) &&
                         (auth()->user()->hasAnyPermission(['admin-access', 'masterdata-management']) &&
-                            request()->is('master-data/*')))
+                            request()->is('master-data/*'))) ||
+                        request()->is('guru/dashbord'))
                     <li class="nav-small-cap">
                         <span class="hide-menu">Curriculum</span>
                     </li>
@@ -45,9 +54,8 @@
                     <li class="list-divider"></li>
                 @endif
 
-
                 @if (auth()->user()->hasAnyRole(['Admin', 'Teacher', 'Curriculum']) &&
-                        auth()->user()->hasAnyPermission(['admin-access', 'homeroom-pg-kg', 'teacher-pg-kg']) &&
+                        auth()->user()->hasAnyPermission(['admin-access', 'masterdata-management', 'homeroom-pg-kg', 'teacher-pg-kg']) &&
                         request()->is('tk/*'))
                     <li class="nav-small-cap">
                         <span class="hide-menu">REPORT TK</span>
@@ -61,7 +69,14 @@
 
                 @if (
                     (auth()->user()->hasAnyRole(['Admin', 'Teacher', 'Curriculum']) &&
-                        auth()->user()->hasAnyPermission(['admin-access', 'homeroom-pg-kg', 'teacher-pg-kg', 'teacher-km', 'homeroom-km']) &&
+                        auth()->user()->hasAnyPermission([
+                                'admin-access',
+                                'masterdata-management',
+                                'homeroom-pg-kg',
+                                'teacher-pg-kg',
+                                'teacher-km',
+                                'homeroom-km',
+                            ]) &&
                         request()->is('km/*')) ||
                         request()->is('admin/dashbaord') ||
                         request()->is('guru/dashboard') ||
@@ -69,27 +84,39 @@
                     <li class="nav-small-cap">
                         <span class="hide-menu">REPORT KM</span>
                     </li>
-                    @include('layouts.partials.sidebar.reportkm.inputdata')
-                    @include('layouts.partials.sidebar.reportkm.rencanapenilaian')
-                    @include('layouts.partials.sidebar.reportkm.penilaian')
-                    @include('layouts.partials.sidebar.reportkm.nilaiekstra')
-                    @include('layouts.partials.sidebar.reportkm.nilaiakhir')
-                    @include('layouts.partials.sidebar.reportkm.prosesdeskripsi')
-                    <li class="list-divider"></li>
-
-                    <li class="nav-small-cap">
-                        <span class="hide-menu">REPORT P5BK</span>
-                    </li>
-                    @include('layouts.partials.sidebar.report-p5.inputdata')
-                    @include('layouts.partials.sidebar.report-p5.manajemen')
+                    @if (
+                        (auth()->user()->hasAnyPermission(['admin-access', 'homeroom-km']) &&
+                            request()->is('km/*')) ||
+                            session()->get('akses_sebagai') == 'homeroom-km')
+                        @include('layouts.partials.sidebar.reportkm.inputdata')
+                    @else
+                        @include('layouts.partials.sidebar.reportkm.rencanapenilaian')
+                        @include('layouts.partials.sidebar.reportkm.penilaian')
+                        @include('layouts.partials.sidebar.reportkm.nilaiekstra')
+                        @include('layouts.partials.sidebar.reportkm.nilaiakhir')
+                        @include('layouts.partials.sidebar.reportkm.prosesdeskripsi')
+                        <li class="list-divider"></li>
+    
+                        <li class="nav-small-cap">
+                            <span class="hide-menu">REPORT P5BK</span>
+                        </li>
+                        @include('layouts.partials.sidebar.report-p5.inputdata')
+                        @include('layouts.partials.sidebar.report-p5.manajemen')
+                    @endif
 
                     <li class="list-divider"></li>
                     <li class="nav-small-cap">
                         <span class="hide-menu">REPORT RESULTS KM</span>
                     </li>
-                    @include('layouts.partials.sidebar.reportresultkm.rekapkehadiran')
-                    @include('layouts.partials.sidebar.reportresultkm.leger')
-                    @include('layouts.partials.sidebar.reportresultkm.printreport')
+                    @if (
+                        (auth()->user()->hasAnyPermission(['admin-access', 'homeroom-km']) &&
+                            request()->is('km/*')) ||
+                            session()->get('akses_sebagai') == 'homeroom-km')
+                        @include('layouts.partials.sidebar.reportresultkm.rekapkehadiran')
+                        @include('layouts.partials.sidebar.reportresultkm.leger')
+                        @include('layouts.partials.sidebar.reportresultkm.printreport')
+                    @else
+                    @endif
                     <li class="list-divider"></li>
                 @endif
 
