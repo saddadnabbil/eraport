@@ -7,7 +7,7 @@
 @endsection
 
 @section('sidebar')
-    @include('layouts.sidebar.admin')
+    @include('layouts.sidebar.index')
 @endsection
 
 @section('content')
@@ -334,8 +334,9 @@
                                             </span>
                                         </div>
                                     </li>
-                                    <hr>
-                                    <!-- /.item -->
+                                    @if (!$loop->last)
+                                        <hr>
+                                    @endif
                                 @endforeach
                             </ul>
                         </div>

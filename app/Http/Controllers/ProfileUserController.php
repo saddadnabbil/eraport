@@ -39,7 +39,7 @@ class ProfileUserController extends Controller
             $dataUnitKaryawan = UnitKaryawan::all();
             $dataPositionKaryawan = PositionKaryawan::all();
 
-            return view('guru.profile.show', compact('title', 'karyawan', 'dataStatusKaryawan', 'dataUnitKaryawan', 'dataPositionKaryawan'));
+            return view('admin.profile.show', compact('title', 'karyawan', 'dataStatusKaryawan', 'dataUnitKaryawan', 'dataPositionKaryawan'));
         } elseif ($user->hasRole('Student')) {
             $siswa = Siswa::where('user_id', Auth::user()->id)->first();
             $tapel = Tapel::where('status', 1)->first();
@@ -47,7 +47,7 @@ class ProfileUserController extends Controller
             $tingkatan_terendah = Kelas::where('tapel_id', $tapel->id)->min('tingkatan_id');
             $tingkatan_akhir = Kelas::where('tapel_id', $tapel->id)->max('tingkatan_id');
 
-            return view('siswa.profile.show', compact('title', 'siswa', 'data_tingkatan', 'tingkatan_terendah', 'tingkatan_akhir'));
+            return view('admin.profile.show', compact('title', 'siswa', 'data_tingkatan', 'tingkatan_terendah', 'tingkatan_akhir'));
         }
     }
 }

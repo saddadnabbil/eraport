@@ -249,9 +249,10 @@
                                             </span>
                                         </div>
                                     </li>
-                                    <hr>
+                                    @if (!$loop->last)
+                                        <hr>
+                                    @endif
                                     <!-- /.item -->
-                                    </li>
                                 @endforeach
                             </ul>
                         </div>

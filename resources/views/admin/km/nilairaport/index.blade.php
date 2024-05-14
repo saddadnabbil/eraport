@@ -1,6 +1,6 @@
 @extends('layouts.main.header')
 @section('sidebar')
-    @include('layouts.sidebar.admin')
+    @include('layouts.sidebar.index')
 @endsection
 
 @section('content')
@@ -59,7 +59,8 @@
                                                         @if ($pembelajaran->id == $pembelajaran_id) selected @endif>
                                                         {{ $pembelajaran->mapel->nama_mapel }}
                                                         ({{ $pembelajaran->kelas->nama_kelas }} -
-                                                        {{ $pembelajaran->kelas->tingkatan->nama_tingkatan }})</option>
+                                                        {{ $pembelajaran->kelas->tingkatan->nama_tingkatan }})
+                                                    </option>
                                                 @endforeach
                                             </select>
                                         </div>

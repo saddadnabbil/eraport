@@ -7,7 +7,7 @@
 @endsection
 
 @section('sidebar')
-    @include('layouts.sidebar.guru')
+    @include('layouts.sidebar.index')
 @endsection
 
 @section('content')
@@ -433,8 +433,9 @@
                                             </span>
                                         </div>
                                     </li>
-                                    <hr>
-
+                                    @if (!$loop->last)
+                                        <hr>
+                                    @endif
                                     <!-- /.item -->
                                 @endforeach
                             </ul>

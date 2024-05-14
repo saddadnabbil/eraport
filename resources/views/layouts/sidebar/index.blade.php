@@ -4,12 +4,9 @@
         <!-- Sidebar navigation-->
         <nav class="sidebar-nav">
             <ul id="sidebarnav">
-                @if (
-                    (auth()->user()->hasAnyRole(['Admin', 'Curriculum', 'Teacher', 'Student']) &&
-                        auth()->user()->hasAnyPermission(['admin-access', 'homeroom-pg-kg', 'teacher-pg-kg', 'teacher-km', 'homeroom-km']) &&
-                        request()->is('admin/*')) ||
-                        request()->is('guru/*') ||
-                        request()->is('siswa/*'))
+                <!-- Logo icon -->
+                @if (auth()->user()->hasAnyRole(['Admin', 'Curriculum', 'Teacher', 'Student']) &&
+                        auth()->user()->hasAnyPermission(['admin-access', 'homeroom-pg-kg', 'teacher-pg-kg', 'teacher-km', 'homeroom-km']))
                     <li class="sidebar-item">
                         @php
                             if (Auth::user()->hasRole('Admin')) {
@@ -24,18 +21,25 @@
                                 data-feather="home" class="feather-icon"></i><span class="hide-menu"> Dashboard
                             </span></a>
                     </li>
+                    <li class="list-divider"></li>
                 @endif
                 @if (auth()->user()->hasAnyRole(['Admin', 'Curriculum']) &&
                         auth()->user()->hasAnyPermission(['admin-access']) &&
                         request()->is('admin/*'))
+                    <li class="nav-small-cap">
+                        <span class="hide-menu">User Management</span>
+                    </li>
                     @include('layouts.partials.sidebar.admin.user')
                     @include('layouts.partials.sidebar.admin.karyawan')
                     <li class="list-divider"></li>
                 @endif
 
                 @if (auth()->user()->hasAnyRole(['Admin', 'Curriculum']) &&
-                        auth()->user()->hasAnyPermission(['admin-access', 'masterdata-management']) &&
-                        request()->is('master-data/*'))
+                        (auth()->user()->hasAnyPermission(['admin-access', 'masterdata-management']) &&
+                            request()->is('master-data/*')))
+                    <li class="nav-small-cap">
+                        <span class="hide-menu">Curriculum</span>
+                    </li>
                     @include('layouts.partials.sidebar.admin.pengumuman')
                     @include('layouts.partials.sidebar.admin.masterdata')
                     <li class="list-divider"></li>

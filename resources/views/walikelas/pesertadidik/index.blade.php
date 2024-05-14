@@ -1,7 +1,7 @@
 @extends('layouts.main.header')
 
 @section('sidebar')
-    @include('layouts.sidebar.walikelas')
+    @include('layouts.sidebar.index')
 @endsection
 
 @section('content')

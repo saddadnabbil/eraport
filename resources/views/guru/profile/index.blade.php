@@ -1,7 +1,7 @@
 @extends('layouts.main.header')
 
 @section('sidebar')
-    @include('layouts.sidebar.guru')
+    @include('layouts.sidebar.index')
 @endsection
 
 @section('content')

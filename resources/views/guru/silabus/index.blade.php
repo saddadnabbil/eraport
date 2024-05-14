@@ -1,7 +1,7 @@
 @extends('layouts.main.header')
 
 @section('sidebar')
-    @include('layouts.sidebar.guru')
+    @include('layouts.sidebar.index')
 @endsection
 
 @section('content')
@@ -74,7 +74,7 @@
                                             <div class="form-group">
                                                 <label for="k_tigabelas">Input File KM
 
-                                                    
+
                                                 </label>
                                                 <div class="input-group">
                                                     <div class="custom-file">

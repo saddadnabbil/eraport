@@ -140,70 +140,79 @@
 
                 <ul class="navbar-nav float-end">
                     <!-- Notification -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle pl-md-3 position-relative" href="javascript:void(0)"
-                            id="bell" role="button" data-bs-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="true">
-                            <span><i data-feather="grid" class="svg-icon"></i></span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-center mailbox animated bounceInDown">
-                            <ul class="list-style-none">
-                                <li>
-                                    <div class="message-center notifications position-relative">
-                                        @if (auth()->user()->hasAnyPermission(['admin-access']))
-                                            <a href="{{ auth()->user()->hasRole('Admin') && !request()->is('admin/*') ? route('admin.dashboard') : 'javascript:void(0)' }}"
-                                                @if (auth()->user()->hasRole('Admin') && request()->is('admin/*')) disabled style="background: #e8eaec;" @endif
-                                                class="message-item d-flex align-items-center border-bottom px-3 py-2">
-                                                <div class="btn btn-danger rounded-circle btn-circle"><i
-                                                        data-feather="airplay" class="text-white"></i></div>
-                                                <div class="w-75 d-inline-block v-middle ps-2">
-                                                    <h6 class="message-title mb-0 mt-1 text-nowrap">Admin
-                                                    </h6>
-                                                </div>
-                                            </a>
-                                        @endif
+                    @if (auth()->user()->hasAnyPermission([
+                                'admin-access',
+                                'masterdata-management',
+                                'homeroom-km',
+                                'homeroom-pg-kg',
+                                'teacher-km',
+                                'teacher-pg-kg',
+                            ]))
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle pl-md-3 position-relative" href="javascript:void(0)"
+                                id="bell" role="button" data-bs-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="true">
+                                <span><i data-feather="grid" class="svg-icon"></i></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-center mailbox animated bounceInDown">
+                                <ul class="list-style-none">
+                                    <li>
+                                        <div class="message-center notifications position-relative">
+                                            @if (auth()->user()->hasAnyPermission(['admin-access']))
+                                                <a href="{{ auth()->user()->hasRole('Admin') && !request()->is('admin/*') ? route('admin.dashboard') : 'javascript:void(0)' }}"
+                                                    @if (auth()->user()->hasRole('Admin') && request()->is('admin/*')) disabled style="background: #e8eaec;" @endif
+                                                    class="message-item d-flex align-items-center border-bottom px-3 py-2">
+                                                    <div class="btn btn-danger rounded-circle btn-circle"><i
+                                                            data-feather="airplay" class="text-white"></i></div>
+                                                    <div class="w-75 d-inline-block v-middle ps-2">
+                                                        <h6 class="message-title mb-0 mt-1 text-nowrap">Admin
+                                                        </h6>
+                                                    </div>
+                                                </a>
+                                            @endif
 
-                                        @if (auth()->user()->hasAnyPermission(['admin-access', 'masterdata-management']))
-                                            <a href="{{ (auth()->user()->hasAnyRole(['Admin', 'Curriculum']) ||auth()->user()->hasAnyPermission(['masterdata-management'])) &&!request()->is('master-data/*')? route('sekolah.index'): 'javascript:void(0)' }}"
-                                                @if (auth()->user()->hasAnyRole(['Admin', 'Curriculum']) && request()->is('master-data/*')) disabled style="background: #e8eaec;" @endif
-                                                class="message-item d-flex align-items-center border-bottom px-3 py-2">
-                                                <div class="btn btn-danger rounded-circle btn-circle"><i
-                                                        data-feather="airplay" class="text-white"></i></div>
-                                                <div class="w-75 d-inline-block v-middle ps-2">
-                                                    <h6 class="message-title mb-0 mt-1 text-nowrap">Panel Kurikulum
-                                                    </h6>
-                                                </div>
-                                            </a>
-                                        @endif
+                                            @if (auth()->user()->hasAnyPermission(['admin-access', 'masterdata-management']))
+                                                <a href="{{ (auth()->user()->hasAnyRole(['Admin', 'Curriculum']) ||auth()->user()->hasAnyPermission(['masterdata-management'])) &&!request()->is('master-data/*')? route('sekolah.index'): 'javascript:void(0)' }}"
+                                                    @if (auth()->user()->hasAnyRole(['Admin', 'Curriculum']) && request()->is('master-data/*')) disabled style="background: #e8eaec;" @endif
+                                                    class="message-item d-flex align-items-center border-bottom px-3 py-2">
+                                                    <div class="btn btn-danger rounded-circle btn-circle"><i
+                                                            data-feather="airplay" class="text-white"></i></div>
+                                                    <div class="w-75 d-inline-block v-middle ps-2">
+                                                        <h6 class="message-title mb-0 mt-1 text-nowrap"> Kurikulum
+                                                        </h6>
+                                                    </div>
+                                                </a>
+                                            @endif
 
-                                        @if (auth()->user()->hasAnyPermission(['admin-access', 'homeroom-pg-kg', 'teacher-pg-kg']))
-                                            <a href="{{ route('tk.penilaian.index') }}"
-                                                class="message-item d-flex align-items-center border-bottom px-3 py-2">
-                                                <div class="btn btn-danger rounded-circle btn-circle"><i
-                                                        data-feather="airplay" class="text-white"></i></div>
-                                                <div class="w-75 d-inline-block v-middle ps-2">
-                                                    <h6 class="message-title mb-0 mt-1 text-nowrap">Panel Raport TK
-                                                    </h6>
-                                                </div>
-                                            </a>
-                                        @endif
+                                            @if (auth()->user()->hasAnyPermission(['admin-access', 'homeroom-pg-kg', 'teacher-pg-kg']))
+                                                <a href="{{ route('tk.penilaian.index') }}"
+                                                    class="message-item d-flex align-items-center border-bottom px-3 py-2">
+                                                    <div class="btn btn-danger rounded-circle btn-circle"><i
+                                                            data-feather="airplay" class="text-white"></i></div>
+                                                    <div class="w-75 d-inline-block v-middle ps-2">
+                                                        <h6 class="message-title mb-0 mt-1 text-nowrap"> Raport TK
+                                                        </h6>
+                                                    </div>
+                                                </a>
+                                            @endif
 
-                                        @if (auth()->user()->hasAnyPermission(['admin-access', 'homeroom-km', 'teacher-km']))
-                                            <a href="{{ route('km.kkm.index') }}"
-                                                class="message-item d-flex align-items-center border-bottom px-3 py-2">
-                                                <div class="btn btn-danger rounded-circle btn-circle"><i
-                                                        data-feather="airplay" class="text-white"></i></div>
-                                                <div class="w-75 d-inline-block v-middle ps-2">
-                                                    <h6 class="message-title mb-0 mt-1 text-nowrap">Panel Raport KM
-                                                    </h6>
-                                                </div>
-                                            </a>
-                                        @endif
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
+                                            @if (auth()->user()->hasAnyPermission(['admin-access', 'homeroom-km', 'teacher-km']))
+                                                <a href="{{ route('km.kkm.index') }}"
+                                                    class="message-item d-flex align-items-center border-bottom px-3 py-2">
+                                                    <div class="btn btn-danger rounded-circle btn-circle"><i
+                                                            data-feather="airplay" class="text-white"></i></div>
+                                                    <div class="w-75 d-inline-block v-middle ps-2">
+                                                        <h6 class="message-title mb-0 mt-1 text-nowrap"> Raport KM
+                                                        </h6>
+                                                    </div>
+                                                </a>
+                                            @endif
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    @endif
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-bs-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">

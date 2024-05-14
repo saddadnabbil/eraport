@@ -116,7 +116,7 @@ Route::group(['middleware' => ['auth']], function () {
         });
     });
 
-    Route::group(['middleware' => 'role:Admin|Curriculum'], function () {
+    Route::group(['middleware' => 'role_or_permission:Admin|masterdata-management'], function () {
         // Master Data
         Route::prefix('master-data')->group(function () {
             // jadwal pelajaran -> siswa
