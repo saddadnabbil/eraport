@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\KM;
 
+use App\Models\Guru;
 use App\Models\Term;
 use App\Models\Kelas;
 use App\Models\Mapel;
@@ -9,10 +10,11 @@ use App\Models\Tapel;
 use App\Models\Sekolah;
 use App\Models\Semester;
 use App\Models\Pembelajaran;
-use App\Models\CapaianPembelajaran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use App\Models\CapaianPembelajaran;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class CapaianPembelajaranController extends Controller
@@ -21,6 +23,14 @@ class CapaianPembelajaranController extends Controller
     {
         $title = 'Capaian Pembajaran';
         $tapel = Tapel::where('status', 1)->first();
+        $user = Auth::user();
+        if ($user->hasAnyRole(['Teacher', 'Curriculum']) && $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])) {
+            $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
+            $dashboard = route('guru.dashboard');
+        } else {
+            $dashboard = route('admin.dashboard');
+            $guru = null;
+        }
 
         $data_mapel = Mapel::where('tapel_id', $tapel->id)->orderBy('nama_mapel', 'ASC')->get();
         $id_mapel = Mapel::where('tapel_id', $tapel->id)->get('id');
@@ -28,18 +38,20 @@ class CapaianPembelajaranController extends Controller
         $data_kelas = Kelas::where('tapel_id', $tapel->id)->groupBy('tingkatan_id')->orderBy('tingkatan_id', 'ASC')->whereNotIn('tingkatan_id', [1, 2, 3])->get();
         $id_kelas = Kelas::where('tapel_id', $tapel->id)->groupBy('tingkatan_id')->orderBy('tingkatan_id', 'ASC')->whereNotIn('tingkatan_id', [1, 2, 3])->get('id');
 
-        $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('kelas_id', 'ASC')->orderBy('mapel_id', 'ASC')->get();
+        if (isset($guru)) {
+            $data_pembelajaran = Pembelajaran::where('guru_id', $guru->id)->whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
+        } else {
+            $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('kelas_id', 'ASC')->orderBy('mapel_id', 'ASC')->get();
+        }
 
         if (count($data_mapel) == 0) {
-            return redirect('admin/mapel')->with('toast_warning', 'Mohon isikan data mata pelajaran');
+            return redirect($dashboard)->with('toast_warning', 'Mohon isikan data mata pelajaran');
         } elseif (count($data_kelas) == 0) {
-            return redirect('admin/kelas')->with('toast_warning', 'Mohon isikan data kelas');
+            return redirect($dashboard)->with('toast_warning', 'Mohon isikan data kelas');
         } else {
             $data_cp = CapaianPembelajaran::whereIn('mapel_id', $id_mapel)->get();
             return view('admin.km.cp.pilihkelas', compact('title', 'data_mapel', 'data_kelas', 'data_cp', 'data_pembelajaran'));
         }
-
-        return view('admin.km.cp.pilihkelas', compact('title', 'data_mapel', 'data_kelas', 'data_cp', 'data_pembelajaran'));
     }
 
     public function create(Request $request)
@@ -51,7 +63,14 @@ class CapaianPembelajaranController extends Controller
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
         } else {
             $title = 'Tambah Capaian Pembelajaran';
-            $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
+            $user = Auth::user();
+            if ($user->hasAnyRole(['Teacher', 'Curriculum']) && $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])) {
+                $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
+                $dashboard = route('guru.dashboard');
+                $pembelajaran = Pembelajaran::where('guru_id', $guru->id)->findorfail($request->pembelajaran_id);
+            } else {
+                $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
+            }
 
             $tapel = Tapel::where('status', 1)->first();
             $term = Term::findorfail($pembelajaran->kelas->tingkatan->term_id);
@@ -59,7 +78,13 @@ class CapaianPembelajaranController extends Controller
 
             $pembelajaran_id = $request->pembelajaran_id;
             $id_kelas = Kelas::where('tapel_id', $tapel->id)->groupBy('tingkatan_id')->orderBy('tingkatan_id', 'ASC')->whereNotIn('tingkatan_id', [1, 2, 3])->get('id');
-            $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('kelas_id', 'ASC')->orderBy('mapel_id', 'ASC')->get();
+
+            if (isset($guru)) {
+                $data_pembelajaran = Pembelajaran::where('guru_id', $guru->id)->whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
+            } else {
+                $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('kelas_id', 'ASC')->orderBy('mapel_id', 'ASC')->get();
+            }
+
             $mapel_id = $pembelajaran->mapel->id;
             $tingkatan_id = $pembelajaran->kelas->tingkatan->id;
             $existingData = CapaianPembelajaran::where('pembelajaran_id', $pembelajaran_id)->get();

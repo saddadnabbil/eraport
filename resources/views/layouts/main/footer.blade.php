@@ -28,13 +28,6 @@
   <!-- SweetAlert -->
   @include('sweetalert::alert')
 
-  <!-- Popover JS -->
-  <script>
-      var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
-      var popoverList = popoverTriggerList.map(function(popoverTriggerEl) {
-          return new bootstrap.Popover(popoverTriggerEl)
-      })
-  </script>
 
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
   <script>
@@ -92,8 +85,8 @@
           //       "autoWidth": false,
           //   });
 
-          //   //Bootstrap Duallistbox
-          //   $('.duallistbox').bootstrapDualListbox()
+          //Bootstrap Duallistbox
+          $('.duallistbox').bootstrapDualListbox()
       });
   </script>
 

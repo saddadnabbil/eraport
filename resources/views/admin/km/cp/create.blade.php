@@ -59,11 +59,11 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Kelas</label>
+                                        <label class="col-sm-2 col-form-label">Pembelajaran</label>
                                         <div class="col-sm-10">
                                             <select class="form-control form-select select2" name="pembelajaran_id"
                                                 style="width: 100%;" required onchange="this.form.submit();">
-                                                <option value="" disabled>-- Pilih Kelas --</option>
+                                                <option value="" disabled>-- Pilih Pembelajaran --</option>
                                                 @foreach ($data_pembelajaran as $pembelajaran)
                                                     <option value="{{ $pembelajaran->id }}"
                                                         @if ($pembelajaran->id == $pembelajaran_id) selected @endif>
@@ -102,7 +102,7 @@
                                                     <tr>
                                                         <td {!! $data->canDelete
                                                             ? ''
-                                                            : 'data-bs-target="popover"  title data-html="true" data-bs-original-title="<b>Tidak Bisa Diedit.</b> <br> Sedang digunakan dalam salah satu penilaian"' !!}>
+                                                            : 'data-bs-toggle="tooltip"  title data-bs-html="true" data-bs-original-title="<b>Tidak Bisa Diedit.</b> <br> Sedang digunakan dalam salah satu penilaian"' !!}>
                                                             <input type="text" class="form-control" name="kode_cp[]"
                                                                 value="{{ $data->kode_cp }}" required
                                                                 oninvalid="this.setCustomValidity('data tidak boleh kosong')"
@@ -112,7 +112,7 @@
 
                                                         <td {!! $data->canDelete
                                                             ? ''
-                                                            : 'data-bs-target="popover"  title data-html="true" data-bs-original-title="<b>Tidak Bisa Diedit.</b> <br> Sedang digunakan dalam salah satu penilaian"' !!}>
+                                                            : 'data-bs-toggle="tooltip"  title data-bs-html="true" data-bs-original-title="<b>Tidak Bisa Diedit.</b> <br> Sedang digunakan dalam salah satu penilaian"' !!}>
                                                             <textarea class="form-control" name="capaian_pembelajaran[]" rows="2" required
                                                                 oninvalid="this.setCustomValidity('data tidak boleh kosong')" oninput="setCustomValidity('')"
                                                                 {{ $data->canDelete ? '' : 'disabled' }}>{{ $data->capaian_pembelajaran }}</textarea>
@@ -120,7 +120,7 @@
 
                                                         <td {!! $data->canDelete
                                                             ? ''
-                                                            : 'data-bs-target="popover"  title data-html="true" data-bs-original-title="<b>Tidak Bisa Diedit.</b> <br> Sedang digunakan dalam salah satu penilaian"' !!}>
+                                                            : 'data-bs-toggle="tooltip"  title data-bs-html="true" data-bs-original-title="<b>Tidak Bisa Diedit.</b> <br> Sedang digunakan dalam salah satu penilaian"' !!}>
                                                             <textarea class="form-control" name="ringkasan_cp[]" rows="2" required
                                                                 oninvalid="this.setCustomValidity('data tidak boleh kosong')" oninput="setCustomValidity('')"
                                                                 {{ $data->canDelete ? '' : 'disabled' }}>{{ $data->ringkasan_cp }}</textarea>
@@ -131,7 +131,7 @@
                                                                 class="btn btn-danger shadow btn-xs sharp"
                                                                 id="deleteButton{{ $data->id }}"
                                                                 onclick="{{ $data->canDelete ? 'deleteData(' . $data->id . ')' : '' }}"
-                                                                {{ $data->canDelete ? '' : 'data-bs-target="popover"  title="Tidak Bisa Dihapus" data-html="true" data-bs-original-title="<b>Sedang digunakan dalam salah satu penilaian.</b>" disabled' }}>
+                                                                {{ $data->canDelete ? '' : 'data-bs-toggle="tooltip"  title="Tidak Bisa Dihapus" data-bs-html="true" data-bs-original-title="<b>Sedang digunakan dalam salah satu penilaian.</b>" disabled' }}>
                                                                 <i class="fas fa-trash-alt"></i>
                                                             </button>
                                                             <button type="button" name="add" id="add"
@@ -230,7 +230,7 @@
 
     <script>
         $(function() {
-            $('[data-bs-target="popover"]').popover({
+            $('[data-bs-toggle="tooltip"]').popover({
                 trigger: 'hover',
                 placement: function(popoverEl, targetEl) {
                     return $(targetEl).data('placement');

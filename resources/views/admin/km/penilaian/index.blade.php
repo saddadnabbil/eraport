@@ -59,11 +59,11 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Kelas</label>
+                                        <label class="col-sm-2 col-form-label">Pembelajaran</label>
                                         <div class="col-sm-10">
                                             <select class="form-control form-select select2" name="pembelajaran_id"
                                                 style="width: 100%;" required onchange="this.form.submit();">
-                                                <option value="" disabled>-- Pilih Kelas --</option>
+                                                <option value="" disabled>-- Pilih Pembelajaran --</option>
                                                 @foreach ($data_pembelajaran as $pembelajaran)
                                                     <option value="{{ $pembelajaran->id }}"
                                                         @if ($pembelajaran->id == $pembelajaran_id) selected @endif>
@@ -96,12 +96,12 @@
                                                 <th rowspan="2" colspan="1" class="text-center"
                                                     style="vertical-align: middle">Nama Siswa</th>
                                                 <th colspan="{{ $count_cp_formatif }}" class="text-center" title
-                                                    data-bs-target="popover" data-html="true"
+                                                    data-bs-toggle="tooltip" data-bs-html="true"
                                                     data-bs-original-title="<b>Penilaian Formatif <br> Bobot: 70</br>">
                                                     Formatif (F)
                                                 </th>
                                                 <th colspan="{{ $count_cp_sumatif }}" class="text-center" title
-                                                    data-bs-target="popover" data-html="true"
+                                                    data-bs-toggle="tooltip" data-bs-html="true"
                                                     data-bs-original-title="<b>Penilaian Sumatif <br> Bobot: 30</b>">Sumatif
                                                     (S)
                                                 </th>
@@ -113,13 +113,14 @@
                                                         value="{{ $rencana_penilaian_formatif['id'] }}">
                                                     <input type="hidden" name="bobot_rencana_nilai_formatif_id[]"
                                                         value="{{ $rencana_penilaian_formatif['bobot'] }}">
-                                                    <th class="text-center" data-bs-target="popover" title data-html="true"
+                                                    <th class="text-center" data-bs-toggle="tooltip" data-bs-html="true"
+                                                        title
                                                         data-bs-original-title="<b>{{ $rencana_penilaian_formatif['teknik_penilaian'] }}<br> Bobot:{{ $rencana_penilaian_formatif['bobot'] }}</b><br></b>">
                                                         (F)
                                                         {{ $rencana_penilaian_formatif['kode_penilaian'] }}
                                                     </th>
                                                 @endforeach
-                                                <th class="text-center red" data-bs-target="popover" data-html="true"
+                                                <th class="text-center red" data-bs-toggle="tooltip" data-bs-html="true"
                                                     data-bs-original-title="<b>Nilai Akhir Formatif</b>">NA
                                                     (F)</th>
 
@@ -128,20 +129,21 @@
                                                         value="{{ $rencana_penilaian_sumatif['id'] }}">
                                                     <input type="hidden" name="bobot_rencana_nilai_sumatif_id[]"
                                                         value="{{ $rencana_penilaian_sumatif['bobot'] }}">
-                                                    <th class="text-center" data-bs-target="popover" title data-html="true"
+                                                    <th class="text-center" data-bs-toggle="tooltip" data-bs-html="true"
+                                                        title
                                                         data-bs-original-title="<b>{{ $rencana_penilaian_sumatif['teknik_penilaian'] }}<br> Bobot:{{ $rencana_penilaian_sumatif['bobot'] }}</b><br> <b></b> ">
                                                         (S)
                                                         {{ $rencana_penilaian_sumatif['kode_penilaian'] }}
                                                     </th>
                                                 @endforeach
-                                                <th class="text-center red" data-bs-target="popover" data-html="true"
+                                                <th class="text-center red" data-bs-toggle="tooltip" data-bs-html="true"
                                                     data-bs-original-title="<b>Nilai Akhir Sumulatif</b>">
                                                     NA (S)</th>
 
-                                                <th class="text-center red" data-bs-target="popover" data-html="true"
+                                                <th class="text-center red" data-bs-toggle="tooltip" data-bs-html="true"
                                                     data-bs-original-title="<b>Nilai Rapor Akhir<br/>Sesuai Perhitungan Sistem</b>">
                                                     Akhir</th>
-                                                <th class="text-center" data-bs-target="popover" data-html="true"
+                                                <th class="text-center" data-bs-toggle="tooltip" data-bs-html="true"
                                                     data-bs-original-title="<b>Nilai Rapor Akhir<br/>Sesuai Revisi Guru</b> <br/> Jika terdapat nilai pada kolom ini, maka nilai di kolom inilah yang akan digunakan di rapor.">
                                                     Revisi</th>
                                             </tr>
@@ -284,16 +286,6 @@
 
 @push('custom-scripts')
     <script>
-        $(function() {
-            $('[data-bs-target="popover"]').popover({
-                trigger: 'hover',
-                placement: function(popoverEl, targetEl) {
-                    return $(targetEl).data('placement');
-                },
-                html: true,
-            });
-        });
-
         $(document).ready(function() {
             // Menghitung nilai akhir untuk setiap baris yang ada saat halaman dimuat
             $('tbody tr').each(function() {

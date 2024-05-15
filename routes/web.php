@@ -282,9 +282,8 @@ Route::group(['middleware' => ['auth']], function () {
             'create' => 'km.cp.create',
         ]);
 
-        Route::resource('rencanaformatif', 'Admin\KM\RencanaNilaiFormatifController')->only(['index', 'create', 'store', 'show', 'edit', 'update', 'destroy'])->names([
+        Route::resource('rencanaformatif', 'Admin\KM\RencanaNilaiFormatifController')->only(['index', 'store', 'show', 'edit', 'update', 'destroy'])->names([
             'index' => 'km.rencanaformatif.index',
-            'create' => 'km.rencanaformatif.create',
             'store' => 'km.rencanaformatif.store',
             'show' => 'km.rencanaformatif.show',
             'edit' => 'km.rencanaformatif.edit',
@@ -292,9 +291,8 @@ Route::group(['middleware' => ['auth']], function () {
             'destroy' => 'km.rencanaformatif.destroy',
         ]);
 
-        Route::resource('rencanasumatif', 'Admin\KM\RencanaNilaiSumatifController')->only(['index', 'create', 'store', 'show', 'edit', 'update', 'destroy'])->names([
+        Route::resource('rencanasumatif', 'Admin\KM\RencanaNilaiSumatifController')->only(['index', 'store', 'show', 'edit', 'update', 'destroy'])->names([
             'index' => 'km.rencanasumatif.index',
-            'create' => 'km.rencanasumatif.create',
             'store' => 'km.rencanasumatif.store',
             'show' => 'km.rencanasumatif.show',
             'edit' => 'km.rencanasumatif.edit',

@@ -185,7 +185,7 @@
                                             @endif
 
                                             @if (auth()->user()->hasAnyPermission(['admin-access', 'homeroom-pg-kg', 'teacher-pg-kg']))
-                                                <a href="{{ (auth()->user()->hasAnyRole(['Admin', 'Curriculum', 'Teacher']) ||auth()->user()->hasAnyPermission(['admin-access', 'homeroom-pg-kg', 'teacher-pg-kg', 'homeroom-km', 'teacher-km', 'masterdata-management'])) && !request()->is('tk/*')? route('tk.penilaian.index'): 'javascript:void(0)' }}"
+                                                <a href="{{ (auth()->user()->hasAnyRole(['Admin', 'Curriculum', 'Teacher']) ||auth()->user()->hasAnyPermission(['admin-access', 'homeroom-pg-kg', 'teacher-pg-kg', 'homeroom-km', 'teacher-km', 'masterdata-management'])) &&!request()->is('tk/*')? route('tk.penilaian.index'): 'javascript:void(0)' }}"
                                                     @if (auth()->user()->hasAnyRole(['Admin', 'Curriculum', 'Teacher']) && request()->is('tk/*')) disabled style="background: #e8eaec;" @endif
                                                     class="message-item d-flex align-items-center border-bottom px-3 py-2">
                                                     <div class="btn btn-danger rounded-circle btn-circle"><i
@@ -198,14 +198,13 @@
                                             @endif
 
                                             @if (auth()->user()->hasAnyPermission(['admin-access', 'homeroom-km', 'teacher-km']))
-                                                    <a href="{{ (auth()->user()->hasAnyRole(['Admin', 'Curriculum', 'Teacher']) ||auth()->user()->hasAnyPermission(['admin-access', 'homeroom-pg-kg', 'teacher-pg-kg', 'homeroom-km', 'teacher-km', 'masterdata-management'])) && !request()->is('km/*') && session()->get('akses_sebagai') == 'teacher-km' ? route('km.kkm.index'): 'javascript:void(0)' }}"
-                                                        @if (auth()->user()->hasAnyRole(['Admin', 'Curriculum', 'Teacher']) && request()->is('km/*')) disabled style="background: #e8eaec;" @endif
+                                                <a href="{{ ((auth()->user()->hasAnyRole(['Admin', 'Curriculum', 'Teacher']) ||auth()->user()->hasAnyPermission(['admin-access', 'homeroom-pg-kg', 'teacher-pg-kg', 'homeroom-km', 'teacher-km', 'masterdata-management'])) &&!request()->is('km/*')) ||session()->get('akses_sebagai') == 'teacher-km'? route('km.kkm.index'): 'javascript:void(0)' }}"
+                                                    @if (auth()->user()->hasAnyRole(['Admin', 'Curriculum', 'Teacher']) && request()->is('km/*')) disabled style="background: #e8eaec;" @endif
                                                     class="message-item d-flex align-items-center border-bottom px-3 py-2">
                                                     <div class="btn btn-danger rounded-circle btn-circle"><i
                                                             data-feather="airplay" class="text-white"></i></div>
                                                     <div class="w-75 d-inline-block v-middle ps-2">
-                                                        <h6 class="message-title mb-0 mt-1 text-nowrap">Raport KM
-                                                        </h6>
+                                                        <h6 class="message-title mb-0 mt-1 text-nowrap">Raport KM</h6>
                                                     </div>
                                                 </a>
                                             @endif

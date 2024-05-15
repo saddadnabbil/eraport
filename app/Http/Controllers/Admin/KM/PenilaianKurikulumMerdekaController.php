@@ -2,22 +2,24 @@
 
 namespace App\Http\Controllers\Admin\KM;
 
+use App\Models\Guru;
+use App\Models\Term;
 use App\Models\Kelas;
 use App\Models\Mapel;
 use App\Models\Tapel;
+use App\Models\Semester;
 use App\Models\NilaiAkhir;
 use App\Models\AnggotaKelas;
 use App\Models\NilaiSumatif;
 use App\Models\Pembelajaran;
+use Illuminate\Http\Request;
 use App\Models\NilaiFormatif;
+use Illuminate\Support\Carbon;
 use App\Models\CapaianPembelajaran;
 use App\Models\RencanaNilaiSumatif;
-use Illuminate\Http\Request;
-use App\Models\RencanaNilaiFormatif;
-use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
-use App\Models\Semester;
-use App\Models\Term;
+use App\Models\RencanaNilaiFormatif;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class PenilaianKurikulumMerdekaController extends Controller
@@ -31,13 +33,21 @@ class PenilaianKurikulumMerdekaController extends Controller
     {
         $title = 'Penilaian Raport';
         $tapel = Tapel::where('status', 1)->first();
+        $user = Auth::user();
+        if ($user->hasAnyRole(['Teacher', 'Curriculum']) && $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])) {
+            $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
+        }
 
         $data_mapel = Mapel::where('tapel_id', $tapel->id)->orderBy('nama_mapel', 'ASC')->get();
 
         $data_kelas = Kelas::where('tapel_id', $tapel->id)->groupBy('tingkatan_id')->orderBy('tingkatan_id', 'ASC')->whereNotIn('tingkatan_id', [1, 2, 3])->get();
         $id_kelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->get('id');
 
-        $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('kelas_id', 'ASC')->orderBy('mapel_id', 'ASC')->get();
+        if (isset($guru)) {
+            $data_pembelajaran = Pembelajaran::where('guru_id', $guru->id)->whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
+        } else {
+            $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('kelas_id', 'ASC')->orderBy('mapel_id', 'ASC')->get();
+        }
 
         if (count($data_mapel) == 0) {
             return redirect('admin/mapel')->with('toast_warning', 'Mohon isikan data mata pelajaran');
@@ -62,7 +72,19 @@ class PenilaianKurikulumMerdekaController extends Controller
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
         } else {
             $title = 'Input Nilai Kurikulum Merdeka';
-            $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
+
+            $user = Auth::user();
+            if ($user->hasAnyRole(['Teacher', 'Curriculum']) && $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])) {
+                $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
+            }
+
+            if ($user->hasAnyRole(['Teacher', 'Curriculum']) && $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])) {
+                $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
+                $pembelajaran = Pembelajaran::where('guru_id', $guru->id)->findorfail($request->pembelajaran_id);
+            } else {
+                $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
+            }
+
             $data_anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
                 ->where('anggota_kelas.kelas_id', $pembelajaran->kelas_id)
                 ->where('siswa.status', 1)
@@ -75,7 +97,12 @@ class PenilaianKurikulumMerdekaController extends Controller
 
             $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
             $id_kelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->get('id');
-            $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('kelas_id', 'ASC')->orderBy('mapel_id', 'ASC')->get();
+
+            if (isset($guru)) {
+                $data_pembelajaran = Pembelajaran::where('guru_id', $guru->id)->whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
+            } else {
+                $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('kelas_id', 'ASC')->orderBy('mapel_id', 'ASC')->get();
+            }
 
             $data_rencana_penilaian_sumatif = RencanaNilaiSumatif::with('nilai_sumatif')->where('term_id', $term->term)->where('semester_id', $semester->id)->where('pembelajaran_id', $request->pembelajaran_id)->get();
             $count_cp_sumatif = count($data_rencana_penilaian_sumatif);
