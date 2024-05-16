@@ -36,12 +36,25 @@
         <!-- ============================================================== -->
         <!-- Bread crumb and right sidebar toggle -->
         <!-- ============================================================== -->
+        @php
+            $user = Auth::user();
+            if (
+                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
+                $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
+            ) {
+                $dashboard = route('guru.dashboard');
+            } elseif ($user->hasAnyRole(['Student']) && $user->hasAnyPermission(['student'])) {
+                $dashboard = route('siswa.dashboard');
+            } else {
+                $dashboard = route('admin.dashboard');
+            }
+        @endphp
         @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
             'titleBreadCrumb' => $title,
             'breadcrumbs' => [
                 [
                     'title' => 'Dashboard',
-                    'url' => route('dashboard'),
+                    'url' => $dashboard,
                     'active' => true,
                 ],
                 [
@@ -138,12 +151,27 @@
                                                                     @php
                                                                         $rowspan++;
                                                                         // Add the skipped cells to the list
-                                                                        $skippedCells[] = ['slot_id' => $dataJadwalPelajaranSlot[$i]->id, 'days' => $weekdays, 'index' => $i];
+                                                                        $skippedCells[] = [
+                                                                            'slot_id' =>
+                                                                                $dataJadwalPelajaranSlot[$i]->id,
+                                                                            'days' => $weekdays,
+                                                                            'index' => $i,
+                                                                        ];
                                                                     @endphp
                                                                 @endif
                                                             @endfor
                                                             @php
-                                                                $isPrimary = isset($selected[$slot->id][$weekdays]) && $selected[$slot->id][$weekdays] && !in_array(['slot_id' => $slot->id, 'days' => $weekdays, 'index' => $index], $skippedCells);
+                                                                $isPrimary =
+                                                                    isset($selected[$slot->id][$weekdays]) &&
+                                                                    $selected[$slot->id][$weekdays] &&
+                                                                    !in_array(
+                                                                        [
+                                                                            'slot_id' => $slot->id,
+                                                                            'days' => $weekdays,
+                                                                            'index' => $index,
+                                                                        ],
+                                                                        $skippedCells,
+                                                                    );
                                                             @endphp
                                                             @if (!in_array(['slot_id' => $slot->id, 'days' => $weekdays, 'index' => $index], $skippedCells))
                                                                 <td class="p-3 border"

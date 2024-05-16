@@ -18,10 +18,10 @@ class CreateKmDeskripsiNilaiSiswasTable extends Migration
             $table->unsignedBigInteger('pembelajaran_id')->unsigned();
             $table->unsignedBigInteger('term_id')->unsigned();
             $table->unsignedBigInteger('km_nilai_akhir_raport_id')->unsigned();
-            $table->string('deskripsi_raport', 200);
+            $table->string('deskripsi_raport', 200)->nullable();
             $table->timestamps();
             $table->softDeletes();
-            
+
             $table->foreign('pembelajaran_id')->references('id')->on('pembelajaran')->onDelete('cascade');
             $table->foreign('term_id')->references('id')->on('terms');
             $table->foreign('km_nilai_akhir_raport_id')->references('id')->on('km_nilai_akhir_raports')->onDelete('cascade');

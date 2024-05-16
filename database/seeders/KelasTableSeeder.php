@@ -20,7 +20,7 @@ class KelasTableSeeder extends Seeder
             'tingkatan_id' => 5,
             'jurusan_id' => 3,
             'tapel_id' => 1,
-            'guru_id' => 1,
+            'guru_id' => 2,
             'nama_kelas' => 'JHS-7A',
         ]);
 

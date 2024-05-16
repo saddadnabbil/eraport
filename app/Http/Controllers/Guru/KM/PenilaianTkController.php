@@ -105,10 +105,11 @@ class PenilaianTkController extends Controller
         $id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('id');
         $kelas_id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('kelas_id');
 
-        $data_anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
-            ->whereIn('anggota_kelas.id', $id_anggota_kelas)
-            ->whereIn('anggota_kelas.kelas_id', $kelas_id_anggota_kelas)
-            ->where('siswa.status', 1)
+        $data_anggota_kelas = AnggotaKelas::where('kelas_id', $kelas_id_anggota_kelas)
+            ->orderBy('id', 'DESC')
+            ->whereHas('siswa', function ($query) {
+                $query->where('status', 1);
+            })
             ->get();
 
         return view('guru.km.penilaiantk.create', compact('title', 'data_anggota_kelas', 'kelas', 'data_kelas', 'tapel', 'term', 'data_term'));
@@ -224,10 +225,11 @@ class PenilaianTkController extends Controller
         $id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('id');
         $kelas_id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('kelas_id');
 
-        $data_anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
-            ->whereIn('anggota_kelas.id', $id_anggota_kelas)
-            ->whereIn('anggota_kelas.kelas_id', $kelas_id_anggota_kelas)
-            ->where('siswa.status', 1)
+        $data_anggota_kelas = AnggotaKelas::where('kelas_id', $kelas_id_anggota_kelas)
+            ->orderBy('id', 'DESC')
+            ->whereHas('siswa', function ($query) {
+                $query->where('status', 1);
+            })
             ->get();
 
         $dataTkElements = TkElement::where('tingkatan_id', $kelas->tingkatan_id)->get();

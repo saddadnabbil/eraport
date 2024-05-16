@@ -26,11 +26,21 @@ class P5ProjectController extends Controller
     {
         $title = 'P5 Project';
         $tapel = Tapel::where('status', 1)->first();
+        $user = Auth::user();
+
+        if ($user->hasAnyRole(['Teacher', 'Curriculum']) && $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])) {
+            $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
+            $dataGuru = Guru::where('id', $guru->id)->orderBy('id', 'ASC')->get();
+            $dataProject = P5Project::where('guru_id', $guru->id)->where('semester_id', $tapel->semester_id)->orderBy('kelas_id', 'ASC')->get();
+        } else {
+            $dataGuru = Guru::orderBy('id', 'ASC')->get();
+            $dataProject = P5Project::where('semester_id', $tapel->semester_id)->orderBy('kelas_id', 'ASC')->get();
+        }
+
         $dataKelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->orderBy('id', 'ASC')->get();
         if (count($dataKelas) == 0) {
             return redirect()->route('kelas.index')->with('toast_warning', 'Mohon isikan data kelas');
         }
-        $dataProject = P5Project::where('semester_id', $tapel->semester_id)->orderBy('kelas_id', 'ASC')->get();
         $dataProject->each(function ($project) {
             $subelement_data_array = json_decode($project->subelement_data, true);
 
@@ -42,7 +52,7 @@ class P5ProjectController extends Controller
         });
 
         $dataTema = P5Tema::orderBy('id', 'ASC')->get();
-        $dataGuru = Guru::orderBy('id', 'ASC')->get();
+
 
         return view('admin.p5.project.index', compact('title', 'tapel', 'dataProject', 'dataTema', 'dataGuru', 'dataKelas'));
     }
@@ -76,9 +86,19 @@ class P5ProjectController extends Controller
 
     public function edit($id)
     {
-        $project = P5Project::findOrFail($id);
+        $user = Auth::user();
+
+        if ($user->hasAnyRole(['Teacher', 'Curriculum']) && $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])) {
+            $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
+            $dataGuru = Guru::where('id', $guru->id)->orderBy('id', 'ASC')->get();
+            $project = P5Project::where('guru_id', $guru->id)->findOrFail($id);
+        } else {
+            $dataGuru = Guru::orderBy('id', 'ASC')->get();
+            $project = P5Project::findOrFail($id);
+        }
+
         $title = 'Edit P5 Project - ' . $project->kelas->nama_kelas . ' - ' . $project->p5_tema->name;
-        $dataGuru = Guru::orderBy('id', 'ASC')->get();
+
         $dataSubelement = P5Subelement::orderBy('p5_element_id', 'ASC')->get();
 
         $subelement_data = json_decode($project->subelement_data, true) ?? [];
@@ -132,7 +152,14 @@ class P5ProjectController extends Controller
                 ->withInput();
         }
 
-        $project = P5Project::findOrFail($id);
+        $user = Auth::user();
+
+        if ($user->hasAnyRole(['Teacher', 'Curriculum']) && $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])) {
+            $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
+            $project = P5Project::where('guru_id', $guru->id)->findOrFail($id);
+        } else {
+            $project = P5Project::findOrFail($id);
+        }
 
         $project->guru_id = $request->guru_id;
         $project->name = $request->name;
@@ -158,9 +185,21 @@ class P5ProjectController extends Controller
     public function show($id)
     {
         $tapel = Tapel::where('status', 1)->first();
-        $project = P5Project::with('kelas', 'p5_tema')->findOrFail($id);
+        $user = Auth::user();
+
+        if ($user->hasAnyRole(['Teacher', 'Curriculum']) && $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])) {
+            $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
+            $dataGuru = Guru::where('id', $guru->id)->orderBy('id', 'ASC')->get();
+            $dataProject = P5Project::where('guru_id', $guru->id)->where('semester_id', $tapel->semester_id)->orderBy('kelas_id', 'ASC')->get();
+            $project = P5Project::where('guru_id', $guru->id)->with('kelas', 'p5_tema')->findOrFail($id);
+        } else {
+            $dataGuru = Guru::orderBy('id', 'ASC')->get();
+            $dataProject = P5Project::where('semester_id', $tapel->semester_id)->orderBy('kelas_id', 'ASC')->get();
+            $project = P5Project::with('kelas', 'p5_tema')->findOrFail($id);
+        }
+
         $title = 'Nilai P5 Project - ' . $project->kelas->nama_kelas . ' - ' . $project->p5_tema->name;
-        $dataGuru = Guru::orderBy('id', 'ASC')->get();
+
         $dataSiswa = Siswa::where('kelas_id', $project->kelas_id)->orderBy('id', 'ASC')->get();
         $dataSubelement = P5Subelement::orderBy('p5_element_id', 'ASC')->get();
 
@@ -191,7 +230,6 @@ class P5ProjectController extends Controller
 
     public function nilai(Request $request, $id)
     {
-        // dd($request->all());
         // Validasi input
         $validator = Validator::make($request->all(), [
             'subelement_id' => 'required|array',

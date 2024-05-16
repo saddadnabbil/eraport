@@ -8,6 +8,19 @@
         <!-- ============================================================== -->
         <!-- Bread crumb and right sidebar toggle -->
         <!-- ============================================================== -->
+        @php
+            $user = Auth::user();
+            if (
+                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
+                $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
+            ) {
+                $dashboard = route('guru.dashboard');
+            } elseif ($user->hasAnyRole(['Student']) && $user->hasAnyPermission(['student'])) {
+                $dashboard = route('siswa.dashboard');
+            } else {
+                $dashboard = route('admin.dashboard');
+            }
+        @endphp
         @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
             'titleBreadCrumb' => $title,
             'breadcrumbs' => [
@@ -123,7 +136,7 @@
 
                                                             <td class="text-center">{{ $nilai_siswa->nilai_sumatif }}</td>
                                                             <td>
-                                                                <textarea class="form-control" name="deskripsi_raport[]" rows="4" minlength="30" maxlength="200" required
+                                                                <textarea class="form-control" name="deskripsi_raport[]" rows="4" minlength="30" maxlength="200"
                                                                     oninvalid="this.setCustomValidity('Deskripsi harus berisi antara 30 s/d 200 karekter')"
                                                                     oninput="setCustomValidity('')">{{ !is_null($nilai_siswa->deskripsi_nilai_siswa) ? $nilai_siswa->deskripsi_nilai_siswa->deskripsi_raport ?? '' : '' }}</textarea>
                                                             </td>

@@ -25,12 +25,14 @@ class RekapKehadiranController extends Controller
         $tapel = Tapel::where('status', 1)->first();
 
         $data_id_kelas = Kelas::where('tapel_id', $tapel->id)->pluck('id');
-        $anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
-            ->orderBy('siswa.nama_lengkap', 'ASC')
-            ->whereIn('anggota_kelas.kelas_id', $data_id_kelas)
-            ->where('anggota_kelas.siswa_id', $siswa->id)
-            ->where('siswa.status', 1)
+
+        $anggota_kelas = AnggotaKelas::whereIn('kelas_id', $data_id_kelas)
+            ->orderBy('id', 'DESC')
+            ->whereHas('siswa', function ($query) {
+                $query->where('status', 1);
+            })
             ->get();
+
         if ($anggota_kelas->isEmpty()) {
             return back()->with('toast_warning', 'Anda belum masuk ke anggota kelas');
         } else {
@@ -38,8 +40,5 @@ class RekapKehadiranController extends Controller
             $anggota_kelas = $anggota_kelas->first();
             return view('siswa.presensi.index', compact('title', 'siswa', 'kehadiran', 'anggota_kelas'));
         }
-            
     }
-
-
 }

@@ -25,8 +25,17 @@ class PrestasiSiswaController extends Controller
 
         $title = 'Prestasi Siswa';
         $tapel = Tapel::where('status', 1)->first();
+        $user = Auth::user();
 
-        $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
+        if ($user->hasAnyRole(['Teacher', 'Curriculum']) && $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])) {
+            $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
+        }
+
+        if (isset($guru)) {
+            $data_kelas = Kelas::where('guru_id', $guru->id)->where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->get();
+        } else {
+            $data_kelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->get();
+        }
 
         return view('admin.prestasi.index', compact('title', 'data_kelas'));
     }
@@ -35,18 +44,30 @@ class PrestasiSiswaController extends Controller
     {
         $title = 'Data Prestasi Siswa';
         $tapel = Tapel::where('status', 1)->first();
+        $user = Auth::user();
 
-        $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)->where('id', $request->kelas_id)->get('id');
+        if ($user->hasAnyRole(['Teacher', 'Curriculum']) && $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])) {
+            $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
+        }
+
+        if (isset($guru)) {
+            $kelas = Kelas::where('guru_id', $guru->id)->where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->findOrFail($request->kelas_id)->first();
+        } else {
+            $kelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->findOrFail($request->kelas_id)->first();
+        }
+
+        $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)->where('id', $kelas->id)->get('id');
 
         $id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('id');
         $kelas_id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('kelas_id');
 
         $data_prestasi_siswa = PrestasiSiswa::whereIn('anggota_kelas_id', $id_anggota_kelas)->get();
 
-        $data_anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
-            ->whereIn('anggota_kelas.id', $id_anggota_kelas)
-            ->whereIn('anggota_kelas.kelas_id', $kelas_id_anggota_kelas)
-            ->where('siswa.status', 1)
+        $data_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)
+            ->orderBy('id', 'DESC')
+            ->whereHas('siswa', function ($query) {
+                $query->where('status', 1);
+            })
             ->get();
 
         return view('admin.prestasi.create', compact('title', 'data_prestasi_siswa', 'data_anggota_kelas'));

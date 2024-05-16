@@ -8,6 +8,19 @@
         <!-- ============================================================== -->
         <!-- Bread crumb and right sidebar toggle -->
         <!-- ============================================================== -->
+        @php
+            $user = Auth::user();
+            if (
+                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
+                $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
+            ) {
+                $dashboard = route('guru.dashboard');
+            } elseif ($user->hasAnyRole(['Student']) && $user->hasAnyPermission(['student'])) {
+                $dashboard = route('siswa.dashboard');
+            } else {
+                $dashboard = route('admin.dashboard');
+            }
+        @endphp
         @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
             'titleBreadCrumb' => $title,
             'breadcrumbs' => [
@@ -194,9 +207,9 @@
                                                             @endif
                                                             <?php $i++; ?>
                                                         @endforeach
-                                                        <td class="red nilai-proses" name="nilaiAkhirFormatif">
+                                                        <td class="red nilai-proses" name="nilaiAkhirFormatif[]">
                                                             {{ $nilaiAkhirFormatif }} </td>
-                                                        <input type="hidden" name="nilaiAkhirFormatif"
+                                                        <input type="hidden" name="nilaiAkhirFormatif[]"
                                                             id="nilaiAkhirFormatif">
 
                                                         <?php $i = 0; ?>
@@ -235,14 +248,14 @@
                                                         @endforeach
 
 
-                                                        <td class="red nilai-proses" name="nilaiAkhirSumatif">
+                                                        <td class="red nilai-proses" name="nilaiAkhirSumatif[]">
                                                             {{ $nilaiAkhirSumatif }}</td>
-                                                        <input type="hidden" name="nilaiAkhirSumatif"
+                                                        <input type="hidden" name="nilaiAkhirSumatif[]"
                                                             id="nilaiAkhirSumatif">
 
                                                         <td class="red nilai-proses" id="nilaiAkhirRaportDisplay">
                                                             {{ $anggota_kelas->nilaiAkhirRaport }}</td>
-                                                        <input type="hidden" name="nilaiAkhirRaport"
+                                                        <input type="hidden" name="nilaiAkhirRaport[]"
                                                             id="nilaiAkhirRaportInput">
                                                         <td>
                                                             <input type="number" class="form-control"
@@ -328,8 +341,8 @@
                 var average = totalBobot > 0 ? sum / totalBobot : 0;
                 var averageFormatted = (average % 1 === 0) ? average.toFixed(0) : average.toFixed(0);
 
-                row.find('td[name="nilaiAkhirFormatif"]').text(averageFormatted);
-                row.find('[name="nilaiAkhirFormatif"]').val(averageFormatted);
+                row.find('td[name="nilaiAkhirFormatif[]"]').text(averageFormatted);
+                row.find('[name="nilaiAkhirFormatif[]"]').val(averageFormatted);
             }
 
             $('.nilai_sumatif_input').on('input', function() {
@@ -355,8 +368,8 @@
                 var average = totalBobot > 0 ? sum / totalBobot : 0;
                 var averageFormatted = (average % 1 === 0) ? average.toFixed(0) : average.toFixed(0);
 
-                row.find('td[name="nilaiAkhirSumatif"]').text(averageFormatted);
-                row.find('[name="nilaiAkhirSumatif"]').val(averageFormatted);
+                row.find('td[name="nilaiAkhirSumatif[]"]').text(averageFormatted);
+                row.find('[name="nilaiAkhirSumatif[]"]').val(averageFormatted);
             }
 
             $('.nilai_sumatif_input, .nilai_formatif_input').on('input', function() {

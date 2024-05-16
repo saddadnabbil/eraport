@@ -25,8 +25,17 @@ class KehadiranSiswaController extends Controller
 
         $title = 'Kehadiran Siswa';
         $tapel = Tapel::where('status', 1)->first();
+        $user = Auth::user();
 
-        $data_kelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->get();
+        if ($user->hasAnyRole(['Teacher', 'Curriculum']) && $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])) {
+            $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
+        }
+
+        if (isset($guru)) {
+            $data_kelas = Kelas::where('guru_id', $guru->id)->where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->get();
+        } else {
+            $data_kelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->get();
+        }
 
         return view('admin.kehadiran.index', compact('title', 'data_kelas'));
     }
@@ -41,10 +50,11 @@ class KehadiranSiswaController extends Controller
         $id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('id');
         $kelas_id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('kelas_id');
 
-        $data_anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
-            ->whereIn('anggota_kelas.id', $id_anggota_kelas)
-            ->whereIn('anggota_kelas.kelas_id', $kelas_id_anggota_kelas)
-            ->where('siswa.status', 1)
+        $anggota_kelas = AnggotaKelas::where('kelas_id', $kelas_id_anggota_kelas)
+            ->orderBy('id', 'DESC')
+            ->whereHas('siswa', function ($query) {
+                $query->where('status', 1);
+            })
             ->get();
 
         foreach ($data_anggota_kelas as $anggota) {

@@ -116,9 +116,9 @@ Route::group(['middleware' => ['auth']], function () {
         });
     });
 
-    Route::group(['middleware' => 'role_or_permission:Admin|masterdata-management'], function () {
-        // Master Data
-        Route::prefix('master-data')->group(function () {
+    // Master Data
+    Route::prefix('master-data')->group(function () {
+        Route::group(['middleware' => 'role_or_permission:Admin|masterdata-management'], function () {
             // jadwal pelajaran -> siswa
             Route::resource('jadwalpelajaran', 'Admin\JadwalPelajaranController', [
                 'only' => ['index', 'create', 'store', 'show'],
@@ -210,6 +210,13 @@ Route::group(['middleware' => ['auth']], function () {
                 'uses' => ['index', 'store', 'show', 'destroy'],
             ]);
 
+            // Timeslot
+            Route::get('timeslot', 'Admin\JadwalPelajaranController@timeSlot')->name('timeslot.index');
+            Route::post('timeslot', 'Admin\JadwalPelajaranController@storeTimeSlot')->name('timeslot.store');
+            Route::put('timeslot/update/{id}', 'Admin\JadwalPelajaranController@updateTimeSlot')->name('timeslot.update');
+            Route::delete('timeslot/{id}', 'Admin\JadwalPelajaranController@deleteTimeSlot')->name('timeslot.destory');
+        });
+        Route::group(['middleware' => 'role_or_permission:Admin|Teacher|Student|teacher-km|student-access'], function () {
             // Silabus Controller
             Route::resource('silabus', 'Admin\SilabusController')
                 ->only(['index', 'store', 'update', 'destroy'])
@@ -221,12 +228,6 @@ Route::group(['middleware' => ['auth']], function () {
                 ]);
             Route::delete('/silabus/{id}/destroy/{fileType}', 'Admin\SilabusController@destroyFile')->name('admin.silabus.destroyFile');
             Route::get('/silabus/pdf/{filename}', 'Admin\PdfController@viewSilabusPDF')->name('admin.silabus.pdf.view');
-
-            // Timeslot
-            Route::get('timeslot', 'Admin\JadwalPelajaranController@timeSlot')->name('timeslot.index');
-            Route::post('timeslot', 'Admin\JadwalPelajaranController@storeTimeSlot')->name('timeslot.store');
-            Route::put('timeslot/update/{id}', 'Admin\JadwalPelajaranController@updateTimeSlot')->name('timeslot.update');
-            Route::delete('timeslot/{id}', 'Admin\JadwalPelajaranController@deleteTimeSlot')->name('timeslot.destory');
         });
     });
 

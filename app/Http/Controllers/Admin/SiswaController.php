@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use Excel;
 use App\Models\User;
-use App\SiswaKeluar;
 use App\Models\Kelas;
 use App\Models\Siswa;
 use App\Models\Tapel;
@@ -19,6 +18,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
+use App\Models\SiswaKeluar;
 
 class SiswaController extends Controller
 {

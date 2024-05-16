@@ -9,7 +9,8 @@
                     $user = Auth::user();
                 @endphp
                 @hasanyrole(['Admin', 'Curriculum', 'Teacher', 'Student'])
-                    @canany(['admin-access', 'teacher-km'])
+                    @canany(['admin-access', 'teacher-km', 'homeroom-km', 'masterdata-management', 'homeroom-pg-kg',
+                        'teacher-pg-kg', 'student-access'])
                         @php
                             if ($user->hasRole('Admin')) {
                                 $dashboard = route('admin.dashboard');
@@ -24,8 +25,15 @@
                                     data-feather="home" class="feather-icon"></i><span class="hide-menu"> Dashboard
                                 </span></a>
                         </li>
-                        <li class="list-divider"></li>
                     @endcanany
+                    @if (
+                        (session()->get('akses_sebagai') != 'homeroom-km' && !$user->hasRole('Admin')) ||
+                            !auth()->user()->can('admin-access'))
+                        @canany(['teacher-km', 'student-access'])
+                            @include('layouts.partials.sidebar.silabus')
+                        @endcan
+                        <li class="list-divider"></li>
+                    @endif
                 @endhasanyrole
 
                 @hasanyrole(['Admin'])
@@ -75,7 +83,8 @@
                         @if (request()->is('km/*') ||
                                 request()->is('admin/dashbaord') ||
                                 request()->is('guru/dashboard') ||
-                                request()->is('siswa'))
+                                request()->is('siswa') ||
+                                request()->is('master-data/silabus'))
                             <li class="nav-small-cap">
                                 <span class="hide-menu">REPORT KM</span>
                             </li>
@@ -143,6 +152,15 @@
 
                             <li class="list-divider"></li>
                         @endif
+                    @endcanany
+                @endhasanyrole
+
+                @hasanyrole(['Student'])
+                    @canany(['student-access'])
+                        @include('layouts.partials.sidebar.ekstra')
+                        @include('layouts.partials.sidebar.reportresultkm.rekapkehadiran')
+                        @include('layouts.partials.sidebar.timetable')
+                        @include('layouts.partials.sidebar.reportresultkm.leger')
                     @endcanany
                 @endhasanyrole
         </nav>

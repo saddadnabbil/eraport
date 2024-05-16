@@ -26,8 +26,17 @@ class NilaiEkstrakulikulerController extends Controller
     {
         $title = 'Input Nilai Ekstrakulikuler';
         $tapel = Tapel::where('status', 1)->first();
+        $user = Auth::user();
 
-        $data_ekstrakulikuler = Ekstrakulikuler::where('tapel_id', $tapel->id)->orderBy('nama_ekstrakulikuler', 'ASC')->get();
+        if ($user->hasAnyRole(['Teacher', 'Curriculum']) && $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])) {
+            $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
+        }
+
+        if (isset($guru)) {
+            $data_ekstrakulikuler = Ekstrakulikuler::where('tapel_id', $tapel->id)->where('pembina_id', $guru->id)->orderBy('nama_ekstrakulikuler', 'ASC')->get();
+        } else {
+            $data_ekstrakulikuler = Ekstrakulikuler::where('tapel_id', $tapel->id)->orderBy('nama_ekstrakulikuler', 'ASC')->get();
+        }
 
         return view('admin.nilaiekstra.index', compact('title', 'data_ekstrakulikuler'));
     }
@@ -49,9 +58,24 @@ class NilaiEkstrakulikulerController extends Controller
             // Data Master 
             $title = 'Input Nilai Ekstrakulikuler';
             $tapel = Tapel::where('status', 1)->first();
-            $data_ekstrakulikuler = Ekstrakulikuler::where('tapel_id', $tapel->id)->orderBy('nama_ekstrakulikuler', 'ASC')->get();
+            $user = Auth::user();
 
-            $ekstrakulikuler = Ekstrakulikuler::findorfail($request->ekstrakulikuler_id);
+            if ($user->hasAnyRole(['Teacher', 'Curriculum']) && $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])) {
+                $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
+            }
+
+            if (isset($guru)) {
+                $data_ekstrakulikuler = Ekstrakulikuler::where('tapel_id', $tapel->id)->where('pembina_id', $guru->id)->orderBy('nama_ekstrakulikuler', 'ASC')->get();
+            } else {
+                $data_ekstrakulikuler = Ekstrakulikuler::where('tapel_id', $tapel->id)->orderBy('nama_ekstrakulikuler', 'ASC')->get();
+            }
+
+            if ($user->hasAnyRole(['Teacher', 'Curriculum']) && $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])) {
+                $ekstrakulikuler = Ekstrakulikuler::where('pembina_id', $guru->id)->findorfail($request->ekstrakulikuler_id);
+            } else {
+                $ekstrakulikuler = Ekstrakulikuler::findorfail($request->ekstrakulikuler_id);
+            }
+
             $kelas = Kelas::findorfail($request->kelas_id);
 
             $id_all_anggota_ekstra = AnggotaEkstrakulikuler::where('ekstrakulikuler_id', $ekstrakulikuler->id)->get('anggota_kelas_id');

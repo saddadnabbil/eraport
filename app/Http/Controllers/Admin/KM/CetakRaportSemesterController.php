@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\KM;
 
 use PDF;
+use App\Models\Guru;
 use App\Models\Kelas;
 use App\Models\Mapel;
 use App\Models\Tapel;
@@ -20,6 +21,7 @@ use App\Models\CatatanWaliKelas;
 use App\Models\KmNilaiAkhirRaport;
 use App\Http\Controllers\Controller;
 use App\Models\NilaiEkstrakulikuler;
+use Illuminate\Support\Facades\Auth;
 use App\Models\AnggotaEkstrakulikuler;
 use Illuminate\Support\Facades\Validator;
 
@@ -34,10 +36,17 @@ class CetakRaportSemesterController extends Controller
     {
         $title = 'Cetak Raport Semester';
         $tapel = Tapel::where('status', 1)->first();
-        $data_kelas = Kelas::where('tapel_id', $tapel->id)
-            ->whereNotIn('tingkatan_id', [1, 2, 3])
-            ->get();
+        $user = Auth::user();
 
+        if ($user->hasAnyRole(['Teacher', 'Curriculum']) && $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])) {
+            $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
+        }
+
+        if (isset($guru)) {
+            $data_kelas = Kelas::where('guru_id', $guru->id)->where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->get();
+        } else {
+            $data_kelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->get();
+        }
         return view('admin.km.raportsemester.setpaper', compact('title', 'data_kelas', 'tapel'));
     }
 
@@ -60,13 +69,21 @@ class CetakRaportSemesterController extends Controller
         }
 
         $title = 'Cetak Raport Semester';
-        $kelas = Kelas::findorfail($request->kelas_id);
         $tapel = Tapel::where('status', 1)->first();
         $semester = Semester::findorfail($request->semester_id);
+        $user = Auth::user();
 
-        $data_kelas = Kelas::where('tapel_id', $tapel->id)
-            ->whereNotIn('tingkatan_id', [1, 2, 3])
-            ->get();
+        if ($user->hasAnyRole(['Teacher', 'Curriculum']) && $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])) {
+            $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
+        }
+
+        if (isset($guru)) {
+            $kelas = Kelas::where('guru_id', $guru->id)->findorfail($request->kelas_id);
+            $data_kelas = Kelas::where('guru_id', $guru->id)->where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->get();
+        } else {
+            $data_kelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->get();
+            $kelas = Kelas::findorfail($request->kelas_id);
+        }
 
         $data_anggota_kelas = AnggotaKelas::where('kelas_id', $request->kelas_id)->get();
 

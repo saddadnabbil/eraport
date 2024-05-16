@@ -8,6 +8,19 @@
         <!-- ============================================================== -->
         <!-- Bread crumb and right sidebar toggle -->
         <!-- ============================================================== -->
+        @php
+            $user = Auth::user();
+            if (
+                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
+                $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
+            ) {
+                $dashboard = route('guru.dashboard');
+            } elseif ($user->hasAnyRole(['Student']) && $user->hasAnyPermission(['student'])) {
+                $dashboard = route('siswa.dashboard');
+            } else {
+                $dashboard = route('admin.dashboard');
+            }
+        @endphp
         @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
             'titleBreadCrumb' => $title,
             'breadcrumbs' => [
@@ -146,8 +159,8 @@
                                                             style="vertical-align: middle">Nama Siswa</th>
                                                         <th rowspan="2" class="text-center"
                                                             style="vertical-align: middle">KKM</th>
-                                                        <th colspan="2" class="text-center">Sumatif</th>
                                                         <th colspan="2" class="text-center">Formatif</th>
+                                                        <th colspan="2" class="text-center">Sumatif</th>
                                                         <th colspan="2" class="text-center">Akhir</th>
                                                     </tr>
                                                     <tr>
@@ -178,31 +191,6 @@
                                                             <td class="text-center">{{ $kkm->kkm }}</td>
 
                                                             <td class="text-center">
-                                                                {{ $anggota_kelas->nilai_pengetahuan }}</td>
-                                                            <input type="hidden" name="nilai_pengetahuan[]"
-                                                                value="{{ $anggota_kelas->nilai_pengetahuan }}">
-
-                                                            <td class="text-center">
-                                                                @if ($anggota_kelas->nilai_pengetahuan < $kkm->predikat_d)
-                                                                    D
-                                                                    <input type="hidden" name="predikat_pengetahuan[]"
-                                                                        value="D">
-                                                                @elseif($anggota_kelas->nilai_pengetahuan >= $kkm->predikat_d && $anggota_kelas->nilai_pengetahuan < $kkm->predikat_c)
-                                                                    C
-                                                                    <input type="hidden" name="predikat_pengetahuan[]"
-                                                                        value="C">
-                                                                @elseif($anggota_kelas->nilai_pengetahuan >= $kkm->predikat_c && $anggota_kelas->nilai_pengetahuan < $kkm->predikat_b)
-                                                                    B
-                                                                    <input type="hidden" name="predikat_pengetahuan[]"
-                                                                        value="B">
-                                                                @elseif($anggota_kelas->nilai_pengetahuan >= $kkm->predikat_b && $anggota_kelas->nilai_pengetahuan <= $kkm->predikat_a)
-                                                                    A
-                                                                    <input type="hidden" name="predikat_pengetahuan[]"
-                                                                        value="A">
-                                                                @endif
-                                                            </td>
-
-                                                            <td class="text-center">
                                                                 {{ $anggota_kelas->nilai_keterampilan }}</td>
                                                             <input type="hidden" name="nilai_keterampilan[]"
                                                                 value="{{ $anggota_kelas->nilai_keterampilan }}">
@@ -223,6 +211,31 @@
                                                                 @elseif($anggota_kelas->nilai_keterampilan >= $kkm->predikat_b && $anggota_kelas->nilai_keterampilan <= $kkm->predikat_a)
                                                                     A
                                                                     <input type="hidden" name="predikat_keterampilan[]"
+                                                                        value="A">
+                                                                @endif
+                                                            </td>
+
+                                                            <td class="text-center">
+                                                                {{ $anggota_kelas->nilai_pengetahuan }}</td>
+                                                            <input type="hidden" name="nilai_pengetahuan[]"
+                                                                value="{{ $anggota_kelas->nilai_pengetahuan }}">
+
+                                                            <td class="text-center">
+                                                                @if ($anggota_kelas->nilai_pengetahuan < $kkm->predikat_d)
+                                                                    D
+                                                                    <input type="hidden" name="predikat_pengetahuan[]"
+                                                                        value="D">
+                                                                @elseif($anggota_kelas->nilai_pengetahuan >= $kkm->predikat_d && $anggota_kelas->nilai_pengetahuan < $kkm->predikat_c)
+                                                                    C
+                                                                    <input type="hidden" name="predikat_pengetahuan[]"
+                                                                        value="C">
+                                                                @elseif($anggota_kelas->nilai_pengetahuan >= $kkm->predikat_c && $anggota_kelas->nilai_pengetahuan < $kkm->predikat_b)
+                                                                    B
+                                                                    <input type="hidden" name="predikat_pengetahuan[]"
+                                                                        value="B">
+                                                                @elseif($anggota_kelas->nilai_pengetahuan >= $kkm->predikat_b && $anggota_kelas->nilai_pengetahuan <= $kkm->predikat_a)
+                                                                    A
+                                                                    <input type="hidden" name="predikat_pengetahuan[]"
                                                                         value="A">
                                                                 @endif
                                                             </td>

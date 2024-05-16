@@ -8,6 +8,19 @@
         <!-- ============================================================== -->
         <!-- Bread crumb and right sidebar toggle -->
         <!-- ============================================================== -->
+        @php
+            $user = Auth::user();
+            if (
+                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
+                $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
+            ) {
+                $dashboard = route('guru.dashboard');
+            } elseif ($user->hasAnyRole(['Student']) && $user->hasAnyPermission(['student'])) {
+                $dashboard = route('siswa.dashboard');
+            } else {
+                $dashboard = route('admin.dashboard');
+            }
+        @endphp
         @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
             'titleBreadCrumb' => $title,
             'breadcrumbs' => [
@@ -53,14 +66,16 @@
                                     <a href="{{ route('p5.project.edit', $project->id) }}"
                                         class="btn btn-primary btn-sm ">Edit Project</a>
                                 </div>
-                                <form action="{{ route('p5.raport.store') }}" method="post">
-                                    @csrf
-                                    <input type="hidden" name="kelas_id" value="{{ $project->kelas_id }}">
-                                    <input type="hidden" name="semester_id" value="{{ $tapel->semester_id }}">
-                                    <div data-bs-toggle="tooltip" data-bs-original-title="Download Raport">
-                                        <button type="submit" class="btn btn-danger btn-sm ">Download Raport P5</button>
-                                    </div>
-                                </form>
+                                @canany(['homeroom-km'] && session('akses_sebagai') == 'homeroom-km')
+                                    <form action="{{ route('p5.raport.store') }}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="kelas_id" value="{{ $project->kelas_id }}">
+                                        <input type="hidden" name="semester_id" value="{{ $tapel->semester_id }}">
+                                        <div data-bs-toggle="tooltip" data-bs-original-title="Download Raport">
+                                            <button type="submit" class="btn btn-danger btn-sm ">Download Raport P5</button>
+                                        </div>
+                                    </form>
+                                @endcanany
                             </div>
                         </div>
                         <div class="card-body">

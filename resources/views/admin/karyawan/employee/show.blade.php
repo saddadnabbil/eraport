@@ -8,6 +8,19 @@
         <!-- ============================================================== -->
         <!-- Bread crumb and right sidebar toggle -->
         <!-- ============================================================== -->
+        @php
+            $user = Auth::user();
+            if (
+                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
+                $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
+            ) {
+                $dashboard = route('guru.dashboard');
+            } elseif ($user->hasAnyRole(['Student']) && $user->hasAnyPermission(['student'])) {
+                $dashboard = route('siswa.dashboard');
+            } else {
+                $dashboard = route('admin.dashboard');
+            }
+        @endphp
         @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
             'titleBreadCrumb' => $title,
             'breadcrumbs' => [
@@ -46,8 +59,8 @@
                         <div class="card-body box-profile">
                             <div class="text-center">
                                 @if ($karyawan->pas_photo == null)
-                                    <img class="profile-user-img" src="{{ asset('/assets/dist/img/avatar/default.png') }}" alt="Avatar"
-                                        style="border: none">
+                                    <img class="profile-user-img" src="{{ asset('/assets/dist/img/avatar/default.png') }}"
+                                        alt="Avatar" style="border: none">
                                 @else
                                     <img class="mb-2" src="{{ asset('storage/' . $karyawan->pas_photo) }}"
                                         alt="{{ $karyawan->pas_photo }}" alt="pas_photo" width="105px" height="144px">

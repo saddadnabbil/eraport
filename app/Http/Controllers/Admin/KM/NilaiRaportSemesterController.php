@@ -64,11 +64,11 @@ class NilaiRaportSemesterController extends Controller
             if (is_null($pembelajaran)) {
                 return back()->with('toast_error', 'Data pembelajaran tidak ditemukan');
             } else {
-
-                $data_anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
-                    ->orderBy('siswa.nama_lengkap', 'ASC')
-                    ->where('anggota_kelas.kelas_id', $kelas_id)
-                    ->where('siswa.status', 1)
+                $data_anggota_kelas = AnggotaKelas::where('kelas_id', $kelas_id)
+                    ->orderBy('id', 'DESC')
+                    ->whereHas('siswa', function ($query) {
+                        $query->where('status', 1);
+                    })
                     ->get();
 
                 foreach ($data_anggota_kelas as $anggota_kelas) {

@@ -66,9 +66,11 @@ class PenilaianKurikulumMerdekaController extends Controller
         } else {
             $title = 'Input Nilai Kurikulum Merdeka';
             $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
-            $data_anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
-                ->where('anggota_kelas.kelas_id', $pembelajaran->kelas_id)
-                ->where('siswa.status', 1)
+            $data_anggota_kelas = AnggotaKelas::where('kelas_id', $pembelajaran->kelas_id)
+                ->orderBy('id', 'DESC')
+                ->whereHas('siswa', function ($query) {
+                    $query->where('status', 1);
+                })
                 ->get();
             $pembelajaran_id = $request->pembelajaran_id;
 

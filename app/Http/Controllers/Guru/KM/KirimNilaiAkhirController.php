@@ -95,9 +95,11 @@ class KirimNilaiAkhirController extends Controller
                     $kkm->predikat_a =  100.00;
 
                     // Data Nilai
-                    $data_anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
-                        ->where('anggota_kelas.kelas_id', $pembelajaran->kelas_id)
-                        ->where('siswa.status', 1)
+                    $data_anggota_kelas = AnggotaKelas::where('kelas_id', $pembelajaran->kelas_id)
+                        ->orderBy('id', 'DESC')
+                        ->whereHas('siswa', function ($query) {
+                            $query->where('status', 1);
+                        })
                         ->get();
 
                     if (count($data_anggota_kelas) == 0) {

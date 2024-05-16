@@ -15,6 +15,7 @@ use App\Models\P5Subelement;
 use Illuminate\Http\Request;
 use App\Models\P5NilaiProject;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class CetakRaportP5Controller extends Controller
@@ -28,9 +29,17 @@ class CetakRaportP5Controller extends Controller
     {
         $title = 'Cetak Raport P5';
         $tapel = Tapel::where('status', 1)->first();
-        $data_kelas = Kelas::where('tapel_id', $tapel->id)
-            ->whereNotIn('tingkatan_id', [1, 2, 3])
-            ->get();
+        $user = Auth::user();
+
+        if ($user->hasAnyRole(['Teacher', 'Curriculum']) && $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])) {
+            $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
+        }
+
+        if (isset($guru)) {
+            $data_kelas = Kelas::where('guru_id', $guru->id)->where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->get();
+        } else {
+            $data_kelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->get();
+        }
 
         return view('admin.p5.raportp5.setpaper', compact('title', 'data_kelas', 'tapel'));
     }

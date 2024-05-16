@@ -8,6 +8,19 @@
         <!-- ============================================================== -->
         <!-- Bread crumb and right sidebar toggle -->
         <!-- ============================================================== -->
+        @php
+            $user = Auth::user();
+            if (
+                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
+                $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
+            ) {
+                $dashboard = route('guru.dashboard');
+            } elseif ($user->hasAnyRole(['Student']) && $user->hasAnyPermission(['student'])) {
+                $dashboard = route('siswa.dashboard');
+            } else {
+                $dashboard = route('admin.dashboard');
+            }
+        @endphp
         @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
             'titleBreadCrumb' => $title,
             'breadcrumbs' => [
@@ -54,7 +67,7 @@
                                                 <th class="text-center" style="width: 5%;">NIS</th>
                                                 <th class="text-center" style="width: 25%;">Nama Siswa</th>
                                                 <th class="text-center" style="width: 5%;">L/P</th>
-                                                <th class="text-center" style="width: 5%;">Kelas</th>
+                                                <th class="text-center" style="width: 10%;">Kelas</th>
                                                 <th class="text-center">Catatan Perkembangan Peserta Didik</th>
                                             </tr>
                                         </thead>

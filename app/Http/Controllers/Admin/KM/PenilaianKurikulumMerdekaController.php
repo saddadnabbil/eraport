@@ -81,13 +81,17 @@ class PenilaianKurikulumMerdekaController extends Controller
             if ($user->hasAnyRole(['Teacher', 'Curriculum']) && $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])) {
                 $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
                 $pembelajaran = Pembelajaran::where('guru_id', $guru->id)->findorfail($request->pembelajaran_id);
+                $data_pembelajaran = Pembelajaran::where('guru_id', $guru->id)->whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
             } else {
                 $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
+                $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('kelas_id', 'ASC')->orderBy('mapel_id', 'ASC')->get();
             }
 
-            $data_anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
-                ->where('anggota_kelas.kelas_id', $pembelajaran->kelas_id)
-                ->where('siswa.status', 1)
+            $data_anggota_kelas = AnggotaKelas::where('kelas_id', $pembelajaran->kelas_id)
+                ->orderBy('id', 'DESC')
+                ->whereHas('siswa', function ($query) {
+                    $query->where('status', 1);
+                })
                 ->get();
             $pembelajaran_id = $request->pembelajaran_id;
 
@@ -97,12 +101,6 @@ class PenilaianKurikulumMerdekaController extends Controller
 
             $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
             $id_kelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->get('id');
-
-            if (isset($guru)) {
-                $data_pembelajaran = Pembelajaran::where('guru_id', $guru->id)->whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
-            } else {
-                $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('kelas_id', 'ASC')->orderBy('mapel_id', 'ASC')->get();
-            }
 
             $data_rencana_penilaian_sumatif = RencanaNilaiSumatif::with('nilai_sumatif')->where('term_id', $term->term)->where('semester_id', $semester->id)->where('pembelajaran_id', $request->pembelajaran_id)->get();
             $count_cp_sumatif = count($data_rencana_penilaian_sumatif);
@@ -267,44 +265,30 @@ class PenilaianKurikulumMerdekaController extends Controller
                 !empty($request->nilai_formatif) ||
                 !empty($request->nilai_revisi)
             ) {
-                for ($count_siswa = 0; $count_siswa < count($request->anggota_kelas_id); $count_siswa++) {
-                    $nilaiAkhirSumatif = $request->nilaiAkhirSumatif;
-                    $nilaiAkhirFormatif = $request->nilaiAkhirFormatif;
-
+                foreach ($request->anggota_kelas_id as $count_siswa => $anggota_kelas_id) {
+                    // Hitung nilai akhir
+                    $nilaiAkhirSumatif = $request->nilaiAkhirSumatif[$count_siswa];
+                    $nilaiAkhirFormatif = $request->nilaiAkhirFormatif[$count_siswa];
                     $bobotSumatif = 0.3;
                     $bobotFormatif = 0.7;
-
                     $nilaiAkhir = ($nilaiAkhirSumatif * $bobotSumatif) + ($nilaiAkhirFormatif * $bobotFormatif);
 
-                    if (isset($request->nilai_revisi[$count_siswa])) {
-                        $nilaiRevisi = $request->nilai_revisi[$count_siswa];
-                    } else {
-                        $nilaiRevisi = null;
-                    }
-
-
-                    // dd($request->all());
-                    $dataNilaiAkhir = [
-                        'anggota_kelas_id' => $request->anggota_kelas_id[$count_siswa],
-                        'pembelajaran_id' => $request->pembelajaran_id,
-                        'term_id' => $request->term_id,
-                        'semester_id' => $request->semester_id,
-                        'nilai_akhir_formatif' => $nilaiAkhirFormatif,
-                        'nilai_akhir_sumatif' => $nilaiAkhirSumatif,
-                        'nilai_akhir_raport' => $nilaiAkhir,
-                        'nilai_akhir_revisi' => $nilaiRevisi,
-                        'created_at' => Carbon::now(),
-                        'updated_at' => Carbon::now(),
-                    ];
-
+                    // Simpan nilai akhir
                     NilaiAkhir::updateOrCreate(
                         [
-                            'anggota_kelas_id' => $dataNilaiAkhir['anggota_kelas_id'],
-                            'pembelajaran_id' => $dataNilaiAkhir['pembelajaran_id'],
-                            'term_id' => $dataNilaiAkhir['term_id'],
+                            'anggota_kelas_id' => $anggota_kelas_id,
+                            'pembelajaran_id' => $request->pembelajaran_id,
+                            'term_id' => $request->term_id,
                             'semester_id' => $request->semester_id,
                         ],
-                        $dataNilaiAkhir
+                        [
+                            'nilai_akhir_formatif' => $nilaiAkhirFormatif,
+                            'nilai_akhir_sumatif' => $nilaiAkhirSumatif,
+                            'nilai_akhir_raport' => $nilaiAkhir,
+                            'nilai_akhir_revisi' => $request->nilai_revisi[$count_siswa] ?? null,
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now(),
+                        ]
                     );
                 }
             }

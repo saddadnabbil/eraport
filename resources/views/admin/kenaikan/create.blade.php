@@ -8,6 +8,19 @@
         <!-- ============================================================== -->
         <!-- Bread crumb and right sidebar toggle -->
         <!-- ============================================================== -->
+        @php
+            $user = Auth::user();
+            if (
+                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
+                $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
+            ) {
+                $dashboard = route('guru.dashboard');
+            } elseif ($user->hasAnyRole(['Student']) && $user->hasAnyPermission(['student'])) {
+                $dashboard = route('siswa.dashboard');
+            } else {
+                $dashboard = route('admin.dashboard');
+            }
+        @endphp
         @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
             'titleBreadCrumb' => $title,
             'breadcrumbs' => [
@@ -73,8 +86,8 @@
                                                         </td>
                                                         <td class="text-center">{{ $anggota_kelas->kelas->nama_kelas }}</td>
                                                         <td>
-                                                            <select class="form-control form-select select2"
-                                                                name="keputusan[]" style="width: 100%;" required>
+                                                            <select class="form-control form-select" name="keputusan[]"
+                                                                style="width: 100%;" required>
                                                                 <option value=""
                                                                     @if ($anggota_kelas->keputusan == null) selected @endif>--
                                                                     Pilih Keputusan --</option>

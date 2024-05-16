@@ -8,6 +8,19 @@
         <!-- ============================================================== -->
         <!-- Bread crumb and right sidebar toggle -->
         <!-- ============================================================== -->
+        @php
+            $user = Auth::user();
+            if (
+                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
+                $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
+            ) {
+                $dashboard = route('guru.dashboard');
+            } elseif ($user->hasAnyRole(['Student']) && $user->hasAnyPermission(['student'])) {
+                $dashboard = route('siswa.dashboard');
+            } else {
+                $dashboard = route('admin.dashboard');
+            }
+        @endphp
         @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
             'titleBreadCrumb' => $title,
             'breadcrumbs' => [
@@ -191,7 +204,7 @@
                                                 </td>
                                                 <td>{{ $prestasi->deskripsi }}</td>
                                                 <td class="text-center">
-                                                    <form action="{{ route('prestasi.destroy', $prestasi->id) }}"
+                                                    <form action="{{ route('km.prestasi.destroy', $prestasi->id) }}"
                                                         method="POST">
                                                         @csrf
                                                         @method('DELETE')
