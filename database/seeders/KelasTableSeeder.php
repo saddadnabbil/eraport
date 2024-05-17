@@ -14,13 +14,100 @@ class KelasTableSeeder extends Seeder
      */
     public function run()
     {
+        // Seed data for P
+        Kelas::create([
+            'tingkatan_id' => 4,
+            'jurusan_id' => 3,
+            'tapel_id' => 1,
+            'guru_id' => 1,
+            'nama_kelas' => 'P-1A',
+        ]);
 
+        Kelas::create([
+            'tingkatan_id' => 4,
+            'jurusan_id' => 3,
+            'tapel_id' => 1,
+            'guru_id' => 1,
+            'nama_kelas' => 'P-1B',
+        ]);
+
+        Kelas::create([
+            'tingkatan_id' => 4,
+            'jurusan_id' => 3,
+            'tapel_id' => 1,
+            'guru_id' => 1,
+            'nama_kelas' => 'P-1C',
+        ]);
+
+        Kelas::create([
+            'tingkatan_id' => 4,
+            'jurusan_id' => 3,
+            'tapel_id' => 1,
+            'guru_id' => 1,
+            'nama_kelas' => 'P-2A',
+        ]);
+
+        Kelas::create([
+            'tingkatan_id' => 4,
+            'jurusan_id' => 3,
+            'tapel_id' => 1,
+            'guru_id' => 1,
+            'nama_kelas' => 'P-2B',
+        ]);
+
+        Kelas::create([
+            'tingkatan_id' => 4,
+            'jurusan_id' => 3,
+            'tapel_id' => 1,
+            'guru_id' => 1,
+            'nama_kelas' => 'P-3A',
+        ]);
+
+        Kelas::create([
+            'tingkatan_id' => 4,
+            'jurusan_id' => 3,
+            'tapel_id' => 1,
+            'guru_id' => 1,
+            'nama_kelas' => 'P-3B',
+        ]);
+
+        Kelas::create([
+            'tingkatan_id' => 4,
+            'jurusan_id' => 3,
+            'tapel_id' => 1,
+            'guru_id' => 1,
+            'nama_kelas' => 'P-4A',
+        ]);
+
+        Kelas::create([
+            'tingkatan_id' => 4,
+            'jurusan_id' => 3,
+            'tapel_id' => 1,
+            'guru_id' => 1,
+            'nama_kelas' => 'P-4B',
+        ]);
+
+        Kelas::create([
+            'tingkatan_id' => 4,
+            'jurusan_id' => 3,
+            'tapel_id' => 1,
+            'guru_id' => 1,
+            'nama_kelas' => 'P-5A',
+        ]);
+
+        Kelas::create([
+            'tingkatan_id' => 4,
+            'jurusan_id' => 3,
+            'tapel_id' => 1,
+            'guru_id' => 1,
+            'nama_kelas' => 'P-6A',
+        ]);
         // Seed data for JHS
         Kelas::create([
             'tingkatan_id' => 5,
             'jurusan_id' => 3,
             'tapel_id' => 1,
-            'guru_id' => 2,
+            'guru_id' => 1,
             'nama_kelas' => 'JHS-7A',
         ]);
 
@@ -128,7 +215,7 @@ class KelasTableSeeder extends Seeder
             'tingkatan_id' => 2,
             'jurusan_id' => 3,
             'tapel_id' => 1,
-            'guru_id' => 1,
+            'guru_id' => 2,
             'nama_kelas' => 'KG-A1',
         ]);
 
@@ -170,95 +257,6 @@ class KelasTableSeeder extends Seeder
             'tapel_id' => 1,
             'guru_id' => 1,
             'nama_kelas' => 'KG-B3',
-        ]);
-
-        // Seed data for P
-        Kelas::create([
-            'tingkatan_id' => 4,
-            'jurusan_id' => 3,
-            'tapel_id' => 1,
-            'guru_id' => 1,
-            'nama_kelas' => 'P-1A',
-        ]);
-
-        Kelas::create([
-            'tingkatan_id' => 4,
-            'jurusan_id' => 3,
-            'tapel_id' => 1,
-            'guru_id' => 1,
-            'nama_kelas' => 'P-1B',
-        ]);
-
-        Kelas::create([
-            'tingkatan_id' => 4,
-            'jurusan_id' => 3,
-            'tapel_id' => 1,
-            'guru_id' => 1,
-            'nama_kelas' => 'P-1C',
-        ]);
-
-        Kelas::create([
-            'tingkatan_id' => 4,
-            'jurusan_id' => 3,
-            'tapel_id' => 1,
-            'guru_id' => 1,
-            'nama_kelas' => 'P-2A',
-        ]);
-
-        Kelas::create([
-            'tingkatan_id' => 4,
-            'jurusan_id' => 3,
-            'tapel_id' => 1,
-            'guru_id' => 1,
-            'nama_kelas' => 'P-2B',
-        ]);
-
-        Kelas::create([
-            'tingkatan_id' => 4,
-            'jurusan_id' => 3,
-            'tapel_id' => 1,
-            'guru_id' => 1,
-            'nama_kelas' => 'P-3A',
-        ]);
-
-        Kelas::create([
-            'tingkatan_id' => 4,
-            'jurusan_id' => 3,
-            'tapel_id' => 1,
-            'guru_id' => 1,
-            'nama_kelas' => 'P-3B',
-        ]);
-
-        Kelas::create([
-            'tingkatan_id' => 4,
-            'jurusan_id' => 3,
-            'tapel_id' => 1,
-            'guru_id' => 1,
-            'nama_kelas' => 'P-4A',
-        ]);
-
-        Kelas::create([
-            'tingkatan_id' => 4,
-            'jurusan_id' => 3,
-            'tapel_id' => 1,
-            'guru_id' => 1,
-            'nama_kelas' => 'P-4B',
-        ]);
-
-        Kelas::create([
-            'tingkatan_id' => 4,
-            'jurusan_id' => 3,
-            'tapel_id' => 1,
-            'guru_id' => 1,
-            'nama_kelas' => 'P-5A',
-        ]);
-
-        Kelas::create([
-            'tingkatan_id' => 4,
-            'jurusan_id' => 3,
-            'tapel_id' => 1,
-            'guru_id' => 1,
-            'nama_kelas' => 'P-6A',
         ]);
     }
 }

@@ -1,9 +1,17 @@
 @php
     $userRole = Auth::user()->getRoleNames()->first();
 
-    $checkRoute = request()->routeIs('km.leger.*');
-    $dynamicRoute = route('km.leger.index');
-
+    switch ($userRole) {
+        case 'Student':
+            $checkRoute = request()->routeIs('nilaiakhir.*');
+            $dynamicRoute = route('nilaiakhir.index');
+            break;
+        case 'Admin' || 'Teacher':
+            $checkRoute = request()->routeIs('km.leger.*');
+            $dynamicRoute = route('km.leger.index');
+            break;
+        default:
+    }
 @endphp
 
 @include('layouts.partials.sidebar._sidebar-item', [

@@ -78,13 +78,11 @@ class PenilaianKurikulumMerdekaController extends Controller
                 $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
             }
 
-            if ($user->hasAnyRole(['Teacher', 'Curriculum']) && $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])) {
+            if (isset($guru)) {
                 $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
                 $pembelajaran = Pembelajaran::where('guru_id', $guru->id)->findorfail($request->pembelajaran_id);
-                $data_pembelajaran = Pembelajaran::where('guru_id', $guru->id)->whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
             } else {
                 $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
-                $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('kelas_id', 'ASC')->orderBy('mapel_id', 'ASC')->get();
             }
 
             $data_anggota_kelas = AnggotaKelas::where('kelas_id', $pembelajaran->kelas_id)
@@ -101,6 +99,12 @@ class PenilaianKurikulumMerdekaController extends Controller
 
             $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
             $id_kelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->get('id');
+
+            if (isset($guru)) {
+                $data_pembelajaran = Pembelajaran::where('guru_id', $guru->id)->whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
+            } else {
+                $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('kelas_id', 'ASC')->orderBy('mapel_id', 'ASC')->get();
+            }
 
             $data_rencana_penilaian_sumatif = RencanaNilaiSumatif::with('nilai_sumatif')->where('term_id', $term->term)->where('semester_id', $semester->id)->where('pembelajaran_id', $request->pembelajaran_id)->get();
             $count_cp_sumatif = count($data_rencana_penilaian_sumatif);

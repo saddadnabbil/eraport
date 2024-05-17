@@ -133,7 +133,7 @@
                                                                         <td class="p-3 border ">
                                                                             <select
                                                                                 name="kelas[{{ $pembelajaran->mapel_id }}][{{ $slot->id }}][{{ $weekdays }}]"
-                                                                                class="form-control form-select">
+                                                                                class="form-control form-select select2">
                                                                                 <option value="">-- select subject
                                                                                     --
                                                                                 </option>

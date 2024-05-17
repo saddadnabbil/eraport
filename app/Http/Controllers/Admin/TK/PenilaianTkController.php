@@ -37,16 +37,25 @@ class PenilaianTkController extends Controller
     {
         $title = 'Penilaian Raport TK';
         $tapel = Tapel::where('status', 1)->first();
+        $user = Auth::user();
+
+        if ($user->hasAnyRole(['Teacher', 'Curriculum']) && $user->hasAnyPermission(['teacher-pg-kg', 'homeroom-pg-kg'])) {
+            $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
+        }
 
         $data_mapel = Mapel::where('tapel_id', $tapel->id)->orderBy('nama_mapel', 'ASC')->get();
 
-        // $data_element = TkElement::where('tingkatan_id', $request->tingkatan_id)->get();
-        // $data_topic = TkTopic::whereIn('tk_element_id', $data_element->pluck('id'))->get();
-        $data_kelas = Kelas::where('tapel_id', $tapel->id)
-            ->whereIn('tingkatan_id', [1, 2, 3])
-            ->get();
+        if (isset($guru)) {
+            $data_kelas = Kelas::where('guru_id', $guru->id)
+                ->where('tapel_id', $tapel->id)
+                ->whereIn('tingkatan_id', [1, 2, 3])
+                ->get();
+        } else {
+            $data_kelas = Kelas::where('tapel_id', $tapel->id)
+                ->whereIn('tingkatan_id', [1, 2, 3])
+                ->get();
+        }
 
-        // handle if kelas null
         if (count($data_kelas) == 0) {
             return redirect(route('kelas.index'))->with('toast_warning', 'Kelas Tingkatan TK Belum tersedia');
         }
@@ -74,27 +83,40 @@ class PenilaianTkController extends Controller
     public function create(Request $request)
     {
         $title = 'Penilaian Raport TK';
-        $kelas = Kelas::where('id', $request->kelas_id)->first();
         $tapel = Tapel::where('status', 1)->first();
         $term = Term::where('id', $request->term_id)->first();
+        $user = Auth::user();
+
+        if ($user->hasAnyRole(['Teacher', 'Curriculum']) && $user->hasAnyPermission(['teacher-pg-kg', 'homeroom-pg-kg'])) {
+            $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
+        }
 
         $data_term = Term::orderBy('id', 'ASC')->get();
-        $data_kelas = Kelas::where('tapel_id', $tapel->id)
-            ->whereIn('tingkatan_id', [1, 2, 3])
-            ->get();
+
+        if (isset($guru)) {
+            $kelas = Kelas::where('guru_id', $guru->id)->findOrFail($request->kelas_id);
+            $data_kelas = Kelas::where('guru_id', $guru->id)
+                ->where('tapel_id', $tapel->id)
+                ->whereIn('tingkatan_id', [1, 2, 3])
+                ->get();
+        } else {
+            $kelas = Kelas::findOrFail($request->kelas_id);
+            $data_kelas = Kelas::where('tapel_id', $tapel->id)
+                ->whereIn('tingkatan_id', [1, 2, 3])
+                ->get();
+        }
 
         $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)
             ->whereIn('tingkatan_id', [1, 2, 3])
-            ->where('id', $request->kelas_id)
+            ->where('id', $kelas->id)
             ->get('id');
 
         $id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('id');
         $kelas_id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('kelas_id');
 
-        $data_anggota_kelas = AnggotaKelas::whereIn('anggota_kelas.id', $id_anggota_kelas)
-            ->whereIn('anggota_kelas.kelas_id', $kelas_id_anggota_kelas)
+        $data_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $kelas_id_anggota_kelas)
+            ->orderBy('id', 'DESC')
             ->whereHas('siswa', function ($query) {
-                // Memeriksa bahwa status siswa adalah 1
                 $query->where('status', 1);
             })
             ->get();
@@ -191,29 +213,42 @@ class PenilaianTkController extends Controller
      */
     public function show($id, Request $request)
     {
-        $user = Auth::user();
-        $kelas = Kelas::where('id', $request->kelas_id)->first();
         $tapel = Tapel::where('status', 1)->first();
         $term = Term::where('id', $request->term_id)->first();
+        $user = Auth::user();
+
+        if ($user->hasAnyRole(['Teacher', 'Curriculum']) && $user->hasAnyPermission(['teacher-pg-kg', 'homeroom-pg-kg'])) {
+            $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
+        }
+
+        if (isset($guru)) {
+            $kelas = Kelas::where('guru_id', $guru->id)->findOrFail($request->kelas_id);
+            $data_kelas = Kelas::where('guru_id', $guru->id)
+                ->where('tapel_id', $tapel->id)
+                ->whereIn('tingkatan_id', [1, 2, 3])
+                ->get();
+        } else {
+            $kelas = Kelas::findOrFail($request->kelas_id);
+            $data_kelas = Kelas::where('tapel_id', $tapel->id)
+                ->whereIn('tingkatan_id', [1, 2, 3])
+                ->get();
+        }
+
         $title = 'Penilaian Raport TK' . ' - ' . $kelas->nama_kelas . ' - Term ' . $term->term;
         $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
         $anggotaKelas = AnggotaKelas::where('id', $request->anggota_kelas_id)->first();
         $siswa = Siswa::where('id', $id)->first();
 
         $data_term = Term::orderBy('id', 'ASC')->get();
-        $data_kelas = Kelas::where('tapel_id', $tapel->id)
-            ->whereIn('tingkatan_id', [1, 2, 3])
-            ->get();
-
         $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)
             ->whereIn('tingkatan_id', [1, 2, 3])
-            ->where('id', $request->kelas_id)
+            ->where('id', $kelas->id)
             ->get('id');
 
         $id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('id');
         $kelas_id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('kelas_id');
 
-        $data_anggota_kelas = AnggotaKelas::where('kelas_id', $kelas_id_anggota_kelas)
+        $data_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $kelas_id_anggota_kelas)
             ->orderBy('id', 'DESC')
             ->whereHas('siswa', function ($query) {
                 $query->where('status', 1);
@@ -234,39 +269,5 @@ class PenilaianTkController extends Controller
         $dataEvents = TkEvent::where('tapel_id', $tapel->id)->where('term_id', $term->id)->get();
 
         return view('admin.km.penilaiantk.show', compact('title', 'data_anggota_kelas', 'kelas', 'data_kelas', 'tapel', 'term', 'data_term', 'dataTkElements', 'dataTkTopics', 'dataTkSubtopics', 'dataTkPoints', 'siswa', 'dataEvents', 'dataAchivements', 'anggotaKelas', 'dataAchivementEvents', 'dataAttendance', 'dataCatatanWalikelas'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

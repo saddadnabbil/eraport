@@ -21,12 +21,12 @@ class RoleTableSeeder extends Seeder
 
         $guru = Role::create(['name' => 'Teacher']);
         $guru->givePermissionTo([
-            'teacher-km', 'homeroom-km'
+            'teacher-km', 'homeroom-km', 'homeroom-pg-kg', 'teacher-pg-kg'
         ]);
 
         $guru = Role::create(['name' => 'Co-Teacher']);
         $guru->givePermissionTo([
-            'teacher-km', 'homeroom-km'
+            'teacher-km', 'homeroom-km', 'homeroom-pg-kg', 'teacher-pg-kg'
         ]);
 
         $siswa = Role::create(['name' => 'Student']);

@@ -39,7 +39,7 @@
             $user = Auth::user();
             if (
                 $user->hasAnyRole(['Teacher', 'Curriculum']) &&
-                $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
+                $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km', 'teacher-pg-kg', 'homeroom-pg-kg'])
             ) {
                 $dashboard = route('guru.dashboard');
             } elseif ($user->hasAnyRole(['Student']) && $user->hasAnyPermission(['student'])) {

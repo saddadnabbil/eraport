@@ -25,15 +25,17 @@
                                     data-feather="home" class="feather-icon"></i><span class="hide-menu"> Dashboard
                                 </span></a>
                         </li>
-                    @endcanany
-                    @if (
-                        (session()->get('akses_sebagai') != 'homeroom-km' && !$user->hasRole('Admin')) ||
-                            !auth()->user()->can('admin-access'))
-                        @canany(['teacher-km', 'student-access'])
-                            @include('layouts.partials.sidebar.silabus')
-                        @endcan
                         <li class="list-divider"></li>
-                    @endif
+                    @endcanany
+                    @canany(['teacher-km', 'student-access'])
+                        @if (session()->get('akses_sebagai') != 'homeroom-km' &&
+                                session()->get('akses_sebagai') != 'teacher-pg-kg' &&
+                                !auth()->user()->can('admin-access'))
+                            @include('layouts.partials.sidebar.silabus')
+                            @include('layouts.partials.sidebar.timetable')
+                            <li class="list-divider"></li>
+                        @endif
+                    @endcan
                 @endhasanyrole
 
                 @hasanyrole(['Admin'])
@@ -64,31 +66,36 @@
 
                 @hasanyrole(['Admin', 'Teacher', 'Curriculum'])
                     @canany(['admin-access', 'masterdata-management', 'homeroom-pg-kg', 'teacher-pg-kg'])
-                        @if (request()->is('tk/*'))
+                        @if (request()->is('tk/*') || request()->is('guru/dashbord'))
                             <li class="nav-small-cap">
                                 <span class="hide-menu">REPORT TK</span>
                             </li>
-                            @include('layouts.partials.sidebar.reportkm-tk.event')
-                            @include('layouts.partials.sidebar.reportkm-tk.area-of-learning')
-                            @include('layouts.partials.sidebar.reportkm-tk.penilaian')
-                            @include('layouts.partials.sidebar.reportkm-tk.printreport_tk')
+                            @canany(['masterdata-management'])
+                                @include('layouts.partials.sidebar.reportkm-tk.event')
+                                @include('layouts.partials.sidebar.reportkm-tk.area-of-learning')
+                            @endcanany
+                            @canany(['teacher-pg-kg'])
+                                @include('layouts.partials.sidebar.reportkm-tk.penilaian')
+                            @endcanany
+                            @canany(['homeroom-pg-kg'])
+                                @include('layouts.partials.sidebar.reportkm-tk.printreport_tk')
+                            @endcanany
                             <li class="list-divider"></li>
                         @endif
                     @endcan
                 @endhasanyrole
-
-                @hasanyrole(['Admin', 'Teacher', 'Curriculum'])
-                    @canany(['admin-access', 'masterdata-management', 'homeroom-pg-kg', 'teacher-pg-kg', 'teacher-km',
-                        'homeroom-km'])
+                @dd($user->getPermissionNames())
+                @role(['Admin', 'Teacher', 'Curriculum'])
+                    @can(['admin-access', 'masterdata-management', 'teacher-km', 'homeroom-km'])
                         @if (request()->is('km/*') ||
-                                request()->is('admin/dashbaord') ||
                                 request()->is('guru/dashboard') ||
                                 request()->is('siswa') ||
                                 request()->is('master-data/silabus'))
                             <li class="nav-small-cap">
                                 <span class="hide-menu">REPORT KM</span>
                             </li>
-                            @canany(['admin-access', 'homeroom-km'])
+                            @dd('mantul')
+                            @can(['admin-access', 'homeroom-km'])
                                 @if (session()->get('akses_sebagai') != 'homeroom-km' && session()->get('akses_sebagai') != 'teacher-km')
                                     @include('layouts.partials.sidebar.reportkm.inputdata')
                                     @include('layouts.partials.sidebar.reportkm.rencanapenilaian')
@@ -108,7 +115,7 @@
                                     @include('layouts.partials.sidebar.reportkm.nilaiakhir')
                                     @include('layouts.partials.sidebar.reportkm.prosesdeskripsi')
                                 @endif
-                            @endcanany
+                            @endcan
 
                             @hasanyrole(['Admin', 'Teacher', 'Curriculum'])
                                 @canany(['admin-access', 'masterdata-management', 'teacher-km'])
@@ -119,7 +126,7 @@
                                         </li>
                                         @include('layouts.partials.sidebar.report-p5.inputdata')
                                         @include('layouts.partials.sidebar.report-p5.manajemen')
-                                    @elseif (request()->is('master-data/*'))
+                                    @elseif (request()->is('master-data/*') && session()->get('akses_sebagai') != 'homeroom-km')
                                         <li class="list-divider"></li>
                                         <li class="nav-small-cap">
                                             <span class="hide-menu">REPORT P5BK</span>
@@ -153,16 +160,28 @@
                             <li class="list-divider"></li>
                         @endif
                     @endcanany
-                @endhasanyrole
+                @endrole
 
                 @hasanyrole(['Student'])
                     @canany(['student-access'])
                         @include('layouts.partials.sidebar.ekstra')
                         @include('layouts.partials.sidebar.reportresultkm.rekapkehadiran')
-                        @include('layouts.partials.sidebar.timetable')
                         @include('layouts.partials.sidebar.reportresultkm.leger')
                     @endcanany
                 @endhasanyrole
+
+                <li class="nav-small-cap">
+                    <span class="hide-menu">AUTHTENTICATION</span>
+                </li>
+                <li class="sidebar-item">
+                    <form class="sidebar-link sidebar-link" id="logout-form" action="{{ route('logout') }}"
+                        method="POST" style="display: inline;">
+                        @csrf
+                        <button type="button" onclick="confirmLogout()"
+                            class="text-decoration-none border-0 bg-transparent btn-link text-danger"> <i
+                                data-feather="log-out" class="feather-icon text-danger"></i>Logout</button>
+                    </form>
+                </li>
         </nav>
         <!-- End Sidebar navigation -->
     </div>

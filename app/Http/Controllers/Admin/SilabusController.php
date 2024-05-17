@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Guru;
 use App\Models\Kelas;
 use App\Models\Mapel;
 use App\Models\Tapel;
@@ -10,6 +11,7 @@ use App\Models\Silabus;
 use App\Models\Pembelajaran;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -25,10 +27,16 @@ class SilabusController extends Controller
     {
         $title = 'Silabus';
         $tapel = Tapel::where('status', 1)->first();
+        $user = Auth::user();
 
         $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
 
-        $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('kelas_id', 'ASC')->orderBy('mapel_id', 'ASC')->get();
+        if ($user->hasAnyRole(['Teacher', 'Curriculum']) && $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])) {
+            $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
+            $data_pembelajaran = Pembelajaran::where('guru_id', $guru->id)->whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('kelas_id', 'ASC')->orderBy('mapel_id', 'ASC')->get();
+        } else {
+            $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('kelas_id', 'ASC')->orderBy('mapel_id', 'ASC')->get();
+        }
 
         $kelas = Kelas::whereIn('id', $data_pembelajaran->pluck('kelas_id'))
             ->orderBy('nama_kelas', 'ASC')

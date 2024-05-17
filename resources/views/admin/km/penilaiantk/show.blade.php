@@ -100,7 +100,7 @@
                                                         <td>{{ $anggota_kelas->siswa->nama_lengkap }}</td>
                                                         <td class="text-center">
                                                             <form
-                                                                action="{{ route('tk.penilaian.show', $anggota_kelas->id) }}"
+                                                                action="{{ route('tk.penilaian.show', $anggota_kelas->siswa->id) }}"
                                                                 method="get">
                                                                 @csrf
                                                                 <input type="hidden" name="kelas_id"

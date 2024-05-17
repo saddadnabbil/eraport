@@ -38,7 +38,7 @@
             $user = Auth::user();
             if (
                 $user->hasAnyRole(['Teacher', 'Curriculum']) &&
-                $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
+                $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km', 'teacher-pg-kg', 'homeroom-pg-kg'])
             ) {
                 $dashboard = route('guru.dashboard');
             } elseif ($user->hasAnyRole(['Student']) && $user->hasAnyPermission(['student'])) {
@@ -52,7 +52,7 @@
             'breadcrumbs' => [
                 [
                     'title' => 'Dashboard',
-                    'url' => route('guru.dashboard'),
+                    'url' => $dashboard,
                     'active' => false,
                 ],
             ],
@@ -153,7 +153,7 @@
             <!-- *************************************************************** -->
 
             {{-- Start Capaian Penilaian Kurikulum Merdeka --}}
-            @if (!auth()->user()->hasAnyPermission(['homeroom-tk']))
+            @if (!auth()->user()->hasAnyPermission(['homeroom-pg-kg']))
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card">

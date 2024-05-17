@@ -13,11 +13,11 @@
                 <div class="navbar-brand">
                     <!-- Logo icon -->
                     @php
-                        if (Auth::user()->hasRole('Admin')) {
+                        if ($user->hasRole('Admin')) {
                             $dashboard = route('admin.dashboard');
-                        } elseif (Auth::user()->hasAnyRole(['Teacher', 'Curriculum'])) {
+                        } elseif ($user->hasAnyRole(['Teacher', 'Curriculum'])) {
                             $dashboard = route('guru.dashboard');
-                        } elseif (Auth::user()->hasRole('Student')) {
+                        } elseif ($user->hasRole('Student')) {
                             $dashboard = route('siswa.dashboard');
                         }
                     @endphp
@@ -45,17 +45,18 @@
                 <!-- ============================================================== -->
 
                 <ul class="navbar-nav float-left me-auto ms-3 ps-1">
-                    @if (Auth::user()->hasAnyRole(['Teacher', 'Co-Teacher', 'Curriculum']) &&
-                            Auth::user()->hasAnyPermission(['homeroom-km', 'homeroom-pg-kg']))
+                    @if (
+                        $user->hasAnyRole(['Teacher', 'Co-Teacher', 'Curriculum']) &&
+                            $user->hasAnyPermission(['homeroom-km'] && session()->get('cek_homeroom') != 'homeroom-pg-kg'))
                         <div style="padding: 0 15px; margin-left: 1rem;">
                             <li class="nav-item d-none d-md-block">
                                 <a class="nav-link" href="javascript:void(0)">
                                     <div class="customize-input">
                                         <select id="roleSelect"
                                             class="custom-select form-control bg-white custom-radius custom-shadow border-0">
-                                            <option value="1" @if (session()->get('akses_sebagai') == 'homeroom-km' && session()->get('cek_homeroom') == 'homeroom-km') selected @endif><a
+                                            <option value="1" @if (session()->get('akses_sebagai') == 'homeroom-km' && session()->get('akses_sebagai') == 'homeroom-km') selected @endif><a
                                                     class="dropdown-item" href="{{ route('akses') }}">
-                                                    @if (session()->get('akses_sebagai') == 'teacher-km' && session()->get('cek_homeroom') == 'homeroom-km')
+                                                    @if (session()->get('akses_sebagai') == 'teacher-km' && session()->get('akses_sebagai') == 'homeroom-km')
                                                         Teacher
                                                     @else
                                                         Change
@@ -82,7 +83,7 @@
                     <div class="d-flex align-items-center justify-content-center"
                         style="padding: 0 15px; margin-left: 1rem;">
                         <li class="nav-item d-none d-md-block">
-                            <a href="{{ Auth::user()->hasAnyRole(['Admin', 'Curriculum']) ? route('tapel.index') : 'javascript:void(0)' }}"
+                            <a href="{{ $user->hasAnyRole(['Admin', 'Curriculum']) ? route('tapel.index') : 'javascript:void(0)' }}"
                                 style="line-height: 1">
                                 <div class="customize-input">
                                     <span class="badge bg-success">
@@ -140,14 +141,15 @@
 
                 <ul class="navbar-nav float-end">
                     <!-- Notification -->
-                    @if (auth()->user()->hasAnyPermission([
-                                'admin-access',
-                                'masterdata-management',
-                                'homeroom-km',
-                                'homeroom-pg-kg',
-                                'teacher-km',
-                                'teacher-pg-kg',
-                            ]))
+                    @if (
+                        $user->hasAnyPermission([
+                            'admin-access',
+                            'masterdata-management',
+                            'homeroom-km',
+                            'homeroom-pg-kg',
+                            'teacher-km',
+                            'teacher-pg-kg',
+                        ]))
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle pl-md-3 position-relative" href="javascript:void(0)"
                                 id="bell" role="button" data-bs-toggle="dropdown" aria-haspopup="true"
@@ -158,9 +160,10 @@
                                 <ul class="list-style-none">
                                     <li>
                                         <div class="message-center notifications position-relative">
-                                            @if (auth()->user()->hasAnyPermission(['admin-access']))
-                                                <a href="{{ auth()->user()->hasRole('Admin') && !request()->is('admin/*') ? route('admin.dashboard') : 'javascript:void(0)' }}"
-                                                    @if (auth()->user()->hasRole('Admin') && request()->is('admin/*')) disabled style="background: #e8eaec;" @endif
+                                            {{-- kalo ada admin makan boleh akses --}}
+                                            @can('admin-access')
+                                                <a href="{{ $user->hasRole('Admin') && !request()->is('admin/*') ? route('admin.dashboard') : 'javascript:void(0)' }}"
+                                                    @if ($user->hasRole('Admin') && request()->is('admin/*')) disabled style="background: #e8eaec;" @endif
                                                     class="message-item d-flex align-items-center border-bottom px-3 py-2">
                                                     <div class="btn btn-danger rounded-circle btn-circle"><i
                                                             data-feather="airplay" class="text-white"></i></div>
@@ -169,11 +172,11 @@
                                                         </h6>
                                                     </div>
                                                 </a>
-                                            @endif
+                                            @endcan
 
-                                            @if (auth()->user()->hasAnyPermission(['admin-access', 'masterdata-management']))
-                                                <a href="{{ (auth()->user()->hasAnyRole(['Admin', 'Curriculum']) ||auth()->user()->hasAnyPermission(['masterdata-management'])) &&!request()->is('master-data/*')? route('sekolah.index'): 'javascript:void(0)' }}"
-                                                    @if (auth()->user()->hasAnyRole(['Admin', 'Curriculum']) && request()->is('master-data/*')) disabled style="background: #e8eaec;" @endif
+                                            @if ($user->hasAnyPermission(['admin-access', 'masterdata-management']))
+                                                <a href="{{ ($user->hasAnyRole(['Admin', 'Curriculum']) || $user->hasAnyPermission(['masterdata-management'])) && !request()->is('master-data/*') ? route('sekolah.index') : 'javascript:void(0)' }}"
+                                                    @if ($user->hasAnyRole(['Admin', 'Curriculum']) && request()->is('master-data/*')) disabled style="background: #e8eaec;" @endif
                                                     class="message-item d-flex align-items-center border-bottom px-3 py-2">
                                                     <div class="btn btn-danger rounded-circle btn-circle"><i
                                                             data-feather="airplay" class="text-white"></i></div>
@@ -184,9 +187,9 @@
                                                 </a>
                                             @endif
 
-                                            @if (auth()->user()->hasAnyPermission(['admin-access', 'homeroom-pg-kg', 'teacher-pg-kg']))
-                                                <a href="{{ (auth()->user()->hasAnyRole(['Admin', 'Curriculum', 'Teacher']) ||auth()->user()->hasAnyPermission(['admin-access', 'homeroom-pg-kg', 'teacher-pg-kg', 'homeroom-km', 'teacher-km', 'masterdata-management'])) &&!request()->is('tk/*')? route('tk.penilaian.index'): 'javascript:void(0)' }}"
-                                                    @if (auth()->user()->hasAnyRole(['Admin', 'Curriculum', 'Teacher']) && request()->is('tk/*')) disabled style="background: #e8eaec;" @endif
+                                            @if ($user->hasAnyPermission(['admin-access', 'homeroom-pg-kg', 'teacher-pg-kg']))
+                                                <a href="{{ ($user->hasAnyRole(['Admin', 'Curriculum', 'Teacher']) || $user->hasAnyPermission(['admin-access', 'homeroom-pg-kg', 'teacher-pg-kg', 'homeroom-km', 'teacher-km', 'masterdata-management'])) && !request()->is('tk/*') ? route('tk.penilaian.index') : 'javascript:void(0)' }}"
+                                                    @if ($user->hasAnyRole(['Admin', 'Curriculum', 'Teacher']) && request()->is('tk/*')) disabled style="background: #e8eaec;" @endif
                                                     class="message-item d-flex align-items-center border-bottom px-3 py-2">
                                                     <div class="btn btn-danger rounded-circle btn-circle"><i
                                                             data-feather="airplay" class="text-white"></i></div>
@@ -197,17 +200,22 @@
                                                 </a>
                                             @endif
 
-                                            @if (auth()->user()->hasAnyPermission(['admin-access', 'homeroom-km', 'teacher-km']))
-                                                <a href="{{ ((auth()->user()->hasAnyRole(['Admin', 'Curriculum', 'Teacher']) ||auth()->user()->hasAnyPermission(['admin-access', 'homeroom-pg-kg', 'teacher-pg-kg', 'homeroom-km', 'teacher-km', 'masterdata-management'])) &&!request()->is('km/*')) ||session()->get('akses_sebagai') == 'teacher-km'? route('km.kkm.index'): 'javascript:void(0)' }}"
-                                                    @if (auth()->user()->hasAnyRole(['Admin', 'Curriculum', 'Teacher']) && request()->is('km/*')) disabled style="background: #e8eaec;" @endif
+                                            @if ($user->hasAnyPermission(['admin-access', 'homeroom-km', 'teacher-km']))
+                                                <a href="{{ (($user->hasAnyRole(['Admin', 'Curriculum', 'Teacher']) || $user->hasAnyPermission(['admin-access', 'homeroom-km', 'teacher-km', 'masterdata-management'])) && !request()->is('km/*')) || session()->get('akses_sebagai') == 'teacher-km' || session()->get('akses_sebagai') == 'homeroom-km' ? route('km.kkm.index') : 'javascript:void(0)' }}"
+                                                    @if (
+                                                        ($user->hasAnyRole(['Admin', 'Curriculum', 'Teacher']) && request()->is('km/*')) ||
+                                                            session()->get('akses_sebagai') == 'teacher-km' ||
+                                                            session()->get('akses_sebagai') == 'homeroom-km') disabled style="background: #e8eaec;" @endif
                                                     class="message-item d-flex align-items-center border-bottom px-3 py-2">
-                                                    <div class="btn btn-danger rounded-circle btn-circle"><i
-                                                            data-feather="airplay" class="text-white"></i></div>
+                                                    <div class="btn btn-danger rounded-circle btn-circle">
+                                                        <i data-feather="airplay" class="text-white"></i>
+                                                    </div>
                                                     <div class="w-75 d-inline-block v-middle ps-2">
                                                         <h6 class="message-title mb-0 mt-1 text-nowrap">Raport KM</h6>
                                                     </div>
                                                 </a>
                                             @endif
+
                                         </div>
                                     </li>
                                 </ul>
@@ -221,12 +229,12 @@
                                 class="rounded-circle" width="40" />
                             <span class="ms-2 d-none d-lg-inline-block"><span>Hello,</span>
                                 <span class="text-dark">
-                                    @if (Auth::user()->hasRole('Admin'))
-                                        {{ Auth::user()->karyawan->nama_lengkap }}
-                                    @elseif (Auth::user()->hasAnyRole(['Teacher', 'Curriculum']))
-                                        {{ Auth::user()->karyawan->nama_lengkap }}
-                                    @elseif(Auth::user()->hasRole('Student'))
-                                        {{ Auth::user()->siswa->nama_lengkap }}
+                                    @if ($user->hasRole('Admin'))
+                                        {{ $user->karyawan->nama_lengkap }}
+                                    @elseif ($user->hasAnyRole(['Teacher', 'Curriculum']))
+                                        {{ $user->karyawan->nama_lengkap }}
+                                    @elseif($user->hasRole('Student'))
+                                        {{ $user->siswa->nama_lengkap }}
                                     @endif
                                 </span>
                                 <i data-feather="chevron-down" class="svg-icon"></i></span>
@@ -237,12 +245,12 @@
                             <a class="dropdown-item" href="{{ route('gantipassword') }}"><i data-feather="settings"
                                     class="svg-icon me-2 ms-1"></i>Change Password</a>
 
-                            @if (Auth::user()->hasRole('Teacher'))
-                                @if (session()->get('akses_sebagai') == 'Guru Mapel' && session()->get('cek_wali_kelas') == true)
+                            @if ($user->hasRole('Teacher'))
+                                @if ($user->hasAnyPermission(['teacher-km']) && session()->get('akses_sebagai') == 'homeroom-km')
                                     <a class="dropdown-item" href="{{ route('akses') }}"><i
                                             data-feather="toggle-right" class="svg-icon me-2 ms-1"></i> Change to
                                         Homeroom</a>
-                                @elseif (session()->get('akses_sebagai') == 'Wali Kelas')
+                                @elseif ($user->hasAnyPermission(['teacher-km']) && session()->get('akses_sebagai') == 'teacher-km')
                                     <a class="dropdown-item" href="{{ route('akses') }}"><i
                                             data-feather="toggle-left" class="svg-icon me-2 ms-1"></i> Change to
                                         Teacher</a>
