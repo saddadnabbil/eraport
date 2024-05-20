@@ -12,7 +12,7 @@
         @php
             $user = Auth::user();
             if (
-                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
+                $user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum']) &&
                 $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
             ) {
                 $dashboard = route('guru.dashboard');
@@ -32,7 +32,7 @@
                 ],
                 [
                     'title' => $title,
-                    'url' => route('guru.cp.index'),
+                    'url' => route('guru.km.cp.index'),
                     'active' => false,
                 ],
             ],
@@ -55,7 +55,7 @@
 
                         <div class="card-body">
                             <div class="callout callout-info">
-                                <form action="{{ route('guru.cp.create') }}" method="GET">
+                                <form action="{{ route('guru.km.cp.create') }}" method="GET">
                                     @csrf
                                     <div class="form-group row">
                                         <label for="pembelajaran_id" class="col-sm-3 col-form-label">Kelas</label>

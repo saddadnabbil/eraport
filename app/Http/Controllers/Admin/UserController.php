@@ -27,17 +27,8 @@ class UserController extends Controller
     public function index()
     {
         $title = 'Data User';
-        $data_user = User::select('id', 'username', 'status')
-            ->with(['siswa' => function ($query) {
-                $query->select('user_id', 'nama_lengkap', 'id');
-            }, 'karyawan' => function ($query) {
-                $query->select('id', 'user_id', 'nama_lengkap', 'id');
-            }])
 
-            ->orderBy('id', 'ASC')
-            ->get();
-
-        return view('admin.user.index', compact('title', 'data_user'));
+        return view('admin.user.index', compact('title'));
     }
 
 
@@ -49,13 +40,12 @@ class UserController extends Controller
             }, 'karyawan' => function ($query) {
                 $query->select('id', 'user_id', 'nama_lengkap', 'id');
             }])
-            // ->where('id', '!=', Auth::user()->id)
             ->orderBy('id', 'ASC')
             ->get();
 
         return DataTables::of($data_user)
             ->addColumn('full_name', function ($user) {
-                if ($user->hasRole('Student') || $user->siswa) {
+                if ($user->siswa) {
                     return $user->siswa->nama_lengkap;
                 } elseif ($user->karyawan) {
                     return $user->karyawan->nama_lengkap;
@@ -63,18 +53,18 @@ class UserController extends Controller
                 return '-';
             })
             ->addColumn('permission', function ($user) {
-                return  $user->getPermissionNames()->implode(', ');
+                return $user->getPermissionNames()->implode(', ');
             })
             ->addColumn('role', function ($user) {
-                return  $user->getRoleNames()->first();
+                return $user->getRoleNames()->implode(', ');
             })
             ->addColumn('status_akun', function ($user) {
                 return $user->status ? '<span class="badge bg-success">Aktif</span>' : '<span class="badge bg-danger">Non Aktif</span>';
             })
             ->addColumn('action', function ($user) {
                 $showRoute = '#';
-                if ($user->hasRole('Student') || $user->siswa) {
-                    $showRoute = route('siswa.show', $user->siswa->id);
+                if ($user->siswa) {
+                    $showRoute = route('admin.siswa.show', $user->siswa->id);
                 } elseif ($user->karyawan) {
                     $showRoute = route('karyawan.show', $user->karyawan->id);
                 }
@@ -109,9 +99,8 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'username' => 'required|min:3|max:100|unique:user',
-            'role' => 'required|exists:roles,id',
-            'permission' => 'required|array',
-            'permission.*' => 'exists:permissions,id',
+            'role' => 'required|array',
+            'role*' => 'required|exists:roles,id',
         ]);
         if ($validator->fails()) {
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
@@ -153,13 +142,10 @@ class UserController extends Controller
                 }
             }
 
-            // Assign each permission to the user
-            foreach ($request->permission as $permissionId) {
-                $permission = Permission::findOrFail($permissionId);
-                $user->givePermissionTo($permission);
+            foreach ($request->role as $roleId) {
+                $role = Role::findOrFail($roleId);
+                $user->giveRoleTo($role);
             }
-
-            $user->assignRole($role->name);
 
             return back()->with('toast_success', 'User berhasil ditambahkan');
         }
@@ -170,9 +156,8 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'username' => 'nullable|min:3|max:100',
             'status' => 'required',
-            'role' => 'nullable|exists:roles,id',
-            'permission' => 'nullable|array',
-            'permission.*' => 'exists:permissions,id',
+            'role' => 'required|array',
+            'role*' => 'required|exists:roles,id',
         ]);
 
         if ($validator->fails()) {
@@ -184,15 +169,14 @@ class UserController extends Controller
         if ($request->filled('password')) {
             $user->password = bcrypt($request->password);
         }
-        $user->role = $request->role;
         $user->status = $request->status;
         $user->save();
 
-        if ($request->has('permission')) {
-            $permissions = Permission::whereIn('id', $request->permission)->get();
-            $user->syncPermissions($permissions);
+        if ($request->has('role')) {
+            $roles = Role::whereIn('id', $request->role)->get();
+            $user->syncRoles($roles);
         } else {
-            $user->syncPermissions([]);
+            $user->syncRoles([]);
         }
 
         return back()->with('toast_success', 'User berhasil diupdate');

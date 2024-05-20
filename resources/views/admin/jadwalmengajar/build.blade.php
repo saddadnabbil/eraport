@@ -1,6 +1,6 @@
 @extends('layouts.main.header')
 @section('sidebar')
-    @include('layouts.sidebar.index')
+    @include('layouts.sidebar.admin')
 @endsection
 
 @section('content')
@@ -10,33 +10,24 @@
         <!-- ============================================================== -->
         @php
             $user = Auth::user();
-            if (
-                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
-                $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
-            ) {
-                $dashboard = route('guru.dashboard');
-            } elseif ($user->hasAnyRole(['Student']) && $user->hasAnyPermission(['student'])) {
-                $dashboard = route('siswa.dashboard');
-            } else {
-                $dashboard = route('admin.dashboard');
-            }
+            $dashboard = route('admin.dashboard');
         @endphp
         @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
             'titleBreadCrumb' => $title,
             'breadcrumbs' => [
                 [
                     'title' => 'Dashboard',
-                    'url' => route('admin.dashboard'),
+                    'url' => $dashboard,
                     'active' => true,
                 ],
                 [
                     'title' => 'Timetable Teacher',
-                    'url' => route('jadwalmengajar.index'),
+                    'url' => route('admin.jadwalmengajar.index'),
                     'active' => true,
                 ],
                 [
                     'title' => $title,
-                    'url' => route('jadwalmengajar.index'),
+                    'url' => route('admin.jadwalmengajar.index'),
                     'active' => false,
                 ],
             ],
@@ -69,14 +60,14 @@
                                 <div class="card-tools">
                                     <div class="d-flex justify-content-end gap-3">
                                         <div data-bs-toggle="tooltip" data-bs-original-title="Show">
-                                            <a href="{{ route('jadwalmengajar.show', $pembelajaran->id) }}"
+                                            <a href="{{ route('admin.jadwalmengajar.show', $pembelajaran->id) }}"
                                                 class="btn btn-tool btn-sm">
                                                 <i class="fas fa-eye"></i>
                                             </a>
                                         </div>
                                         <div data-bs-toggle="tooltip" title="Print" class="d-inline-block"
                                             class="d-inline-block">
-                                            <a href="{{ route('jadwalmengajar.print', $pembelajaran->id) }}"
+                                            <a href="{{ route('admin.jadwalmengajar.print', $pembelajaran->id) }}"
                                                 class="btn btn-tool btn-sm">
                                                 <i class="fas fa-download"></i>
                                             </a>
@@ -87,7 +78,7 @@
 
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <form action="{{ route('jadwalmengajar.store') }}" method="POST">
+                                    <form action="{{ route('admin.jadwalmengajar.store') }}" method="POST">
                                         @csrf
                                         <input type="hidden" name="guru_id" value="{{ $guru->id }}">
                                         <input type="hidden" name="mapel_id" value="{{ $pembelajaran->mapel_id }}">

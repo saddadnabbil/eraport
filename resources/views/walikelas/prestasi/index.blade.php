@@ -1,7 +1,7 @@
 @extends('layouts.main.header')
 
 @section('sidebar')
-    @include('layouts.sidebar.index')
+    @include('layouts.sidebar.walikelas')
 @endsection
 
 @section('content')
@@ -12,7 +12,7 @@
         @php
             $user = Auth::user();
             if (
-                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
+                $user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum']) &&
                 $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
             ) {
                 $dashboard = route('guru.dashboard');
@@ -72,7 +72,7 @@
                                             aria-hidden="true"></button>
                                         </button>
                                     </div>
-                                    <form action="{{ route('prestasi.store') }}" method="POST">
+                                    <form action="{{ route('walikelas.prestasi.store') }}" method="POST">
                                         @csrf
                                         <div class="modal-body">
                                             <div class="form-group row">
@@ -226,7 +226,8 @@
                                                             <button type="button" class="btn-close"
                                                                 data-bs-dismiss="modal" aria-hidden="true"></button>
                                                         </div>
-                                                        <form action="{{ route('prestasi.update', $prestasi->id) }}"
+                                                        <form
+                                                            action="{{ route('walikelas.prestasi.update', $prestasi->id) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('PUT')

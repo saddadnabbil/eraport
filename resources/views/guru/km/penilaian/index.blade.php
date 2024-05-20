@@ -12,7 +12,7 @@
         @php
             $user = Auth::user();
             if (
-                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
+                $user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum']) &&
                 $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
             ) {
                 $dashboard = route('guru.dashboard');
@@ -32,7 +32,7 @@
                 ],
                 [
                     'title' => 'Penilaian',
-                    'url' => route('guru.penilaiankm.index'),
+                    'url' => route('guru.km.penilaian.index'),
                     'active' => false,
                 ],
                 [
@@ -60,7 +60,7 @@
 
                         <div class="card-body">
                             <div class="callout callout-info">
-                                <form action="{{ route('guru.penilaiankm.create') }}" method="GET">
+                                <form action="{{ route('guru.km.penilaian.create') }}" method="GET">
                                     @csrf
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Semester</label>
@@ -92,7 +92,7 @@
                                 </form>
                             </div>
 
-                            <form action="{{ route('guru.penilaiankm.store') }}" method="POST">
+                            <form action="{{ route('guru.km.penilaian.store') }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="pembelajaran_id" value="{{ $pembelajaran_id }}">
                                 <input type="hidden" name="term_id" value="{{ $term->id }}">
@@ -283,7 +283,7 @@
 
                         <div class="card-footer clearfix">
                             <button type="submit" class="btn btn-primary float-right">Simpan</button>
-                            <a href="{{ route('guru.penilaiankm.index') }}"
+                            <a href="{{ route('guru.km.penilaian.index') }}"
                                 class="btn btn-default float-right me-2">Batal</a>
                         </div>
                         </form>

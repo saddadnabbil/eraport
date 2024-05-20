@@ -1,6 +1,6 @@
 @extends('layouts.main.header')
 @section('sidebar')
-    @include('layouts.sidebar.index')
+    @include('layouts.sidebar.admin')
 @endsection
 
 @section('content')
@@ -10,23 +10,14 @@
         <!-- ============================================================== -->
         @php
             $user = Auth::user();
-            if (
-                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
-                $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
-            ) {
-                $dashboard = route('guru.dashboard');
-            } elseif ($user->hasAnyRole(['Student']) && $user->hasAnyPermission(['student'])) {
-                $dashboard = route('siswa.dashboard');
-            } else {
-                $dashboard = route('admin.dashboard');
-            }
+            $dashboard = route('admin.dashboard');
         @endphp
         @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
             'titleBreadCrumb' => $title,
             'breadcrumbs' => [
                 [
                     'title' => 'Dashboard',
-                    'url' => route('admin.dashboard'),
+                    'url' => $dashboard,
                     'active' => true,
                 ],
                 [
@@ -91,16 +82,9 @@
                                     <b>Username</b> <a class="float-right">{{ $karyawan->user->username }}</a>
                                 </li>
                                 <li class="list-group-item">
-                                    <b>Role</b> <a class="float-right">{{ $karyawan->user->getRoleNames()->first() }}</a>
-                                </li>
-                                <li class="list-group-item">
-                                    <b>Permission</b>
-                                    <a class="float-right">
-                                        @foreach ($karyawan->user->getPermissionNames() as $index => $permission)
-                                            {{ $permission }}
-                                            @if ($index < count($karyawan->user->getPermissionNames()) - 1)
-                                                ,
-                                            @endif
+                                    <b>Role</b> <a class="float-right">
+                                        @foreach ($karyawan->user->getRoleNames() as $role)
+                                            <span class="badge bg-primary">{{ $role }}</span>
                                         @endforeach
                                     </a>
                                 </li>
@@ -546,28 +530,13 @@
                                                 <div class="form-group row">
                                                     <label for="role" class="col-sm-3 col-form-label">Role</label>
                                                     <div class="col-sm-9">
-                                                        <select class="form-control form-select select2" name="role"
-                                                            id="">
+                                                        <select class="form-control form-select select2" select2"
+                                                            name="role[]" id="role" multiple="multiple">
                                                             <option value="">=== Select Role ===</option>
                                                             @foreach ($dataRoles as $role)
                                                                 <option value="{{ $role->id }}"
                                                                     {{ $karyawan->user->hasRole($role->name) ? 'selected' : '' }}>
                                                                     {{ $role->name }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label for="permission"
-                                                        class="col-sm-3 col-form-label">Permission</label>
-                                                    <div class="col-sm-9">
-                                                        <select class="form-control form-select select2"
-                                                            name="permission[]" id="permission" multiple="multiple">
-                                                            @foreach ($dataPermission as $permission)
-                                                                <option value="{{ $permission->id }}"
-                                                                    {{ $karyawan->user->hasPermissionTo($permission->name) ? 'selected' : '' }}>
-                                                                    {{ $permission->name }}
-                                                                </option>
                                                             @endforeach
                                                         </select>
                                                     </div>

@@ -1,16 +1,34 @@
 @php
     $userRole = Auth::user()->getRoleNames()->first();
 
-    $allowedRoutes = ['km.cp.*', 'km.rencanaformatif.*', 'km.rencanasumatif.*'];
+    switch ($userRole) {
+        case 'Admin':
+            $allowedRoutes = ['km.cp.*', 'km.rencanaformatif.*', 'km.rencanasumatif.*'];
 
-    $checkRouteCP = request()->routeIs('km.cp.*');
-    $dynamicRouteCP = route('km.cp.index');
+            $checkRouteCP = request()->routeIs('km.cp.*');
+            $dynamicRouteCP = route('km.cp.index');
 
-    $checkRouteFormatif = request()->routeIs('km.rencanaformatif.*');
-    $dynamicRouteFormatif = route('km.rencanaformatif.index');
+            $checkRouteFormatif = request()->routeIs('km.rencanaformatif.*');
+            $dynamicRouteFormatif = route('km.rencanaformatif.index');
 
-    $checkRouteSumatif = request()->routeIs('km.rencanasumatif.*');
-    $dynamicRouteSumatif = route('km.rencanasumatif.index');
+            $checkRouteSumatif = request()->routeIs('km.rencanasumatif.*');
+            $dynamicRouteSumatif = route('km.rencanasumatif.index');
+            break;
+        case 'Teacher':
+            $allowedRoutes = ['guru.km.cp.*', 'guru.km.rencanaformatif.*', 'guru.km.rencanasumatif.*'];
+
+            $checkRouteCP = request()->routeIs('guru.km.cp.*');
+            $dynamicRouteCP = route('guru.km.cp.index');
+
+            $checkRouteFormatif = request()->routeIs('guru.km.rencanaformatif.*');
+            $dynamicRouteFormatif = route('guru.km.rencanaformatif.index');
+
+            $checkRouteSumatif = request()->routeIs('guru.km.rencanasumatif.*');
+            $dynamicRouteSumatif = route('guru.km.rencanasumatif.index');
+
+            break;
+        default:
+    }
 @endphp
 
 @include('layouts.partials.sidebar._sidebar-item', [

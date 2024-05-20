@@ -36,7 +36,7 @@ class TingkatanController extends Controller
 
         Tingkatan::create($request->all());
 
-        return redirect()->route('tingkatan.index')->with('success', 'Tingkatan berhasil ditambahkan.');
+        return redirect()->route('guru.tingkatan.index')->with('success', 'Tingkatan berhasil ditambahkan.');
     }
 
     public function edit(Tingkatan $tingkatan)
@@ -52,7 +52,7 @@ class TingkatanController extends Controller
 
         $tingkatan->update($request->all());
 
-        return redirect()->route('tingkatan.index')->with('success', 'Tingkatan berhasil diperbarui.');
+        return redirect()->route('guru.tingkatan.index')->with('success', 'Tingkatan berhasil diperbarui.');
     }
 
     public function destroy($id)

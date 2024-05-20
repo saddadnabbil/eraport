@@ -7,7 +7,7 @@
 @endsection
 
 @section('sidebar')
-    @include('layouts.sidebar.index')
+    @include('layouts.sidebar.admin')
 @endsection
 
 @section('content')
@@ -35,7 +35,7 @@
         @php
             $user = Auth::user();
             if (
-                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
+                $user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum']) &&
                 $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
             ) {
                 $dashboard = route('guru.dashboard');
@@ -231,7 +231,7 @@
                                                     -
                                                     {{ \Carbon\Carbon::parse($pengumuman->created_at)->diffForHumans() }}</span>
                                                 @if (Auth::user()->id == $pengumuman->user_id)
-                                                    <form action="{{ route('pengumuman.destroy', $pengumuman->id) }}"
+                                                    <form action="{{ route('admin.pengumuman.destroy', $pengumuman->id) }}"
                                                         method="POST">
                                                         @csrf
                                                         @method('DELETE')
@@ -257,7 +257,8 @@
                                                                 data-bs-dismiss="modal" aria-hidden="true"></button>
                                                             </button>
                                                         </div>
-                                                        <form action="{{ route('pengumuman.update', $pengumuman->id) }}"
+                                                        <form
+                                                            action="{{ route('admin.pengumuman.update', $pengumuman->id) }}"
                                                             method="POST">
                                                             {{ method_field('PATCH') }}
                                                             @csrf

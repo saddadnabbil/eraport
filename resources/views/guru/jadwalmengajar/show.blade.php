@@ -1,6 +1,6 @@
 @extends('layouts.main.header')
 @section('sidebar')
-    @include('layouts.sidebar.index')
+    @include('layouts.sidebar.guru')
 @endsection
 
 @php
@@ -39,7 +39,7 @@
         @php
             $user = Auth::user();
             if (
-                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
+                $user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum']) &&
                 $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
             ) {
                 $dashboard = route('guru.dashboard');
@@ -59,7 +59,7 @@
                 ],
                 [
                     'title' => 'Teacher Schedule',
-                    'url' => route('jadwalpelajaran.index'),
+                    'url' => route('guru.jadwalpelajaran.index'),
                     'active' => true,
                 ],
                 [

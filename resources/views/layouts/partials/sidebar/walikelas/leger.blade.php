@@ -4,7 +4,7 @@
     switch ($userRole) {
         case 'Teacher':
             $checkRoute = request()->routeIs('leger.*');
-            $dynamicRoute = route('leger.index');
+            $dynamicRoute = route('walikelas.hasilnilai.index');
 
             break;
     }

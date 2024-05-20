@@ -28,7 +28,7 @@ class P5ProjectController extends Controller
         $tapel = Tapel::where('status', 1)->first();
         $user = Auth::user();
 
-        if ($user->hasAnyRole(['Teacher', 'Curriculum']) && $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])) {
+        if ($user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum']) && $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])) {
             $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
             $dataGuru = Guru::where('id', $guru->id)->orderBy('id', 'ASC')->get();
             $dataProject = P5Project::where('guru_id', $guru->id)->where('semester_id', $tapel->semester_id)->orderBy('kelas_id', 'ASC')->get();
@@ -39,7 +39,7 @@ class P5ProjectController extends Controller
 
         $dataKelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->orderBy('id', 'ASC')->get();
         if (count($dataKelas) == 0) {
-            return redirect()->route('kelas.index')->with('toast_warning', 'Mohon isikan data kelas');
+            return redirect()->route('admin.kelas.index')->with('toast_warning', 'Mohon isikan data kelas');
         }
         $dataProject->each(function ($project) {
             $subelement_data_array = json_decode($project->subelement_data, true);
@@ -88,7 +88,7 @@ class P5ProjectController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->hasAnyRole(['Teacher', 'Curriculum']) && $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])) {
+        if ($user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum']) && $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])) {
             $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
             $dataGuru = Guru::where('id', $guru->id)->orderBy('id', 'ASC')->get();
             $project = P5Project::where('guru_id', $guru->id)->findOrFail($id);
@@ -154,7 +154,7 @@ class P5ProjectController extends Controller
 
         $user = Auth::user();
 
-        if ($user->hasAnyRole(['Teacher', 'Curriculum']) && $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])) {
+        if ($user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum']) && $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])) {
             $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
             $project = P5Project::where('guru_id', $guru->id)->findOrFail($id);
         } else {
@@ -187,7 +187,7 @@ class P5ProjectController extends Controller
         $tapel = Tapel::where('status', 1)->first();
         $user = Auth::user();
 
-        if ($user->hasAnyRole(['Teacher', 'Curriculum']) && $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])) {
+        if ($user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum']) && $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])) {
             $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
             $dataGuru = Guru::where('id', $guru->id)->orderBy('id', 'ASC')->get();
             $dataProject = P5Project::where('guru_id', $guru->id)->where('semester_id', $tapel->semester_id)->orderBy('kelas_id', 'ASC')->get();

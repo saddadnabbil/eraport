@@ -23,7 +23,7 @@ class RekapKehadiranSiswaController extends Controller
         $tapel = Tapel::where('status', 1)->first();
         $user = Auth::user();
 
-        if ($user->hasAnyRole(['Teacher', 'Curriculum']) && $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])) {
+        if ($user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum']) && $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])) {
             $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
         }
 
@@ -49,7 +49,7 @@ class RekapKehadiranSiswaController extends Controller
         $tapel = Tapel::where('status', 1)->first();
         $user = Auth::user();
 
-        if ($user->hasAnyRole(['Teacher', 'Curriculum']) && $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])) {
+        if ($user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum']) && $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])) {
             $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
         }
 

@@ -47,7 +47,7 @@ class CetakRaportTKController extends Controller
         $tapel = Tapel::where('status', 1)->first();
         $user = Auth::user();
 
-        if ($user->hasAnyRole(['Teacher', 'Curriculum']) && $user->hasAnyPermission(['teacher-pg-kg', 'homeroom-pg-kg'])) {
+        if ($user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum']) && $user->hasAnyPermission(['teacher-pg-kg', 'homeroom-pg-kg'])) {
             $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
         }
 
@@ -88,7 +88,7 @@ class CetakRaportTKController extends Controller
         $term = Term::findorfail($request->term_id);
         $user = Auth::user();
 
-        if ($user->hasAnyRole(['Teacher', 'Curriculum']) && $user->hasAnyPermission(['teacher-pg-kg', 'homeroom-pg-kg'])) {
+        if ($user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum']) && $user->hasAnyPermission(['teacher-pg-kg', 'homeroom-pg-kg'])) {
             $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
         }
 

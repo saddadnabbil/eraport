@@ -12,7 +12,7 @@
         @php
             $user = Auth::user();
             if (
-                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
+                $user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum']) &&
                 $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
             ) {
                 $dashboard = route('guru.dashboard');
@@ -32,7 +32,7 @@
                 ],
                 [
                     'title' => 'Rencana Sumatif',
-                    'url' => route('guru.rencanasumatif.index'),
+                    'url' => route('guru.km.rencanasumatif.index'),
                     'active' => true,
                 ],
                 [
@@ -56,7 +56,7 @@
 
                         <div class="card-body">
                             <div class="callout callout-info">
-                                <form action="{{ route('guru.rencanasumatif.create') }}" method="GET">
+                                <form action="{{ route('guru.km.rencanasumatif.create') }}" method="GET">
                                     @csrf
                                     <div class="form-group row">
                                         <label for="pembelajaran_id" class="col-sm-2 col-form-label">Mata Pelajaran</label>
@@ -79,7 +79,7 @@
                                 </form>
                             </div>
 
-                            <form action="{{ route('guru.rencanasumatif.store') }}" method="POST">
+                            <form action="{{ route('guru.km.rencanasumatif.store') }}" method="POST">
                                 @csrf
 
                                 <input type="hidden" name="pembelajaran_id" value="{{ $pembelajaran->id }}">
@@ -149,7 +149,7 @@
 
                         <div class="card-footer clearfix">
                             <button type="submit" class="btn btn-primary float-right">Simpan</button>
-                            <a href="{{ route('guru.rencanasumatif.index') }}"
+                            <a href="{{ route('guru.km.rencanasumatif.index') }}"
                                 class="btn btn-default float-right me-2">Batal</a>
                         </div>
                         </form>

@@ -98,8 +98,8 @@ class KaryawanController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'role' => 'required|exists:roles,id',
-            'permission' => 'required|array|exists:permissions,id',
+            'role' => 'required|array',
+            'role*' => 'required|exists:roles,id',
             'status_karyawan_id' => 'required|exists:status_karyawans,id',
             'unit_karyawan_id' => 'required|exists:unit_karyawans,id',
             'position_karyawan_id' => 'required|exists:position_karyawans,id',
@@ -156,9 +156,11 @@ class KaryawanController extends Controller
 
             $user->save();
 
-            // add role and permission
-            $user->assignRole($request->role);
-            $user->givePermissionTo($request->permission);
+            // add role
+            foreach ($request->role as $roleId) {
+                $role = Role::findOrFail($roleId);
+                $user->assignRole($role);
+            }
         } catch (\Throwable $th) {
             return back()->with('toast_error', 'Username telah digunakan');
         }
@@ -277,9 +279,8 @@ class KaryawanController extends Controller
         $dataUnitKaryawan = UnitKaryawan::all();
         $dataPositionKaryawan = PositionKaryawan::all();
         $dataRoles = Role::get();
-        $dataPermission = Permission::get();
 
-        return view('admin.karyawan.employee.show', compact('title', 'karyawan', 'dataStatusKaryawan', 'dataUnitKaryawan', 'dataPositionKaryawan', 'dataRoles', 'dataPermission'));
+        return view('admin.karyawan.employee.show', compact('title', 'karyawan', 'dataStatusKaryawan', 'dataUnitKaryawan', 'dataPositionKaryawan', 'dataRoles'));
     }
 
     /**
@@ -351,14 +352,12 @@ class KaryawanController extends Controller
             $user->save();
 
             // Mengupdate role
-            $role = Role::findOrFail($request->role);
-            $karyawan->user->syncRoles([$role->id]);
-            // update role in user 
-
-            // Mengupdate permission
-            $permissions = Permission::findOrFail($request->permission);
-            $karyawan->user->permissions()->detach(); // Hapus semua permission yang ada
-            $karyawan->user->syncPermissions($permissions);
+            if ($request->has('role')) {
+                $roles = Role::whereIn('id', $request->role)->get();
+                $user->syncRoles($roles);
+            } else {
+                $user->syncRoles([]);
+            }
 
             // Mengupdate status
             $karyawan->user->status = $request->status;

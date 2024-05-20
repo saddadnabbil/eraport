@@ -1,7 +1,7 @@
 @extends('layouts.main.header')
 
 @section('sidebar')
-    @include('layouts.sidebar.index')
+    @include('layouts.sidebar.walikelas')
 @endsection
 
 @section('content')
@@ -12,7 +12,7 @@
         @php
             $user = Auth::user();
             if (
-                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
+                $user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum']) &&
                 $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
             ) {
                 $dashboard = route('guru.dashboard');
@@ -78,7 +78,7 @@
                                                 <td>{{ $anggota_kelas->siswa->nis }}</td>
                                                 <td>{{ $anggota_kelas->siswa->nisn }}</td>
                                                 <td><a class="text-decoration-none text-body"
-                                                        href="{{ route('pesertadidik.show', $anggota_kelas->siswa_id) }}">{{ $anggota_kelas->siswa->nama_lengkap }}
+                                                        href="{{ route('walikelas.pesertadidik.show', $anggota_kelas->siswa_id) }}">{{ $anggota_kelas->siswa->nama_lengkap }}
                                                     </a></td>
                                                 <td>{{ $anggota_kelas->siswa->tempat_lahir }}</td>
                                                 <td>{{ $anggota_kelas->siswa->tanggal_lahir->format('d-M-Y') }}</td>
@@ -87,7 +87,7 @@
                                                 <td>
                                                     <div data-bs-toggle="tooltip" data-bs-original-title="Show"
                                                         class="text-center">
-                                                        <a href="{{ route('pesertadidik.show', $anggota_kelas->siswa_id) }}"
+                                                        <a href="{{ route('walikelas.pesertadidik.show', $anggota_kelas->siswa_id) }}"
                                                             class="btn btn-info btn-sm mt-1">
                                                             <i class="fas fa-eye"></i>
                                                         </a>

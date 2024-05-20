@@ -4,7 +4,7 @@
     switch ($userRole) {
         case 'Teacher':
             $checkRoute = request()->routeIs('statusnilaiguru.*');
-            $dynamicRoute = route('statusnilaiguru.index');
+            $dynamicRoute = route('walikelas.statusnilaiguru.index');
             break;
     }
 @endphp
@@ -15,5 +15,5 @@
     'hasArrow' => false,
     'icon' => 'users',
     'itemName' => 'Cek Status Penilaian',
-    'route' => route('statusnilaiguru.index'),
+    'route' => route('walikelas.statusnilaiguru.index'),
 ])

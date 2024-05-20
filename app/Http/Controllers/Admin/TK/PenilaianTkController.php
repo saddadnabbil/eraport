@@ -39,7 +39,7 @@ class PenilaianTkController extends Controller
         $tapel = Tapel::where('status', 1)->first();
         $user = Auth::user();
 
-        if ($user->hasAnyRole(['Teacher', 'Curriculum']) && $user->hasAnyPermission(['teacher-pg-kg', 'homeroom-pg-kg'])) {
+        if ($user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum']) && $user->hasAnyPermission(['teacher-pg-kg', 'homeroom-pg-kg'])) {
             $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
         }
 
@@ -57,7 +57,7 @@ class PenilaianTkController extends Controller
         }
 
         if (count($data_kelas) == 0) {
-            return redirect(route('kelas.index'))->with('toast_warning', 'Kelas Tingkatan TK Belum tersedia');
+            return redirect(route('admin.kelas.index'))->with('toast_warning', 'Kelas Tingkatan TK Belum tersedia');
         }
 
         $term = $data_kelas->first()->tingkatan->term_id;
@@ -87,7 +87,7 @@ class PenilaianTkController extends Controller
         $term = Term::where('id', $request->term_id)->first();
         $user = Auth::user();
 
-        if ($user->hasAnyRole(['Teacher', 'Curriculum']) && $user->hasAnyPermission(['teacher-pg-kg', 'homeroom-pg-kg'])) {
+        if ($user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum']) && $user->hasAnyPermission(['teacher-pg-kg', 'homeroom-pg-kg'])) {
             $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
         }
 
@@ -217,7 +217,7 @@ class PenilaianTkController extends Controller
         $term = Term::where('id', $request->term_id)->first();
         $user = Auth::user();
 
-        if ($user->hasAnyRole(['Teacher', 'Curriculum']) && $user->hasAnyPermission(['teacher-pg-kg', 'homeroom-pg-kg'])) {
+        if ($user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum']) && $user->hasAnyPermission(['teacher-pg-kg', 'homeroom-pg-kg'])) {
             $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
         }
 

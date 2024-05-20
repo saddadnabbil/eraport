@@ -25,25 +25,25 @@
     'subItems' => [
         [
             'name' => 'Kehadiran Siswa',
-            'route' => route('kehadiran.index'),
+            'route' => route('walikelas.kehadiran.index'),
             'isActive' => request()->routeIs('kehadiran.*'),
             'childHasArrow' => false,
         ],
         [
             'name' => 'Prestasi Siswa',
-            'route' => route('prestasi.index'),
+            'route' => route('walikelas.prestasi.index'),
             'isActive' => request()->routeIs('prestasi.*'),
             'childHasArrow' => false,
         ],
         [
             'name' => 'Catatan Wali Kelas',
-            'route' => route('catatan.index'),
+            'route' => route('walikelas.catatan.index'),
             'isActive' => request()->routeIs('catatan.*'),
             'childHasArrow' => false,
         ],
         [
             'name' => 'Kenaikan Kelas',
-            'route' => route('kenaikan.index'),
+            'route' => route('walikelas.kenaikan.index'),
             'isActive' => request()->routeIs('kenaikan.*'),
             'childHasArrow' => false,
         ],

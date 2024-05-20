@@ -1,7 +1,7 @@
 @extends('layouts.main.header')
 
 @section('sidebar')
-    @include('layouts.sidebar.index')
+    @include('layouts.sidebar.guru')
 @endsection
 
 @section('content')
@@ -12,7 +12,7 @@
         @php
             $user = Auth::user();
             if (
-                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
+                $user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum']) &&
                 $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
             ) {
                 $dashboard = route('guru.dashboard');
@@ -55,7 +55,7 @@
 
                         <div class="card-body">
                             <div class="callout callout-info">
-                                <form action="{{ route('nilaiekstra.create') }}" method="GET">
+                                <form action="{{ route('guru.km.nilaiekstra.create') }}" method="GET">
                                     @csrf
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Ekstrakulikuler</label>
@@ -94,7 +94,7 @@
                                 <div class="card-header bg-primary">
                                     <h3 class="card-title"> Nilai Ekstrakulikuler</h3>
                                 </div>
-                                <form action="{{ route('nilaiekstra.store') }}" method="POST">
+                                <form action="{{ route('guru.km.nilaiekstra.store') }}" method="POST">
                                     @csrf
                                     <div class="card-body">
                                         <div class="table-responsive">
@@ -177,7 +177,7 @@
                                     </div>
                                     <div class="card-footer clearfix">
                                         <button type="submit" class="btn btn-primary float-right">Simpan</button>
-                                        <a href="{{ route('nilaiekstra.index') }}"
+                                        <a href="{{ route('guru.km.nilaiekstra.index') }}"
                                             class="btn btn-default float-right me-2">Batal</a>
                                     </div>
                                 </form>

@@ -7,7 +7,7 @@
 @endsection
 
 @section('sidebar')
-    @include('layouts.sidebar.index')
+    @include('layouts.sidebar.admin')
 @endsection
 
 @section('content')
@@ -17,33 +17,24 @@
     <div class="page-wrapper">
         @php
             $user = Auth::user();
-            if (
-                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
-                $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
-            ) {
-                $dashboard = route('guru.dashboard');
-            } elseif ($user->hasAnyRole(['Student']) && $user->hasAnyPermission(['student'])) {
-                $dashboard = route('siswa.dashboard');
-            } else {
-                $dashboard = route('admin.dashboard');
-            }
+            $dashboard = route('admin.dashboard');
         @endphp
         @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
             'titleBreadCrumb' => $title,
             'breadcrumbs' => [
                 [
                     'title' => 'Dashboard',
-                    'url' => route('admin.dashboard'),
+                    'url' => $dashboard,
                     'active' => true,
                 ],
                 [
                     'title' => 'Kelas',
-                    'url' => route('kelas.index'),
+                    'url' => route('admin.kelas.index'),
                     'active' => true,
                 ],
                 [
                     'title' => 'Anggota Kelas',
-                    'url' => route('kelas.index'),
+                    'url' => route('admin.kelas.index'),
                     'active' => false,
                 ],
             ],
@@ -83,7 +74,7 @@
                                 {{-- get form trash --}}
                                 <div data-bs-toggle="tooltip" title="Trash" class="d-inline-block" class="d-inline-block">
                                     {{-- Form untuk mengirimkan permintaan POST dengan menyertakan nilai $kelas->id --}}
-                                    <form action="{{ route('kelas.anggota_kelas.trash', ['id' => $kelas->id]) }}"
+                                    <form action="{{ route('admin.kelas.anggota_kelas.trash', ['id' => $kelas->id]) }}"
                                         method="get">
                                         @csrf
                                         <button type="submit" class="btn btn-tool btn-sm" data-bs-toggle="tooltip"
@@ -106,7 +97,7 @@
                                             aria-hidden="true"></button>
                                         </button>
                                     </div>
-                                    <form action="{{ route('kelas.anggota') }}" method="POST">
+                                    <form action="{{ route('admin.kelas.anggota') }}" method="POST">
                                         @csrf
                                         <div class="modal-body">
                                             <div class="row">
@@ -197,7 +188,7 @@
                                                 <td>{{ $anggota->siswa->nis }}</td>
                                                 <td>{{ $anggota->siswa->nisn }}</td>
                                                 <td><a class="text-decoration-none text-dark"
-                                                        href="{{ route('siswa.show', $anggota->siswa->id) }}">{{ $anggota->siswa->nama_lengkap }}</a>
+                                                        href="{{ route('admin.siswa.show', $anggota->siswa->id) }}">{{ $anggota->siswa->nama_lengkap }}</a>
                                                 </td>
                                                 <td>{{ $anggota->siswa->tanggal_lahir->format('d-m-Y') }}</td>
                                                 <td>{{ $anggota->siswa->jenis_kelamin }}</td>
@@ -216,11 +207,11 @@
                                                 </td>
                                                 <td>
 
-                                                    <form action="{{ route('kelas.anggota.delete', $anggota->id) }}"
+                                                    <form action="{{ route('admin.kelas.anggota.delete', $anggota->id) }}"
                                                         method="POST">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <a href="{{ route('siswa.show', $anggota->siswa->id) }}"
+                                                        <a href="{{ route('admin.siswa.show', $anggota->siswa->id) }}"
                                                             class="btn btn-warning btn-sm mt-1"><i
                                                                 class="fas fa-eye"></i></a>
                                                         <button type="submit" class="btn btn-danger btn-sm mt-1"
@@ -230,7 +221,7 @@
                                                     </form>
                                                     {{-- <input type="hidden" name="siswa_id"
                                                         value="{{ $anggota->siswa->id }}">
-                                                    <a href="{{ route('siswa.show', $anggota->siswa->id) }}"
+                                                    <a href="{{ route('admin.siswa.show', $anggota->siswa->id) }}"
                                                         class="btn btn-warning btn-sm mt-1"><i class="fas fa-eye"></i></a>
                                                     <button type="button" class="btn btn-danger btn-sm"
                                                         data-bs-toggle="modal"
@@ -256,7 +247,7 @@
                                                                     </button>
                                                                 </div>
                                                                 <form
-                                                                    action="{{ route('kelas.anggota.pindah_kelas', $anggota->id) }}"
+                                                                    action="{{ route('admin.kelas.anggota.pindah_kelas', $anggota->id) }}"
                                                                     method="POST">
                                                                     @csrf
                                                                     <div class="modal-body">

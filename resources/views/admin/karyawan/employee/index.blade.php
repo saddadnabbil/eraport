@@ -1,6 +1,6 @@
 @extends('layouts.main.header')
 @section('sidebar')
-    @include('layouts.sidebar.index')
+    @include('layouts.sidebar.admin')
 @endsection
 
 @section('content')
@@ -10,23 +10,14 @@
         <!-- ============================================================== -->
         @php
             $user = Auth::user();
-            if (
-                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
-                $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
-            ) {
-                $dashboard = route('guru.dashboard');
-            } elseif ($user->hasAnyRole(['Student']) && $user->hasAnyPermission(['student'])) {
-                $dashboard = route('siswa.dashboard');
-            } else {
-                $dashboard = route('admin.dashboard');
-            }
+            $dashboard = route('admin.dashboard');
         @endphp
         @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
             'titleBreadCrumb' => $title,
             'breadcrumbs' => [
                 [
                     'title' => 'Dashboard',
-                    'url' => route('admin.dashboard'),
+                    'url' => $dashboard,
                     'active' => true,
                 ],
                 [
@@ -157,27 +148,14 @@
                                             </div>
                                             <div class="form-group row">
                                                 <label for="role" class="col-sm-3 col-form-label">Role</label>
-                                                <div class="col-sm-3">
-                                                    <select class="form-control form-select select2" name="role"
-                                                        id="" required>
+                                                <div class="col-sm-9">
+                                                    <select class="form-control form-select select2" name="role[]"
+                                                        id="" multiple="multiple" required>
                                                         <option value="" selected>-- Select Role --</option>
                                                         @foreach ($dataRoles as $role)
                                                             <option value="{{ $role->id }}"
                                                                 @if (old('role') == $role->id) selected @endif>
                                                                 {{ $role->name }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                                <label for="permission" class="col-sm-3 col-form-label">Permission</label>
-                                                <div class="col-sm-3">
-                                                    <select class="form-control form-select select2" name="permission[]"
-                                                        id="" multiple="multiple" required>
-                                                        <option value="">-- Select Permission --</option>
-                                                        @foreach ($dataPermission as $permission)
-                                                            <option value="{{ $permission->id }}"
-                                                                @if (in_array($permission->id, old('permission', []))) selected @endif>
-                                                                {{ $permission->name }}
-                                                            </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -274,7 +252,7 @@
                                                 <div class="col-sm-3">
                                                     <input type="number" class="form-control" id="nik"
                                                         name="nik" placeholder="Identity Card"
-                                                        value="{{ old('nik') }}" pattern="[0-9]{16}" required>
+                                                        value="{{ old('nik') }}" minlength="16" required>
                                                 </div>
                                                 <label for="nomor_akun" class="col-sm-3 col-form-label ">
                                                     Account No.</label>

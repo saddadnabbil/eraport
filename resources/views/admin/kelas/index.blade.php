@@ -1,6 +1,6 @@
 @extends('layouts.main.header')
 @section('sidebar')
-    @include('layouts.sidebar.index')
+    @include('layouts.sidebar.admin')
 @endsection
 
 @section('content')
@@ -10,23 +10,14 @@
         <!-- ============================================================== -->
         @php
             $user = Auth::user();
-            if (
-                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
-                $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
-            ) {
-                $dashboard = route('guru.dashboard');
-            } elseif ($user->hasAnyRole(['Student']) && $user->hasAnyPermission(['student'])) {
-                $dashboard = route('siswa.dashboard');
-            } else {
-                $dashboard = route('admin.dashboard');
-            }
+            $dashboard = route('admin.dashboard');
         @endphp
         @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
             'titleBreadCrumb' => $title,
             'breadcrumbs' => [
                 [
                     'title' => 'Dashboard',
-                    'url' => route('admin.dashboard'),
+                    'url' => $dashboard,
                     'active' => true,
                 ],
                 [
@@ -166,7 +157,7 @@
                                             aria-hidden="true"></button>
                                         </button>
                                     </div>
-                                    <form action="{{ route('kelas.store') }}" method="POST">
+                                    <form action="{{ route('admin.kelas.store') }}" method="POST">
                                         @csrf
                                         <div class="modal-body">
                                             <div class="form-group row">
@@ -284,13 +275,13 @@
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    <a href="{{ route('kelas.show', $kelas->id) }}"
+                                                    <a href="{{ route('admin.kelas.show', $kelas->id) }}"
                                                         class="btn btn-primary btn-sm">
                                                         <i class="fas fa-list"></i> {{ $kelas->jumlah_anggota }} Siswa
                                                     </a>
                                                 </td>
                                                 <td>
-                                                    <form action="{{ route('kelas.destroy', $kelas->id) }}"
+                                                    <form action="{{ route('admin.kelas.destroy', $kelas->id) }}"
                                                         method="POST">
                                                         @csrf
                                                         @method('DELETE')
@@ -316,7 +307,7 @@
                                                             <button type="button" class="btn-close"
                                                                 data-bs-dismiss="modal" aria-hidden="true"></button>
                                                         </div>
-                                                        <form action="{{ route('kelas.update', $kelas->id) }}"
+                                                        <form action="{{ route('admin.kelas.update', $kelas->id) }}"
                                                             method="POST">
                                                             {{ method_field('PATCH') }}
                                                             @csrf

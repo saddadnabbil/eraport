@@ -1,7 +1,7 @@
 @extends('layouts.main.header')
 
 @section('sidebar')
-    @include('layouts.sidebar.index')
+    @include('layouts.sidebar.walikelas')
 @endsection
 
 @section('content')
@@ -12,7 +12,7 @@
         @php
             $user = Auth::user();
             if (
-                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
+                $user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum']) &&
                 $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
             ) {
                 $dashboard = route('guru.dashboard');
@@ -54,7 +54,7 @@
                         </div>
                         <div class="card-body">
                             {{-- <div class="callout callout-info">
-                <form action="{{ route('statusnilaiguru.store') }}" method="POST">
+                <form action="{{ route('walikelas.statusnilaiguru.store') }}" method="POST">
                   @csrf
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Kelas</label>

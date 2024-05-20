@@ -1,7 +1,7 @@
 @extends('layouts.main.header')
 
 @section('sidebar')
-    @include('layouts.sidebar.index')
+    @include('layouts.sidebar.admin')
 @endsection
 
 @section('content')
@@ -11,23 +11,14 @@
         <!-- ============================================================== -->
         @php
             $user = Auth::user();
-            if (
-                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
-                $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
-            ) {
-                $dashboard = route('guru.dashboard');
-            } elseif ($user->hasAnyRole(['Student']) && $user->hasAnyPermission(['student'])) {
-                $dashboard = route('siswa.dashboard');
-            } else {
-                $dashboard = route('admin.dashboard');
-            }
+            $dashboard = route('admin.dashboard');
         @endphp
         @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
             'titleBreadCrumb' => $title,
             'breadcrumbs' => [
                 [
                     'title' => 'Dashboard',
-                    'url' => route('admin.dashboard'),
+                    'url' => $dashboard,
                     'active' => true,
                 ],
                 [
@@ -50,7 +41,8 @@
                 <p>Please go through the Employee menu or click the button below.</p>
                 <a href="{{ route('karyawan.index') }}" class="btn btn-primary text-white mt-2" style="text-decoration:none">
                     Employee</a>
-                <a href="{{ route('siswa.index') }}" class="btn btn-success text-white mt-2" style="text-decoration:none">
+                <a href="{{ route('admin.siswa.index') }}" class="btn btn-success text-white mt-2"
+                    style="text-decoration:none">
                     Student</a>
             </div>
 
@@ -63,73 +55,6 @@
                             </div>
                         </div>
 
-                        <!-- Modal tambah  -->
-                        {{-- <div class="modal fade" id="modal-tambah">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Tambah {{ $title }} Admin</h5>
-
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-hidden="true"></button>
-                                        </button>
-                                    </div>
-                                    <form action="{{ route('user.store') }}" method="POST">
-                                        @csrf
-                                        <div class="modal-body">
-                                            <div class="form-group row">
-                                                <label for="username" class="col-sm-3 col-form-label">Username</label>
-                                                <div class="col-sm-9">
-                                                    <input type="text" class="form-control" id="username"
-                                                        name="username" placeholder="username" value="{{ old('username') }}"
-                                                        required>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label for="password" class="col-sm-3 col-form-label">Password</label>
-                                                <div class="col-sm-9">
-                                                    <input type="password" class="form-control" id="password"
-                                                        name="password" placeholder="password" value="{{ old('password') }}"
-                                                        required>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label for="role" class="col-sm-3 col-form-label">Role</label>
-                                                <div class="col-sm-9">
-                                                    <select class="form-control form-select select2" name="role"
-                                                        id="" required>
-                                                        <option value="" selected>-- Select Role --</option>
-                                                        @foreach ($data_roles as $role)
-                                                            <option value="{{ $role->id }}">{{ $role->name }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label for="permission" class="col-sm-3 col-form-label">Permission</label>
-                                                <div class="col-sm-9">
-                                                    <select class="form-control form-select select2" name="permission[]"
-                                                        id="" multiple="multiple" required>
-                                                        <option value="">-- Select Permission --</option>
-                                                        @foreach ($data_permission as $permission)
-                                                            <option value="{{ $permission->id }}">{{ $permission->name }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer justify-content-end">
-                                            <button type="button" class="btn btn-default"
-                                                data-bs-dismiss="modal">Batal</button>
-                                            <button type="submit" class="btn btn-primary">Simpan</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div> --}}
-                        <!-- End Modal tambah -->
-
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table id="zero_config" class="table border table-striped table-bordered text-nowrap">
@@ -139,7 +64,6 @@
                                             <th>Full name</th>
                                             <th>Username</th>
                                             <th>Role</th>
-                                            <th>Permission</th>
                                             <th>Status Akun</th>
                                             <th>Aksi</th>
                                         </tr>
@@ -183,9 +107,6 @@
                     },
                     {
                         "data": "role"
-                    },
-                    {
-                        "data": "permission"
                     },
                     {
                         "data": "status_akun"

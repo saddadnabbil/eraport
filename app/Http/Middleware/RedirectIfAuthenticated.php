@@ -22,13 +22,13 @@ class RedirectIfAuthenticated
             $user = Auth::user();
             if ($user->hasRole('Admin')) {
                 return redirect('/admin/dashboard');
-            } elseif ($user->hasAnyRole(['Teacher', 'Curriculum'])) {
+            } elseif ($user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum'])) {
                 return redirect('/guru/dashboard');
             } elseif ($user->hasRole('Student')) {
                 return redirect('/siswa/dashboard');
             }
         }
-    
+
         return $next($request);
     }
 }

@@ -1,6 +1,6 @@
 @extends('layouts.main.header')
 @section('sidebar')
-    @include('layouts.sidebar.index')
+    @include('layouts.sidebar.admin')
 @endsection
 
 @section('content')
@@ -10,23 +10,14 @@
         <!-- ============================================================== -->
         @php
             $user = Auth::user();
-            if (
-                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
-                $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
-            ) {
-                $dashboard = route('guru.dashboard');
-            } elseif ($user->hasAnyRole(['Student']) && $user->hasAnyPermission(['student'])) {
-                $dashboard = route('siswa.dashboard');
-            } else {
-                $dashboard = route('admin.dashboard');
-            }
+            $dashboard = route('admin.dashboard');
         @endphp
         @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
             'titleBreadCrumb' => $title,
             'breadcrumbs' => [
                 [
                     'title' => 'Dashboard',
-                    'url' => route('admin.dashboard'),
+                    'url' => $dashboard,
                     'active' => true,
                 ],
                 [
@@ -68,7 +59,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-hidden="true"></button>
                                     </div>
-                                    <form action="{{ route('ekstrakulikuler.store') }}" method="POST">
+                                    <form action="{{ route('admin.ekstrakulikuler.store') }}" method="POST">
                                         @csrf
                                         <div class="modal-body">
                                             <div class="form-group row">
@@ -149,7 +140,7 @@
                                                 <td>{{ $ekstrakulikuler->pembina->nama_lengkap }}
                                                     {{ $ekstrakulikuler->pembina->gelar }}</td>
                                                 <td>
-                                                    <a href="{{ route('ekstrakulikuler.show', $ekstrakulikuler->id) }}"
+                                                    <a href="{{ route('admin.ekstrakulikuler.show', $ekstrakulikuler->id) }}"
                                                         class="btn btn-primary btn-sm">
                                                         <i class="fas fa-list"></i> {{ $ekstrakulikuler->jumlah_anggota }}
                                                         Anggota
@@ -157,7 +148,7 @@
                                                 </td>
                                                 <td>
                                                     <form
-                                                        action="{{ route('ekstrakulikuler.destroy', $ekstrakulikuler->id) }}"
+                                                        action="{{ route('admin.ekstrakulikuler.destroy', $ekstrakulikuler->id) }}"
                                                         method="POST">
                                                         @csrf
                                                         @method('DELETE')
@@ -184,7 +175,7 @@
                                                                 aria-hidden="true"></button>
                                                         </div>
                                                         <form
-                                                            action="{{ route('ekstrakulikuler.update', $ekstrakulikuler->id) }}"
+                                                            action="{{ route('admin.ekstrakulikuler.update', $ekstrakulikuler->id) }}"
                                                             method="POST">
                                                             {{ method_field('PATCH') }}
                                                             @csrf

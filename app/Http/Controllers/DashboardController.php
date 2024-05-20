@@ -53,10 +53,10 @@ class DashboardController extends Controller
                 ->orderBy('status_login', 'DESC')
                 ->orderBy('updated_at', 'DESC')
                 ->get();
-        } elseif ($user->hasAnyRole(['Teacher'])) {
+        } elseif ($user->hasAnyRole(['Teacher', 'Teacher PG-KG'])) {
             $data_riwayat_login = RiwayatLogin::whereHas('user', function ($query) {
                 $query->whereHas('roles', function ($query) {
-                    $query->whereIn('name', ['Teacher']);
+                    $query->whereIn('name', ['Teacher', 'Teacher PG-KG']);
                 });
             })
                 ->where('user_id', '!=', Auth::user()->id)
@@ -76,7 +76,7 @@ class DashboardController extends Controller
                 ->get();
         }
 
-        if ($user->hasAnyRole(['Admin', 'Curriculum'])) {
+        if ($user->hasAnyRole(['Admin'])) {
             $jumlah_guru = Guru::all()->count();
             $jumlah_siswa = Siswa::where('status', 1)->count();
 
@@ -108,7 +108,7 @@ class DashboardController extends Controller
                 'jumlah_kelas',
                 'jumlah_ekstrakulikuler',
             ));
-        } elseif ($user->hasAnyRole(['Teacher'])) {
+        } elseif ($user->hasAnyRole(['Teacher', 'Teacher PG-KG', 'Co-Teacher', 'Co-Teacher PG-KG', 'Curriculum'])) {
             $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
 
             $unit_kode = Auth::user()->karyawan->unitKaryawan->unit_kode;
@@ -176,7 +176,7 @@ class DashboardController extends Controller
                     'data_capaian_penilaian',
                     'unit_kode',
                 ));
-            } elseif (session()->get('akses_sebagai') == 'homeroom-pg-kg' || session()->get('akses_sebagai') == 'homeroom-km') {
+            } elseif (session()->get('akses_sebagai') == 'homeroom-km' || session()->get('cek_homeroom') == 'homeroom-pg-kg') {
                 $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)->where('guru_id', $guru->id)->pluck('id')->toArray();
                 $jumlah_anggota_kelas = count(AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get());
                 $id_pembelajaran_kelas = Pembelajaran::whereIn('kelas_id', $id_kelas_diampu)->where('status', 1)->get('id');

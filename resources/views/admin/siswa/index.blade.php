@@ -1,6 +1,6 @@
 @extends('layouts.main.header')
 @section('sidebar')
-    @include('layouts.sidebar.index')
+    @include('layouts.sidebar.admin')
 @endsection
 
 @section('content')
@@ -10,28 +10,19 @@
         <!-- ============================================================== -->
         @php
             $user = Auth::user();
-            if (
-                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
-                $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
-            ) {
-                $dashboard = route('guru.dashboard');
-            } elseif ($user->hasAnyRole(['Student']) && $user->hasAnyPermission(['student'])) {
-                $dashboard = route('siswa.dashboard');
-            } else {
-                $dashboard = route('admin.dashboard');
-            }
+            $dashboard = route('admin.dashboard');
         @endphp
         @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
             'titleBreadCrumb' => $title,
             'breadcrumbs' => [
                 [
                     'title' => 'Dashboard',
-                    'url' => route('admin.dashboard'),
+                    'url' => $dashboard,
                     'active' => true,
                 ],
                 [
                     'title' => $title,
-                    'url' => route('tapel.index'),
+                    'url' => route('admin.tapel.index'),
                     'active' => false,
                 ],
             ],
@@ -166,12 +157,12 @@
                                     </button>
                                 </div>
                                 <div data-bs-toggle="tooltip" title="Export" class="d-inline-block" class="d-inline-block">
-                                    <a href="{{ route('siswa.export') }}" class="btn btn-tool btn-sm">
+                                    <a href="{{ route('admin.siswa.export') }}" class="btn btn-tool btn-sm">
                                         <i class="fas fa-download"></i>
                                     </a>
                                 </div>
                                 <div data-bs-toggle="tooltip" title="Trash" class="d-inline-block" class="d-inline-block">
-                                    <a href="{{ route('siswa.trash') }}" class="btn btn-tool btn-sm">
+                                    <a href="{{ route('admin.siswa.trash') }}" class="btn btn-tool btn-sm">
                                         <i class="fas fa-trash"></i>
                                     </a>
                                 </div>
@@ -189,14 +180,14 @@
                                             aria-hidden="true"></button>
                                         </button>
                                     </div>
-                                    <form name="import-siswa" action="{{ route('siswa.import') }}" method="POST"
+                                    <form name="import-siswa" action="{{ route('admin.siswa.import') }}" method="POST"
                                         enctype="multipart/form-data">
                                         @csrf
                                         <div class="modal-body">
                                             <div class="callout callout-info">
                                                 <h5>Download format import</h5>
                                                 <p>Silahkan download file format import melalui tombol dibawah ini.</p>
-                                                <a href="{{ route('siswa.format_import') }}"
+                                                <a href="{{ route('admin.siswa.format_import') }}"
                                                     class="btn btn-primary text-white" style="text-decoration:none"><i
                                                         class="fas fa-file-download"></i> Download</a>
                                             </div>
@@ -243,7 +234,7 @@
                                             aria-hidden="true"></button>
                                         </button>
                                     </div>
-                                    <form action="{{ route('siswa.store') }}" method="POST"
+                                    <form action="{{ route('admin.siswa.store') }}" method="POST"
                                         enctype="multipart/form-data">
                                         @csrf
                                         <div class="modal-body">
@@ -1249,7 +1240,7 @@
                     "processing": true,
                     "serverSide": true,
                     "ajax": {
-                        "url": "{{ route('siswa.data') }}",
+                        "url": "{{ route('admin.siswa.data') }}",
                     },
                     "columns": [{
                             "data": "id"

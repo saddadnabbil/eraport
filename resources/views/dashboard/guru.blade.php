@@ -7,7 +7,7 @@
 @endsection
 
 @section('sidebar')
-    @include('layouts.sidebar.index')
+    @include('layouts.sidebar.guru')
 @endsection
 
 @section('content')
@@ -28,31 +28,19 @@
             $user = Auth::user();
             if ($user->hasRole('Admin')) {
                 $fullName = Auth::user()->karyawan > nama_lengkap;
-            } elseif ($user->hasRole('Teacher')) {
+            } elseif ($user->hasAnyRole(['Teacher', 'Teacher PG-KG'])) {
                 $fullName = Auth::user()->karyawan->nama_lengkap;
             } elseif ($user->hasRole('Student')) {
                 $fullName = Auth::user()->siswa->nama_lengkap;
             }
         @endphp
-        @php
-            $user = Auth::user();
-            if (
-                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
-                $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km', 'teacher-pg-kg', 'homeroom-pg-kg'])
-            ) {
-                $dashboard = route('guru.dashboard');
-            } elseif ($user->hasAnyRole(['Student']) && $user->hasAnyPermission(['student'])) {
-                $dashboard = route('siswa.dashboard');
-            } else {
-                $dashboard = route('admin.dashboard');
-            }
-        @endphp
+
         @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
             'titleBreadCrumb' => $greeting . $fullName . '!',
             'breadcrumbs' => [
                 [
                     'title' => 'Dashboard',
-                    'url' => $dashboard,
+                    'url' => route('guru.dashboard'),
                     'active' => false,
                 ],
             ],
@@ -329,7 +317,7 @@
                                                     -
                                                     {{ \Carbon\Carbon::parse($pengumuman->created_at)->diffForHumans() }}</span>
                                                 @if (Auth::user()->id == $pengumuman->user_id)
-                                                    <form action="{{ route('pengumuman.destroy', $pengumuman->id) }}"
+                                                    <form action="{{ route('guru.pengumuman.destroy', $pengumuman->id) }}"
                                                         method="POST">
                                                         @csrf
                                                         @method('DELETE')
@@ -355,7 +343,8 @@
                                                                 data-bs-dismiss="modal" aria-hidden="true"></button>
                                                             </button>
                                                         </div>
-                                                        <form action="{{ route('pengumuman.update', $pengumuman->id) }}"
+                                                        <form
+                                                            action="{{ route('guru.pengumuman.update', $pengumuman->id) }}"
                                                             method="POST">
                                                             {{ method_field('PATCH') }}
                                                             @csrf

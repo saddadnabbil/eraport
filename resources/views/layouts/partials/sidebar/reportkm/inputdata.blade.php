@@ -45,7 +45,7 @@
     ];
 @endphp
 
-@if(auth()->user()->hasAnyPermission(['homeroom-km']) && session('akses_sebagai') == 'homeroom-km')
+@if (auth()->user()->hasAnyPermission(['homeroom-km']) && session('akses_sebagai') == 'homeroom-km')
     @php
         $inputDataSubItems = array_slice($inputDataSubItems, 2, 4);
     @endphp
@@ -67,4 +67,3 @@
     'route' => 'javascript:void(0)',
     'subItems' => $inputDataSubItems,
 ])
-

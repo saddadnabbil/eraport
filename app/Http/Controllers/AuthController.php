@@ -30,7 +30,7 @@ class AuthController extends Controller
         if (Auth::check()) {
             if (Auth::user()->hasRole('Admin')) {
                 return redirect()->route('admin.dashboard');
-            } elseif (Auth::user()->hasAnyRole(['Teacher', 'Curriculum'])) {
+            } elseif (Auth::user()->hasAnyRole(['Teacher', 'Curriculum', 'Teacher PG-KG', 'Co-Teacher', 'Co-Teacher PG-KG'])) {
                 return redirect()->route('guru.dashboard');
             } elseif (Auth::user()->hasRole('Student')) {
                 return redirect()->route('siswa.dashboard');
@@ -114,7 +114,7 @@ class AuthController extends Controller
             // Redirect to the dashboard
             if (Auth::user()->hasAnyRole(['Admin'])) {
                 return redirect()->route('admin.dashboard')->with('toast_success', 'Login berhasil');
-            } elseif (Auth::user()->hasAnyRole('Teacher', 'Curriculum')) {
+            } elseif (Auth::user()->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum'])) {
                 return redirect()->route('guru.dashboard')->with('toast_success', 'Login berhasil');
             } elseif (Auth::user()->hasRole('Student')) {
                 return redirect()->route('siswa.dashboard')->with('toast_success', 'Login berhasil');
@@ -144,25 +144,33 @@ class AuthController extends Controller
     protected function handleGuruSession()
     {
         $user = Auth::user();
-        if ($user->hasAnyRole(['Teacher', 'Curriculum'])) {
-            if (Auth::user()->hasAnyRole(['Teacher', 'Curriculum'])) {
+        $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
+
+        if ($user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum'])) {
+            if (Auth::user()->hasAnyRole(['Teacher', 'Curriculum', 'Teacher PG-KG', 'Co-Teacher', 'Co-Teacher PG-KG'])) {
                 // check permission name if homeroom-km true
-                if ($user->getPermissionNames()->contains('teacher-km')) {
+                if ($user->getRoleNames()->contains('Teacher')) {
                     session([
                         'akses_sebagai' => 'teacher-km',
                     ]);
-                } elseif ($user->getPermissionNames()->contains('teacher-pg-kg')) {
+                } elseif ($user->getRoleNames()->contains('Teacher PG-KG')) {
                     session([
                         'akses_sebagai' => 'teacher-pg-kg',
                     ]);
                 }
-                if ($user->getPermissionNames()->contains('homeroom-km')) {
+
+                $cek_wali_kelas = Kelas::where('guru_id', $guru->id)->whereNotIn('tingkatan_id', [1, 2, 3])->first();
+                $cek_wali_kelas_tk = Kelas::where('guru_id', $guru->id)->whereIn('tingkatan_id', [1, 2, 3])->get();
+
+                if ($cek_wali_kelas) {
                     session([
-                        'akses_sebagai' => 'homeroom-km',
+                        'cek_homeroom' => true,
                     ]);
-                } elseif ($user->getPermissionNames()->contains('homeroom-pg-kg')) {
+                }
+
+                if ($cek_wali_kelas_tk && count($cek_wali_kelas_tk) > 0) {
                     session([
-                        'cek_homeroom' => 'homeroom-pg-kg',
+                        'cek_homeroom_tk' => true,
                     ]);
                 }
             }
@@ -240,33 +248,20 @@ class AuthController extends Controller
     public function ganti_akses()
     {
         $user = Auth::user();
-        if (session()->get('akses_sebagai') == 'teacher-km' || session()->get('akses_sebagai') == 'teacher-pg-kg') {
-            if ($user->hasAnyPermission(['homeroom-km', 'homeroom-pg-kg'])) {
-                if ($user->hasAnyPermission(['homeroom-km'])) {
-                    session()->put([
-                        'akses_sebagai' => 'homeroom-km',
-                    ]);
-                } elseif ($user->hasAnyPermission(['homeroom-pg-kg'])) {
-                    session()->put([
-                        'akses_sebagai' => 'homeroom-pg-kg',
-                    ]);
-                }
-                return redirect(route('guru.dashboard'))->with('toast_success', 'Homeroom access successful');
-            } else {
-                return back()->with('toast_error', 'You do not have access as homeroom teacher');
-            }
-        } else {
-            if ($user->hasAnyPermission(['teacher-km'])) {
+        if ($user->hasRole(['Teacher'])) {
+            if (session()->get('akses_sebagai') == 'teacher-km') {
+                session()->put([
+                    'akses_sebagai' => 'homeroom-km',
+                    'cek_homeroom' => true,
+                ]);
+                return back()->with('toast_success', 'Homeroom access was successful');
+                dd(session()->all());
+            } elseif (session()->get('akses_sebagai') == 'homeroom-km') {
                 session()->put([
                     'akses_sebagai' => 'teacher-km',
                 ]);
-            } elseif ($user->hasAnyPermission(['teacher-pg-kg'])) {
-                session()->put([
-                    'akses_sebagai' => 'teacher-pg-kg',
-                ]);
+                return redirect(route('guru.dashboard'))->with('toast_success', 'Teacher access was successful');
             }
-
-            return redirect(route('guru.dashboard'))->with('toast_success', 'Teacher access was successful');
         }
     }
 
@@ -276,7 +271,7 @@ class AuthController extends Controller
         if (Auth::check()) {
             if (Auth::user()->hasRole('Admin')) {
                 return redirect()->route('admin.dashboard');
-            } elseif (Auth::user()->hasAnyRole(['Teacher', 'Curriculum'])) {
+            } elseif (Auth::user()->hasAnyRole(['Teacher', 'Curriculum', 'Teacher PG-KG', 'Co-Teacher', 'Co-Teacher PG-KG'])) {
                 return redirect()->route('guru.dashboard');
             } elseif (Auth::user()->hasRole('Student')) {
                 return redirect()->route('siswa.dashboard');

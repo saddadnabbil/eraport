@@ -28,7 +28,7 @@ class JadwalMengajarController extends Controller
 
         $data_pembelajaran = Pembelajaran::where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
 
-        return view('admin.jadwalmengajar.pilihkelas', compact('title', 'data_pembelajaran'));
+        return view('guru.jadwalmengajar.pilihkelas', compact('title', 'data_pembelajaran'));
     }
 
     /**
@@ -45,7 +45,7 @@ class JadwalMengajarController extends Controller
 
         $dataJadwalMengajar = JadwalMengajar::where('tapel_id', 1)->where('kelas_id', $pembelajaran->kelas_id)->get();
 
-        return view('admin.jadwalmengajar.index', compact('title', 'dataJadwalMengajar', 'tapel', 'pembelajaran'));
+        return view('guru.jadwalmengajar.index', compact('title', 'dataJadwalMengajar', 'tapel', 'pembelajaran'));
     }
 
     /**
@@ -114,7 +114,7 @@ class JadwalMengajarController extends Controller
 
         $dataKelas = Kelas::where('tapel_id', $tapel->id)->orderBy('id', 'ASC')->get();
 
-        return view('admin.jadwalmengajar.build', compact('title', 'jadwalMengajar', 'dataJadwalMengajarSlot', 'dataWeekdays', 'dataKelas', 'selected'));
+        return view('guru.jadwalmengajar.build', compact('title', 'jadwalMengajar', 'dataJadwalMengajarSlot', 'dataWeekdays', 'dataKelas', 'selected'));
     }
 
     public function timeSlot(Request $request)
@@ -229,7 +229,7 @@ class JadwalMengajarController extends Controller
 
         $dataKelas = Kelas::where('tapel_id', $tapel->id)->orderBy('id', 'ASC')->get();
 
-        return view('admin.jadwalmengajar.show', compact('title', 'dataWeekdays', 'selected', 'jadwalMengajar', 'dataJadwalMengajarSlot', 'dataKelas'));
+        return view('guru.jadwalmengajar.show', compact('title', 'dataWeekdays', 'selected', 'jadwalMengajar', 'dataJadwalMengajarSlot', 'dataKelas'));
     }
 
     /**

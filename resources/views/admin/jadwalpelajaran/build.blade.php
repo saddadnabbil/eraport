@@ -1,6 +1,6 @@
 @extends('layouts.main.header')
 @section('sidebar')
-    @include('layouts.sidebar.index')
+    @include('layouts.sidebar.admin')
 @endsection
 
 @section('content')
@@ -10,33 +10,24 @@
         <!-- ============================================================== -->
         @php
             $user = Auth::user();
-            if (
-                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
-                $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
-            ) {
-                $dashboard = route('guru.dashboard');
-            } elseif ($user->hasAnyRole(['Student']) && $user->hasAnyPermission(['student'])) {
-                $dashboard = route('siswa.dashboard');
-            } else {
-                $dashboard = route('admin.dashboard');
-            }
+            $dashboard = route('admin.dashboard');
         @endphp
         @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
             'titleBreadCrumb' => $title,
             'breadcrumbs' => [
                 [
                     'title' => 'Dashboard',
-                    'url' => route('admin.dashboard'),
+                    'url' => $dashboard,
                     'active' => true,
                 ],
                 [
                     'title' => 'Timetable',
-                    'url' => route('jadwalpelajaran.index'),
+                    'url' => route('admin.jadwalpelajaran.index'),
                     'active' => true,
                 ],
                 [
                     'title' => $title,
-                    'url' => route('jadwalpelajaran.index'),
+                    'url' => route('admin.jadwalpelajaran.index'),
                     'active' => false,
                 ],
             ],
@@ -64,14 +55,14 @@
                                         </a>
                                     </div>
                                     <div data-bs-toggle="tooltip" data-bs-original-title="Show">
-                                        <a href="{{ route('jadwalpelajaran.show', $kelas->id) }}"
+                                        <a href="{{ route('admin.jadwalpelajaran.show', $kelas->id) }}"
                                             class="btn btn-tool btn-sm">
                                             <i class="fas fa-eye"></i>
                                         </a>
                                     </div>
                                     <div data-bs-toggle="tooltip" title="Print" class="d-inline-block"
                                         class="d-inline-block">
-                                        <a href="{{ route('jadwalpelajaran.print', $kelas->id) }}"
+                                        <a href="{{ route('admin.jadwalpelajaran.print', $kelas->id) }}"
                                             class="btn btn-tool btn-sm">
                                             <i class="fas fa-download"></i>
                                         </a>
@@ -82,7 +73,7 @@
 
                         <div class="card-body">
                             <div class="table-responsive">
-                                <form action="{{ route('jadwalpelajaran.store') }}" method="POST">
+                                <form action="{{ route('admin.jadwalpelajaran.store') }}" method="POST">
                                     @csrf
                                     <input type="hidden" name="kelas_id" value="{{ $kelas->id }}">
                                     <div class="beautify-scrollbar">

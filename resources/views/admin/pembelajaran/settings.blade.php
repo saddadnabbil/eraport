@@ -1,7 +1,7 @@
 @extends('layouts.main.header')
 
 @section('sidebar')
-    @include('layouts.sidebar.index')
+    @include('layouts.sidebar.admin')
 @endsection
 
 @section('content')
@@ -11,28 +11,19 @@
     <div class="page-wrapper">
         @php
             $user = Auth::user();
-            if (
-                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
-                $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
-            ) {
-                $dashboard = route('guru.dashboard');
-            } elseif ($user->hasAnyRole(['Student']) && $user->hasAnyPermission(['student'])) {
-                $dashboard = route('siswa.dashboard');
-            } else {
-                $dashboard = route('admin.dashboard');
-            }
+            $dashboard = route('admin.dashboard');
         @endphp
         @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
             'titleBreadCrumb' => $title,
             'breadcrumbs' => [
                 [
                     'title' => 'Dashboard',
-                    'url' => route('admin.dashboard'),
+                    'url' => $dashboard,
                     'active' => true,
                 ],
                 [
                     'title' => 'Data Pembelajaran',
-                    'url' => route('pembelajaran.index'),
+                    'url' => route('admin.pembelajaran.index'),
                     'active' => false,
                 ],
                 [
@@ -58,7 +49,7 @@
                             <div class="form-group row callout callout-info mx-1">
                                 <label for="kelas_id" class="col-sm-2 col-form-label">Kelas</label>
                                 <div class="col-sm-10">
-                                    <form action="{{ route('pembelajaran.settings') }}" method="POST">
+                                    <form action="{{ route('admin.pembelajaran.settings') }}" method="POST">
                                         @csrf
                                         <select class="form-control form-select select2" name="kelas_id"
                                             style="width: 100%;" required onchange="this.form.submit();">
@@ -87,7 +78,7 @@
                                     </form>
                                 </div>
                             </div>
-                            <form action="{{ route('pembelajaran.store') }}" method="POST">
+                            <form action="{{ route('admin.pembelajaran.store') }}" method="POST">
                                 @csrf
                                 <div class="table-responsive">
                                     <table class="table table-bordered">

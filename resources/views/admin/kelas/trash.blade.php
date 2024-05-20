@@ -1,6 +1,6 @@
 @extends('layouts.main.header')
 @section('sidebar')
-    @include('layouts.sidebar.index')
+    @include('layouts.sidebar.admin')
 @endsection
 
 @section('content')
@@ -10,28 +10,19 @@
         <!-- ============================================================== -->
         @php
             $user = Auth::user();
-            if (
-                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
-                $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
-            ) {
-                $dashboard = route('guru.dashboard');
-            } elseif ($user->hasAnyRole(['Student']) && $user->hasAnyPermission(['student'])) {
-                $dashboard = route('siswa.dashboard');
-            } else {
-                $dashboard = route('admin.dashboard');
-            }
+            $dashboard = route('admin.dashboard');
         @endphp
         @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
             'titleBreadCrumb' => $title,
             'breadcrumbs' => [
                 [
                     'title' => 'Dashboard',
-                    'url' => route('admin.dashboard'),
+                    'url' => $dashboard,
                     'active' => true,
                 ],
                 [
                     'title' => $title,
-                    'url' => route('siswa.trash'),
+                    'url' => route('admin.siswa.trash'),
                     'active' => false,
                 ],
             ],
@@ -80,7 +71,7 @@
                                                     <td>
                                                         @if ($anggota->siswa->nama_lengkap)
                                                             <a class="text-decoration-none text-body"
-                                                                href="{{ route('siswa.show', $anggota->siswa->id) }}">
+                                                                href="{{ route('admin.siswa.show', $anggota->siswa->id) }}">
                                                                 {{ $anggota->siswa->nama_lengkap }}
                                                             </a>
                                                         @else
@@ -109,7 +100,7 @@
                                                         <div class="d-flex gap-2">
                                                             <div data-bs-toggle="tooltip" data-bs-original-title="Restore">
                                                                 <form method="POST"
-                                                                    action="{{ route('kelas.anggota_kelas.restore', ['id' => $anggota->id]) }}">
+                                                                    action="{{ route('admin.kelas.anggota_kelas.restore', ['id' => $anggota->id]) }}">
                                                                     @csrf
                                                                     @method('PATCH')
                                                                     <button type="submit" class="btn btn-primary"><i
@@ -119,7 +110,7 @@
                                                             <div data-bs-toggle="tooltip"
                                                                 data-bs-original-title="Delete Permanent">
                                                                 <form method="POST"
-                                                                    action="{{ route('kelas.anggota_kelas.permanent-delete', ['id' => $anggota->id]) }}">
+                                                                    action="{{ route('admin.kelas.anggota_kelas.permanent-delete', ['id' => $anggota->id]) }}">
                                                                     @csrf
                                                                     @method('DELETE')
                                                                     <button type="submit" class="btn btn-danger"><i

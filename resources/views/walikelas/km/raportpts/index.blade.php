@@ -1,7 +1,7 @@
 @extends('layouts.main.header')
 
 @section('sidebar')
-    @include('layouts.sidebar.index')
+    @include('layouts.sidebar.walikelas')
 @endsection
 
 @section('content')
@@ -12,7 +12,7 @@
         @php
             $user = Auth::user();
             if (
-                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
+                $user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum']) &&
                 $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
             ) {
                 $dashboard = route('guru.dashboard');
@@ -56,7 +56,7 @@
                         <div class="card-body">
 
                             <div class="callout callout-info">
-                                <form action="{{ route('raportptskm.store') }}" method="POST">
+                                <form action="{{ route('walikelas.raportptskm.store') }}" method="POST">
                                     @csrf
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Term</label>
@@ -108,7 +108,8 @@
                                                     <td>{{ $anggota_kelas->siswa->nama_lengkap }}</td>
                                                     <td class="text-center">{{ $anggota_kelas->siswa->jenis_kelamin }}</td>
                                                     <td class="text-center">
-                                                        <form action="{{ route('raportptskm.show', $anggota_kelas->id) }}"
+                                                        <form
+                                                            action="{{ route('walikelas.raportptskm.show', $anggota_kelas->id) }}"
                                                             target="_black" method="GET">
                                                             @csrf
                                                             <input type="hidden" name="paper_size"

@@ -1,6 +1,6 @@
 @extends('layouts.main.header')
 @section('sidebar')
-    @include('layouts.sidebar.index')
+    @include('layouts.sidebar.admin')
 @endsection
 
 @section('content')
@@ -10,23 +10,14 @@
         <!-- ============================================================== -->
         @php
             $user = Auth::user();
-            if (
-                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
-                $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
-            ) {
-                $dashboard = route('guru.dashboard');
-            } elseif ($user->hasAnyRole(['Student']) && $user->hasAnyPermission(['student'])) {
-                $dashboard = route('siswa.dashboard');
-            } else {
-                $dashboard = route('admin.dashboard');
-            }
+            $dashboard = route('admin.dashboard');
         @endphp
         @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
             'titleBreadCrumb' => $title,
             'breadcrumbs' => [
                 [
                     'title' => 'Dashboard',
-                    'url' => route('admin.dashboard'),
+                    'url' => $dashboard,
                     'active' => true,
                 ],
                 [
@@ -73,7 +64,7 @@
                                             aria-hidden="true"></button>
                                         </button>
                                     </div>
-                                    <form action="{{ route('jurusan.store') }}" method="POST">
+                                    <form action="{{ route('admin.jurusan.store') }}" method="POST">
                                         @csrf
                                         <div class="modal-body">
                                             <div class="form-group row">
@@ -117,7 +108,7 @@
                                                 <td>{{ $jurusan->nama_jurusan }}</td>
                                                 <td>
                                                     @include('components.actions.delete-button', [
-                                                        'route' => route('jurusan.destroy', $jurusan->id),
+                                                        'route' => route('admin.jurusan.destroy', $jurusan->id),
                                                         'id' => $jurusan->id,
                                                         'isPermanent' => true,
                                                         'withEdit' => true,
@@ -137,7 +128,7 @@
                                                                 aria-hidden="true"></button>
                                                             </button>
                                                         </div>
-                                                        <form action="{{ route('jurusan.update', $jurusan->id) }}"
+                                                        <form action="{{ route('admin.jurusan.update', $jurusan->id) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('PUT')

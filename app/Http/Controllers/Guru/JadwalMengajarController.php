@@ -120,7 +120,7 @@ class JadwalMengajarController extends Controller
 
             $dataKelas = Kelas::where('tapel_id', $tapel->id)->orderBy('id', 'ASC')->get();
 
-            $timetable = PDF::loadview('admin.jadwalmengajar.print', compact('title', 'pembelajaran', 'dataWeekdays', 'selected', 'dataJadwalPelajaranSlot', 'dataKelas'))->setPaper('A4', 'landscape');
+            $timetable = PDF::loadview('guru.jadwalmengajar.print', compact('title', 'pembelajaran', 'dataWeekdays', 'selected', 'dataJadwalPelajaranSlot', 'dataKelas'))->setPaper('A4', 'landscape');
             return $timetable->stream('Print (' . $guru->karyawan->nama_lengkap . ' - ' . $pembelajaran->mapel->nama_mapel . ').pdf');
         }
     }

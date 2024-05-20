@@ -3,5 +3,5 @@
     'hasArrow' => false,
     'icon' => 'bell',
     'itemName' => 'Announcement',
-    'route' => route('pengumuman.index'),
+    'route' => route('admin.pengumuman.index'),
 ])

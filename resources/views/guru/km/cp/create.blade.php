@@ -12,7 +12,7 @@
         @php
             $user = Auth::user();
             if (
-                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
+                $user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum']) &&
                 $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
             ) {
                 $dashboard = route('guru.dashboard');
@@ -32,7 +32,7 @@
                 ],
                 [
                     'title' => 'Capaian Pelajaran',
-                    'url' => route('guru.cp.index'),
+                    'url' => route('guru.km.cp.index'),
                     'active' => false,
                 ],
                 [
@@ -56,7 +56,7 @@
 
                         <div class="card-body">
                             <div class="callout callout-info">
-                                <form action="{{ route('guru.cp.create') }}" method="GET">
+                                <form action="{{ route('guru.km.cp.create') }}" method="GET">
                                     @csrf
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Kelas</label>
@@ -78,7 +78,7 @@
                                 </form>
                             </div>
 
-                            <form id="dynamic_form" action="{{ route('guru.cp.store') }}" method="POST">
+                            <form id="dynamic_form" action="{{ route('guru.km.cp.store') }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="mapel_id" value="{{ $mapel_id }}">
                                 <input type="hidden" name="tingkatan_id" value="{{ $tingkatan_id }}">
@@ -166,7 +166,7 @@
 
                         <div class="card-footer clearfix">
                             <button type="submit" class="btn btn-primary float-right">Simpan</button>
-                            <a href="{{ route('guru.cp.index') }}" class="btn btn-default float-right me-2">Batal</a>
+                            <a href="{{ route('guru.km.cp.index') }}" class="btn btn-default float-right me-2">Batal</a>
                         </div>
                         </form>
                     </div>
@@ -250,7 +250,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        url: "{{ route('guru.cp.destroy', ':id') }}".replace(':id', id),
+                        url: "{{ route('guru.km.cp.destroy', ':id') }}".replace(':id', id),
                         type: 'DELETE',
                         data: {
                             _token: '{{ csrf_token() }}'

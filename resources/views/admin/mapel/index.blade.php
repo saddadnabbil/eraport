@@ -1,6 +1,6 @@
 @extends('layouts.main.header')
 @section('sidebar')
-    @include('layouts.sidebar.index')
+    @include('layouts.sidebar.admin')
 @endsection
 
 @section('content')
@@ -10,23 +10,14 @@
         <!-- ============================================================== -->
         @php
             $user = Auth::user();
-            if (
-                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
-                $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
-            ) {
-                $dashboard = route('guru.dashboard');
-            } elseif ($user->hasAnyRole(['Student']) && $user->hasAnyPermission(['student'])) {
-                $dashboard = route('siswa.dashboard');
-            } else {
-                $dashboard = route('admin.dashboard');
-            }
+            $dashboard = route('admin.dashboard');
         @endphp
         @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
             'titleBreadCrumb' => $title,
             'breadcrumbs' => [
                 [
                     'title' => 'Dashboard',
-                    'url' => route('admin.dashboard'),
+                    'url' => $dashboard,
                     'active' => true,
                 ],
                 [
@@ -77,14 +68,14 @@
                                             aria-hidden="true"></button>
                                         </button>
                                     </div>
-                                    <form name="contact-form" action="{{ route('mapel.import') }}" method="POST"
+                                    <form name="contact-form" action="{{ route('admin.mapel.import') }}" method="POST"
                                         enctype="multipart/form-data">
                                         @csrf
                                         <div class="modal-body">
                                             <div class="callout callout-info">
                                                 <h5>Download format import</h5>
                                                 <p>Silahkan download file format import melalui tombol dibawah ini.</p>
-                                                <a href="{{ route('mapel.format_import') }}"
+                                                <a href="{{ route('admin.mapel.format_import') }}"
                                                     class="btn btn-primary text-white" style="text-decoration:none"><i
                                                         class="fas fa-file-download"></i> Download</a>
                                             </div>
@@ -122,7 +113,7 @@
                                             aria-hidden="true"></button>
                                         </button>
                                     </div>
-                                    <form action="{{ route('mapel.store') }}" method="POST">
+                                    <form action="{{ route('admin.mapel.store') }}" method="POST">
                                         @csrf
                                         <div class="modal-body">
                                             <input type="hidden" name="tapel_id" value="{{ $tapel->id }}">
@@ -190,7 +181,7 @@
                                                 <td>{{ $mapel->ringkasan_mapel }}</td>
                                                 <td>
                                                     @include('components.actions.delete-button', [
-                                                        'route' => route('mapel.destroy', $mapel->id),
+                                                        'route' => route('admin.mapel.destroy', $mapel->id),
                                                         'id' => $mapel->id,
                                                         'isPermanent' => true,
                                                         'withEdit' => true,
@@ -208,7 +199,7 @@
                                                             <button type="button" class="btn-close"
                                                                 data-bs-dismiss="modal" aria-hidden="true"></button>
                                                         </div>
-                                                        <form action="{{ route('mapel.update', $mapel->id) }}"
+                                                        <form action="{{ route('admin.mapel.update', $mapel->id) }}"
                                                             method="POST">
                                                             {{ method_field('PATCH') }}
                                                             @csrf

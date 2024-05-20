@@ -11,7 +11,15 @@
                     @php
                         if (Auth::user()->hasRole('Admin')) {
                             $dashboard = route('admin.dashboard');
-                        } elseif (Auth::user()->hasAnyRole(['Teacher', 'Curriculum'])) {
+                        } elseif (
+                            Auth::user()->hasAnyRole([
+                                'Teacher',
+                                'Curriculum',
+                                'Teacher PG-KG',
+                                'Co-Teacher',
+                                'Co-Teacher PG-KG',
+                            ])
+                        ) {
                             $dashboard = route('guru.dashboard');
                         } elseif (Auth::user()->hasRole('Student')) {
                             $dashboard = route('siswa.dashboard');

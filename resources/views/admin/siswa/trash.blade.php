@@ -1,6 +1,6 @@
 @extends('layouts.main.header')
 @section('sidebar')
-    @include('layouts.sidebar.index')
+    @include('layouts.sidebar.admin')
 @endsection
 
 @section('content')
@@ -10,28 +10,19 @@
         <!-- ============================================================== -->
         @php
             $user = Auth::user();
-            if (
-                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
-                $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
-            ) {
-                $dashboard = route('guru.dashboard');
-            } elseif ($user->hasAnyRole(['Student']) && $user->hasAnyPermission(['student'])) {
-                $dashboard = route('siswa.dashboard');
-            } else {
-                $dashboard = route('admin.dashboard');
-            }
+            $dashboard = route('admin.dashboard');
         @endphp
         @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
             'titleBreadCrumb' => $title,
             'breadcrumbs' => [
                 [
                     'title' => 'Dashboard',
-                    'url' => route('admin.dashboard'),
+                    'url' => $dashboard,
                     'active' => true,
                 ],
                 [
                     'title' => $title,
-                    'url' => route('siswa.trash'),
+                    'url' => route('admin.siswa.trash'),
                     'active' => false,
                 ],
             ],
@@ -105,14 +96,14 @@
                                                 <td class="text-center">
                                                     <div class="d-flex gap-2">
                                                         @include('components.actions.restore-button', [
-                                                            'route' => route('siswa.restore', [
+                                                            'route' => route('admin.siswa.restore', [
                                                                 'id' => $siswa->id,
                                                             ]),
                                                             'id' => $siswa->id,
                                                             'method' => 'PATCH',
                                                         ])
                                                         @include('components.actions.delete-button', [
-                                                            'route' => route('siswa.permanent-delete', [
+                                                            'route' => route('admin.siswa.permanent-delete', [
                                                                 'id' => $siswa->id,
                                                             ]),
                                                             'isPermanent' => false,

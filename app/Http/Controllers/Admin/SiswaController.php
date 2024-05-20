@@ -68,18 +68,20 @@ class SiswaController extends Controller
 
         return DataTables::of($data_siswa)
             ->addColumn('tingkatan', function ($siswa) {
-                return $siswa->kelas_id ? $siswa->kelas->tingkatan->nama_tingkatan : 'Belum terdata';
+                return $siswa->kelas_id ? ($siswa->kelas ? ($siswa->kelas->tingkatan ? $siswa->kelas->tingkatan->nama_tingkatan : 'Belum terdata') : 'Belum terdata') : 'Belum terdata';
             })
             ->addColumn('kelas', function ($siswa) {
-                return $siswa->kelas_id ? $siswa->kelas->nama_kelas : 'Belum masuk anggota kelas';
+                return $siswa->kelas_id ? ($siswa->kelas ? $siswa->kelas->nama_kelas : 'Belum masuk anggota kelas') : 'Belum masuk anggota kelas';
             })
             ->addColumn('action', function ($siswa) {
+                $showRoute = route('admin.siswa.show', $siswa->id);
+
                 $deleteButton = view('components.actions.delete-button', [
-                    'route' => route('siswa.destroy', $siswa->id),
+                    'route' => route('admin.siswa.destroy', $siswa->id),
                     'id' => $siswa->id,
                     'isPermanent' => false,
                     'withShow' => true,
-                    'showRoute' => route('siswa.show', $siswa->id),
+                    'showRoute' => $showRoute,
                     'withEdit' => false,
                 ])->render();
 
@@ -87,6 +89,7 @@ class SiswaController extends Controller
             })
             ->toJson();
     }
+
 
     public function show($id)
     {

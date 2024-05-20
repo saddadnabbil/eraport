@@ -1,6 +1,6 @@
 @extends('layouts.main.header')
 @section('sidebar')
-    @include('layouts.sidebar.index')
+    @include('layouts.sidebar.admin')
 @endsection
 
 
@@ -11,28 +11,19 @@
         <!-- ============================================================== -->
         @php
             $user = Auth::user();
-            if (
-                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
-                $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
-            ) {
-                $dashboard = route('guru.dashboard');
-            } elseif ($user->hasAnyRole(['Student']) && $user->hasAnyPermission(['student'])) {
-                $dashboard = route('siswa.dashboard');
-            } else {
-                $dashboard = route('admin.dashboard');
-            }
+            $dashboard = route('admin.dashboard');
         @endphp
         @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
             'titleBreadCrumb' => $title,
             'breadcrumbs' => [
                 [
                     'title' => 'Dashboard',
-                    'url' => route('admin.dashboard'),
+                    'url' => $dashboard,
                     'active' => true,
                 ],
                 [
                     'title' => $title,
-                    'url' => route('tapel.index'),
+                    'url' => route('admin.tapel.index'),
                     'active' => false,
                 ],
             ],
@@ -52,7 +43,7 @@
                             <h3 class="card-title">Setting Of The School Year</h3>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('tapel.setAcademicYear') }}" method="POST">
+                            <form action="{{ route('admin.tapel.setAcademicYear') }}" method="POST">
                                 @csrf
                                 <div class="form-group row border-bottom">
                                     <div class="col-lg-5 col-md-6 form-inline" style="margin-bottom: 14px">
@@ -181,7 +172,7 @@
                                         aria-hidden="true"></button>
                                     </button>
                                 </div>
-                                <form action="{{ route('tapel.store') }}" method="POST">
+                                <form action="{{ route('admin.tapel.store') }}" method="POST">
                                     @csrf
                                     <div class="modal-body">
                                         <div class="form-group row">
@@ -242,7 +233,7 @@
                                                         </button>
                                                     </div>
 
-                                                    <form action="{{ route('tapel.update', $tapel->id) }}"
+                                                    <form action="{{ route('admin.tapel.update', $tapel->id) }}"
                                                         method="POST">
                                                         @csrf
                                                         @method('PUT')

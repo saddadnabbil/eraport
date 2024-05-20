@@ -2,23 +2,23 @@
 
 namespace App\Http\Controllers\Guru\KM;
 
+use Carbon\Carbon;
 use App\Models\Guru;
 use App\Models\Term;
 use App\Models\Kelas;
 use App\Models\Tapel;
-use Carbon\Carbon;
+use App\Models\Semester;
 use App\Models\KmKkmMapel;
 use App\Models\NilaiAkhir;
 use App\Models\AnggotaKelas;
 use App\Models\NilaiSumatif;
 use App\Models\Pembelajaran;
+use Illuminate\Http\Request;
 use App\Models\NilaiFormatif;
 use App\Models\KmNilaiAkhirRaport;
 use App\Models\RencanaNilaiSumatif;
-use Illuminate\Http\Request;
-use App\Models\RencanaNilaiFormatif;
 use App\Http\Controllers\Controller;
-use App\Models\Semester;
+use App\Models\RencanaNilaiFormatif;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -33,12 +33,21 @@ class KirimNilaiAkhirController extends Controller
     {
         $title = 'Kirim Nilai Akhir';
         $tapel = Tapel::where('status', 1)->first();
-        $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
+        $user = Auth::user();
 
-        $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
+        $data_kelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->get();
 
-        $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
-        $data_pembelajaran = Pembelajaran::where('guru_id', $guru->id)->whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
+        $id_kelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->get('id');
+
+        if ($user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum'])) {
+            $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
+        }
+
+        if (isset($guru)) {
+            $data_pembelajaran = Pembelajaran::where('guru_id', $guru->id)->whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
+        } else {
+            $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('kelas_id', 'ASC')->orderBy('mapel_id', 'ASC')->get();
+        }
 
         return view('guru.km.kirimnilaiakhirkm.index', compact('title', 'data_pembelajaran', 'data_kelas'));
     }
@@ -57,15 +66,22 @@ class KirimNilaiAkhirController extends Controller
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
         } else {
             $tapel = Tapel::where('status', 1)->first();
+            $user = Auth::user();
 
-            $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
+            if ($user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum'])) {
+                $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
+                $pembelajaran = Pembelajaran::where('guru_id', $guru->id)->findorfail($request->pembelajaran_id);
+            } else {
+                $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
+            }
+
             $term = Term::findorfail($pembelajaran->kelas->tingkatan->term_id);
             $semester = Semester::findorfail($pembelajaran->kelas->tingkatan->semester_id);
 
             $kkm = KmKkmMapel::where('mapel_id', $pembelajaran->mapel_id)->where('kelas_id', $pembelajaran->kelas_id)->first();
 
             if (is_null($kkm)) {
-                return back()->with('toast_error', 'Belum ada data kkm untuk ' . $pembelajaran->mapel->nama_mapel . ' ' . $pembelajaran->kelas->nama_kelas . '. Silahkan input kkm!');
+                return back()->with('toast_error', 'KKM untuk ' . $pembelajaran->mapel->nama_mapel . ' ' . $pembelajaran->kelas->nama_kelas . ' belum ditentukan. Silakan input KKM sebelum melakukan penilaian.');
             }
 
             $rencana_nilai_sumatif = RencanaNilaiSumatif::where('pembelajaran_id', $pembelajaran->id)->where('term_id', $term->id)->where('semester_id', $semester->id)->get('id');
@@ -78,15 +94,20 @@ class KirimNilaiAkhirController extends Controller
                 $nilai_formatif = NilaiFormatif::whereIn('rencana_nilai_formatif_id', $rencana_nilai_formatif)->groupBy('rencana_nilai_formatif_id')->get();
 
                 if (count($rencana_nilai_sumatif) != count($nilai_sumatif) || count($rencana_nilai_formatif) != count($nilai_formatif)) {
-                    return redirect(route('guru.penilaiankm.index'))->with('toast_warning', 'Belum ada data penilaian untuk ' . $pembelajaran->mapel->nama_mapel . ' ' . $pembelajaran->kelas->nama_kelas . '. Silahkan input penilaian!');
+                    return back()->with('toast_warning', 'Perlu pembaruan. Tidak ada data penilaian terbaru untuk ' . $pembelajaran->mapel->nama_mapel . ' ' . $pembelajaran->kelas->nama_kelas . '.');
                 } else {
                     // Data Master
                     $title = 'Kirim Nilai Akhir';
                     $tapel = Tapel::where('status', 1)->first();
 
-                    $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
                     $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
-                    $data_pembelajaran = Pembelajaran::where('guru_id', $guru->id)->whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
+
+                    if (isset($guru)) {
+                        $data_pembelajaran = Pembelajaran::where('guru_id', $guru->id)->whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
+                    } else {
+                        $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('kelas_id', 'ASC')->orderBy('mapel_id', 'ASC')->get();
+                    }
+
 
                     // Interval KKM
                     $kkm->predikat_d =  60.00;
@@ -103,11 +124,12 @@ class KirimNilaiAkhirController extends Controller
                         ->get();
 
                     if (count($data_anggota_kelas) == 0) {
-                        return redirect(route('guru.penilaiankm.index'))->with('toast_error', 'Data anggota kelas tidak ditemukan');
+                        return redirect(route('guru.km.penilaian.index'))->with('toast_error', 'Data anggota kelas tidak ditemukan');
                     }
 
                     foreach ($data_anggota_kelas as $anggota_kelas) {
-                        $data_nilai_akhir = NilaiAkhir::where('anggota_kelas_id', $anggota_kelas->id)->where('pembelajaran_id', $pembelajaran->id)->where('term_id', $term->id)->where('semester_id', $semester->id)->first();
+
+                        $data_nilai_akhir = NilaiAkhir::where('anggota_kelas_id', $anggota_kelas->id)->where('pembelajaran_id', $pembelajaran->id)->where('term_id', $term->id)->first();
 
                         if (!is_null($data_nilai_akhir)) {
                             $nilai_akhir_pengetahuan = $data_nilai_akhir->nilai_akhir_sumatif;
@@ -121,7 +143,7 @@ class KirimNilaiAkhirController extends Controller
                             $nilai_akhir_keterampilan = 0;
                             $nilai_akhir_raport = 0;
 
-                            return redirect(route('guru.penilaiankm.index'))->with('toast_error', 'Belum ada data penilaian untuk ' . $pembelajaran->mapel->nama_mapel . ' ' . $pembelajaran->kelas->nama_kelas . '. Silahkan input penilaian!');
+                            return redirect(route('guru.km.penilaian.index'))->with('toast_error', 'Perlu pembaruan. Tidak ada data penilaian terbaru untuk ' . $pembelajaran->mapel->nama_mapel . ' ' . $pembelajaran->kelas->nama_kelas . '.');
                         }
 
                         $anggota_kelas->nilai_pengetahuan = round($nilai_akhir_pengetahuan, 0);
@@ -142,32 +164,35 @@ class KirimNilaiAkhirController extends Controller
      */
     public function store(Request $request)
     {
-        for ($cound_siswa = 0; $cound_siswa < count($request->anggota_kelas_id); $cound_siswa++) {
-            $data_nilai = array(
+        foreach ($request->anggota_kelas_id as $index => $anggota_kelas_id) {
+            $data_nilai = [
                 'pembelajaran_id' => $request->pembelajaran_id,
-                'term_id'  => $request->term_id,
+                'term_id' => $request->term_id,
+                'semester_id' => $request->semester_id,
                 'kkm' => $request->kkm,
-                'anggota_kelas_id'  => $request->anggota_kelas_id[$cound_siswa],
-                'nilai_sumatif'  => ltrim($request->nilai_pengetahuan[$cound_siswa]),
-                'predikat_sumatif'  => $request->predikat_pengetahuan[$cound_siswa],
-                'nilai_formatif'  => ltrim($request->nilai_keterampilan[$cound_siswa]),
-                'predikat_formatif'  => $request->predikat_keterampilan[$cound_siswa],
-                'nilai_akhir_raport'  => ltrim($request->nilai_akhir_raport[$cound_siswa]),
-                'predikat_akhir_raport'  => $request->predikat_akhir_raport[$cound_siswa],
-                'created_at'  => Carbon::now(),
-                'updated_at'  => Carbon::now(),
+                'anggota_kelas_id' => $anggota_kelas_id,
+                'nilai_sumatif' => intval($request->nilai_pengetahuan[$index]),
+                'predikat_sumatif' => $request->predikat_pengetahuan[$index],
+                'nilai_formatif' => intval($request->nilai_keterampilan[$index]),
+                'predikat_formatif' => $request->predikat_keterampilan[$index],
+                'nilai_akhir_raport' => intval($request->nilai_akhir_raport[$index]),
+                'predikat_akhir_raport' => $request->predikat_akhir_raport[$index],
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ];
+
+            // Cari atau buat entri baru berdasarkan pembelajaran_id, anggota_kelas_id, term_id, dan semester_id
+            KmNilaiAkhirRaport::updateOrCreate(
+                [
+                    'pembelajaran_id' => $request->pembelajaran_id,
+                    'anggota_kelas_id' => $anggota_kelas_id,
+                    'term_id' => $request->term_id,
+                    'semester_id' => $request->semester_id,
+                ],
+                $data_nilai
             );
-
-            $cek_nilai = KmNilaiAkhirRaport::where('pembelajaran_id', $request->pembelajaran_id)
-                ->where('anggota_kelas_id', $request->anggota_kelas_id[$cound_siswa])->where('term_id', $request->term_id)
-                ->first();
-
-            if (is_null($cek_nilai)) {
-                KmNilaiAkhirRaport::insert($data_nilai);
-            } else {
-                $cek_nilai->update($data_nilai);
-            }
         }
+
         return back()->with('toast_success', 'Nilai akhir raport berhasil dikirim');
     }
 }

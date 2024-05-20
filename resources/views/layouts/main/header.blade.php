@@ -20,8 +20,7 @@
     <link rel="stylesheet" href="{{ asset('assets/libs/bootstrap4-duallistbox/bootstrap-duallistbox.min.css') }}">
     {{-- Select2 --}}
     <link href="{{ asset('assets/libs/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('assets/libs/select2/css/select2.min.css') }}" rel="stylesheet" />
-    {{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> --}}
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     {{-- datatables --}}
     <link rel="stylesheet" href="{{ asset('assets/extra-libs/datatables.net-bs4/css/dataTables.bootstrap4.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/extra-libs/datatables.net-bs4/css/responsive.dataTables.min.css') }}">
@@ -45,9 +44,13 @@
     <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
         data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
 
+        @php
+            $user = Auth::user();
+        @endphp
+
         @include('layouts.partials.topbar.topbar')
 
-        @include('layouts.sidebar.index')
+        @yield('sidebar')
         <!-- ============================================================== -->
         <!-- End Topbar header -->
         <!-- ============================================================== -->

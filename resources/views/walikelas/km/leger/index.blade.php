@@ -1,7 +1,7 @@
 @extends('layouts.main.header')
 
 @section('sidebar')
-    @include('layouts.sidebar.index')
+    @include('layouts.sidebar.walikelas')
 @endsection
 
 @section('content')
@@ -12,7 +12,7 @@
         @php
             $user = Auth::user();
             if (
-                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
+                $user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum']) &&
                 $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
             ) {
                 $dashboard = route('guru.dashboard');
@@ -52,7 +52,7 @@
                         <div class="card-header">
                             <h3 class="card-title">{{ $title }}</h3>
                             <div class="card-tools">
-                                <a href="{{ route('leger.show', $kelas->id) }}" class="btn btn-tool btn-sm"
+                                <a href="{{ route('walikelas.hasilnilai.show', $kelas->id) }}" class="btn btn-tool btn-sm"
                                     onclick="return confirm('Download {{ $title }} ?')">
                                     <i class="fas fa-download"></i>
                                 </a>

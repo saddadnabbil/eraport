@@ -1,6 +1,6 @@
 @extends('layouts.main.header')
 @section('sidebar')
-    @include('layouts.sidebar.index')
+    @include('layouts.sidebar.admin')
 @endsection
 
 @php
@@ -38,28 +38,19 @@
         <!-- ============================================================== -->
         @php
             $user = Auth::user();
-            if (
-                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
-                $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
-            ) {
-                $dashboard = route('guru.dashboard');
-            } elseif ($user->hasAnyRole(['Student']) && $user->hasAnyPermission(['student'])) {
-                $dashboard = route('siswa.dashboard');
-            } else {
-                $dashboard = route('admin.dashboard');
-            }
+            $dashboard = route('admin.dashboard');
         @endphp
         @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
             'titleBreadCrumb' => $title,
             'breadcrumbs' => [
                 [
                     'title' => 'Dashboard',
-                    'url' => route('admin.dashboard'),
+                    'url' => $dashboard,
                     'active' => true,
                 ],
                 [
                     'title' => 'Teacher Schedule',
-                    'url' => route('jadwalpelajaran.index'),
+                    'url' => route('admin.jadwalpelajaran.index'),
                     'active' => true,
                 ],
                 [
@@ -87,7 +78,7 @@
                             <h3 class="card-title">{{ $title }}</h3>
                             <div class="card-tools">
                                 <div data-bs-toggle="tooltip" title="Print" class="d-inline-block" class="d-inline-block">
-                                    <a href="{{ route('jadwalmengajar.print', $pembelajaran->id) }}"
+                                    <a href="{{ route('admin.jadwalmengajar.print', $pembelajaran->id) }}"
                                         class="btn btn-tool btn-sm">
                                         <i class="fas fa-download"></i>
                                     </a>

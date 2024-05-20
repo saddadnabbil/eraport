@@ -3,14 +3,13 @@
 namespace App\Http\Controllers\Guru\KM;
 
 use Excel;
-use App\Models\Guru;
+use App\Models\Kelas;
 use App\Models\Mapel;
 use App\Models\Tapel;
 use App\Models\KmKkmMapel;
 use App\Models\Pembelajaran;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class KkmMapelController extends Controller
@@ -24,20 +23,17 @@ class KkmMapelController extends Controller
     {
         $title = 'KKM Mata Pelajaran';
         $tapel = Tapel::where('status', 1)->first();
-        $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
 
         $data_mapel = Mapel::where('tapel_id', $tapel->id)->orderBy('nama_mapel', 'ASC')->get();
         $id_mapel = Mapel::where('tapel_id', $tapel->id)->get('id');
 
-        $cek_pembelajaran = Pembelajaran::where('guru_id', $guru->id)->whereIn('mapel_id', $id_mapel)->whereNotNull('guru_id')->where('status', 1)->get();
+        $id_kelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->get('id');
 
-        $data_kkm = [];
-        foreach ($cek_pembelajaran as $pembelajaran) {
-            $data_kkm[] = KmKkmMapel::where('mapel_id', $pembelajaran->mapel_id)->where('kelas_id', $pembelajaran->kelas_id)->get();
-        }
+        $cek_pembelajaran = Pembelajaran::whereIn('mapel_id', $id_mapel)->whereNotNull('guru_id')->whereIn('kelas_id', $id_kelas)->where('status', 1)->get();
         if (count($cek_pembelajaran) == 0) {
-            return redirect('guru/pembelajaran')->with('toast_warning', 'data pembelajaran untuk mapel ini belum tersedia');
+            return redirect('admin/pembelajaran')->with('toast_warning', 'data pembelajaran untuk mapel ini belum tersedia');
         } else {
+            $data_kkm = KmKkmMapel::whereIn('mapel_id', $id_mapel)->get();
             return view('guru.km.kkm.index', compact('title', 'data_mapel', 'data_kkm'));
         }
     }

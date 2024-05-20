@@ -12,7 +12,7 @@
         @php
             $user = Auth::user();
             if (
-                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
+                $user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum']) &&
                 $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
             ) {
                 $dashboard = route('guru.dashboard');
@@ -32,12 +32,12 @@
                 ],
                 [
                     'title' => 'Rencana Sumatif',
-                    'url' => route('guru.rencanasumatif.index'),
+                    'url' => route('guru.km.rencanasumatif.index'),
                     'active' => true,
                 ],
                 [
                     'title' => 'Data Rencana Sumatif',
-                    'url' => route('guru.rencanasumatif.index'),
+                    'url' => route('guru.km.rencanasumatif.index'),
                     'active' => false,
                 ],
             ],
@@ -124,7 +124,7 @@
                                                                 </div>
                                                                 <div class="modal-body">
                                                                     <form
-                                                                        action="{{ route('guru.rencanasumatif.update', $rencana_penilaian->id) }}"
+                                                                        action="{{ route('guru.km.rencanasumatif.update', $rencana_penilaian->id) }}"
                                                                         method="POST">
                                                                         @csrf
                                                                         @method('PUT')

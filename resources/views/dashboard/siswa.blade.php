@@ -28,7 +28,7 @@
             $user = Auth::user();
             if ($user->hasRole('Admin')) {
                 $fullName = optional(Auth::user()->admin)->nama_lengkap ?? 'Admin not available';
-            } elseif ($user->hasRole('Teacher')) {
+            } elseif ($user->hasAnyRole(['Teacher', 'Teacher PG-KG'])) {
                 $fullName = optional(Auth::user()->karyawan)->nama_lengkap ?? 'Guru not available';
             } elseif ($user->hasRole('Student')) {
                 $fullName = optional(Auth::user()->siswa)->nama_lengkap ?? 'Siswa not available';
@@ -38,7 +38,7 @@
         @php
             $user = Auth::user();
             if (
-                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
+                $user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum']) &&
                 $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
             ) {
                 $dashboard = route('guru.dashboard');

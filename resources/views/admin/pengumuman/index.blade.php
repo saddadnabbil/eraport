@@ -1,7 +1,7 @@
 @extends('layouts.main.header')
 
 @section('sidebar')
-    @include('layouts.sidebar.index')
+    @include('layouts.sidebar.admin')
 @endsection
 
 @section('content')
@@ -11,28 +11,19 @@
         <!-- ============================================================== -->
         @php
             $user = Auth::user();
-            if (
-                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
-                $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
-            ) {
-                $dashboard = route('guru.dashboard');
-            } elseif ($user->hasAnyRole(['Student']) && $user->hasAnyPermission(['student'])) {
-                $dashboard = route('siswa.dashboard');
-            } else {
-                $dashboard = route('admin.dashboard');
-            }
+            $dashboard = route('admin.dashboard');
         @endphp
         @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
             'titleBreadCrumb' => $title,
             'breadcrumbs' => [
                 [
                     'title' => 'Dashboard',
-                    'url' => route('admin.dashboard'),
+                    'url' => $dashboard,
                     'active' => true,
                 ],
                 [
                     'title' => $title,
-                    'url' => route('pengumuman.index'),
+                    'url' => route('admin.pengumuman.index'),
                     'active' => false,
                 ],
             ],
@@ -70,7 +61,7 @@
                                             aria-hidden="true"></button>
                                         </button>
                                     </div>
-                                    <form action="{{ route('pengumuman.store') }}" method="POST">
+                                    <form action="{{ route('admin.pengumuman.store') }}" method="POST">
                                         @csrf
                                         <div class="modal-body">
                                             <div class="form-group">
@@ -121,7 +112,9 @@
                                                     {{ \Carbon\Carbon::parse($pengumuman->created_at)->diffForHumans() }}</span>
                                                 @if (Auth::user()->id == $pengumuman->user_id)
                                                     @include('components.actions.delete-button', [
-                                                        'route' => route('pengumuman.destroy', $pengumuman->id),
+                                                        'route' => route(
+                                                            'admin.pengumuman.destroy',
+                                                            $pengumuman->id),
                                                         'id' => $pengumuman->id,
                                                         'isPermanent' => true,
                                                         'withEdit' => true,
@@ -140,7 +133,8 @@
                                                                 aria-hidden="true"></button>
                                                             </button>
                                                         </div>
-                                                        <form action="{{ route('pengumuman.update', $pengumuman->id) }}"
+                                                        <form
+                                                            action="{{ route('admin.pengumuman.update', $pengumuman->id) }}"
                                                             method="POST">
                                                             {{ method_field('PATCH') }}
                                                             @csrf

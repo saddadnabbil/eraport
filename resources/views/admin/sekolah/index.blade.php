@@ -1,6 +1,6 @@
 @extends('layouts.main.header')
 @section('sidebar')
-    @include('layouts.sidebar.index')
+    @include('layouts.sidebar.admin')
 @endsection
 
 @section('content')
@@ -10,28 +10,19 @@
         <!-- ============================================================== -->
         @php
             $user = Auth::user();
-            if (
-                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
-                $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
-            ) {
-                $dashboard = route('guru.dashboard');
-            } elseif ($user->hasAnyRole(['Student']) && $user->hasAnyPermission(['student'])) {
-                $dashboard = route('siswa.dashboard');
-            } else {
                 $dashboard = route('admin.dashboard');
-            }
         @endphp
         @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
             'titleBreadCrumb' => $title,
             'breadcrumbs' => [
                 [
                     'title' => 'Dashboard',
-                    'url' => route('admin.dashboard'),
+                    'url' => $dashboard,
                     'active' => true,
                 ],
                 [
                     'title' => $title,
-                    'url' => route('sekolah.index'),
+                    'url' => route('admin.sekolah.index'),
                     'active' => false,
                 ],
             ],
@@ -51,8 +42,8 @@
                             <h3 class="card-title"><i class="fas fa-school"></i> {{ $title }}</h3>
                         </div>
                         <div class="card-body">
-                            <form name="contact-form" action="{{ route('sekolah.update', $sekolah->id) }}" method="POST"
-                                enctype="multipart/form-data">
+                            <form name="contact-form" action="{{ route('admin.sekolah.update', $sekolah->id) }}"
+                                method="POST" enctype="multipart/form-data">
                                 @method('put')
                                 @csrf
                                 <div class="form-group row">

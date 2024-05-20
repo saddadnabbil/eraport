@@ -1,6 +1,6 @@
 @extends('layouts.main.header')
 @section('sidebar')
-    @include('layouts.sidebar.index')
+    @include('layouts.sidebar.admin')
 @endsection
 
 @section('content')
@@ -10,23 +10,14 @@
         <!-- ============================================================== -->
         @php
             $user = Auth::user();
-            if (
-                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
-                $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
-            ) {
-                $dashboard = route('guru.dashboard');
-            } elseif ($user->hasAnyRole(['Student']) && $user->hasAnyPermission(['student'])) {
-                $dashboard = route('siswa.dashboard');
-            } else {
-                $dashboard = route('admin.dashboard');
-            }
+            $dashboard = route('admin.dashboard');
         @endphp
         @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
             'titleBreadCrumb' => $title,
             'breadcrumbs' => [
                 [
                     'title' => 'Dashboard',
-                    'url' => route('admin.dashboard'),
+                    'url' => $dashboard,
                     'active' => true,
                 ],
                 [
@@ -58,7 +49,7 @@
                                     </button>
                                 </div>
                                 <div data-bs-toggle="tooltip" title="Export" class="d-inline-block" class="d-inline-block">
-                                    <a href="{{ route('pembelajaran.export') }}" class="btn btn-tool btn-sm">
+                                    <a href="{{ route('admin.pembelajaran.export') }}" class="btn btn-tool btn-sm">
                                         <i class="fas fa-download"></i>
                                     </a>
                                 </div>
@@ -80,7 +71,7 @@
                                         <div class="form-group row">
                                             <label for="kelas_id" class="col-sm-2 col-form-label">Kelas</label>
                                             <div class="col-sm-10">
-                                                <form action="{{ route('pembelajaran.settings') }}" method="POST">
+                                                <form action="{{ route('admin.pembelajaran.settings') }}" method="POST">
                                                     @csrf
                                                     <select class="form-control form-select select2" name="kelas_id"
                                                         style="width: 100%;" required onchange="this.form.submit();">

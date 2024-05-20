@@ -6,10 +6,10 @@
             $allowedRoutes = ['raportptskm.*', 'raportsemesterkm.*'];
 
             $checkRouteMidSemesterReport = request()->routeIs('raportptskm.*');
-            $dynamicRouteMidSemesterReport = route('raportptskm.index');
+            $dynamicRouteMidSemesterReport = route('walikelas.raportptskm.index');
 
             $checkRouteSemesterReport = request()->routeIs('raportsemesterkm.*');
-            $dynamicRouteSemesterReport = route('raportsemesterkm.index');
+            $dynamicRouteSemesterReport = route('walikelas.raportsemesterkm.index');
             break;
     }
 @endphp

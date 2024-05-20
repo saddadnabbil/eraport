@@ -1,7 +1,7 @@
 @extends('layouts.main.header')
 
 @section('sidebar')
-    @include('layouts.sidebar.index')
+    @include('layouts.sidebar.guru')
 @endsection
 
 @section('content')
@@ -12,7 +12,7 @@
         @php
             $user = Auth::user();
             if (
-                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
+                $user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum']) &&
                 $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
             ) {
                 $dashboard = route('guru.dashboard');
@@ -203,19 +203,19 @@
                                                             <td>{{ $silabus->kelas->nama_kelas }}</td>
                                                             <td>
                                                                 @if (isset($silabus->k_tigabelas))
-                                                                    <a href="{{ route('silabus.guru.pdf.view', ['filename' => $silabus->k_tigabelas]) }}"
+                                                                    <a href="{{ route('guru.silabus.guru.pdf.view', ['filename' => $silabus->k_tigabelas]) }}"
                                                                         class="badge bg-info badge-sm" target="_blank"><i
                                                                             class="nav-icon fas fa-download"></i> &nbsp;
                                                                         K13</a>
                                                                 @endif
                                                                 @if (isset($silabus->cambridge))
-                                                                    <a href="{{ route('silabus.guru.pdf.view', ['filename' => $silabus->cambridge]) }}"
+                                                                    <a href="{{ route('guru.silabus.guru.pdf.view', ['filename' => $silabus->cambridge]) }}"
                                                                         class="badge bg-info badge-sm" target="_blank"><i
                                                                             class="nav-icon fas fa-download"></i> &nbsp;
                                                                         Cambridge</a>
                                                                 @endif
                                                                 @if (isset($silabus->edexcel))
-                                                                    <a href="{{ route('silabus.guru.pdf.view', ['filename' => $silabus->edexcel]) }}"
+                                                                    <a href="{{ route('guru.silabus.guru.pdf.view', ['filename' => $silabus->edexcel]) }}"
                                                                         class="badge bg-info badge-sm" target="_blank"><i
                                                                             class="nav-icon fas fa-download"></i> &nbsp;
                                                                         Edexcel</a>
@@ -223,13 +223,13 @@
                                                             </td>
                                                             <td>
                                                                 @if (isset($silabus->book_indo_siswa))
-                                                                    <a href="{{ route('silabus.guru.pdf.view', ['filename' => $silabus->book_indo_siswa]) }}"
+                                                                    <a href="{{ route('guru.silabus.guru.pdf.view', ['filename' => $silabus->book_indo_siswa]) }}"
                                                                         class="badge bg-info badge-sm" target="_blank"><i
                                                                             class="nav-icon fas fa-download"></i> &nbsp;
                                                                         Indonesian</a>
                                                                 @endif
                                                                 @if (isset($silabus->book_english_siswa))
-                                                                    <a href="{{ route('silabus.guru.pdf.view', ['filename' => $silabus->book_english_siswa]) }}"
+                                                                    <a href="{{ route('guru.silabus.guru.pdf.view', ['filename' => $silabus->book_english_siswa]) }}"
                                                                         class="badge bg-info badge-sm" target="_blank"><i
                                                                             class="nav-icon fas fa-download"></i> &nbsp;
                                                                         English</a>
@@ -237,13 +237,13 @@
                                                             </td>
                                                             <td>
                                                                 @if (isset($silabus->book_indo_guru))
-                                                                    <a href="{{ route('silabus.guru.pdf.view', ['filename' => $silabus->book_indo_guru]) }}"
+                                                                    <a href="{{ route('guru.silabus.guru.pdf.view', ['filename' => $silabus->book_indo_guru]) }}"
                                                                         class="badge bg-info badge-sm" target="_blank"><i
                                                                             class="nav-icon fas fa-download"></i> &nbsp;
                                                                         Indonesian</a>
                                                                 @endif
                                                                 @if (isset($silabus->book_english_guru))
-                                                                    <a href="{{ route('silabus.guru.pdf.view', ['filename' => $silabus->book_english_guru]) }}"
+                                                                    <a href="{{ route('guru.silabus.guru.pdf.view', ['filename' => $silabus->book_english_guru]) }}"
                                                                         class="badge bg-info badge-sm" target="_blank"><i
                                                                             class="nav-icon fas fa-download"></i> &nbsp;
                                                                         English</a>
@@ -337,7 +337,7 @@
                                                                                                 class="fas fa-trash-alt"></i>
                                                                                             &nbsp; delete k13
                                                                                         </a>
-                                                                                        <a href="{{ route('silabus.guru.pdf.view', ['filename' => $silabus->k_tigabelas]) }}"
+                                                                                        <a href="{{ route('guru.silabus.guru.pdf.view', ['filename' => $silabus->k_tigabelas]) }}"
                                                                                             class="badge bg-info badge-sm"
                                                                                             target="_blank"><i
                                                                                                 class="nav-icon fas fa-eye"></i>
@@ -367,7 +367,7 @@
                                                                                                 class="fas fa-trash-alt"></i>
                                                                                             &nbsp; delete cambridge
                                                                                         </a>
-                                                                                        <a href="{{ route('silabus.guru.pdf.view', ['filename' => $silabus->cambridge]) }}"
+                                                                                        <a href="{{ route('guru.silabus.guru.pdf.view', ['filename' => $silabus->cambridge]) }}"
                                                                                             class="badge bg-info badge-sm"
                                                                                             target="_blank"><i
                                                                                                 class="nav-icon fas fa-eye"></i>
@@ -397,7 +397,7 @@
                                                                                                 class="fas fa-trash-alt"></i>
                                                                                             &nbsp; delete edexcel
                                                                                         </a>
-                                                                                        <a href="{{ route('silabus.guru.pdf.view', ['filename' => $silabus->edexcel]) }}"
+                                                                                        <a href="{{ route('guru.silabus.guru.pdf.view', ['filename' => $silabus->edexcel]) }}"
                                                                                             class="badge bg-info badge-sm"
                                                                                             target="_blank"><i
                                                                                                 class="nav-icon fas fa-eye"></i>
@@ -428,7 +428,7 @@
                                                                                                 class="fas fa-trash-alt"></i>
                                                                                             &nbsp; delete book_indo_siswa
                                                                                         </a>
-                                                                                        <a href="{{ route('silabus.guru.pdf.view', ['filename' => $silabus->book_indo_siswa]) }}"
+                                                                                        <a href="{{ route('guru.silabus.guru.pdf.view', ['filename' => $silabus->book_indo_siswa]) }}"
                                                                                             class="badge bg-info badge-sm"
                                                                                             target="_blank"><i
                                                                                                 class="nav-icon fas fa-eye"></i>
@@ -459,7 +459,7 @@
                                                                                                 class="fas fa-trash-alt"></i>
                                                                                             &nbsp; delete book english siswa
                                                                                         </a>
-                                                                                        <a href="{{ route('silabus.guru.pdf.view', ['filename' => $silabus->book_english_siswa]) }}"
+                                                                                        <a href="{{ route('guru.silabus.guru.pdf.view', ['filename' => $silabus->book_english_siswa]) }}"
                                                                                             class="badge bg-info badge-sm"
                                                                                             target="_blank"><i
                                                                                                 class="nav-icon fas fa-eye"></i>
@@ -490,7 +490,7 @@
                                                                                                 class="fas fa-trash-alt"></i>
                                                                                             &nbsp; delete book indo guru
                                                                                         </a>
-                                                                                        <a href="{{ route('silabus.guru.pdf.view', ['filename' => $silabus->book_indo_guru]) }}"
+                                                                                        <a href="{{ route('guru.silabus.guru.pdf.view', ['filename' => $silabus->book_indo_guru]) }}"
                                                                                             class="badge bg-info badge-sm"
                                                                                             target="_blank"><i
                                                                                                 class="nav-icon fas fa-eye"></i>
@@ -521,7 +521,7 @@
                                                                                                 class="fas fa-trash-alt"></i>
                                                                                             &nbsp; delete book english guru
                                                                                         </a>
-                                                                                        <a href="{{ route('silabus.guru.pdf.view', ['filename' => $silabus->book_english_guru]) }}"
+                                                                                        <a href="{{ route('guru.silabus.guru.pdf.view', ['filename' => $silabus->book_english_guru]) }}"
                                                                                             class="badge bg-info badge-sm"
                                                                                             target="_blank"><i
                                                                                                 class="nav-icon fas fa-eye"></i>

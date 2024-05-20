@@ -19,18 +19,6 @@ class UsersTableSeeder extends Seeder
             'status' => true,
         ]);
         $admin->assignRole('Admin');
-        $admin->givePermissionTo([
-            'admin-access',
-            'admin-access',
-            'user-management',
-            'employee-management',
-            'masterdata-management',
-            'teacher-pg-kg',
-            'teacher-km',
-            'homeroom-pg-kg',
-            'homeroom-km',
-            'student-access',
-        ]);
 
         // siswas
         $siswa = User::create([
@@ -39,7 +27,6 @@ class UsersTableSeeder extends Seeder
             'status' => true,
         ]);
         $siswa->assignRole('Student');
-        $siswa->givePermissionTo('student-access');
 
         $siswa = User::create([
             'username' => 'siswa2',
@@ -47,7 +34,6 @@ class UsersTableSeeder extends Seeder
             'status' => true,
         ]);
         $siswa->assignRole('Student');
-        $siswa->givePermissionTo('student-access');
 
         $siswa = User::create([
             'username' => 'siswa3',
@@ -55,15 +41,13 @@ class UsersTableSeeder extends Seeder
             'status' => true,
         ]);
         $siswa->assignRole('Student');
-        $siswa->givePermissionTo('student-access');
 
         $guru = User::create([
             'username' => 'guru',
             'password' => bcrypt('123456'),
             'status' => true,
         ]);
-        $guru->assignRole('Teacher');
-        $guru->givePermissionTo(['homeroom-pg-kg', 'teacher-pg-kg']);
+        $guru->assignRole(['Teacher']);
 
         $guru = User::create([
             'username' => 'guru1',
@@ -71,7 +55,6 @@ class UsersTableSeeder extends Seeder
             'status' => true,
         ]);
         $guru->assignRole('Teacher');
-        $guru->givePermissionTo(['teacher-km']);
 
         $curriculum = User::create([
             'username' => 'curriculum',
@@ -79,6 +62,5 @@ class UsersTableSeeder extends Seeder
             'status' => true,
         ]);
         $curriculum->assignRole('Curriculum');
-        $curriculum->givePermissionTo('masterdata-management');
     }
 }

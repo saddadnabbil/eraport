@@ -3,17 +3,17 @@
 
     switch ($userRole) {
         case 'Teacher':
-            $checkRoute = request()->routeIs('pesertadidik.*');
-            $dynamicRoute = route('pesertadidik.index');
+            $checkRoute = request()->routeIs('walikelas.pesertadidik.*');
+            $dynamicRoute = route('walikelas.pesertadidik.index');
             break;
     }
 @endphp
 
 
 @include('layouts.partials.sidebar._sidebar-item', [
-    'isActive' => request()->routeIs('pesertadidik.*'),
+    'isActive' => request()->routeIs('walikelas.pesertadidik.*'),
     'hasArrow' => false,
     'icon' => 'users',
     'itemName' => 'Data Peserta Didik',
-    'route' => route('pesertadidik.index'),
+    'route' => route('walikelas.pesertadidik.index'),
 ])

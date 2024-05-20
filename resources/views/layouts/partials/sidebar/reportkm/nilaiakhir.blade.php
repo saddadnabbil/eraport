@@ -1,12 +1,27 @@
 @php
     $userRole = Auth::user()->getRoleNames()->first();
-    $allowedRoutes = ['km.kirimnilaiakhir.*', 'km.nilaiterkirim.*'];
 
-    $checkRouteKirim = request()->routeIs('km.kirimnilaiakhir.*');
-    $dynamicRouteKirim = route('km.kirimnilaiakhir.index');
+    switch ($userRole) {
+        case 'Admin':
+            $allowedRoutes = ['km.kirimnilaiakhir.*', 'km.nilaiterkirim.*'];
 
-    $checkRouteLihat = request()->routeIs('km.nilaiterkirim.*');
-    $dynamicRouteLihat = route('km.nilaiterkirim.index');
+            $checkRouteKirim = request()->routeIs('km.kirimnilaiakhir.*');
+            $dynamicRouteKirim = route('km.kirimnilaiakhir.index');
+
+            $checkRouteLihat = request()->routeIs('km.nilaiterkirim.*');
+            $dynamicRouteLihat = route('km.nilaiterkirim.index');
+            break;
+        case 'Teacher':
+            $allowedRoutes = ['guru.km.kirimnilaiakhir.*', 'guru.km.nilaiterkirim.*'];
+
+            $checkRouteKirim = request()->routeIs('guru.km.kirimnilaiakhir.*');
+            $dynamicRouteKirim = route('guru.km.kirimnilaiakhir.index');
+
+            $checkRouteLihat = request()->routeIs('guru.km.nilaiterkirim.*');
+            $dynamicRouteLihat = route('guru.km.nilaiterkirim.index');
+            break;
+        default:
+    }
 
 @endphp
 

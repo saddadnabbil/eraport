@@ -12,7 +12,7 @@
         @php
             $user = Auth::user();
             if (
-                $user->hasAnyRole(['Teacher', 'Curriculum']) &&
+                $user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum']) &&
                 $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
             ) {
                 $dashboard = route('guru.dashboard');
@@ -85,7 +85,7 @@
                                                 <td>
                                                     @if ($penilaian->jumlah_rencana_penilaian == 0)
                                                         <form
-                                                            action="{{ route('guru.rencanasumatif.create', $penilaian->id) }}"
+                                                            action="{{ route('guru.km.rencanasumatif.create', $penilaian->id) }}"
                                                             method="GET">
                                                             @csrf
                                                             <input type="hidden" name="pembelajaran_id"
@@ -97,7 +97,7 @@
                                                                     class="{{ $penilaian->jumlah_rencana_penilaian == 0 ? 'fas fa-plus' : 'fas fa-pen' }}"></i></button>
                                                         </form>
                                                     @else
-                                                        <a href="{{ route('guru.rencanasumatif.show', $penilaian->id) }}"
+                                                        <a href="{{ route('guru.km.rencanasumatif.show', $penilaian->id) }}"
                                                             class="btn btn-sm btn-success"><i class="fas fa-eye"></i></a>
                                                     @endif
                                                 </td>
