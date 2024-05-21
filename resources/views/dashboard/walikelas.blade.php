@@ -244,10 +244,8 @@
                                     <li class="item">
 
                                         <div class="product-img">
-                                            @if ($riwayat_login->user->hasRole('Admin'))
-                                                <img src="{{ asset('assets/dist/img/avatar/' . ($riwayat_login->user->karyawan->avatar ?? 'default.png')) }}"
-                                                    alt="Avatar" class="img-size-50">
-                                            @elseif($riwayat_login->user->hasAnyRole(['Teacher', 'Curriculum']))
+                                            @if ($riwayat_login->user->hasRole(['Admin', 'Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Curriculum']))
+                                                )
                                                 <img src="{{ asset('assets/dist/img/avatar/' . ($riwayat_login->user->karyawan->avatar ?? 'default.png')) }}"
                                                     alt="Avatar" class="img-size-50">
                                             @elseif($riwayat_login->user->hasRole('Student'))
@@ -258,9 +256,7 @@
 
                                         <div class="product-info">
                                             <a href="javascript:void(0)" class="product-title">
-                                                @if ($riwayat_login->user->hasRole('Admin'))
-                                                    {{ $riwayat_login->user->karyawan->nama_lengkap }}
-                                                @elseif($riwayat_login->user->hasRole('Teacher'))
+                                                @if ($riwayat_login->user->hasRole(['Admin', 'Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Curriculum']))
                                                     {{ $riwayat_login->user->karyawan->nama_lengkap }}
                                                 @elseif($riwayat_login->user->hasRole('Student'))
                                                     {{ $riwayat_login->user->siswa->nama_lengkap }}

@@ -57,7 +57,7 @@
 
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table id="zero_config" class="table border table-striped table-bordered text-nowrap">
+                                <table id="zero_config_ajax" class="table border table-striped table-bordered text-nowrap">
                                     <thead>
                                         <tr>
                                             <th>No</th>
@@ -90,7 +90,7 @@
 @push('custom-scripts')
     <script>
         $(document).ready(function() {
-            $('#zero_config').DataTable({
+            $('#zero_config_ajax').DataTable({
                 "processing": true,
                 "serverSide": true,
                 "ajax": {

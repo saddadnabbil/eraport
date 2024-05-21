@@ -96,7 +96,7 @@
 
     function confirmLogout() {
         Swal.fire({
-            title: 'Konfirmasi Logout',
+            title: 'Logout',
             text: 'Apakah Anda yakin ingin keluar?',
             icon: 'warning',
             showCancelButton: true,

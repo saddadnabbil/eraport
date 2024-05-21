@@ -37,9 +37,7 @@
         <div class="container-fluid">
             <div class="callout callout-info">
                 <h5>Add, edit, and delete {{ $title }}</h5>
-                <p>Please go through the Employee menu or click the button below.</p>
-                <a href="{{ route('karyawan.index') }}" class="btn btn-primary text-white mt-2" style="text-decoration:none">
-                    Employee</a>
+                <p>Please Contact Admin</p>
             </div>
 
             <div class="row">

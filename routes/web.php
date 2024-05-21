@@ -599,15 +599,29 @@ Route::group(['middleware' => ['auth']], function () {
     });
     // End Route Admin
 
+    // Start Route Curriculum
+    Route::group(['middleware' => 'role:Curriculum'], function () {
+        Route::prefix('curriculum')->group(function () {
+            Route::get('dashboard', 'DashboardController@index')->name('curriculum.dashboard');
+        });
+    });
+    // End Route Curriculum
+
     // Start Route Guru
     Route::group(['middleware' => 'role:Teacher|Teacher PG-KG|Co-Teacher|Co-Teacher PG-KG|Curriculum'], function () {
         Route::prefix('teacher')->group(function () {
             Route::get('dashboard', 'DashboardController@index')->name('guru.dashboard');
             Route::get('akses', 'AuthController@ganti_akses')->name('ganti-akses');
+            Route::resource('profile', 'Guru\ProfileController')->only(['update'])->names([
+                'update' => 'guru.profile.update',
+            ]);
 
             // Curriculum
             Route::group(['middleware' => 'role:Curriculum'], function () {
                 Route::prefix('master-data')->group(function () {
+
+                    Route::get('karyawan/{id}', 'Admin\KaryawanController@show')->name('guru.karyawan.show');
+
                     // jadwal pelajaran -> siswa
                     Route::resource('jadwalpelajaran', 'Guru\MD\JadwalPelajaranController', [
                         'only' => ['index', 'create', 'store', 'show'],
@@ -1006,60 +1020,64 @@ Route::group(['middleware' => ['auth']], function () {
 
             // Start Route Wali Kelas KM
             Route::group(['middleware' => ['checkAksesGuru:homeroom-km', 'role:Teacher|Co-Teacher']], function () {
-                Route::resource('pesertadidik', 'Walikelas\PesertaDidikController')->only(['index', 'show'])->names([
-                    'index' => 'walikelas.pesertadidik.index',
-                    'show' => 'walikelas.pesertadidik.show',
-                ]);
+                Route::prefix('km')->group(function () {
+                    Route::resource('pesertadidik', 'Walikelas\PesertaDidikController')->only(['index', 'show'])->names([
+                        'index' => 'walikelas.pesertadidik.index',
+                        'show' => 'walikelas.pesertadidik.show',
+                    ]);
 
-                Route::resource('kehadiran', 'Walikelas\KehadiranSiswaController')->only(['index', 'store'])->names([
-                    'index' => 'walikelas.kehadiran.index',
-                    'store' => 'walikelas.kehadiran.store',
-                ]);
+                    Route::resource('kehadiran', 'Walikelas\KehadiranSiswaController')->only(['index', 'store'])->names([
+                        'index' => 'walikelas.kehadiran.index',
+                        'store' => 'walikelas.kehadiran.store',
+                    ]);
 
-                Route::resource('prestasi', 'Walikelas\PrestasiSiswaController')->only(['index', 'store', 'update', 'destroy'])->names([
-                    'index' => 'walikelas.prestasi.index',
-                    'store' => 'walikelas.prestasi.store',
-                    'update' => 'walikelas.prestasi.update',
-                    'destroy' => 'walikelas.prestasi.destroy',
-                ]);
+                    Route::resource('prestasi', 'Walikelas\PrestasiSiswaController')->only(['index', 'store', 'update', 'destroy'])->names([
+                        'index' => 'walikelas.prestasi.index',
+                        'store' => 'walikelas.prestasi.store',
+                        'update' => 'walikelas.prestasi.update',
+                        'destroy' => 'walikelas.prestasi.destroy',
+                    ]);
 
-                Route::resource('catatan', 'Walikelas\CatatanWaliKelasController')->only(['index', 'store'])->names([
-                    'index' => 'walikelas.catatan.index',
-                    'store' => 'walikelas.catatan.store',
-                ]);
+                    Route::resource('catatan', 'Walikelas\CatatanWaliKelasController')->only(['index', 'store'])->names([
+                        'index' => 'walikelas.catatan.index',
+                        'store' => 'walikelas.catatan.store',
+                    ]);
 
-                Route::resource('kenaikan', 'Walikelas\KenaikanKelasController')->only(['index', 'store'])->names([
-                    'index' => 'walikelas.kenaikan.index',
-                    'store' => 'walikelas.kenaikan.store',
-                ]);
+                    Route::resource('kenaikan', 'Walikelas\KenaikanKelasController')->only(['index', 'store'])->names([
+                        'index' => 'walikelas.kenaikan.index',
+                        'store' => 'walikelas.kenaikan.store',
+                    ]);
 
-                Route::resource('statusnilaiguru', 'Walikelas\KM\StatusPenilaianController')->only(['index'])->names([
-                    'index' => 'walikelas.statusnilaiguru.index',
-                ]);
+                    Route::resource('statusnilai', 'Walikelas\KM\StatusPenilaianController')->only(['index'])->names([
+                        'index' => 'walikelas.statusnilaiguru.index',
+                    ]);
 
-                Route::resource('hasilnilai', 'Walikelas\KM\PengelolaanNilaiController')->only(['index'])->names([
-                    'index' => 'walikelas.hasilnilai.index',
-                ]);
+                    Route::resource('hasilnilai', 'Walikelas\KM\PengelolaanNilaiController')->only(['index'])->names([
+                        'index' => 'walikelas.hasilnilai.index',
+                    ]);
 
-                Route::resource('nilairaportkmwalas', 'Admin\KM\NilaiRaportSemesterController')->only(['index', 'store'])->names([
-                    'index' => 'walikelas.nilairaportkmwalas.index',
-                    'store' => 'walikelas.nilairaportkmwalas.store',
-                ]);
+                    Route::resource('nilairaport', 'Admin\KM\NilaiRaportSemesterController')->only(['index', 'store'])->names([
+                        'index' => 'walikelas.nilairaport.index',
+                        'store' => 'walikelas.nilairaport.store',
+                    ]);
 
-                Route::resource('leger', 'Walikelas\KM\LegerNilaiSiswaController')->only(['index', 'show'])->names([
-                    'index' => 'walikelas.leger.index',
-                    'show' => 'walikelas.leger.show',
-                ]);
+                    Route::resource('leger', 'Walikelas\KM\LegerNilaiSiswaController')->only(['index', 'show'])->names([
+                        'index' => 'walikelas.leger.index',
+                        'show' => 'walikelas.leger.show',
+                    ]);
 
-                Route::resource('raportptskm', 'Walikelas\KM\CetakRaportPTSController')->only(['index', 'show'])->names([
-                    'index' => 'walikelas.raportptskm.index',
-                    'show' => 'walikelas.raportptskm.show',
-                ]);
+                    Route::resource('raportpts', 'Walikelas\KM\CetakRaportPTSController')->only(['index', 'show', 'store'])->names([
+                        'index' => 'walikelas.raportpts.index',
+                        'show' => 'walikelas.raportpts.show',
+                        'store' => 'walikelas.raportpts.store',
+                    ]);
 
-                Route::resource('raportsemesterkm', 'Walikelas\KM\CetakRaportSemesterController')->only(['index', 'show'])->names([
-                    'index' => 'walikelas.raportsemesterkm.index',
-                    'show' => 'walikelas.raportsemesterkm.show',
-                ]);
+                    Route::resource('raportsemester', 'Walikelas\KM\CetakRaportSemesterController')->only(['index', 'show', 'store'])->names([
+                        'index' => 'walikelas.raportsemester.index',
+                        'show' => 'walikelas.raportsemester.show',
+                        'store' => 'walikelas.raportsemester.store',
+                    ]);
+                });
             });
             // End  Raport KM Wali Kelas
 
@@ -1157,209 +1175,36 @@ Route::group(['middleware' => ['auth']], function () {
     });
     // End Route Guru
 
-    // Route User Guru
-    // Route::group(['middleware' => 'role:Teacher|Co-Teacher'], function () {
-    //     Route::group(['prefix' => 'guru'], function () {
-    //         Route::resource('profileguru', 'Guru\ProfileController', [
-    //             'uses' => ['update'],
-    //         ]);
-
-    //         Route::get('akses', 'AuthController@ganti_akses')->name('akses');
-
-    //         // Route Guru Mapel
-    //         Route::group(['middleware' => 'checkAksesGuru:teacher-km'], function () {
-
-    //             // jadwal mengajar -> guru
-    //             Route::get('jadwalmengajar', 'Guru\JadwalMengajarController@index')->name('guru.jadwalmengajar');
-    //             Route::get('jadwalmengajar/show', 'Guru\JadwalMengajarController@show')->name('guru.jadwalmengajar.show');
-    //             Route::get('jadwalmengajar/{id}/print', 'Guru\JadwalMengajarController@print')->name('guru.jadwalmengajar.print');
-
-    //             Route::get('kkmguru/import', 'Guru\KM\KkmMapelController@format_import')->name('kkmguru.format_import');
-    //             Route::post('kkmguru/import', 'Guru\KM\KkmMapelController@import')->name('kkmguru.import');
-    //             Route::resource('kkmguru', 'Guru\KM\KkmMapelController', [
-    //                 'only' => ['index', 'store', 'update', 'destroy'],
-    //             ]);
-
-    //             Route::delete('/cp/delete/{id}', 'Guru\KM\CapaianPembelajaranController@destroy')->name('guru.cp.destroy');
-    //             Route::resource('cp', 'Guru\KM\CapaianPembelajaranController')->names([
-    //                 'index' => 'guru.cp.index',
-    //                 'create' => 'guru.cp.create',
-    //                 'store' => 'guru.cp.store',
-    //                 'update' => 'guru.cp.update',
-    //             ]);
-
-    //             Route::resource('rencanaformatif', 'Guru\KM\RencanaNilaiFormatifController')->names([
-    //                 'index' => 'guru.rencanaformatif.index',
-    //                 'create' => 'guru.rencanaformatif.create',
-    //                 'store' => 'guru.rencanaformatif.store',
-    //                 'show' => 'guru.rencanaformatif.show',
-    //                 'edit' => 'guru.rencanaformatif.edit',
-    //                 'update' => 'guru.rencanaformatif.update',
-    //                 'destroy' => 'guru.rencanaformatif.destroy',
-    //             ]);
-
-    //             Route::resource('rencanasumatif', 'Guru\KM\RencanaNilaiSumatifController')->names([
-    //                 'index' => 'guru.rencanasumatif.index',
-    //                 'create' => 'guru.rencanasumatif.create',
-    //                 'store' => 'guru.rencanasumatif.store',
-    //                 'show' => 'guru.rencanasumatif.show',
-    //                 'edit' => 'guru.rencanasumatif.edit',
-    //                 'update' => 'guru.rencanasumatif.update',
-    //                 'destroy' => 'guru.rencanasumatif.destroy',
-    //             ]);
-
-    //             Route::resource('penilaiankm', 'Guru\KM\PenilaianKurikulumMerdekaController')->names([
-    //                 'index' => 'guru.penilaiankm.index',
-    //                 'create' => 'guru.penilaiankm.create',
-    //                 'store' => 'guru.penilaiankm.store',
-    //                 'show' => 'guru.penilaiankm.show',
-    //                 'edit' => 'guru.penilaiankm.edit',
-    //                 'update' => 'guru.penilaiankm.update',
-    //                 'destroy' => 'guru.penilaiankm.destroy',
-    //             ]);
-
-    //             Route::resource('prosesdeskripsikm', 'Guru\KM\ProsesDeskripsiSiswaController', [
-    //                 'uses' => ['index', 'create', 'store'],
-    //             ]);
-
-    //             Route::get('getKelas/ekstra/{id}', 'AjaxController@ajax_kelas_ekstra');
-
-    //             Route::resource('nilaiekstra', 'Guru\NilaiEkstrakulikulerController', [
-    //                 'uses' => ['index', 'create', 'store'],
-    //             ]);
-
-    //             Route::get('getKelas/ajax/{id}', 'AjaxController@ajax_kelas_silabus');
-    //             Route::get('getAllSilabus/ajax/{id}', 'AjaxController@getAllSilabus')->name('guru.get.all.silabus');
-    //             // Route::get('getKelas/ajax/{id}', 'AjaxController@ajax_kelas');
-
-    //             Route::get('getPembelajaranId/', 'AjaxController@getPembelajaranId')->name('guru.get.pembelajaran.id');
-
-    //             Route::resource('silabus', 'Guru\SilabusController')
-    //                 ->only(['index', 'store', 'update', 'destroy'])
-    //                 ->names([
-    //                     'index' => 'guru.silabus.index',
-    //                     'store' => 'guru.silabus.store',
-    //                     'update' => 'guru.silabus.update',
-    //                     'destroy' => 'guru.silabus.destroy',
-    //                 ]);
-    //             Route::delete('/silabus/{id}/destroy/{fileType}', 'Guru\SilabusController@destroyFile')->name('guru.silabus.destroyFile');
-
-    //             Route::get('/pdf/{filename}', 'Admin\PdfController@viewSilabusPDF')->name('silabus.guru.pdf.view');
-
-    //             // End Import Nilai
-    //             Route::resource('kirimnilaiakhirkm', 'Guru\KM\KirimNilaiAkhirController', [
-    //                 'uses' => ['index', 'create', 'store'],
-    //             ]);
-
-    //             Route::resource('nilaiterkirimkm', 'Guru\KM\LihatNilaiTerkirimController', [
-    //                 'uses' => ['index', 'create'],
-    //             ]);
-    //         });
-
-    //         Route::group(['prefix' => 'tk'], function () {
-    //             Route::resource('penilaian', 'Guru\KM\PenilaianTkController')->names([
-    //                 'index' => 'tk.guru.penilaian.index',
-    //                 'create' => 'tk.guru.penilaian.create',
-    //                 'store' => 'tk.guru.penilaian.store',
-    //                 'show' => 'tk.guru.penilaian.show',
-    //                 'edit' => 'tk.guru.penilaian.edit',
-    //                 'update' => 'tk.guru.penilaian.update',
-    //                 'destroy' => 'tk.guru.penilaian.destroy',
-    //             ]);
-    //             Route::resource('raport', 'Guru\KM\CetakRaportTKController')->names([
-    //                 'index' => 'tk.guru.raport.index',
-    //                 'show' => 'tk.guru.raport.show',
-    //                 'store' => 'tk.guru.raport.store',
-    //             ]);
-    //             Route::get('raport/export/{id}', 'Guru\KM\CetakRaportTKController@export')->name('tk.guru.raport.export');
-    //         });
-    //         // End Route Guru Mapel
-
-    //         //Route Wali Kelas
-    //         Route::group(['middleware' => 'checkAksesGuru:homeroom-km'], function () {
-    //             Route::resource('pesertadidik', 'Walikelas\PesertaDidikController')->only(['index', 'show'])->names([
-    //                 'index' => 'walikelas.pesertadidik.index',
-    //                 'show' => 'walikelas.pesertadidik.show',
-    //             ]);
-
-    //             Route::resource('kehadiran', 'Walikelas\KehadiranSiswaController')->only(['index', 'store'])->names([
-    //                 'index' => 'walikelas.kehadiran.index',
-    //                 'store' => 'walikelas.kehadiran.store',
-    //             ]);
-
-    //             Route::resource('prestasi', 'Walikelas\PrestasiSiswaController')->only(['index', 'store', 'update', 'destroy'])->names([
-    //                 'index' => 'walikelas.prestasi.index',
-    //                 'store' => 'walikelas.prestasi.store',
-    //                 'update' => 'walikelas.prestasi.update',
-    //                 'destroy' => 'walikelas.prestasi.destroy',
-    //             ]);
-
-    //             Route::resource('catatan', 'Walikelas\CatatanWaliKelasController')->only(['index', 'store'])->names([
-    //                 'index' => 'walikelas.catatan.index',
-    //                 'store' => 'walikelas.catatan.store',
-    //             ]);
-
-    //             Route::resource('kenaikan', 'Walikelas\KenaikanKelasController')->only(['index', 'store'])->names([
-    //                 'index' => 'walikelas.kenaikan.index',
-    //                 'store' => 'walikelas.kenaikan.store',
-    //             ]);
-
-    //             Route::resource('statusnilaiguru', 'Walikelas\KM\StatusPenilaianController', [
-    //                 'uses' => ['index'],
-    //             ]);
-    //             Route::resource('hasilnilai', 'Walikelas\KM\PengelolaanNilaiController', [
-    //                 'uses' => ['index'],
-    //             ]);
-    //             Route::resource('nilairaportkmwalas', 'Admin\KM\NilaiRaportSemesterController', [
-    //                 'uses' => ['index', 'store'],
-    //             ]);
-
-    //             Route::resource('leger', 'Walikelas\KM\LegerNilaiSiswaController', [
-    //                 'uses' => ['index', 'show'],
-    //             ]);
-
-    //             Route::resource('raportptskm', 'Walikelas\KM\CetakRaportPTSController', [
-    //                 'uses' => ['index', 'show'],
-    //             ]);
-
-    //             Route::resource('raportsemesterkm', 'Walikelas\KM\CetakRaportSemesterController', [
-    //                 'uses' => ['index', 'show'],
-    //             ]);
-    //             // End  Raport KM Wali Kelas
-    //         });
-    //         // End Route Wali Kelas
-    //     });
-    // });
-    // End Route User Guru
-
     // Route User Siswa
     Route::group(['middleware' => 'role:Student'], function () {
-        Route::get('dashboard', 'DashboardController@index')->name('siswa.dashboard');
+        Route::prefix('student')->group(function () {
+            Route::get('dashboard', 'DashboardController@index')->name('siswa.dashboard');
 
-        // jadwal pelajaran -> siswa
-        Route::get('jadwalpelajaran', 'Siswa\JadwalPelajaranController@index')->name('siswa.jadwalpelajaran');
-        Route::get('jadwalpelajaran/{id}/print', 'Siswa\JadwalPelajaranController@print')->name('siswa.jadwalpelajaran.print');
+            // jadwal pelajaran -> siswa
+            Route::get('jadwalpelajaran', 'Siswa\JadwalPelajaranController@index')->name('siswa.jadwalpelajaran');
+            Route::get('jadwalpelajaran/{id}/print', 'Siswa\JadwalPelajaranController@print')->name('siswa.jadwalpelajaran.print');
 
-        Route::resource('profilesiswa', 'Siswa\ProfileController', [
-            'uses' => ['update'],
-        ]);
-        Route::resource('ekstra', 'Siswa\EkstrakulikulerController', [
-            'uses' => ['index'],
-        ]);
-        Route::resource('presensi', 'Siswa\RekapKehadiranController', [
-            'uses' => ['index'],
-        ]);
-
-        Route::resource('silabus', 'Siswa\SilabusController')
-            ->only(['index'])
-            ->names([
-                'index' => 'siswa.silabus.index',
+            Route::resource('profilesiswa', 'Siswa\ProfileController', [
+                'uses' => ['update'],
             ]);
-        Route::get('/pdf/{filename}', 'Admin\PdfController@viewSilabusPDF')->name('silabus.siswa.pdf.view');
+            Route::resource('ekstra', 'Siswa\EkstrakulikulerController', [
+                'uses' => ['index'],
+            ]);
+            Route::resource('presensi', 'Siswa\RekapKehadiranController', [
+                'uses' => ['index'],
+            ]);
 
-        Route::resource('nilaiakhir', 'Siswa\KM\NilaiAkhirSemesterController', [
-            'uses' => ['index'],
-        ]);
+            Route::resource('silabus', 'Siswa\SilabusController')
+                ->only(['index'])
+                ->names([
+                    'index' => 'siswa.silabus.index',
+                ]);
+            Route::get('/pdf/{filename}', 'Admin\PdfController@viewSilabusPDF')->name('silabus.siswa.pdf.view');
+
+            Route::resource('nilaiakhir', 'Siswa\KM\NilaiAkhirSemesterController', [
+                'uses' => ['index'],
+            ]);
+        });
     });
     // End Route User Siswa
 });

@@ -4,23 +4,24 @@ namespace App\Http\Controllers\WaliKelas\KM;
 
 use PDF;
 use App\Models\Guru;
+use App\Models\Term;
 use App\Models\Kelas;
 use App\Models\Mapel;
 use App\Models\Tapel;
 use App\Models\Sekolah;
+use App\Models\Semester;
 use App\Models\AnggotaKelas;
 use App\Models\Pembelajaran;
+use Illuminate\Http\Request;
 use App\Models\KehadiranSiswa;
 use App\Models\Ekstrakulikuler;
 use App\Models\CatatanWaliKelas;
 use App\Models\KmNilaiAkhirRaport;
-use Illuminate\Http\Request;
-use App\Models\NilaiEkstrakulikuler;
-use App\Models\AnggotaEkstrakulikuler;
 use App\Http\Controllers\Controller;
-use App\Models\Semester;
-use App\Models\Term;
+use App\Models\NilaiEkstrakulikuler;
 use Illuminate\Support\Facades\Auth;
+use App\Models\AnggotaEkstrakulikuler;
+use Illuminate\Support\Facades\Validator;
 
 class CetakRaportPTSController extends Controller
 {
@@ -44,6 +45,15 @@ class CetakRaportPTSController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'term_id' => 'required',
+            'semester_id' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+        }
+
         $title = 'Raport Tengah Semester';
         $tapel = Tapel::where('status', 1)->first();
         $term = Term::findorfail($request->term_id);
@@ -54,7 +64,7 @@ class CetakRaportPTSController extends Controller
         $id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('id');
         $kelas_id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('kelas_id');
 
-        $data_anggota_kelas = AnggotaKelas::where('kelas_id', $kelas_id_anggota_kelas)
+        $data_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $kelas_id_anggota_kelas)
             ->orderBy('id', 'DESC')
             ->whereHas('siswa', function ($query) {
                 $query->where('status', 1);

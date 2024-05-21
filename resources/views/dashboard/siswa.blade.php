@@ -216,25 +216,22 @@
                                 @foreach ($data_riwayat_login as $riwayat_login)
                                     <li class="item">
                                         <div class="product-img">
-                                            @if ($riwayat_login->user->hasRole('Admin'))
-                                                <img src="{{ asset('assets/dist/img/avatar/' . ($riwayat_login->user->karyawan->avatar ?? 'default.png')) }}"
-                                                    alt="Avatar" class="img-size-50">
-                                            @elseif($riwayat_login->user->hasAnyRole(['Teacher', 'Curriculum']))
-                                                <img src="{{ asset('assets/dist/img/avatar/' . ($riwayat_login->user->karyawan->avatar ?? 'default.png')) }}"
-                                                    alt="Avatar" class="img-size-50">
-                                            @elseif($riwayat_login->user->hasRole('Student'))
-                                                <img src="{{ asset('assets/dist/img/avatar/' . ($riwayat_login->user->siswa->avatar ?? 'default.png')) }}"
-                                                    alt="Avatar" class="img-size-50">
+                                            @if ($riwayat_login->user->hasRole('Student'))
+                                                @php
+                                                    if ($riwayat_login->user->siswa->avatar == null) {
+                                                        $avatar = 'default.png';
+                                                    } else {
+                                                        $avatar = $riwayat_login->user->siswa->avatar;
+                                                    }
+                                                @endphp
                                             @endif
+                                            <img src="{{ asset('assets/dist/img/avatar/' . $avatar) }}" alt="Avatar"
+                                                class="img-size-50">
                                         </div>
 
                                         <div class="product-info">
                                             <a href="javascript:void(0)" class="product-title">
-                                                @if ($riwayat_login->user->hasRole('Admin'))
-                                                    {{ $riwayat_login->user->karyawan->nama_lengkap }}
-                                                @elseif($riwayat_login->user->hasRole('Teacher'))
-                                                    {{ $riwayat_login->user->karyawan->nama_lengkap }}
-                                                @elseif($riwayat_login->user->hasRole('Student'))
+                                                @if ($riwayat_login->user->hasRole('Student'))
                                                     {{ $riwayat_login->user->siswa->nama_lengkap }}
                                                 @endif
 
@@ -245,11 +242,7 @@
                                                 @endif
                                             </a>
                                             <span class="product-description">
-                                                @if ($riwayat_login->user->hasRole('Admin'))
-                                                    Administrator
-                                                @elseif($riwayat_login->user->hasRole('Teacher'))
-                                                    Guru
-                                                @elseif($riwayat_login->user->hasRole('Student'))
+                                                @if ($riwayat_login->user->hasRole('Student'))
                                                     Siswa
                                                 @endif
 

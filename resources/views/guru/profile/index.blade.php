@@ -11,16 +11,7 @@
         <!-- ============================================================== -->
         @php
             $user = Auth::user();
-            if (
-                $user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum']) &&
-                $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
-            ) {
-                $dashboard = route('guru.dashboard');
-            } elseif ($user->hasAnyRole(['Student']) && $user->hasAnyPermission(['student'])) {
-                $dashboard = route('siswa.dashboard');
-            } else {
-                $dashboard = route('admin.dashboard');
-            }
+            $dashboard = route('guru.dashboard');
         @endphp
         @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
             'titleBreadCrumb' => $title,
@@ -85,7 +76,7 @@
                             <h3 class="card-title"> Data Pribadi</h3>
                         </div><!-- /.card-header -->
                         <div class="card-body">
-                            <form action="{{ route('profileguru.update', $guru->id) }}" method="POST"
+                            <form action="{{ route('guru.profile.update', $guru->id) }}" method="POST"
                                 enctype="multipart/form-data">
                                 @method('put')
                                 @csrf

@@ -7,9 +7,21 @@
                 <!-- Logo icon -->
                 @php
                     $user = Auth::user();
-                @endphp
-                @php
-                    $dashboard = route('guru.dashboard');
+                    if (Auth::user()->hasRole('Admin')) {
+                        $dashboard = route('admin.dashboard');
+                    } elseif (
+                        (Auth::user()->hasRole('Curriculum') && !Auth::user()->hasRole('Teacher')) ||
+                        request()->is('teacher/master-data/*') ||
+                        request()->is('curriculum/dashboard')
+                    ) {
+                        $dashboard = route('curriculum.dashboard');
+                    } elseif (
+                        Auth::user()->hasAnyRole(['Teacher', 'Teacher PG-KG', 'Co-Teacher', 'Co-Teacher PG-KG'])
+                    ) {
+                        $dashboard = route('guru.dashboard');
+                    } elseif (Auth::user()->hasRole('Student')) {
+                        $dashboard = route('siswa.dashboard');
+                    }
                 @endphp
                 <li class="sidebar-item">
                     <a class="sidebar-link sidebar-link" href="{{ $dashboard }}" aria-expanded="false"><i
@@ -19,7 +31,7 @@
                 <li class="list-divider"></li>
 
                 @if ($user->hasRole('Curriculum'))
-                    @if (request()->is('teacher/master-data/*') || request()->is('teacher/dashboard'))
+                    @if (request()->is('teacher/master-data/*') || request()->is('curriculum/dashboard'))
                         <li class="nav-small-cap">
                             <span class="hide-menu">Curriculum</span>
                         </li>
@@ -28,12 +40,11 @@
                         <li class="list-divider"></li>
                     @endif
 
-                    @if ($request->is('teacher/km/p5*'))
+                    @if (request()->is('teacher/km/p5*'))
                         <li class="list-divider"></li>
                         <li class="nav-small-cap">
                             <span class="hide-menu">REPORT P5BK</span>
                         </li>
-
                         @include('layouts.partials.sidebar.report-p5.inputdata')
                     @endif
                 @endif
@@ -76,13 +87,10 @@
                     <span class="hide-menu">AUTHTENTICATION</span>
                 </li>
                 <li class="sidebar-item">
-                    <form class="sidebar-link sidebar-link" id="logout-form" action="{{ route('logout') }}"
-                        method="POST" style="display: inline;">
-                        @csrf
-                        <button type="button" onclick="confirmLogout()"
-                            class="text-decoration-none border-0 bg-transparent btn-link text-danger"> <i
-                                data-feather="log-out" class="feather-icon text-danger"></i>Logout</button>
-                    </form>
+                    <button type="button" id="logout-form" onclick="confirmLogout()"
+                        class="text-decoration-none border-0 bg-transparent btn-link text-danger button sidebar-link sidebar-link"
+                        style="display: inline;"> <i data-feather="log-out"
+                            class="feather-icon text-danger"></i>Logout</button>
                 </li>
         </nav>
         <!-- End Sidebar navigation -->

@@ -80,7 +80,7 @@ class KaryawanController extends Controller
                     'isPermanent' => true,
                     'withEdit' => false,
                     'withShow' => true,
-                    'showRoute' => route('karyawan.show', $karyawan->id),
+                    'showRoute' => route('guru.karyawan.show', $karyawan->id),
                 ])->render();
 
                 return $deleteButton;

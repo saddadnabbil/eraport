@@ -20,7 +20,7 @@ class KmKkmMapel extends Model
 
     public function mapel()
     {
-        return $this->belongsTo('App\Models\Mapel');
+        return $this->belongsTo('App\Models\Mapel', 'mapel_id');
     }
 
     public function kelas()

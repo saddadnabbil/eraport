@@ -52,8 +52,7 @@
                         <div class="card-header">
                             <h3 class="card-title">{{ $title }}</h3>
                             <div class="card-tools">
-                                <a href="{{ route('walikelas.hasilnilai.show', $kelas->id) }}" class="btn btn-tool btn-sm"
-                                    onclick="return confirm('Download {{ $title }} ?')">
+                                <a href="{{ route('walikelas.leger.show', $kelas->id) }}" class="btn btn-tool btn-sm">
                                     <i class="fas fa-download"></i>
                                 </a>
                             </div>

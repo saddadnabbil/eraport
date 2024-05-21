@@ -56,7 +56,7 @@
                         <div class="card-body">
 
                             <div class="callout callout-info">
-                                <form action="{{ route('walikelas.raportptskm.store') }}" method="POST">
+                                <form action="{{ route('walikelas.raportpts.store') }}" method="POST">
                                     @csrf
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Term</label>
@@ -109,7 +109,7 @@
                                                     <td class="text-center">{{ $anggota_kelas->siswa->jenis_kelamin }}</td>
                                                     <td class="text-center">
                                                         <form
-                                                            action="{{ route('walikelas.raportptskm.show', $anggota_kelas->id) }}"
+                                                            action="{{ route('walikelas.raportpts.show', $anggota_kelas->id) }}"
                                                             target="_black" method="GET">
                                                             @csrf
                                                             <input type="hidden" name="paper_size"

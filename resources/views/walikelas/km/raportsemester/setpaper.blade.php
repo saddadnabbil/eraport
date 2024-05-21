@@ -55,7 +55,7 @@
 
                         <div class="card-body">
                             <div class="callout callout-info">
-                                <form action="{{ route('walikelas.raportsemesterkm.store') }}" method="POST">
+                                <form action="{{ route('walikelas.raportsemester.store') }}" method="POST">
                                     @csrf
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">Semester</label>

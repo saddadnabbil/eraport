@@ -11,16 +11,7 @@
         <!-- ============================================================== -->
         @php
             $user = Auth::user();
-            if (
-                $user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum']) &&
-                $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
-            ) {
-                $dashboard = route('guru.dashboard');
-            } elseif ($user->hasAnyRole(['Student']) && $user->hasAnyPermission(['student'])) {
-                $dashboard = route('siswa.dashboard');
-            } else {
-                $dashboard = route('admin.dashboard');
-            }
+            $dashboard = route('guru.dashboard');
         @endphp
         @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
             'titleBreadCrumb' => $title,

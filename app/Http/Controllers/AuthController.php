@@ -111,9 +111,10 @@ class AuthController extends Controller
 
             $this->handleGuruSession();
 
-            // Redirect to the dashboard
             if (Auth::user()->hasAnyRole(['Admin'])) {
                 return redirect()->route('admin.dashboard')->with('toast_success', 'Login berhasil');
+            } elseif (Auth::user()->hasRole('Curriculum') && !Auth::user()->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG'])) {
+                return redirect()->route('curriculum.dashboard')->with('toast_success', 'Login berhasil');
             } elseif (Auth::user()->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum'])) {
                 return redirect()->route('guru.dashboard')->with('toast_success', 'Login berhasil');
             } elseif (Auth::user()->hasRole('Student')) {
@@ -144,35 +145,33 @@ class AuthController extends Controller
     protected function handleGuruSession()
     {
         $user = Auth::user();
-        $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
 
-        if ($user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum'])) {
-            if (Auth::user()->hasAnyRole(['Teacher', 'Curriculum', 'Teacher PG-KG', 'Co-Teacher', 'Co-Teacher PG-KG'])) {
-                // check permission name if homeroom-km true
-                if ($user->getRoleNames()->contains('Teacher')) {
-                    session([
-                        'akses_sebagai' => 'teacher-km',
-                    ]);
-                } elseif ($user->getRoleNames()->contains('Teacher PG-KG')) {
-                    session([
-                        'akses_sebagai' => 'teacher-pg-kg',
-                    ]);
-                }
+        if ($user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG'])) {
+            $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
+            // check permission name if homeroom-km true
+            if ($user->getRoleNames()->contains('Teacher')) {
+                session([
+                    'akses_sebagai' => 'teacher-km',
+                ]);
+            } elseif ($user->getRoleNames()->contains('Teacher PG-KG')) {
+                session([
+                    'akses_sebagai' => 'teacher-pg-kg',
+                ]);
+            }
 
-                $cek_wali_kelas = Kelas::where('guru_id', $guru->id)->whereNotIn('tingkatan_id', [1, 2, 3])->first();
-                $cek_wali_kelas_tk = Kelas::where('guru_id', $guru->id)->whereIn('tingkatan_id', [1, 2, 3])->get();
+            $cek_wali_kelas = Kelas::where('guru_id', $guru->id)->whereNotIn('tingkatan_id', [1, 2, 3])->first();
+            $cek_wali_kelas_tk = Kelas::where('guru_id', $guru->id)->whereIn('tingkatan_id', [1, 2, 3])->get();
 
-                if ($cek_wali_kelas) {
-                    session([
-                        'cek_homeroom' => true,
-                    ]);
-                }
+            if ($cek_wali_kelas) {
+                session([
+                    'cek_homeroom' => true,
+                ]);
+            }
 
-                if ($cek_wali_kelas_tk && count($cek_wali_kelas_tk) > 0) {
-                    session([
-                        'cek_homeroom_tk' => true,
-                    ]);
-                }
+            if ($cek_wali_kelas_tk && count($cek_wali_kelas_tk) > 0) {
+                session([
+                    'cek_homeroom_tk' => true,
+                ]);
             }
         }
     }
@@ -254,8 +253,7 @@ class AuthController extends Controller
                     'akses_sebagai' => 'homeroom-km',
                     'cek_homeroom' => true,
                 ]);
-                return back()->with('toast_success', 'Homeroom access was successful');
-                dd(session()->all());
+                return redirect(route('guru.dashboard'))->with('toast', 'Homeroom access was successful');
             } elseif (session()->get('akses_sebagai') == 'homeroom-km') {
                 session()->put([
                     'akses_sebagai' => 'teacher-km',

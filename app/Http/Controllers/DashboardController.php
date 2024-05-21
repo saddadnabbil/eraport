@@ -44,9 +44,9 @@ class DashboardController extends Controller
                 ->orderBy('status_login', 'DESC')
                 ->orderBy('updated_at', 'DESC')->get();
         } elseif ($user->hasAnyRole(['Curriculum'])) {
-            $data_riwayat_login = RiwayatLogin::whereHas('user', function ($query) {
+            $data_riwayat_login = RiwayatLogin::where('user_id', '!=', Auth::user()->id)->whereHas('user', function ($query) {
                 $query->whereHas('roles', function ($query) {
-                    $query->whereIn('name', ['Curriculum']);
+                    $query->whereIn('name', ['Curriculum', 'Teacher', 'Teacher PG-KG', 'Co-Teacher', 'Co-Teacher PG-KG', 'Student']);
                 });
             })
                 ->where('updated_at', '>=', Carbon::today())
@@ -54,9 +54,9 @@ class DashboardController extends Controller
                 ->orderBy('updated_at', 'DESC')
                 ->get();
         } elseif ($user->hasAnyRole(['Teacher', 'Teacher PG-KG'])) {
-            $data_riwayat_login = RiwayatLogin::whereHas('user', function ($query) {
+            $data_riwayat_login = RiwayatLogin::where('user_id', '!=', Auth::user()->id)->whereHas('user', function ($query) {
                 $query->whereHas('roles', function ($query) {
-                    $query->whereIn('name', ['Teacher', 'Teacher PG-KG']);
+                    $query->whereIn('name', ['Teacher', 'Teacher PG-KG', 'Co-Teacher', 'Co-Teacher PG-KG', 'Student']);
                 });
             })
                 ->where('user_id', '!=', Auth::user()->id)
@@ -65,7 +65,7 @@ class DashboardController extends Controller
                 ->orderBy('updated_at', 'DESC')
                 ->get();
         } elseif ($user->hasAnyRole(['Student'])) {
-            $data_riwayat_login = RiwayatLogin::whereHas('user', function ($query) {
+            $data_riwayat_login = RiwayatLogin::where('user_id', '!=', Auth::user()->id)->whereHas('user', function ($query) {
                 $query->whereHas('roles', function ($query) {
                     $query->whereIn('name', ['Student']);
                 });
@@ -108,7 +108,39 @@ class DashboardController extends Controller
                 'jumlah_kelas',
                 'jumlah_ekstrakulikuler',
             ));
-        } elseif ($user->hasAnyRole(['Teacher', 'Teacher PG-KG', 'Co-Teacher', 'Co-Teacher PG-KG', 'Curriculum'])) {
+        } elseif ($user->hasAnyRole(['Curriculum']) && !$user->hasAnyRole(['Teacher', 'Teacher PG-KG']) || request()->is('curriculum/dashboard')) {
+            $jumlah_guru = Guru::all()->count();
+            $jumlah_siswa = Siswa::where('status', 1)->count();
+
+            $jumlah_siswa_shs = Siswa::where('status', 1)->where('tingkatan_id', 6)->count();
+            $jumlah_siswa_jhs = Siswa::where('status', 1)->where('tingkatan_id', 5)->count();
+            $jumlah_siswa_ps = Siswa::where('status', 1)->where('tingkatan_id', 4)->count();
+            $jumlah_siswa_kg_b = Siswa::where('status', 1)->where('tingkatan_id', 3)->count();
+            $jumlah_siswa_kg_a = Siswa::where('status', 1)->where('tingkatan_id', 2)->count();
+            $jumlah_siswa_pg = Siswa::where('status', 1)->where('tingkatan_id', 1)->count();
+
+            $jumlah_kelas = Kelas::where('tapel_id', $tapel->id)->count();
+
+            $jumlah_ekstrakulikuler = Ekstrakulikuler::where('tapel_id', $tapel->id)->count();
+
+            return view('dashboard.curriculum', compact(
+                'title',
+                'data_pengumuman',
+                'data_riwayat_login',
+                'sekolah',
+                'tapel',
+                'jumlah_guru',
+                'jumlah_siswa',
+                'jumlah_siswa_shs',
+                'jumlah_siswa_jhs',
+                'jumlah_siswa_ps',
+                'jumlah_siswa_kg_a',
+                'jumlah_siswa_kg_b',
+                'jumlah_siswa_pg',
+                'jumlah_kelas',
+                'jumlah_ekstrakulikuler',
+            ));
+        } elseif ($user->hasAnyRole(['Teacher', 'Teacher PG-KG', 'Co-Teacher', 'Co-Teacher PG-KG'])) {
             $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
 
             $unit_kode = Auth::user()->karyawan->unitKaryawan->unit_kode;

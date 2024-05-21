@@ -38,16 +38,7 @@
         <!-- ============================================================== -->
         @php
             $user = Auth::user();
-            if (
-                $user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum']) &&
-                $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
-            ) {
-                $dashboard = route('guru.dashboard');
-            } elseif ($user->hasAnyRole(['Student']) && $user->hasAnyPermission(['student'])) {
-                $dashboard = route('siswa.dashboard');
-            } else {
-                $dashboard = route('admin.dashboard');
-            }
+            $dashboard = route('siswa.dashboard');
         @endphp
         @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
             'titleBreadCrumb' => $title,
@@ -59,7 +50,7 @@
                 ],
                 [
                     'title' => 'Timetable',
-                    'url' => route('jadwalpelajaran.index'),
+                    'url' => route('siswa.jadwalpelajaran'),
                     'active' => true,
                 ],
                 [
@@ -88,7 +79,7 @@
                             <div class="card-tools">
                                 <div data-bs-toggle="tooltip" title="Print" class="d-inline-block" class="d-inline-block">
                                     <a href="{{ route('siswa.jadwalpelajaran.print', $anggota_kelas->kelas->id) }}"
-                                        class="btn btn-tool btn-sm">
+                                        target="_blank" class="btn btn-tool btn-sm">
                                         <i class="fas fa-download"></i>
                                     </a>
                                 </div>

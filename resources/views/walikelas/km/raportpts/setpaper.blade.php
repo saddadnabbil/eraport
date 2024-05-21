@@ -56,7 +56,7 @@
                         <div class="card-body">
 
                             <div class="callout callout-info">
-                                <form action="{{ route('walikelas.raportptskm.store') }}" method="POST">
+                                <form action="{{ route('walikelas.raportpts.store') }}" method="POST">
                                     @csrf
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Term</label>

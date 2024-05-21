@@ -11,16 +11,7 @@
         <!-- ============================================================== -->
         @php
             $user = Auth::user();
-            if (
-                $user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum']) &&
-                $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
-            ) {
-                $dashboard = route('guru.dashboard');
-            } elseif ($user->hasAnyRole(['Student']) && $user->hasAnyPermission(['student'])) {
-                $dashboard = route('siswa.dashboard');
-            } else {
-                $dashboard = route('admin.dashboard');
-            }
+            $dashboard = route('guru.dashboard');
         @endphp
         @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
             'titleBreadCrumb' => $title,
@@ -78,14 +69,14 @@
                                             aria-hidden="true"></button>
                                         </button>
                                     </div>
-                                    <form name="contact-form" action="{{ route('kkmguru.import') }}" method="POST"
+                                    <form name="contact-form" action="{{ route('guru.km.kkm.import') }}" method="POST"
                                         enctype="multipart/form-data">
                                         @csrf
                                         <div class="modal-body">
                                             <div class="callout callout-info">
                                                 <h5>Download format import</h5>
                                                 <p>Silahkan download file format import melalui tombol dibawah ini.</p>
-                                                <a href="{{ route('kkmguru.format_import') }}"
+                                                <a href="{{ route('guru.km.kkm.format_import') }}"
                                                     class="btn btn-primary text-white" style="text-decoration:none"><i
                                                         class="fas fa-file-download"></i> Download</a>
                                             </div>
@@ -124,7 +115,7 @@
                                             aria-hidden="true"></button>
                                         </button>
                                     </div>
-                                    <form action="{{ route('kkmguru.store') }}" method="POST">
+                                    <form action="{{ route('guru.km.kkm.store') }}" method="POST">
                                         @csrf
                                         <div class="modal-body">
                                             <div class="form-group row">
@@ -184,96 +175,94 @@
                                     <tbody>
                                         <?php $no = 0; ?>
                                         @foreach ($data_kkm as $kkm)
-                                            @foreach ($kkm as $kkm)
-                                                <?php $no++; ?>
-                                                <tr>
-                                                    <td>{{ $no }}</td>
-                                                    <td>{{ $kkm->mapel->nama_mapel }}</td>
-                                                    <td>{{ $kkm->kelas->tapel->tahun_pelajaran }}
-                                                        @if ($kkm->kelas->tapel->semester_id == 1)
-                                                            Ganjil
-                                                        @else
-                                                            Genap
-                                                        @endif
-                                                    </td>
-                                                    <td>Level {{ $kkm->kelas->tingkatan->nama_tingkatan }} -
-                                                        {{ $kkm->kelas->nama_kelas }}</td>
-                                                    <td>{{ $kkm->kkm }}</td>
-                                                    <td>
-                                                        <form action="{{ route('kkmguru.destroy', $kkm->id) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="button" class="btn btn-warning btn-sm mt-1"
-                                                                data-bs-toggle="modal"
-                                                                data-bs-target="#modal-edit{{ $kkm->id }}">
-                                                                <i class="fas fa-pencil-alt"></i>
-                                                            </button>
-                                                            <button type="submit" class="btn btn-danger btn-sm mt-1"
-                                                                onclick="return confirm('Hapus {{ $title }} ?')">
-                                                                <i class="fas fa-trash-alt"></i>
-                                                            </button>
-                                                        </form>
-                                                    </td>
-                                                </tr>
+                                            <?php $no++; ?>
+                                            <tr>
+                                                <td>{{ $no }}</td>
+                                                <td>{{ $kkm->mapel->nama_mapel }}</td>
+                                                <td>{{ $kkm->kelas->tapel->tahun_pelajaran }}
+                                                    @if ($kkm->kelas->tapel->semester_id == 1)
+                                                        Ganjil
+                                                    @else
+                                                        Genap
+                                                    @endif
+                                                </td>
+                                                <td>Level {{ $kkm->kelas->tingkatan->nama_tingkatan }} -
+                                                    {{ $kkm->kelas->nama_kelas }}</td>
+                                                <td>{{ $kkm->kkm }}</td>
+                                                <td>
+                                                    <form action="{{ route('guru.km.kkm.destroy', $kkm->id) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="button" class="btn btn-warning btn-sm mt-1"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#modal-edit{{ $kkm->id }}">
+                                                            <i class="fas fa-pencil-alt"></i>
+                                                        </button>
+                                                        <button type="submit" class="btn btn-danger btn-sm mt-1"
+                                                            onclick="return confirm('Hapus {{ $title }} ?')">
+                                                            <i class="fas fa-trash-alt"></i>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
 
-                                                <!-- Modal edit  -->
-                                                <div class="modal fade" id="modal-edit{{ $kkm->id }}">
-                                                    <div class="modal-dialog modal-lg">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title">Edit {{ $title }}</h5>
-                                                                <button type="button" class="btn-close"
-                                                                    data-bs-dismiss="modal" aria-hidden="true"></button>
-                                                            </div>
-                                                            <form action="{{ route('kkmguru.update', $kkm->id) }}"
-                                                                method="POST">
-                                                                {{ method_field('PATCH') }}
-                                                                @csrf
-                                                                <div class="modal-body">
-                                                                    <div class="form-group row">
-                                                                        <label for="mapel_id"
-                                                                            class="col-sm-3 col-form-label">Mata
-                                                                            Pelajaran</label>
-                                                                        <div class="col-sm-9">
-                                                                            <input type="text" class="form-control"
-                                                                                id="mapel_id"
-                                                                                value="{{ $kkm->mapel->nama_mapel }}"
-                                                                                readonly>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group row">
-                                                                        <label for="kelas_id"
-                                                                            class="col-sm-3 col-form-label">Kelas</label>
-                                                                        <div class="col-sm-9">
-                                                                            <input type="text" class="form-control"
-                                                                                id="kelas_id"
-                                                                                value="{{ $kkm->kelas->nama_kelas }}"
-                                                                                readonly>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group row">
-                                                                        <label for="kkm"
-                                                                            class="col-sm-3 col-form-label">KKM</label>
-                                                                        <div class="col-sm-9">
-                                                                            <input type="number" class="form-control"
-                                                                                id="kkm" name="kkm"
-                                                                                value="{{ $kkm->kkm }}">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="modal-footer justify-content-end">
-                                                                    <button type="button" class="btn btn-default"
-                                                                        data-bs-dismiss="modal">Batal</button>
-                                                                    <button type="submit"
-                                                                        class="btn btn-primary">Simpan</button>
-                                                                </div>
-                                                            </form>
+                                            <!-- Modal edit  -->
+                                            <div class="modal fade" id="modal-edit{{ $kkm->id }}">
+                                                <div class="modal-dialog modal-lg">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">Edit {{ $title }}</h5>
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal" aria-hidden="true"></button>
                                                         </div>
+                                                        <form action="{{ route('guru.km.kkm.update', $kkm->id) }}"
+                                                            method="POST">
+                                                            {{ method_field('PATCH') }}
+                                                            @csrf
+                                                            <div class="modal-body">
+                                                                <div class="form-group row">
+                                                                    <label for="mapel_id"
+                                                                        class="col-sm-3 col-form-label">Mata
+                                                                        Pelajaran</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control"
+                                                                            id="mapel_id"
+                                                                            value="{{ $kkm->mapel->nama_mapel }}"
+                                                                            readonly>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <label for="kelas_id"
+                                                                        class="col-sm-3 col-form-label">Kelas</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="text" class="form-control"
+                                                                            id="kelas_id"
+                                                                            value="{{ $kkm->kelas->nama_kelas }}"
+                                                                            readonly>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <label for="kkm"
+                                                                        class="col-sm-3 col-form-label">KKM</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="number" class="form-control"
+                                                                            id="kkm" name="kkm"
+                                                                            value="{{ $kkm->kkm }}">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer justify-content-end">
+                                                                <button type="button" class="btn btn-default"
+                                                                    data-bs-dismiss="modal">Batal</button>
+                                                                <button type="submit"
+                                                                    class="btn btn-primary">Simpan</button>
+                                                            </div>
+                                                        </form>
                                                     </div>
                                                 </div>
-                                                <!-- End Modal edit -->
-                                            @endforeach
+                                            </div>
+                                            <!-- End Modal edit -->
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -291,39 +280,40 @@
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
+@endsection
 
-    @push('custom-scripts')
-        <!-- ajax -->
-        <script type="text/javascript">
-            $(document).ready(function() {
-                $('select[name="mapel_id"]').on('change', function() {
-                    var mapel_id = $(this).val();
-                    if (mapel_id) {
-                        $.ajax({
-                            url: '/guru/getKelas/ajax/' + mapel_id,
-                            type: "GET",
-                            dataType: "json",
-                            success: function(data) {
-                                $('select[name="kelas_id"').empty();
+@push('custom-scripts')
+    <!-- ajax -->
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('select[name="mapel_id"]').on('change', function() {
+                var mapel_id = $(this).val();
+                if (mapel_id) {
+                    $.ajax({
+                        url: '/guru/getKelas/ajax/' + mapel_id,
+                        type: "GET",
+                        dataType: "json",
+                        success: function(data) {
+                            $('select[name="kelas_id"').empty();
 
+                            $('select[name="kelas_id"]').append(
+                                '<option value="">-- Pilih Kelas --</option>'
+                            );
+
+                            $.each(data, function(i, data) {
                                 $('select[name="kelas_id"]').append(
-                                    '<option value="">-- Pilih Kelas --</option>'
-                                );
-
-                                $.each(data, function(i, data) {
-                                    $('select[name="kelas_id"]').append(
-                                        '<option value="' +
-                                        data.kelas_id + '">' + data.nama_kelas +
-                                        '</option>');
-                                });
-                            }
-                        });
-                    } else {
-                        $('select[name="kelas_id"').empty();
-                    }
-                });
+                                    '<option value="' +
+                                    data.kelas_id + '">' + data.nama_kelas +
+                                    '</option>');
+                            });
+                        }
+                    });
+                } else {
+                    $('select[name="kelas_id"').empty();
+                }
             });
-        </script>
-    @endpush
-    <!-- end ajax -->
-    @include('layouts.main.footer')
+        });
+    </script>
+@endpush
+<!-- end ajax -->
+@include('layouts.main.footer')

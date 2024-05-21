@@ -10,6 +10,10 @@
             $checkRoute = request()->routeIs('guru.km.rekapkehadiran.*');
             $dynamicRoute = route('guru.km.rekapkehadiran.index');
             break;
+        case 'Student':
+            $checkRoute = request()->routeIs('presensi.*');
+            $dynamicRoute = route('presensi.index');
+            break;
     }
 @endphp
 

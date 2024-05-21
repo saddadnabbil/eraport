@@ -13,6 +13,7 @@ use App\Rules\MatchOldPassword;
 use App\Models\PositionKaryawan;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
@@ -267,13 +268,12 @@ class KaryawanController extends Controller
      */
     public function show($id)
     {
-        // return back if not have admin-access permission with alert
-        if (!auth()->user()->can('admin-access')) {
-            return redirect()->back()->with('toast_error', 'Anda tidak punya akses, silahkan hubungi admin');
-        }
-
         $title = 'Detail Karyawan';
-        $karyawan = Karyawan::findorfail($id);
+        if (Auth::user()->hasRole('Curriculum')) {
+            $karyawan = Karyawan::with('guru')->findorfail($id);
+        } elseif (Auth::user()->hasRole('Admin')) {
+            $karyawan = Karyawan::findorfail($id);
+        }
 
         $dataStatusKaryawan = StatusKaryawan::all();
         $dataUnitKaryawan = UnitKaryawan::all();

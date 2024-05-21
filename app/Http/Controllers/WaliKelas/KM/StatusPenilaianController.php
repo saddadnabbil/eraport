@@ -29,7 +29,7 @@ class StatusPenilaianController extends Controller
         $tapel = Tapel::where('status', 1)->first();
         $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
         $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)->where('guru_id', $guru->id)->pluck('id')->toArray();
-        $data_pembelajaran_kelas = Pembelajaran::whereIn('kelas_id', $id_kelas_diampu)->where('status', 1)->get();
+        $data_pembelajaran_kelas = Pembelajaran::where('guru_id', $guru->id)->whereIn('kelas_id', $id_kelas_diampu)->where('status', 1)->get();
 
         $data_kelas = Kelas::where('guru_id', $guru->id)->where('tapel_id', $tapel->id)->get();
 

@@ -7,7 +7,11 @@
 @endsection
 
 @section('sidebar')
-    @include('layouts.sidebar.guru')
+    @if (Auth::user()->hasAnyRole(['Admin']))
+        @include('layouts.sidebar.admin')
+    @elseif (Auth::user()->hasAnyRole(['Teacher', 'Curriculum']))
+        @include('layouts.sidebar.guru')
+    @endif
 @endsection
 
 @section('content')
@@ -26,21 +30,31 @@
                 $greeting = 'Good evening, ';
             }
             $user = Auth::user();
-            if ($user->hasRole('Admin')) {
-                $fullName = Auth::user()->karyawan > nama_lengkap;
-            } elseif ($user->hasAnyRole(['Teacher', 'Teacher PG-KG'])) {
-                $fullName = Auth::user()->karyawan->nama_lengkap;
+            if ($user->hasAnyRole(['Admin', 'Teacher', 'Curriculum'])) {
+                $fullName = optional(Auth::user()->karyawan)->nama_lengkap ?? 'Guru not available';
             } elseif ($user->hasRole('Student')) {
                 $fullName = Auth::user()->siswa->nama_lengkap;
             }
         @endphp
-
+        @php
+            $user = Auth::user();
+            if (
+                $user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum']) &&
+                $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])
+            ) {
+                $dashboard = route('guru.dashboard');
+            } elseif ($user->hasAnyRole(['Student']) && $user->hasAnyPermission(['student'])) {
+                $dashboard = route('siswa.dashboard');
+            } else {
+                $dashboard = route('admin.dashboard');
+            }
+        @endphp
         @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
             'titleBreadCrumb' => $greeting . $fullName . '!',
             'breadcrumbs' => [
                 [
                     'title' => 'Dashboard',
-                    'url' => route('guru.dashboard'),
+                    'url' => route('admin.dashboard'),
                     'active' => false,
                 ],
             ],
@@ -59,13 +73,13 @@
                             <div class="d-flex align-items-center">
                                 <div class="w-80">
                                     <div class="d-inline-flex align-items-center">
-                                        <h2 class="text-dark mb-1 font-weight-medium">{{ $jumlah_kelas_diampu }} </h2>
+                                        <h2 class="text-dark mb-1 font-weight-medium">{{ $jumlah_guru }} </h2>
                                         {{-- <span
                                             class="badge bg-primary font-12 text-white font-weight-medium rounded-pill ms-2 d-lg-block d-md-none">+18.33%</span>
                                         --}}
                                     </div>
                                     <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">
-                                        Jumlah Kelas Diampu
+                                        Jumlah Guru
                                     </h6>
                                 </div>
                                 <div class="ms-auto mt-md-3 mt-lg-0">
@@ -82,10 +96,10 @@
                                 <div class="w-80">
                                     <h2 class="text-dark mb-1 w-100 text-truncate font-weight-medium">
                                         {{-- <sup class="set-doller">$</sup>18,306 --}}
-                                        {{ $jumlah_mapel_diampu }}
+                                        {{ $jumlah_siswa }}
                                     </h2>
                                     <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">
-                                        Jumlah Mapel Diampu
+                                        Jumlah Siswa
                                     </h6>
                                 </div>
                                 <div class="ms-auto mt-md-3 mt-lg-0">
@@ -101,13 +115,13 @@
                             <div class="d-flex align-items-center">
                                 <div class="w-80">
                                     <div class="d-inline-flex align-items-center">
-                                        <h2 class="text-dark mb-1 font-weight-medium">{{ $jumlah_siswa_diampu }}</h2>
+                                        <h2 class="text-dark mb-1 font-weight-medium">{{ $jumlah_kelas }}</h2>
                                         {{-- <span
                                             class="badge bg-danger font-12 text-white font-weight-medium rounded-pill ms-2 d-md-none d-lg-block">-18.33%</span>
                                         --}}
                                     </div>
                                     <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">
-                                        Jumlah Siswa Diampu
+                                        Jumlah Kelas
                                     </h6>
                                 </div>
                                 <div class="ms-auto mt-md-3 mt-lg-0">
@@ -122,10 +136,9 @@
                         <div class="card-body">
                             <div class="d-flex align-items-center">
                                 <div class="w-80">
-                                    <h2 class="text-dark mb-1 font-weight-medium">{{ $jumlah_ekstrakulikuler_diampu }}
-                                    </h2>
+                                    <h2 class="text-dark mb-1 font-weight-medium">{{ $jumlah_ekstrakulikuler }}</h2>
                                     <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">
-                                        Jumlah Ekstrakulikuler Diampu
+                                        Jumlah Ekstrakulikuler
                                     </h6>
                                 </div>
                                 <div class="ms-auto mt-md-3 mt-lg-0">
@@ -139,156 +152,62 @@
             <!-- *************************************************************** -->
             <!-- End First Cards -->
             <!-- *************************************************************** -->
-
-            {{-- Start Capaian Penilaian Kurikulum Merdeka --}}
-            @if (!auth()->user()->hasAnyPermission(['homeroom-pg-kg']))
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <!-- /.card-header -->
-                            <div class="card-body">
-                                <h4 class="card-title">Capaian Proses Penilaian </h4>
-                                <div class="table-responsive">
-                                    <table class="table table-bordered">
-                                        <thead class="bg-success">
-                                            <tr>
-                                                <th rowspan="2" class="text-center" style="vertical-align: middle">No
-                                                </th>
-                                                <th rowspan="2" class="text-center" style="vertical-align: middle">Kelas
-                                                </th>
-                                                <th rowspan="2" class="text-center" style="vertical-align: middle">Mata
-                                                    Pelajaran</th>
-                                                <th rowspan="2" class="text-center"
-                                                    style="width: 50px; vertical-align: middle">KKM</th>
-                                                <th colspan="2" class="text-center" style="width: 200px;">Jumlah
-                                                    Perencanaan
-                                                </th>
-                                                <th colspan="2" class="text-center" style="width: 200px;">Jumlah
-                                                    Penilaian
-                                                </th>
-                                                <th colspan="2" class="text-center" style="width: 100px;">Status Nilai
-                                                    Raport
-                                                </th>
-                                            </tr>
-                                            <tr>
-                                                <th class="text-center" style="width: 50px; vertical-align: middle">Sumatif
-                                                </th>
-                                                <th class="text-center" style="width: 50px; vertical-align: middle">Formatif
-                                                </th>
-
-                                                <th class="text-center" style="width: 50px; vertical-align: middle">Sumatif
-                                                </th>
-                                                <th class="text-center" style="width: 50px; vertical-align: middle">Formatif
-                                                </th>
-
-                                                <th class="text-center" style="width: 100px; vertical-align: middle">Kirim
-                                                    Nilai
-                                                </th>
-                                                <th class="text-center" style="width: 100px; vertical-align: middle">Proses
-                                                    Deskripsi</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php $no = 0; ?>
-                                            @foreach ($data_capaian_penilaian_km as $penilaian)
-                                                <?php $no++; ?>
-                                                <tr>
-                                                    <td class="text-center">{{ $no }}</td>
-                                                    <td class="text-center">{{ $penilaian->kelas->nama_kelas }}</td>
-                                                    <td>{{ $penilaian->mapel->nama_mapel }}</td>
-                                                    <td class="text-center">
-                                                        @if (is_null($penilaian->kkm))
-                                                            <span class="badge bg-danger">0</span>
-                                                        @else
-                                                            <span class="badge bg-success">{{ $penilaian->kkm }}</span>
-                                                        @endif
-                                                    </td>
-                                                    <td class="text-center">
-                                                        @if ($penilaian->jumlah_rencana_sumatif == 0)
-                                                            <b class="text-danger">
-                                                                {{ $penilaian->jumlah_rencana_sumatif }}
-                                                            </b>
-                                                        @else
-                                                            <b class="text-success">
-                                                                {{ $penilaian->jumlah_rencana_sumatif }}
-                                                            </b>
-                                                        @endif
-                                                    </td>
-                                                    <td class="text-center">
-                                                        @if ($penilaian->jumlah_rencana_formatif == 0)
-                                                            <b class="text-danger">
-                                                                {{ $penilaian->jumlah_rencana_formatif }}
-                                                            </b>
-                                                        @else
-                                                            <b class="text-success">
-                                                                {{ $penilaian->jumlah_rencana_formatif }}
-                                                            </b>
-                                                        @endif
-                                                    </td>
-
-                                                    <td class="text-center">
-                                                        @if ($penilaian->jumlah_sumatif_telah_dinilai == 0)
-                                                            <b class="text-danger">
-                                                                0
-                                                            </b>
-                                                        @elseif($penilaian->jumlah_sumatif_telah_dinilai == $penilaian->jumlah_rencana_sumatif)
-                                                            <b class="text-success">
-                                                                {{ $penilaian->jumlah_sumatif_telah_dinilai }}
-                                                            </b>
-                                                        @else
-                                                            <b class="text-warning">
-                                                                {{ $penilaian->jumlah_sumatif_telah_dinilai }}
-                                                            </b>
-                                                        @endif
-                                                    </td>
-
-                                                    <td class="text-center">
-                                                        @if ($penilaian->jumlah_formatif_telah_dinilai == 0)
-                                                            <b class="text-danger">
-                                                                0
-                                                            </b>
-                                                        @elseif($penilaian->jumlah_formatif_telah_dinilai == $penilaian->jumlah_rencana_formatif)
-                                                            <b class="text-success">
-                                                                {{ $penilaian->jumlah_formatif_telah_dinilai }}
-                                                            </b>
-                                                        @else
-                                                            <b class="text-warning">
-                                                                {{ $penilaian->jumlah_formatif_telah_dinilai }}
-                                                            </b>
-                                                        @endif
-                                                    </td>
-
-                                                    @if ($penilaian->kirim_nilai_raport == 0)
-                                                        <td><span class="badge bg-danger">Belum Kirim</span></td>
-                                                    @else
-                                                        <td><span class="badge bg-success">Sudah Kirim</span></td>
-                                                    @endif
-
-                                                    @if ($penilaian->proses_deskripsi == 0)
-                                                        <td><span class="badge bg-danger">Belum Proses</span></td>
-                                                    @else
-                                                        <td><span class="badge bg-success">Sudah Proses</span></td>
-                                                    @endif
-
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <!-- /.table-responsive -->
-
-                            </div>
-                            <!-- /.card-body -->
+            <!-- *************************************************************** -->
+            <!-- Start Sales Charts Section -->
+            <!-- *************************************************************** -->
+            <div class="row">
+                <div class="col-lg-4 col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            @php
+                                $siswaData = [
+                                    ['Senior High School', $jumlah_siswa_shs],
+                                    ['Junior High School', $jumlah_siswa_jhs],
+                                    ['Primary School', $jumlah_siswa_ps],
+                                    ['Kinder Garten A', $jumlah_siswa_kg_a],
+                                    ['Kinder Garten B', $jumlah_siswa_kg_b],
+                                    ['Playgroup', $jumlah_siswa_pg],
+                                ];
+                            @endphp
+                            <h4 class="card-title">Total Siswa</h4>
+                            <div id="campaign-v2" data-siswa='{{ json_encode($siswaData) }}' class="mt-2"
+                                style="height: 283px; width: 100%"></div>
+                            <ul class="list-style-none mb-0">
+                                <li>
+                                    <i class="fas fa-circle font-10 me-2" style="color: #edf2f6"></i>
+                                    <span class="text-muted">Senior High School</span>
+                                    <span class="text-dark float-end font-weight-medium">{{ $jumlah_siswa_shs }}</span>
+                                </li>
+                                <li class="mt-3">
+                                    <i class="fas fa-circle text-danger font-10 me-2"></i>
+                                    <span class="text-muted">Junior High School</span>
+                                    <span class="text-dark float-end font-weight-medium">{{ $jumlah_siswa_jhs }}</span>
+                                </li>
+                                <li class="mt-3">
+                                    <i class="fas fa-circle text-success font-10 me-2"></i>
+                                    <span class="text-muted">Primary School</span>
+                                    <span class="text-dark float-end font-weight-medium">{{ $jumlah_siswa_ps }}</span>
+                                </li>
+                                <li class="mt-3">
+                                    <i class="fas fa-circle text-cyan font-10 me-2"></i>
+                                    <span class="text-muted">Kinder Garten A</span>
+                                    <span class="text-dark float-end font-weight-medium">{{ $jumlah_siswa_kg_a }}</span>
+                                </li>
+                                <li class="mt-3">
+                                    <i class="fas fa-circle text-cyan font-10 me-2"></i>
+                                    <span class="text-muted">Kinder Garten B</span>
+                                    <span class="text-dark float-end font-weight-medium">{{ $jumlah_siswa_kg_b }}</span>
+                                </li>
+                                <li class="mt-3">
+                                    <i class="fas fa-circle text-orange font-10 me-2"></i>
+                                    <span class="text-muted">Playgroup</span>
+                                    <span class="text-dark float-end font-weight-medium">{{ $jumlah_siswa_pg }}</span>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-            @endif
-            {{-- End Capaian Penilaian Kurikulum Merdeka --}}
-
-            <!-- Main row -->
-            <div class="row">
-                <!-- Left col -->
-                <div class="col-md-8">
+                <div class="col-lg-4 col-md-6">
                     <!-- MAP & BOX PANE -->
                     <div class="card">
                         <div class="col-md-12 col-lg-12">
@@ -298,8 +217,7 @@
                                     @foreach ($data_pengumuman->sortByDesc('created_at') as $pengumuman)
                                         <div class="d-flex align-items-start border-left-line">
                                             <div>
-                                                <a href="javascript:void(0)"
-                                                    class="btn btn-cyan btn-circle mb-2 btn-item">
+                                                <a href="javascript:void(0)" class="btn btn-cyan btn-circle mb-2 btn-item">
                                                     <i data-feather="bell"></i>
                                                 </a>
                                             </div>
@@ -317,7 +235,7 @@
                                                     -
                                                     {{ \Carbon\Carbon::parse($pengumuman->created_at)->diffForHumans() }}</span>
                                                 @if (Auth::user()->id == $pengumuman->user_id)
-                                                    <form action="{{ route('guru.pengumuman.destroy', $pengumuman->id) }}"
+                                                    <form action="{{ route('admin.pengumuman.destroy', $pengumuman->id) }}"
                                                         method="POST">
                                                         @csrf
                                                         @method('DELETE')
@@ -344,7 +262,7 @@
                                                             </button>
                                                         </div>
                                                         <form
-                                                            action="{{ route('guru.pengumuman.update', $pengumuman->id) }}"
+                                                            action="{{ route('admin.pengumuman.update', $pengumuman->id) }}"
                                                             method="POST">
                                                             {{ method_field('PATCH') }}
                                                             @csrf
@@ -380,9 +298,7 @@
                         <!-- /.card-body -->
                     </div>
                 </div>
-                <!-- /.col -->
-
-                <div class="col-md-4">
+                <div class="col-lg-4 col-md-6">
                     <!-- PRODUCT LIST -->
                     <div class="card">
                         <!-- /.card-header -->
@@ -414,8 +330,8 @@
                                         </div>
 
                                         <div class="product-info">
-                                            <a href="javascript:void(0)" class="product-title">
-                                                @if ($riwayat_login->user->hasRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum']))
+                                            <a href="javascript:void(0)" class="product-title text-dark">
+                                                @if ($riwayat_login->user->hasRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Curriculum']))
                                                     {{ $riwayat_login->user->karyawan->nama_lengkap }}
                                                 @elseif($riwayat_login->user->hasRole('Student'))
                                                     {{ $riwayat_login->user->siswa->nama_lengkap }}
@@ -428,11 +344,8 @@
                                                 @endif
                                             </a>
                                             <span class="product-description">
-                                                @if ($riwayat_login->user->hasRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum']))
-                                                    Guru
-                                                @elseif($riwayat_login->user->hasRole('Student'))
-                                                    Siswa
-                                                @endif
+                                                <span
+                                                    class="badge bg-primary">{{ $riwayat_login->user->getRoleNames()->first() }}</span>
 
                                                 @if ($riwayat_login->status_login == false)
                                                     <span class="time float-right"><i class="far fa-clock"></i>
@@ -444,7 +357,6 @@
                                     @if (!$loop->last)
                                         <hr>
                                     @endif
-                                    <!-- /.item -->
                                 @endforeach
                             </ul>
                         </div>
@@ -453,9 +365,10 @@
                     </div>
                     <!-- /.card -->
                 </div>
-                <!-- /.col -->
             </div>
-            <!-- /.row -->
+            <!-- *************************************************************** -->
+            <!-- End Sales Charts Section -->
+            <!-- *************************************************************** -->
         </div>
         <!-- ============================================================== -->
         <!-- End ontainer fluid  -->

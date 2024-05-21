@@ -66,7 +66,7 @@ class UserController extends Controller
                 if ($user->siswa) {
                     $showRoute = route('admin.siswa.show', $user->siswa->id);
                 } elseif ($user->karyawan) {
-                    $showRoute = route('karyawan.show', $user->karyawan->id);
+                    $showRoute = route('guru.karyawan.show', $user->karyawan->id);
                 }
 
                 return view('components.actions.delete-button', [

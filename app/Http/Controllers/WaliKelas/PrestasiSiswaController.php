@@ -33,7 +33,7 @@ class PrestasiSiswaController extends Controller
 
         $data_prestasi_siswa = PrestasiSiswa::whereIn('anggota_kelas_id', $id_anggota_kelas)->get();
 
-        $data_anggota_kelas = AnggotaKelas::where('kelas_id', $kelas_id_anggota_kelas)
+        $data_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $kelas_id_anggota_kelas)
             ->orderBy('id', 'DESC')
             ->whereHas('siswa', function ($query) {
                 $query->where('status', 1);

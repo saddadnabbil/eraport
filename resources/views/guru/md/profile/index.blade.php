@@ -468,7 +468,7 @@
                                             aria-hidden="true"></button>
                                         </button>
                                     </div>
-                                    <form action="{{ route('profileguru.update', $karyawan->id) }}" method="POST"
+                                    <form action="{{ route('guru.profile.update', $karyawan->id) }}" method="POST"
                                         enctype="multipart/form-data">
                                         {{ method_field('PATCH') }}
                                         @csrf

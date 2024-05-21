@@ -51,7 +51,7 @@ class GuruController extends Controller
                 return $guru->jenis_kelamin == 'L' ? 'Male' : 'Female';
             })
             ->addColumn('action', function ($guru) {
-                return '<a href="' . route('karyawan.show', $guru->karyawan->id) . '" class="btn btn-info btn-sm mt-1"><i class="fas fa-eye"></i></a>';
+                return '<a href="' . route('guru.karyawan.show', $guru->karyawan->id) . '" class="btn btn-info btn-sm mt-1"><i class="fas fa-eye"></i></a>';
             })
             ->rawColumns(['action']) // Untuk menginterpretasikan HTML dalam kolom action
             ->toJson();

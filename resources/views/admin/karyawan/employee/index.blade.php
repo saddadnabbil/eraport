@@ -587,7 +587,7 @@
                         <div class="card-body">
                             <div class="table-responsive">
 
-                                <table id="zero_config" class="table table-striped table-valign-middle ">
+                                <table id="zero_config_ajax" class="table table-striped table-valign-middle ">
                                     <thead>
                                         <tr>
                                             <th>No</th>
@@ -705,8 +705,8 @@
     {{-- datatable --}}
     <script>
         $(document).ready(function() {
-            if (!$.fn.DataTable.isDataTable('#zero_config')) {
-                $('#zero_config').DataTable({
+            if (!$.fn.DataTable.isDataTable('#zero_config_ajax')) {
+                $('#zero_config_ajax').DataTable({
                     "processing": true,
                     "serverSide": true,
                     "ajax": {
