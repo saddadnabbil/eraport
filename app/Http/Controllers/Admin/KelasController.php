@@ -119,7 +119,7 @@ class KelasController extends Controller
     {
         $title = 'Anggota Kelas';
         $kelas = Kelas::findorfail($id);
-        $data_kelas = Kelas::where('tingkatan_id', $kelas->tingkatan_id)->get();
+        $data_kelas = Kelas::where('tapel_id', $kelas->tapel_id)->where('tingkatan_id', $kelas->tingkatan_id)->get();
         $anggota_kelas = AnggotaKelas::where('kelas_id', $id)
             ->orderBy('id', 'DESC')
             ->whereHas('siswa', function ($query) {

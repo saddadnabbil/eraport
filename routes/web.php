@@ -55,6 +55,12 @@ Route::group(['middleware' => ['auth']], function () {
         Route::prefix('admin')->group(function () {
             Route::get('dashboard', 'DashboardController@index')->name('admin.dashboard');
 
+            Route::get('getKelas/ajax/{id}', 'AjaxController@ajax_kelas');
+            Route::get('getKelas/penilaian-tk/{id}', 'AjaxController@getClassByTkTopic');
+            Route::get('getKelasByTingkatan/ajax/{id}', 'AjaxController@ajax_kelas_by_tingkatan_id');
+            Route::get('getAllSilabus/ajax/{id}', 'AjaxController@getAllSilabus')->name('admin.get.all.silabus');
+            Route::get('getPembelajaranId/', 'AjaxController@getPembelajaranId')->name('get.pembelajaran.id');
+
             // User 
             Route::prefix('user')->group(function () {
                 Route::resource('user', 'Admin\UserController')
@@ -85,13 +91,13 @@ Route::group(['middleware' => ['auth']], function () {
                 // Karyawan
                 Route::prefix('karyawan')->group(function () {
                     Route::resource('statuskaryawan', 'Admin\StatusKaryawanController', [
-                        'only' => ['index', 'update', 'destroy'],
+                        'only' => ['index', 'update', 'destroy', 'store'],
                     ]);
                     Route::resource('unitkaryawan', 'Admin\UnitKaryawanController', [
-                        'only' => ['index', 'update', 'destroy'],
+                        'only' => ['index', 'update', 'destroy', 'store'],
                     ]);
                     Route::resource('positionkaryawan', 'Admin\PositionKaryawanController', [
-                        'only' => ['index', 'update', 'destroy'],
+                        'only' => ['index', 'update', 'destroy', 'store'],
                     ]);
 
                     Route::get('karyawan/data', 'Admin\KaryawanController@data')->name('karyawan.data');
@@ -616,6 +622,13 @@ Route::group(['middleware' => ['auth']], function () {
                 'update' => 'guru.profile.update',
             ]);
 
+            Route::get('getKelas/ajax/{id}', 'AjaxController@ajax_kelas_silabus');
+            Route::get('getAllSilabus/ajax/{id}', 'AjaxController@getAllSilabus')->name('guru.get.all.silabus');
+            // Route::get('getKelas/ajax/{id}', 'AjaxController@ajax_kelas');
+
+            Route::get('getPembelajaranId/', 'AjaxController@getPembelajaranId')->name('guru.get.pembelajaran.id');
+
+
             // Curriculum
             Route::group(['middleware' => 'role:Curriculum'], function () {
                 Route::prefix('master-data')->group(function () {
@@ -749,10 +762,11 @@ Route::group(['middleware' => ['auth']], function () {
                     Route::delete('kelas/{id}/permanent-delete', 'Guru\MD\KelasController@destroyPermanent')->name('guru.kelas.anggota_kelas.permanent-delete');
                     Route::patch('kelas/{id}/restore', 'Guru\MD\KelasController@restore')->name('guru.kelas.anggota_kelas.restore');
                     Route::resource('kelas', 'Guru\MD\KelasController', [
-                        'only' => ['index', 'store', 'show', 'destroy'],
+                        'only' => ['index', 'store', 'update', 'show', 'destroy'],
                     ])->names([
                         'index' => 'guru.kelas.index',
                         'store' => 'guru.kelas.store',
+                        'update' => 'guru.kelas.update',
                         'show' => 'guru.kelas.show',
                         'destroy' => 'guru.kelas.destroy',
                     ]);
@@ -769,10 +783,11 @@ Route::group(['middleware' => ['auth']], function () {
                     Route::post('ekstrakulikuler/anggota', 'Guru\MD\EkstrakulikulerController@store_anggota')->name('guru.ekstrakulikuler.anggota');
                     Route::delete('ekstrakulikuler/anggota/{anggota}', 'Guru\MD\EkstrakulikulerController@delete_anggota')->name('guru.ekstrakulikuler.anggota.delete');
                     Route::resource('ekstrakulikuler', 'Guru\MD\EkstrakulikulerController', [
-                        'only' => ['index', 'store', 'show', 'destroy'],
+                        'only' => ['index', 'store', 'update', 'show', 'destroy'],
                     ])->names([
                         'index' => 'guru.ekstrakulikuler.index',
                         'store' => 'guru.ekstrakulikuler.store',
+                        'update' => 'guru.ekstrakulikuler.update',
                         'show' => 'guru.ekstrakulikuler.show',
                         'destroy' => 'guru.ekstrakulikuler.destroy',
                     ]);

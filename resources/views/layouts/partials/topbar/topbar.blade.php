@@ -13,12 +13,14 @@
             <div class="navbar-brand">
                 <!-- Logo icon -->
                 @php
-                    if ($user->hasRole('Admin')) {
+                    if ($user->hasRole(['Admin'])) {
                         $dashboard = route('admin.dashboard');
                         $tapel = route('admin.tapel.index');
-                    } elseif ($user->hasAnyRole(['Teacher', 'Curriculum', 'Teacher PG-KG', 'Teacher'])) {
+                    } elseif ($user->hasRole(['Curriculum'])) {
+                        $dashboard = route('curriculum.dashboard');
+                        $tapel = route('guru.tapel.index');
+                    } elseif ($user->hasAnyRole(['Teacher', 'Teacher PG-KG', 'Teacher'])) {
                         $dashboard = route('guru.dashboard');
-                        $tapel = route('admin.tapel.index');
                     } elseif ($user->hasRole('Student')) {
                         $dashboard = route('siswa.dashboard');
                     }

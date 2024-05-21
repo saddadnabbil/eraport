@@ -14,6 +14,7 @@ use App\Models\AnggotaKelas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Jurusan;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
 use Yajra\DataTables\Facades\DataTables;
@@ -47,6 +48,7 @@ class SiswaController extends Controller
                 ->pluck('total', 'tingkatan_id');
 
             $data_tingkatan = Tingkatan::orderBy('id', 'ASC')->get();
+            $data_jurusan = Jurusan::orderBy('id', 'ASC')->get();
             $tingkatan_akhir = Kelas::where('tapel_id', $tapel->id)->max('tingkatan_id');
             $tingkatan_terendah = Kelas::where('tapel_id', $tapel->id)->min('tingkatan_id');
             $data_kelas_all = Kelas::where('tapel_id', $tapel->id)
@@ -54,7 +56,7 @@ class SiswaController extends Controller
                 ->with('tingkatan')
                 ->get();
 
-            return view('admin.siswa.index', compact('title', 'data_kelas_all', 'jumlah_kelas', 'jumlah_kelas_per_level', 'data_tingkatan', 'tingkatan_terendah', 'tingkatan_akhir'));
+            return view('admin.siswa.index', compact('title', 'data_kelas_all', 'jumlah_kelas', 'jumlah_kelas_per_level', 'data_tingkatan', 'data_jurusan', 'tingkatan_terendah', 'tingkatan_akhir'));
         }
     }
 
@@ -97,13 +99,14 @@ class SiswaController extends Controller
         $title = 'Detail Siswa';
         $tapel = Tapel::where('status', 1)->first();
         $data_tingkatan = Tingkatan::orderBy('id', 'ASC')->get();
+        $data_jurusan = Jurusan::orderBy('id', 'ASC')->get();
 
         $tingkatan_terendah = Kelas::where('tapel_id', $tapel->id)->min('tingkatan_id');
         $tingkatan_akhir = Kelas::where('tapel_id', $tapel->id)->max('tingkatan_id');
         $data_kelas_terendah = Kelas::where('tapel_id', $tapel->id)->where('tingkatan_id', $tingkatan_terendah)->orderBy('tingkatan_id', 'ASC')->get();
         $data_kelas_all = Kelas::where('tapel_id', $tapel->id)->orderBy('tingkatan_id', 'ASC')->get();
 
-        return view('admin.siswa.show', compact('title', 'siswa', 'tingkatan_akhir', 'data_kelas_all', 'data_kelas_terendah', 'data_tingkatan'));
+        return view('admin.siswa.show', compact('title', 'siswa', 'tingkatan_akhir', 'data_kelas_all', 'data_kelas_terendah', 'data_tingkatan', 'data_jurusan'));
     }
 
     /**

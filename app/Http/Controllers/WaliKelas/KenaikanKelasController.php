@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\WaliKelas;
 
-use App\Models\AnggotaKelas;
-use App\Models\Guru;
-use App\Http\Controllers\Controller;
-use App\Models\Kelas;
-use App\KenaikanKelas;
-use App\Models\Tapel;
 use Carbon\Carbon;
+use App\Models\Guru;
+use App\Models\Kelas;
+use App\Models\Tapel;
+use App\Models\AnggotaKelas;
 use Illuminate\Http\Request;
+use App\Models\KenaikanKelas;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class KenaikanKelasController extends Controller
@@ -97,7 +97,7 @@ class KenaikanKelasController extends Controller
                     }
                 }
             }
-            return redirect('guru/kenaikan')->with('toast_success', 'Kenaikan kelas berhasil disimpan');
+            return redirect()->back()->with('toast_success', 'Kenaikan kelas berhasil disimpan');
         }
     }
 }

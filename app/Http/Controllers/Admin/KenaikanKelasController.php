@@ -58,6 +58,14 @@ class KenaikanKelasController extends Controller
             $kelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->findOrFail($request->kelas_id)->first();
         }
 
+        $kelas_id = $kelas->id;
+
+        if (isset($guru)) {
+            $data_kelas = Kelas::where('guru_id', $guru->id)->where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->get();
+        } else {
+            $data_kelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->get();
+        }
+
         $semester = Semester::findorfail($kelas->tingkatan->semester_id);
 
         if ($semester->id == 2) {
@@ -85,7 +93,7 @@ class KenaikanKelasController extends Controller
 
             $tingkatan_akhir = Kelas::where('tapel_id', $tapel->id)->max('tingkatan_id');
 
-            return view('admin.kenaikan.create', compact('title', 'data_anggota_kelas', 'tingkatan_akhir'));
+            return view('admin.kenaikan.create', compact('title', 'data_kelas', 'kelas_id', 'data_anggota_kelas', 'tingkatan_akhir'));
         } else {
             return back()->with('toast_warning', 'Menu kenaikan kelas hanya aktif pada semester genap');
         }
