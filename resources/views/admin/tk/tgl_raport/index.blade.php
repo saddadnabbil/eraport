@@ -1,7 +1,10 @@
 @extends('layouts.main.header')
-
 @section('sidebar')
-    @include('layouts.sidebar.guru')
+    @if (Auth::user()->hasRole('Admin'))
+        @include('layouts.sidebar.admin')
+    @else
+        @include('layouts.sidebar.guru')
+    @endif
 @endsection
 
 @section('content')
@@ -11,7 +14,7 @@
         <!-- ============================================================== -->
         @php
             $user = Auth::user();
-            $dashboard = route('guru.dashboard');
+            $dashboard = route('admin.dashboard');
         @endphp
         @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
             'titleBreadCrumb' => $title,
@@ -41,110 +44,59 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title"><i class="fas fa-greater-than-equal"></i> {{ $title }}</h3>
+                            <h3 class="card-title">{{ $title }}</h3>
                             <div class="card-tools">
-                                <div data-bs-toggle="tooltip" title="Tambah" class="d-inline-block" class="d-inline-block">
+                                <div data-bs-toggle="tooltip" title="Tambah" class="d-inline-block">
                                     <button type="button" class="btn btn-tool btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#modal-tambah">
                                         <i class="fas fa-plus"></i>
                                     </button>
                                 </div>
-                                <div data-bs-toggle="tooltip" title="Import" class="d-inline-block" class="d-inline-block">
-                                    <button type="button" class="btn btn-tool btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#modal-import">
-                                        <i class="fas fa-upload"></i>
-                                    </button>
-                                </div>
                             </div>
                         </div>
-
-                        <!-- Modal import  -->
-                        <div class="modal fade" id="modal-import">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Import {{ $title }}</h5>
-
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-hidden="true"></button>
-                                        </button>
-                                    </div>
-                                    <form name="contact-form" action="{{ route('guru.km.kkm.import') }}" method="POST"
-                                        enctype="multipart/form-data">
-                                        @csrf
-                                        <div class="modal-body">
-                                            <div class="callout callout-info">
-                                                <h5>Download format import</h5>
-                                                <p>Silahkan download file format import melalui tombol dibawah ini.</p>
-                                                <a href="{{ route('guru.km.kkm.format_import') }}"
-                                                    class="btn btn-primary text-white" style="text-decoration:none"><i
-                                                        class="fas fa-file-download"></i> Download</a>
-                                            </div>
-                                            <div class="form-group row pt-2">
-                                                <label for="file_import" class="col-sm-2 col-form-label">File Import</label>
-                                                <div class="col-sm-10">
-                                                    <div class="custom-file">
-                                                        <input type="file"
-                                                            class="custom-file-input form-control form-control"
-                                                            name="file_import" id="customFile"
-                                                            accept="application/vnd.ms-excel">
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer justify-content-end">
-                                            <button type="button" class="btn btn-default"
-                                                data-bs-dismiss="modal">Batal</button>
-                                            <button type="submit" class="btn btn-primary">Import</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- End Modal import -->
 
                         <!-- Modal tambah  -->
                         <div class="modal fade" id="modal-tambah">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title">Tambah {{ $title }}</h5>
+                                        <h5 class="modal-title">Input {{ $title }}</h5>
 
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-hidden="true"></button>
                                         </button>
                                     </div>
-                                    <form action="{{ route('guru.km.kkm.store') }}" method="POST">
+                                    <form action="{{ route('tk.tglraport.store') }}" method="POST">
                                         @csrf
                                         <div class="modal-body">
                                             <div class="form-group row">
-                                                <label for="mapel_id" class="col-sm-3 col-form-label">Mata Pelajaran</label>
+                                                <label for="tapel_id" class="col-sm-3 col-form-label">Tahun
+                                                    Pelajaran</label>
                                                 <div class="col-sm-9">
-                                                    <select class="form-control form-select select2" name="mapel_id"
-                                                        style="width: 100%;" required>
-                                                        <option value="">-- Pilih Mata Pelajaran -- </option>
-                                                        @foreach ($data_mapel as $mapel)
-                                                            <option value="{{ $mapel->id }}"> {{ $mapel->nama_mapel }}
-                                                            </option>
+                                                    <select class="form-control form-select select2" name="tapel_id"
+                                                        id="tapel_id">
+                                                        @foreach ($data_tapel as $x)
+                                                            <option value="{{ $x->id }}"
+                                                                data-tapel="{{ $x->id }}"
+                                                                data-semester="{{ $x->semester->id }}">
+                                                                {{ $x->tahun_pelajaran }} | Semester
+                                                                {{ $x->semester->semester }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="kelas_id" class="col-sm-3 col-form-label">Kelas</label>
+                                                <label for="tempat_penerbitan" class="col-sm-3 col-form-label">Tempat
+                                                    Penerbitan</label>
                                                 <div class="col-sm-9">
-                                                    <select class="form-control form-select select2" name="kelas_id"
-                                                        style="width: 100%;" required>
-                                                        <!--  -->
-                                                    </select>
+                                                    <input type="text" class="form-control" name="tempat_penerbitan">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label for="kkm" class="col-sm-3 col-form-label">KKM</label>
+                                                <label for="tanggal_pembagian" class="col-sm-3 col-form-label">Tanggal
+                                                    Pembagian</label>
                                                 <div class="col-sm-9">
-                                                    <input type="number" class="form-control" id="kkm"
-                                                        name="kkm">
+                                                    <input type="date" class="form-control" name="tanggal_pembagian">
                                                 </div>
                                             </div>
                                         </div>
@@ -165,38 +117,35 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Mata Pelajaran</th>
                                             <th>Semester</th>
-                                            <th>Kelas</th>
-                                            <th>KKM</th>
+                                            <th>Tempat</th>
+                                            <th>Tanggal Pembagian Raport</th>
                                             <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php $no = 0; ?>
-                                        @foreach ($data_kkm as $kkm)
+                                        @foreach ($data_tgl_raport as $tgl_raport)
                                             <?php $no++; ?>
                                             <tr>
                                                 <td>{{ $no }}</td>
-                                                <td>{{ $kkm->mapel->nama_mapel }}</td>
-                                                <td>{{ $kkm->kelas->tapel->tahun_pelajaran }}
-                                                    @if ($kkm->kelas->tapel->semester_id == 1)
+                                                <td>{{ $tgl_raport->tapel->tahun_pelajaran }}
+                                                    @if ($tgl_raport->tapel->semester_id == 1)
                                                         Ganjil
                                                     @else
                                                         Genap
                                                     @endif
                                                 </td>
-                                                <td>Level {{ $kkm->kelas->tingkatan->nama_tingkatan }} -
-                                                    {{ $kkm->kelas->nama_kelas }}</td>
-                                                <td>{{ $kkm->kkm }}</td>
+                                                <td>{{ $tgl_raport->tempat_penerbitan }}</td>
+                                                <td>{{ date('d-M-Y', strtotime($tgl_raport->tanggal_pembagian)) }}</td>
                                                 <td>
-                                                    <form action="{{ route('guru.km.kkm.destroy', $kkm->id) }}"
+                                                    <form action="{{ route('tk.tglraport.destroy', $tgl_raport->id) }}"
                                                         method="POST">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="button" class="btn btn-warning btn-sm mt-1"
                                                             data-bs-toggle="modal"
-                                                            data-bs-target="#modal-edit{{ $kkm->id }}">
+                                                            data-bs-target="#modal-edit{{ $tgl_raport->id }}">
                                                             <i class="fas fa-pencil-alt"></i>
                                                         </button>
                                                         <button type="submit" class="btn btn-danger btn-sm mt-1"
@@ -208,47 +157,54 @@
                                             </tr>
 
                                             <!-- Modal edit  -->
-                                            <div class="modal fade" id="modal-edit{{ $kkm->id }}">
+                                            <div class="modal fade" id="modal-edit{{ $tgl_raport->id }}">
                                                 <div class="modal-dialog modal-lg">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <h5 class="modal-title">Edit {{ $title }}</h5>
-                                                            <button type="button" class="btn-close"
-                                                                data-bs-dismiss="modal" aria-hidden="true"></button>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                                aria-hidden="true"></button>
                                                         </div>
-                                                        <form action="{{ route('guru.km.kkm.update', $kkm->id) }}"
+                                                        <form action="{{ route('tk.tglraport.update', $tgl_raport->id) }}"
                                                             method="POST">
                                                             {{ method_field('PATCH') }}
                                                             @csrf
                                                             <div class="modal-body">
                                                                 <div class="form-group row">
-                                                                    <label for="mapel_id"
-                                                                        class="col-sm-3 col-form-label">Mata
+                                                                    <label for="tapel_id"
+                                                                        class="col-sm-3 col-form-label">Tahun
                                                                         Pelajaran</label>
                                                                     <div class="col-sm-9">
                                                                         <input type="text" class="form-control"
-                                                                            id="mapel_id"
-                                                                            value="{{ $kkm->mapel->nama_mapel }}"
+                                                                            id="tapel_id"
+                                                                            value="{{ $tgl_raport->tapel->tahun_pelajaran }} {{ $tgl_raport->tapel->semester_id }}"
+                                                                            readonly>
+                                                                        <input type="hidden" class="form-control"
+                                                                            name="semester_id"
+                                                                            value="{{ $tgl_raport->tapel->semester_id }}"
                                                                             readonly>
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group row">
-                                                                    <label for="kelas_id"
-                                                                        class="col-sm-3 col-form-label">Kelas</label>
+                                                                    <label for="tempat_penerbitan"
+                                                                        class="col-sm-3 col-form-label">Tempat
+                                                                        Penerbitan</label>
                                                                     <div class="col-sm-9">
                                                                         <input type="text" class="form-control"
-                                                                            id="kelas_id"
-                                                                            value="{{ $kkm->kelas->nama_kelas }}"
-                                                                            readonly>
+                                                                            id="tempat_penerbitan"
+                                                                            name="tempat_penerbitan"
+                                                                            value="{{ $tgl_raport->tempat_penerbitan }}">
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group row">
-                                                                    <label for="kkm"
-                                                                        class="col-sm-3 col-form-label">KKM</label>
+                                                                    <label for="tanggal_pembagian"
+                                                                        class="col-sm-3 col-form-label">Tanggal
+                                                                        Pembagian</label>
                                                                     <div class="col-sm-9">
-                                                                        <input type="number" class="form-control"
-                                                                            id="kkm" name="kkm"
-                                                                            value="{{ $kkm->kkm }}">
+                                                                        <input type="date" class="form-control"
+                                                                            id="tanggal_pembagian"
+                                                                            name="tanggal_pembagian"
+                                                                            value="{{ $tgl_raport->tanggal_pembagian->format('Y-m-d') }}">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -275,45 +231,12 @@
             </div>
             <!-- /.row -->
         </div>
-        <!--/. container-fluid -->
-        </section>
-        <!-- /.content -->
+        <!-- ============================================================== -->
+        <!-- End Container fluid  -->
+        <!-- ============================================================== -->
     </div>
-    <!-- /.content-wrapper -->
 @endsection
 
-@push('custom-scripts')
-    <!-- ajax -->
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('select[name="mapel_id"]').on('change', function() {
-                var mapel_id = $(this).val();
-                if (mapel_id) {
-                    $.ajax({
-                        url: '/teacher/getKelas/ajax/' + mapel_id,
-                        type: "GET",
-                        dataType: "json",
-                        success: function(data) {
-                            $('select[name="kelas_id"').empty();
-
-                            $('select[name="kelas_id"]').append(
-                                '<option value="">-- Pilih Kelas --</option>'
-                            );
-
-                            $.each(data, function(i, data) {
-                                $('select[name="kelas_id"]').append(
-                                    '<option value="' +
-                                    data.kelas_id + '">' + data.nama_kelas +
-                                    '</option>');
-                            });
-                        }
-                    });
-                } else {
-                    $('select[name="kelas_id"').empty();
-                }
-            });
-        });
-    </script>
-@endpush
-<!-- end ajax -->
-@include('layouts.main.footer')
+@section('footer')
+    @include('layouts.main.footer')
+@endsection

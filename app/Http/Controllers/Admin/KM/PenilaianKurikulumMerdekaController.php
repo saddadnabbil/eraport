@@ -50,9 +50,9 @@ class PenilaianKurikulumMerdekaController extends Controller
         }
 
         if (count($data_mapel) == 0) {
-            return redirect('admin/mapel')->with('toast_warning', 'Mohon isikan data mata pelajaran');
+            return redirect(route('admin.mapel.index'))->with('toast_warning', 'Mohon isikan data mata pelajaran');
         } elseif (count($data_kelas) == 0) {
-            return redirect('admin/kelas')->with('toast_warning', 'Mohon isikan data kelas');
+            return redirect(route('admin.kelas.index'))->with('toast_warning', 'Mohon isikan data kelas');
         }
 
         return view('admin.km.penilaian.pilihkelas', compact('title', 'data_mapel', 'data_kelas', 'data_pembelajaran', 'tapel'));

@@ -31,7 +31,7 @@
                 ],
                 [
                     'title' => $title,
-                    'url' => route('tapel.index'),
+                    'url' => '#',
                     'active' => false,
                 ],
             ],

@@ -94,7 +94,7 @@
                 var ekstrakulikuler_id = $(this).val();
                 if (ekstrakulikuler_id) {
                     $.ajax({
-                        url: '/guru/getKelas/ekstra/' + ekstrakulikuler_id,
+                        url: '/teacher/getKelas/ekstra/' + ekstrakulikuler_id,
                         type: "GET",
                         dataType: "json",
                         success: function(data) {

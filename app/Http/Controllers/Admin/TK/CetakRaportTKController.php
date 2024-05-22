@@ -129,6 +129,12 @@ class CetakRaportTKController extends Controller
         $kelas = strtoupper($anggota_kelas->kelas->nama_kelas);
         $nisn = $anggota_kelas->siswa->nisn;
 
+        dd($tapel->km_tgl_raport->tempat_penerbitan);
+
+        if ($tapel->km_tgl_raport->tempat_penerbitan == null) {
+            return redirect()->back()->with('toast_error', 'Tempat Penerbitan Tidak Boleh Kosong');
+        }
+
         if ($request->data_type == 1) {
             $title = 'Kelengkapan Raport TK';
             $kelengkapan_raport = PDF::loadview('walikelas.km.raporttk.kelengkapanraport', compact('title', 'sekolah', 'anggota_kelas', 'term'))->setPaper($request->paper_size, $request->orientation);

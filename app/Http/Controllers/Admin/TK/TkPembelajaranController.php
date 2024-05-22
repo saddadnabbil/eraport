@@ -32,9 +32,9 @@ class TkPembelajaranController extends Controller
         $data_kelas = Kelas::where('tapel_id', $tapel->id)->whereIn('tingkatan_id', [1, 2, 3])->get();
 
         if (count($data_topic) == 0) {
-            return redirect('admin/mapel')->with('toast_warning', 'Mohon isikan data mata pelajaran');
+            return redirect(route('admin.mapel.index'))->with('toast_warning', 'Mohon isikan data mata pelajaran');
         } elseif (count($data_kelas) == 0) {
-            return redirect('admin/kelas')->with('toast_warning', 'Mohon isikan data kelas');
+            return redirect(route('admin.kelas.index'))->with('toast_warning', 'Mohon isikan data kelas');
         } else {
             $title = 'Data Pembelajaran TK';
             $id_tingkatan = Tingkatan::whereIn('id', [1, 2, 3])->get('id');

@@ -46,6 +46,7 @@ use Database\Seeders\NilaiAkhirTableSeeder;
 use Database\Seeders\PermissionTableSeeder;
 use Spatie\Permission\Contracts\Permission;
 use Database\Seeders\KmTglRaportTableSeeder;
+use Database\Seeders\TkTglRaportTableSeeder;
 use Database\Seeders\AnggotaKelasTableSeeder;
 use Database\Seeders\KmNilaiAkhirTableSeeder;
 use Database\Seeders\NilaiSumatifTableSeeder;
@@ -133,7 +134,7 @@ class DatabaseSeeder extends Seeder
             TkPointSeeder::class,
             TkPembelajaranSeeder::class,
             TkEventSeeder::class,
-
+            TkTglRaportTableSeeder::class,
 
             // P5BK
             P5DimensiSeeder::class,

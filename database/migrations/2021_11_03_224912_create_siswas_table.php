@@ -20,6 +20,7 @@ class CreateSiswasTable extends Migration
             $table->unsignedBigInteger('kelas_id')->unsigned()->nullable();
             $table->unsignedBigInteger('tingkatan_id')->unsigned()->nullable();
             $table->unsignedBigInteger('jurusan_id')->unsigned()->nullable();
+
             $table->enum('jenis_pendaftaran', ['1', '2']);
             $table->string('tahun_masuk')->nullable();
             $table->string('semester_masuk')->nullable();

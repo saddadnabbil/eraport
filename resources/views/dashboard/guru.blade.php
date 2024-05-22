@@ -140,6 +140,39 @@
             <!-- End First Cards -->
             <!-- *************************************************************** -->
 
+            <!-- *************************************************************** -->
+            <!-- Start Charts Section -->
+            <!-- *************************************************************** -->
+            {{-- <div class="row">
+                <div class="col-lg-4 col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            @php
+                                $siswaData = [['Laki-laki', $jumlah_siswa_lk], ['Perempuan', $jumlah_siswa_pr]];
+                            @endphp
+                            <h4 class="card-title">Total Siswa</h4>
+                            <div id="campaign-jenis_kelamin" data-siswa='{{ json_encode($siswaData) }}' class="mt-2"
+                                style="height: 283px; width: 100%"></div>
+                            <ul class="list-style-none mb-0">
+                                <li>
+                                    <i class="fas fa-circle font-10 me-2" style="color: #edf2f6"></i>
+                                    <span class="text-muted">Laki-laki</span>
+                                    <span class="text-dark float-end font-weight-medium">{{ $jumlah_siswa_lk }}</span>
+                                </li>
+                                <li class="mt-3">
+                                    <i class="fas fa-circle text-danger font-10 me-2"></i>
+                                    <span class="text-muted">Perempuan</span>
+                                    <span class="text-dark float-end font-weight-medium">{{ $jumlah_siswa_pr }}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div> --}}
+            <!-- *************************************************************** -->
+            <!-- End Charts Section -->
+            <!-- *************************************************************** -->
+
             {{-- Start Capaian Penilaian Kurikulum Merdeka --}}
             @if (!auth()->user()->hasAnyPermission(['homeroom-pg-kg']))
                 <div class="row">
@@ -154,9 +187,11 @@
                                             <tr>
                                                 <th rowspan="2" class="text-center" style="vertical-align: middle">No
                                                 </th>
-                                                <th rowspan="2" class="text-center" style="vertical-align: middle">Kelas
+                                                <th rowspan="2" class="text-center" style="vertical-align: middle">
+                                                    Kelas
                                                 </th>
-                                                <th rowspan="2" class="text-center" style="vertical-align: middle">Mata
+                                                <th rowspan="2" class="text-center" style="vertical-align: middle">
+                                                    Mata
                                                     Pelajaran</th>
                                                 <th rowspan="2" class="text-center"
                                                     style="width: 50px; vertical-align: middle">KKM</th>
@@ -171,20 +206,25 @@
                                                 </th>
                                             </tr>
                                             <tr>
-                                                <th class="text-center" style="width: 50px; vertical-align: middle">Sumatif
+                                                <th class="text-center" style="width: 50px; vertical-align: middle">
+                                                    Sumatif
                                                 </th>
-                                                <th class="text-center" style="width: 50px; vertical-align: middle">Formatif
+                                                <th class="text-center" style="width: 50px; vertical-align: middle">
+                                                    Formatif
                                                 </th>
 
-                                                <th class="text-center" style="width: 50px; vertical-align: middle">Sumatif
+                                                <th class="text-center" style="width: 50px; vertical-align: middle">
+                                                    Sumatif
                                                 </th>
-                                                <th class="text-center" style="width: 50px; vertical-align: middle">Formatif
+                                                <th class="text-center" style="width: 50px; vertical-align: middle">
+                                                    Formatif
                                                 </th>
 
                                                 <th class="text-center" style="width: 100px; vertical-align: middle">Kirim
                                                     Nilai
                                                 </th>
-                                                <th class="text-center" style="width: 100px; vertical-align: middle">Proses
+                                                <th class="text-center" style="width: 100px; vertical-align: middle">
+                                                    Proses
                                                     Deskripsi</th>
                                             </tr>
                                         </thead>
@@ -467,14 +507,13 @@
 @endsection
 
 @push('custom-scripts')
-    <!--This page JavaScript -->
     <script src="{{ asset('assets/extra-libs/c3/d3.min.js') }}"></script>
     <script src="{{ asset('assets/extra-libs/c3/c3.min.js') }}"></script>
     <script src="{{ asset('assets/libs/chartist/dist/chartist.min.js') }}"></script>
     <script src="{{ asset('assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js') }}"></script>
     <script src="{{ asset('assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js') }}"></script>
     <script src="{{ asset('assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js') }}"></script>
-    <script src="{{ asset('dist/js/pages/dashboards/dashboard1.min.js') }}"></script>
+    <script src="{{ asset('dist/js/pages/dashboards/dashboard2.min.js') }}"></script>
 @endpush
 
 @section('footer')

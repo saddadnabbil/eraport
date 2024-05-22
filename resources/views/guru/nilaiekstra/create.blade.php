@@ -196,7 +196,8 @@
                 var ekstrakulikuler_id = $(this).val();
                 if (ekstrakulikuler_id) {
                     $.ajax({
-                        url: '/guru/getKelas/ekstra/' + ekstrakulikuler_id,
+                        url: '{{ route('guru.get.kelas.ekstra', ':id') }}'.replace(':id',
+                            ekstrakulikuler_id),
                         type: "GET",
                         dataType: "json",
                         success: function(data) {

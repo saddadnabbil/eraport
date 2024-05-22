@@ -7,7 +7,7 @@ use App\Models\Mapel;
 use App\Models\Tapel;
 use App\Models\Pembelajaran;
 use App\Models\JadwalMengajar;
-use App\JadwalPelajaran;
+use App\Models\JadwalPelajaran;
 use PDF;
 use App\Models\JadwalPelajaranSlot;
 use Illuminate\Http\Request;

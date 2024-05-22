@@ -17,7 +17,7 @@
                 <td colspan="5">Waktu download : {{ $time_download }}</td>
             </tr>
             <tr>
-                <td colspan="5">Didownload oleh : {{ Auth::user()->admin->nama_lengkap }}
+                <td colspan="5">Didownload oleh : {{ Auth::user()->karyawan->nama_lengkap }}
                     ({{ Auth::user()->username }})</td>
             </tr>
             <tr>
@@ -37,7 +37,8 @@
                 <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>NAMA
                         LENGKAP</strong></td>
                 <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;">
-                    <strong>USERNAME</strong></td>
+                    <strong>USERNAME</strong>
+                </td>
                 <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>LEVEL</strong>
                 </td>
                 <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>STATUS</strong>
@@ -75,7 +76,8 @@
                 <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>NAMA
                         LENGKAP</strong></td>
                 <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;">
-                    <strong>USERNAME</strong></td>
+                    <strong>USERNAME</strong>
+                </td>
                 <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>LEVEL</strong>
                 </td>
                 <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>STATUS</strong>
@@ -119,7 +121,8 @@
                 <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>NAMA
                         LENGKAP</strong></td>
                 <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;">
-                    <strong>USERNAME</strong></td>
+                    <strong>USERNAME</strong>
+                </td>
                 <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>LEVEL</strong>
                 </td>
                 <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>STATUS</strong>

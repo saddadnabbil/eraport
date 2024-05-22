@@ -25,9 +25,9 @@ class RedirectIfAuthenticated
             } elseif ($user->hasRole('Curriculum')) {
                 return redirect(route('curriculum.dashboard'));
             } elseif ($user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG'])) {
-                return redirect(route('teacher.dashboard'));
+                return redirect(route('guru.dashboard'));
             } elseif ($user->hasRole('Student')) {
-                return redirect(route('student.dashboard'));
+                return redirect(route('siswa.dashboard'));
             }
         }
 

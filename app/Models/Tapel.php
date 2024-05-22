@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Tapel extends Model
 {
     use \Illuminate\Database\Eloquent\SoftDeletes;
-    
+
     protected $table = 'tapels';
     protected $fillable = [
         'tahun_pelajaran',
@@ -46,4 +46,8 @@ class Tapel extends Model
         return $this->hasOne('App\Models\KmTglRaport');
     }
 
+    public function tk_tgl_raport()
+    {
+        return $this->hasOne('App\Models\KmTglRaport');
+    }
 }

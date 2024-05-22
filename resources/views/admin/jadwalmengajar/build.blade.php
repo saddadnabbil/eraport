@@ -47,7 +47,7 @@
                 <div class="col-12">
                     @foreach ($dataPembelajaran as $pembelajaran)
                         <div class="d-flex justify-content-end mb-2">
-                            <a href="{{ route('timeslot.index') }}" class="btn btn-primary btn-tool btn-sm">
+                            <a href="{{ route('admin.timeslot.index') }}" class="btn btn-primary btn-tool btn-sm">
                                 <i class="fas fa-hammer  me-2"></i>Set Timeslot
                             </a>
                         </div>

@@ -574,7 +574,7 @@
                     var mapel_id = $(this).val();
                     if (mapel_id) {
                         $.ajax({
-                            url: '/guru/getKelas/ajax/' + mapel_id,
+                            url: '{{ route('guru.get.kelas', ':id') }}'.replace(':id', mapel_id),
                             type: "GET",
                             dataType: "json",
                             success: function(data) {

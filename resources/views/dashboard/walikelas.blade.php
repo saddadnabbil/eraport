@@ -137,11 +137,46 @@
             <!-- End First Cards -->
             <!-- *************************************************************** -->
 
+            <!-- *************************************************************** -->
+            <!-- Start Charts Section -->
+            <!-- *************************************************************** -->
+            <div class="row">
+
+            </div>
+            <!-- *************************************************************** -->
+            <!-- End Charts Section -->
+            <!-- *************************************************************** -->
+
 
             <!-- Main row -->
             <div class="row">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            @php
+                                $siswaData = [['Laki-laki', $jumlah_siswa_lk], ['Perempuan', $jumlah_siswa_pr]];
+                            @endphp
+                            <h4 class="card-title">Persentase Siswa Per Jenis Kelamin</h4>
+                            <div id="campaign-jenis_kelamin" data-siswa='{{ json_encode($siswaData) }}' class="mt-2"
+                                style="height: 283px; width: 100%"></div>
+                            <ul class="list-style-none mb-0">
+                                <li>
+                                    <i class="fas fa-circle font-10 me-2" style="color: #edf2f6"></i>
+                                    <span class="text-muted">Laki-laki</span>
+                                    <span class="text-dark float-end font-weight-medium">{{ $jumlah_siswa_lk }}</span>
+                                </li>
+                                <li class="mt-3">
+                                    <i class="fas fa-circle text-danger font-10 me-2"></i>
+                                    <span class="text-muted">Perempuan</span>
+                                    <span class="text-dark float-end font-weight-medium">{{ $jumlah_siswa_pr }}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Left col -->
-                <div class="col-md-8">
+                <div class="col-md-4">
                     <!-- MAP & BOX PANE -->
                     <div class="card">
                         <div class="col-md-12 col-lg-12">
@@ -314,7 +349,7 @@
     <script src="{{ asset('assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js') }}"></script>
     <script src="{{ asset('assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js') }}"></script>
     <script src="{{ asset('assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js') }}"></script>
-    <script src="{{ asset('dist/js/pages/dashboards/dashboard1.min.js') }}"></script>
+    <script src="{{ asset('dist/js/pages/dashboards/dashboard2.min.js') }}"></script>
 @endpush
 
 @include('layouts.main.footer')

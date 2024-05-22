@@ -17,7 +17,7 @@
                 <td colspan="9">Waktu download : {{ $time_download }}</td>
             </tr>
             <tr>
-                <td colspan="9">Didownload oleh : {{ Auth::user()->admin->nama_lengkap }}
+                <td colspan="9">Didownload oleh : {{ Auth::user()->karyawan->nama_lengkap }}
                     ({{ Auth::user()->username }})</td>
             </tr>
         </thead>

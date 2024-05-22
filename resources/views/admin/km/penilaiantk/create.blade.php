@@ -98,7 +98,8 @@
                                             <tbody>
                                                 @if ($data_anggota_kelas->count() == 0)
                                                     <tr>
-                                                        <td colspan="3" class="text-center">Tidak ada data</td>
+                                                        <td colspan="3" class="text-center">Data siswa tidak tersedia
+                                                        </td>
                                                     </tr>
                                                 @else
                                                     @foreach ($data_anggota_kelas as $anggota_kelas)

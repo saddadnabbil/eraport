@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Carbon\Carbon;
 use App\Models\Guru;
 use App\Models\Kelas;
 use App\Models\Mapel;
@@ -9,12 +10,11 @@ use App\Models\Siswa;
 use App\Models\Tapel;
 use App\Models\Jurusan;
 use App\Models\Tingkatan;
-use Carbon\Carbon;
 use App\Models\AnggotaKelas;
 use Illuminate\Http\Request;
+
+
 use App\Http\Controllers\Controller;
-
-
 use Illuminate\Support\Facades\Validator;
 
 class KelasController extends Controller
@@ -34,10 +34,12 @@ class KelasController extends Controller
 
         foreach ($data_kelas as $kelas) {
             $jumlah_anggota =  AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
+                ->where('anggota_kelas.tapel_id', $tapel->id)
                 ->where('anggota_kelas.kelas_id', $kelas->id)
                 ->where('siswa.status', 1)
                 ->orderBy('siswa.nama_lengkap', 'ASC')
                 ->count();
+
             $kelas->jumlah_anggota = $jumlah_anggota;
         }
 
@@ -85,13 +87,9 @@ class KelasController extends Controller
         $tingkatan = Tingkatan::find($request->tingkatan_id);
         $jurusan = Jurusan::find($request->jurusan_id);
 
-        if ($tingkatan->id != '5' && ($jurusan->id == '1' || $jurusan->id == '2')) {
+        if ($tingkatan->id != '6' && ($jurusan->id == '1' || $jurusan->id == '2')) {
             return back()->with('toast_error', $tingkatan->nama_tingkatan . ' Tidak boleh mengambil jurusan ' . $jurusan->nama_jurusan)->withInput();
         }
-
-        // if (!preg_match('/[a-zA-Z]/', $request->nama_kelas) || !preg_match('/\d/', $request->nama_kelas)) {
-        //     return back()->with('toast_error', 'Nama kelas harus mengandung setidaknya satu huruf dan satu angka')->withInput();
-        // }
 
         if ($validator->fails()) {
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
@@ -118,25 +116,48 @@ class KelasController extends Controller
     public function show($id)
     {
         $title = 'Anggota Kelas';
+        $tapel = Tapel::where('status', 1)->first();
         $kelas = Kelas::findorfail($id);
         $data_kelas = Kelas::where('tapel_id', $kelas->tapel_id)->where('tingkatan_id', $kelas->tingkatan_id)->get();
         $anggota_kelas = AnggotaKelas::where('kelas_id', $id)
+            ->where('tapel_id', $tapel->id)
             ->orderBy('id', 'DESC')
             ->whereHas('siswa', function ($query) {
                 $query->where('status', 1);
             })
             ->get();
-        $siswa_belum_masuk_kelas = Siswa::where('status', 1)->where('kelas_id', null)->get();
+
+        $siswa_belum_masuk_kelas = Siswa::whereDoesntHave('anggota_kelas', function ($query) use ($tapel) {
+            $query->where('tapel_id', $tapel->id);
+        })->where('status', 1)->get();
 
         foreach ($siswa_belum_masuk_kelas as $belum_masuk_kelas) {
-            $kelas_sebelumhya = AnggotaKelas::where('siswa_id', $belum_masuk_kelas->id)->orderBy('id', 'DESC')->first();
+            // Ambil informasi tahun pelajaran tapel sekarang
+            $tahun_pelajaran_sekarang = $tapel->tahun_pelajaran;
+
+            // Split tahun pelajaran menjadi dua bagian (misalnya: '2023-2024' menjadi ['2023', '2024'])
+            $parts = explode('-', $tahun_pelajaran_sekarang);
+
+            // Hitung tahun pelajaran sebelumnya
+            $tahun_pelajaran_sebelumnya = ($parts[0] - 1) . '-' . ($parts[1] - 1);
+
+            // Cari tapel sebelumnya berdasarkan tahun pelajaran sebelumnya
+            $tapel_sebelumnya = Tapel::where('tahun_pelajaran', $tahun_pelajaran_sebelumnya)->first();
+
+            // Ambil kelas sebelumnya siswa jika ada
+            $kelas_sebelumhya = AnggotaKelas::where('siswa_id', $belum_masuk_kelas->id)
+                ->where('tapel_id', $tapel_sebelumnya->id)
+                ->orderBy('id', 'DESC')
+                ->first();
+
             if (is_null($kelas_sebelumhya)) {
                 $belum_masuk_kelas->kelas_sebelumhya = null;
             } else {
                 $belum_masuk_kelas->kelas_sebelumhya = $kelas_sebelumhya->kelas->nama_kelas;
             }
         }
-        return view('admin.kelas.show', compact('title', 'kelas', 'data_kelas', 'anggota_kelas', 'siswa_belum_masuk_kelas'));
+
+        return view('admin.kelas.show', compact('title', 'kelas', 'tapel', 'data_kelas', 'anggota_kelas', 'siswa_belum_masuk_kelas'));
     }
 
     /**
@@ -158,7 +179,7 @@ class KelasController extends Controller
         $tingkatan = Tingkatan::find($request->tingkatan_id);
         $jurusan = Jurusan::find($request->jurusan_id);
 
-        if ($tingkatan->id != '5' && ($jurusan->id == '1' || $jurusan->id == '2')) {
+        if ($tingkatan->id != '6' && ($jurusan->id == '1' || $jurusan->id == '2')) {
             return back()->with('toast_error', $tingkatan->nama_tingkatan . ' Tidak boleh mengambil jurusan ' . $jurusan->nama_jurusan)->withInput();
         }
 
@@ -214,6 +235,7 @@ class KelasController extends Controller
             for ($count = 0; $count < count($siswa_id); $count++) {
                 $data = array(
                     'siswa_id' => $siswa_id[$count],
+                    'tapel_id' => $request->tapel_id,
                     'kelas_id'  => $request->kelas_id,
                     'pendaftaran'  => $request->pendaftaran,
                     'created_at'  => Carbon::now(),
@@ -222,11 +244,20 @@ class KelasController extends Controller
                 $insert_data[] = $data;
 
                 $siswa = Siswa::find($siswa_id[$count]);
-                if ($siswa->kelas_masuk == null && $siswa->tahun_masuk == null && $siswa->semester_masuk == null) {
+                if ($siswa->kelas_masuk == null && $siswa->tahun_masuk == null && $siswa->semester_masuk == null && $request->pendaftaran == 1 || $request->pendaftaran == 2) {
                     $siswa->update([
                         'kelas_masuk' => $kelas->nama_kelas,
                         'tahun_masuk' => Carbon::now()->year,
                         'semester_masuk' => $tingkatan->semester_id,
+                    ]);
+                }
+
+
+                if ($siswa->kelas_id != $request->input('kelas_id') && $request->pendaftaran == 3 || $request->pendaftaran == 4 || $request->pendaftaran == 5) {
+                    $siswa->update([
+                        'kelas_id' => $request->kelas_id,
+                        'tingkatan_id' => $tingkatan->id,
+                        'jurusan_id' => $jurusan->id
                     ]);
                 }
             }

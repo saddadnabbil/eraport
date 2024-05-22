@@ -32,18 +32,23 @@
     @php
         $user = Auth::user();
 
-        if ($user->hasRole(['Admin'])) {
-            $dashboard = route('admin.dashboard');
-        } elseif ($user->hasAnyRole(['Teacher', 'Teacher PG-KG', 'Co-Teacher', 'Co-Teacher PG-KG'])) {
-            $dashboard = route('guru.dashboard');
-        } elseif ($user->hasRole('Curriculum')) {
-            $dashboard = route('curriculum.dashboard');
-        } elseif ($user->hasRole('Student')) {
-            $dashboard = route('siswa.dashboard');
+        if ($user) {
+            if ($user->hasRole(['Admin'])) {
+                $dashboard = route('admin.dashboard');
+            } elseif ($user->hasAnyRole(['Teacher', 'Teacher PG-KG', 'Co-Teacher', 'Co-Teacher PG-KG'])) {
+                $dashboard = route('guru.dashboard');
+            } elseif ($user->hasRole('Curriculum')) {
+                $dashboard = route('curriculum.dashboard');
+            } elseif ($user->hasRole('Student')) {
+                $dashboard = route('siswa.dashboard');
+            }
+        } else {
+            // Jika pengguna belum login, arahkan kembali ke halaman login
+            $dashboard = route('login');
         }
     @endphp
     <div class="container">
-        <h1>An error as occured.</h1>
+        <h1>404 Page Not Found.</h1>
         <h1> <span class="ascii">(╯°□°）╯︵ ┻━┻</span></h1>
         <a href="{{ $dashboard }}">Go back</a>
     </div>

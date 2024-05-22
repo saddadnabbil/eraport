@@ -17,12 +17,14 @@ class CreateAnggotaKelasTable extends Migration
             $table->id();
             $table->unsignedBigInteger('siswa_id')->unsigned();
             $table->unsignedBigInteger('kelas_id')->unsigned()->nullable();
+            $table->unsignedBigInteger('tapel_id')->unsigned();
             $table->enum('pendaftaran', ['1', '2', '3', '4', '5']);
             $table->timestamps();
             $table->softDeletes();
 
             $table->foreign('siswa_id')->references('id')->on('siswa')->onDelete('cascade');
             $table->foreign('kelas_id')->references('id')->on('kelas')->onDelete('cascade');
+            $table->foreign('tapel_id')->references('id')->on('tapels')->onDelete('cascade');
         });
 
         // Pendaftaran 

@@ -215,6 +215,9 @@ class DashboardController extends Controller
                 $jumlah_kirim_nilai = count(KmNilaiAkhirRaport::whereIn('pembelajaran_id', $id_pembelajaran_kelas)->groupBy('pembelajaran_id')->get());
                 $jumlah_proses_deskripsi = count(KmDeskripsiNilaiSiswa::whereIn('pembelajaran_id', $id_pembelajaran_kelas)->groupBy('pembelajaran_id')->get());
 
+                $jumlah_siswa_lk = Siswa::where('status', 1)->where('kelas_id', $id_kelas_diampu)->where('jenis_kelamin', 'MALE')->count();
+                $jumlah_siswa_pr = Siswa::where('status', 1)->where('kelas_id', $id_kelas_diampu)->where('jenis_kelamin', 'FEMALE')->count();
+
                 // Dashboard Wali Kelas
                 return view('dashboard.walikelas', compact(
                     'title',
@@ -227,6 +230,8 @@ class DashboardController extends Controller
                     'jumlah_proses_deskripsi',
                     'id_kelas_diampu',
                     'unit_kode',
+                    'jumlah_siswa_lk',
+                    'jumlah_siswa_pr',
                 ));
             } else {
                 abort(404);

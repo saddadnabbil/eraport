@@ -154,7 +154,7 @@
                                                     </td>
                                                     <td class="text-center">
                                                         @include('components.actions.delete-button', [
-                                                            'route' => route('guru.timeslot.destory', $slot->id),
+                                                            'route' => route('guru.timeslot.destroy', $slot->id),
                                                             'id' => $slot->id,
                                                             'isPermanent' => true,
                                                             'withEdit' => true,

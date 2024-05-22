@@ -27,7 +27,7 @@ class PembelajaranController extends Controller
         $data_kelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->orderBy('tingkatan_id', 'ASC')->get();
 
         if (count($data_mapel) == 0) {
-            return redirect('admin/mapel')->with('toast_warning', 'Mohon isikan data mata pelajaran');
+            return redirect(route('guru.mapel.index'))->with('toast_warning', 'Mohon isikan data mata pelajaran');
         } elseif (count($data_kelas) == 0) {
             return redirect('admin/kelas')->with('toast_warning', 'Mohon isikan data kelas');
         } else {
@@ -100,7 +100,7 @@ class PembelajaranController extends Controller
             }
             Pembelajaran::insert($store_data_baru);
         }
-        return redirect('admin/pembelajaran')->with('toast_success', 'Setting pembelajaran berhasil');
+        return redirect(route('guru.pembelajaran.index'))->with('toast_success', 'Setting pembelajaran berhasil');
     }
 
     public function export()

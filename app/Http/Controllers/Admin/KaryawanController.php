@@ -454,10 +454,10 @@ class KaryawanController extends Controller
     public function format_import()
     {
         $file = public_path() . "/format_import/format_import_karyawan.xls";
-        $headers = array(
-            'Content-Type: application/xls',
-        );
-        return Response::download($file, 'format_import_karyawan ' . date('Y-m-d H_i_s') . '.xls', $headers);
+        $fileName = 'format_import_karyawan_' . date('Y-m-d_H_i_s') . '.xls';
+        return download($file, $fileName, [
+            'Content-Type' => 'application/xls',
+        ]);
     }
 
     public function import(Request $request)

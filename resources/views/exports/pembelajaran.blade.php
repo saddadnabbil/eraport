@@ -17,7 +17,7 @@
                 <td colspan="9">Waktu download : {{ $time_download }}</td>
             </tr>
             <tr>
-                <td colspan="9">Didownload oleh : {{ Auth::user()->admin->nama_lengkap }}
+                <td colspan="9">Didownload oleh : {{ Auth::user()->karyawan->nama_lengkap }}
                     ({{ Auth::user()->username }})</td>
             </tr>
         </thead>
@@ -28,7 +28,8 @@
             <tr>
                 <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>NO</strong></td>
                 <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;">
-                    <strong>SEMESTER</strong></td>
+                    <strong>SEMESTER</strong>
+                </td>
                 <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>KELAS</strong>
                 </td>
                 <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>MATA

@@ -55,7 +55,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::prefix('admin')->group(function () {
             Route::get('dashboard', 'DashboardController@index')->name('admin.dashboard');
 
-            Route::get('getKelas/ajax/{id}', 'AjaxController@ajax_kelas');
+            Route::get('getKelas/ajax/{id}', 'AjaxController@ajax_kelas')->name('admin.get.kelas');
             Route::get('getKelas/penilaian-tk/{id}', 'AjaxController@getClassByTkTopic');
             Route::get('getKelasByTingkatan/ajax/{id}', 'AjaxController@ajax_kelas_by_tingkatan_id');
             Route::get('getAllSilabus/ajax/{id}', 'AjaxController@getAllSilabus')->name('admin.get.all.silabus');
@@ -542,6 +542,13 @@ Route::group(['middleware' => ['auth']], function () {
                     'create' => 'tk.catatan.create',
                 ]);
 
+                Route::resource('tgl-raport', 'Admin\TK\TglRaportController')->only(['index', 'store', 'update', 'destroy'])->names([
+                    'index' => 'tk.tglraport.index',
+                    'store' => 'tk.tglraport.store',
+                    'update' => 'tk.tglraport.update',
+                    'destroy' => 'tk.tglraport.destroy',
+                ]);
+
                 // Element resource
                 Route::resource('element', 'Admin\TK\TkElementController')->names([
                     'index' => 'tk.element.index',
@@ -622,12 +629,13 @@ Route::group(['middleware' => ['auth']], function () {
                 'update' => 'guru.profile.update',
             ]);
 
-            Route::get('getKelas/ajax/{id}', 'AjaxController@ajax_kelas_silabus');
+            Route::get('getKelas/ajax/{id}', 'AjaxController@ajax_kelas_silabus')->name('guru.get.kelas');
             Route::get('getAllSilabus/ajax/{id}', 'AjaxController@getAllSilabus')->name('guru.get.all.silabus');
             // Route::get('getKelas/ajax/{id}', 'AjaxController@ajax_kelas');
 
             Route::get('getPembelajaranId/', 'AjaxController@getPembelajaranId')->name('guru.get.pembelajaran.id');
 
+            Route::get('getKelas/ekstra/{id}', 'AjaxController@ajax_kelas_ekstra')->name('guru.get.kelas.ekstra');
 
             // Curriculum
             Route::group(['middleware' => 'role:Curriculum'], function () {
@@ -796,7 +804,7 @@ Route::group(['middleware' => ['auth']], function () {
                     Route::get('timeslot', 'Guru\MD\JadwalPelajaranController@timeSlot')->name('guru.timeslot.index');
                     Route::post('timeslot', 'Guru\MD\JadwalPelajaranController@storeTimeSlot')->name('guru.timeslot.store');
                     Route::put('timeslot/update/{id}', 'Guru\MD\JadwalPelajaranController@updateTimeSlot')->name('guru.timeslot.update');
-                    Route::delete('timeslot/{id}', 'Guru\MD\JadwalPelajaranController@deleteTimeSlot')->name('guru.timeslot.destory');
+                    Route::delete('timeslot/{id}', 'Guru\MD\JadwalPelajaranController@deleteTimeSlot')->name('guru.timeslot.destroy');
 
                     // Silabus Controller
                     Route::resource('silabus', 'Guru\MD\SilabusController')
@@ -1123,6 +1131,13 @@ Route::group(['middleware' => ['auth']], function () {
                         'index' => 'guru.tk.catatan.index',
                         'store' => 'guru.tk.catatan.store',
                         'create' => 'guru.tk.catatan.create',
+                    ]);
+
+                    Route::resource('tgl-raport', 'Admin\TK\TglRaportController')->only(['index', 'store', 'update', 'destroy'])->names([
+                        'index' => 'guru.tk.tglraport.index',
+                        'store' => 'guru.tk.tglraport.store',
+                        'update' => 'guru.tk.tglraport.update',
+                        'destroy' => 'guru.tk.tglraport.destroy',
                     ]);
 
                     // Element resource

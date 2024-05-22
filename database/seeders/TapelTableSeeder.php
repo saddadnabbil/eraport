@@ -20,5 +20,12 @@ class TapelTableSeeder extends Seeder
             'term_id' => 1,
             'status' => 1
         ]);
+
+        Tapel::create([
+            'tahun_pelajaran' => '2024-2025',
+            'semester_id' => 1,
+            'term_id' => 1,
+            'status' => 1
+        ]);
     }
 }

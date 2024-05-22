@@ -25,6 +25,7 @@ class AnggotaKelasFactory extends Factory
         return [
             'siswa_id' => $siswa->id,
             'kelas_id' => $siswa->kelas_id, // Gunakan kelas_id dari siswa
+            'tapel_id' => 1,
             'pendaftaran' => $this->faker->randomElement(['1', '2', '3', '4', '5']),
         ];
     }

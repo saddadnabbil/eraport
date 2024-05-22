@@ -69,7 +69,7 @@
                                             aria-hidden="true"></button>
                                         </button>
                                     </div>
-                                    <form action="{{ route('timeslot.store') }}" method="POST">
+                                    <form action="{{ route('admin.timeslot.store') }}" method="POST">
                                         @csrf
                                         <input type="hidden" name="tapel_id" value="{{ $tapel->id }}">
                                         <div class="modal-body">
@@ -154,7 +154,7 @@
                                                     </td>
                                                     <td class="text-center">
                                                         @include('components.actions.delete-button', [
-                                                            'route' => route('timeslot.destory', $slot->id),
+                                                            'route' => route('admin.timeslot.destroy', $slot->id),
                                                             'id' => $slot->id,
                                                             'isPermanent' => true,
                                                             'withEdit' => true,
@@ -173,7 +173,7 @@
                                                                 <button type="button" class="btn-close"
                                                                     data-bs-dismiss="modal" aria-hidden="true"></button>
                                                             </div>
-                                                            <form action="{{ route('timeslot.update', $slot->id) }}"
+                                                            <form action="{{ route('admin.timeslot.update', $slot->id) }}"
                                                                 method="POST">
                                                                 @csrf
                                                                 @method('PUT')

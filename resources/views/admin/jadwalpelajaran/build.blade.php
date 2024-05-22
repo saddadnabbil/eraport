@@ -50,7 +50,7 @@
                             <div class="card-tools">
                                 <div class="d-flex justify-content-end gap-3">
                                     <div data-bs-toggle="tooltip" data-bs-original-title="Set Timeslot">
-                                        <a href="{{ route('timeslot.index') }}" class="btn btn-tool btn-sm">
+                                        <a href="{{ route('admin.timeslot.index') }}" class="btn btn-tool btn-sm">
                                             <i class="fas fa-hammer"></i>
                                         </a>
                                     </div>

@@ -27,9 +27,9 @@ class PembelajaranController extends Controller
         $data_kelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->orderBy('tingkatan_id', 'ASC')->get();
 
         if (count($data_mapel) == 0) {
-            return redirect('admin/mapel')->with('toast_warning', 'Mohon isikan data mata pelajaran');
+            return redirect(route('admin.mapel.index'))->with('toast_warning', 'Mohon isikan data mata pelajaran');
         } elseif (count($data_kelas) == 0) {
-            return redirect('admin/kelas')->with('toast_warning', 'Mohon isikan data kelas');
+            return redirect(route('admin.kelas.index'))->with('toast_warning', 'Mohon isikan data kelas');
         } else {
             $title = 'Data Pembelajaran';
             $id_kelas = Kelas::where('tapel_id', $tapel->id)->orderBy('tingkatan_id', 'ASC')->get('id');
@@ -47,7 +47,7 @@ class PembelajaranController extends Controller
 
         $data_pembelajaran_kelas = Pembelajaran::where('kelas_id', $request->kelas_id)->get();
         $mapel_id_pembelajaran_kelas = Pembelajaran::where('kelas_id', $request->kelas_id)->get('mapel_id');
-        $data_mapel = Mapel::whereNotIn('id', $mapel_id_pembelajaran_kelas)->get();
+        $data_mapel = Mapel::where('tapel_id', $tapel->id)->whereNotIn('id', $mapel_id_pembelajaran_kelas)->get();
         $data_guru = Guru::orderBy('id', 'ASC')->get();
 
         return view('admin.pembelajaran.settings', compact('title', 'tapel', 'kelas', 'data_kelas', 'data_pembelajaran_kelas', 'data_mapel', 'data_guru'));
@@ -62,7 +62,6 @@ class PembelajaranController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         if (!is_null($request->pembelajaran_id)) {
             for ($count = 0; $count < count($request->pembelajaran_id); $count++) {
                 $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id[$count]);
@@ -100,7 +99,7 @@ class PembelajaranController extends Controller
             }
             Pembelajaran::insert($store_data_baru);
         }
-        return redirect('admin/pembelajaran')->with('toast_success', 'Setting pembelajaran berhasil');
+        return redirect(route('admin.pembelajaran.index'))->with('toast_success', 'Setting pembelajaran berhasil');
     }
 
     public function export()

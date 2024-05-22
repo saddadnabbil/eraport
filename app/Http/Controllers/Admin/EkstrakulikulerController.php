@@ -26,10 +26,7 @@ class EkstrakulikulerController extends Controller
         $tapel = Tapel::where('status', 1)->first();
         $data_ekstrakulikuler = Ekstrakulikuler::where('tapel_id', $tapel->id)->orderBy('nama_ekstrakulikuler', 'ASC')->get();
         foreach ($data_ekstrakulikuler as $ekstrakulikuler) {
-            $anggota_ekstrakulikuler = AnggotaEkstrakulikuler::join('siswa', 'anggota_ekstrakulikuler.anggota_kelas_id', '=', 'siswa.id')
-                ->where('anggota_ekstrakulikuler.ekstrakulikuler_id', $ekstrakulikuler->id)
-                ->where('siswa.status', 1)
-                ->get();
+            $anggota_ekstrakulikuler = AnggotaEkstrakulikuler::where('ekstrakulikuler_id', $ekstrakulikuler->id)->get();
 
             $jumlah_anggota = $anggota_ekstrakulikuler->count();
             $ekstrakulikuler->jumlah_anggota = $jumlah_anggota;
@@ -79,14 +76,21 @@ class EkstrakulikulerController extends Controller
         //         ->where('siswa.status', 1)
         //         ->get();
         $title = 'Anggota Ekstrakulikuler';
+        $tapel = Tapel::where('status', 1)->first();
+
         $ekstrakulikuler = Ekstrakulikuler::findorfail($id);
-        $anggota_ekstrakulikuler = AnggotaEkstrakulikuler::join('siswa', 'anggota_ekstrakulikuler.anggota_kelas_id', '=', 'siswa.id')
-            ->where('anggota_ekstrakulikuler.ekstrakulikuler_id', $ekstrakulikuler->id)
-            ->where('siswa.status', 1)
+        $anggota_ekstrakulikuler = AnggotaEkstrakulikuler::where('ekstrakulikuler_id', $id)->get();
+
+        $anggota_kelas = AnggotaKelas::where('kelas_id', $id)
+            ->where('tapel_id', $tapel->id)
+            ->orderBy('id', 'DESC')
+            ->whereHas('siswa', function ($query) {
+                $query->where('status', 1);
+            })
             ->get();
 
         $id_anggota_ekstrakulikuler = AnggotaEkstrakulikuler::where('ekstrakulikuler_id', $id)->get('anggota_kelas_id');
-        $siswa_belum_masuk_ekstrakulikuler = AnggotaKelas::whereNotIn('id', $id_anggota_ekstrakulikuler)->get();
+        $siswa_belum_masuk_ekstrakulikuler = AnggotaKelas::where('tapel_id', $tapel->id)->whereNotIn('id', $id_anggota_ekstrakulikuler)->get();
 
         return view('admin.ekstrakulikuler.show', compact('title', 'ekstrakulikuler', 'anggota_ekstrakulikuler', 'siswa_belum_masuk_ekstrakulikuler'));
     }
@@ -161,7 +165,8 @@ class EkstrakulikulerController extends Controller
     {
         try {
             $anggota_ekstrakulikuler = AnggotaEkstrakulikuler::findorfail($id);
-            $anggota_ekstrakulikuler->delete();
+            // force delete
+            $anggota_ekstrakulikuler->forceDelete();
             return back()->with('toast_success', 'Anggota ekstrakulikuler berhasil dihapus');
         } catch (\Throwable $th) {
             return back()->with('toast_error', 'Anggota ekstrakulikuler tidak dapat dihapus');

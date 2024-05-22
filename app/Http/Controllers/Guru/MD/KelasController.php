@@ -85,7 +85,7 @@ class KelasController extends Controller
         $tingkatan = Tingkatan::find($request->tingkatan_id);
         $jurusan = Jurusan::find($request->jurusan_id);
 
-        if ($tingkatan->id != '5' && ($jurusan->id == '1' || $jurusan->id == '2')) {
+        if ($tingkatan->id != '6' && ($jurusan->id == '1' || $jurusan->id == '2')) {
             return back()->with('toast_error', $tingkatan->nama_tingkatan . ' Tidak boleh mengambil jurusan ' . $jurusan->nama_jurusan)->withInput();
         }
 
@@ -158,7 +158,7 @@ class KelasController extends Controller
         $tingkatan = Tingkatan::find($request->tingkatan_id);
         $jurusan = Jurusan::find($request->jurusan_id);
 
-        if ($tingkatan->id != '5' && ($jurusan->id == '1' || $jurusan->id == '2')) {
+        if ($tingkatan->id != '6' && ($jurusan->id == '1' || $jurusan->id == '2')) {
             return back()->with('toast_error', $tingkatan->nama_tingkatan . ' Tidak boleh mengambil jurusan ' . $jurusan->nama_jurusan)->withInput();
         }
 

@@ -99,6 +99,7 @@
                                     </div>
                                     <form action="{{ route('admin.kelas.anggota') }}" method="POST">
                                         @csrf
+                                        <input type="hidden" name="tapel_id" value="{{ $tapel->id }}">
                                         <div class="modal-body">
                                             <div class="row">
                                                 <div class="col-12">
@@ -243,7 +244,8 @@
                                                                     </h5>
 
                                                                     <button type="button" class="btn-close"
-                                                                        data-bs-dismiss="modal" aria-hidden="true"></button>
+                                                                        data-bs-dismiss="modal"
+                                                                        aria-hidden="true"></button>
                                                                     </button>
                                                                 </div>
                                                                 <form
