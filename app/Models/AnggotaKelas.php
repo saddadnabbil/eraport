@@ -11,11 +11,7 @@ class AnggotaKelas extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'anggota_kelas';
-    protected $fillable = [
-        'siswa_id',
-        'kelas_id',
-        'pendaftaran',
-    ];
+    protected $guarded = ['id'];
 
     public function siswa()
     {

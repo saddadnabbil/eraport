@@ -40,7 +40,7 @@ class KaryawanTableSeeder extends Seeder
             'resign_date' => null,
             'permanent_date' => '2023-01-01',
 
-            'kode_karyawan' => 'K001',
+            'kode_karyawan' => '2307014',
             'nama_lengkap' => 'Teacher Bros',
             'nik' => '1234567890123456',
             'nomor_akun' => '123456789',

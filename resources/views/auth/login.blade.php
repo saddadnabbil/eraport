@@ -3,12 +3,12 @@
 <!-- Login box.scss -->
 <!-- ============================================================== -->
 <div class="auth-wrapper d-flex no-block justify-content-center align-items-center position-relative"
-    style="background:url({{ asset('assets/images/big/auth-bg.jpg') }}) no-repeat center center;">
+    style="border-radius: 15px 0px 0px 15px;">
     <div class="auth-box row">
         <div class="col-lg-7 col-md-5 modal-bg-img"
             style="background-image: url({{ asset('assets/images/img-login-upacara.png') }});">
         </div>
-        <div class="col-lg-5 col-md-7 bg-white">
+        <div class="col-lg-5 col-md-7 bg-white form-box" style="">
             <div class="p-3">
                 <div class="text-center">
                     <img src="{{ asset('assets/images/logo-gis-circle.png') }}" alt="wrapkit">
@@ -38,7 +38,7 @@
                             </div>
                         </div>
                         <div class="col-lg-12 text-center">
-                            <button type="submit" class="btn w-100 btn-dark">Sign In</button>
+                            <button type="submit" class="btn w-100 btn-dark rounded">Sign In</button>
                         </div>
                     </div>
                 </form>

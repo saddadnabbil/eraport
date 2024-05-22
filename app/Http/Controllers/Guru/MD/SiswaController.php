@@ -31,14 +31,12 @@ class SiswaController extends Controller
     {
         $title = 'Data Siswa';
         $tapel = Tapel::where('status', 1)->first();
-        $tingkatanIds = [1, 2, 3, 4, 5];
-
+        $tingkatanIds = [1, 2, 3, 4, 5, 6];
         $jumlah_kelas = Kelas::where('tapel_id', $tapel->id)->count();
 
         if ($jumlah_kelas == 0) {
             return redirect(route('guru.kelas.index'))->with('toast_warning', 'Mohon isikan data kelas');
         } else {
-
             $jumlah_kelas_per_level = Siswa::select('tingkatan_id', DB::raw('count(*) as total'))
                 ->where('status', 1)
                 ->whereIn('tingkatan_id', $tingkatanIds)

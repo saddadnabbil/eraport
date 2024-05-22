@@ -17,7 +17,7 @@ class CreateAnggotaKelasTable extends Migration
             $table->id();
             $table->unsignedBigInteger('siswa_id')->unsigned();
             $table->unsignedBigInteger('kelas_id')->unsigned()->nullable();
-            $table->unsignedBigInteger('tapel_id')->unsigned();
+            $table->unsignedBigInteger('tapel_id')->unsigned()->nullable();
             $table->enum('pendaftaran', ['1', '2', '3', '4', '5']);
             $table->timestamps();
             $table->softDeletes();

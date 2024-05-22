@@ -78,12 +78,20 @@
                     <div class="card card-primary card-outline">
                         <div class="card-body box-profile">
                             <div class="text-center">
-                                @if ($karyawan->pas_photo == null)
+                                {{-- @if ($karyawan->pas_photo == null)
                                     <img class="profile-user-img" src="{{ asset('/assets/dist/img/avatar/default.png') }}"
                                         alt="Avatar" style="border: none">
                                 @else
                                     <img class="mb-2" src="{{ asset('storage/' . $karyawan->pas_photo) }}"
                                         alt="{{ $karyawan->pas_photo }}" alt="pas_photo" width="105px" height="144px">
+                                @endif --}}
+                                @if (Storage::disk('public')->exists('karyawan/' . $karyawan->kode_karyawan . '.jpg'))
+                                    <img class="mb-2"
+                                        src="{{ asset('storage/karyawan/' . $karyawan->kode_karyawan . '.jpg') }}"
+                                        alt="{{ $karyawan->pas_photo }}" alt="pas_photo" width="105px">
+                                @else
+                                    <img class="profile-user-img" src="{{ asset('/assets/dist/img/avatar/default.png') }}"
+                                        alt="Avatar" style="border: none">
                                 @endif
                             </div>
 
@@ -392,16 +400,16 @@
                                         <select class="form-control form-select select2" name="status_pernikahan"
                                             id="status_pernikahan" disabled>
                                             <option value=""></option>
-                                            <option value="1" @if ($karyawan->status_pernikahan == 1) selected @endif>
-                                                Single
-                                            </option>
-                                            <option value="2" @if ($karyawan->status_pernikahan == 2) selected @endif>
+                                            <option value="2" @if ($karyawan->status_pernikahan == 1) selected @endif>
                                                 Merried
+                                            </option>
+                                            <option value="1" @if ($karyawan->status_pernikahan == 2) selected @endif>
+                                                Single
                                             </option>
                                             <option value="3" @if ($karyawan->status_pernikahan == 3) selected @endif>
                                                 Widow
                                             </option>
-                                            <option value="3" @if ($karyawan->status_pernikahan == 3) selected @endif>
+                                            <option value="3" @if ($karyawan->status_pernikahan == 4) selected @endif>
                                                 Widower
                                             </option>
                                         </select>
@@ -909,20 +917,20 @@
                                                             <select class="form-control form-select select2"
                                                                 name="status_pernikahan" id="status_pernikahan">
                                                                 <option value="">-- Select Marital Status --</option>
-                                                                <option value="1"
-                                                                    @if ($karyawan->status_pernikahan == 1) selected @endif>
-                                                                    Single
-                                                                </option>
                                                                 <option value="2"
-                                                                    @if ($karyawan->status_pernikahan == 2) selected @endif>
+                                                                    @if ($karyawan->status_pernikahan == 1) selected @endif>
                                                                     Merried
+                                                                </option>
+                                                                <option value="1"
+                                                                    @if ($karyawan->status_pernikahan == 2) selected @endif>
+                                                                    Single
                                                                 </option>
                                                                 <option value="3"
                                                                     @if ($karyawan->status_pernikahan == 3) selected @endif>
                                                                     Widow
                                                                 </option>
                                                                 <option value="3"
-                                                                    @if ($karyawan->status_pernikahan == 3) selected @endif>
+                                                                    @if ($karyawan->status_pernikahan == 4) selected @endif>
                                                                     Widower
                                                                 </option>
                                                             </select>
@@ -971,16 +979,15 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-3">
-                                                            @if ($karyawan->pas_photo == null)
+                                                            @if (Storage::disk('public')->exists('karyawan/' . $karyawan->kode_karyawan . '.jpg'))
+                                                                <img class="mb-2"
+                                                                    src="{{ asset('storage/karyawan/' . $karyawan->kode_karyawan . '.jpg') }}"
+                                                                    alt="{{ $karyawan->pas_photo }}" alt="pas_photo"
+                                                                    width="105px">
+                                                            @else
                                                                 <img src="{{ asset('assets/dist/img/3x4.png') }}"
                                                                     alt="" id="pas_photo_preview" width="105px"
                                                                     height="144px">
-                                                            @else
-                                                                <img class="mb-2"
-                                                                    src="{{ asset('storage/' . $karyawan->pas_photo) }}"
-                                                                    alt="{{ $karyawan->pas_photo_preview }}"
-                                                                    id="pas_photo_preview" alt="pas_photo_preview"
-                                                                    width="105px" height="144px">
                                                             @endif
                                                         </div>
                                                     </div>

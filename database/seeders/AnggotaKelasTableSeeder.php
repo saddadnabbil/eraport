@@ -35,6 +35,6 @@ class AnggotaKelasTableSeeder extends Seeder
             'pendaftaran' => 1
         ]);
 
-        AnggotaKelas::factory()->count(40)->create();
+        AnggotaKelas::factory()->count(20)->create();
     }
 }

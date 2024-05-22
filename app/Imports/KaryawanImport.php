@@ -29,21 +29,21 @@ class KaryawanImport implements ToCollection
                 // 0 Super Admin
                 // 1 Admin
                 // Teacher
-                '1' => 2, // Extracurricular Teacher
+                '1' => 1, // Extracurricular Teacher
                 '2' => 2, // Playgroup - Kindergarten
-                '3' => 2, // Primary
-                '4' => 2, // Junior High School
-                '5' => 2, // Senior High School
+                '3' => 3, // Primary
+                '4' => 4, // Junior High School
+                '5' => 5, // Senior High School
 
-                '6' => 5, // HRD / Personel
-                '7' => 6, // Finance Admin
-                '8' => 7, // Librarian
-                '9' => 8, // Admission
+                '6' => 6, // HRD / Personel
+                '7' => 7, // Finance Admin
+                '8' => 8, // Librarian
+                '9' => 9, // Admission
                 // '10' //Security
                 // '11' //Suster
                 // '12' //Sauber
                 // '13' //IT Staff
-                '14' => 9, // General Affair
+                '14' => 14, // General Affair
                 // '15' => 10, // Cleaner
                 // Sales
             ];
@@ -52,10 +52,33 @@ class KaryawanImport implements ToCollection
             $user = User::create([
                 'username' => strtolower(str_replace(' ', '', $row[8])),
                 'password' => bcrypt(gmdate('d-m-Y', Date::excelToTimestamp($row[22]))),
-                'role' => '2',
                 'status' => true
             ]);
-            $user->assignRole('karyawan');
+
+            // Map unit_kode to role
+            $unitRoles = [
+                '1' => 'Extracurricular Teacher',
+                '2' => 'Teacher PG-KG',
+                '3' => 'Teacher',
+                '4' => 'Teacher',
+                '5' => 'Teacher',
+                '6' => 'HRD',
+                '7' => 'Finance',
+                '8' => 'Librarian',
+                '9' => 'Admission',
+                '13' => 'IT',
+                '14' => 'General Affair'
+            ];
+
+            // Periksa dan tetapkan peran berdasarkan nilai dari $row[3]
+            $unitCode = $row[3] ?? null;
+            if ($unitCode && in_array($unitCode, ['3', '4', '5'])) {
+                $user->assignRole('Teacher');
+            } elseif (($unitCode && in_array($unitCode, ['6']))) {
+                $user->assignRole(['HRD', 'Personel']);
+            } elseif ($unitCode && isset($unitRoles[$unitCode])) {
+                $user->assignRole($unitRoles[$unitCode]);
+            }
 
             // Create Karyawan
             Karyawan::create([

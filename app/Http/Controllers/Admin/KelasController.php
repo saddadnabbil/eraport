@@ -144,11 +144,15 @@ class KelasController extends Controller
             // Cari tapel sebelumnya berdasarkan tahun pelajaran sebelumnya
             $tapel_sebelumnya = Tapel::where('tahun_pelajaran', $tahun_pelajaran_sebelumnya)->first();
 
-            // Ambil kelas sebelumnya siswa jika ada
-            $kelas_sebelumhya = AnggotaKelas::where('siswa_id', $belum_masuk_kelas->id)
-                ->where('tapel_id', $tapel_sebelumnya->id)
-                ->orderBy('id', 'DESC')
-                ->first();
+            if (!is_null($tapel_sebelumnya)) {
+                // Ambil kelas sebelumnya siswa jika ada
+                $kelas_sebelumhya = AnggotaKelas::where('siswa_id', $belum_masuk_kelas->id)
+                    ->where('tapel_id', $tapel_sebelumnya->id)
+                    ->orderBy('id', 'DESC')
+                    ->first();
+            } else {
+                $kelas_sebelumhya = null;
+            }
 
             if (is_null($kelas_sebelumhya)) {
                 $belum_masuk_kelas->kelas_sebelumhya = null;

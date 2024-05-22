@@ -461,10 +461,10 @@ class SiswaController extends Controller
 
             // Define the file fields and their corresponding subdirectories
             $fileFields = [
-                'pas_photo' => 'pas_photo_siswa',
-                'file_document_kesehatan' => 'documents_siswa',
-                'file_list_pertanyaan' => 'documents_siswa',
-                'file_dokument_sekolah_lama' => 'documents_siswa',
+                'pas_photo' => 'siswa',
+                'file_document_kesehatan' => 'documents_siswa_kesehatan',
+                'file_list_pertanyaan' => 'documents_siswa_pertanyaan',
+                'file_dokument_sekolah_lama' => 'documents_siswa_sekolah_lama',
             ];
 
             // Handle file uploads using a loop
@@ -486,9 +486,12 @@ class SiswaController extends Controller
                 Storage::disk('public')->delete($model->$fileField);
             }
 
-            // Store the new file
+            // Store the new file with custom filename based on $siswa->nis
             $file = $request->file($fileField);
-            return $file->store($subdirectory, 'public'); // Adjust the storage path as needed
+            $filename = $model->nis . '.' . $file->getClientOriginalExtension();
+            $path = $file->storeAs($subdirectory, $filename, 'public');
+
+            return $path; // Return the path of the newly uploaded file
         }
 
         return $model->$fileField; // Return the existing file path if no new file is uploaded
@@ -560,7 +563,7 @@ class SiswaController extends Controller
             }
             $siswa->update($update_siswa);
             User::findorfail($siswa->user_id)->update(['status' => false]);
-            return redirect('admin/siswa')->with('toast_success', 'Siswa berhasil dinonaktifkan');
+            return redirect(route('admin.siswa.index'))->with('toast_success', 'Siswa berhasil dinonaktifkan');
         }
     }
 

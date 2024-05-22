@@ -25,7 +25,7 @@ class SiswaTableSeeder extends Seeder
             'semester_masuk' => '1',
             'kelas_masuk' => 'PA1',
 
-            'nis' => '1234567890',
+            'nis' => '192007007',
             'nisn' => '0987654321',
             'nama_lengkap' => 'John Doe 1',
             'nama_panggilan' => 'John',

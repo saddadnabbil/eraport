@@ -2,10 +2,11 @@
 
 namespace App\Imports;
 
-use App\Models\AnggotaKelas;
 use App\Models\User;
 use App\Models\Kelas;
 use App\Models\Siswa;
+use App\Models\Tapel;
+use App\Models\AnggotaKelas;
 use Illuminate\Support\Collection;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use Maatwebsite\Excel\Concerns\ToCollection;
@@ -21,6 +22,7 @@ class SiswaImport implements ToCollection
     {
         $chunkSize = 100; // Set the batch size
         $chunks = $collection->chunk($chunkSize);
+        $tapel = Tapel::where('status', true)->first();
 
         foreach ($chunks as $chunk) {
             foreach ($chunk as $key => $row) {
@@ -36,12 +38,9 @@ class SiswaImport implements ToCollection
                         'status' => true
                     ];
 
-                    
-
+                    $user = User::create($dataUser);
                     // assign role and permission student
                     $user->assignRole('Student');
-                    $user->givePermissionTo('student');
-                    $user = User::create($dataUser);
 
                     $tanggal_lahir = $row[13] ? gmdate('Y-m-d', Date::excelToTimestamp($row[13])) : null;
                     $tanggal_lahir_ayah = $row[31] ? gmdate('Y-m-d', Date::excelToTimestamp($row[31])) : null;
@@ -52,10 +51,17 @@ class SiswaImport implements ToCollection
 
                     // kelas_id, jurusan_id, tingkatan_id
                     $namaKelas = $row[5]; // Contoh: 'JHS-10IPS'
-
-                    // Pisahkan tingkatan dan jurusan dari nama kelas
-                    $parts = explode('-', $namaKelas);
-                    $tingkatan = $parts[0]; // Contoh: 'JHS'
+                    if (strpos($namaKelas, 'KG') === 0) {
+                        // Jika nama kelas dimulai dengan "KG"
+                        // Mengambil bagian nama kelas hingga sebelum angka di belakangnya
+                        preg_match('/^[^\d]+/', $namaKelas, $matches);
+                        $tingkatan = $matches[0] ?? null;
+                    } else {
+                        // Jika nama kelas tidak dimulai dengan "KG"
+                        // Pisahkan tingkatan dan jurusan dari nama kelas
+                        $parts = explode('-', $namaKelas);
+                        $tingkatan = $parts[0]; // Contoh: 'JHS'
+                    }
                     $jurusan = isset($parts[1]) ? $parts[1] : null; // Contoh: '10IPS'
 
                     // Tentukan tingkatan_id berdasarkan tingkatan
@@ -63,12 +69,14 @@ class SiswaImport implements ToCollection
                         $tingkatanId = 1; // PG
                     } elseif ($tingkatan === 'KG') {
                         $tingkatanId = 2; // JHS
-                    } elseif ($tingkatan === 'P') {
+                    } elseif ($tingkatan === 'KG') {
                         $tingkatanId = 3; // JHS
-                    } elseif ($tingkatan === 'JHS') {
+                    } elseif ($tingkatan === 'P') {
                         $tingkatanId = 4; // JHS
+                    } elseif ($tingkatan === 'JHS') {
+                        $tingkatanId = 5; // JHS
                     } elseif ($tingkatan === 'SHS') {
-                        $tingkatanId = 5; // SHS
+                        $tingkatanId = 6; // SHS
                     } else {
                         $tingkatanId = null; // Tingkatan tidak valid
                     }
@@ -177,10 +185,12 @@ class SiswaImport implements ToCollection
                     AnggotaKelas::create([
                         'siswa_id' => $siswa->id,
                         'kelas_id' => $siswa->kelas_id,
+                        'tapel_id' => $kelas->tapel_id,
                         'pendaftaran' => $siswa->jenis_pendaftaran,
                     ]);
                 } catch (\Throwable $th) {
-                    dd($row);
+                    // show error message ke index berapa
+                    dd("Error occurred at index: $key, $row[6]", $th);
                 }
             }
         }

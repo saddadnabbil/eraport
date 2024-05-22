@@ -195,7 +195,14 @@
             </div>
           </div>
           <div class="col-sm-5">
-            <img src="{{ $siswa->pas_photo ? asset('storage/' . $siswa->pas_photo) : asset('assets/dist/img/3x4.png') }}" alt="" id="pas_photo_preview" width="105px" height="144px">
-          </div>
+              @if (Storage::disk('public')->exists('siswa/' . $siswa->nis . '.jpg'))
+                    <img class="mb-2" src="{{ asset('storage/siswa/' . $siswa->nis . '.jpg') }}"
+                        alt="{{ $siswa->pas_photo }}" alt="pas_photo" width="105px">
+                @else
+                    <img src="{{ asset('assets/dist/img/3x4.png') }}" alt="" id="pas_photo_preview"
+                        width="105px" height="144px">
+                    @endif
+
+                </div>
+            </div>
         </div>
-    </div>

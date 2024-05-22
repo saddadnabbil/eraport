@@ -41,7 +41,7 @@
                     <div class="card card-primary card-outline">
                         <div class="card-body box-profile">
                             <div class="text-center">
-                                @if ($siswa->pas_photo == null)
+                                {{-- @if ($siswa->pas_photo == null)
                                     <img class="profile-user-img" src="{{ asset('/assets/dist/img/avatar/default.png') }}"
                                         alt="Avatar" style="border: none">
                                 @elseif ($siswa->pas_photo == 'default.png')
@@ -50,6 +50,16 @@
                                 @else
                                     <img class="mb-2" src="{{ asset('storage/' . $siswa->pas_photo) }}"
                                         alt="{{ $siswa->pas_photo }}" alt="pas_photo" width="105px" height="144px">
+                                @endif --}}
+
+                                @if (Storage::disk('public')->exists('siswa/' . $siswa->nis . '.jpg'))
+                                    <img class="mb-2" src="{{ asset('storage/siswa/' . $siswa->nis . '.jpg') }}"
+                                        alt="{{ $siswa->pas_photo }}" alt="pas_photo" width="105px">
+                                @else
+                                    {{-- <img src="{{ asset('assets/dist/img/3x4.png') }}" alt="" id="pas_photo_preview"
+                                        width="105px" height="144px"> --}}
+                                    <img class="profile-user-img" src="{{ asset('/assets/dist/img/avatar/default.png') }}"
+                                        alt="Avatar" style="border: none">
                                 @endif
                             </div>
 
@@ -872,7 +882,7 @@
                 </div>
 
                 {{-- Start Modal Keluar --}}
-                {{-- @include('admin.siswa.partials.keluar.index') --}}
+                @include('admin.siswa.partials.keluar.index')
                 <!-- End Modal Keluar-->
             </div>
         </div>

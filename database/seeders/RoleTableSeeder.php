@@ -19,6 +19,7 @@ class RoleTableSeeder extends Seeder
             'admin-access'
         ]);
 
+        // Akademik
         $guru = Role::create(['name' => 'Teacher']);
         $guru->givePermissionTo([
             'teacher-km', 'homeroom-km'
@@ -48,5 +49,20 @@ class RoleTableSeeder extends Seeder
         $curriculum->givePermissionTo([
             'masterdata-management'
         ]);
+
+        // Non Akademik
+        $hrd = Role::create(['name' => 'HRD']);
+
+        $personel = Role::create(['name' => 'Personel']);
+
+        $finance = Role::create(['name' => 'Finance']);
+
+        $librarian = Role::create(['name' => 'Librarian']);
+
+        $admission = Role::create(['name' => 'Admission']);
+
+        $ga = Role::create(['name' => 'General Affair']);
+
+        $it = Role::create(['name' => 'IT']);
     }
 }

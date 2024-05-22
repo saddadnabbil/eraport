@@ -454,10 +454,10 @@ class KaryawanController extends Controller
     public function format_import()
     {
         $file = public_path() . "/format_import/format_import_karyawan.xls";
-        $fileName = 'format_import_karyawan_' . date('Y-m-d_H_i_s') . '.xls';
-        return download($file, $fileName, [
-            'Content-Type' => 'application/xls',
-        ]);
+        $headers = array(
+            'Content-Type: application/xls',
+        );
+        return Response::download($file, 'format_import_karyawan ' . date('Y-m-d H_i_s') . '.xls', $headers);
     }
 
     public function import(Request $request)
@@ -470,7 +470,7 @@ class KaryawanController extends Controller
             Excel::import(new KaryawanImport, $request->file('file_import'));
             return back()->with('toast_success', 'Data karyawan berhasil diimport');
         } catch (\Throwable $th) {
-            // dd($th->getMessage());
+            dd($th->getMessage());
             return back()->with('toast_error', 'Maaf, format data tidak sesuai');
         }
     }
