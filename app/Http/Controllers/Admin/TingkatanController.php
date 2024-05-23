@@ -8,12 +8,16 @@ use App\Models\Semester;
 use App\Models\Tingkatan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\StoreTingkatanRequest;
+use App\Http\Requests\UpdateTingkatanRequest;
 
 class TingkatanController extends Controller
 {
     public function index()
     {
-        $title = 'Data Tingkatan';
+        $title = 'Level Data';
         $tapel = Tapel::where('status', 1)->first();
 
         $data_tingkatan = Tingkatan::orderBy('id', 'ASC')->get();
@@ -21,38 +25,18 @@ class TingkatanController extends Controller
         return view('admin.tingkatan.index', compact('title', 'data_tingkatan', 'tapel'));
     }
 
-    public function create()
+    public function store(StoreTingkatanRequest $request): RedirectResponse
     {
-        return view('tingkatan.create');
-    }
-
-    public function store(Request $request)
-    {
-        $request->validate([
-            'nama_tingkatan' => 'required|string|max:255',
-            'term_id' => 'required|exists:terms,id',
-            'semester_id' => 'required|exists:semesters,id',
-        ]);
-
         Tingkatan::create($request->all());
 
-        return redirect()->route('guru.tingkatan.index')->with('success', 'Tingkatan berhasil ditambahkan.');
+        return redirect()->back()->with('success', 'Level added successfully.');
     }
 
-    public function edit(Tingkatan $tingkatan)
+    public function update(UpdateTingkatanRequest $request, Tingkatan $tingkatan)
     {
-        return view('tingkatan.edit', compact('tingkatan'));
-    }
-
-    public function update(Request $request, Tingkatan $tingkatan)
-    {
-        $request->validate([
-            'nama_tingkatan' => 'required|string|max:255',
-        ]);
-
         $tingkatan->update($request->all());
 
-        return redirect()->route('guru.tingkatan.index')->with('success', 'Tingkatan berhasil diperbarui.');
+        return redirect()->back()->with('success', 'Level updated successfully.');
     }
 
     public function destroy($id)
@@ -60,9 +44,9 @@ class TingkatanController extends Controller
         $tingkatan = Tingkatan::findorfail($id);
         try {
             $tingkatan->forceDelete();
-            return back()->with('toast_success', 'Tingkatan berhasil dihapus');
+            return back()->with('toast_success', 'Level deleted successfully');
         } catch (\Throwable $th) {
-            return back()->with('toast_warning', 'Tingkatan ini gagal dihapus karena memiliki relasi dengan data kelas');
+            return back()->with('toast_warning', 'Level cannot be deleted because it has related data');
         }
     }
 }

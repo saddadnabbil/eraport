@@ -32,7 +32,7 @@ class SiswaController extends Controller
     {
         $title = 'Data Siswa';
         $tapel = Tapel::where('status', 1)->first();
-        $tingkatanIds = [1, 2, 3, 4, 5];
+        $tingkatanIds = [1, 2, 3, 4, 5,6];
 
         $jumlah_kelas = Kelas::where('tapel_id', $tapel->id)->count();
 

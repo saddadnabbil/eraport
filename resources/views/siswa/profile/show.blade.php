@@ -99,27 +99,27 @@
                                     <a href="#student1" data-bs-toggle="tab" aria-expanded="false"
                                         class="nav-link rounded-0 active">
                                         <i class="mdi mdi-home-variant d-lg-none d-block me-1"></i>
-                                        <span class="d-none d-lg-block">Student</span>
+                                        <span class="d-block">Student</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="#father1" data-bs-toggle="tab" aria-expanded="true"
                                         class="nav-link rounded-0 ">
                                         <i class="mdi mdi-account-circle d-lg-none d-block me-1"></i>
-                                        <span class="d-none d-lg-block">Father</span>
+                                        <span class="d-block">Father</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="#mother1" data-bs-toggle="tab" aria-expanded="true" class="nav-link rounded-0">
                                         <i class="mdi mdi-account-circle d-lg-none d-block me-1"></i>
-                                        <span class="d-none d-lg-block">Mother</span>
+                                        <span class="d-block">Mother</span>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="#guardian1" data-bs-toggle="tab" aria-expanded="false"
                                         class="nav-link rounded-0">
                                         <i class="mdi mdi-settings-outline d-lg-none d-block me-1"></i>
-                                        <span class="d-none d-lg-block">Guardian</span>
+                                        <span class="d-block">Guardian</span>
                                     </a>
                                 </li>
                             </ul>
@@ -777,28 +777,28 @@
                                             <a href="#student2" data-bs-toggle="tab" aria-expanded="false"
                                                 class="nav-link rounded-0 active">
                                                 <i class="mdi mdi-home-variant d-lg-none d-block me-1"></i>
-                                                <span class="d-none d-lg-block">Student</span>
+                                                <span class="d-block">Student</span>
                                             </a>
                                         </li>
                                         <li class="nav-item">
                                             <a href="#father2" data-bs-toggle="tab" aria-expanded="true"
                                                 class="nav-link rounded-0 ">
                                                 <i class="mdi mdi-account-circle d-lg-none d-block me-1"></i>
-                                                <span class="d-none d-lg-block">Father</span>
+                                                <span class="d-block">Father</span>
                                             </a>
                                         </li>
                                         <li class="nav-item">
                                             <a href="#mother2" data-bs-toggle="tab" aria-expanded="true"
                                                 class="nav-link rounded-0">
                                                 <i class="mdi mdi-account-circle d-lg-none d-block me-1"></i>
-                                                <span class="d-none d-lg-block">Mother</span>
+                                                <span class="d-block">Mother</span>
                                             </a>
                                         </li>
                                         <li class="nav-item">
                                             <a href="#guardian2" data-bs-toggle="tab" aria-expanded="false"
                                                 class="nav-link rounded-0">
                                                 <i class="mdi mdi-settings-outline d-lg-none d-block me-1"></i>
-                                                <span class="d-none d-lg-block">Guardian</span>
+                                                <span class="d-block">Guardian</span>
                                             </a>
                                         </li>
                                     </ul>

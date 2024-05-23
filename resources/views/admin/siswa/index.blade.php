@@ -60,9 +60,27 @@
                         <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-book  text-light"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text">Kindergarten</span>
+                            <span class="info-box-text">Kindergarten A</span>
                             @if (isset($jumlah_kelas_per_level['2']))
                                 <span class="info-box-number">{{ $jumlah_kelas_per_level['2'] }}
+                                    <small>students</small></span>
+                            @else
+                                <span class="info-box-number">0 <small>students</small></span>
+                            @endif
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box mb-3">
+                        <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-book  text-light"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">Kindergarten B</span>
+                            @if (isset($jumlah_kelas_per_level['2']))
+                                <span class="info-box-number">{{ $jumlah_kelas_per_level['3'] }}
                                     <small>students</small></span>
                             @else
                                 <span class="info-box-number">0 <small>students</small></span>
@@ -84,25 +102,6 @@
                         <div class="info-box-content">
                             <span class="info-box-text">Primary School</span>
                             @if (isset($jumlah_kelas_per_level['3']))
-                                <span class="info-box-number">{{ $jumlah_kelas_per_level['3'] }}
-                                    <small>students</small></span>
-                            @else
-                                <span class="info-box-number">0 <small>students</small></span>
-                            @endif
-                        </div>
-                        <!-- /.info-box-content -->
-                    </div>
-                    <!-- /.info-box -->
-                </div>
-                <!-- /.col -->
-                <div class="col-12 col-sm-6 col-md-3">
-                    <div class="info-box mb-3">
-                        <span class="info-box-icon bg-warning elevation-1"><i
-                                class="fas fa-book-reader text-light"></i></span>
-
-                        <div class="info-box-content">
-                            <span class="info-box-text">Junior High School</span>
-                            @if (isset($jumlah_kelas_per_level['4']))
                                 <span class="info-box-number">{{ $jumlah_kelas_per_level['4'] }}
                                     <small>students</small></span>
                             @else
@@ -113,7 +112,28 @@
                     </div>
                     <!-- /.info-box -->
                 </div>
+                
                 <!-- /.col -->
+                <div class="col-12 col-sm-6 col-md-3">
+                    <div class="info-box mb-3">
+                        <span class="info-box-icon bg-warning elevation-1"><i
+                                class="fas fa-book-reader text-light"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text">Junior High School</span>
+                            @if (isset($jumlah_kelas_per_level['4']))
+                                <span class="info-box-number">{{ $jumlah_kelas_per_level['5'] }}
+                                    <small>students</small></span>
+                            @else
+                                <span class="info-box-number">0 <small>students</small></span>
+                            @endif
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </div>
+                <!-- /.col -->
+
                 <!-- /.col -->
                 <div class="col-12 col-sm-6 col-md-3">
                     <div class="info-box mb-3">
@@ -123,7 +143,7 @@
                         <div class="info-box-content">
                             <span class="info-box-text">Senior High School</span>
                             @if (isset($jumlah_kelas_per_level['5']))
-                                <span class="info-box-number">{{ $jumlah_kelas_per_level['5'] }}
+                                <span class="info-box-number">{{ $jumlah_kelas_per_level['6'] }}
                                     <small>students</small></span>
                             @else
                                 <span class="info-box-number">0 <small>students</small></span>
@@ -144,7 +164,7 @@
                         <div class="card-header">
                             <h3 class="card-title"> {{ $title }}</h3>
                             <div class="card-tools">
-                                <div data-bs-toggle="tooltip" title="Tambah" class="d-inline-block" class="d-inline-block">
+                                <div data-bs-toggle="tooltip" title="Create" class="d-inline-block" class="d-inline-block">
                                     <button type="button" class="btn btn-tool btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#modal-tambah">
                                         <i class="fas fa-plus"></i>
@@ -244,28 +264,28 @@
                                                         <a href="#student1" data-bs-toggle="tab" aria-expanded="false"
                                                             class="nav-link rounded-0 active">
                                                             <i class="mdi mdi-home-variant d-lg-none d-block me-1"></i>
-                                                            <span class="d-none d-lg-block">Student</span>
+                                                            <span class="d-block">Student</span>
                                                         </a>
                                                     </li>
                                                     <li class="nav-item">
                                                         <a href="#father1" data-bs-toggle="tab" aria-expanded="true"
                                                             class="nav-link rounded-0 ">
                                                             <i class="mdi mdi-account-circle d-lg-none d-block me-1"></i>
-                                                            <span class="d-none d-lg-block">Father</span>
+                                                            <span class="d-block">Father</span>
                                                         </a>
                                                     </li>
                                                     <li class="nav-item">
                                                         <a href="#mother1" data-bs-toggle="tab" aria-expanded="true"
                                                             class="nav-link rounded-0">
                                                             <i class="mdi mdi-account-circle d-lg-none d-block me-1"></i>
-                                                            <span class="d-none d-lg-block">Mother</span>
+                                                            <span class="d-block">Mother</span>
                                                         </a>
                                                     </li>
                                                     <li class="nav-item">
                                                         <a href="#guardian1" data-bs-toggle="tab" aria-expanded="false"
                                                             class="nav-link rounded-0">
                                                             <i class="mdi mdi-settings-outline d-lg-none d-block me-1"></i>
-                                                            <span class="d-none d-lg-block">Guardian</span>
+                                                            <span class="d-block">Guardian</span>
                                                         </a>
                                                     </li>
                                                 </ul>
