@@ -27,7 +27,7 @@ class CetakRaportP5Controller extends Controller
      */
     public function index()
     {
-        $title = 'Cetak Raport P5';
+        $title = 'Print Report P5';
         $tapel = Tapel::where('status', 1)->first();
         $user = Auth::user();
 
@@ -62,7 +62,7 @@ class CetakRaportP5Controller extends Controller
                 ->withInput();
         }
 
-        $title = 'Cetak Raport P5';
+        $title = 'Print Report P5';
         $kelas = Kelas::findorfail($request->kelas_id);
         $tapel = Tapel::where('status', 1)->first();
         $semester = Semester::findorfail($request->semester_id);
@@ -104,7 +104,7 @@ class CetakRaportP5Controller extends Controller
         $tapel = Tapel::where('status', 1)->first();
         $semester = Semester::findorfail($request->semester_id);
 
-        $title = 'Kelengkapan Raport';
+        $title = 'Completeness of Report';
 
         $tapel = Tapel::where('status', 1)->first();
         $dataNilaiProject = P5NilaiProject::where('anggota_kelas_id', $id)->get();

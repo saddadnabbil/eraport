@@ -162,7 +162,7 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label class="col-sm-2 col-form-label">Nomor HP </label>
+                                    <label class="col-sm-2 col-form-label">Phone </label>
                                     <div class="col-sm-10">
                                         <input type="number" class="form-control" name="nomor_hp"
                                             value="{{ $siswa->nomor_hp }}">
@@ -170,7 +170,7 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label class="col-sm-2 col-form-label">Alamat </label>
+                                    <label class="col-sm-2 col-form-label">Address </label>
                                     <div class="col-sm-10">
                                         <textarea class="form-control" name="alamat" rows="2">{{ $siswa->alamat }}</textarea>
                                     </div>
@@ -239,7 +239,7 @@
                                 </div>
                                 <div class="form-group row">
                                     <div class="offset-sm-2 col-sm-10">
-                                        <button type="submit" class="btn btn-primary">Simpan</button>
+                                        <button type="submit" class="btn btn-primary">Save</button>
                                     </div>
                                 </div>
                             </form>

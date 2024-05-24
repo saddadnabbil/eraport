@@ -159,7 +159,7 @@
                                             <div class="modal-footer justify-content-end">
                                                 <button type="button" class="btn btn-default"
                                                     data-bs-dismiss="modal">Batal</button>
-                                                <button type="submit" class="btn btn-primary">Simpan</button>
+                                                <button type="submit" class="btn btn-primary">Save</button>
                                             </div>
                                         </form>
                                     </div>
@@ -175,13 +175,13 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Mata Pelajaran</th>
-                                            <th>Kelas</th>
-                                            <th>Silabus</th>
+                                            <th>Subject</th>
+                                            <th>Class</th>
+                                            <th>Syllabus</th>
                                             <th>Buku Siswa</th>
                                             <th>Buku Guru</th>
                                             @if ($user->getRoleNames()->first() != 'Student')
-                                                <th>Aksi</th>
+                                                <th>Action</th>
                                             @endif
                                         </tr>
                                     </thead>
@@ -496,7 +496,7 @@
                                                                         <button type="button" class="btn btn-default"
                                                                             data-bs-dismiss="modal">Batal</button>
                                                                         <button type="submit"
-                                                                            class="btn btn-primary">Simpan</button>
+                                                                            class="btn btn-primary">Save</button>
                                                                     </div>
                                                                 </form>
                                                             </div>

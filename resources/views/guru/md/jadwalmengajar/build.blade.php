@@ -103,7 +103,7 @@
                                                         <tr>
                                                             <td colspan="{{ count($dataWeekdays) + 1 }}"
                                                                 class="text-center border p-3 ">
-                                                                Data tidak tersedia</td>
+                                                                Data not available</td>
                                                         </tr>
                                                     @else
                                                         @foreach ($dataJadwalMengajarSlot as $slot)

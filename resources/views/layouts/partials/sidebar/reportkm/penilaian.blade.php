@@ -19,6 +19,6 @@
     'isActive' => $checkRoute,
     'hasArrow' => false,
     'icon' => 'plus-square',
-    'itemName' => 'Penilaian',
+    'itemName' => 'Grading',
     'route' => $dynamicRoute,
 ])

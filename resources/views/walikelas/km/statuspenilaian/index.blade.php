@@ -58,11 +58,11 @@
                                     <thead class="bg-info">
                                         <tr>
                                             <th rowspan="2" class="text-center">No</th>
-                                            <th rowspan="2" class="text-center">Mata Pelajaran</th>
+                                            <th rowspan="2" class="text-center">Subject</th>
                                             <th rowspan="2" class="text-center">Nama Guru</th>
                                             <th colspan="2" class="text-center" style="width: 200px;">Status Perencanaan
                                             </th>
-                                            <th colspan="2" class="text-center" style="width: 200px;">Status Penilaian
+                                            <th colspan="2" class="text-center" style="width: 200px;">Status Grading
                                             </th>
                                             <th colspan="2" class="text-center" style="width: 100px;">Status Nilai Raport
                                             </th>

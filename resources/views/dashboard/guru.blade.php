@@ -65,7 +65,7 @@
                                         --}}
                                     </div>
                                     <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">
-                                        Jumlah Kelas Diampu
+                                        Number of Classes Diampu
                                     </h6>
                                 </div>
                                 <div class="ms-auto mt-md-3 mt-lg-0">
@@ -107,7 +107,7 @@
                                         --}}
                                     </div>
                                     <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">
-                                        Jumlah Siswa Diampu
+                                        Number of Students Diampu
                                     </h6>
                                 </div>
                                 <div class="ms-auto mt-md-3 mt-lg-0">
@@ -125,7 +125,7 @@
                                     <h2 class="text-dark mb-1 font-weight-medium">{{ $jumlah_ekstrakulikuler_diampu }}
                                     </h2>
                                     <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">
-                                        Jumlah Ekstrakulikuler Diampu
+                                        Number of Extracurricular Diampu
                                     </h6>
                                 </div>
                                 <div class="ms-auto mt-md-3 mt-lg-0">
@@ -150,7 +150,7 @@
                             @php
                                 $siswaData = [['Laki-laki', $jumlah_siswa_lk], ['Perempuan', $jumlah_siswa_pr]];
                             @endphp
-                            <h4 class="card-title">Total Siswa</h4>
+                            <h4 class="card-title">Total Students</h4>
                             <div id="campaign-jenis_kelamin" data-siswa='{{ json_encode($siswaData) }}' class="mt-2"
                                 style="height: 283px; width: 100%"></div>
                             <ul class="list-style-none mb-0">
@@ -405,7 +405,7 @@
                                                                 <button type="button" class="btn btn-default"
                                                                     data-bs-dismiss="modal">Batal</button>
                                                                 <button type="submit"
-                                                                    class="btn btn-primary">Simpan</button>
+                                                                    class="btn btn-primary">Save</button>
                                                             </div>
                                                         </form>
                                                     </div>

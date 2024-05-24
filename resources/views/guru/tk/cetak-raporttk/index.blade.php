@@ -72,9 +72,9 @@
                                         <tr>
                                             <th class="text-center" style="width: 5%;">No</th>
                                             <th class="text-center" style="width: 5%;">NIS</th>
-                                            <th class="text-center" style="width: 50%;">Nama Siswa</th>
+                                            <th class="text-center" style="width: 50%;">Student Name</th>
                                             <th class="text-center" style="width: 5%;">L/P</th>
-                                            <th class="text-center" style="width: 15%;">Kelengkapan Raport</th>
+                                            <th class="text-center" style="width: 15%;">Completeness of Report</th>
                                             <th class="text-center" style="width: 15%;">Raport</th>
                                         </tr>
                                     </thead>
@@ -103,7 +103,7 @@
                                                             <input type="hidden" name="semester_id"
                                                                 value="{{ $semester->id }}">
                                                             <button type="submit" class="btn btn-danger btn-sm">
-                                                                <i class="fas fa-print"></i> Cetak Data
+                                                                <i class="fas fa-print"></i> Print Data
                                                             </button>
                                                         </form>
                                                     </td>
@@ -120,7 +120,7 @@
                                                             <input type="hidden" name="semester_id"
                                                                 value="{{ $semester->id }}">
                                                             <button type="submit" class="btn btn-primary btn-sm">
-                                                                <i class="fas fa-print"></i> Cetak Raport
+                                                                <i class="fas fa-print"></i> Print Report
                                                             </button>
                                                         </form>
                                                     </td>
@@ -128,7 +128,7 @@
                                             @endforeach
                                         @else
                                             <tr>
-                                                <td class="text-center" colspan="12">Data tidak tersedia.</td>
+                                                <td class="text-center" colspan="12">Data not available.</td>
                                             </tr>
                                         @endif
                                     </tbody>

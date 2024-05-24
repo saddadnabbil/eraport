@@ -70,11 +70,11 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Kelas</label>
+                                        <label class="col-sm-2 col-form-label">Class</label>
                                         <div class="col-sm-10">
                                             <select class="form-control form-select select2" name="kelas_id"
                                                 style="width: 100%;" required onchange="this.form.submit();">
-                                                <option value="" disabled>-- Pilih Kelas --</option>
+                                                <option value="" disabled>-- Select Class --</option>
                                                 @foreach ($data_kelas->sortBy('tingkatan_id') as $kls)
                                                     <option value="{{ $kls->id }}"
                                                         @if ($kls->id == $kelas->id) selected @endif>
@@ -92,7 +92,7 @@
                                         <tr>
                                             <th class="text-center" style="width: 5%;">No</th>
                                             <th class="text-center" style="width: 5%;">NIS</th>
-                                            <th class="text-center">Nama Siswa</th>
+                                            <th class="text-center">Student Name</th>
                                             <th class="text-center" style="width: 5%;">L/P</th>
                                             <th class="text-center" style="width: 15%;">Raport Tengah Semester</th>
                                         </tr>

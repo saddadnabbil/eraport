@@ -111,7 +111,7 @@
                                         <div class="modal-footer justify-content-end">
                                             <button type="button" class="btn btn-default"
                                                 data-bs-dismiss="modal">Batal</button>
-                                            <button type="submit" class="btn btn-primary">Simpan</button>
+                                            <button type="submit" class="btn btn-primary">Save</button>
                                         </div>
                                     </form>
                                 </div>
@@ -138,7 +138,7 @@
                                         @if ($dataJadwalPelajaranSlot->isEmpty())
                                             <tr>
                                                 <td colspan="6" class="text-center border p-3">
-                                                    Data tidak tersedia</td>
+                                                    Data not available</td>
                                             </tr>
                                         @else
                                             @foreach ($dataJadwalPelajaranSlot as $slot)
@@ -228,7 +228,7 @@
                                                                     <button type="button" class="btn btn-default"
                                                                         data-bs-dismiss="modal">Batal</button>
                                                                     <button type="submit"
-                                                                        class="btn btn-primary">Simpan</button>
+                                                                        class="btn btn-primary">Save</button>
                                                                 </div>
                                                             </form>
                                                         </div>

@@ -43,7 +43,7 @@ class CetakRaportTKController extends Controller
      */
     public function index()
     {
-        $title = 'Cetak Raport TK';
+        $title = 'Print Report TK';
         $tapel = Tapel::where('status', 1)->first();
         $user = Auth::user();
 
@@ -83,7 +83,7 @@ class CetakRaportTKController extends Controller
                 ->withInput();
         }
 
-        $title = 'Cetak Raport TK';
+        $title = 'Print Report TK';
         $tapel = Tapel::where('status', 1)->first();
         $term = Term::findorfail($request->term_id);
         $user = Auth::user();
@@ -130,7 +130,7 @@ class CetakRaportTKController extends Controller
         $nisn = $anggota_kelas->siswa->nisn;
 
         if ($request->data_type == 1) {
-            $title = 'Kelengkapan Raport TK';
+            $title = 'Completeness of Report TK';
             $kelengkapan_raport = PDF::loadview('guru.tk.cetak-raporttk.kelengkapanraport', compact('title', 'sekolah', 'anggota_kelas', 'term'))->setPaper($request->paper_size, $request->orientation);
             return $kelengkapan_raport->stream('KELENGKAPAN RAPORT ' . $anggota_kelas->siswa->nama_lengkap . ' (' . $anggota_kelas->kelas->nama_kelas . ').pdf');
         } elseif ($request->data_type == 2) {
@@ -187,7 +187,7 @@ class CetakRaportTKController extends Controller
         $term = Term::findorfail($request->term_id);
 
         if ($request->data_type == 1) {
-            $title = 'Kelengkapan Raport TK';
+            $title = 'Completeness of Report TK';
             $kelengkapan_raport = PDF::loadview('guru.tk.cetak-raporttk.kelengkapanraport-all-data', compact('title', 'sekolah', 'kelas', 'tapel', 'data_anggota_kelas', 'term'))->setPaper($request->paper_size, $request->orientation);
             return $kelengkapan_raport->stream('KELENGKAPAN RAPORT  (' . $kelas->nama_kelas . ').pdf');
         } elseif ($request->data_type == 2) {

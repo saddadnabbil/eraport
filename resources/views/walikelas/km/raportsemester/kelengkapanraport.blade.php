@@ -408,7 +408,7 @@
                         9.
                     </td>
                     <td class="name">
-                        Telp/Phone Number:
+                        Telp/Phone:
                     </td>
                     <td class="value">
                         : {{ $anggota_kelas->siswa->nomor_hp }}
@@ -558,7 +558,7 @@
                     </td>
                     <td class="name">
                         <span class="no">&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                        Phone Number
+                        Phone
                     </td>
                     <td class="value">
                         : {{ $anggota_kelas->siswa->nomor_hp_ayah }}
@@ -591,7 +591,7 @@
                     </td>
                     <td class="name">
                         <span class="no">&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                        Phone Number
+                        Phone
                     </td>
                     <td class="value">
                         : {{ $anggota_kelas->siswa->nomor_hp_ibu }}
@@ -656,7 +656,7 @@
                     </td>
                     <td class="name">
                         <span class="no">c. </span>
-                        Phone Number
+                        Phone
                     </td>
                     <td class="value">
                         : {{ $anggota_kelas->siswa->nomor_hp_wali }}

@@ -52,7 +52,7 @@
                                         <div class="col-sm-9">
                                             <select class="form-control form-select select2" name="kelas_id"
                                                 style="width: 100%;" required onchange="this.form.submit();">
-                                                <option value="" selected>-- Pilih Kelas --</option>
+                                                <option value="" selected>-- Select Class --</option>
                                                 @foreach ($dataKelas as $kelas)
                                                     <option value="{{ $kelas->id }}">
                                                         {{ $kelas->nama_kelas }}

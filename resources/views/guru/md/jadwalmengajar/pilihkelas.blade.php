@@ -49,11 +49,11 @@
                                     @csrf
 
                                     <div class="form-group row">
-                                        <label for="pembelajaran_id" class="col-sm-3 col-form-label">Kelas</label>
+                                        <label for="pembelajaran_id" class="col-sm-3 col-form-label">Class</label>
                                         <div class="col-sm-9">
                                             <select class="form-control form-select select2" name="guru_id"
                                                 style="width: 100%;" required onchange="this.form.submit();">
-                                                <option value="" selected>-- Pilih Kelas --</option>
+                                                <option value="" selected>-- Select Class --</option>
                                                 @foreach ($dataGuru as $guru)
                                                     <option value="{{ $guru->id }}">
                                                         {{ $guru->karyawan->nama_lengkap }}

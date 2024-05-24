@@ -52,11 +52,11 @@
                                 <form action="{{ route('pengelolaannilaikm.store') }}" method="POST">
                                     @csrf
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Kelas</label>
+                                        <label class="col-sm-2 col-form-label">Class</label>
                                         <div class="col-sm-10">
                                             <select class="form-control form-select select2" name="kelas_id"
                                                 style="width: 100%;" required onchange="this.form.submit();">
-                                                <option value="" disabled>-- Pilih Kelas --</option>
+                                                <option value="" disabled>-- Select Class --</option>
                                                 @foreach ($data_kelas->sortBy('tingkatan_id') as $kls)
                                                     <option value="{{ $kls->id }}"
                                                         @if ($kls->id == $kelas->id) selected @endif>
@@ -75,9 +75,9 @@
                                             <th class="text-center" style="width: 5%;">No</th>
                                             <th class="text-center">NIS</th>
                                             <th class="text-center">NISN</th>
-                                            <th class="text-center">Nama Siswa</th>
+                                            <th class="text-center">Student Name</th>
                                             <th class="text-center" style="width: 5%;">L/P</th>
-                                            <th class="text-center" style="width: 15%;">Lihat Nilai Akhir Semester</th>
+                                            <th class="text-center" style="width: 15%;">Lihat Final Grade Semester</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -103,7 +103,7 @@
                                                         <div class="modal-dialog modal-xl">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                    <h5 class="modal-title">Nilai Akhir Semester Siswa</h5>
+                                                                    <h5 class="modal-title">Final Grade Semester Siswa</h5>
 
                                                                     <button type="button" class="btn-close"
                                                                         data-bs-dismiss="modal" aria-hidden="true"></button>
@@ -112,17 +112,17 @@
                                                                 <div class="modal-body">
                                                                     <!-- Header Info  -->
                                                                     <div class="row">
-                                                                        <div class="col-sm-2"><strong>Nama Sekolah</strong>
+                                                                        <div class="col-sm-2"><strong>School Name</strong>
                                                                         </div>
                                                                         <div class="col-sm-6"><strong>:
                                                                                 {{ $sekolah->nama_sekolah }}</strong></div>
-                                                                        <div class="col-sm-2"><strong>Kelas</strong></div>
+                                                                        <div class="col-sm-2"><strong>Class</strong></div>
                                                                         <div class="col-sm-2"><strong>:
                                                                                 {{ $anggota_kelas->kelas->nama_kelas }}</strong>
                                                                         </div>
                                                                     </div>
                                                                     <div class="row">
-                                                                        <div class="col-sm-2"><strong>Alamat</strong></div>
+                                                                        <div class="col-sm-2"><strong>Address</strong></div>
                                                                         <div class="col-sm-6"><strong>:
                                                                                 {{ $sekolah->alamat }}</strong></div>
                                                                         <div class="col-sm-2"><strong>Semester</strong>
@@ -154,7 +154,7 @@
                                                                     <!-- Tabel Nilai  -->
                                                                     <div class="row mt-3">
                                                                         <div class="col-sm-12">
-                                                                            <strong>NILAI AKHIR SEMESTER SUMATIF DAN
+                                                                            <strong>Final Grade SEMESTER SUMATIF DAN
                                                                                 FORMATIF</strong>
                                                                         </div>
                                                                     </div>

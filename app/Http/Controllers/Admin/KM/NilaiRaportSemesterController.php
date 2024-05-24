@@ -62,7 +62,7 @@ class NilaiRaportSemesterController extends Controller
 
             $pembelajaran = Pembelajaran::where('mapel_id', $mapel_id)->where('kelas_id', $kelas_id)->first();
             if (is_null($pembelajaran)) {
-                return back()->with('toast_error', 'Data pembelajaran tidak ditemukan');
+                return back()->with('toast_error', 'Learning Data tidak ditemukan');
             } else {
                 $data_anggota_kelas = AnggotaKelas::where('kelas_id', $kelas_id)
                     ->orderBy('id', 'DESC')

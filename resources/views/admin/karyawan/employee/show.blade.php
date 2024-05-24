@@ -27,7 +27,7 @@
                         'active' => true,
                     ],
                     [
-                        'title' => 'Data Guru',
+                        'title' => 'Teacher Data',
                         'url' => route('guru.guru.index'),
                         'active' => true,
                     ],
@@ -129,7 +129,7 @@
                                     <b>Email</b> <a class="float-right">{{ $karyawan->email }}</a>
                                 </li>
                                 <li class="list-group-item">
-                                    <b>Nomor HP</b> <a class="float-right">{{ $karyawan->nomor_hp }}</a>
+                                    <b>Phone</b> <a class="float-right">{{ $karyawan->nomor_hp }}</a>
                                 </li>
                             </ul>
                         </div>
@@ -497,7 +497,7 @@
                                 </div>
                             </div>
                             <a href="{{ $user->hasRole('Curriculum') ? route('guru.guru.index') : route('karyawan.index') }}"
-                                class="btn btn-success btn-sm">Kembali</a>
+                                class="btn btn-success btn-sm">Back</a>
                             @if ($user->hasAnyPermission(['admin-access']))
                                 <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                     data-bs-target="#modal-edit{{ $karyawan->id }}">Edit</button>
@@ -1102,7 +1102,7 @@
                                                     <div class="modal-footer justify-content-end">
                                                         <button type="button" class="btn btn-default"
                                                             data-bs-dismiss="modal">Batal</button>
-                                                        <button type="submit" class="btn btn-primary">Simpan</button>
+                                                        <button type="submit" class="btn btn-primary">Save</button>
                                                     </div>
                                                 </div>
                                             </div>

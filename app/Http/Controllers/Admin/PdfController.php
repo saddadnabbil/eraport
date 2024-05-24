@@ -13,7 +13,7 @@ class PdfController extends Controller
     public function viewSilabusPDF($filename)
     {
         $pdfUrl = asset("storage/silabus/{$filename}");
-        $title = "Silabus | {$filename}";
+        $title = "Syllabus | {$filename}";
 
         return view('admin.silabus.pdf.view', compact('title', 'pdfUrl'));
     }

@@ -157,7 +157,7 @@
                                         <div class="modal-footer justify-content-end">
                                             <button type="button" class="btn btn-default"
                                                 data-bs-dismiss="modal">Batal</button>
-                                            <button type="submit" class="btn btn-primary">Simpan</button>
+                                            <button type="submit" class="btn btn-primary">Save</button>
                                         </div>
                                     </form>
                                 </div>
@@ -173,11 +173,11 @@
                                             <th>No</th>
                                             <th>NIS</th>
                                             <th>NISN</th>
-                                            <th>Nama Siswa</th>
+                                            <th>Student Name</th>
                                             <th>Tanggal Lahir</th>
                                             <th>L/P</th>
                                             <th>Pendaftaran</th>
-                                            <th>Aksi</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -282,7 +282,7 @@
                                                                                                 name="kelas_id" required>
                                                                                                 <option value="">
                                                                                                     --
-                                                                                                    Pilih Kelas
+                                                                                                    Select Class
                                                                                                     --
                                                                                                 </option>
                                                                                                 @foreach ($data_kelas as $kelas)
@@ -307,7 +307,7 @@
                                                                         <button type="button" class="btn btn-default"
                                                                             data-bs-dismiss="modal">Batal</button>
                                                                         <button type="submit"
-                                                                            class="btn btn-primary">Simpan</button>
+                                                                            class="btn btn-primary">Save</button>
                                                                     </div>
                                                                 </form>
                                                             </div>

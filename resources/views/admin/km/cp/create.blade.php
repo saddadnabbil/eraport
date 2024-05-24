@@ -67,7 +67,7 @@
                                         <div class="col-sm-10">
                                             <select class="form-control form-select select2" name="pembelajaran_id"
                                                 style="width: 100%;" required onchange="this.form.submit();">
-                                                <option value="" disabled>-- Pilih Pembelajaran --</option>
+                                                <option value="" disabled>-- Select Learning Data --</option>
                                                 @foreach ($data_pembelajaran as $pembelajaran)
                                                     <option value="{{ $pembelajaran->id }}"
                                                         @if ($pembelajaran->id == $pembelajaran_id) selected @endif>
@@ -97,7 +97,7 @@
                                                 <th style="width: 100px;">Kode CP</th>
                                                 <th>Capaian Pembelajaran</th>
                                                 <th>Ringkasan Capaian Pembelajaran</th>
-                                                <th>Aksi</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>

@@ -52,7 +52,7 @@
                                         <thead class="bg-info">
                                             <tr>
                                                 <th class="text-center">No</th>
-                                                <th class="text-center">Mata Pelajaran</th>
+                                                <th class="text-center">Subject</th>
                                                 <th class="text-center">Kelompok</th>
                                                 <th class="text-center">No Urut Raport</th>
                                             </tr>

@@ -50,7 +50,7 @@ class PenilaianKurikulumMerdekaController extends Controller
         }
 
         if (count($data_mapel) == 0) {
-            return redirect(route('guru.mapel.index'))->with('toast_warning', 'Mohon isikan data mata pelajaran');
+            return redirect(route('guru.mapel.index'))->with('toast_warning', 'Mohon isikan Subject Data');
         } elseif (count($data_kelas) == 0) {
             return redirect('admin/kelas')->with('toast_warning', 'Mohon isikan data kelas');
         }
@@ -114,9 +114,9 @@ class PenilaianKurikulumMerdekaController extends Controller
             $count_cp_formatif = count($data_rencana_penilaian_formatif);
 
             if ($count_cp_sumatif == null) {
-                return redirect(route('guru.km.rencanasumatif.index'))->with('toast_error', 'Belum ada rencana penilaian sumatif ' .  $pembelajaran->mapel->nama_mapel . ' ' . $pembelajaran->kelas->nama_kelas . ', silahkan tambah rencana nilai sumatif ' . $pembelajaran->mapel->nama_mapel . ' ' .  $pembelajaran->kelas->nama_kelas . ' terlebih dahulu!');
+                return redirect(route('guru.km.rencanasumatif.index'))->with('toast_error', 'Belum ada Grading Plan sumatif ' .  $pembelajaran->mapel->nama_mapel . ' ' . $pembelajaran->kelas->nama_kelas . ', silahkan tambah rencana Sumatif Grade ' . $pembelajaran->mapel->nama_mapel . ' ' .  $pembelajaran->kelas->nama_kelas . ' terlebih dahulu!');
             } elseif ($count_cp_formatif == null) {
-                return redirect(route('guru.km.rencanaformatif.index'))->with('toast_error', 'Belum ada rencana penilaian formatif ' .  $pembelajaran->mapel->nama_mapel . ' ' . $pembelajaran->kelas->nama_kelas . ', silahkan tambah rencana nilai formatif ' . $pembelajaran->mapel->nama_mapel . ' ' .  $pembelajaran->kelas->nama_kelas . ' terlebih dahulu!');
+                return redirect(route('guru.km.rencanaformatif.index'))->with('toast_error', 'Belum ada Grading Plan formatif ' .  $pembelajaran->mapel->nama_mapel . ' ' . $pembelajaran->kelas->nama_kelas . ', silahkan tambah rencana Formatif Grade ' . $pembelajaran->mapel->nama_mapel . ' ' .  $pembelajaran->kelas->nama_kelas . ' terlebih dahulu!');
             }
 
             $rencana_penilaian_data_sumatif = [];
@@ -211,7 +211,7 @@ class PenilaianKurikulumMerdekaController extends Controller
     public function store(Request $request)
     {
         if (is_null($request->anggota_kelas_id)) {
-            return back()->with('toast_error', 'Data siswa tidak ditemukan');
+            return back()->with('toast_error', 'Student Data tidak ditemukan');
         } else {
             $data_penilaian_sumatif_siswa = array();
             $data_penilaian_formatif_siswa = array();
@@ -270,14 +270,14 @@ class PenilaianKurikulumMerdekaController extends Controller
                 !empty($request->nilai_revisi)
             ) {
                 foreach ($request->anggota_kelas_id as $count_siswa => $anggota_kelas_id) {
-                    // Hitung nilai akhir
+                    // Hitung Final Grade
                     $nilaiAkhirSumatif = $request->nilaiAkhirSumatif[$count_siswa];
                     $nilaiAkhirFormatif = $request->nilaiAkhirFormatif[$count_siswa];
                     $bobotSumatif = 0.3;
                     $bobotFormatif = 0.7;
                     $nilaiAkhir = ($nilaiAkhirSumatif * $bobotSumatif) + ($nilaiAkhirFormatif * $bobotFormatif);
 
-                    // Simpan nilai akhir
+                    // Simpan Final Grade
                     NilaiAkhir::updateOrCreate(
                         [
                             'anggota_kelas_id' => $anggota_kelas_id,

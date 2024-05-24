@@ -158,7 +158,7 @@
                                         <div class="modal-footer justify-content-end">
                                             <button type="button" class="btn btn-default"
                                                 data-bs-dismiss="modal">Batal</button>
-                                            <button type="submit" class="btn btn-primary">Simpan</button>
+                                            <button type="submit" class="btn btn-primary">Save</button>
                                         </div>
                                     </form>
                                 </div>
@@ -173,12 +173,12 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Mata Pelajaran</th>
-                                            <th>Kelas</th>
-                                            <th>Silabus</th>
+                                            <th>Subject</th>
+                                            <th>Class</th>
+                                            <th>Syllabus</th>
                                             <th>Buku Siswa</th>
                                             <th>Buku Guru</th>
-                                            <th>Aksi</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -538,7 +538,7 @@
                                                                                     class="btn btn-default"
                                                                                     data-bs-dismiss="modal">Batal</button>
                                                                                 <button type="submit"
-                                                                                    class="btn btn-primary">Simpan</button>
+                                                                                    class="btn btn-primary">Save</button>
                                                                             </div>
                                                                         </form>
                                                                     </div>
@@ -656,11 +656,11 @@
                     // Mendapatkan ID dari data-id atribut
                     var silabusId = $(this).data('id');
 
-                    // Memanggil fungsi untuk mendapatkan data Silabus berdasarkan ID
+                    // Memanggil fungsi untuk mendapatkan data Syllabus berdasarkan ID
                     getSilabusData(silabusId);
                 });
 
-                // Fungsi untuk mendapatkan data Silabus berdasarkan ID menggunakan AJAX
+                // Fungsi untuk mendapatkan data Syllabus berdasarkan ID menggunakan AJAX
                 function getSilabusData(id) {
                     $.ajax({
                         url: "{{ route('guru.get.all.silabus', ':id') }}".replace(':id', id),

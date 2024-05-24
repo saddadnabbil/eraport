@@ -29,17 +29,17 @@
     'isActive' => request()->routeIs($allowedRoutes),
     'hasArrow' => true,
     'icon' => 'send',
-    'itemName' => 'Nilai Akhir',
+    'itemName' => 'Final Grade',
     'route' => 'javascript:void(0)',
     'subItems' => [
         [
-            'name' => 'Kirim Nilai Akhir',
+            'name' => 'Submit Final Grade',
             'route' => $dynamicRouteKirim,
             'isActive' => $checkRouteKirim,
             'childHasArrow' => false,
         ],
         [
-            'name' => 'Lihat Nilai Terkirim',
+            'name' => 'Submitted Grades',
             'route' => $dynamicRouteLihat,
             'isActive' => $checkRouteLihat,
             'childHasArrow' => false,

@@ -115,7 +115,7 @@
                                                 <tr>
                                                     <td colspan="{{ count($dataWeekdays) + 1 }}"
                                                         class="text-center border p-1 ">
-                                                        Data tidak tersedia</td>
+                                                        Data not available</td>
                                                 </tr>
                                             @else
                                                 @php

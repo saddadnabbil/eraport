@@ -101,11 +101,11 @@
                                         </div>
                                         <div class="modal-body">
                                             <div class="form-group row">
-                                                <label for="kelas_id" class="col-sm-3 col-form-label">Kelas</label>
+                                                <label for="kelas_id" class="col-sm-3 col-form-label">Class</label>
                                                 <div class="col-sm-9">
                                                     <select class="form-control form-select select2" name="kelas_id"
                                                         id="kelas_id">
-                                                        <option value="">Pilih Kelas</option>
+                                                        <option value="">Select Class</option>
                                                         @foreach ($dataKelas as $kelas)
                                                             <option value="{{ $kelas->id }}"
                                                                 @if (old('kelas_id') == $kelas->id) selected @endif>
@@ -119,7 +119,7 @@
                                         <div class="modal-footer justify-content-end">
                                             <button type="button" class="btn btn-default"
                                                 data-bs-dismiss="modal">Batal</button>
-                                            <button type="submit" class="btn btn-primary">Simpan</button>
+                                            <button type="submit" class="btn btn-primary">Save</button>
                                         </div>
                                     </form>
                                 </div>
@@ -134,7 +134,7 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Kelas</th>
+                                            <th>Class</th>
                                             <th>Tema</th>
                                             <th>Subelement</th>
                                             <th>Pembina</th>
@@ -209,7 +209,7 @@
                                                                 <button type="button" class="btn btn-default"
                                                                     data-bs-dismiss="modal">Batal</button>
                                                                 <button type="submit"
-                                                                    class="btn btn-primary">Simpan</button>
+                                                                    class="btn btn-primary">Save</button>
                                                             </div>
                                                         </form>
                                                     </div>

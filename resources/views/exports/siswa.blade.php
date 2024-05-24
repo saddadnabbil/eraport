@@ -11,7 +11,7 @@
     <table>
         <thead>
             <tr>
-                <td colspan="9"><strong>DATA SISWA</strong></td>
+                <td colspan="9"><strong>Student Data</strong></td>
             </tr>
             <tr>
                 <td colspan="9">Waktu download : {{ $time_download }}</td>
@@ -59,7 +59,7 @@
                         Kandung</strong></td>
                 <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>Warga
                         Negara</strong></td>
-                <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>Alamat</strong>
+                <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>Address</strong>
                 </td>
                 <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>Kota</strong>
                 </td>
@@ -84,9 +84,9 @@
                         Ayah</strong></td>
                 <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>Tanggal Lahir
                         Ayah</strong></td>
-                <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>Alamat
+                <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>Address
                         Ayah</strong></td>
-                <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>Nomor HP
+                <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>Phone
                         Ayah</strong></td>
                 <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>Agama
                         Ayah</strong></td>
@@ -106,9 +106,9 @@
                         Ibu</strong></td>
                 <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>Tanggal Lahir
                         Ibu</strong></td>
-                <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>Alamat
+                <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>Address
                         Ibu</strong></td>
-                <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>Nomor HP
+                <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>Phone
                         Ibu</strong></td>
                 <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>Agama
                         Ibu</strong></td>
@@ -128,9 +128,9 @@
                         Wali</strong></td>
                 <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>Tanggal Lahir
                         Wali</strong></td>
-                <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>Alamat
+                <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>Address
                         Wali</strong></td>
-                <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>Nomor HP
+                <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>Phone
                         Wali</strong></td>
                 <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>Agama
                         Wali</strong></td>
@@ -154,7 +154,7 @@
                         Sekolah Lama</strong></td>
                 <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>Tanggal
                         Keluar Sekolah Lama</strong></td>
-                <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>Nama Sekolah
+                <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>School Name
                         Lama</strong></td>
                 <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>Prestasi
                         Sekolah Lama</strong></td>
@@ -162,7 +162,7 @@
                         Prestasi Sekolah Lama</strong></td>
                 <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>Sertifikat
                         Number Sekolah Lama</strong></td>
-                <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>Alamat
+                <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>Address
                         Sekolah Lama</strong></td>
                 <td align="center" style="border: 1px solid #000000; background-color: #d9ecd0;"><strong>No STTB
                         Sekolah Lama</strong></td>

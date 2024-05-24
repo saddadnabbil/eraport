@@ -122,17 +122,17 @@
                                                     Pelajaran</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control" id="nama_mapel"
-                                                        name="nama_mapel" placeholder="Nama Mata Pelajaran"
+                                                        name="nama_mapel" placeholder="Nama Subject"
                                                         value="{{ old('nama_mapel') }}">
                                                 </div>
                                             </div>
 
                                             <div class="form-group row">
-                                                <label for="nama_mapel" class="col-sm-3 col-form-label">Nama Mata Pelajaran
+                                                <label for="nama_mapel" class="col-sm-3 col-form-label">Nama Subject
                                                     dalam Bahasa Indonesia</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control" id="nama_mapel_indonesian"
-                                                        name="nama_mapel_indonesian" placeholder="Nama Mata Pelajaran"
+                                                        name="nama_mapel_indonesian" placeholder="Nama Subject"
                                                         value="{{ old('nama_mapel') }}">
                                                 </div>
                                             </div>
@@ -150,7 +150,7 @@
                                         <div class="modal-footer justify-content-end">
                                             <button type="button" class="btn btn-default"
                                                 data-bs-dismiss="modal">Batal</button>
-                                            <button type="submit" class="btn btn-primary">Simpan</button>
+                                            <button type="submit" class="btn btn-primary">Save</button>
                                         </div>
                                     </form>
                                 </div>
@@ -164,10 +164,10 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Mata Pelajaran</th>
-                                            <th>Nama Mata Pelajaran dalam Bahasa Indonesia</th>
+                                            <th>Subject</th>
+                                            <th>Nama Subject dalam Bahasa Indonesia</th>
                                             <th>Ringkas (Singkatan)</th>
-                                            <th>Aksi</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -217,13 +217,13 @@
 
                                                                 <div class="form-group row">
                                                                     <label for="nama_mapel"
-                                                                        class="col-sm-3 col-form-label">Nama Mata Pelajaran
+                                                                        class="col-sm-3 col-form-label">Nama Subject
                                                                         dalam Bahasa Indonesia</label>
                                                                     <div class="col-sm-9">
                                                                         <input type="text" class="form-control"
                                                                             id="nama_mapel_indonesian"
                                                                             name="nama_mapel_indonesian"
-                                                                            placeholder="Nama Mata Pelajaran"
+                                                                            placeholder="Nama Subject"
                                                                             value="{{ $mapel->nama_mapel_indonesian }}">
                                                                     </div>
                                                                 </div>
@@ -242,7 +242,7 @@
                                                                 <button type="button" class="btn btn-default"
                                                                     data-bs-dismiss="modal">Batal</button>
                                                                 <button type="submit"
-                                                                    class="btn btn-primary">Simpan</button>
+                                                                    class="btn btn-primary">Save</button>
                                                             </div>
                                                         </form>
                                                     </div>

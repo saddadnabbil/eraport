@@ -27,7 +27,7 @@ class RencanaNilaiFormatifController extends Controller
      */
     public function index()
     {
-        $title = 'Rencana Nilai Formatif';
+        $title = 'Rencana Formatif Grade';
         $tapel = Tapel::where('status', 1)->first();
         $user = Auth::user();
 
@@ -61,7 +61,7 @@ class RencanaNilaiFormatifController extends Controller
      */
     public function show($id)
     {
-        $title = 'Data Rencana Nilai Formatif';
+        $title = 'Data Rencana Formatif Grade';
         $user = Auth::user();
 
         if ($user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum']) && $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])) {
@@ -117,7 +117,7 @@ class RencanaNilaiFormatifController extends Controller
             $data_penilaian_permapel[] = $data_penilaian;
         }
 
-        return redirect(route('km.rencanaformatif.index'))->with('toast_success', 'Rencana nilai Formatif berhasil disimpan.');
+        return redirect(route('km.rencanaformatif.index'))->with('toast_success', 'Rencana Formatif Grade berhasil disimpan.');
     }
 
     /**
@@ -182,11 +182,11 @@ class RencanaNilaiFormatifController extends Controller
 
             DB::commit();
 
-            return redirect()->back()->with('success', 'Rencana Nilai Formatif deleted successfully.');
+            return redirect()->back()->with('success', 'Rencana Formatif Grade deleted successfully.');
         } catch (\Exception $e) {
             DB::rollback();
 
-            return redirect()->back()->with('error', 'Failed to delete Rencana Nilai Formatif.');
+            return redirect()->back()->with('error', 'Failed to delete Rencana Formatif Grade.');
         }
     }
 }

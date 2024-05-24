@@ -59,11 +59,11 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Mata Pelajaran</label>
+                                        <label class="col-sm-2 col-form-label">Subject</label>
                                         <div class="col-sm-10">
                                             <select class="form-control form-select select2" name="pembelajaran_id"
                                                 style="width: 100%;" required onchange="this.form.submit();">
-                                                <option value="" disabled>-- Pilih Pembelajaran --</option>
+                                                <option value="" disabled>-- Select Learning Data --</option>
                                                 @foreach ($data_pembelajaran as $mapel)
                                                     <option value="{{ $mapel->id }}"
                                                         @if ($mapel->id == $pembelajaran->id) selected @endif>
@@ -94,9 +94,9 @@
                                                         <th rowspan="2" class="text-center"
                                                             style="width: 75px; vertical-align: middle">No</th>
                                                         <th rowspan="2" class="text-center"
-                                                            style="vertical-align: middle">Nama Siswa</th>
-                                                        <th class="text-center">Nilai Sumatif</th>
-                                                        <th class="text-center">Nilai Formatif</th>
+                                                            style="vertical-align: middle">Student Name</th>
+                                                        <th class="text-center">Sumatif Grade</th>
+                                                        <th class="text-center">Formatif Grade</th>
                                                         <th class="text-center align-middle">Capaian Pembelajaran</th>
                                                     </tr>
                                                     <tr>
@@ -131,7 +131,7 @@
                                                         </tr>
                                                     @empty
                                                         <tr>
-                                                            <td colspan="6" class="text-center">Data tidak tersedia</td>
+                                                            <td colspan="6" class="text-center">Data not available</td>
                                                         </tr>
                                                     @endforelse
                                                 </tbody>

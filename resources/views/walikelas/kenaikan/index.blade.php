@@ -61,7 +61,7 @@
                                             <tr>
                                                 <th class="text-center" style="width: 5%;">No</th>
                                                 <th class="text-center" style="width: 5%;">NIS</th>
-                                                <th class="text-center" style="width: 25%;">Nama Siswa</th>
+                                                <th class="text-center" style="width: 25%;">Student Name</th>
                                                 <th class="text-center" style="width: 5%;">L/P</th>
                                                 <th class="text-center" style="width: 10%;">Kelas Saat Ini</th>
                                                 <th class="text-center" colspan="2">Keputusan Naik Kelas / Lulus</th>
@@ -115,7 +115,7 @@
                                                 @endforeach
                                             @else
                                                 <tr>
-                                                    <td class="text-center" colspan="12">Data tidak tersedia.</td>
+                                                    <td class="text-center" colspan="12">Data not available.</td>
                                                 </tr>
                                             @endif
                                         </tbody>

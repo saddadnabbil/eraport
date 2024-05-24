@@ -28,7 +28,15 @@
                             data-feather="home" class="feather-icon"></i><span class="hide-menu"> Dashboard
                         </span></a>
                 </li>
+
+                <li class="sidebar-item">
+                    <a class="sidebar-link sidebar-link" href="{{ route('guru.silabus.index') }}" aria-expanded="false"><i
+                            data-feather="home" class="feather-icon"></i><span class="hide-menu"> Syllabus
+                        </span></a>
+                </li>
                 <li class="list-divider"></li>
+
+
 
                 @if ($user->hasRole('Curriculum'))
                     @if (request()->is('teacher/master-data/*') || request()->is('curriculum/dashboard'))

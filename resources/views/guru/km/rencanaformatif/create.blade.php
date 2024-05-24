@@ -22,7 +22,7 @@
                     'active' => true,
                 ],
                 [
-                    'title' => 'Rencana Formatif',
+                    'title' => 'Formatif Plan',
                     'url' => route('guru.km.rencanaformatif.index'),
                     'active' => true,
                 ],
@@ -50,7 +50,7 @@
                                 <form action="{{ route('guru.km.rencanaformatif.create') }}" method="GET">
                                     @csrf
                                     <div class="form-group row">
-                                        <label for="pembelajaran_id" class="col-sm-2 col-form-label">Mata Pelajaran</label>
+                                        <label for="pembelajaran_id" class="col-sm-2 col-form-label">Subject</label>
                                         <div class="col-sm-10">
                                             <input type="hidden" name="pembelajaran_id" value="{{ $pembelajaran->id }}">
                                             <input type="text" class="form-control"
@@ -60,7 +60,7 @@
                                     </div>
                                     <div class="form-group row">
                                         <label for="jumlah_penilaian" class="col-sm-2 col-form-label">Jumlah
-                                            Penilaian</label>
+                                            Grading</label>
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control " name="jumlah_penilaian"
                                                 id="jumlah_penilaian" value="{{ $jumlah_penilaian }}" style="width: 100%;"
@@ -79,7 +79,7 @@
                                     <table class="table table-bordered">
                                         <thead class="bg-primary">
                                             <tr>
-                                                <th>Penilaian</th>
+                                                <th>Grading</th>
                                                 @for ($i = 1; $i <= $jumlah_penilaian; $i++)
                                                     <th class="text-center">P.{{ $i }}</th>
                                                 @endfor
@@ -87,14 +87,14 @@
                                         </thead>
                                         <tbody>
                                             <tr class="bg-primary">
-                                                <td>Kelompok/Teknik Penilaian</td>
+                                                <td>Kelompok/Teknik Grading</td>
                                                 @for ($i = 1; $i <= $jumlah_penilaian; $i++)
                                                     <td>
                                                         <select class="form-control form-select" name="teknik_penilaian[]"
                                                             style="width: 100%;" required
                                                             oninvalid="this.setCustomValidity('silakan pilih item dalam daftar')"
                                                             oninput="setCustomValidity('')">
-                                                            <option value="">-- Teknik Penilaian --</option>
+                                                            <option value="">-- Teknik Grading --</option>
                                                             <option value="1"
                                                                 @if ($i == 1) selected @endif>Praktik
                                                             </option>
@@ -115,7 +115,7 @@
                                                 @endfor
                                             </tr>
                                             <tr class="bg-primary">
-                                                <td>Kode Penilaian</td>
+                                                <td>Kode Grading</td>
                                                 @for ($i = 1; $i <= $jumlah_penilaian; $i++)
                                                     <td>
                                                         <input type="text" class="form-control" name="kode_penilaian[]"
@@ -126,7 +126,7 @@
                                                 @endfor
                                             </tr>
                                             <tr class="bg-primary">
-                                                <td>Bobot Teknik Penilaian</td>
+                                                <td>Bobot Teknik Grading</td>
                                                 @for ($i = 1; $i <= $jumlah_penilaian; $i++)
                                                     <td>
                                                         <input type="number" class="form-control"

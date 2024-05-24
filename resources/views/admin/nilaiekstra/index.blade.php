@@ -61,7 +61,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Kelas</label>
+                                        <label class="col-sm-2 col-form-label">Class</label>
                                         <div class="col-sm-10">
                                             <select class="form-control form-select select2" name="kelas_id"
                                                 style="width: 100%;" required onchange="this.form.submit();">
@@ -100,7 +100,7 @@
                             $('select[name="kelas_id"').empty();
 
                             $('select[name="kelas_id"]').append(
-                                '<option value="">-- Pilih Kelas --</option>'
+                                '<option value="">-- Select Class --</option>'
                             );
 
                             $.each(data, function(i, data) {

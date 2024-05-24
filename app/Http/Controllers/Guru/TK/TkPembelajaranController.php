@@ -32,11 +32,11 @@ class TkPembelajaranController extends Controller
         $data_kelas = Kelas::where('tapel_id', $tapel->id)->whereIn('tingkatan_id', [1, 2, 3])->get();
 
         if (count($data_topic) == 0) {
-            return redirect(route('guru.mapel.index'))->with('toast_warning', 'Mohon isikan data mata pelajaran');
+            return redirect(route('guru.mapel.index'))->with('toast_warning', 'Mohon isikan Subject Data');
         } elseif (count($data_kelas) == 0) {
             return redirect('admin/kelas')->with('toast_warning', 'Mohon isikan data kelas');
         } else {
-            $title = 'Data Pembelajaran TK';
+            $title = 'Learning Data TK';
             $id_tingkatan = Tingkatan::whereIn('id', [1, 2, 3])->get('id');
             $id_kelas = Kelas::where('tapel_id', $tapel->id)->whereIn('tingkatan_id', [1, 2, 3])->get('id');
             $data_pembelajaran = TkPembelajaran::whereIn('kelas_id', $id_kelas)->whereNotNull('guru_id')->get();

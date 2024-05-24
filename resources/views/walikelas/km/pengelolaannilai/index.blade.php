@@ -60,9 +60,9 @@
                                             <th class="text-center" style="width: 5%;">No</th>
                                             <th class="text-center">NIS</th>
                                             <th class="text-center">NISN</th>
-                                            <th class="text-center">Nama Siswa</th>
+                                            <th class="text-center">Student Name</th>
                                             <th class="text-center" style="width: 5%;">L/P</th>
-                                            <th class="text-center" style="width: 15%;">Lihat Nilai Akhir Semester</th>
+                                            <th class="text-center" style="width: 15%;">Lihat Final Grade Semester</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -89,7 +89,7 @@
                                                             <div class="modal-dialog modal-xl">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
-                                                                        <h5 class="modal-title">Nilai Akhir Semester Siswa
+                                                                        <h5 class="modal-title">Final Grade Semester Siswa
                                                                         </h5>
 
                                                                         <button type="button" class="btn-close"
@@ -112,7 +112,7 @@
                                                                             </div>
                                                                         </div>
                                                                         <div class="row">
-                                                                            <div class="col-sm-2"><strong>Alamat</strong>
+                                                                            <div class="col-sm-2"><strong>Address</strong>
                                                                             </div>
                                                                             <div class="col-sm-6"><strong>:
                                                                                     {{ $sekolah->alamat }}</strong></div>
@@ -147,7 +147,7 @@
                                                                         <!-- Tabel Nilai  -->
                                                                         <div class="row mt-3">
                                                                             <div class="col-sm-12">
-                                                                                <strong>NILAI AKHIR SEMESTER SUMATIF DAN
+                                                                                <strong>Final Grade SEMESTER SUMATIF DAN
                                                                                     FORMATIF</strong>
                                                                             </div>
                                                                         </div>
@@ -308,7 +308,7 @@
                                             @endforeach
                                         @else
                                             <tr>
-                                                <td class="text-center" colspan="12">Data tidak tersedia.</td>
+                                                <td class="text-center" colspan="12">Data not available.</td>
                                             </tr>
                                         @endif
                                     </tbody>

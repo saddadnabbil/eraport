@@ -68,7 +68,7 @@
                                         @csrf
                                         <div class="modal-body">
                                             <div class="form-group row">
-                                                <label for="tapel_id" class="col-sm-3 col-form-label">Tahun Pelajaran
+                                                <label for="tapel_id" class="col-sm-3 col-form-label">Academic Year
                                                 </label>
                                                 <div class="col-sm-9">
                                                     <select name="tapel_id" id="tapel_id" class="form-control form-select">
@@ -103,7 +103,7 @@
                                         <div class="modal-footer justify-content-end">
                                             <button type="button" class="btn btn-default"
                                                 data-bs-dismiss="modal">Batal</button>
-                                            <button type="submit" class="btn btn-primary">Simpan</button>
+                                            <button type="submit" class="btn btn-primary">Save</button>
                                         </div>
                                     </form>
                                 </div>
@@ -119,7 +119,7 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Event Name</th>
-                                            <th>Tahun Pelajaran</th>
+                                            <th>Academic Year</th>
                                             <th>Term</th>
                                             <th>Action</th>
                                         </tr>

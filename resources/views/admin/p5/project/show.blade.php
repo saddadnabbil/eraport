@@ -71,7 +71,7 @@
                         </div>
                         <div class="card-body">
                             <div class="col-md-12 mb-3">
-                                <h6>Petunjuk Penilaian</h6>
+                                <h6>Petunjuk Grading</h6>
                                 <div class="table-responsive">
                                     <table id="example2" class="table table-striped table-bordered dataTable">
                                         <tbody>

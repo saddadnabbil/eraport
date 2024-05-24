@@ -307,7 +307,7 @@
                                                                 <div class="col-sm-9">
                                                                     <input type="text" class="form-control"
                                                                         id="nama_lengkap" name="nama_lengkap"
-                                                                        placeholder="Nama Siswa"
+                                                                        placeholder="Student Name"
                                                                         value="{{ old('nama_lengkap') }}">
                                                                 </div>
                                                             </div>
@@ -338,7 +338,7 @@
                                                                     </select>
                                                                 </div>
                                                                 <label
-                                                                    class="col-sm-2 col-form-label required">Kelas</label>
+                                                                    class="col-sm-2 col-form-label required">Class</label>
                                                                 <div class="col-sm-4">
                                                                     <select class="form-control form-select"
                                                                         id="kelas_id" name="kelas_id" required>
@@ -517,9 +517,9 @@
                                                             <h6 class="mt-2"><b>B. Domicile Information</b></h6>
                                                             <div class="form-group row">
                                                                 <label for="alamat"
-                                                                    class="col-sm-3 col-form-label required">Alamat</label>
+                                                                    class="col-sm-3 col-form-label required">Address</label>
                                                                 <div class="col-sm-9">
-                                                                    <textarea class="form-control" id="alamat" name="alamat" placeholder="Alamat lengkap">{{ old('alamat') }}</textarea>
+                                                                    <textarea class="form-control" id="alamat" name="alamat" placeholder="Address lengkap">{{ old('alamat') }}</textarea>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
@@ -536,7 +536,7 @@
                                                                 <div class="col-sm-4">
                                                                     <input type="number" class="form-control"
                                                                         id="kode_pos" name="kode_pos"
-                                                                        placeholder="Kode Pos"
+                                                                        placeholder="Postal Code"
                                                                         value="{{ old('kode_pos') }}">
                                                                 </div>
                                                             </div>
@@ -573,11 +573,11 @@
                                                             </div>
                                                             <div class="form-group row required">
                                                                 <label for="nomor_hp"
-                                                                    class="col-sm-3 col-form-label">Nomor HP</label>
+                                                                    class="col-sm-3 col-form-label">Phone</label>
                                                                 <div class="col-sm-9">
                                                                     <input type="number" class="form-control"
                                                                         id="nomor_hp" name="nomor_hp"
-                                                                        placeholder="Nomor HP"
+                                                                        placeholder="Phone"
                                                                         value="{{ old('nomor_hp') }}">
                                                                 </div>
                                                             </div>
@@ -707,21 +707,21 @@
                                                             </div>
                                                             <div class="form-group row">
                                                                 <label for="nama_sekolah_lama"
-                                                                    class="col-sm-3 col-form-label">Nama Sekolah</label>
+                                                                    class="col-sm-3 col-form-label">School Name</label>
                                                                 <div class="col-sm-9">
                                                                     <input type="text" class="form-control"
                                                                         id="nama_sekolah_lama" name="nama_sekolah_lama"
-                                                                        placeholder="Nama Sekolah"
+                                                                        placeholder="School Name"
                                                                         value="{{ old('nama_sekolah_lama') }}">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
                                                                 <label for="alamat_lama"
-                                                                    class="col-sm-3 col-form-label">Alamat Sekolah</label>
+                                                                    class="col-sm-3 col-form-label">Address Sekolah</label>
                                                                 <div class="col-sm-9">
                                                                     <input type="text" class="form-control"
                                                                         id="alamat_lama" name="alamat_lama"
-                                                                        placeholder="Alamat Sekolah"
+                                                                        placeholder="Address Sekolah"
                                                                         value="{{ old('alamat_lama') }}">
                                                                 </div>
                                                             </div>
@@ -802,18 +802,18 @@
                                                             </div>
                                                             <div class="form-group row">
                                                                 <label for="alamat_ayah"
-                                                                    class="col-sm-3 col-form-label">Alamat</label>
+                                                                    class="col-sm-3 col-form-label">Address</label>
                                                                 <div class="col-sm-9">
-                                                                    <textarea class="form-control" id="alamat_ayah" name="alamat_ayah" placeholder="Alamat">{{ old('alamat_ayah') }}</textarea>
+                                                                    <textarea class="form-control" id="alamat_ayah" name="alamat_ayah" placeholder="Address">{{ old('alamat_ayah') }}</textarea>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
                                                                 <label for="nomor_hp_ayah"
-                                                                    class="col-sm-3 col-form-label">Nomor HP</label>
+                                                                    class="col-sm-3 col-form-label">Phone</label>
                                                                 <div class="col-sm-9">
                                                                     <input type="text" class="form-control"
                                                                         id="nomor_hp_ayah" name="nomor_hp_ayah"
-                                                                        placeholder="Nomor HP"
+                                                                        placeholder="Phone"
                                                                         value="{{ old('nomor_hp_ayah') }}">
                                                                 </div>
                                                             </div>
@@ -918,18 +918,18 @@
                                                             </div>
                                                             <div class="form-group row">
                                                                 <label for="alamat_ibu"
-                                                                    class="col-sm-3 col-form-label">Alamat</label>
+                                                                    class="col-sm-3 col-form-label">Address</label>
                                                                 <div class="col-sm-9">
-                                                                    <textarea class="form-control" id="alamat_ibu" name="alamat_ibu" placeholder="Alamat">{{ old('alamat_ibu') }}</textarea>
+                                                                    <textarea class="form-control" id="alamat_ibu" name="alamat_ibu" placeholder="Address">{{ old('alamat_ibu') }}</textarea>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
                                                                 <label for="nomor_hp_ibu"
-                                                                    class="col-sm-3 col-form-label">Nomor HP</label>
+                                                                    class="col-sm-3 col-form-label">Phone</label>
                                                                 <div class="col-sm-9">
                                                                     <input type="text" class="form-control"
                                                                         id="nomor_hp_ibu" name="nomor_hp_ibu"
-                                                                        placeholder="Nomor HP"
+                                                                        placeholder="Phone"
                                                                         value="{{ old('nomor_hp_ibu') }}">
                                                                 </div>
                                                             </div>
@@ -1034,18 +1034,18 @@
                                                             </div>
                                                             <div class="form-group row">
                                                                 <label for="alamat_wali"
-                                                                    class="col-sm-3 col-form-label">Alamat</label>
+                                                                    class="col-sm-3 col-form-label">Address</label>
                                                                 <div class="col-sm-9">
-                                                                    <textarea class="form-control" id="alamat_wali" name="alamat_wali" placeholder="Alamat">{{ old('alamat_wali') }}</textarea>
+                                                                    <textarea class="form-control" id="alamat_wali" name="alamat_wali" placeholder="Address">{{ old('alamat_wali') }}</textarea>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
                                                                 <label for="nomor_hp_wali"
-                                                                    class="col-sm-3 col-form-label">Nomor HP</label>
+                                                                    class="col-sm-3 col-form-label">Phone</label>
                                                                 <div class="col-sm-9">
                                                                     <input type="text" class="form-control"
                                                                         id="nomor_hp_wali" name="nomor_hp_wali"
-                                                                        placeholder="Nomor HP"
+                                                                        placeholder="Phone"
                                                                         value="{{ old('nomor_hp_wali') }}">
                                                                 </div>
                                                             </div>
@@ -1114,7 +1114,7 @@
                                         <div class="modal-footer justify-content-end">
                                             <button type="button" class="btn btn-default"
                                                 data-bs-dismiss="modal">Batal</button>
-                                            <button type="submit" class="btn btn-primary">Simpan</button>
+                                            <button type="submit" class="btn btn-primary">Save</button>
                                         </div>
                                     </form>
                                 </div>

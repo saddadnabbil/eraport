@@ -39,7 +39,7 @@ class AuthController extends Controller
 
         $data_tapel = Tapel::orderBy('id', 'DESC')->get();
         if (count($data_tapel) == 0) {
-            $title = 'Setting Tahun Pelajaran';
+            $title = 'Setting Academic Year';
             return view('auth.setting_tapel', compact('title'));
         } else {
             $title = 'Login';
@@ -73,7 +73,7 @@ class AuthController extends Controller
 
             Tapel::create($tapelData);
 
-            return back()->with('toast_success', 'Registrasi berhasil');
+            return back()->with('toast_success', 'Registration successful');
         }
     }
 

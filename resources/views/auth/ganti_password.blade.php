@@ -2,8 +2,7 @@
   <!-- ============================================================== -->
   <!-- Login box.scss -->
   <!-- ============================================================== -->
-  <div class="auth-wrapper d-flex no-block justify-content-center align-items-center position-relative"
-      style="background:url({{ asset('assets/images/big/auth-bg.jpg') }}) no-repeat center center;">
+  <div class="auth-wrapper d-flex no-block justify-content-center align-items-center position-relative">
       <div class="auth-box row">
           <div class="col-lg-7 col-md-5 modal-bg-img"
               style="background-image: url({{ asset('assets/images/img-login-upacara.png') }});">
@@ -21,19 +20,19 @@
                           <div class="col-lg-12">
                               <div class="form-group mb-3">
                                   <input class="form-control" id="password_lama" name="password_lama" type="password"
-                                      placeholder="password lama">
+                                      placeholder="old password">
                               </div>
                           </div>
                           <div class="col-lg-12">
                               <div class="form-group mb-3">
                                   <input class="form-control" id="pwd" name="password_baru" type="password"
-                                      placeholder="password baru">
+                                      placeholder="new password">
                               </div>
                           </div>
                           <div class="col-lg-12">
                               <div class="form-group mb-3">
                                   <input class="form-control" id="pwd" name="konfirmasi_password" type="password"
-                                      placeholder="konfirmasi password">
+                                      placeholder="confirm password">
                               </div>
                           </div>
                           <div class="col-lg-12 text-center">

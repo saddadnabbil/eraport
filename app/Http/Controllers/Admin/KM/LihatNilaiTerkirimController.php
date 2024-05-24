@@ -24,7 +24,7 @@ class LihatNilaiTerkirimController extends Controller
      */
     public function index()
     {
-        $title = 'Lihat Nilai Akhir Terkirim';
+        $title = 'Submitted Final Grades';
         $tapel = Tapel::where('status', 1)->first();
         $user = Auth::user();
 
@@ -58,7 +58,7 @@ class LihatNilaiTerkirimController extends Controller
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
         } else {
             // Data Master
-            $title = 'Lihat Nilai Akhir Terkirim';
+            $title = 'Submitted Final Grades';
             $tapel = Tapel::where('status', 1)->first();
             $user = Auth::user();
 

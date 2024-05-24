@@ -47,10 +47,10 @@
                                 @method('put')
                                 @csrf
                                 <div class="form-group row">
-                                    <label for="nama_sekolah" class="col-sm-2 col-form-label">Nama Sekolah</label>
+                                    <label for="nama_sekolah" class="col-sm-2 col-form-label">School Name</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="nama_sekolah" name="nama_sekolah"
-                                            placeholder="Nama Sekolah" value="{{ $sekolah->nama_sekolah }}">
+                                            placeholder="School Name" value="{{ $sekolah->nama_sekolah }}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -70,23 +70,23 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="alamat" class="col-sm-2 col-form-label">Alamat</label>
+                                    <label for="alamat" class="col-sm-2 col-form-label">Address</label>
                                     <div class="col-sm-10">
-                                        <textarea class="form-control" id="alamat" name="alamat" placeholder="Alamat">{{ $sekolah->alamat }}</textarea>
+                                        <textarea class="form-control" id="alamat" name="alamat" placeholder="Address">{{ $sekolah->alamat }}</textarea>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="kode_pos" class="col-sm-2 col-form-label">Kode Pos</label>
+                                    <label for="kode_pos" class="col-sm-2 col-form-label">Postal Code</label>
                                     <div class="col-sm-10">
                                         <input type="number" class="form-control" id="kode_pos" name="kode_pos"
-                                            placeholder="Kode Pos" value="{{ $sekolah->kode_pos }}">
+                                            placeholder="Postal Code" value="{{ $sekolah->kode_pos }}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="nomor_telpon" class="col-sm-2 col-form-label">Telepon</label>
+                                    <label for="nomor_telpon" class="col-sm-2 col-form-label">Telephone</label>
                                     <div class="col-sm-10">
                                         <input type="number" class="form-control" id="nomor_telpon" name="nomor_telpon"
-                                            placeholder="Telepon"
+                                            placeholder="Telephone"
                                             value="{{ intval(str_replace('-', '', $sekolah->nomor_telpon)) }}"
                                             data-inputmask="'mask': ['999-999-9999 [x99999]', '+099 99 99 9999[9]-9999']"
                                             data-mask>
@@ -108,23 +108,23 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="kepala_sekolah" class="col-sm-2 col-form-label">Kepala Sekolah</label>
+                                    <label for="kepala_sekolah" class="col-sm-2 col-form-label">Principal</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="kepala_sekolah" name="kepala_sekolah"
-                                            placeholder="Kepala Sekolah" value="{{ $sekolah->kepala_sekolah }}">
+                                            placeholder="Principal" value="{{ $sekolah->kepala_sekolah }}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="nip_kepala_sekolah" class="col-sm-2 col-form-label">NIP Kepala Sekolah
+                                    <label for="nip_kepala_sekolah" class="col-sm-2 col-form-label">NIP Principal
                                         <small><i>(opsional)</i></small></label>
                                     <div class="col-sm-10">
                                         <input type="number" class="form-control" id="nip_kepala_sekolah"
-                                            name="nip_kepala_sekolah" placeholder="NIP Kepala Sekolah"
+                                            name="nip_kepala_sekolah" placeholder="NIP Principal"
                                             value="{{ $sekolah->nip_kepala_sekolah }}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="logo" class="col-sm-2 col-form-label">Logo Sekolah</label>
+                                    <label for="logo" class="col-sm-2 col-form-label">School Logo</label>
                                     <div class="col-sm-5">
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input form-control" name="logo"
@@ -145,13 +145,13 @@
                                 <div class="form-group row">
                                     <div class="offset-sm-2 col-sm-10">
                                         <div class="checkbox">
-                                            <input type="checkbox" required> Perbarui data profil sekolah
+                                            <input type="checkbox" required> Update school profile data
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="offset-sm-2 col-sm-10">
-                                        <button type="submit" class="btn btn-primary">Simpan</button>
+                                        <button type="submit" class="btn btn-primary">Save</button>
                                     </div>
                                 </div>
                             </form>

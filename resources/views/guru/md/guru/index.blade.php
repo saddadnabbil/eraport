@@ -36,8 +36,8 @@
         <!-- ============================================================== -->
         <div class="container-fluid">
             <div class="callout callout-info">
-                <h5>Add, edit, and delete {{ $title }}</h5>
-                <p>Please Contact Admin</p>
+                <h5>Create, edit, and delete {{ $title }}</h5>
+                <p>Please contact the admin</p>
             </div>
 
             <div class="row">

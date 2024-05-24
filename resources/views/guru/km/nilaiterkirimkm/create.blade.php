@@ -58,11 +58,11 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Mata Pelajaran</label>
+                                        <label class="col-sm-2 col-form-label">Subject</label>
                                         <div class="col-sm-10">
                                             <select class="form-control form-select select2" name="pembelajaran_id"
                                                 style="width: 100%;" required onchange="this.form.submit();">
-                                                <option value="" disabled>-- Pilih Pembelajaran --</option>
+                                                <option value="" disabled>-- Select Learning Data --</option>
                                                 @foreach ($data_pembelajaran as $mapel)
                                                     <option value="{{ $mapel->id }}"
                                                         @if ($mapel->id == $pembelajaran->id) selected @endif>
@@ -89,7 +89,7 @@
                                                     <th rowspan="2" class="text-center" style="vertical-align: middle">No
                                                     </th>
                                                     <th rowspan="2" class="text-center" style="vertical-align: middle">
-                                                        Nama Siswa</th>
+                                                        Student Name</th>
                                                     <th rowspan="2" class="text-center" style="vertical-align: middle">
                                                         KKM</th>
                                                     <th colspan="2" class="text-center">Sumatif</th>
@@ -109,7 +109,7 @@
                                                 <?php $no = 0; ?>
                                                 @if ($data_nilai_terkirim->isEmpty())
                                                     <tr>
-                                                        <td colspan="9" class="text-center">Data tidak tersedia</td>
+                                                        <td colspan="9" class="text-center">Data not available</td>
                                                     </tr>
                                                 @else
                                                     @foreach ($data_nilai_terkirim->sortBy('anggota_kelas.siswa.nama_lengkap') as $nilai_terkirim)

@@ -50,10 +50,10 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Mata Pelajaran</th>
-                                            <th>Kelas</th>
-                                            <th>Jumlah Rencana Penilaian</th>
-                                            <th>Aksi</th>
+                                            <th>Subject</th>
+                                            <th>Class</th>
+                                            <th>Jumlah Rencana Grading</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -66,7 +66,7 @@
                                                 <td>{{ $penilaian->kelas->nama_kelas }}</td>
                                                 <td>
                                                     @if ($penilaian->jumlah_rencana_penilaian == 0)
-                                                        <span class="badge bg-danger">Belum ada rencana penilaian</span>
+                                                        <span class="badge bg-danger">Belum ada Grading Plan</span>
                                                     @else
                                                         <span
                                                             class="badge bg-success"><b>{{ $penilaian->jumlah_rencana_penilaian }}</b>

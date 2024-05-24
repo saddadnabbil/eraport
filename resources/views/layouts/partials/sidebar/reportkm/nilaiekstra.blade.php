@@ -18,6 +18,6 @@
     'isActive' => $checkRoute,
     'hasArrow' => false,
     'icon' => 'plus-circle',
-    'itemName' => 'Nilai Ekstrakulikuler',
+    'itemName' => 'Extracurricular Grade',
     'route' => $dynamicRoute,
 ])

@@ -386,7 +386,7 @@
                 </td>
                 <td style="width:48pt;border: 1px solid black;" bgcolor="#999999">
                     <p class="s1"
-                        style="padding-top: 2pt;padding-left: 13pt; padding-right: 13pt;text-align: center;">Nilai Akhir
+                        style="padding-top: 2pt;padding-left: 13pt; padding-right: 13pt;text-align: center;">Final Grade
                     </p>
                 </td>
                 <td style="width:48pt;border: 1px solid black;" bgcolor="#999999">

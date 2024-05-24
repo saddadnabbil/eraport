@@ -20,7 +20,7 @@
                     'active' => true,
                 ],
                 [
-                    'title' => 'Penilaian TK',
+                    'title' => 'Grading TK',
                     'url' => route('guru.tk.penilaian.index'),
                     'active' => true,
                 ],

@@ -18,6 +18,6 @@
     'isActive' => $checkRoute,
     'hasArrow' => false,
     'icon' => 'file-plus',
-    'itemName' => 'Deskripsi Siswa',
+    'itemName' => 'Student Description',
     'route' => $dynamicRoute,
 ])

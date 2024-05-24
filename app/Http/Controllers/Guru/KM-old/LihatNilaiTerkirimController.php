@@ -23,7 +23,7 @@ class LihatNilaiTerkirimController extends Controller
      */
     public function index()
     {
-        $title = 'Lihat Nilai Akhir Terkirim';
+        $title = 'Submitted Final Grades';
         $tapel = Tapel::where('status', 1)->first();
 
         $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
@@ -49,7 +49,7 @@ class LihatNilaiTerkirimController extends Controller
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
         } else {
             // Data Master
-            $title = 'Lihat Nilai Akhir Terkirim';
+            $title = 'Submitted Final Grades';
             $tapel = Tapel::where('status', 1)->first();
 
             $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();

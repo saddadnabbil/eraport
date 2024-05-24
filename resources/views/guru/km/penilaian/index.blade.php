@@ -22,7 +22,7 @@
                     'active' => true,
                 ],
                 [
-                    'title' => 'Penilaian',
+                    'title' => 'Grading',
                     'url' => route('guru.km.penilaian.index'),
                     'active' => false,
                 ],
@@ -64,11 +64,11 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Kelas</label>
+                                        <label class="col-sm-2 col-form-label">Class</label>
                                         <div class="col-sm-10">
                                             <select class="form-control form-select select2" name="pembelajaran_id"
                                                 style="width: 100%;" required onchange="this.form.submit();">
-                                                <option value="" disabled>-- Pilih Kelas --</option>
+                                                <option value="" disabled>-- Select Class --</option>
                                                 @foreach ($data_pembelajaran as $pembelajaran)
                                                     <option value="{{ $pembelajaran->id }}"
                                                         @if ($pembelajaran->id == $pembelajaran_id) selected @endif>
@@ -99,17 +99,17 @@
                                                 <th rowspan="2" colspan="1" class="text-center"
                                                     style="vertical-align: middle">No</th>
                                                 <th rowspan="2" colspan="1" class="text-center"
-                                                    style="vertical-align: middle">Nama Siswa</th>
+                                                    style="vertical-align: middle">Student Name</th>
                                                 <th colspan="{{ $count_cp_formatif }}" class="text-center" title
-                                                    data-bs-toogle="tooltip" data-html="true"
-                                                    data-bs-original-title="<b>Penilaian Formatif <br> Bobot: 70</br>">
+                                                    data-bs-toogle="tooltip" data-bs-html="true"
+                                                    data-bs-original-title="<b>Grading Formatif <br> Bobot: 70</br>">
                                                     <div data-bs-toggle="tooltip" data-bs-original-title="Show"> Formatif
                                                         (F)
                                                     </div>
                                                 </th>
                                                 <th colspan="{{ $count_cp_sumatif }}" class="text-center" title
-                                                    data-bs-toggle="tooltip" data-html="true"
-                                                    data-bs-original-title="<b>Penilaian Sumatif <br> Bobot: 30</b>">Sumatif
+                                                    data-bs-toggle="tooltip" data-bs-html="true"
+                                                    data-bs-original-title="<b>Grading Sumatif <br> Bobot: 30</b>">Sumatif
                                                     (S)
                                                 </th>
                                                 <th colspan="2" class="text-center">Nilai Raport</th>
@@ -120,14 +120,14 @@
                                                         value="{{ $rencana_penilaian_formatif['id'] }}">
                                                     <input type="hidden" name="bobot_rencana_nilai_formatif_id[]"
                                                         value="{{ $rencana_penilaian_formatif['bobot'] }}">
-                                                    <th class="text-center" data-bs-toggle="tooltip" title data-html="true"
+                                                    <th class="text-center" data-bs-toggle="tooltip" title data-bs-html="true"
                                                         data-bs-original-title="<b>{{ $rencana_penilaian_formatif['teknik_penilaian'] }}<br> Bobot:{{ $rencana_penilaian_formatif['bobot'] }}</b><br></b>">
                                                         (F)
                                                         {{ $rencana_penilaian_formatif['kode_penilaian'] }}
                                                     </th>
                                                 @endforeach
-                                                <th class="text-center red" data-bs-toggle="tooltip" data-html="true"
-                                                    data-bs-original-title="<b>Nilai Akhir Formatif</b>">NA
+                                                <th class="text-center red" data-bs-toggle="tooltip" data-bs-html="true"
+                                                    data-bs-original-title="<b>Final Grade Formatif</b>">NA
                                                     (F)</th>
 
                                                 @foreach ($rencana_penilaian_data_sumatif as $rencana_penilaian_sumatif)
@@ -135,20 +135,20 @@
                                                         value="{{ $rencana_penilaian_sumatif['id'] }}">
                                                     <input type="hidden" name="bobot_rencana_nilai_sumatif_id[]"
                                                         value="{{ $rencana_penilaian_sumatif['bobot'] }}">
-                                                    <th class="text-center" data-bs-toggle="tooltip" title data-html="true"
+                                                    <th class="text-center" data-bs-toggle="tooltip" title data-bs-html="true"
                                                         data-bs-original-title="<b>{{ $rencana_penilaian_sumatif['teknik_penilaian'] }}<br> Bobot:{{ $rencana_penilaian_sumatif['bobot'] }}</b><br> <b></b> ">
                                                         (S)
                                                         {{ $rencana_penilaian_sumatif['kode_penilaian'] }}
                                                     </th>
                                                 @endforeach
-                                                <th class="text-center red" data-bs-toggle="tooltip" data-html="true"
-                                                    data-bs-original-title="<b>Nilai Akhir Sumulatif</b>">
+                                                <th class="text-center red" data-bs-toggle="tooltip" data-bs-html="true"
+                                                    data-bs-original-title="<b>Final Grade Sumulatif</b>">
                                                     NA (S)</th>
 
-                                                <th class="text-center red" data-bs-toggle="tooltip" data-html="true"
+                                                <th class="text-center red" data-bs-toggle="tooltip" data-bs-html="true"
                                                     data-bs-original-title="<b>Nilai Rapor Akhir<br/>Sesuai Perhitungan Sistem</b>">
                                                     Akhir</th>
-                                                <th class="text-center" data-bs-toggle="tooltip" data-html="true"
+                                                <th class="text-center" data-bs-toggle="tooltip" data-bs-html="true"
                                                     data-bs-original-title="<b>Nilai Rapor Akhir<br/>Sesuai Revisi Guru</b> <br/> Jika terdapat nilai pada kolom ini, maka nilai di kolom inilah yang akan digunakan di rapor.">
                                                     Revisi</th>
                                             </tr>
@@ -263,7 +263,7 @@
                                                 @endforeach
                                             @else
                                                 <tr>
-                                                    <td class="text-center" colspan="12">Data tidak tersedia.</td>
+                                                    <td class="text-center" colspan="12">Data not available.</td>
                                                 </tr>
                                             @endif
                                         </tbody>
@@ -304,7 +304,7 @@
         // });
 
         $(document).ready(function() {
-            // Menghitung nilai akhir untuk setiap baris yang ada saat halaman dimuat
+            // Menghitung Final Grade untuk setiap baris yang ada saat halaman dimuat
             $('tbody tr').each(function() {
                 var row = $(this);
                 updateNilaiAkhirFormatif(row);
@@ -354,7 +354,7 @@
                 updateNilaiAkhirSumatif(row);
             });
 
-            // Fungsi untuk menghitung nilai akhir sumatif berdasarkan bobot
+            // Fungsi untuk menghitung Final Grade sumatif berdasarkan bobot
             function updateNilaiAkhirSumatif(row) {
                 var sum = 0;
                 var totalBobot = 0;

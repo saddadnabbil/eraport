@@ -17,7 +17,7 @@ class PengumumanController extends Controller
      */
     public function index()
     {
-        $title = 'Data Pengumuman';
+        $title = 'Announcement Data';
         $data_pengumuman = Pengumuman::all();
         return view('guru.md.pengumuman.index', compact('title', 'data_pengumuman'));
     }

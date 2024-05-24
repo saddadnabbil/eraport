@@ -22,7 +22,7 @@
                     'active' => true,
                 ],
                 [
-                    'title' => 'Data Pembelajaran',
+                    'title' => 'Learning Data',
                     'url' => route('tk.pembelajaran.index'),
                     'active' => false,
                 ],
@@ -47,13 +47,13 @@
 
                         <div class="card-body">
                             <div class="form-group row callout callout-info mx-1">
-                                <label for="kelas_id" class="col-sm-2 col-form-label">Kelas</label>
+                                <label for="kelas_id" class="col-sm-2 col-form-label">Class</label>
                                 <div class="col-sm-10">
                                     <form action="{{ route('tk.pembelajaran.settings') }}" method="POST">
                                         @csrf
                                         <select class="form-control form-select select2" name="kelas_id"
                                             style="width: 100%;" required onchange="this.form.submit();">
-                                            <option value="" disabled> -- Pilih Kelas --</option>
+                                            <option value="" disabled> -- Select Class --</option>
                                             <option value="" selected>{{ $kelas->nama_kelas }}
                                                 @foreach ($data_kelas as $d_kelas)
                                                     @if ($d_kelas->id != $kelas->id)
@@ -73,7 +73,7 @@
                                         <thead>
                                             <tr>
                                                 <th>Tingkatan</th>
-                                                <th>Kelas</th>
+                                                <th>Class</th>
                                                 <th>Topic</th>
                                                 <th>Guru</th>
                                             </tr>

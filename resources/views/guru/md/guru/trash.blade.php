@@ -53,7 +53,7 @@
                                             <th>NUPTK</th>
                                             <th>Tempat Lahir</th>
                                             <th>Jenis Kelamin</th>
-                                            <th>Aksi</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>

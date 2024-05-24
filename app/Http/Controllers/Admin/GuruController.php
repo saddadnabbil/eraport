@@ -22,7 +22,7 @@ class GuruController extends Controller
      */
     public function index()
     {
-        $title = 'Data Guru';
+        $title = 'Teacher Data';
         $data_guru = Guru::orderBy('id', 'ASC')->get();
         return view('admin.guru.index', compact('title', 'data_guru'));
     }
@@ -107,7 +107,7 @@ class GuruController extends Controller
                 'avatar' => 'default.png',
             ]);
             $guru->save();
-            return back()->with('toast_success', 'Data guru berhasil ditambahkan');
+            return back()->with('toast_success', 'Teacher Data berhasil ditambahkan');
         }
     }
 
@@ -146,7 +146,7 @@ class GuruController extends Controller
             ];
 
             $guru->update($data_guru);
-            return back()->with('toast_success', 'Data guru berhasil diedit');
+            return back()->with('toast_success', 'Teacher Data berhasil diedit');
         }
     }
 
@@ -167,7 +167,7 @@ class GuruController extends Controller
     {
         try {
             Excel::import(new GuruImport(), $request->file('file_import'));
-            return back()->with('toast_success', 'Data guru berhasil diimport');
+            return back()->with('toast_success', 'Teacher Data berhasil diimport');
         } catch (\Throwable $th) {
             return back()->with('toast_error', 'Maaf, format data tidak sesuai');
         }

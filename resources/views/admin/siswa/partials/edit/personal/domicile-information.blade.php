@@ -3,9 +3,9 @@
     <h6 class="mt-2"><b>B. Domicile Information</b></h6>
 
     <div class="form-group row">
-        <label for="alamat" class="col-sm-3 col-form-label">Alamat</label>
+        <label for="alamat" class="col-sm-3 col-form-label">Address</label>
         <div class="col-sm-9">
-            <textarea class="form-control" id="alamat" name="alamat" placeholder="Alamat lengkap">{{ $siswa->alamat }}</textarea>
+            <textarea class="form-control" id="alamat" name="alamat" placeholder="Address lengkap">{{ $siswa->alamat }}</textarea>
         </div>
     </div>
     <div class="form-group row">
@@ -14,9 +14,9 @@
             <input type="text" class="form-control" id="kota" name="kota" placeholder="Kota"
                 value="{{ $siswa->kota }}">
         </div>
-        <label for="kode_pos" class="col-sm-2 col-form-label">Kode Pos</label>
+        <label for="kode_pos" class="col-sm-2 col-form-label">Postal Code</label>
         <div class="col-sm-3">
-            <input type="number" class="form-control" id="kode_pos" name="kode_pos" placeholder="Kode Pos"
+            <input type="number" class="form-control" id="kode_pos" name="kode_pos" placeholder="Postal Code"
                 value="{{ $siswa->kode_pos }}">
         </div>
     </div>
@@ -44,9 +44,9 @@
     </div>
 </div>
 <div class="form-group row">
-    <label for="nomor_hp" class="col-sm-3 col-form-label">Nomor HP</label>
+    <label for="nomor_hp" class="col-sm-3 col-form-label">Phone</label>
     <div class="col-sm-9">
-        <input type="number" class="form-control" id="nomor_hp" name="nomor_hp" placeholder="Nomor HP"
+        <input type="number" class="form-control" id="nomor_hp" name="nomor_hp" placeholder="Phone"
             value="{{ $siswa->nomor_hp }}">
     </div>
 </div>

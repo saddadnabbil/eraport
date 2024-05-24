@@ -59,7 +59,7 @@
                                                 <th rowspan="2" colspan="1" class="text-center" style="width: 5%;">NIS
                                                 </th>
                                                 <th rowspan="2" colspan="1" class="text-center" style="width: 35%;">
-                                                    Nama Siswa</th>
+                                                    Student Name</th>
                                                 @if ($data_event->isEmpty())
                                                     <th class="text-center" colspan="1" style="width: 5%;">Event</th>
                                                 @else
@@ -153,7 +153,7 @@
                                                 @endforeach
                                             @else
                                                 <tr>
-                                                    <td class="text-center" colspan="12">Data tidak tersedia.</td>
+                                                    <td class="text-center" colspan="12">Data not available.</td>
                                                 </tr>
                                             @endif
                                         </tbody>

@@ -79,7 +79,7 @@
                                         --}}
                                     </div>
                                     <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">
-                                        Jumlah Siswa
+                                        Number of Students
                                     </h6>
                                 </div>
                                 <div class="ms-auto mt-md-3 mt-lg-0">
@@ -251,7 +251,7 @@
                                                                 <button type="button" class="btn btn-default"
                                                                     data-bs-dismiss="modal">Batal</button>
                                                                 <button type="submit"
-                                                                    class="btn btn-primary">Simpan</button>
+                                                                    class="btn btn-primary">Save</button>
                                                             </div>
                                                         </form>
                                                     </div>

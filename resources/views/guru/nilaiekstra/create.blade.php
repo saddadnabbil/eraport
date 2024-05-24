@@ -63,11 +63,11 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Kelas</label>
+                                        <label class="col-sm-2 col-form-label">Class</label>
                                         <div class="col-sm-10">
                                             <select class="form-control form-select select2" name="kelas_id"
                                                 style="width: 100%;" required onchange="this.form.submit();">
-                                                <option value="" disabled>-- Pilih Kelas --</option>
+                                                <option value="" disabled>-- Select Class --</option>
                                                 @foreach ($data_kelas as $kls)
                                                     <option value="{{ $kls->id }}"
                                                         @if ($kls->id == $kelas->id) selected @endif>
@@ -83,7 +83,7 @@
 
                             <div class="card">
                                 <div class="card-header bg-primary">
-                                    <h3 class="card-title"> Nilai Ekstrakulikuler</h3>
+                                    <h3 class="card-title"> Extracurricular Grade</h3>
                                 </div>
                                 <form action="{{ route('guru.km.nilaiekstra.store') }}" method="POST">
                                     @csrf
@@ -93,9 +93,9 @@
                                                 <thead class="bg-info">
                                                     <tr>
                                                         <th class="text-center" style="width: 4%;">No</th>
-                                                        <th class="text-center" style="width: 25%;">Nama Siswa</th>
+                                                        <th class="text-center" style="width: 25%;">Student Name</th>
                                                         <th class="text-center" style="width: 4%;">L/P</th>
-                                                        <th class="text-center" style="width: 7%;">Kelas</th>
+                                                        <th class="text-center" style="width: 7%;">Class</th>
                                                         <th class="text-center" style="width: 10%;">Ekstrakulikuler</th>
                                                         <th class="text-center" style="width: 10%;">Nilai</th>
                                                         <th class="text-center" style="width: 40%;">Deskripsi</th>
@@ -159,7 +159,7 @@
                                                         @endforeach
                                                     @else
                                                         <tr>
-                                                            <td class="text-center" colspan="12">Data tidak tersedia.</td>
+                                                            <td class="text-center" colspan="12">Data not available.</td>
                                                         </tr>
                                                     @endif
                                                 </tbody>
@@ -204,7 +204,7 @@
                             $('select[name="kelas_id"').empty();
 
                             $('select[name="kelas_id"]').append(
-                                '<option value="">-- Pilih Kelas --</option>'
+                                '<option value="">-- Select Class --</option>'
                             );
 
                             $.each(data, function(i, data) {

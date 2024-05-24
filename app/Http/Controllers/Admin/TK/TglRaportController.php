@@ -49,7 +49,7 @@ class TglRaportController extends Controller
             $tglRaport = TkTglRaport::where('tapel_id', $tapel->id)->first();
 
             if ($tglRaport) {
-                return back()->with('toast_error', 'Tahun Pelajaran raport sudah ada')->withInput();
+                return back()->with('toast_error', 'Academic Year raport sudah ada')->withInput();
             }
 
             $tgl_raport = new TkTglRaport([

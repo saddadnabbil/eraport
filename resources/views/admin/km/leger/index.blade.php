@@ -53,11 +53,11 @@
                                 <form action="{{ route('km.leger.store') }}" method="POST">
                                     @csrf
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Kelas</label>
+                                        <label class="col-sm-2 col-form-label">Class</label>
                                         <div class="col-sm-10">
                                             <select class="form-control form-select select2" name="kelas_id"
                                                 style="width: 100%;" required onchange="this.form.submit();">
-                                                <option value="" disabled>-- Pilih Kelas --</option>
+                                                <option value="" disabled>-- Select Class --</option>
                                                 @foreach ($data_kelas->sortBy('tingkatan_id') as $kls)
                                                     <option value="{{ $kls->id }}"
                                                         @if ($kls->id == $kelas->id) selected @endif>
@@ -77,8 +77,8 @@
                                         <tr>
                                             <th rowspan="2" class="text-center" style="width: 50px;">No</th>
                                             <th rowspan="2" class="text-center" style="width: 50px;">NIS</th>
-                                            <th rowspan="2" class="text-center">Nama Siswa</th>
-                                            <th rowspan="2" class="text-center" style="width: 50px;">Kelas</th>
+                                            <th rowspan="2" class="text-center">Student Name</th>
+                                            <th rowspan="2" class="text-center" style="width: 50px;">Class</th>
                                             <th colspan="2" class="text-center">Rata-Rata</th>
                                             <th colspan="3" class="text-center">Kehadiran</th>
                                             <th colspan="{{ $count_ekstrakulikuler }}" class="text-center">Ekstrakulikuler

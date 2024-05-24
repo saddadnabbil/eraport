@@ -58,11 +58,11 @@
                                                 </option>
                                             </select>
                                         </div>
-                                        <label class="col-sm-2 col-form-label">Kelas</label>
+                                        <label class="col-sm-2 col-form-label">Class</label>
                                         <div class="col-sm-4">
                                             <select class="form-control form-select select2" name="kelas_id"
                                                 style="width: 100%;" required onchange="this.form.submit();">
-                                                <option value="">-- Pilih Kelas --</option>
+                                                <option value="">-- Select Class --</option>
                                                 @foreach ($data_kelas->sortBy('tingkatan_id') as $kls)
                                                     <option value="{{ $kls->id }}">{{ $kls->nama_kelas }}</option>
                                                 @endforeach

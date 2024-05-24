@@ -24,7 +24,7 @@ class NilaiEkstrakulikulerController extends Controller
      */
     public function index()
     {
-        $title = 'Input Nilai Ekstrakulikuler';
+        $title = 'Input Extracurricular Grade';
         $tapel = Tapel::where('status', 1)->first();
 
         $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
@@ -48,7 +48,7 @@ class NilaiEkstrakulikulerController extends Controller
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
         } else {
             // Data Master 
-            $title = 'Input Nilai Ekstrakulikuler';
+            $title = 'Input Extracurricular Grade';
             $tapel = Tapel::where('status', 1)->first();
             $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
             $data_ekstrakulikuler = Ekstrakulikuler::where('tapel_id', $tapel->id)->where('pembina_id', $guru->id)->orderBy('nama_ekstrakulikuler', 'ASC')->get();
@@ -92,7 +92,7 @@ class NilaiEkstrakulikulerController extends Controller
     {
         // dd($request->all());
         if (is_null($request->nilai)) {
-            return back()->with('toast_error', 'Tidak ditemukan data nilai ekstrakulikuler');
+            return back()->with('toast_error', 'Tidak ditemukan data Extracurricular Grade');
         } else {
             for ($cound_siswa = 0; $cound_siswa < count($request->anggota_ekstrakulikuler_id); $cound_siswa++) {
                 $data_nilai = array(
@@ -110,7 +110,7 @@ class NilaiEkstrakulikulerController extends Controller
                     $cek_data->update($data_nilai);
                 }
             }
-            return redirect('guru/nilaiekstra')->with('toast_success', 'Nilai ekstrakulikuler berhasil disimpan');
+            return redirect('guru/nilaiekstra')->with('toast_success', 'Extracurricular Grade berhasil disimpan');
         }
     }
 }

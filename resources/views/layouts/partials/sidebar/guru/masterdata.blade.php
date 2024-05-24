@@ -80,8 +80,8 @@
         ],
         [
             'name' => 'Syllabus',
-            'route' => route('guru.silabus.index'),
-            'isActive' => request()->routeIs('guru.guru.silabus.*'),
+            'route' => route('curriculum.silabus.index'),
+            'isActive' => request()->routeIs('curriculum.silabus.*'),
             'childHasArrow' => false,
         ],
         [

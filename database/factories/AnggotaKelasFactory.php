@@ -16,7 +16,7 @@ class AnggotaKelasFactory extends Factory
         // Ambil semua ID siswa yang belum di-assign ke kelas lain
         $siswaIds = Siswa::whereNotIn('id', $this->siswaAlreadyAssigned)->pluck('id')->toArray();
 
-        // Ambil data siswa dengan ID acak
+        // Ambil Student Data dengan ID acak
         $siswa = Siswa::find($this->faker->randomElement($siswaIds));
 
         // Tandai siswa sebagai sudah di-assign

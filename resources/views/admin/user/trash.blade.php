@@ -52,7 +52,7 @@
                                             <th>Username</th>
                                             <th>Level</th>
                                             <th>Status Akun</th>
-                                            <th>Aksi</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>

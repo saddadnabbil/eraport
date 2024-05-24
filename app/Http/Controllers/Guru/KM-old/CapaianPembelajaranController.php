@@ -34,7 +34,7 @@ class CapaianPembelajaranController extends Controller
         $data_pembelajaran = Pembelajaran::where('guru_id', $guru->id)->whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
 
         if (count($data_mapel) == 0) {
-            return redirect('guru/mapel')->with('toast_warning', 'Mohon isikan data mata pelajaran');
+            return redirect('guru/mapel')->with('toast_warning', 'Mohon isikan Subject Data');
         } elseif (count($data_kelas) == 0) {
             return redirect('guru/kelas')->with('toast_warning', 'Mohon isikan data kelas');
         } else {

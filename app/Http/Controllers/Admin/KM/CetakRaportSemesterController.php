@@ -34,7 +34,7 @@ class CetakRaportSemesterController extends Controller
      */
     public function index()
     {
-        $title = 'Cetak Raport Semester';
+        $title = 'Print Report Semester';
         $tapel = Tapel::where('status', 1)->first();
         $user = Auth::user();
 
@@ -68,7 +68,7 @@ class CetakRaportSemesterController extends Controller
                 ->withInput();
         }
 
-        $title = 'Cetak Raport Semester';
+        $title = 'Print Report Semester';
         $tapel = Tapel::where('status', 1)->first();
         $semester = Semester::findorfail($request->semester_id);
         $user = Auth::user();
@@ -107,7 +107,7 @@ class CetakRaportSemesterController extends Controller
         $semester = Semester::findorfail($request->semester_id);
 
         if ($request->data_type == 1) {
-            $title = 'Kelengkapan Raport';
+            $title = 'Completeness of Report';
             $kelengkapan_raport = PDF::loadview('walikelas.km.raportsemester.kelengkapanraport', compact('title', 'sekolah', 'anggota_kelas', 'semester'))->setPaper($request->paper_size, $request->orientation);
             return $kelengkapan_raport->stream('KELENGKAPAN RAPORT ' . $anggota_kelas->siswa->nama_lengkap . ' (' . $anggota_kelas->kelas->nama_kelas . ').pdf');
         } elseif ($request->data_type == 2) {
@@ -116,12 +116,12 @@ class CetakRaportSemesterController extends Controller
 
             $data_id_pembelajaran = Pembelajaran::where('kelas_id', $anggota_kelas->kelas_id)->get('id');
 
-            // Inisialisasi array untuk nilai akhir total
+            // Inisialisasi array untuk Final Grade total
             $data_nilai_akhir_total = [];
 
             // Looping untuk semua term dan semester
             for ($semester_id = 1; $semester_id <= 2; $semester_id++) {
-                // Inisialisasi array untuk nilai akhir semester
+                // Inisialisasi array untuk Final Grade semester
                 $data_nilai_akhir_semester = [];
 
                 for ($term = 1; $term <= 2; $term++) {
@@ -141,7 +141,7 @@ class CetakRaportSemesterController extends Controller
                         ];
                     }
 
-                    // Hitung nilai akhir untuk term dan semester tertentu
+                    // Hitung Final Grade untuk term dan semester tertentu
                     foreach ($nilai_akhir as $nilai) {
                         $pembelajaran_id = $nilai['pembelajaran_id'];
                         $key = "nilai_akhir_term_{$term}_semester_{$semester_id}";
@@ -157,11 +157,11 @@ class CetakRaportSemesterController extends Controller
                     }
                 }
 
-                // Hitung nilai akhir untuk semester tertentu
+                // Hitung Final Grade untuk semester tertentu
                 $data_nilai_akhir_semester = array_map(function ($data) {
                     $data['nilai'] /= 2; // Bagi dengan jumlah term (dalam hal ini, 2)
 
-                    // Tentukan predikat berdasarkan nilai akhir total
+                    // Tentukan predikat berdasarkan Final Grade total
                     $kkm = [
                         'predikat_a' => 80.00,
                         'predikat_b' => 70.00,
@@ -185,14 +185,14 @@ class CetakRaportSemesterController extends Controller
                     return $data;
                 }, $data_nilai_akhir_semester);
 
-                // Simpan hasil nilai akhir semester dalam variabel sesuai semester
+                // Simpan hasil Final Grade semester dalam variabel sesuai semester
                 if ($semester_id == 1) {
                     $data_nilai_akhir_semester_1 = $data_nilai_akhir_semester;
                 } elseif ($semester_id == 2) {
                     $data_nilai_akhir_semester_2 = $data_nilai_akhir_semester;
                 }
 
-                // Masukkan ke dalam array nilai akhir total jika sudah ada data dari kedua semester
+                // Masukkan ke dalam array Final Grade total jika sudah ada data dari kedua semester
                 if (isset($data_nilai_akhir_semester_1) && isset($data_nilai_akhir_semester_2)) {
                     $data_nilai_akhir_total = [];
 
@@ -213,7 +213,7 @@ class CetakRaportSemesterController extends Controller
                             $data_nilai_akhir_total[$pembelajaran_id]['nilai_akhir_term_1_semester_2'] = $data_nilai_akhir_semester_2[$pembelajaran_id]['nilai_akhir_term_1_semester_2'] ?? null;
                             $data_nilai_akhir_total[$pembelajaran_id]['nilai_akhir_term_2_semester_2'] = $data_nilai_akhir_semester_2[$pembelajaran_id]['nilai_akhir_term_2_semester_2'] ?? null;
 
-                            // Tambahan nilai akhir total untuk per semester
+                            // Tambahan Final Grade total untuk per semester
                             $data_nilai_akhir_total[$pembelajaran_id]['nilai_akhir_semester_1'] = $data_semester_1['nilai'];
                             $data_nilai_akhir_total[$pembelajaran_id]['nilai_akhir_semester_2'] = $data_nilai_akhir_semester_2[$pembelajaran_id]['nilai'];
                         }
@@ -221,7 +221,7 @@ class CetakRaportSemesterController extends Controller
                 }
             }
 
-            // Sekarang, $data_nilai_akhir_total berisi nilai akhir untuk masing-masing term dan semester dengan 'semester_id'.
+            // Sekarang, $data_nilai_akhir_total berisi Final Grade untuk masing-masing term dan semester dengan 'semester_id'.
 
             $data_nilai = KmNilaiAkhirRaport::whereIn('pembelajaran_id', $data_id_pembelajaran)->where('anggota_kelas_id', $anggota_kelas->id)->get();
 
@@ -265,12 +265,12 @@ class CetakRaportSemesterController extends Controller
 
         $data_id_pembelajaran = Pembelajaran::where('kelas_id', $kelas->id)->get('id');
 
-        // Inisialisasi array untuk nilai akhir total
+        // Inisialisasi array untuk Final Grade total
         $data_nilai_akhir_total = [];
 
         // Looping untuk semua term dan semester
         for ($semester_id = 1; $semester_id <= 2; $semester_id++) {
-            // Inisialisasi array untuk nilai akhir semester
+            // Inisialisasi array untuk Final Grade semester
             $data_nilai_akhir_semester = [];
 
             for ($term = 1; $term <= 2; $term++) {
@@ -290,7 +290,7 @@ class CetakRaportSemesterController extends Controller
                     ];
                 }
 
-                // Hitung nilai akhir untuk term dan semester tertentu
+                // Hitung Final Grade untuk term dan semester tertentu
                 foreach ($nilai_akhir as $nilai) {
                     $pembelajaran_id = $nilai['pembelajaran_id'];
                     $key = "nilai_akhir_term_{$term}_semester_{$semester_id}";
@@ -306,11 +306,11 @@ class CetakRaportSemesterController extends Controller
                 }
             }
 
-            // Hitung nilai akhir untuk semester tertentu
+            // Hitung Final Grade untuk semester tertentu
             $data_nilai_akhir_semester = array_map(function ($data) {
                 $data['nilai'] /= 2; // Bagi dengan jumlah term (dalam hal ini, 2)
 
-                // Tentukan predikat berdasarkan nilai akhir total
+                // Tentukan predikat berdasarkan Final Grade total
                 $kkm = [
                     'predikat_a' => 80.00,
                     'predikat_b' => 70.00,
@@ -334,14 +334,14 @@ class CetakRaportSemesterController extends Controller
                 return $data;
             }, $data_nilai_akhir_semester);
 
-            // Simpan hasil nilai akhir semester dalam variabel sesuai semester
+            // Simpan hasil Final Grade semester dalam variabel sesuai semester
             if ($semester_id == 1) {
                 $data_nilai_akhir_semester_1 = $data_nilai_akhir_semester;
             } elseif ($semester_id == 2) {
                 $data_nilai_akhir_semester_2 = $data_nilai_akhir_semester;
             }
 
-            // Masukkan ke dalam array nilai akhir total jika sudah ada data dari kedua semester
+            // Masukkan ke dalam array Final Grade total jika sudah ada data dari kedua semester
             if (isset($data_nilai_akhir_semester_1) && isset($data_nilai_akhir_semester_2)) {
                 $data_nilai_akhir_total = [];
 
@@ -362,7 +362,7 @@ class CetakRaportSemesterController extends Controller
                         $data_nilai_akhir_total[$pembelajaran_id]['nilai_akhir_term_1_semester_2'] = $data_nilai_akhir_semester_2[$pembelajaran_id]['nilai_akhir_term_1_semester_2'] ?? null;
                         $data_nilai_akhir_total[$pembelajaran_id]['nilai_akhir_term_2_semester_2'] = $data_nilai_akhir_semester_2[$pembelajaran_id]['nilai_akhir_term_2_semester_2'] ?? null;
 
-                        // Tambahan nilai akhir total untuk per semester
+                        // Tambahan Final Grade total untuk per semester
                         $data_nilai_akhir_total[$pembelajaran_id]['nilai_akhir_semester_1'] = $data_semester_1['nilai'];
                         $data_nilai_akhir_total[$pembelajaran_id]['nilai_akhir_semester_2'] = $data_nilai_akhir_semester_2[$pembelajaran_id]['nilai'];
                     }
@@ -370,7 +370,7 @@ class CetakRaportSemesterController extends Controller
             }
         }
 
-        // Sekarang, $data_nilai_akhir_total berisi nilai akhir untuk masing-masing term dan semester dengan 'semester_id'.
+        // Sekarang, $data_nilai_akhir_total berisi Final Grade untuk masing-masing term dan semester dengan 'semester_id'.
 
         $data_nilai = KmNilaiAkhirRaport::whereIn('pembelajaran_id', $data_id_pembelajaran)->get();
 

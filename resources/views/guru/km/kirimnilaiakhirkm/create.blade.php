@@ -65,11 +65,11 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Mata Pelajaran</label>
+                                        <label class="col-sm-2 col-form-label">Subject</label>
                                         <div class="col-sm-10">
                                             <select class="form-control form-select select2" name="pembelajaran_id"
                                                 style="width: 100%;" required onchange="this.form.submit();">
-                                                <option value="" disabled>-- Pilih Pembelajaran --</option>
+                                                <option value="" disabled>-- Select Learning Data --</option>
                                                 @foreach ($data_pembelajaran as $mapel)
                                                     <option value="{{ $mapel->id }}"
                                                         @if ($mapel->id == $pembelajaran->id) selected @endif>
@@ -143,7 +143,7 @@
                                                         <th rowspan="2" class="text-center"
                                                             style="vertical-align: middle">No</th>
                                                         <th rowspan="2" class="text-center"
-                                                            style="vertical-align: middle">Nama Siswa</th>
+                                                            style="vertical-align: middle">Student Name</th>
                                                         <th rowspan="2" class="text-center"
                                                             style="vertical-align: middle">KKM</th>
                                                         <th colspan="2" class="text-center">Sumatif</th>
@@ -259,7 +259,7 @@
                                     </div>
                                     <div class="card-footer clearfix">
                                         <button type="submit" class="btn btn-primary float-right kirim-nilai-akhir"
-                                            onclick=" event.preventDefault(); sendFinalGrade();">Kirim Nilai Akhir</button>
+                                            onclick=" event.preventDefault(); sendFinalGrade();">Submit Final Grade</button>
                                         <a href="{{ route('guru.km.kirimnilaiakhir.index') }}"
                                             class="btn btn-default float-right me-2">Batal</a>
                                     </div>
@@ -286,7 +286,7 @@
 <script>
     function sendFinalGrade() {
         Swal.fire({
-            title: 'Kirim Nilai Akhir?',
+            title: 'Submit Final Grade?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#d33',
@@ -298,7 +298,7 @@
                 document.querySelector('.kirim-nilai-akhir').removeAttribute('onclick');
                 document.querySelector('.kirim-nilai-akhir').click();
             } else if (result.dismiss === Swal.DismissReason.cancel) {
-                Swal.fire('Batal', 'Anda membatalkan pengiriman nilai akhir.', 'error');
+                Swal.fire('Batal', 'Anda membatalkan pengiriman Final Grade.', 'error');
             }
         });
     }

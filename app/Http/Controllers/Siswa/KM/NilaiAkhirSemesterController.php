@@ -22,7 +22,7 @@ class NilaiAkhirSemesterController extends Controller
      */
     public function index()
     {
-        $title = 'Nilai Akhir Semester';
+        $title = 'Final Grade Semester';
         $siswa = Siswa::where('user_id', Auth::user()->id)->first();
         $tapel = Tapel::where('status', 1)->first();
 

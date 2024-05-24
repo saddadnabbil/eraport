@@ -67,7 +67,7 @@
                                     <thead class="bg-info">
                                         <tr>
                                             <th class="text-center" rowspan="2" style="width: 5%;">No</th>
-                                            <th class="text-center" rowspan="2" style="width: 28%;">Mata Pelajaran</th>
+                                            <th class="text-center" rowspan="2" style="width: 28%;">Subject</th>
                                             <th class="text-center" rowspan="2" style="width: 7%;">KKM</th>
                                             <th class="text-center" colspan="2" style="width: 15%;">Sumatif</th>
                                             <th class="text-center" colspan="2" style="width: 15%;">Formatif</th>

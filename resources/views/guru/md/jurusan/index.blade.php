@@ -72,7 +72,7 @@
                                                     Jurusan</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" class="form-control" id="nama_jurusan"
-                                                        name="nama_jurusan" placeholder="Nama Jurusan"
+                                                        name="nama_jurusan" placeholder="Line Name"
                                                         value="{{ old('nama_jurusan') }}">
                                                 </div>
                                             </div>
@@ -80,7 +80,7 @@
                                         <div class="modal-footer justify-content-end">
                                             <button type="button" class="btn btn-default"
                                                 data-bs-dismiss="modal">Batal</button>
-                                            <button type="submit" class="btn btn-primary">Simpan</button>
+                                            <button type="submit" class="btn btn-primary">Save</button>
                                         </div>
                                     </form>
                                 </div>
@@ -95,8 +95,8 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Nama Jurusan</th>
-                                            <th>Aksi</th>
+                                            <th>Line Name</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -135,11 +135,11 @@
                                                             <div class="modal-body">
                                                                 <div class="form-group row">
                                                                     <label for="tahun_pelajaran"
-                                                                        class="col-sm-3 col-form-label">Nama Jurusan</label>
+                                                                        class="col-sm-3 col-form-label">Line Name</label>
                                                                     <div class="col-sm-9">
                                                                         <input type="text" class="form-control"
                                                                             id="nama_jurusan" name="nama_jurusan"
-                                                                            placeholder="Nama Jurusan"
+                                                                            placeholder="Line Name"
                                                                             value="{{ $jurusan->nama_jurusan }}">
                                                                     </div>
                                                                 </div>
@@ -148,7 +148,7 @@
                                                                 <button type="button" class="btn btn-default"
                                                                     data-bs-dismiss="modal">Batal</button>
                                                                 <button type="submit"
-                                                                    class="btn btn-primary">Simpan</button>
+                                                                    class="btn btn-primary">Save</button>
                                                             </div>
                                                         </form>
                                                     </div>

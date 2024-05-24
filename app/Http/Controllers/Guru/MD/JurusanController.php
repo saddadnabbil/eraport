@@ -10,7 +10,7 @@ class JurusanController extends Controller
 {
     public function index()
     {
-        $title = 'Data Jurusan';
+        $title = 'Line Data';
 
         $data_jurusan = Jurusan::orderBy('id', 'ASC')->get();
 

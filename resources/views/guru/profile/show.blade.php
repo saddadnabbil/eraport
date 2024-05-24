@@ -83,7 +83,7 @@
                                     <b>Email</b> <a class="float-right">{{ $karyawan->email }}</a>
                                 </li>
                                 <li class="list-group-item">
-                                    <b>Nomor HP</b> <a class="float-right">{{ $karyawan->nomor_hp }}</a>
+                                    <b>Phone</b> <a class="float-right">{{ $karyawan->nomor_hp }}</a>
                                 </li>
                             </ul>
                         </div>
@@ -955,7 +955,7 @@
                                             <div class="modal-footer justify-content-end">
                                                 <button type="button" class="btn btn-default"
                                                     data-bs-dismiss="modal">Batal</button>
-                                                <button type="submit" class="btn btn-primary">Simpan</button>
+                                                <button type="submit" class="btn btn-primary">Save</button>
                                             </div>
                                         </div>
                                 </div>

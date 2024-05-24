@@ -82,7 +82,7 @@ class KehadiranSiswaController extends Controller
     public function store(Request $request)
     {
         if (is_null($request->anggota_kelas_id)) {
-            return back()->with('toast_error', 'Data siswa tidak ditemukan');
+            return back()->with('toast_error', 'Student Data tidak ditemukan');
         } else {
             for ($cound_siswa = 0; $cound_siswa < count($request->anggota_kelas_id); $cound_siswa++) {
                 $data = array(

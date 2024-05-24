@@ -25,7 +25,7 @@
                                 Siswa</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap"
-                                    placeholder="Nama Siswa" value="{{ $siswa->nama_lengkap }}" readonly>
+                                    placeholder="Student Name" value="{{ $siswa->nama_lengkap }}" readonly>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -74,7 +74,7 @@
                     </div>
                     <div class="modal-footer justify-content-end">
                         <button type="button" class="btn btn-default" data-bs-dismiss="modal">Batal</button>
-                        <button type="submit" class="btn btn-primary">Simpan</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
                     </div>
                 </form>
             </div>

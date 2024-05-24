@@ -51,9 +51,9 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Mata Pelajaran</th>
+                                            <th>Subject</th>
                                             <th>Kelas</th>
-                                            <th>Silabus</th>
+                                            <th>Syllabus</th>
                                             <th>Buku Siswa</th>
                                             <th>Buku Guru</th>
                                         </tr>
@@ -268,7 +268,7 @@
                                                 </div>
                                                 <div class="modal-footer justify-content-end">
                                                     <button type="button" class="btn btn-default" data-bs-dismiss="modal">Batal</button>
-                                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                                    <button type="submit" class="btn btn-primary">Save</button>
                                                 </div>
                                             </form> --}}
                                                         </div>

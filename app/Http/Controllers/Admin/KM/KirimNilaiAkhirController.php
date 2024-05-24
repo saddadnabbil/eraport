@@ -31,7 +31,7 @@ class KirimNilaiAkhirController extends Controller
      */
     public function index()
     {
-        $title = 'Kirim Nilai Akhir';
+        $title = 'Submit Final Grade';
         $tapel = Tapel::where('status', 1)->first();
         $user = Auth::user();
 
@@ -88,7 +88,7 @@ class KirimNilaiAkhirController extends Controller
             $rencana_nilai_formatif = RencanaNilaiFormatif::where('pembelajaran_id', $pembelajaran->id)->where('term_id', $term->id)->where('semester_id', $semester->id)->get('id');
 
             if (count($rencana_nilai_sumatif) == 0 || count($rencana_nilai_formatif) == 0) {
-                return back()->with('toast_warning', 'Data rencana penilaian tidak ditemukan');
+                return back()->with('toast_warning', 'Data Grading Plan tidak ditemukan');
             } else {
                 $nilai_sumatif = NilaiSumatif::whereIn('rencana_nilai_sumatif_id', $rencana_nilai_sumatif)->groupBy('rencana_nilai_sumatif_id')->get();
                 $nilai_formatif = NilaiFormatif::whereIn('rencana_nilai_formatif_id', $rencana_nilai_formatif)->groupBy('rencana_nilai_formatif_id')->get();
@@ -97,7 +97,7 @@ class KirimNilaiAkhirController extends Controller
                     return back()->with('toast_warning', 'Perlu pembaruan. Tidak ada data penilaian terbaru untuk ' . $pembelajaran->mapel->nama_mapel . ' ' . $pembelajaran->kelas->nama_kelas . '.');
                 } else {
                     // Data Master
-                    $title = 'Kirim Nilai Akhir';
+                    $title = 'Submit Final Grade';
                     $tapel = Tapel::where('status', 1)->first();
 
                     $id_kelas = Kelas::where('tapel_id', $tapel->id)->get('id');
@@ -193,6 +193,6 @@ class KirimNilaiAkhirController extends Controller
             );
         }
 
-        return back()->with('toast_success', 'Nilai akhir raport berhasil dikirim');
+        return back()->with('toast_success', 'Final Grade raport berhasil dikirim');
     }
 }

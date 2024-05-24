@@ -29,7 +29,7 @@ class SiswaController extends Controller
      */
     public function index()
     {
-        $title = 'Data Siswa';
+        $title = 'Student Data';
         $tapel = Tapel::where('status', 1)->first();
         $tingkatanIds = [1, 2, 3, 4, 5, 6];
         $jumlah_kelas = Kelas::where('tapel_id', $tapel->id)->count();
@@ -508,7 +508,7 @@ class SiswaController extends Controller
     {
         try {
             Excel::import(new SiswaImport, $request->file('file_import'));
-            return back()->with('toast_success', 'Data siswa berhasil diimport');
+            return back()->with('toast_success', 'Student Data berhasil diimport');
         } catch (\Throwable $th) {
             dd($th->getMessage());
             return back()->with('toast_error', 'Maaf, format data tidak sesuai');

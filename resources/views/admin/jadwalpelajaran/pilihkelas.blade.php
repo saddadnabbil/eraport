@@ -48,11 +48,11 @@
                                 <form action="{{ route('admin.jadwalpelajaran.create') }}" method="GET">
                                     @csrf
                                     <div class="form-group row">
-                                        <label for="pembelajaran_id" class="col-sm-3 col-form-label">Kelas</label>
+                                        <label for="pembelajaran_id" class="col-sm-3 col-form-label">Class</label>
                                         <div class="col-sm-9">
                                             <select class="form-control form-select select2" name="kelas_id"
                                                 style="width: 100%;" required onchange="this.form.submit();">
-                                                <option value="" selected>-- Pilih Kelas --</option>
+                                                <option value="" selected>-- Select Class --</option>
                                                 @foreach ($dataKelas as $kelas)
                                                     <option value="{{ $kelas->id }}">
                                                         {{ $kelas->nama_kelas }}

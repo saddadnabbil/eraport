@@ -45,7 +45,7 @@ class CapaianPembelajaranController extends Controller
         }
 
         if (count($data_mapel) == 0) {
-            return redirect($dashboard)->with('toast_warning', 'Mohon isikan data mata pelajaran');
+            return redirect($dashboard)->with('toast_warning', 'Mohon isikan Subject Data');
         } elseif (count($data_kelas) == 0) {
             return redirect($dashboard)->with('toast_warning', 'Mohon isikan data kelas');
         } else {

@@ -71,11 +71,11 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Mata Pelajaran</label>
+                                        <label class="col-sm-2 col-form-label">Subject</label>
                                         <div class="col-sm-10">
                                             <select class="form-control form-select select2" name="pembelajaran_id"
                                                 style="width: 100%;" required onchange="this.form.submit();">
-                                                <option value="">-- Pilih Pembelajaran --</option>
+                                                <option value="">-- Select Learning Data --</option>
                                                 @foreach ($data_pembelajaran as $pembelajaran)
                                                     <option value="{{ $pembelajaran->id }}">
                                                         {{ $pembelajaran->mapel->nama_mapel }}

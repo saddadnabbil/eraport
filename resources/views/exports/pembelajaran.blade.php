@@ -11,7 +11,7 @@
     <table>
         <thead>
             <tr>
-                <td colspan="9"><strong>DATA PEMBELAJARAN</strong></td>
+                <td colspan="9"><strong>Learning Data</strong></td>
             </tr>
             <tr>
                 <td colspan="9">Waktu download : {{ $time_download }}</td>

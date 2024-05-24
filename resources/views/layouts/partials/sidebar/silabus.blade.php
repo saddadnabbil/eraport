@@ -21,6 +21,6 @@
     'isActive' => $checkRoute,
     'hasArrow' => false,
     'icon' => 'plus-circle',
-    'itemName' => 'Silabus',
+    'itemName' => 'Syllabus',
     'route' => $dynamicRoute,
 ])

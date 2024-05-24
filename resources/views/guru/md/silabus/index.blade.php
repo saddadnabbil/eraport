@@ -159,7 +159,7 @@
                                             <div class="modal-footer justify-content-end">
                                                 <button type="button" class="btn btn-default"
                                                     data-bs-dismiss="modal">Batal</button>
-                                                <button type="submit" class="btn btn-primary">Simpan</button>
+                                                <button type="submit" class="btn btn-primary">Save</button>
                                             </div>
                                         </form>
                                     </div>
@@ -175,13 +175,13 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Mata Pelajaran</th>
-                                            <th>Kelas</th>
-                                            <th>Silabus</th>
+                                            <th>Subject</th>
+                                            <th>Class</th>
+                                            <th>Syllabus</th>
                                             <th>Buku Siswa</th>
                                             <th>Buku Guru</th>
                                             @if ($user->getRoleNames()->first() != 'Student')
-                                                <th>Aksi</th>
+                                                <th>Action</th>
                                             @endif
                                         </tr>
                                     </thead>
@@ -496,7 +496,7 @@
                                                                         <button type="button" class="btn btn-default"
                                                                             data-bs-dismiss="modal">Batal</button>
                                                                         <button type="submit"
-                                                                            class="btn btn-primary">Simpan</button>
+                                                                            class="btn btn-primary">Save</button>
                                                                     </div>
                                                                 </form>
                                                             </div>
@@ -532,7 +532,8 @@
                     var mapel_id = $(this).val();
                     if (mapel_id) {
                         $.ajax({
-                            url: '/getKelas/ajax/' + mapel_id,
+                            // route('guru.get.kelas') with mapel_id
+                            url: '{{ route('guru.get.kelas', ':id') }}'.replace(':id', mapel_id),
                             type: "GET",
                             dataType: "json",
                             success: function(data) {
@@ -548,6 +549,14 @@
                                         data.kelas_id + '">' + data.nama_kelas +
                                         '</option>');
                                 });
+                            },
+                            success: function(response) {
+                                console.log('Response received:', response);
+                                pembelajaranIdField.val(response.pembelajaran_id);
+                                pembelajaranIdField.attr('placeholder', response.placeholder_value);
+                            },
+                            error: function(error) {
+                                console.error('Error fetching pembelajaran_id:', error);
                             }
                         });
                     } else {
@@ -585,7 +594,7 @@
 
                     if (kelasId) {
                         $.ajax({
-                            url: "{{ route('get.pembelajaran.id') }}",
+                            url: "{{ route('guru.get.pembelajaran.id') }}",
                             method: 'GET',
                             data: {
                                 mapel_id: mapelId,

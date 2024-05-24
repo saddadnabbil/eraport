@@ -53,11 +53,11 @@
                                 <form action="{{ route('nilairaportkm.store') }}" method="POST">
                                     @csrf
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Kelas</label>
+                                        <label class="col-sm-2 col-form-label">Class</label>
                                         <div class="col-sm-10">
                                             <select class="form-control form-select select2" name="pembelajaran_id"
                                                 style="width: 100%;" required onchange="this.form.submit();">
-                                                <option value="" disabled>-- Pilih Kelas --</option>
+                                                <option value="" disabled>-- Select Class --</option>
                                                 @foreach ($data_pembelajaran as $pembelajaran)
                                                     <option value="{{ $pembelajaran->id }}"
                                                         @if ($pembelajaran->id == $pembelajaran_id) selected @endif>
@@ -81,7 +81,7 @@
                                             <th class="text-center" rowspan="2"
                                                 style="width: 5%; vertical-align: middle">NIS</th>
                                             <th class="text-center" rowspan="2"
-                                                style="width: 37%; vertical-align: middle">Nama Siswa</th>
+                                                style="width: 37%; vertical-align: middle">Student Name</th>
                                             <th class="text-center" rowspan="2"
                                                 style="width: 5%; vertical-align: middle">KKM</th>
                                             <th class="text-center" colspan="2" style="width: 12%;">Sumatif</th>
@@ -116,7 +116,7 @@
                                                 </tr>
                                             @else
                                                 <tr>
-                                                    <td class="text-center" colspan="8">Data tidak tersedia.</td>
+                                                    <td class="text-center" colspan="8">Data not available.</td>
                                                 </tr>
                                             @endif
                                         @endforeach

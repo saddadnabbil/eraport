@@ -21,7 +21,7 @@ class MapelController extends Controller
      */
     public function index()
     {
-        $title = 'Data Mata Pelajaran';
+        $title = 'Subject Data';
         $tapel = Tapel::where('status', 1)->first();
         $data_mapel = Mapel::where('tapel_id', $tapel->id)->orderBy('nama_mapel', 'ASC')->get();
         return view('guru.md.mapel.index', compact('title', 'data_mapel', 'tapel'));
@@ -51,7 +51,7 @@ class MapelController extends Controller
                 'ringkasan_mapel' => $request->ringkasan_mapel,
             ]);
             $mapel->save();
-            return back()->with('toast_success', 'Mata Pelajaran berhasil ditambahkan');
+            return back()->with('toast_success', 'Subject berhasil ditambahkan');
         }
     }
 
@@ -79,7 +79,7 @@ class MapelController extends Controller
                 'ringkasan_mapel' => $request->ringkasan_mapel,
             ];
             $mapel->update($data_mapel);
-            return back()->with('toast_success', 'Mata Pelajaran berhasil diedit');
+            return back()->with('toast_success', 'Subject berhasil diedit');
         }
     }
 
@@ -94,10 +94,10 @@ class MapelController extends Controller
         $mapel = Mapel::findorfail($id);
         try {
             $mapel->forceDelete();
-            return back()->with('toast_success', 'Mata Pelajaran berhasil dihapus');
+            return back()->with('toast_success', 'Subject berhasil dihapus');
         } catch (\Throwable $th) {
             dd($th->getMessage());
-            return back()->with('toast_warning', 'Data Mata Pelajaran tidak dapat dihapus');
+            return back()->with('toast_warning', 'Subject Data tidak dapat dihapus');
         }
     }
 
@@ -114,7 +114,7 @@ class MapelController extends Controller
     {
         try {
             Excel::import(new MapelImport, $request->file('file_import'));
-            return back()->with('toast_success', 'Data mata pelajaran berhasil diimport');
+            return back()->with('toast_success', 'Subject Data berhasil diimport');
         } catch (\Throwable $th) {
             return back()->with('toast_error', 'Maaf, format data tidak sesuai');
         }

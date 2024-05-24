@@ -61,7 +61,7 @@
                                             <th>No</th>
                                             <th>NIS</th>
                                             <th>NISN</th>
-                                            <th>Nama Siswa</th>
+                                            <th>Student Name</th>
                                             <th>Tempat Lahir</th>
                                             <th>Tanggal Lahir</th>
                                             <th>L/P</th>

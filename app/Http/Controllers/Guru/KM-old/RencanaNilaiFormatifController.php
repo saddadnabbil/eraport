@@ -27,7 +27,7 @@ class RencanaNilaiFormatifController extends Controller
      */
     public function index()
     {
-        $title = 'Rencana Nilai Formatif';
+        $title = 'Rencana Formatif Grade';
         $tapel = Tapel::where('status', 1)->first();
         $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
 
@@ -52,7 +52,7 @@ class RencanaNilaiFormatifController extends Controller
      */
     public function show($id)
     {
-        $title = 'Data Rencana Nilai Formatif';
+        $title = 'Data Rencana Formatif Grade';
         $pembelajaran = Pembelajaran::findorfail($id);
         $term = Term::findorfail($pembelajaran->kelas->tingkatan->term_id);
         $semester = Semester::findorfail($pembelajaran->kelas->tingkatan->semester_id);
@@ -73,7 +73,7 @@ class RencanaNilaiFormatifController extends Controller
      */
     public function create(Request $request)
     {
-        $title = 'Tambah Rencana Nilai Formatif';
+        $title = 'Tambah Rencana Formatif Grade';
         $tapel = Tapel::where('status', 1)->first();
 
         $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
@@ -132,7 +132,7 @@ class RencanaNilaiFormatifController extends Controller
             $data_penilaian_permapel[] = $data_penilaian;
         }
 
-        return redirect(route('rencanaformatif.index'))->with('toast_success', 'Rencana nilai Formatif berhasil disimpan.');
+        return redirect(route('rencanaformatif.index'))->with('toast_success', 'Rencana Formatif Grade berhasil disimpan.');
     }
 
     /**

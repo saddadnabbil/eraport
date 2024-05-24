@@ -37,7 +37,7 @@
         <!-- ============================================================== -->
         <div class="container-fluid">
             <div class="callout callout-info">
-                <h5>Add, edit, and delete {{ $title }}</h5>
+                <h5>Create, edit, and delete {{ $title }}</h5>
                 <p>Please go through the Employee menu or click the button below.</p>
                 <a href="{{ route('karyawan.index') }}" class="btn btn-primary text-white mt-2" style="text-decoration:none">
                     Employee</a>
@@ -65,7 +65,7 @@
                                             <th>Username</th>
                                             <th>Role</th>
                                             <th>Status Akun</th>
-                                            <th>Aksi</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>

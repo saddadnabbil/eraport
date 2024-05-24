@@ -27,7 +27,7 @@ class SilabusController extends Controller
      */
     public function index()
     {
-        $title = 'Silabus';
+        $title = 'Syllabus';
         $tapel = Tapel::findorfail(session()->get('tapel_id'));
 
 

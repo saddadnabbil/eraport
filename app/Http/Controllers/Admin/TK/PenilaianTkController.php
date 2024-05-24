@@ -67,7 +67,7 @@ class PenilaianTkController extends Controller
         $id_kelas = Kelas::where('tapel_id', $tapel->id)->where('tingkatan_id', [1, 2, 3])->get('id');
 
         if (count($data_mapel) == 0) {
-            return redirect(route('admin.mapel.index'))->with('toast_warning', 'Mohon isikan data mata pelajaran');
+            return redirect(route('admin.mapel.index'))->with('toast_warning', 'Mohon isikan Subject Data');
         } elseif (count($data_kelas) == 0) {
             return redirect(route('admin.kelas.index'))->with('toast_warning', 'Mohon isikan data kelas');
         }

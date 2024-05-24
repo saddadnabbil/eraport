@@ -14,6 +14,6 @@
     'isActive' => request()->routeIs('statusnilaiguru.*'),
     'hasArrow' => false,
     'icon' => 'users',
-    'itemName' => 'Cek Status Penilaian',
+    'itemName' => 'Status Grading',
     'route' => route('walikelas.statusnilaiguru.index'),
 ])

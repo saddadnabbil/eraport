@@ -69,7 +69,7 @@
                                             <th class="text-center" rowspan="2" style="width: 25%;">Nama Ekstrakulikuler
                                             </th>
                                             <th class="text-center" rowspan="2" style="width: 20%;">Pembina</th>
-                                            <th class="text-center" colspan="2" style="width: 50%;">Nilai Ekstrakulikuler
+                                            <th class="text-center" colspan="2" style="width: 50%;">Extracurricular Grade
                                             </th>
                                         </tr>
                                         <tr>

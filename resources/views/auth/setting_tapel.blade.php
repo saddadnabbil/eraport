@@ -17,7 +17,7 @@
                       <div class="row">
                           <div class="col-lg-12">
                               <div class="form-group mb-3">
-                                  <input class="form-control" id="tahun_pelajaran" name="tahun_pelajaran" placeholder="Tahun Pelajaran" value="{{old('tahun_pelajaran')}}">
+                                  <input class="form-control" id="tahun_pelajaran" name="tahun_pelajaran" placeholder="Academic Year" value="{{old('tahun_pelajaran')}}">
                               </div>
                           </div>
                           <div class="mb-3">

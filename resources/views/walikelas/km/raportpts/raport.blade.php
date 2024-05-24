@@ -368,7 +368,7 @@
                 <td style="width:48pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"
                     bgcolor="#999999">
                     <p class="s1"
-                        style="padding-top: 2pt;padding-left: 13pt; padding-right: 13pt;text-align: center;">Nilai Akhir
+                        style="padding-top: 2pt;padding-left: 13pt; padding-right: 13pt;text-align: center;">Final Grade
                     </p>
                 </td>
 

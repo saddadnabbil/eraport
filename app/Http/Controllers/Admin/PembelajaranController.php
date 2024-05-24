@@ -27,11 +27,11 @@ class PembelajaranController extends Controller
         $data_kelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->orderBy('tingkatan_id', 'ASC')->get();
 
         if (count($data_mapel) == 0) {
-            return redirect(route('admin.mapel.index'))->with('toast_warning', 'Mohon isikan data mata pelajaran');
+            return redirect(route('admin.mapel.index'))->with('toast_warning', 'Mohon isikan Subject Data');
         } elseif (count($data_kelas) == 0) {
             return redirect(route('admin.kelas.index'))->with('toast_warning', 'Mohon isikan data kelas');
         } else {
-            $title = 'Data Pembelajaran';
+            $title = 'Learning Data';
             $id_kelas = Kelas::where('tapel_id', $tapel->id)->orderBy('tingkatan_id', 'ASC')->get('id');
             $data_pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->whereNotNull('guru_id')->where('status', 1)->orderBy('kelas_id', 'ASC')->get();
             return view('admin.pembelajaran.index', compact('title', 'data_kelas', 'data_pembelajaran'));

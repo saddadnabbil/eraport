@@ -25,7 +25,7 @@ class TapelController extends Controller
      */
     public function index()
     {
-        $title = 'Data Tahun Pelajaran';
+        $title = 'Data Academic Year';
         $data_tapel = Tapel::orderBy('id', 'ASC')->get();
         $data_semester = Semester::orderBy('id', 'ASC')->get();
         $data_term = Term::orderBy('id', 'ASC')->get();
@@ -56,7 +56,7 @@ class TapelController extends Controller
             // Cek apakah tapel ini sudah ada
             $tapel = Tapel::where('tahun_pelajaran', $request->tahun_pelajaran)->first();
             if ($tapel) {
-                return back()->with('toast_error', 'Tahun Pelajaran sudah ada');
+                return back()->with('toast_error', 'Academic Year sudah ada');
             }
 
             $tapel = new Tapel([
@@ -68,7 +68,7 @@ class TapelController extends Controller
 
             // Siswa::where('status', 1)->update(['kelas_id' => null]);
 
-            return back()->with('toast_success', 'Tahun Pelajaran berhasil ditambahkan');
+            return back()->with('toast_success', 'Academic Year berhasil ditambahkan');
         }
     }
 
@@ -83,7 +83,7 @@ class TapelController extends Controller
             // Cek apakah tapel ini sudah ada
             $tapel = Tapel::where('id', '!=', $id)->where('tahun_pelajaran', $request->tahun_pelajaran)->first();
             if ($tapel) {
-                return back()->with('toast_error', 'Tahun Pelajaran sudah ada');
+                return back()->with('toast_error', 'Academic Year sudah ada');
             }
 
             $tapel = Tapel::findorfail($id);
@@ -91,7 +91,7 @@ class TapelController extends Controller
                 'tahun_pelajaran' => $request->tahun_pelajaran,
             ];
             $tapel->update($data_tapel);
-            return back()->with('toast_success', 'Tahun Pelajaran berhasil diedit');
+            return back()->with('toast_success', 'Academic Year berhasil diedit');
         }
     }
 
@@ -106,10 +106,10 @@ class TapelController extends Controller
     // {
     //     $tapel = Tapel::findorfail($id);
     //     if ($tapel->status == 1) {
-    //         return back()->with('toast_error', 'Tahun Pelajaran masih aktif');
+    //         return back()->with('toast_error', 'Academic Year masih aktif');
     //     }
     //     $tapel->forceDelete();
-    //     return back()->with('toast_success', 'Tahun Pelajaran berhasil dihapus');
+    //     return back()->with('toast_success', 'Academic Year berhasil dihapus');
     // }
 
     public function setAcademicYear(Request $request): RedirectResponse

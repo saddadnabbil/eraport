@@ -21,7 +21,7 @@
                     'active' => true,
                 ],
                 [
-                    'title' => 'Penilaian TK',
+                    'title' => 'Grading TK',
                     'url' => route('tk.penilaian.index'),
                     'active' => true,
                 ],
@@ -66,11 +66,11 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <label class="col-sm-2 col-form-label">Kelas</label>
+                                        <label class="col-sm-2 col-form-label">Class</label>
                                         <div class="col-sm-4">
                                             <select class="form-control form-select select2" name="kelas_id"
                                                 style="width: 100%;" required onchange="this.form.submit();">
-                                                <option value="" disabled>-- Pilih Kelas --</option>
+                                                <option value="" disabled>-- Select Class --</option>
                                                 @foreach ($data_kelas as $kelas_item)
                                                     <option value="{{ $kelas_item->id }}"
                                                         @if ($kelas_item->id == $kelas->id) selected @endif>
@@ -98,7 +98,7 @@
                                             <tbody>
                                                 @if ($data_anggota_kelas->count() == 0)
                                                     <tr>
-                                                        <td colspan="3" class="text-center">Data siswa tidak tersedia
+                                                        <td colspan="3" class="text-center">Student Data not available
                                                         </td>
                                                     </tr>
                                                 @else

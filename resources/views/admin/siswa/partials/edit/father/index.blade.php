@@ -30,16 +30,16 @@
             </div>
         </div>
         <div class="form-group row">
-            <label for="alamat_ayah" class="col-sm-3 col-form-label">Alamat</label>
+            <label for="alamat_ayah" class="col-sm-3 col-form-label">Address</label>
             <div class="col-sm-9">
-                <textarea class="form-control" id="alamat_ayah" name="alamat_ayah" placeholder="Alamat">{{ $siswa->alamat_ayah }}</textarea>
+                <textarea class="form-control" id="alamat_ayah" name="alamat_ayah" placeholder="Address">{{ $siswa->alamat_ayah }}</textarea>
             </div>
         </div>
         <div class="form-group row">
-            <label for="nomor_hp_ayah" class="col-sm-3 col-form-label">Nomor HP</label>
+            <label for="nomor_hp_ayah" class="col-sm-3 col-form-label">Phone</label>
             <div class="col-sm-9">
                 <input type="text" class="form-control" id="nomor_hp_ayah" name="nomor_hp_ayah"
-                    placeholder="Nomor HP" value="{{ $siswa->nomor_hp_ayah }}">
+                    placeholder="Phone" value="{{ $siswa->nomor_hp_ayah }}">
             </div>
         </div>
         <div class="form-group row">

@@ -76,7 +76,7 @@
                                         {{ $jumlah_ekstrakulikuler }}
                                     </h2>
                                     <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">
-                                        Jumlah Ekstrakulikuler yang Diikuti
+                                        Number of Extracurricular yang Diikuti
                                     </h6>
                                 </div>
                                 <div class="ms-auto mt-md-3 mt-lg-0">
@@ -98,7 +98,7 @@
                                         --}}
                                     </div>
                                     <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">
-                                        Jumlah Mata Pelajaran yang Diikuti
+                                        Jumlah Subject yang Diikuti
                                     </h6>
                                 </div>
                                 <div class="ms-auto mt-md-3 mt-lg-0">
@@ -191,7 +191,7 @@
                                                                 <button type="button" class="btn btn-default"
                                                                     data-bs-dismiss="modal">Batal</button>
                                                                 <button type="submit"
-                                                                    class="btn btn-primary">Simpan</button>
+                                                                    class="btn btn-primary">Save</button>
                                                             </div>
                                                         </form>
                                                     </div>

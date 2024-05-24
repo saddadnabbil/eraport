@@ -35,7 +35,7 @@
     'isActive' => request()->routeIs($allowedRoutes),
     'hasArrow' => true,
     'icon' => 'file-text',
-    'itemName' => 'Rencana Penilaian',
+    'itemName' => 'Grading Plan',
     'route' => 'javascript:void(0)',
     'subItems' => [
         [
@@ -45,13 +45,13 @@
             'childHasArrow' => false,
         ],
         [
-            'name' => 'Rencana Formatif',
+            'name' => 'Formatif Plan',
             'route' => $dynamicRouteFormatif,
             'isActive' => $checkRouteFormatif,
             'childHasArrow' => false,
         ],
         [
-            'name' => 'Rencana Sumatif',
+            'name' => 'Sumatif Plan',
             'route' => $dynamicRouteSumatif,
             'isActive' => $checkRouteSumatif,
             'childHasArrow' => false,

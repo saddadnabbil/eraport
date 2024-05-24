@@ -22,12 +22,12 @@
                     'active' => true,
                 ],
                 [
-                    'title' => 'Rencana Sumatif',
+                    'title' => 'Sumatif Plan',
                     'url' => route('guru.km.rencanasumatif.index'),
                     'active' => true,
                 ],
                 [
-                    'title' => 'Data Rencana Sumatif',
+                    'title' => 'Data Sumatif Plan',
                     'url' => route('guru.km.rencanasumatif.index'),
                     'active' => false,
                 ],
@@ -48,7 +48,7 @@
                         <div class="card-body">
                             <div class="callout callout-info">
                                 <div class="form-group row">
-                                    <label for="pembelajaran_id" class="col-sm-2 col-form-label">Mata Pelajaran</label>
+                                    <label for="pembelajaran_id" class="col-sm-2 col-form-label">Subject</label>
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control"
                                             value="{{ $pembelajaran->mapel->nama_mapel }} {{ $pembelajaran->kelas->nama_kelas }}"
@@ -62,17 +62,17 @@
                                     <thead class="bg-primary">
                                         <tr>
                                             <th class="text-center">No</th>
-                                            <th class="text-center">Kode Penilaian</th>
+                                            <th class="text-center">Kode Grading</th>
                                             <th class="text-center">Bobot</th>
-                                            <th class="text-center">Kelompok/Teknik Penilaian</th>
-                                            <th class="text-center">Aksi</th>
+                                            <th class="text-center">Kelompok/Teknik Grading</th>
+                                            <th class="text-center">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
 
                                         @if (empty(count($data_rencana_penilaian)))
                                             <tr>
-                                                <td class="text-center" colspan="5">Data tidak tersedia</td>
+                                                <td class="text-center" colspan="5">Data not available</td>
                                             </tr>
                                         @else
                                             <?php $no = 0; ?>
@@ -122,7 +122,7 @@
                                                                         <div class="form-group row">
                                                                             <label for="jumlah_penilaian"
                                                                                 class="col-sm-3 col-form-label">Kode
-                                                                                Penilaian</label>
+                                                                                Grading</label>
                                                                             <div class="col-sm-9">
                                                                                 <input type="text" class="form-control"
                                                                                     name="kode_penilaian"
@@ -148,7 +148,7 @@
                                                                         <div class="form-group row">
                                                                             <label for="jumlah_penilaian"
                                                                                 class="col-sm-3 col-form-label">Teknik
-                                                                                Penilaian</label>
+                                                                                Grading</label>
                                                                             <div class="col-sm-9">
                                                                                 <select class="form-control form-select"
                                                                                     name="teknik_penilaian"
@@ -156,7 +156,7 @@
                                                                                     oninvalid="this.setCustomValidity('silakan pilih item dalam daftar')"
                                                                                     oninput="setCustomValidity('')">
                                                                                     <option value="">-- Teknik
-                                                                                        Penilaian --</option>
+                                                                                        Grading --</option>
                                                                                     <option value="1"
                                                                                         @if ($rencana_penilaian->teknik_penilaian == 1) selected @endif>
                                                                                         Tes Tulis</option>

@@ -132,16 +132,16 @@ class KelasController extends Controller
         })->where('status', 1)->get();
 
         foreach ($siswa_belum_masuk_kelas as $belum_masuk_kelas) {
-            // Ambil informasi tahun pelajaran tapel sekarang
+            // Ambil informasi Academic Year tapel sekarang
             $tahun_pelajaran_sekarang = $tapel->tahun_pelajaran;
 
-            // Split tahun pelajaran menjadi dua bagian (misalnya: '2023-2024' menjadi ['2023', '2024'])
+            // Split Academic Year menjadi dua bagian (misalnya: '2023-2024' menjadi ['2023', '2024'])
             $parts = explode('-', $tahun_pelajaran_sekarang);
 
-            // Hitung tahun pelajaran sebelumnya
+            // Hitung Academic Year sebelumnya
             $tahun_pelajaran_sebelumnya = ($parts[0] - 1) . '-' . ($parts[1] - 1);
 
-            // Cari tapel sebelumnya berdasarkan tahun pelajaran sebelumnya
+            // Cari tapel sebelumnya berdasarkan Academic Year sebelumnya
             $tapel_sebelumnya = Tapel::where('tahun_pelajaran', $tahun_pelajaran_sebelumnya)->first();
 
             if (!is_null($tapel_sebelumnya)) {

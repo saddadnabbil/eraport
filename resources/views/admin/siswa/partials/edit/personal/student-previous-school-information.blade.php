@@ -16,10 +16,10 @@
         </div>
     </div>
     <div class="form-group row">
-        <label for="nama_sekolah_lama" class="col-sm-3 col-form-label">Nama Sekolah</label>
+        <label for="nama_sekolah_lama" class="col-sm-3 col-form-label">School Name</label>
         <div class="col-sm-9">
             <input type="text" class="form-control" id="nama_sekolah_lama" name="nama_sekolah_lama"
-                placeholder="Nama Sekolah" value="{{ $siswa->nama_sekolah_lama }}">
+                placeholder="School Name" value="{{ $siswa->nama_sekolah_lama }}">
         </div>
     </div>
     <div class="form-group row">
@@ -44,10 +44,10 @@
         </div>
     </div>
     <div class="form-group row">
-        <label for="alamat_sekolah_lama" class="col-sm-3 col-form-label">Alamat Sekolah</label>
+        <label for="alamat_sekolah_lama" class="col-sm-3 col-form-label">Address Sekolah</label>
         <div class="col-sm-9">
             <input type="text" class="form-control" id="alamat_sekolah_lama" name="alamat_sekolah_lama"
-                placeholder="Alamat Sekolah" value="{{ $siswa->alamat_sekolah_lama }}">
+                placeholder="Address Sekolah" value="{{ $siswa->alamat_sekolah_lama }}">
         </div>
     </div>
     <div class="form-group row">

@@ -17,7 +17,7 @@ class SilabusController extends Controller
 {
     public function index()
     {
-        $title = 'Silabus';
+        $title = 'Syllabus';
         $siswa = Siswa::where('user_id', Auth::user()->id)->first();
         $tapel = Tapel::where('status', 1)->first();
 

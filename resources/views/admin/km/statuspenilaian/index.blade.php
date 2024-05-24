@@ -21,7 +21,7 @@
                     'active' => true,
                 ],
                 [
-                    'title' => 'Status Penilaian',
+                    'title' => 'Status Grading',
                     'url' => route('raportstatuskm.penilaian.index'),
                     'active' => true,
                 ],
@@ -52,11 +52,11 @@
                                 <form action="{{ route('raportstatuskm.penilaian.store') }}" method="POST">
                                     @csrf
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Kelas</label>
+                                        <label class="col-sm-2 col-form-label">Class</label>
                                         <div class="col-sm-10">
                                             <select class="form-control form-select select2" name="kelas_id"
                                                 style="width: 100%;" required onchange="this.form.submit();">
-                                                <option value="" disabled>-- Pilih Kelas --</option>
+                                                <option value="" disabled>-- Select Class --</option>
                                                 @foreach ($data_kelas->sortBy('tingkatan_id') as $kls)
                                                     <option value="{{ $kls->id }}"
                                                         @if ($kelas->id == $kls->id) selected @endif>
@@ -72,11 +72,11 @@
                                     <thead class="bg-info">
                                         <tr>
                                             <th rowspan="2" class="text-center">No</th>
-                                            <th rowspan="2" class="text-center">Mata Pelajaran</th>
+                                            <th rowspan="2" class="text-center">Subject</th>
                                             <th rowspan="2" class="text-center">Nama Guru</th>
                                             <th colspan="2" class="text-center" style="width: 200px;">Status Perencanaan
                                             </th>
-                                            <th colspan="2" class="text-center" style="width: 200px;">Status Penilaian
+                                            <th colspan="2" class="text-center" style="width: 200px;">Status Grading
                                             </th>
                                             <th colspan="2" class="text-center" style="width: 100px;">Status Nilai Raport
                                             </th>

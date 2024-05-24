@@ -22,7 +22,7 @@ class KkmMapelController extends Controller
      */
     public function index()
     {
-        $title = 'KKM Mata Pelajaran';
+        $title = 'KKM Subject';
         $tapel = Tapel::where('status', 1)->first();
         $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
 
@@ -36,7 +36,7 @@ class KkmMapelController extends Controller
             $data_kkm[] = KmKkmMapel::where('mapel_id', $pembelajaran->mapel_id)->where('kelas_id', $pembelajaran->kelas_id)->get();
         }
         if (count($cek_pembelajaran) == 0) {
-            return redirect('guru/pembelajaran')->with('toast_warning', 'data pembelajaran untuk mapel ini belum tersedia');
+            return redirect('guru/pembelajaran')->with('toast_warning', 'Learning Data untuk mapel ini belum tersedia');
         } else {
             return view('guru.km.kkm.index', compact('title', 'data_mapel', 'data_kkm'));
         }

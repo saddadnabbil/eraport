@@ -806,17 +806,16 @@ Route::group(['middleware' => ['auth']], function () {
                     Route::put('timeslot/update/{id}', 'Guru\MD\JadwalPelajaranController@updateTimeSlot')->name('guru.timeslot.update');
                     Route::delete('timeslot/{id}', 'Guru\MD\JadwalPelajaranController@deleteTimeSlot')->name('guru.timeslot.destroy');
 
-                    // Silabus Controller
                     Route::resource('silabus', 'Guru\MD\SilabusController')
                         ->only(['index', 'store', 'update', 'destroy'])
                         ->names([
-                            'index' => 'guru.silabus.index',
-                            'store' => 'guru.silabus.store',
-                            'update' => 'guru.silabus.update',
-                            'destroy' => 'guru.silabus.destroy',
+                            'index' => 'curriculum.silabus.index',
+                            'store' => 'curriculum.silabus.store',
+                            'update' => 'curriculum.silabus.update',
+                            'destroy' => 'curriculum.silabus.destroy',
                         ]);
-                    Route::delete('/silabus/{id}/destroy/{fileType}', 'Guru\MD\SilabusController@destroyFile')->name('guru.admin.silabus.destroyFile');
-                    Route::get('/silabus/pdf/{filename}', 'Guru\MD\PdfController@viewSilabusPDF')->name('guru.admin.silabus.pdf.view');
+                    Route::delete('/silabus/{id}/destroy/{fileType}', 'Guru\MD\SilabusController@destroyFile')->name('curriculum.silabus.destroyFile');
+                    Route::get('/silabus/pdf/{filename}', 'Guru\MD\PdfController@viewSilabusPDF')->name('curriculum.silabus.pdf.view');
                 });
             });
 
@@ -824,6 +823,17 @@ Route::group(['middleware' => ['auth']], function () {
             Route::group(['middleware' => ['role:Teacher|Co-Teacher']], function () {
                 // Start KM
                 Route::prefix('km')->group(function () {
+                    Route::resource('silabus', 'Guru\SilabusController')
+                        ->only(['index', 'store', 'update', 'destroy'])
+                        ->names([
+                            'index' => 'guru.silabus.index',
+                            'store' => 'guru.silabus.store',
+                            'update' => 'guru.silabus.update',
+                            'destroy' => 'guru.silabus.destroy',
+                        ]);
+                    Route::delete('/silabus/{id}/destroy/{fileType}', 'Guru\MD\SilabusController@destroyFile')->name('guru.silabus.destroyFile');
+                    Route::get('/silabus/pdf/{filename}', 'Guru\MD\PdfController@viewSilabusPDF')->name('guru.silabus.pdf.view');
+
                     Route::resource('rekap-kehadiran', 'Guru\KM\InputData\RekapKehadiranSiswaController')
                         ->only(['index', 'store'])->names([
                             'index' => 'guru.km.rekapkehadiran.index',

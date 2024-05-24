@@ -24,10 +24,10 @@
             </div>
 
             <div class="form-group row">
-                <label for="nama_lengkap" class="col-sm-3 col-form-label required">Nama Siswa</label>
+                <label for="nama_lengkap" class="col-sm-3 col-form-label required">Student Name</label>
                 <div class="col-sm-9">
                     <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap"
-                        placeholder="Nama Siswa" value="{{ $siswa->nama_lengkap }}" required>
+                        placeholder="Student Name" value="{{ $siswa->nama_lengkap }}" required>
                 </div>
             </div>
 
@@ -50,10 +50,10 @@
                         @endforeach
                     </select>
                 </div>
-                <label class="col-sm-2 col-form-label required">Kelas</label>
+                <label class="col-sm-2 col-form-label required">Class</label>
                 <div class="col-sm-4">
                     <select class="form-control form-select" id="kelas_id" name="kelas_id" required>
-                        <option value="">-- Pilih Kelas --</option>
+                        <option value="">-- Select Class --</option>
                         @if ($siswa->kelas)
                             <option value="{{ $siswa->kelas->id }}" selected>
                                 {{ $siswa->kelas->nama_kelas }}
@@ -82,7 +82,7 @@
                 <label class="col-sm-2 col-form-label required">Jurusan</label>
                 <div class="col-sm-4">
                     <select class="form-control form-select" id="jurusan_id" name="jurusan_id" required>
-                        <option value="">-- Pilih Kelas --</option>
+                        <option value="">-- Select Class --</option>
                         @if ($siswa->kelas)
                             <option value="{{ $siswa->kelas->jurusan->id }}" selected>
                                 {{ $siswa->kelas->jurusan->nama_jurusan }}

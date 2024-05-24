@@ -79,7 +79,7 @@
                                     <b>Email</b> <a class="float-right">{{ $siswa->email }}</a>
                                 </li>
                                 <li class="list-group-item">
-                                    <b>Nomor HP</b> <a class="float-right">{{ $siswa->nomor_hp }}</a>
+                                    <b>Phone</b> <a class="float-right">{{ $siswa->nomor_hp }}</a>
                                 </li>
                             </ul>
                         </div>
@@ -150,7 +150,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">Nama Siswa</label>
+                                            <label class="col-sm-3 col-form-label">Student Name</label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" placeholder=""
                                                     value="{{ $siswa->nama_lengkap }}" disabled>
@@ -175,7 +175,7 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <label class="col-sm-2 col-form-label ">Kelas</label>
+                                            <label class="col-sm-2 col-form-label ">Class</label>
                                             <div class="col-sm-4">
                                                 <select class="form-control form-select" required disabled>
                                                     <option value=""></option>
@@ -324,7 +324,7 @@
                                     <div class="border-bottom mt-3 p-2">
                                         <h6 class="mt-2"><b>B. Domicile Information</b></h6>
                                         <div class="form-group row">
-                                            <label for="alamat" class="col-sm-3 col-form-label">Alamat</label>
+                                            <label for="alamat" class="col-sm-3 col-form-label">Address</label>
                                             <div class="col-sm-9">
                                                 <textarea class="form-control" placeholder="" disabled>{{ $siswa->alamat }}</textarea>
                                             </div>
@@ -335,7 +335,7 @@
                                                 <input type="text" class="form-control" placeholder=""
                                                     value="{{ $siswa->kota }}" disabled>
                                             </div>
-                                            <label for="kode_pos" class="col-sm-2 col-form-label">Kode Pos</label>
+                                            <label for="kode_pos" class="col-sm-2 col-form-label">Postal Code</label>
                                             <div class="col-sm-3">
                                                 <input type="number" class="form-control" placeholder=""
                                                     value="{{ $siswa->kode_pos }}" disabled>
@@ -364,7 +364,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label for="nomor_hp" class="col-sm-3 col-form-label">Nomor HP</label>
+                                            <label for="nomor_hp" class="col-sm-3 col-form-label">Phone</label>
                                             <div class="col-sm-9">
                                                 <input type="number" class="form-control" placeholder=""
                                                     value="{{ $siswa->nomor_hp }}" disabled>
@@ -485,15 +485,15 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">Alamat</label>
+                                            <label class="col-sm-3 col-form-label">Address</label>
                                             <div class="col-sm-9">
-                                                <textarea class="form-control" placeholder="Alamat" disabled>{{ $siswa->alamat_ayah }}</textarea>
+                                                <textarea class="form-control" placeholder="Address" disabled>{{ $siswa->alamat_ayah }}</textarea>
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">Nomor HP</label>
+                                            <label class="col-sm-3 col-form-label">Phone</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" placeholder="Nomor HP"
+                                                <input type="text" class="form-control" placeholder="Phone"
                                                     value="{{ $siswa->nomor_hp_ayah }}" disabled>
                                             </div>
                                         </div>
@@ -585,15 +585,15 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">Alamat</label>
+                                            <label class="col-sm-3 col-form-label">Address</label>
                                             <div class="col-sm-9">
-                                                <textarea class="form-control" placeholder="Alamat" disabled>{{ $siswa->alamat_ibu }}</textarea>
+                                                <textarea class="form-control" placeholder="Address" disabled>{{ $siswa->alamat_ibu }}</textarea>
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">Nomor HP</label>
+                                            <label class="col-sm-3 col-form-label">Phone</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" placeholder="Nomor HP"
+                                                <input type="text" class="form-control" placeholder="Phone"
                                                     value="{{ $siswa->nomor_hp_ibu }}" disabled>
                                             </div>
                                         </div>
@@ -683,15 +683,15 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">Alamat</label>
+                                            <label class="col-sm-3 col-form-label">Address</label>
                                             <div class="col-sm-9">
-                                                <textarea class="form-control" placeholder="Alamat" disabled>{{ $siswa->alamat_wali }}</textarea>
+                                                <textarea class="form-control" placeholder="Address" disabled>{{ $siswa->alamat_wali }}</textarea>
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label">Nomor HP</label>
+                                            <label class="col-sm-3 col-form-label">Phone</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control" placeholder="Nomor HP"
+                                                <input type="text" class="form-control" placeholder="Phone"
                                                     value="{{ $siswa->nomor_hp_wali }}" disabled>
                                             </div>
                                         </div>
@@ -867,10 +867,10 @@
 
                                                 <div class="form-group row">
                                                     <label for="nama_lengkap"
-                                                        class="col-sm-3 col-form-label required">Nama Siswa</label>
+                                                        class="col-sm-3 col-form-label required">Student Name</label>
                                                     <div class="col-sm-9">
                                                         <input type="text" class="form-control" id="nama_lengkap"
-                                                            name="nama_lengkap" placeholder="Nama Siswa"
+                                                            name="nama_lengkap" placeholder="Student Name"
                                                             value="{{ $siswa->nama_lengkap }}" required>
                                                     </div>
                                                 </div>
@@ -897,7 +897,7 @@
                                                             @endforeach
                                                         </select>
                                                     </div>
-                                                    <label class="col-sm-2 col-form-label required">Kelas</label>
+                                                    <label class="col-sm-2 col-form-label required">Class</label>
                                                     <div class="col-sm-4">
                                                         <select class="form-control form-select" required disabled>
                                                             <option value=""></option>
@@ -928,7 +928,7 @@
                                                     <div class="col-sm-4">
                                                         <select class="form-control form-select" id="jurusan_id"
                                                             name="jurusan_id" disabled>
-                                                            <option value="">-- Pilih Kelas --</option>
+                                                            <option value="">-- Select Class --</option>
                                                             @if ($siswa->kelas)
                                                                 <option value="{{ $siswa->kelas->jurusan->id }}" selected>
                                                                     {{ $siswa->kelas->jurusan->nama_jurusan }}
@@ -1062,9 +1062,9 @@
                                                                                                                                           <div class="border-bottom mt-3 p-2" >
                                                                                                                                             <h6 class="mt-2"><b>B. Domicile Information</b></h6>
                                                                                                                                             <div class="form-group row">
-                                                                                                                                              <label for="alamat" class="col-sm-3 col-form-label">Alamat</label>
+                                                                                                                                              <label for="alamat" class="col-sm-3 col-form-label">Address</label>
                                                                                                                                               <div class="col-sm-9">
-                                                                                                                                                <textarea class="form-control" id="alamat" name="alamat" placeholder="Alamat lengkap">{{ $siswa->alamat }}</textarea>
+                                                                                                                                                <textarea class="form-control" id="alamat" name="alamat" placeholder="Address lengkap">{{ $siswa->alamat }}</textarea>
                                                                                                                                               </div>
                                                                                                                                             </div>
                                                                                                                                             <div class="form-group row">
@@ -1072,9 +1072,9 @@
                                                                                                                                               <div class="col-sm-4">
                                                                                                                                                 <input type="text" class="form-control" id="kota" name="kota" placeholder="Kota" value="{{ $siswa->kota }}">
                                                                                                                                               </div>
-                                                                                                                                              <label for="kode_pos" class="col-sm-2 col-form-label">Kode Pos</label>
+                                                                                                                                              <label for="kode_pos" class="col-sm-2 col-form-label">Postal Code</label>
                                                                                                                                               <div class="col-sm-3">
-                                                                                                                                                <input type="number" class="form-control" id="kode_pos" name="kode_pos" placeholder="Kode Pos" value="{{ $siswa->kode_pos }}">
+                                                                                                                                                <input type="number" class="form-control" id="kode_pos" name="kode_pos" placeholder="Postal Code" value="{{ $siswa->kode_pos }}">
                                                                                                                                               </div>
                                                                                                                                             </div>
                                                                                                                                             <div class="form-group row">
@@ -1096,9 +1096,9 @@
                                                                                                                                               </div>
                                                                                                                                             </div>
                                                                                                                                             <div class="form-group row">
-                                                                                                                                              <label for="nomor_hp" class="col-sm-3 col-form-label">Nomor HP</label>
+                                                                                                                                              <label for="nomor_hp" class="col-sm-3 col-form-label">Phone</label>
                                                                                                                                               <div class="col-sm-9">
-                                                                                                                                                <input type="number" class="form-control" id="nomor_hp" name="nomor_hp" placeholder="Nomor HP" value="{{ $siswa->nomor_hp }}">
+                                                                                                                                                <input type="number" class="form-control" id="nomor_hp" name="nomor_hp" placeholder="Phone" value="{{ $siswa->nomor_hp }}">
                                                                                                                                               </div>
                                                                                                                                             </div>
                                                                                                                                             <div class="form-group row">
@@ -1195,15 +1195,15 @@
                                                                                                                                               </div>
                                                                                                                                             </div>
                                                                                                                                             <div class="form-group row">
-                                                                                                                                              <label for="alamat_ayah" class="col-sm-3 col-form-label">Alamat</label>
+                                                                                                                                              <label for="alamat_ayah" class="col-sm-3 col-form-label">Address</label>
                                                                                                                                               <div class="col-sm-9">
-                                                                                                                                                <textarea class="form-control" id="alamat_ayah" name="alamat_ayah" placeholder="Alamat">{{ $siswa->alamat_ayah }}</textarea>
+                                                                                                                                                <textarea class="form-control" id="alamat_ayah" name="alamat_ayah" placeholder="Address">{{ $siswa->alamat_ayah }}</textarea>
                                                                                                                                               </div>
                                                                                                                                             </div>
                                                                                                                                             <div class="form-group row">
-                                                                                                                                              <label for="nomor_hp_ayah" class="col-sm-3 col-form-label">Nomor HP</label>
+                                                                                                                                              <label for="nomor_hp_ayah" class="col-sm-3 col-form-label">Phone</label>
                                                                                                                                               <div class="col-sm-9">
-                                                                                                                                                <input type="text" class="form-control" id="nomor_hp_ayah" name="nomor_hp_ayah" placeholder="Nomor HP" value="{{ $siswa->nomor_hp_ayah }}">
+                                                                                                                                                <input type="text" class="form-control" id="nomor_hp_ayah" name="nomor_hp_ayah" placeholder="Phone" value="{{ $siswa->nomor_hp_ayah }}">
                                                                                                                                               </div>
                                                                                                                                             </div>
                                                                                                                                             <div class="form-group row">
@@ -1272,15 +1272,15 @@
                                                                                                                                               </div>
                                                                                                                                             </div>
                                                                                                                                             <div class="form-group row">
-                                                                                                                                              <label for="alamat_ibu" class="col-sm-3 col-form-label">Alamat</label>
+                                                                                                                                              <label for="alamat_ibu" class="col-sm-3 col-form-label">Address</label>
                                                                                                                                               <div class="col-sm-9">
-                                                                                                                                                <textarea class="form-control" id="alamat_ibu" name="alamat_ibu" placeholder="Alamat">{{ $siswa->alamat_ibu }}</textarea>
+                                                                                                                                                <textarea class="form-control" id="alamat_ibu" name="alamat_ibu" placeholder="Address">{{ $siswa->alamat_ibu }}</textarea>
                                                                                                                                               </div>
                                                                                                                                             </div>
                                                                                                                                             <div class="form-group row">
-                                                                                                                                              <label for="nomor_hp_ibu" class="col-sm-3 col-form-label">Nomor HP</label>
+                                                                                                                                              <label for="nomor_hp_ibu" class="col-sm-3 col-form-label">Phone</label>
                                                                                                                                               <div class="col-sm-9">
-                                                                                                                                                <input type="text" class="form-control" id="nomor_hp_ibu" name="nomor_hp_ibu" placeholder="Nomor HP" value="{{ $siswa->nomor_hp_ibu }}">
+                                                                                                                                                <input type="text" class="form-control" id="nomor_hp_ibu" name="nomor_hp_ibu" placeholder="Phone" value="{{ $siswa->nomor_hp_ibu }}">
                                                                                                                                               </div>
                                                                                                                                             </div>
                                                                                                                                             <div class="form-group row">
@@ -1349,15 +1349,15 @@
                                                                                                                                               </div>
                                                                                                                                             </div>
                                                                                                                                             <div class="form-group row">
-                                                                                                                                              <label for="alamat_wali" class="col-sm-3 col-form-label">Alamat</label>
+                                                                                                                                              <label for="alamat_wali" class="col-sm-3 col-form-label">Address</label>
                                                                                                                                               <div class="col-sm-9">
-                                                                                                                                                <textarea class="form-control" id="alamat_wali" name="alamat_wali" placeholder="Alamat">{{ $siswa->alamat_wali }}</textarea>
+                                                                                                                                                <textarea class="form-control" id="alamat_wali" name="alamat_wali" placeholder="Address">{{ $siswa->alamat_wali }}</textarea>
                                                                                                                                               </div>
                                                                                                                                             </div>
                                                                                                                                             <div class="form-group row">
-                                                                                                                                              <label for="nomor_hp_wali" class="col-sm-3 col-form-label">Nomor HP</label>
+                                                                                                                                              <label for="nomor_hp_wali" class="col-sm-3 col-form-label">Phone</label>
                                                                                                                                               <div class="col-sm-9">
-                                                                                                                                                <input type="text" class="form-control" id="nomor_hp_wali" name="nomor_hp_wali" placeholder="Nomor HP" value="{{ $siswa->nomor_hp_wali }}">
+                                                                                                                                                <input type="text" class="form-control" id="nomor_hp_wali" name="nomor_hp_wali" placeholder="Phone" value="{{ $siswa->nomor_hp_wali }}">
                                                                                                                                               </div>
                                                                                                                                             </div>
                                                                                                                                             <div class="form-group row">
@@ -1403,7 +1403,7 @@
                                                                                                                                     </div>
                                                                                                                                     <div class="modal-footer justify-content-end">
                                                                                                                                       <button type="button" class="btn btn-default" data-bs-dismiss="modal">Batal</button>
-                                                                                                                                      <button type="submit" class="btn btn-primary">Simpan</button>
+                                                                                                                                      <button type="submit" class="btn btn-primary">Save</button>
                                                                                                                                     </div>
                                                                                                                                   </form>
                                                                                                                                 </div>

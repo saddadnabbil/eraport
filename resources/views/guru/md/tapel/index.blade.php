@@ -47,8 +47,7 @@
                                 @csrf
                                 <div class="form-group row border-bottom">
                                     <div class="col-lg-5 col-md-6 form-inline" style="margin-bottom: 14px">
-                                        <label class="col-lg-6 col-md-6font-weight-normal" for="select_tapel_id">Tahun
-                                            Pelajaran</label>
+                                        <label class="col-lg-6 col-md-6font-weight-normal" for="select_tapel_id">Academic Year</label>
                                         <div class="col-6">
                                             <select class="custom-select form-control" name="select_tapel_id">
                                                 {{-- <option selected>{{ $tapel_id }}</option> --}}
@@ -180,7 +179,7 @@
                                                 Pelajaran</label>
                                             <div class="col-sm-9">
                                                 <input type="text" class="form-control" id="tahun_pelajaran"
-                                                    name="tahun_pelajaran" placeholder="Tahun Pelajaran"
+                                                    name="tahun_pelajaran" placeholder="Academic Year"
                                                     value="{{ old('tahun_pelajaran') }}">
                                             </div>
                                         </div>
@@ -188,7 +187,7 @@
                                     <div class="modal-footer justify-content-end">
                                         <button type="button" class="btn btn-default"
                                             data-bs-dismiss="modal">Batal</button>
-                                        <button type="submit" class="btn btn-primary">Simpan</button>
+                                        <button type="submit" class="btn btn-primary">Save</button>
                                     </div>
                                 </form>
                             </div>
@@ -202,8 +201,8 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Tahun Pelajaran</th>
-                                        <th>Aksi</th>
+                                        <th>Academic Year</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -245,7 +244,7 @@
                                                                 <div class="col-sm-9">
                                                                     <input type="text" class="form-control"
                                                                         id="tahun_pelajaran" name="tahun_pelajaran"
-                                                                        placeholder="Tahun Pelajaran"
+                                                                        placeholder="Academic Year"
                                                                         value="{{ $tapel->tahun_pelajaran }}">
                                                                 </div>
                                                             </div>
@@ -253,7 +252,7 @@
                                                         <div class="modal-footer justify-content-end">
                                                             <button type="button" class="btn btn-default"
                                                                 data-bs-dismiss="modal">Batal</button>
-                                                            <button type="submit" class="btn btn-primary">Simpan</button>
+                                                            <button type="submit" class="btn btn-primary">Save</button>
                                                         </div>
                                                     </form>
 

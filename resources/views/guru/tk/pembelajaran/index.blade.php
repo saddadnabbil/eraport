@@ -66,13 +66,13 @@
                                     </div>
                                     <div class="modal-body">
                                         <div class="form-group row">
-                                            <label for="kelas_id" class="col-sm-2 col-form-label">Kelas</label>
+                                            <label for="kelas_id" class="col-sm-2 col-form-label">Class</label>
                                             <div class="col-sm-10">
                                                 <form action="{{ route('guru.tk.pembelajaran.settings') }}" method="POST">
                                                     @csrf
                                                     <select class="form-control form-select select2" name="kelas_id"
                                                         style="width: 100%;" required onchange="this.form.submit();">
-                                                        <option value="">-- Pilih Kelas --</option>
+                                                        <option value="">-- Select Class --</option>
                                                         @foreach ($data_kelas as $kelas)
                                                             <option value="{{ $kelas->id }}">
                                                                 {{ $kelas->nama_kelas }}
@@ -95,7 +95,7 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Tingkatan</th>
-                                            <th>Kelas</th>
+                                            <th>Class</th>
                                             <th>Topic</th>
                                             <th>Guru</th>
                                         </tr>

@@ -138,7 +138,7 @@
                                 </div>
 
                                 <div class="form-group row">
-                                    <label class="col-sm-2 col-form-label">Alamat </label>
+                                    <label class="col-sm-2 col-form-label">Address </label>
                                     <div class="col-sm-10">
                                         <textarea class="form-control" name="alamat" rows="2">{{ $guru->alamat }}</textarea>
                                     </div>
@@ -165,7 +165,7 @@
                                 </div>
                                 <div class="form-group row">
                                     <div class="offset-sm-2 col-sm-10">
-                                        <button type="submit" class="btn btn-primary">Simpan</button>
+                                        <button type="submit" class="btn btn-primary">Save</button>
                                         <a href="{{ route('gantipassword') }}" class="btn btn-danger">Change Password</a>
                                     </div>
                                 </div>

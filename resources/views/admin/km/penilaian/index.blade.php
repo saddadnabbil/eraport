@@ -21,7 +21,7 @@
                     'active' => true,
                 ],
                 [
-                    'title' => 'Penilaian',
+                    'title' => 'Grading',
                     'url' => route('km.penilaian.index'),
                     'active' => true,
                 ],
@@ -67,7 +67,7 @@
                                         <div class="col-sm-10">
                                             <select class="form-control form-select select2" name="pembelajaran_id"
                                                 style="width: 100%;" required onchange="this.form.submit();">
-                                                <option value="" disabled>-- Pilih Pembelajaran --</option>
+                                                <option value="" disabled>-- Select Learning Data --</option>
                                                 @foreach ($data_pembelajaran as $pembelajaran)
                                                     <option value="{{ $pembelajaran->id }}"
                                                         @if ($pembelajaran->id == $pembelajaran_id) selected @endif>
@@ -98,15 +98,15 @@
                                                 <th rowspan="2" colspan="1" class="text-center"
                                                     style="vertical-align: middle">No</th>
                                                 <th rowspan="2" colspan="1" class="text-center"
-                                                    style="vertical-align: middle">Nama Siswa</th>
+                                                    style="vertical-align: middle">Student Name</th>
                                                 <th colspan="{{ $count_cp_formatif }}" class="text-center" title
                                                     data-bs-toggle="tooltip" data-bs-html="true"
-                                                    data-bs-original-title="<b>Penilaian Formatif <br> Bobot: 70</br>">
+                                                    data-bs-original-title="<b>Grading Formatif <br> Bobot: 70</br>">
                                                     Formatif (F)
                                                 </th>
                                                 <th colspan="{{ $count_cp_sumatif }}" class="text-center" title
                                                     data-bs-toggle="tooltip" data-bs-html="true"
-                                                    data-bs-original-title="<b>Penilaian Sumatif <br> Bobot: 30</b>">Sumatif
+                                                    data-bs-original-title="<b>Grading Sumatif <br> Bobot: 30</b>">Sumatif
                                                     (S)
                                                 </th>
                                                 <th colspan="2" class="text-center">Nilai Raport</th>
@@ -125,7 +125,7 @@
                                                     </th>
                                                 @endforeach
                                                 <th class="text-center red" data-bs-toggle="tooltip" data-bs-html="true"
-                                                    data-bs-original-title="<b>Nilai Akhir Formatif</b>">NA
+                                                    data-bs-original-title="<b>Final Grade Formatif</b>">NA
                                                     (F)</th>
 
                                                 @foreach ($rencana_penilaian_data_sumatif as $rencana_penilaian_sumatif)
@@ -141,7 +141,7 @@
                                                     </th>
                                                 @endforeach
                                                 <th class="text-center red" data-bs-toggle="tooltip" data-bs-html="true"
-                                                    data-bs-original-title="<b>Nilai Akhir Sumulatif</b>">
+                                                    data-bs-original-title="<b>Final Grade Sumulatif</b>">
                                                     NA (S)</th>
 
                                                 <th class="text-center red" data-bs-toggle="tooltip" data-bs-html="true"
@@ -260,7 +260,7 @@
                                                 @endforeach
                                             @else
                                                 <tr>
-                                                    <td class="text-center" colspan="12">Data tidak tersedia.</td>
+                                                    <td class="text-center" colspan="12">Data not available.</td>
                                                 </tr>
                                             @endif
                                         </tbody>
@@ -291,7 +291,7 @@
 @push('custom-scripts')
     <script>
         $(document).ready(function() {
-            // Menghitung nilai akhir untuk setiap baris yang ada saat halaman dimuat
+            // Menghitung Final Grade untuk setiap baris yang ada saat halaman dimuat
             $('tbody tr').each(function() {
                 var row = $(this);
                 updateNilaiAkhirFormatif(row);
@@ -341,7 +341,7 @@
                 updateNilaiAkhirSumatif(row);
             });
 
-            // Fungsi untuk menghitung nilai akhir sumatif berdasarkan bobot
+            // Fungsi untuk menghitung Final Grade sumatif berdasarkan bobot
             function updateNilaiAkhirSumatif(row) {
                 var sum = 0;
                 var totalBobot = 0;

@@ -29,7 +29,7 @@ class RencanaNilaiSumatifController extends Controller
      */
     public function index()
     {
-        $title = 'Rencana Nilai Sumatif';
+        $title = 'Rencana Sumatif Grade';
         $tapel = Tapel::where('status', 1)->first();
         $user = Auth::user();
 
@@ -64,7 +64,7 @@ class RencanaNilaiSumatifController extends Controller
      */
     public function show($id)
     {
-        $title = 'Data Rencana Nilai Sumatif';
+        $title = 'Data Rencana Sumatif Grade';
         $user = Auth::user();
 
         if ($user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum'])) {
@@ -94,7 +94,7 @@ class RencanaNilaiSumatifController extends Controller
      */
     public function create(Request $request)
     {
-        $title = 'Tambah Rencana Nilai Sumatif';
+        $title = 'Tambah Rencana Sumatif Grade';
         $tapel = Tapel::where('status', 1)->first();
 
         $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
@@ -150,7 +150,7 @@ class RencanaNilaiSumatifController extends Controller
 
             $data_penilaian_permapel[] = $data_penilaian;
         }
-        return redirect(route('guru.km.rencanasumatif.index'))->with('toast_success', 'Rencana nilai Formatif berhasil disimpan.');
+        return redirect(route('guru.km.rencanasumatif.index'))->with('toast_success', 'Rencana Formatif Grade berhasil disimpan.');
     }
 
     public function update(Request $request, $id)
@@ -204,11 +204,11 @@ class RencanaNilaiSumatifController extends Controller
 
             DB::commit();
 
-            return redirect()->back()->with('success', 'Rencana Nilai Sumatif deleted successfully.');
+            return redirect()->back()->with('success', 'Rencana Sumatif Grade deleted successfully.');
         } catch (\Exception $e) {
             DB::rollback();
 
-            return redirect()->back()->with('error', 'Failed to delete Rencana Nilai Sumatif.');
+            return redirect()->back()->with('error', 'Failed to delete Rencana Sumatif Grade.');
         }
     }
 }

@@ -52,11 +52,11 @@
                                             <th>No</th>
                                             <th>NIS</th>
                                             <th>NISN</th>
-                                            <th>Nama Siswa</th>
+                                            <th>Student Name</th>
                                             <th>Tanggal Lahir</th>
                                             <th>L/P</th>
                                             <th>Pendaftaran</th>
-                                            <th>Aksi</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>

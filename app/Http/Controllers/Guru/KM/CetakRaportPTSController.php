@@ -143,7 +143,7 @@ class CetakRaportPTSController extends Controller
             $nilai_akhir_total[$pembelajaran_id]['term'] = $nilai['term'];
         }
 
-        // Nilai Akhir
+        // Final Grade
         // Membagi hasil jumlah nilai dengan 2 dan menambahkan predikat
         $nilai_akhir_total = array_map(function ($data) {
             // Interval KKM
