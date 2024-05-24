@@ -50,7 +50,7 @@
                 ],
                 [
                     'title' => 'Teacher Schedule',
-                    'url' => route('admin.jadwalpelajaran.index'),
+                    'url' => route('guru.jadwalpelajaran.index'),
                     'active' => true,
                 ],
                 [
@@ -78,7 +78,7 @@
                             <h3 class="card-title">{{ $title }}</h3>
                             <div class="card-tools">
                                 <div data-bs-toggle="tooltip" title="Print" class="d-inline-block" class="d-inline-block">
-                                    <a href="{{ route('admin.jadwalmengajar.print', $pembelajaran->id) }}"
+                                    <a href="{{ route('guru.jadwalmengajar.print', $pembelajaran->id) }}"
                                         class="btn btn-tool btn-sm">
                                         <i class="fas fa-download"></i>
                                     </a>

@@ -143,7 +143,7 @@
                                                     {{ optional($pengumuman->user->karyawan)->nama_lengkap ?? '' }}
                                                     -
                                                     {{ \Carbon\Carbon::parse($pengumuman->created_at)->diffForHumans() }}</span>
-                                                @if (Auth::user()->id == $pengumuman->user_id)
+                                                @if ($user->hasRole(['Admin', 'Curriculum']))
                                                     <form action="{{ route('pengumuman.destroy', $pengumuman->id) }}"
                                                         method="POST">
                                                         @csrf
@@ -159,45 +159,48 @@
                                                     </form>
                                                 @endif
                                             </div>
-                                            <!-- Modal edit  -->
-                                            <div class="modal fade" id="modal-edit{{ $pengumuman->id }}">
-                                                <div class="modal-dialog modal-xl">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title">Edit {{ $title }}</h5>
+                                            @if ($user->hasRole(['Admin', 'Curriculum']))
+                                                <!-- Modal edit  -->
+                                                <div class="modal fade" id="modal-edit{{ $pengumuman->id }}">
+                                                    <div class="modal-dialog modal-xl">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">Edit {{ $title }}</h5>
 
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                                aria-hidden="true"></button>
-                                                            </button>
+                                                                <button type="button" class="btn-close"
+                                                                    data-bs-dismiss="modal" aria-hidden="true"></button>
+                                                                </button>
+                                                            </div>
+                                                            <form
+                                                                action="{{ route('pengumuman.update', $pengumuman->id) }}"
+                                                                method="POST">
+                                                                {{ method_field('PATCH') }}
+                                                                @csrf
+                                                                <div class="modal-body">
+                                                                    <div class="form-group">
+                                                                        <label>Judul Pengumuman</label>
+                                                                        <input type="text" class="form-control"
+                                                                            name="judul" value="{{ $pengumuman->judul }}"
+                                                                            readonly>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label>Isi Pengumuman</label>
+                                                                        <textarea class="textarea" name="isi"
+                                                                            style="width: 100%; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 5px;" required>{!! $pengumuman->isi !!}</textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer justify-content-end">
+                                                                    <button type="button" class="btn btn-default"
+                                                                        data-bs-dismiss="modal">Batal</button>
+                                                                    <button type="submit"
+                                                                        class="btn btn-primary">Save</button>
+                                                                </div>
+                                                            </form>
                                                         </div>
-                                                        <form action="{{ route('pengumuman.update', $pengumuman->id) }}"
-                                                            method="POST">
-                                                            {{ method_field('PATCH') }}
-                                                            @csrf
-                                                            <div class="modal-body">
-                                                                <div class="form-group">
-                                                                    <label>Judul Pengumuman</label>
-                                                                    <input type="text" class="form-control"
-                                                                        name="judul" value="{{ $pengumuman->judul }}"
-                                                                        readonly>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <label>Isi Pengumuman</label>
-                                                                    <textarea class="textarea" name="isi"
-                                                                        style="width: 100%; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 5px;" required>{!! $pengumuman->isi !!}</textarea>
-                                                                </div>
-                                                            </div>
-                                                            <div class="modal-footer justify-content-end">
-                                                                <button type="button" class="btn btn-default"
-                                                                    data-bs-dismiss="modal">Batal</button>
-                                                                <button type="submit"
-                                                                    class="btn btn-primary">Save</button>
-                                                            </div>
-                                                        </form>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <!-- End Modal edit -->
+                                                <!-- End Modal edit -->
+                                            @endif
                                         </div>
                                     @endforeach
                                 </div>

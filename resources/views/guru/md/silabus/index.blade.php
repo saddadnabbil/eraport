@@ -64,7 +64,7 @@
                                                 aria-hidden="true"></button>
                                             </button>
                                         </div>
-                                        <form action="{{ route('admin.silabus.store') }}" method="POST"
+                                        <form action="{{ route('guru.silabus.store') }}" method="POST"
                                             enctype="multipart/form-data">
                                             @csrf
                                             <div class="modal-body">
@@ -195,41 +195,41 @@
                                                 <td>{{ $silabus->kelas->nama_kelas }}</td>
                                                 <td>
                                                     @if (isset($silabus->k_tigabelas))
-                                                        <a href="{{ route('admin.silabus.pdf.view', ['filename' => $silabus->k_tigabelas]) }}"
+                                                        <a href="{{ route('guru.silabus.pdf.view', ['filename' => $silabus->k_tigabelas]) }}"
                                                             class="badge bg-info badge-sm" target="_blank"><i
                                                                 class="nav-icon fas fa-download"></i> &nbsp; K13</a>
                                                     @endif
                                                     @if (isset($silabus->cambridge))
-                                                        <a href="{{ route('admin.silabus.pdf.view', ['filename' => $silabus->cambridge]) }}"
+                                                        <a href="{{ route('guru.silabus.pdf.view', ['filename' => $silabus->cambridge]) }}"
                                                             class="badge bg-info badge-sm" target="_blank"><i
                                                                 class="nav-icon fas fa-download"></i> &nbsp; Cambridge</a>
                                                     @endif
                                                     @if (isset($silabus->edexcel))
-                                                        <a href="{{ route('admin.silabus.pdf.view', ['filename' => $silabus->edexcel]) }}"
+                                                        <a href="{{ route('guru.silabus.pdf.view', ['filename' => $silabus->edexcel]) }}"
                                                             class="badge bg-info badge-sm" target="_blank"><i
                                                                 class="nav-icon fas fa-download"></i> &nbsp; Edexcel</a>
                                                     @endif
                                                 </td>
                                                 <td>
                                                     @if (isset($silabus->book_indo_siswa))
-                                                        <a href="{{ route('admin.silabus.pdf.view', ['filename' => $silabus->book_indo_siswa]) }}"
+                                                        <a href="{{ route('guru.silabus.pdf.view', ['filename' => $silabus->book_indo_siswa]) }}"
                                                             class="badge bg-info badge-sm" target="_blank"><i
                                                                 class="nav-icon fas fa-download"></i> &nbsp; Indonesian</a>
                                                     @endif
                                                     @if (isset($silabus->book_english_siswa))
-                                                        <a href="{{ route('admin.silabus.pdf.view', ['filename' => $silabus->book_english_siswa]) }}"
+                                                        <a href="{{ route('guru.silabus.pdf.view', ['filename' => $silabus->book_english_siswa]) }}"
                                                             class="badge bg-info badge-sm" target="_blank"><i
                                                                 class="nav-icon fas fa-download"></i> &nbsp; English</a>
                                                     @endif
                                                 </td>
                                                 <td>
                                                     @if (isset($silabus->book_indo_guru))
-                                                        <a href="{{ route('admin.silabus.pdf.view', ['filename' => $silabus->book_indo_guru]) }}"
+                                                        <a href="{{ route('guru.silabus.pdf.view', ['filename' => $silabus->book_indo_guru]) }}"
                                                             class="badge bg-info badge-sm" target="_blank"><i
                                                                 class="nav-icon fas fa-download"></i> &nbsp; Indonesian</a>
                                                     @endif
                                                     @if (isset($silabus->book_english_guru))
-                                                        <a href="{{ route('admin.silabus.pdf.view', ['filename' => $silabus->book_english_guru]) }}"
+                                                        <a href="{{ route('guru.silabus.pdf.view', ['filename' => $silabus->book_english_guru]) }}"
                                                             class="badge bg-info badge-sm" target="_blank"><i
                                                                 class="nav-icon fas fa-download"></i> &nbsp; English</a>
                                                     @endif
@@ -237,7 +237,7 @@
                                                 <td>
                                                     @if ($user->getRoleNames()->first() != 'Student')
                                                         <form id="deleteForm{{ $silabus->id }}"
-                                                            action="{{ route('admin.silabus.destroy', $silabus->id) }}"
+                                                            action="{{ route('guru.silabus.destroy', $silabus->id) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')
@@ -272,7 +272,7 @@
                                                                     </button>
                                                                 </div>
                                                                 <form
-                                                                    action="{{ route('admin.silabus.update', $silabus->id) }}"
+                                                                    action="{{ route('guru.silabus.update', $silabus->id) }}"
                                                                     method="POST" enctype="multipart/form-data">
                                                                     @csrf
                                                                     @method('PUT')
@@ -318,7 +318,7 @@
                                                                                     <i class="fas fa-trash-alt"></i> &nbsp;
                                                                                     delete k13
                                                                                 </a>
-                                                                                <a href="{{ route('admin.silabus.pdf.view', ['filename' => $silabus->k_tigabelas]) }}"
+                                                                                <a href="{{ route('guru.silabus.pdf.view', ['filename' => $silabus->k_tigabelas]) }}"
                                                                                     class="badge bg-info badge-sm"
                                                                                     target="_blank"><i
                                                                                         class="nav-icon fas fa-eye"></i>
@@ -344,7 +344,7 @@
                                                                                     <i class="fas fa-trash-alt"></i> &nbsp;
                                                                                     delete cambridge
                                                                                 </a>
-                                                                                <a href="{{ route('admin.silabus.pdf.view', ['filename' => $silabus->cambridge]) }}"
+                                                                                <a href="{{ route('guru.silabus.pdf.view', ['filename' => $silabus->cambridge]) }}"
                                                                                     class="badge bg-info badge-sm"
                                                                                     target="_blank"><i
                                                                                         class="nav-icon fas fa-eye"></i>
@@ -369,7 +369,7 @@
                                                                                     <i class="fas fa-trash-alt"></i> &nbsp;
                                                                                     delete edexcel
                                                                                 </a>
-                                                                                <a href="{{ route('admin.silabus.pdf.view', ['filename' => $silabus->edexcel]) }}"
+                                                                                <a href="{{ route('guru.silabus.pdf.view', ['filename' => $silabus->edexcel]) }}"
                                                                                     class="badge bg-info badge-sm"
                                                                                     target="_blank"><i
                                                                                         class="nav-icon fas fa-eye"></i>
@@ -396,7 +396,7 @@
                                                                                     <i class="fas fa-trash-alt"></i> &nbsp;
                                                                                     delete book_indo_siswa
                                                                                 </a>
-                                                                                <a href="{{ route('admin.silabus.pdf.view', ['filename' => $silabus->book_indo_siswa]) }}"
+                                                                                <a href="{{ route('guru.silabus.pdf.view', ['filename' => $silabus->book_indo_siswa]) }}"
                                                                                     class="badge bg-info badge-sm"
                                                                                     target="_blank"><i
                                                                                         class="nav-icon fas fa-eye"></i>
@@ -422,7 +422,7 @@
                                                                                     <i class="fas fa-trash-alt"></i> &nbsp;
                                                                                     delete book english siswa
                                                                                 </a>
-                                                                                <a href="{{ route('admin.silabus.pdf.view', ['filename' => $silabus->book_english_siswa]) }}"
+                                                                                <a href="{{ route('guru.silabus.pdf.view', ['filename' => $silabus->book_english_siswa]) }}"
                                                                                     class="badge bg-info badge-sm"
                                                                                     target="_blank"><i
                                                                                         class="nav-icon fas fa-eye"></i>
@@ -449,7 +449,7 @@
                                                                                     <i class="fas fa-trash-alt"></i> &nbsp;
                                                                                     delete book indo guru
                                                                                 </a>
-                                                                                <a href="{{ route('admin.silabus.pdf.view', ['filename' => $silabus->book_indo_guru]) }}"
+                                                                                <a href="{{ route('guru.silabus.pdf.view', ['filename' => $silabus->book_indo_guru]) }}"
                                                                                     class="badge bg-info badge-sm"
                                                                                     target="_blank"><i
                                                                                         class="nav-icon fas fa-eye"></i>
@@ -475,7 +475,7 @@
                                                                                     <i class="fas fa-trash-alt"></i> &nbsp;
                                                                                     delete book english guru
                                                                                 </a>
-                                                                                <a href="{{ route('admin.silabus.pdf.view', ['filename' => $silabus->book_english_guru]) }}"
+                                                                                <a href="{{ route('guru.silabus.pdf.view', ['filename' => $silabus->book_english_guru]) }}"
                                                                                     class="badge bg-info badge-sm"
                                                                                     target="_blank"><i
                                                                                         class="nav-icon fas fa-eye"></i>
@@ -625,7 +625,7 @@
 
                 function getSilabusData(id) {
                     $.ajax({
-                        url: "{{ route('admin.get.all.silabus', ':id') }}".replace(':id', id),
+                        url: "{{ route('guru.get.all.silabus', ':id') }}".replace(':id', id),
                         method: 'GET',
                         success: function(response) {
                             if (response.success) {
@@ -665,7 +665,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         // Make an AJAX request to the server to delete the file
-                        fetch(`{{ route('admin.silabus.destroyFile', ['id' => '__id__', 'fileType' => '__fileType__']) }}`
+                        fetch(`{{ route('guru.silabus.destroyFile', ['id' => '__id__', 'fileType' => '__fileType__']) }}`
                                 .replace('__id__', id)
                                 .replace('__fileType__', fileType), {
                                     method: 'DELETE',

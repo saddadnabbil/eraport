@@ -22,7 +22,7 @@
                 ],
                 [
                     'title' => $title,
-                    'url' => route('admin.sekolah.index'),
+                    'url' => route('guru.sekolah.index'),
                     'active' => false,
                 ],
             ],

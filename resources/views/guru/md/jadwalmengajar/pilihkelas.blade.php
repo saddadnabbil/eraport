@@ -45,7 +45,7 @@
 
                         <div class="card-body">
                             <div class="callout callout-info">
-                                <form action="{{ route('admin.jadwalmengajar.create') }}" method="GET">
+                                <form action="{{ route('guru.jadwalmengajar.create') }}" method="GET">
                                     @csrf
 
                                     <div class="form-group row">

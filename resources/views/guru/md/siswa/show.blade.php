@@ -17,12 +17,12 @@
             'breadcrumbs' => [
                 [
                     'title' => 'Dashboard',
-                    'url' => route('admin.dashboard'),
+                    'url' => route('guru.dashboard'),
                     'active' => true,
                 ],
                 [
                     'title' => $title,
-                    'url' => route('admin.tapel.index'),
+                    'url' => route('guru.tapel.index'),
                     'active' => false,
                 ],
             ],

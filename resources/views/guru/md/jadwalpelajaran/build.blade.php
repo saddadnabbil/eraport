@@ -22,12 +22,12 @@
                 ],
                 [
                     'title' => 'Timetable',
-                    'url' => route('admin.jadwalpelajaran.index'),
+                    'url' => route('guru.jadwalpelajaran.index'),
                     'active' => true,
                 ],
                 [
                     'title' => $title,
-                    'url' => route('admin.jadwalpelajaran.index'),
+                    'url' => route('guru.jadwalpelajaran.index'),
                     'active' => false,
                 ],
             ],
@@ -55,14 +55,14 @@
                                         </a>
                                     </div>
                                     <div data-bs-toggle="tooltip" data-bs-original-title="Show">
-                                        <a href="{{ route('admin.jadwalpelajaran.show', $kelas->id) }}"
+                                        <a href="{{ route('guru.jadwalpelajaran.show', $kelas->id) }}"
                                             class="btn btn-tool btn-sm">
                                             <i class="fas fa-eye"></i>
                                         </a>
                                     </div>
                                     <div data-bs-toggle="tooltip" title="Print" class="d-inline-block"
                                         class="d-inline-block">
-                                        <a href="{{ route('admin.jadwalpelajaran.print', $kelas->id) }}"
+                                        <a href="{{ route('guru.jadwalpelajaran.print', $kelas->id) }}"
                                             class="btn btn-tool btn-sm">
                                             <i class="fas fa-download"></i>
                                         </a>
@@ -73,7 +73,7 @@
 
                         <div class="card-body">
                             <div class="table-responsive">
-                                <form action="{{ route('admin.jadwalpelajaran.store') }}" method="POST">
+                                <form action="{{ route('guru.jadwalpelajaran.store') }}" method="POST">
                                     @csrf
                                     <input type="hidden" name="kelas_id" value="{{ $kelas->id }}">
                                     <div class="beautify-scrollbar">

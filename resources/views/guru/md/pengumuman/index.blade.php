@@ -23,7 +23,7 @@
                 ],
                 [
                     'title' => $title,
-                    'url' => route('admin.pengumuman.index'),
+                    'url' => route('guru.pengumuman.index'),
                     'active' => false,
                 ],
             ],
@@ -61,7 +61,7 @@
                                             aria-hidden="true"></button>
                                         </button>
                                     </div>
-                                    <form action="{{ route('admin.pengumuman.store') }}" method="POST">
+                                    <form action="{{ route('guru.pengumuman.store') }}" method="POST">
                                         @csrf
                                         <div class="modal-body">
                                             <div class="form-group">
@@ -110,7 +110,6 @@
                                                     class="font-weight-light font-14 mb-1 d-block text-muted">{{ $pengumuman->user->karyawan->nama_lengkap }}
                                                     -
                                                     {{ \Carbon\Carbon::parse($pengumuman->created_at)->diffForHumans() }}</span>
-                                                @if (Auth::user()->id == $pengumuman->user_id)
                                                     @include('components.actions.delete-button', [
                                                         'route' => route(
                                                             'admin.pengumuman.destroy',
@@ -120,7 +119,6 @@
                                                         'withEdit' => true,
                                                         'withShow' => false,
                                                     ])
-                                                @endif
                                             </div>
                                             <!-- Modal edit  -->
                                             <div class="modal fade" id="modal-edit{{ $pengumuman->id }}">
@@ -134,7 +132,7 @@
                                                             </button>
                                                         </div>
                                                         <form
-                                                            action="{{ route('admin.pengumuman.update', $pengumuman->id) }}"
+                                                            action="{{ route('guru.pengumuman.update', $pengumuman->id) }}"
                                                             method="POST">
                                                             {{ method_field('PATCH') }}
                                                             @csrf

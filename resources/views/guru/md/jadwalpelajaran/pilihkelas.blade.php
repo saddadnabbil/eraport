@@ -45,7 +45,7 @@
 
                         <div class="card-body">
                             <div class="callout callout-info">
-                                <form action="{{ route('admin.jadwalpelajaran.create') }}" method="GET">
+                                <form action="{{ route('guru.jadwalpelajaran.create') }}" method="GET">
                                     @csrf
                                     <div class="form-group row">
                                         <label for="pembelajaran_id" class="col-sm-3 col-form-label">Class</label>

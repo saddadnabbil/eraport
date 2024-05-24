@@ -22,12 +22,12 @@
                 ],
                 [
                     'title' => 'Timetable',
-                    'url' => route('admin.jadwalpelajaran.index'),
+                    'url' => route('guru.jadwalpelajaran.index'),
                     'active' => true,
                 ],
                 [
                     'title' => $title,
-                    'url' => route('admin.jadwalpelajaran.index'),
+                    'url' => route('guru.jadwalpelajaran.index'),
                     'active' => false,
                 ],
             ],

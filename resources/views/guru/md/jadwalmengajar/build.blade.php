@@ -22,12 +22,12 @@
                 ],
                 [
                     'title' => 'Timetable Teacher',
-                    'url' => route('admin.jadwalmengajar.index'),
+                    'url' => route('guru.jadwalmengajar.index'),
                     'active' => true,
                 ],
                 [
                     'title' => $title,
-                    'url' => route('admin.jadwalmengajar.index'),
+                    'url' => route('guru.jadwalmengajar.index'),
                     'active' => false,
                 ],
             ],
@@ -60,14 +60,14 @@
                                 <div class="card-tools">
                                     <div class="d-flex justify-content-end gap-3">
                                         <div data-bs-toggle="tooltip" data-bs-original-title="Show">
-                                            <a href="{{ route('admin.jadwalmengajar.show', $pembelajaran->id) }}"
+                                            <a href="{{ route('guru.jadwalmengajar.show', $pembelajaran->id) }}"
                                                 class="btn btn-tool btn-sm">
                                                 <i class="fas fa-eye"></i>
                                             </a>
                                         </div>
                                         <div data-bs-toggle="tooltip" title="Print" class="d-inline-block"
                                             class="d-inline-block">
-                                            <a href="{{ route('admin.jadwalmengajar.print', $pembelajaran->id) }}"
+                                            <a href="{{ route('guru.jadwalmengajar.print', $pembelajaran->id) }}"
                                                 class="btn btn-tool btn-sm">
                                                 <i class="fas fa-download"></i>
                                             </a>
@@ -78,7 +78,7 @@
 
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <form action="{{ route('admin.jadwalmengajar.store') }}" method="POST">
+                                    <form action="{{ route('guru.jadwalmengajar.store') }}" method="POST">
                                         @csrf
                                         <input type="hidden" name="guru_id" value="{{ $guru->id }}">
                                         <input type="hidden" name="mapel_id" value="{{ $pembelajaran->mapel_id }}">
