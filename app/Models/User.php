@@ -19,18 +19,14 @@ class User extends Authenticatable
      * @var array
      */
     protected $table = 'user';
-    protected $fillable = [
-        'username', 'password', 'status',
-    ];
+    protected $fillable = ['username', 'password', 'status'];
 
     /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
      */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+    protected $hidden = ['password', 'remember_token'];
 
     /**
      * The attributes that should be cast to native types.
@@ -71,7 +67,6 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Pengumuman');
     }
 
-
     protected static function boot()
     {
         parent::boot();
@@ -84,7 +79,6 @@ class User extends Authenticatable
             $user->siswa?->restore();
         });
     }
-
 
     /**
      * Trash the User record.
@@ -99,7 +93,7 @@ class User extends Authenticatable
         $this->restore();
 
         $this->update([
-            'status' => 1
+            'status' => 1,
         ]);
 
         switch ($this->getRoleNames()->first()) {
@@ -112,9 +106,14 @@ class User extends Authenticatable
             case 'Teacher':
                 $this->siswa()->withTrashed()->restore();
                 $this->siswa()->update([
-                    'status' => 1
+                    'status' => 1,
                 ]);
                 break;
         }
+    }
+
+    public function getRoleId()
+    {
+        return $this->roles()->first()->id;
     }
 }

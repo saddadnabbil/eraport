@@ -10,9 +10,10 @@ use App\Models\Tapel;
 use App\Models\Karyawan;
 use App\Models\Tingkatan;
 use App\Models\UnitKaryawan;
+use Illuminate\Http\Request;
 use App\Models\StatusKaryawan;
 use App\Models\PositionKaryawan;
-use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
 
 class ProfileUserController extends Controller
@@ -31,15 +32,17 @@ class ProfileUserController extends Controller
             $dataStatusKaryawan = StatusKaryawan::all();
             $dataUnitKaryawan = UnitKaryawan::all();
             $dataPositionKaryawan = PositionKaryawan::all();
+            $dataRoles = Role::get();
 
-            return view('admin.profile.show', compact('title', 'karyawan', 'dataStatusKaryawan', 'dataUnitKaryawan', 'dataPositionKaryawan'));
+            return view('admin.karyawan.employee.show', compact('title', 'karyawan', 'dataStatusKaryawan', 'dataUnitKaryawan', 'dataPositionKaryawan', 'dataRoles'));
         } elseif ($user->hasRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum'])) {
             $karyawan = Karyawan::where('user_id', Auth::user()->id)->first();
             $dataStatusKaryawan = StatusKaryawan::all();
             $dataUnitKaryawan = UnitKaryawan::all();
             $dataPositionKaryawan = PositionKaryawan::all();
+            $dataRoles = Role::get();
 
-            return view('guru.profile.show', compact('title', 'karyawan', 'dataStatusKaryawan', 'dataUnitKaryawan', 'dataPositionKaryawan'));
+            return view('guru.profile.show', compact('title', 'karyawan', 'dataStatusKaryawan', 'dataUnitKaryawan', 'dataPositionKaryawan', 'dataRoles'));
         } elseif ($user->hasRole('Student')) {
             $siswa = Siswa::where('user_id', Auth::user()->id)->first();
             $tapel = Tapel::where('status', 1)->first();

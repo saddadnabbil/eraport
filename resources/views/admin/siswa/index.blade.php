@@ -317,7 +317,7 @@
                                                                 <div class="col-sm-9">
                                                                     <input type="text" class="form-control"
                                                                         id="nik" name="nik" placeholder="NIK"
-                                                                        value="{{ old('nik') }}" required>
+                                                                        value="{{ old('nik') }}" minlength="16" maxlength="16" required>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">

@@ -19,27 +19,49 @@
                       <div class="row">
                           <div class="col-lg-12">
                               <div class="form-group mb-3">
-                                  <input class="form-control" id="password_lama" name="password_lama" type="password"
-                                      placeholder="old password">
+                                  <input class="form-control @error('password_lama') is-invalid @enderror"
+                                      id="password_lama" name="password_lama" type="password" placeholder="old password"
+                                      required>
+                                  @error('password_lama')
+                                      <div class="invalid-feedback">
+                                          {{ $message }}
+                                      </div>
+                                  @enderror
                               </div>
                           </div>
                           <div class="col-lg-12">
                               <div class="form-group mb-3">
-                                  <input class="form-control" id="pwd" name="password_baru" type="password"
-                                      placeholder="new password">
+                                  <input class="form-control @error('password_baru') is-invalid @enderror"
+                                      id="password_baru" name="password_baru" type="password" placeholder="new password"
+                                      required>
+                                  @error('password_baru')
+                                      <div class="invalid-feedback">
+                                          {{ $message }}
+                                      </div>
+                                  @enderror
                               </div>
                           </div>
                           <div class="col-lg-12">
                               <div class="form-group mb-3">
-                                  <input class="form-control" id="pwd" name="konfirmasi_password" type="password"
-                                      placeholder="confirm password">
+                                  <input class="form-control @error('konfirmasi_password') is-invalid @enderror"
+                                      id="konfirmasi_password" name="konfirmasi_password" type="password"
+                                      placeholder="confirm password" required>
+                                  @error('konfirmasi_password')
+                                      <div class="invalid-feedback">
+                                          {{ $message }}
+                                      </div>
+                                  @enderror
                               </div>
                           </div>
-                          <div class="col-lg-12 text-center">
-                              <button type="submit" class="btn w-100 btn-dark">Change Password</button>
+                          <div class="col-lg-6 text-center">
+                              <a href="{{ route('login') }}" class="btn w-100 btn-primary">Cancel</a>
+                          </div>
+                          <div class="col-lg-6 text-center">
+                              <button type="submit" class="btn w-100 btn-danger">Submit</button>
                           </div>
                       </div>
                   </form>
+
               </div>
           </div>
       </div>

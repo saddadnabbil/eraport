@@ -15,6 +15,14 @@
                 </div>
                 <h2 class="mt-3 text-center font-18 mb-3">Sign In</h2>
 
+
+                @error('username')
+                    <div class="alert alert-danger alert-dismissible fade show text-sm" role="alert">
+                        <p>There is no account matching that username/password</p>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @enderror
+
                 <form method="post" action="{{ route('login') }}">
                     @csrf
                     <div class="row">

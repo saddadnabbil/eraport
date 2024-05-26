@@ -321,8 +321,13 @@
                                                     }
                                                 @endphp
                                             @endif
-                                            <img src="{{ asset('assets/dist/img/avatar/' . $avatar) }}" alt="Avatar"
-                                                class="img-size-50">
+                                            @if ($riwayat_login->user->karyawan->avatar != null)
+                                                <img src="{{ asset('assets/dist/img/avatar/' . $riwayat_login->user->karyawan->avatar) }}"
+                                                    alt="Avatar" class="img-size-50">
+                                            @else 
+                                                <img src="{{ asset('assets/dist/img/avatar/default.png') }}"
+                                                    alt="Avatar" class="img-size-50">
+                                            @endif
                                         </div>
 
                                         <div class="product-info">

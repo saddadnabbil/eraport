@@ -7,94 +7,51 @@ use App\Models\User;
 use App\Models\Karyawan;
 use Illuminate\Http\Request;
 use App\Rules\MatchOldPassword;
+use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\UpdateKaryawanRequest;
 
 class ProfileController extends Controller
 {
-    public function update(Request $request, $id)
+    public function update(UpdateKaryawanRequest $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'nama_lengkap' => 'required|string|max:255',
-            'nik' => 'required|string|size:16',
-            'nomor_akun' => 'nullable|string|max:255',
-            'nomor_fingerprint' => 'required|integer',
-            'nomor_taxpayer' => 'nullable|string|max:255',
-            'nama_taxpayer' => 'nullable|string|max:255',
-            'nomor_bpjs_ketenagakerjaan' => 'nullable|string|max:255',
-            'iuran_bpjs_ketenagakerjaan' => 'nullable|string|max:255',
-            'nomor_bpjs_yayasan' => 'nullable|string|max:255',
-            'nomor_bpjs_pribadi' => 'nullable|string|max:255',
-            'jenis_kelamin' => 'required|in:MALE,FEMALE',
-            'agama' => 'required|in:1,2,3,4,5,6,7',
-            'tempat_lahir' => 'required|string|max:50',
-            'tanggal_lahir' => 'required|date',
-            'alamat' => 'nullable|string',
-            'alamat_sekarang' => 'nullable|string',
-            'kota' => 'nullable|string',
-            'kode_pos' => 'nullable|integer',
-            'nomor_phone' => 'nullable|string',
-            'nomor_hp' => 'required|string',
-            'email' => 'required|email',
-            'email_sekolah' => 'nullable|email',
-            'warga_negara' => 'nullable|string',
-            'status_pernikahan' => 'nullable|string',
-            'nama_pasangan' => 'nullable|string|max:255',
-            'jumlah_anak' => 'nullable|string|max:255',
-            'keterangan' => 'nullable|string',
-            'pas_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'photo_kartu_identitas' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'photo_taxpayer' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'photo_kk' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'other_document' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
-        if ($validator->fails()) {
-            return back()
-                ->with('toast_error', $validator->messages()->all()[0])
-                ->withInput();
-        }
-
         // Find the Karyawan instance by ID
         $karyawan = Karyawan::findOrFail($id);
 
-        if ($request->username != $karyawan->user->username) {
-            // check username
-            $user = User::where('username', $request->username)->first();
-            if (!$user) {
-                $validator = Validator::make($request->all(), [
-                    'username' => 'required|unique:users,username,' . $karyawan->user->id,
-                ]);
-                if ($validator->fails()) {
-                    return back()
-                        ->with('toast_error', $validator->messages()->all()[0])
-                        ->withInput();
-                }
+        $user = User::findOrFail($karyawan->user_id);
 
-                $karyawan->user->update([
-                    'username' => $request->username,
-                ]);
-            } else {
-                return back()->with('toast_error', 'Username ' . $request->username . ' sudah ada, silahkan gunakan username lain');
-            }
+        $user->username = $request->username;
+
+        if ($request->password_baru && $request->password_lama) {
+            $user->password = Hash::make($request->password_baru);
+        }
+        $user->save();
+
+        // Mengupdate role
+        if ($request->has('role')) {
+            $roles = Role::whereIn('id', $request->role)->get();
+            $user->syncRoles($roles);
+        } else {
+            $user->syncRoles([]);
         }
 
-        if ($request->old_password && $request->new_password) {
-            $validator = Validator::make($request->all(), [
-                'old_password' => ['required', new MatchOldPassword()],
-                'new_password' => ['required', 'min:8'],
-            ]);
-            if ($validator->fails()) {
-                return back()
-                    ->with('toast_error', $validator->messages()->all()[0])
-                    ->withInput();
-            }
-            $karyawan->user->update([
-                'password' => bcrypt($request->new_password),
-            ]);
-        }
+        // Mengupdate status
+        $karyawan->user->status = $request->status;
+        $karyawan->user->save();
 
         // Update the Karyawan instance with the new request data
         $karyawan->update([
+            'user_id' => $user->id,
+            'status_karyawan_id' => $request->status_karyawan_id,
+            'unit_karyawan_id' => $request->unit_karyawan_id,
+            'position_karyawan_id' => $request->position_karyawan_id,
+            'resign_date' => $request->resign_date,
+            'join_date' => $request->join_date,
+            'permanent_date' => $request->permanent_date,
+            'kode_karyawan' => $request->kode_karyawan,
             'nama_lengkap' => $request->nama_lengkap,
             'nik' => $request->nik,
             'nomor_akun' => $request->nomor_akun,

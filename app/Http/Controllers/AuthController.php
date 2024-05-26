@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Guru;
 use App\Models\Term;
 use App\Models\User;
@@ -9,13 +10,14 @@ use App\Models\Kelas;
 use App\Models\Tapel;
 use App\Models\Sekolah;
 use App\Models\Semester;
-use Carbon\Carbon;
 use App\Models\RiwayatLogin;
 use Illuminate\Http\Request;
 use App\Rules\MatchOldPassword;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
+use App\Http\Requests\StoreAuthRequest;
+use App\Http\Requests\UpdateAuthRequest;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -39,7 +41,7 @@ class AuthController extends Controller
 
         $data_tapel = Tapel::orderBy('id', 'DESC')->get();
         if (count($data_tapel) == 0) {
-            $title = 'Setting Academic Year';
+            $title = 'Setting Tahun Pelajaran';
             return view('auth.setting_tapel', compact('title'));
         } else {
             $title = 'Login';
@@ -83,18 +85,8 @@ class AuthController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreAuthRequest $request)
     {
-        // Validate the login form
-        $validator = Validator::make($request->all(), [
-            'username' => 'required|exists:user,username',
-            'password' => 'required',
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->back()->with('toast_error', $validator->errors()->first())->withInput();
-        }
-
         $credentials = $request->only('username', 'password');
 
         if (Auth::attempt($credentials, $request->remember)) {
@@ -112,18 +104,18 @@ class AuthController extends Controller
             $this->handleGuruSession();
 
             if (Auth::user()->hasAnyRole(['Admin'])) {
-                return redirect()->route('admin.dashboard')->with('toast_success', 'Login berhasil');
+                return redirect()->route('admin.dashboard')->with('toast_success', 'Login successful');
             } elseif (Auth::user()->hasRole('Curriculum') && !Auth::user()->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG'])) {
-                return redirect()->route('curriculum.dashboard')->with('toast_success', 'Login berhasil');
+                return redirect()->route('curriculum.dashboard')->with('toast_success', 'Login successful');
             } elseif (Auth::user()->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum'])) {
-                return redirect()->route('guru.dashboard')->with('toast_success', 'Login berhasil');
+                return redirect()->route('guru.dashboard')->with('toast_success', 'Login successful');
             } elseif (Auth::user()->hasRole('Student')) {
-                return redirect()->route('siswa.dashboard')->with('toast_success', 'Login berhasil');
+                return redirect()->route('siswa.dashboard')->with('toast_success', 'Login successful');
             } else {
-                return redirect()->back()->with('toast_error', 'Belum terverifikasi.')->withInput();
+                return redirect()->back()->with('toast_error', 'Please contact your administrator')->withInput();
             }
         } else {
-            return redirect()->back()->with('toast_error', 'Kombinasi username dan password tidak valid.')->withInput();
+            return redirect()->back()->with('toast_error', 'There is no account matching that username/password.')->withInput();
         }
     }
 
@@ -159,8 +151,12 @@ class AuthController extends Controller
                 ]);
             }
 
-            $cek_wali_kelas = Kelas::where('guru_id', $guru->id)->whereNotIn('tingkatan_id', [1, 2, 3])->first();
-            $cek_wali_kelas_tk = Kelas::where('guru_id', $guru->id)->whereIn('tingkatan_id', [1, 2, 3])->get();
+            $cek_wali_kelas = Kelas::where('guru_id', $guru->id)
+                ->whereNotIn('tingkatan_id', [1, 2, 3])
+                ->first();
+            $cek_wali_kelas_tk = Kelas::where('guru_id', $guru->id)
+                ->whereIn('tingkatan_id', [1, 2, 3])
+                ->get();
 
             if ($cek_wali_kelas) {
                 session([
@@ -187,7 +183,7 @@ class AuthController extends Controller
 
         $request->session()->flush();
         Auth::logout();
-        return redirect('/')->with('toast_success', 'Logout berhasil');
+        return redirect('/')->with('toast_success', 'Logout successful');
     }
 
     public function view_ganti_password()
@@ -196,28 +192,16 @@ class AuthController extends Controller
         return view('auth.ganti_password', compact('title'));
     }
 
-    public function ganti_password(Request $request)
+    public function ganti_password(UpdateAuthRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'password_lama' => ['required', new MatchOldPassword()],
-            'password_baru' => 'required|min:6',
-            'konfirmasi_password' => 'required|same:password_baru',
-        ]);
-
-        if ($validator->fails()) {
-            return back()
-                ->with('toast_error', $validator->messages()->all()[0])
-                ->withInput();
-        } else {
-            $user = User::findorfail(Auth::id());
-            $data = [
-                'password' => bcrypt($request->password_baru),
-            ];
-            $user->update($data);
-            RiwayatLogin::where('user_id', Auth::id())->update(['status_login' => false]);
-            Auth::logout();
-            return redirect('/')->with('toast_success', 'Password berhasil diganti, silahkan login !');
-        }
+        $user = User::findorfail(Auth::id());
+        $data = [
+            'password' => bcrypt($request->password_baru),
+        ];
+        $user->update($data);
+        RiwayatLogin::where('user_id', Auth::id())->update(['status_login' => false]);
+        Auth::logout();
+        return redirect('/')->with('toast_success', 'Password has been changed successfully, please log in!');
     }
 
     public function admin_ganti_password(Request $request)
@@ -240,7 +224,7 @@ class AuthController extends Controller
             $user->update($data);
             RiwayatLogin::where('user_id', Auth::id())->update(['status_login' => false]);
             Auth::logout();
-            return redirect('/')->with('toast_success', 'Password berhasil diganti, silahkan login !');
+            return redirect('/')->with('toast_success', 'Password has been changed successfully, please log in!');
         }
     }
 
