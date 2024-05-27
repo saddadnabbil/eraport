@@ -24,7 +24,7 @@ class AnggotaKelasTableSeeder extends Seeder
         AnggotaKelas::create([
             'siswa_id' => 2,
             'tapel_id' => 1,
-            'kelas_id' => 1,
+            'kelas_id' => 24,
             'pendaftaran' => 1
         ]);
 

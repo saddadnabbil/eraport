@@ -395,8 +395,8 @@
                                                                     <div class="form-group">
                                                                         <label>Judul Pengumuman</label>
                                                                         <input type="text" class="form-control"
-                                                                            name="judul" value="{{ $pengumuman->judul }}"
-                                                                            readonly>
+                                                                            name="judul"
+                                                                            value="{{ $pengumuman->judul }}" readonly>
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label>Isi Pengumuman</label>
@@ -414,7 +414,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            <!-- End Modal edit -->
+                                                <!-- End Modal edit -->
                                             @endif
                                         </div>
                                     @endforeach
@@ -453,13 +453,8 @@
                                                     }
                                                 @endphp
                                             @endif
-                                            @if ($riwayat_login->user->karyawan->avatar != null)
-                                                <img src="{{ asset('assets/dist/img/avatar/' . $riwayat_login->user->karyawan->avatar) }}"
-                                                    alt="Avatar" class="img-size-50">
-                                            @else 
-                                                <img src="{{ asset('assets/dist/img/avatar/default.png') }}"
-                                                    alt="Avatar" class="img-size-50">
-                                            @endif
+                                            <img src="{{ asset('assets/dist/img/avatar/' . $avatar) }}" alt="Avatar"
+                                                class="img-size-50">
                                         </div>
 
                                         <div class="product-info">

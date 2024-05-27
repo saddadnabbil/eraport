@@ -24,12 +24,12 @@ class RekapKehadiranController extends Controller
         $siswa = Siswa::where('user_id', Auth::user()->id)->first();
         $tapel = Tapel::where('status', 1)->first();
 
-        $data_id_kelas = Kelas::where('tapel_id', $tapel->id)->pluck('id');
+        // $data_id_kelas = Kelas::where('tapel_id', $tapel->id)->where('id', $siswa->anggota_kelas->kelas_id)->pluck('id');
 
-        $anggota_kelas = AnggotaKelas::whereIn('kelas_id', $data_id_kelas)
+        $anggota_kelas = AnggotaKelas::where('kelas_id', $siswa->kelas_id)
             ->orderBy('id', 'DESC')
             ->whereHas('siswa', function ($query) {
-                $query->where('status', 1);
+                $query->where('status', 1)->where('id', Auth::user()->siswa->id);
             })
             ->get();
 

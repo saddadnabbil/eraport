@@ -90,7 +90,7 @@ class SiswaTableSeeder extends Seeder
 
         Siswa::create([
             'user_id' => 3,
-            'kelas_id' => 1,
+            'kelas_id' => 24,
             'tingkatan_id' => 1,
             'jurusan_id' => 3,
             'jenis_pendaftaran' => '1',
