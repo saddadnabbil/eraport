@@ -8,7 +8,7 @@
             $checkRouteTKReport = request()->routeIs('tk.raport.*');
             $dynamicRouteTKReport = route('tk.raport.index');
             break;
-        case 'Teacher':
+        case 'Teacher PG-KG' or 'Co-Teacher PG-KG':
             $allowedRoutes = ['guru.tk.raport*', 'guru.tk.raport*'];
 
             $checkRouteTKReport = request()->routeIs('guru.tk.raport*');

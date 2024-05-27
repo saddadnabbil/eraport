@@ -282,14 +282,25 @@
                                     <li class="item">
 
                                         <div class="product-img">
-                                            @if ($riwayat_login->user->hasRole(['Admin', 'Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Curriculum']))
-                                                )
-                                                <img src="{{ asset('assets/dist/img/avatar/' . ($riwayat_login->user->karyawan->avatar ?? 'default.png')) }}"
-                                                    alt="Avatar" class="img-size-50">
+                                            @if ($riwayat_login->user->hasRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Curriculum']))
+                                                @php
+                                                    if ($riwayat_login->user->karyawan->avatar == null) {
+                                                        $avatar = 'default.png';
+                                                    } else {
+                                                        $avatar = $riwayat_login->user->karyawan->avatar;
+                                                    }
+                                                @endphp
                                             @elseif($riwayat_login->user->hasRole('Student'))
-                                                <img src="{{ asset('assets/dist/img/avatar/' . ($riwayat_login->user->siswa->avatar ?? 'default.png')) }}"
-                                                    alt="Avatar" class="img-size-50">
+                                                @php
+                                                    if ($riwayat_login->user->siswa->avatar == null) {
+                                                        $avatar = 'default.png';
+                                                    } else {
+                                                        $avatar = $riwayat_login->user->siswa->avatar;
+                                                    }
+                                                @endphp
                                             @endif
+                                            <img src="{{ asset('assets/dist/img/avatar/' . $avatar) }}" alt="Avatar"
+                                                class="img-size-50">
                                         </div>
 
                                         <div class="product-info">
@@ -309,9 +320,7 @@
                                             </a>
 
                                             <span class="product-description">
-                                                @if ($riwayat_login->user->hasRole('Admin'))
-                                                    Administrator
-                                                @elseif($riwayat_login->user->hasRole('Teacher'))
+                                                @if ($riwayat_login->user->hasRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum']))
                                                     Guru
                                                 @elseif($riwayat_login->user->hasRole('Student'))
                                                     Siswa

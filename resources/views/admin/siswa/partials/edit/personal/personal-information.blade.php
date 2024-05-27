@@ -5,29 +5,42 @@
             <div class="form-group row">
                 <label for="nik" class="col-sm-3 col-form-label required">NIK</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" id="nik" name="nik" placeholder="NIK"
-                        value="{{ $siswa->nik }}" required>
+                    <input type="text" class="form-control @error('nik') is-invalid @enderror" id="nik"
+                        name="nik" placeholder="NIK" value="{{ $siswa->nik }}" required>
+                    @error('nik')
+                        <span class="invalid-feedback">{{ $message }}
+                        </span>
+                    @enderror
                 </div>
             </div>
 
             <div class="form-group row">
                 <label for="nis" class="col-sm-3 col-form-label required">NIS</label>
                 <div class="col-sm-3">
-                    <input type="number" class="form-control" id="nis" name="nis" placeholder="NIS"
-                        value="{{ $siswa->nis }}" required>
+                    <input type="number" class="form-control @error('nis') is-invalid @enderror" id="nis"
+                        name="nis" placeholder="NIS" value="{{ $siswa->nis }}" required>
+                    @error('nis')
+                        <span class="invalid-feedback">{{ $message }}
+                        </span>
+                    @enderror
                 </div>
                 <label for="nisn" class="col-sm-2 col-form-label">NISN</label>
                 <div class="col-sm-4">
-                    <input type="number" class="form-control" id="nisn" name="nisn" placeholder="NISN"
-                        value="{{ $siswa->nisn }}">
+                    <input type="number" class="form-control @error('nisn') is-invalid @enderror" id="nisn"
+                        name="nisn" placeholder="NISN" value="{{ $siswa->nisn }}">
+                    @error('nisn')
+                        <span class="invalid-feedback">{{ $message }}
+                        </span>
+                    @enderror
                 </div>
             </div>
 
             <div class="form-group row">
                 <label for="nama_lengkap" class="col-sm-3 col-form-label required">Student Name</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap"
-                        placeholder="Student Name" value="{{ $siswa->nama_lengkap }}" required>
+                    <input type="text" class="form-control @error('nama_lengkap') is-invalid @enderror"
+                        id="nama_lengkap" name="nama_lengkap" placeholder="Student Name"
+                        value="{{ $siswa->nama_lengkap }}" required>
                 </div>
             </div>
 
@@ -42,7 +55,7 @@
             <div class="form-group row">
                 <label class=" col-sm-3 col-form-label required">Tingkatan</label>
                 <div class="col-sm-3">
-                    <select class="form-control form-select" id="kelas" name="tingkatan_id" required>
+                    <select class="form-control form-select select2" id="kelas" name="tingkatan_id" required>
                         <option value="">-- Pilih Tingkatan --</option>
                         @foreach ($data_tingkatan as $tingkatan)
                             <option value="{{ $tingkatan->id }}" @if ($tingkatan->id == $siswa->tingkatan_id) selected @endif>
@@ -52,13 +65,12 @@
                 </div>
                 <label class="col-sm-2 col-form-label required">Class</label>
                 <div class="col-sm-4">
-                    <select class="form-control form-select" id="kelas_id" name="kelas_id" required>
+                    <select class="form-control form-select select2" id="kelas_id" name="kelas_id" required>
                         <option value="">-- Select Class --</option>
-                        @if ($siswa->kelas)
-                            <option value="{{ $siswa->kelas->id }}" selected>
-                                {{ $siswa->kelas->nama_kelas }}
-                            </option>
-                        @endif
+                        @foreach ($data_kelas as $kelas)
+                            <option value="{{ $kelas->id }}" @if ($kelas->id == $siswa->kelas_id) selected @endif>
+                                {{ $kelas->nama_kelas }}</option>
+                        @endforeach
                     </select>
                 </div>
             </div>
@@ -81,13 +93,12 @@
 
                 <label class="col-sm-2 col-form-label required">Jurusan</label>
                 <div class="col-sm-4">
-                    <select class="form-control form-select" id="jurusan_id" name="jurusan_id" required>
-                        <option value="">-- Select Class --</option>
-                        @if ($siswa->kelas)
-                            <option value="{{ $siswa->kelas->jurusan->id }}" selected>
-                                {{ $siswa->kelas->jurusan->nama_jurusan }}
-                            </option>
-                        @endif
+                    <select class="form-control form-select select2" id="jurusan_id" name="jurusan_id" required>
+                        <option value="">-- Select Jurusan --</option>
+                        @foreach ($data_jurusan as $jurusan)
+                            <option value="{{ $jurusan->id }}" @if ($jurusan->id == $siswa->jurusan_id) selected @endif>
+                                {{ $jurusan->nama_jurusan }}</option>
+                        @endforeach
                     </select>
                 </div>
             </div>
@@ -150,54 +161,54 @@
                 <div class="col-sm-4">
                     <input type="date" class="form-control" id="tanggal_lahir_edit" name="tanggal_lahir"
                         value="{{ $siswa->tanggal_lahir ? \Carbon\Carbon::parse($siswa->tanggal_lahir)->format('Y-m-d') : '' }}" " required>
+          </div>
       </div>
-  </div>
-  
-        <div class="form-group row">
-              <label for="agama" class="col-sm-3 col-form-label required">Agama</label>
-              <div class="col-sm-3">
-                <select class="form-control form-select" name="agama" required>
-                    <option value="">-- Pilih Agama --</option>
-                    <option value="1" @if ($siswa->agama == '1') selected @endif>Islam</option>
-                    <option value="2" @if ($siswa->agama == '2') selected @endif>Protestan</option>
-                    <option value="3" @if ($siswa->agama == '3') selected @endif>Katolik</option>
-                    <option value="4" @if ($siswa->agama == '4') selected @endif>Hindu</option>
-                    <option value="5" @if ($siswa->agama == '5') selected @endif>Budha</option>
-                    <option value="6" @if ($siswa->agama == '6') selected @endif>Khonghucu</option>
-                    <option value="7" @if ($siswa->agama == '7') selected @endif>Lainnya</option>
-                </select>
-              </div>
+      
+            <div class="form-group row">
+                  <label for="agama" class="col-sm-3 col-form-label required">Agama</label>
+                  <div class="col-sm-3">
+                    <select class="form-control form-select" name="agama" required>
+                        <option value="">-- Pilih Agama --</option>
+                        <option value="1" @if ($siswa->agama == '1') selected @endif>Islam</option>
+                        <option value="2" @if ($siswa->agama == '2') selected @endif>Protestan</option>
+                        <option value="3" @if ($siswa->agama == '3') selected @endif>Katolik</option>
+                        <option value="4" @if ($siswa->agama == '4') selected @endif>Hindu</option>
+                        <option value="5" @if ($siswa->agama == '5') selected @endif>Budha</option>
+                        <option value="6" @if ($siswa->agama == '6') selected @endif>Khonghucu</option>
+                        <option value="7" @if ($siswa->agama == '7') selected @endif>Lainnya</option>
+                    </select>
+                  </div>
 
-              <label for="warga_negara" class="col-sm-2 col-form-label">Warga Negara</label>
-              <div class="col-sm-4">
-                <input type="text" class="form-control" id="warga_negara" name="warga_negara" placeholder="Kewarganegaraan" value="{{ $siswa->warga_negara }}" >
-              </div>
-        </div>
-                                                                                                                            
-        <div class="form-group row">
-          <label for="jml_saudara_kandung" class="col-sm-3 col-form-label">Jumlah Saudara Kandung</label>
-          <div class="col-sm-3">
-            <input type="number" class="form-control" id="jml_saudara_kandung" name="jml_saudara_kandung"  value="{{ $siswa->jml_saudara_kandung }}" >
-          </div>
-          <label for="anak_ke" class="col-sm-2 col-form-label">Anak Ke</label>
-          <div class="col-sm-4">
-            <input type="number" class="form-control" id="anak_ke" name="anak_ke"  value="{{ $siswa->anak_ke }}" >
-          </div>
-        </div>
-
-        <div class="form-group row">
-          <label for="pas_photo" class="col-sm-3 col-form-label required">Pas Photo</label>
-          <div class="col-sm-4 custom-file">
-            <div class="input-group">
-                <div class="custom-file">
-                    <input type="file" name="pas_photo" class="custom-file-input form-control form-control" id="pas_photo" onchange="readURL(this);" >
-                </div>
+                  <label for="warga_negara" class="col-sm-2 col-form-label">Warga Negara</label>
+                  <div class="col-sm-4">
+                    <input type="text" class="form-control" id="warga_negara" name="warga_negara" placeholder="Kewarganegaraan" value="{{ $siswa->warga_negara }}" >
+                  </div>
             </div>
-          </div>
-          <div class="col-sm-5">
-              @if (Storage::disk('public')->exists('siswa/' . $siswa->nis . '.jpg'))
+                                                                                                                                
+            <div class="form-group row">
+              <label for="jml_saudara_kandung" class="col-sm-3 col-form-label">Jumlah Saudara Kandung</label>
+              <div class="col-sm-3">
+                <input type="number" class="form-control" id="jml_saudara_kandung" name="jml_saudara_kandung"  value="{{ $siswa->jml_saudara_kandung }}" >
+              </div>
+              <label for="anak_ke" class="col-sm-2 col-form-label">Anak Ke</label>
+              <div class="col-sm-4">
+                <input type="number" class="form-control" id="anak_ke" name="anak_ke"  value="{{ $siswa->anak_ke }}" >
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="pas_photo" class="col-sm-3 col-form-label required">Pas Photo</label>
+              <div class="col-sm-4 custom-file">
+                <div class="input-group">
+                    <div class="custom-file">
+                        <input type="file" name="pas_photo" class="custom-file-input form-control form-control" id="pas_photo" onchange="readURL(this);" >
+                    </div>
+                </div>
+              </div>
+              <div class="col-sm-5">
+                                              @if (Storage::disk('public')->exists('siswa/' . $siswa->nis . '.jpg'))
                     <img class="mb-2" src="{{ asset('storage/siswa/' . $siswa->nis . '.jpg') }}"
-                        alt="{{ $siswa->pas_photo }}" alt="pas_photo" width="105px">
+                        alt="{{ $siswa->pas_photo }}" alt="pas_photo" width="105px" id="pas_photo_preview">
                 @else
                     <img src="{{ asset('assets/dist/img/3x4.png') }}" alt="" id="pas_photo_preview"
                         width="105px" height="144px">

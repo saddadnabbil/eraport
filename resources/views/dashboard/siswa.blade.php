@@ -245,9 +245,8 @@
                                                 @endif
                                             </a>
                                             <span class="product-description">
-                                                @if ($riwayat_login->user->hasRole('Student'))
-                                                    Siswa
-                                                @endif
+                                                <span
+                                                    class="badge bg-primary">{{ $riwayat_login->user->getRoleNames()->first() }}</span>
 
                                                 @if ($riwayat_login->status_login == false)
                                                     <span class="time float-right"><i class="far fa-clock"></i>

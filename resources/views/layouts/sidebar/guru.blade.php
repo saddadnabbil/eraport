@@ -30,8 +30,9 @@
                 </li>
 
                 <li class="sidebar-item">
-                    <a class="sidebar-link sidebar-link" href="{{ route('guru.silabus.index') }}" aria-expanded="false"><i
-                            data-feather="home" class="feather-icon"></i><span class="hide-menu"> Syllabus
+                    <a class="sidebar-link sidebar-link" href="{{ route('guru.silabus.index') }}"
+                        aria-expanded="false"><i data-feather="home" class="feather-icon"></i><span class="hide-menu">
+                            Syllabus
                         </span></a>
                 </li>
                 <li class="list-divider"></li>
@@ -39,21 +40,29 @@
 
 
                 @if ($user->hasRole('Curriculum'))
-                    @if (request()->is('teacher/master-data/*') || request()->is('curriculum/dashboard'))
+                    @if (request()->is('teacher/master-data/*') ||
+                            request()->is('curriculum/dashboard') ||
+                            request()->is('teacher/tk/*') ||
+                            request()->is('teacher/km/p5*'))
                         <li class="nav-small-cap">
                             <span class="hide-menu">Curriculum</span>
                         </li>
                         @include('layouts.partials.sidebar.guru.pengumuman')
                         @include('layouts.partials.sidebar.guru.masterdata')
                         <li class="list-divider"></li>
-                    @endif
 
-                    @if (request()->is('teacher/km/p5*'))
-                        <li class="list-divider"></li>
                         <li class="nav-small-cap">
-                            <span class="hide-menu">REPORT P5BK</span>
+                            <span class="hide-menu">MANAGEMENT REPORT TK</span>
+                        </li>
+                        @include('layouts.partials.sidebar.reportkm-tk.event')
+                        @include('layouts.partials.sidebar.reportkm-tk.area-of-learning')
+                        <li class="list-divider"></li>
+
+                        <li class="nav-small-cap">
+                            <span class="hide-menu">MANAGEMENT REPORT P5BK</span>
                         </li>
                         @include('layouts.partials.sidebar.report-p5.inputdata')
+                        <li class="list-divider"></li>
                     @endif
                 @endif
 
@@ -62,8 +71,7 @@
                         <li class="nav-small-cap">
                             <span class="hide-menu">REPORT TK</span>
                         </li>
-                        @include('layouts.partials.sidebar.reportkm-tk.event')
-                        @include('layouts.partials.sidebar.reportkm-tk.area-of-learning')
+
                         @include('layouts.partials.sidebar.reportkm-tk.penilaian')
                         @include('layouts.partials.sidebar.reportkm-tk.printreport_tk')
                         <li class="list-divider"></li>

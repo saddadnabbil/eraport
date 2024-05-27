@@ -24,7 +24,6 @@ class StoreKaryawanRequest extends FormRequest
     public function rules()
     {
         return [
-
             'role' => 'required|array',
             'role*' => 'required|exists:roles,id',
             'status_karyawan_id' => 'required|exists:status_karyawans,id',
@@ -61,11 +60,11 @@ class StoreKaryawanRequest extends FormRequest
             'nama_pasangan' => 'nullable|string|max:255',
             'jumlah_anak' => 'nullable|string|max:255',
             'keterangan' => 'nullable|string',
-            'pas_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Maksimum 2 MB
-            'photo_kartu_identitas' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'photo_taxpayer' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'photo_kk' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'other_document' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'pas_photo' => 'nullable|image|max:2048', // Maksimum 2 MB
+            'photo_kartu_identitas' => 'nullable|image|max:2048',
+            'photo_taxpayer' => 'nullable|image|max:2048',
+            'photo_kk' => 'nullable|image|max:2048',
+            'other_document' => 'nullable|image|max:2048',
         ];
     }
 

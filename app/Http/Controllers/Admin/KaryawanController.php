@@ -158,7 +158,7 @@ class KaryawanController extends Controller
             // Save the Karyawan instance to the database
             $karyawan->save();
 
-            if ($request->unit_karyawan_id == 2 || $request->unit_karyawan_id == 3 || $request->unit_karyawan_id == 4 || $request->unit_karyawan_id == 5) {
+            if ($user->hasRole(['Curriculum', 'Teacher', 'Teacher PG-KG', 'Co-Teacher', 'Co-Teacher PG-KG'])) {
                 $guru = new Guru([
                     'karyawan_id' => $karyawan->id,
                 ]);
@@ -177,13 +177,14 @@ class KaryawanController extends Controller
 
     private function validateImageSize(Request $request)
     {
-        $maxFileSize = 2048 * 1024; // 2 MB in bytes
+        $maxFileSizeKB = 2048; // 2 MB in kilobytes
         $images = ['pas_photo', 'photo_kartu_identitas', 'photo_taxpayer', 'photo_kk', 'other_document'];
 
         foreach ($images as $imageField) {
             if ($request->hasFile($imageField)) {
                 $file = $request->file($imageField);
-                if ($file->getSize() > $maxFileSize) {
+                $fileSizeKB = $file->getSize() / 1024; // Convert bytes to kilobytes
+                if ($fileSizeKB > $maxFileSizeKB) {
                     throw new \Exception('File size exceeds limit for ' . $imageField);
                 }
             }
@@ -194,7 +195,7 @@ class KaryawanController extends Controller
     {
         if ($request->hasFile('pas_photo')) {
             $pasPhoto = $request->file('pas_photo');
-            $pasPhotoPath = $this->savePhoto($pasPhoto, 'pas_photo', $request->kode_karyawan, '.jpg');
+            $pasPhotoPath = $this->savePhoto($pasPhoto, 'karyawan', $request->kode_karyawan, '.jpg');
             $karyawan->pas_photo = $pasPhotoPath;
         }
 
@@ -210,7 +211,7 @@ class KaryawanController extends Controller
     {
         // Make extension optional with default
         $filename = $kodeKaryawan . $extension;
-        return $file->storeAs('karyawan', $filename, 'public');
+        return $file->storeAs($field, $filename, 'public');
     }
 
     private function savePhotoField($inputName, Request $request, Karyawan $karyawan, $kodeKaryawan, $extension = '.jpg')
@@ -255,7 +256,14 @@ class KaryawanController extends Controller
      */
     public function update(UpdateKaryawanRequest $request, $id)
     {
-        // Find the Karyawan instance by ID
+        try {
+            // Image validation before upload
+            $this->validateImageSize($request);
+        } catch (\Throwable $th) {
+            // Handle validation errors
+            return back()->with('toast_error', 'File size exceeds limit (2 MB)');
+        } // Find the Karyawan instance by ID
+
         $karyawan = Karyawan::findOrFail($id);
 
         $user = User::findOrFail($karyawan->user_id);
@@ -264,7 +272,7 @@ class KaryawanController extends Controller
 
         if ($request->password_baru && $request->password_baru != null && $request->password_lama) {
             $user->password = Hash::make($request->password_baru);
-        } 
+        }
         $user->save();
 
         // Mengupdate role
@@ -318,11 +326,17 @@ class KaryawanController extends Controller
             'keterangan' => $request->keterangan,
         ]);
 
+        if ($user->hasRole(['Curriculum', 'Teacher', 'Teacher PG-KG', 'Co-Teacher', 'Co-Teacher PG-KG'])) {
+            // create or update guru
+            $guru = [
+                'karyawan_id' => $karyawan->id
+            ];
+
+            $guru = Guru::updateOrCreate($guru, $guru);
+        }
+
         // Optionally, you can update and save any uploaded files to the model
         $this->updateUploadedFiles($request, $karyawan);
-
-        // Save the Karyawan instance to the database
-        $karyawan->save();
 
         // Redirect or return a response as needed
         return back()->with('toast_success', 'Karyawan ' . $request->nama_lengkap . ' berhasil diperbarui');
@@ -330,32 +344,43 @@ class KaryawanController extends Controller
 
     private function updateUploadedFiles(Request $request, Karyawan $karyawan)
     {
-        // Handle and update the uploaded files (if any) associated with the Karyawan model
-        // Example: Assuming 'pas_photo' is the name of the file input for pas_photo
-        $this->updatePhoto('pas_photo', $request, $karyawan, 'pas_photo');
+        if ($request->hasFile('pas_photo')) {
+            $this->deletePhoto($karyawan->pas_photo); // Hapus foto lama sebelum menyimpan yang baru
+            $pasPhoto = $request->file('pas_photo');
+            $pasPhotoPath = $this->updatePhoto($pasPhoto, 'karyawan', $request->kode_karyawan, '.jpg');
+            $karyawan->pas_photo = $pasPhotoPath;
+        }
 
-        // Repeat the process for other uploaded files
-        // Example: 'photo_kartu_identitas', 'photo_taxpayer', 'photo_kk', 'other_document', etc.
+        $this->updatePhotoField('photo_kartu_identitas', $request, $karyawan, $request->kode_karyawan, '.jpg');
+        $this->updatePhotoField('photo_taxpayer', $request, $karyawan, $request->kode_karyawan, '.jpg');
+        $this->updatePhotoField('photo_kk', $request, $karyawan, $request->kode_karyawan, '.jpg');
+        $this->updatePhotoField('other_document', $request, $karyawan, $request->kode_karyawan, '.jpg');
 
-        $this->updatePhoto('photo_kartu_identitas', $request, $karyawan, 'photo_kartu_identitas');
-        $this->updatePhoto('photo_taxpayer', $request, $karyawan, 'photo_taxpayer');
-        $this->updatePhoto('photo_kk', $request, $karyawan, 'photo_kk');
-        $this->updatePhoto('other_document', $request, $karyawan, 'other_document');
+        $karyawan->save();
     }
 
-    private function updatePhoto($inputName, Request $request, Karyawan $karyawan, $attributeName)
+    private function deletePhoto($path)
     {
+        // Hapus foto dari penyimpanan
+        if ($path && Storage::disk('public')->exists($path)) {
+            Storage::disk('public')->delete($path);
+        }
+    }
+
+    private function updatePhoto($file, $field, $kodeKaryawan, $extension = '.jpg')
+    {
+        // Make extension optional with default
+        $filename = $kodeKaryawan . $extension;
+        return $file->storeAs('karyawan', $filename, 'public');
+    }
+
+    private function updatePhotoField($inputName, Request $request, Karyawan $karyawan, $kodeKaryawan, $extension = '.jpg')
+    {
+        // Make extension optional with default
         if ($request->hasFile($inputName)) {
-            // Delete the existing file if it exists
-            if ($karyawan->$attributeName) {
-                Storage::disk('public')->delete($karyawan->$attributeName);
-            }
-
-            $photo = $request->file($inputName);
-            $photoPath = $photo->store($attributeName, 'public'); // Assuming $attributeName is your storage disk
-
-            // Update the file path to the model attribute
-            $karyawan->$attributeName = $photoPath;
+            $file = $request->file($inputName);
+            $path = $this->savePhoto($file, $inputName, $kodeKaryawan, $extension);
+            $karyawan->$inputName = $path;
         }
     }
 

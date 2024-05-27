@@ -138,36 +138,38 @@ class AuthController extends Controller
     {
         $user = Auth::user();
 
-        if ($user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG'])) {
+        if ($user->hasAnyRole(['Teacher', 'Teacher PG-KG'])) {
             $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
-            // check permission name if homeroom-km true
-            if ($user->getRoleNames()->contains('Teacher')) {
-                session([
-                    'akses_sebagai' => 'teacher-km',
-                ]);
-            } elseif ($user->getRoleNames()->contains('Teacher PG-KG')) {
-                session([
-                    'akses_sebagai' => 'teacher-pg-kg',
-                ]);
-            }
+            if ($guru !== null) {
+                // check permission name if homeroom-km true
+                if ($user->getRoleNames()->contains('Teacher')) {
+                    session([
+                        'akses_sebagai' => 'teacher-km',
+                    ]);
+                } elseif ($user->getRoleNames()->contains('Teacher PG-KG')) {
+                    session([
+                        'akses_sebagai' => 'teacher-pg-kg',
+                    ]);
+                }
 
-            $cek_wali_kelas = Kelas::where('guru_id', $guru->id)
-                ->whereNotIn('tingkatan_id', [1, 2, 3])
-                ->first();
-            $cek_wali_kelas_tk = Kelas::where('guru_id', $guru->id)
-                ->whereIn('tingkatan_id', [1, 2, 3])
-                ->get();
+                $cek_wali_kelas = Kelas::where('guru_id', $guru->id)
+                    ->whereNotIn('tingkatan_id', [1, 2, 3])
+                    ->first();
+                $cek_wali_kelas_tk = Kelas::where('guru_id', $guru->id)
+                    ->whereIn('tingkatan_id', [1, 2, 3])
+                    ->get();
 
-            if ($cek_wali_kelas) {
-                session([
-                    'cek_homeroom' => true,
-                ]);
-            }
+                if ($cek_wali_kelas) {
+                    session([
+                        'cek_homeroom' => true,
+                    ]);
+                }
 
-            if ($cek_wali_kelas_tk && count($cek_wali_kelas_tk) > 0) {
-                session([
-                    'cek_homeroom_tk' => true,
-                ]);
+                if ($cek_wali_kelas_tk && count($cek_wali_kelas_tk) > 0) {
+                    session([
+                        'cek_homeroom_tk' => true,
+                    ]);
+                }
             }
         }
     }

@@ -17,7 +17,7 @@
             'breadcrumbs' => [
                 [
                     'title' => 'Dashboard',
-                    'url' => route('guru.dashboard'),
+                    'url' => $dashboard,
                     'active' => true,
                 ],
                 [

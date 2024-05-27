@@ -1,20 +1,38 @@
 @php
     $userRole = Auth::user()->getRoleNames()->first();
 
-    $allowedRoutes = ['p5.dimensi.*', 'p5.element.*', 'p5.subelement.*'];
+    switch ($userRole) {
+        case 'Admin':
+            $allowedRoutes = ['p5.dimensi.*', 'p5.element.*', 'p5.subelement.*'];
 
-    $checkRouteDimensi = request()->routeIs('p5.dimensi.*');
-    $dynamicRouteDimensi = route('p5.dimensi.index');
+            $checkRouteDimensi = request()->routeIs('p5.dimensi.*');
+            $dynamicRouteDimensi = route('p5.dimensi.index');
 
-    $checkRouteElement = request()->routeIs('p5.element.*');
-    $dynamicRouteElement = route('p5.element.index');
+            $checkRouteElement = request()->routeIs('p5.element.*');
+            $dynamicRouteElement = route('p5.element.index');
 
-    $checkRouteSubelement = request()->routeIs('p5.subelement.*');
-    $dynamicRouteSubelement = route('p5.subelement.index');
+            $checkRouteSubelement = request()->routeIs('p5.subelement.*');
+            $dynamicRouteSubelement = route('p5.subelement.index');
 
-    $checkRouteTema = request()->routeIs('p5.tema.*');
-    $dynamicRouteTema = route('p5.tema.index');
+            $checkRouteTema = request()->routeIs('p5.tema.*');
+            $dynamicRouteTema = route('p5.tema.index');
+            break;
+        case 'Teacher' or 'Co-Teacher' or 'Curriculum':
+            $allowedRoutes = ['guru.p5.dimensi.*', 'guru.p5.element.*', 'guru.p5.subelement.*'];
 
+            $checkRouteDimensi = request()->routeIs('guru.p5.dimensi.*');
+            $dynamicRouteDimensi = route('guru.p5.dimensi.index');
+
+            $checkRouteElement = request()->routeIs('guru.p5.element.*');
+            $dynamicRouteElement = route('guru.p5.element.index');
+
+            $checkRouteSubelement = request()->routeIs('guru.p5.subelement.*');
+            $dynamicRouteSubelement = route('guru.p5.subelement.index');
+
+            $checkRouteTema = request()->routeIs('guru.p5.tema.*');
+            $dynamicRouteTema = route('guru.p5.tema.index');
+            break;
+    }
 @endphp
 
 @include('layouts.partials.sidebar._sidebar-item', [

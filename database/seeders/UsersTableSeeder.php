@@ -50,11 +50,11 @@ class UsersTableSeeder extends Seeder
         $guru->assignRole(['Teacher']);
 
         $guru = User::create([
-            'username' => 'guru1',
+            'username' => 'guru2',
             'password' => bcrypt('123456'),
             'status' => true,
         ]);
-        $guru->assignRole('Teacher');
+        $guru->assignRole('Teacher PG-KG');
 
         $curriculum = User::create([
             'username' => 'curriculum',

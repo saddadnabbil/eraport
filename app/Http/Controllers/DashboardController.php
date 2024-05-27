@@ -53,7 +53,7 @@ class DashboardController extends Controller
                 ->orderBy('status_login', 'DESC')
                 ->orderBy('updated_at', 'DESC')
                 ->get();
-        } elseif ($user->hasAnyRole(['Teacher', 'Teacher PG-KG'])) {
+        } elseif ($user->hasAnyRole(['Teacher', 'Teacher PG-KG', 'Co-Teacher', 'Co-Teacher PG-KG'])) {
             $data_riwayat_login = RiwayatLogin::where('user_id', '!=', Auth::user()->id)->whereHas('user', function ($query) {
                 $query->whereHas('roles', function ($query) {
                     $query->whereIn('name', ['Teacher', 'Teacher PG-KG', 'Co-Teacher', 'Co-Teacher PG-KG', 'Student']);

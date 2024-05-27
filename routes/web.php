@@ -629,9 +629,11 @@ Route::group(['middleware' => ['auth']], function () {
                 'update' => 'guru.profile.update',
             ]);
 
-            Route::get('getKelas/ajax/{id}', 'AjaxController@ajax_kelas_silabus')->name('guru.get.kelas');
+            Route::get('getKelas/ajax/{id}', 'AjaxController@ajax_kelas')->name('guru.get.kelas');
+            Route::get('getKelas/penilaian-tk/{id}', 'AjaxController@getClassByTkTopic');
+            Route::get('getKelasByTingkatan/ajax/{id}', 'AjaxController@ajax_kelas_by_tingkatan_id');
             Route::get('getAllSilabus/ajax/{id}', 'AjaxController@getAllSilabus')->name('guru.get.all.silabus');
-            // Route::get('getKelas/ajax/{id}', 'AjaxController@ajax_kelas');
+            Route::get('getPembelajaranId/', 'AjaxController@getPembelajaranId')->name('get.pembelajaran.id');
 
             Route::get('getPembelajaranId/', 'AjaxController@getPembelajaranId')->name('guru.get.pembelajaran.id');
 
@@ -820,7 +822,7 @@ Route::group(['middleware' => ['auth']], function () {
             });
 
             // Start Route Guru Mapel KM
-            Route::group(['middleware' => ['role:Teacher|Co-Teacher']], function () {
+            Route::group(['middleware' => ['role:Teacher|Co-Teacher|Curriculum']], function () {
                 // Start KM
                 Route::prefix('km')->group(function () {
                     Route::resource('silabus', 'Guru\SilabusController')
@@ -1116,7 +1118,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 
             // Start Route PG-KG
-            Route::group(['middleware' => ['role:Teacher PG-KG|Co-Teacher PG-KG']], function () {
+            Route::group(['middleware' => ['role:Teacher PG-KG|Co-Teacher PG-KG|Curriculum']], function () {
                 Route::prefix('tk')->group(function () {
                     Route::resource('kehadiran', 'Guru\TK\TkKehadiranSiswaController')->only(['index', 'store', 'create'])->names([
                         'index' => 'guru.tk.kehadiran.index',

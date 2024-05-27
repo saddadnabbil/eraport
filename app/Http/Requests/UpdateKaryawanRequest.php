@@ -62,11 +62,11 @@ class UpdateKaryawanRequest extends FormRequest
             'nama_pasangan' => 'nullable|string|max:255',
             'jumlah_anak' => 'nullable|string|max:255',
             'keterangan' => 'nullable|string',
-            'pas_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'photo_kartu_identitas' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'photo_taxpayer' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'photo_kk' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'other_document' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'pas_photo' => 'nullable|image|max:2048',
+            'photo_kartu_identitas' => 'nullable|image|max:2048',
+            'photo_taxpayer' => 'nullable|image|max:2048',
+            'photo_kk' => 'nullable|image|max:2048',
+            'other_document' => 'nullable|image|max:2048',
         ];
     }
 
@@ -107,7 +107,7 @@ class UpdateKaryawanRequest extends FormRequest
             'warga_negara.max' => 'The warga negara may not be greater than 255 characters.',
             'status_pernikahan.max' => 'The status pernikahan may not be greater than 255 characters.',
             'nama_pasangan.max' => 'The nama pasangan may not be greater than 255 characters.',
-            'jumlah_anak.max' => 'The jumlah anak may not be greater than 255 characters.', 
+            'jumlah_anak.max' => 'The jumlah anak may not be greater than 255 characters.',
             'keterangan.max' => 'The keterangan may not be greater than 255 characters.',
             'other_document.max' => 'The other document may not be greater than 255 characters.',
             'photo_kartu_identitas.image' => 'The photo kartu identitas must be an image.',
@@ -116,5 +116,4 @@ class UpdateKaryawanRequest extends FormRequest
             'other_document.image' => 'The other document must be an image.',
         ];
     }
-    
 }

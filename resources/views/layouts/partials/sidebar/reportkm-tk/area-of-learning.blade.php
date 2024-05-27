@@ -22,7 +22,7 @@
             $checkPoint = request()->routeIs('tk.point.*');
             $checkPembelajaran = request()->routeIs('tk.pembelajaran.*');
             break;
-        case 'Teacher':
+        case 'Teacher PG-KG' or 'Co-Teacher PG-KG' or 'Curriculum':
             $checkRoute = request()->routeIs([
                 'guru.tk.element.*',
                 'guru.tk.topic.*',

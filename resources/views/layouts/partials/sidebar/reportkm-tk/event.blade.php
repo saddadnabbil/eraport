@@ -5,7 +5,7 @@
             $checkRoute = request()->routeIs('tk.event.*');
             $dynamicRoute = route('tk.event.index');
             break;
-        case 'Teacher':
+        case 'Teacher PG-KG' or 'Co-Teacher PG-KG' or 'Curriculum':
             $checkRoute = request()->routeIs('guru.tk.event.*');
             $dynamicRoute = route('guru.tk.event.index');
             break;

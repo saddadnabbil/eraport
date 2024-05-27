@@ -206,7 +206,7 @@ class KelasTableSeeder extends Seeder
             'tingkatan_id' => 1,
             'jurusan_id' => 3,
             'tapel_id' => 1,
-            'guru_id' => 1,
+            'guru_id' => 3,
             'nama_kelas' => 'PG',
         ]);
 

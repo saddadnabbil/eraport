@@ -110,15 +110,15 @@
                                                     class="font-weight-light font-14 mb-1 d-block text-muted">{{ $pengumuman->user->karyawan->nama_lengkap }}
                                                     -
                                                     {{ \Carbon\Carbon::parse($pengumuman->created_at)->diffForHumans() }}</span>
-                                                    @include('components.actions.delete-button', [
-                                                        'route' => route(
-                                                            'admin.pengumuman.destroy',
-                                                            $pengumuman->id),
-                                                        'id' => $pengumuman->id,
-                                                        'isPermanent' => true,
-                                                        'withEdit' => true,
-                                                        'withShow' => false,
-                                                    ])
+                                                @include('components.actions.delete-button', [
+                                                    'route' => route(
+                                                        'guru.md.pengumuman.destroy',
+                                                        $pengumuman->id),
+                                                    'id' => $pengumuman->id,
+                                                    'isPermanent' => true,
+                                                    'withEdit' => true,
+                                                    'withShow' => false,
+                                                ])
                                             </div>
                                             <!-- Modal edit  -->
                                             <div class="modal fade" id="modal-edit{{ $pengumuman->id }}">
@@ -152,8 +152,7 @@
                                                             <div class="modal-footer justify-content-end">
                                                                 <button type="button" class="btn btn-default"
                                                                     data-bs-dismiss="modal">Batal</button>
-                                                                <button type="submit"
-                                                                    class="btn btn-primary">Save</button>
+                                                                <button type="submit" class="btn btn-primary">Save</button>
                                                             </div>
                                                         </form>
                                                     </div>

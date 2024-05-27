@@ -21,6 +21,11 @@
                     'active' => true,
                 ],
                 [
+                    'title' => 'Student Data',
+                    'url' => route('admin.siswa.index'),
+                    'active' => true,
+                ],
+                [
                     'title' => $title,
                     'url' => route('admin.tapel.index'),
                     'active' => false,
@@ -41,23 +46,10 @@
                     <div class="card card-primary card-outline">
                         <div class="card-body box-profile">
                             <div class="text-center">
-                                {{-- @if ($siswa->pas_photo == null)
-                                    <img class="profile-user-img" src="{{ asset('/assets/dist/img/avatar/default.png') }}"
-                                        alt="Avatar" style="border: none">
-                                @elseif ($siswa->pas_photo == 'default.png')
-                                    <img class="profile-user-img" src="{{ asset('/assets/dist/img/avatar/default.png') }}"
-                                        alt="Avatar" style="border: none">
-                                @else
-                                    <img class="mb-2" src="{{ asset('storage/' . $siswa->pas_photo) }}"
-                                        alt="{{ $siswa->pas_photo }}" alt="pas_photo" width="105px" height="144px">
-                                @endif --}}
-
                                 @if (Storage::disk('public')->exists('siswa/' . $siswa->nis . '.jpg'))
                                     <img class="mb-2" src="{{ asset('storage/siswa/' . $siswa->nis . '.jpg') }}"
                                         alt="{{ $siswa->pas_photo }}" alt="pas_photo" width="105px">
                                 @else
-                                    {{-- <img src="{{ asset('assets/dist/img/3x4.png') }}" alt="" id="pas_photo_preview"
-                                        width="105px" height="144px"> --}}
                                     <img class="profile-user-img" src="{{ asset('/assets/dist/img/avatar/default.png') }}"
                                         alt="Avatar" style="border: none">
                                 @endif
@@ -107,6 +99,20 @@
                             <h3 class="card-title"> Data Pribadi</h3>
                         </div><!-- /.card-header -->
                         <div class="card-body">
+                            @if ($errors->any())
+                                <div class="alert alert-danger alert-dismissible fade show text-sm" role="alert">
+                                    <strong>Failed!</strong> There are errors in the form submission. Please check
+                                    again:
+                                    <ul style="list-style-type: inside; padding-left: 20px;">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                        aria-label="Close"></button>
+                                </div>
+                            @endif
+
                             <ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
                                 <li class="nav-item">
                                     <a href="#student1" data-bs-toggle="tab" aria-expanded="false"
@@ -908,12 +914,11 @@
         }
     </script>
 
-    <!-- ajax get class id and and jurusan class name-->
+    {{-- <!-- ajax get class id and and jurusan class name-->
     <script type="text/javascript">
         $(document).ready(function() {
             $('select[name="tingkatan_id"]').on('change', function() {
                 var tingkatan_id = $(this).val();
-                console.log(tingkatan_id);
                 if (tingkatan_id) {
                     $.ajax({
                         url: '/getKelasByTingkatan/ajax/' + tingkatan_id,
@@ -950,7 +955,7 @@
                 }
             });
         });
-    </script>
+    </script> --}}
 @endpush
 
 @section('footer')

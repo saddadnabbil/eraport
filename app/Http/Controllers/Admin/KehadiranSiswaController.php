@@ -50,7 +50,7 @@ class KehadiranSiswaController extends Controller
         $id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('id');
         $kelas_id_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $id_kelas_diampu)->get('kelas_id');
 
-        $anggota_kelas = AnggotaKelas::where('kelas_id', $kelas_id_anggota_kelas)
+        $data_anggota_kelas = AnggotaKelas::whereIn('kelas_id', $kelas_id_anggota_kelas)
             ->orderBy('id', 'DESC')
             ->whereHas('siswa', function ($query) {
                 $query->where('status', 1);

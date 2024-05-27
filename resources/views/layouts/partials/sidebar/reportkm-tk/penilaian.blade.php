@@ -6,7 +6,7 @@
             $checkRoute = request()->routeIs('tk.penilaian.*');
             $dynamicRoute = route('tk.penilaian.index');
             break;
-        case 'Teacher':
+        case 'Teacher PG-KG' or 'Co-Teacher PG-KG':
             $checkRoute = request()->routeIs('guru.tk.penilaian.*');
             $dynamicRoute = route('guru.tk.penilaian.index');
             break;

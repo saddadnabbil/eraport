@@ -73,7 +73,12 @@
                                 @if ($errors->any())
                                     <div class="alert alert-danger alert-dismissible fade show text-sm" role="alert">
                                         <strong>Failed!</strong> There are errors in the form submission. Please check
-                                        create modal again
+                                        again:
+                                        <ul style="list-style-type: inside; padding-left: 20px;">
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
                                         <button type="button" class="btn-close" data-bs-dismiss="alert"
                                             aria-label="Close"></button>
                                     </div>

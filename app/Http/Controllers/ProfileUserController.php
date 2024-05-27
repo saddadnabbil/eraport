@@ -7,6 +7,7 @@ use App\Models\Admin;
 use App\Models\Kelas;
 use App\Models\Siswa;
 use App\Models\Tapel;
+use App\Models\Jurusan;
 use App\Models\Karyawan;
 use App\Models\Tingkatan;
 use App\Models\UnitKaryawan;
@@ -47,10 +48,12 @@ class ProfileUserController extends Controller
             $siswa = Siswa::where('user_id', Auth::user()->id)->first();
             $tapel = Tapel::where('status', 1)->first();
             $data_tingkatan = Tingkatan::orderBy('id', 'ASC')->get();
+            $data_jurusan = Jurusan::orderBy('id', 'ASC')->get();
+            $data_kelas = Kelas::where('tapel_id', $tapel->id)->get();
             $tingkatan_terendah = Kelas::where('tapel_id', $tapel->id)->min('tingkatan_id');
             $tingkatan_akhir = Kelas::where('tapel_id', $tapel->id)->max('tingkatan_id');
 
-            return view('siswa.profile.show', compact('title', 'siswa', 'data_tingkatan', 'tingkatan_terendah', 'tingkatan_akhir'));
+            return view('siswa.profile.show', compact('title', 'siswa', 'data_tingkatan', 'data_jurusan', 'data_kelas', 'tingkatan_terendah', 'tingkatan_akhir'));
         }
     }
 }

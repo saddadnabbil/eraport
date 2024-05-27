@@ -46,13 +46,6 @@
                     <div class="card card-primary card-outline">
                         <div class="card-body box-profile">
                             <div class="text-center">
-                                {{-- @if ($karyawan->pas_photo == null)
-                                    <img class="profile-user-img" src="{{ asset('/assets/dist/img/avatar/default.png') }}"
-                                        alt="Avatar" style="border: none">
-                                @else
-                                    <img class="mb-2" src="{{ asset('storage/' . $karyawan->pas_photo) }}"
-                                        alt="{{ $karyawan->pas_photo }}" alt="pas_photo" width="105px" height="144px">
-                                @endif --}}
                                 @if (Storage::disk('public')->exists('karyawan/' . $karyawan->kode_karyawan . '.jpg'))
                                     <img class="mb-2"
                                         src="{{ asset('storage/karyawan/' . $karyawan->kode_karyawan . '.jpg') }}"
@@ -478,8 +471,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="{{ $user->hasRole('Curriculum') ? route('guru.guru.index') : route('karyawan.index') }}"
-                                class="btn btn-success btn-sm">Back</a>
+                            <a href="{{ route('guru.dashboard') }}" class="btn btn-success btn-sm">Back</a>
                             @if ($user->hasRole(['Admin', 'Curriculum', 'Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG']))
                                 <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                     data-bs-target="#modal-edit{{ $karyawan->id }}">Edit</button>

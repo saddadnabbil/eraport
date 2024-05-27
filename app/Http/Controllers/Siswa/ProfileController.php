@@ -105,7 +105,7 @@ class ProfileController extends Controller
             'agama' => 'required|in:1,2,3,4,5,6,7',
             'alamat' => 'required|min:3|max:255',
             'nomor_hp' => 'nullable|numeric',
-            'pas_photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Adjust the allowed file types and size as needed
+            'pas_photo' => 'nullable|image|max:2048', // Adjust the allowed file types and size as needed
 
             'nama_ayah' => 'required|min:3|max:100',
             'nama_ibu' => 'required|min:3|max:100',
