@@ -91,8 +91,6 @@
     <script>
         $(document).ready(function() {
             $('#zero_config_ajax').DataTable({
-                "processing": true,
-                "serverSide": true,
                 "ajax": {
                     "url": "{{ route('user.data') }}",
                 },
@@ -117,9 +115,6 @@
                         "searchable": false
                     }
                 ],
-                "language": {
-                    "processing": "<div class='spinner-border text-primary' role='status'><span class='visually-hidden'>Loading...</span></div>"
-                }
             });
         });
     </script>

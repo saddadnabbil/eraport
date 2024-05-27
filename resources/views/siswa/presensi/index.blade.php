@@ -86,7 +86,6 @@
                                                 <td class="text-center">-</td>
                                             @else
                                                 <td class="text-center">
-                                                    @dd($kehadiran)
                                                     {{ $anggota_kelas->kelas->nama_kelas }}
                                                     {{ $kehadiran->anggota_kelas->kelas->tapel->tahun_pelajaran }}
                                                     @if ($kehadiran->anggota_kelas->kelas->tapel->semester == 1)

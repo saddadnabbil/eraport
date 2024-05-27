@@ -112,7 +112,7 @@
                     </div>
                     <!-- /.info-box -->
                 </div>
-                
+
                 <!-- /.col -->
                 <div class="col-12 col-sm-6 col-md-3">
                     <div class="info-box mb-3">
@@ -317,7 +317,8 @@
                                                                 <div class="col-sm-9">
                                                                     <input type="text" class="form-control"
                                                                         id="nik" name="nik" placeholder="NIK"
-                                                                        value="{{ old('nik') }}" minlength="16" maxlength="16" required>
+                                                                        value="{{ old('nik') }}" minlength="16"
+                                                                        maxlength="16" required>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
@@ -1257,8 +1258,6 @@
         $(document).ready(function() {
             if (!$.fn.DataTable.isDataTable('#zero_config_ajax')) {
                 $('#zero_config_ajax').DataTable({
-                    "processing": true,
-                    "serverSide": true,
                     "ajax": {
                         "url": "{{ route('admin.siswa.data') }}",
                     },

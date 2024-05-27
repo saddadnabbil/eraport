@@ -297,7 +297,8 @@
                                                                 <div class="col-sm-9">
                                                                     <input type="text" class="form-control"
                                                                         id="nik" name="nik" placeholder="NIK"
-                                                                        value="{{ old('nik') }}" minlength="16" maxlength="16" required>
+                                                                        value="{{ old('nik') }}" minlength="16"
+                                                                        maxlength="16" required>
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
@@ -1237,8 +1238,6 @@
         $(document).ready(function() {
             if (!$.fn.DataTable.isDataTable('#zero_config_ajax')) {
                 $('#zero_config_ajax').DataTable({
-                    "processing": true,
-                    "serverSide": true,
                     "ajax": {
                         "url": "{{ route('guru.siswa.data') }}",
                     },

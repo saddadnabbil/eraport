@@ -88,10 +88,6 @@
         $(document).ready(function() {
             if (!$.fn.DataTable.isDataTable('#zero_config_ajax')) {
                 $('#zero_config_ajax').DataTable({
-                    "processing": true,
-                    "language": {
-                        "processing": '<i class="fas fa-spinner fa-spin"></i> Processing...'
-                    },
                     "serverSide": true,
                     "ajax": {
                         "url": "{{ route('admin.guru.data') }}",

@@ -69,7 +69,7 @@
 
                         <div class="card-body">
                             <div class="table-responsive">
-                                
+
                                 @if ($errors->any())
                                     <div class="alert alert-danger alert-dismissible fade show text-sm" role="alert">
                                         <strong>Failed!</strong> There are errors in the form submission. Please check
@@ -199,8 +199,6 @@
         $(document).ready(function() {
             if (!$.fn.DataTable.isDataTable('#zero_config_ajax')) {
                 $('#zero_config_ajax').DataTable({
-                    "processing": true,
-                    "serverSide": true,
                     "ajax": {
                         "url": "{{ route('karyawan.data') }}",
                     },
