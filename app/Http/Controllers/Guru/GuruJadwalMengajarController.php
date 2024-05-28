@@ -15,7 +15,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
-class JadwalMengajarController extends Controller
+class GuruJadwalMengajarController extends Controller
 {
     /**
      * Display a listing of the resource.

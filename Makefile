@@ -31,6 +31,7 @@ dump:
 	composer dump-autoload
 
 fresh-seed:
+	composer dump-autoload
 	php artisan migrate:fresh --seed
 
 route-clear:

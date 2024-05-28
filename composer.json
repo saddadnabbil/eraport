@@ -21,6 +21,7 @@
         "realrashid/sweet-alert": "^4.0",
         "sentry/sentry-laravel": "*",
         "spatie/laravel-permission": "^6.3",
+        "symfony/http-foundation": "^5.4",
         "yajra/laravel-datatables-oracle": "~9.0"
     },
     "require-dev": {
