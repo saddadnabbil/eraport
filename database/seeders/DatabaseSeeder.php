@@ -99,51 +99,51 @@ class DatabaseSeeder extends Seeder
             PositionKaryawanTableSeeder::class,
             KaryawanTableSeeder::class,
 
-            // GuruTableSeeder::class,
+            GuruTableSeeder::class,
             KelasTableSeeder::class,
-            // SiswaTableSeeder::class,
-            // AnggotaKelasTableSeeder::class,
-            // PrestasiSiswaTableSeeder::class,
-            // EkstrakulikulerTableSeeder::class,
-            // AnggotaEkstrakulikulerTableSeeder::class,
-            // MapelTableSeeder::class,
-            // PembelajaranTableSeeder::class,
+            SiswaTableSeeder::class,
+            AnggotaKelasTableSeeder::class,
+            PrestasiSiswaTableSeeder::class,
+            EkstrakulikulerTableSeeder::class,
+            AnggotaEkstrakulikulerTableSeeder::class,
+            MapelTableSeeder::class,
+            PembelajaranTableSeeder::class,
 
-            // NilaiEkstrakulikulerTableSeeder::class,
+            NilaiEkstrakulikulerTableSeeder::class,
 
-            // // KM Seeder
-            // KmKkmMapelTableSeeder::class,
-            // SilabusSeeder::class,
-            // CapaianPembelajaranTableSeeder::class,
-            // RencanaNilaiSumatifTableSeeder::class,
-            // RencanaNilaiFormatifTableSeeder::class,
-            // KmNilaiFormatifTableSeeder::class,
-            // KmNilaiSumatifTableSeeder::class,
-            // KmNilaiAkhirRaportTableSeeder::class,
-            // KmDeskripsiNilaiSiswaTableSeeder::class,
-            // KmNilaiAkhirTableSeeder::class,
-            // KmMappingMapelTableSeeder::class,
-            // KmTglRaportTableSeeder::class,
+            // KM Seeder
+            KmKkmMapelTableSeeder::class,
+            SilabusSeeder::class,
+            CapaianPembelajaranTableSeeder::class,
+            RencanaNilaiSumatifTableSeeder::class,
+            RencanaNilaiFormatifTableSeeder::class,
+            KmNilaiFormatifTableSeeder::class,
+            KmNilaiSumatifTableSeeder::class,
+            KmNilaiAkhirRaportTableSeeder::class,
+            KmDeskripsiNilaiSiswaTableSeeder::class,
+            KmNilaiAkhirTableSeeder::class,
+            KmMappingMapelTableSeeder::class,
+            KmTglRaportTableSeeder::class,
 
-            // // Timetable
-            // JadwalPelajaranSlotTableSeeder::class,
+            // Timetable
+            JadwalPelajaranSlotTableSeeder::class,
 
-            // // Tk report
-            // TkElementSeeder::class,
-            // TkTopicSeeder::class,
-            // TkSubtopicSeeder::class,
-            // TkPointSeeder::class,
-            // TkPembelajaranSeeder::class,
-            // TkEventSeeder::class,
-            // TkTglRaportTableSeeder::class,
+            // Tk report
+            TkElementSeeder::class,
+            TkTopicSeeder::class,
+            TkSubtopicSeeder::class,
+            TkPointSeeder::class,
+            TkPembelajaranSeeder::class,
+            TkEventSeeder::class,
+            TkTglRaportTableSeeder::class,
 
-            // // P5BK
-            // P5DimensiSeeder::class,
-            // P5ElementSeeder::class,
-            // P5SubelementSeeder::class,
-            // P5TemaSeeder::class,
-            // P5ProjectSeeder::class,
-            // P5NilaiProjectSeeder::class,
+            // P5BK
+            P5DimensiSeeder::class,
+            P5ElementSeeder::class,
+            P5SubelementSeeder::class,
+            P5TemaSeeder::class,
+            P5ProjectSeeder::class,
+            P5NilaiProjectSeeder::class,
         ]);
     }
 }

@@ -19,7 +19,7 @@ class KelasTableSeeder extends Seeder
             'tingkatan_id' => 1,
             'jurusan_id' => 3,
             'tapel_id' => 1,
-            'guru_id' => null,
+            'guru_id' => 2,
             'nama_kelas' => 'PG',
         ]);
 
@@ -28,7 +28,7 @@ class KelasTableSeeder extends Seeder
             'tingkatan_id' => 2,
             'jurusan_id' => 3,
             'tapel_id' => 1,
-            'guru_id' => null,
+            'guru_id' => 1,
             'nama_kelas' => 'KG-A1',
         ]);
 
@@ -36,7 +36,7 @@ class KelasTableSeeder extends Seeder
             'tingkatan_id' => 2,
             'jurusan_id' => 3,
             'tapel_id' => 1,
-            'guru_id' => null,
+            'guru_id' => 1,
             'nama_kelas' => 'KG-A2',
         ]);
 
@@ -44,7 +44,7 @@ class KelasTableSeeder extends Seeder
             'tingkatan_id' => 2,
             'jurusan_id' => 3,
             'tapel_id' => 1,
-            'guru_id' => null,
+            'guru_id' => 1,
             'nama_kelas' => 'KG-A3',
         ]);
 
@@ -52,7 +52,7 @@ class KelasTableSeeder extends Seeder
             'tingkatan_id' => 3,
             'jurusan_id' => 3,
             'tapel_id' => 1,
-            'guru_id' => null,
+            'guru_id' => 1,
             'nama_kelas' => 'KG-B1',
         ]);
 
@@ -60,7 +60,7 @@ class KelasTableSeeder extends Seeder
             'tingkatan_id' => 3,
             'jurusan_id' => 3,
             'tapel_id' => 1,
-            'guru_id' => null,
+            'guru_id' => 1,
             'nama_kelas' => 'KG-B2',
         ]);
 
@@ -68,7 +68,7 @@ class KelasTableSeeder extends Seeder
             'tingkatan_id' => 3,
             'jurusan_id' => 3,
             'tapel_id' => 1,
-            'guru_id' => null,
+            'guru_id' => 1,
             'nama_kelas' => 'KG-B3',
         ]);
 
@@ -77,7 +77,7 @@ class KelasTableSeeder extends Seeder
             'tingkatan_id' => 4,
             'jurusan_id' => 3,
             'tapel_id' => 1,
-            'guru_id' => null,
+            'guru_id' => 1,
             'nama_kelas' => 'P-1A',
         ]);
 
@@ -85,7 +85,7 @@ class KelasTableSeeder extends Seeder
             'tingkatan_id' => 4,
             'jurusan_id' => 3,
             'tapel_id' => 1,
-            'guru_id' => null,
+            'guru_id' => 1,
             'nama_kelas' => 'P-1B',
         ]);
 
@@ -93,7 +93,7 @@ class KelasTableSeeder extends Seeder
             'tingkatan_id' => 4,
             'jurusan_id' => 3,
             'tapel_id' => 1,
-            'guru_id' => null,
+            'guru_id' => 1,
             'nama_kelas' => 'P-1C',
         ]);
 
@@ -101,7 +101,7 @@ class KelasTableSeeder extends Seeder
             'tingkatan_id' => 4,
             'jurusan_id' => 3,
             'tapel_id' => 1,
-            'guru_id' => null,
+            'guru_id' => 1,
             'nama_kelas' => 'P-2A',
         ]);
 
@@ -109,7 +109,7 @@ class KelasTableSeeder extends Seeder
             'tingkatan_id' => 4,
             'jurusan_id' => 3,
             'tapel_id' => 1,
-            'guru_id' => null,
+            'guru_id' => 1,
             'nama_kelas' => 'P-2B',
         ]);
 
@@ -117,7 +117,7 @@ class KelasTableSeeder extends Seeder
             'tingkatan_id' => 4,
             'jurusan_id' => 3,
             'tapel_id' => 1,
-            'guru_id' => null,
+            'guru_id' => 1,
             'nama_kelas' => 'P-3A',
         ]);
 
@@ -125,7 +125,7 @@ class KelasTableSeeder extends Seeder
             'tingkatan_id' => 4,
             'jurusan_id' => 3,
             'tapel_id' => 1,
-            'guru_id' => null,
+            'guru_id' => 1,
             'nama_kelas' => 'P-3B',
         ]);
 
@@ -133,7 +133,7 @@ class KelasTableSeeder extends Seeder
             'tingkatan_id' => 4,
             'jurusan_id' => 3,
             'tapel_id' => 1,
-            'guru_id' => null,
+            'guru_id' => 1,
             'nama_kelas' => 'P-4A',
         ]);
 
@@ -141,7 +141,7 @@ class KelasTableSeeder extends Seeder
             'tingkatan_id' => 4,
             'jurusan_id' => 3,
             'tapel_id' => 1,
-            'guru_id' => null,
+            'guru_id' => 1,
             'nama_kelas' => 'P-4B',
         ]);
 
@@ -149,7 +149,7 @@ class KelasTableSeeder extends Seeder
             'tingkatan_id' => 4,
             'jurusan_id' => 3,
             'tapel_id' => 1,
-            'guru_id' => null,
+            'guru_id' => 1,
             'nama_kelas' => 'P-5A',
         ]);
 
@@ -157,7 +157,7 @@ class KelasTableSeeder extends Seeder
             'tingkatan_id' => 4,
             'jurusan_id' => 3,
             'tapel_id' => 1,
-            'guru_id' => null,
+            'guru_id' => 1,
             'nama_kelas' => 'P-6A',
         ]);
         // Seed data for JHS
@@ -165,7 +165,7 @@ class KelasTableSeeder extends Seeder
             'tingkatan_id' => 5,
             'jurusan_id' => 3,
             'tapel_id' => 1,
-            'guru_id' => null,
+            'guru_id' => 1,
             'nama_kelas' => 'JHS-7A',
         ]);
 
@@ -173,7 +173,7 @@ class KelasTableSeeder extends Seeder
             'tingkatan_id' => 5,
             'jurusan_id' => 3,
             'tapel_id' => 1,
-            'guru_id' => null,
+            'guru_id' => 1,
             'nama_kelas' => 'JHS-7B',
         ]);
 
@@ -181,7 +181,7 @@ class KelasTableSeeder extends Seeder
             'tingkatan_id' => 5,
             'jurusan_id' => 3,
             'tapel_id' => 1,
-            'guru_id' => null,
+            'guru_id' => 1,
             'nama_kelas' => 'JHS-8A',
         ]);
 
@@ -189,7 +189,7 @@ class KelasTableSeeder extends Seeder
             'tingkatan_id' => 5,
             'jurusan_id' => 3,
             'tapel_id' => 1,
-            'guru_id' => null,
+            'guru_id' => 1,
             'nama_kelas' => 'JHS-8B',
         ]);
 
@@ -197,7 +197,7 @@ class KelasTableSeeder extends Seeder
             'tingkatan_id' => 5,
             'jurusan_id' => 3,
             'tapel_id' => 1,
-            'guru_id' => null,
+            'guru_id' => 1,
             'nama_kelas' => 'JHS-9A',
         ]);
 
@@ -205,7 +205,7 @@ class KelasTableSeeder extends Seeder
             'tingkatan_id' => 5,
             'jurusan_id' => 3,
             'tapel_id' => 1,
-            'guru_id' => null,
+            'guru_id' => 1,
             'nama_kelas' => 'JHS-9B',
         ]);
 
@@ -214,7 +214,7 @@ class KelasTableSeeder extends Seeder
             'tingkatan_id' => 6,
             'jurusan_id' => 3,
             'tapel_id' => 1,
-            'guru_id' => null,
+            'guru_id' => 1,
             'nama_kelas' => 'SHS-10A',
         ]);
 
@@ -222,7 +222,7 @@ class KelasTableSeeder extends Seeder
             'tingkatan_id' => 6,
             'jurusan_id' => 3,
             'tapel_id' => 1,
-            'guru_id' => null,
+            'guru_id' => 1,
             'nama_kelas' => 'SHS-10B',
         ]);
 
@@ -230,7 +230,7 @@ class KelasTableSeeder extends Seeder
             'tingkatan_id' => 6,
             'jurusan_id' => 3,
             'tapel_id' => 1,
-            'guru_id' => null,
+            'guru_id' => 1,
             'nama_kelas' => 'SHS-11A',
         ]);
 
@@ -238,7 +238,7 @@ class KelasTableSeeder extends Seeder
             'tingkatan_id' => 6,
             'jurusan_id' => 3,
             'tapel_id' => 1,
-            'guru_id' => null,
+            'guru_id' => 1,
             'nama_kelas' => 'SHS-11B',
         ]);
 
@@ -246,7 +246,7 @@ class KelasTableSeeder extends Seeder
             'tingkatan_id' => 6,
             'jurusan_id' => 1,
             'tapel_id' => 1,
-            'guru_id' => null,
+            'guru_id' => 1,
             'nama_kelas' => 'SHS-12IPA',
         ]);
 
@@ -254,7 +254,7 @@ class KelasTableSeeder extends Seeder
             'tingkatan_id' => 6,
             'jurusan_id' => 2,
             'tapel_id' => 1,
-            'guru_id' => null,
+            'guru_id' => 1,
             'nama_kelas' => 'SHS-12IPS',
         ]);
     }
