@@ -75,18 +75,24 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <label for="status" class="col-sm-3 col-form-label">Status
-                                    Akun</label>
-                                <div class="col-sm-9 pt-1">
-                                    <label class="radio-inline me-3"><input type="radio" name="status" value="1"
-                                            @if ($karyawan->user->status == 1) checked @endif required>
-                                        Aktif</label>
-                                    <label class="radio-inline me-3"><input type="radio" name="status" value="0"
-                                            @if ($karyawan->user->status == 0) checked @endif required>
-                                        Non Aktif</label>
+                            @if ($karyawan->user->getRoleNames()->first() != 'Admin')
+                                <div class="form-group row">
+                                    <label for="status" class="col-sm-3 col-form-label">Status
+                                        Akun</label>
+                                    <div class="col-sm-9 pt-1">
+                                        <label class="radio-inline me-3"><input type="radio" name="status"
+                                                value="1" @if ($karyawan->user->status == 1) checked @endif
+                                                required>
+                                            Aktif</label>
+                                        <label class="radio-inline me-3"><input type="radio" name="status"
+                                                value="0" @if ($karyawan->user->status == 0) checked @endif
+                                                required>
+                                            Non Aktif</label>
+                                    </div>
                                 </div>
-                            </div>
+                            @else
+                                <input type="hidden" name="status" value="{{ $karyawan->user->status }}">
+                            @endif
                         @else
                             <input type="hidden" name="role" value="{{ $karyawan->user->getRoleNames()[0] }}">
                             <input type="hidden" name="status" value="{{ $karyawan->user->status }}">

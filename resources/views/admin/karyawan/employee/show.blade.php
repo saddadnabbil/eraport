@@ -516,7 +516,11 @@
                             @if ($user->hasRole(['Admin']))
                                 <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                     data-bs-target="#modal-edit{{ $karyawan->id }}">Edit</button>
-                                @if ($karyawan->status != false && $karyawan->user->status != false && $user->hasRole(['Admin', 'Curriculum']))
+                                @if (
+                                    $karyawan->status != false &&
+                                        $karyawan->user->status != false &&
+                                        $user->hasRole(['Admin', 'Curriculum']) &&
+                                        $karyawan->user->getRoleNames()->first() != 'Admin')
                                     <form id="form-non-active{{ $karyawan->id }}"
                                         action="{{ route('karyawan.nonactivate') }}" method="POST"
                                         style="display: inline-block;">
