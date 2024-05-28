@@ -14,21 +14,21 @@ class GuruTableSeeder extends Seeder
      */
     public function run()
     {
-        Guru::create([
-            'karyawan_id' => 1,
-        ]);
-        Guru::create([
-            'karyawan_id' => 2,
-        ]);
+        // Guru::create([
+        //     'karyawan_id' => 1,
+        // ]);
+        // Guru::create([
+        //     'karyawan_id' => 2,
+        // ]);
 
-        Guru::create([
-            'karyawan_id' => 3,
-        ]);
+        // Guru::create([
+        //     'karyawan_id' => 3,
+        // ]);
 
-        Guru::create([
-            'karyawan_id' => 4,
-        ]);
+        // Guru::create([
+        //     'karyawan_id' => 4,
+        // ]);
 
-        Guru::factory()->count(10)->create();
+        // Guru::factory()->count(10)->create();
     }
 }

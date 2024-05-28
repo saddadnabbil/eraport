@@ -18,7 +18,7 @@ class CreateKelasTable extends Migration
             $table->unsignedBigInteger('tingkatan_id')->unsigned();
             $table->unsignedBigInteger('jurusan_id')->unsigned();
             $table->unsignedBigInteger('tapel_id')->unsigned();
-            $table->unsignedBigInteger('guru_id')->unsigned();
+            $table->unsignedBigInteger('guru_id')->unsigned()->nullable();
             // $table->numeric('kelas');
             $table->string('nama_kelas', 30);
             $table->timestamps();
