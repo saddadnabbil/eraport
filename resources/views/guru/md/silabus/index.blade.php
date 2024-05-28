@@ -532,7 +532,7 @@
                     var mapel_id = $(this).val();
                     if (mapel_id) {
                         $.ajax({
-                            // route('guru.get.kelas') with mapel_id
+                            // route('admin.get.kelas') with mapel_id
                             url: '{{ route('guru.get.kelas', ':id') }}'.replace(':id', mapel_id),
                             type: "GET",
                             dataType: "json",
@@ -549,14 +549,6 @@
                                         data.kelas_id + '">' + data.nama_kelas +
                                         '</option>');
                                 });
-                            },
-                            success: function(response) {
-                                console.log('Response received:', response);
-                                pembelajaranIdField.val(response.pembelajaran_id);
-                                pembelajaranIdField.attr('placeholder', response.placeholder_value);
-                            },
-                            error: function(error) {
-                                console.error('Error fetching pembelajaran_id:', error);
                             }
                         });
                     } else {

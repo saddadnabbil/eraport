@@ -871,10 +871,6 @@
                         </div>
                     </div>
                 </div>
-
-                {{-- Start Modal Keluar --}}
-                @include('siswa.profile.partials.keluar.index')
-                <!-- End Modal Keluar-->
             </div>
         </div>
         <!-- ============================================================== -->

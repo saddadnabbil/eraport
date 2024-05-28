@@ -29,7 +29,9 @@ class GuruController extends Controller
 
     public function data()
     {
-        $dataGuru = Guru::orderBy('id', 'ASC')->get();
+        $dataGuru = Guru::whereDoesntHave('karyawan.user.roles', function ($query) {
+            $query->where('name', 'Admin');
+        })->orderBy('id', 'ASC')->get();
 
         return DataTables::of($dataGuru)
             ->addColumn('full_name', function ($guru) {

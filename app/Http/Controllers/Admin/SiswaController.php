@@ -16,6 +16,7 @@ use App\Models\AnggotaKelas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
 use Yajra\DataTables\Facades\DataTables;
@@ -323,20 +324,17 @@ class SiswaController extends Controller
         }
 
         $siswa = Siswa::findorfail($id);
-        $password_baru = bcrypt($request->password_baru);
-        $password_lama = bcrypt($request->password_lama);
+        $user = User::findOrFail($siswa->user_id);
+        $user->username = $request->username;
 
-        if ($password_baru != $siswa->user->password && $request->password_baru != null || $request->username != null) {
-            if ($password_lama != $siswa->user->password && $request->password_lama != null) {
-                return back()->with('toast_error', 'Password lama tidak sesuai');
+        if ($request->password_baru && $request->password_baru != null && $request->password_lama) {
+            if (Hash::check($request->password_lama, $user->password)) {
+                $user->password = Hash::make($request->password_baru);
             } else {
-                $user = User::findOrFail($siswa->user_id);
-
-                $user->password = $password_baru;
-                $user->username = $request->username;
-                $user->save();
+                return redirect()->back()->with('error', 'Password lama tidak sesuai');
             }
         }
+        $user->save();
 
         $data_siswa = [
             'tingkatan_id' => $request->kelas_id,

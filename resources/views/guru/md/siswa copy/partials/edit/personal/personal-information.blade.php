@@ -149,58 +149,64 @@
                 <label for="tanggal_lahir_edit" class="col-sm-2 col-form-label required">Tanggal Lahir</label>
                 <div class="col-sm-4">
                     <input type="date" class="form-control" id="tanggal_lahir_edit" name="tanggal_lahir"
-                        value="{{ $siswa->tanggal_lahir ? \Carbon\Carbon::parse($siswa->tanggal_lahir)->format('Y-m-d') : '' }}" " required>
-      </div>
-  </div>
-  
-        <div class="form-group row">
-              <label for="agama" class="col-sm-3 col-form-label required">Agama</label>
-              <div class="col-sm-3">
-                <select class="form-control form-select" name="agama" required>
-                    <option value="">-- Pilih Agama --</option>
-                    <option value="1" @if ($siswa->agama == '1') selected @endif>Islam</option>
-                    <option value="2" @if ($siswa->agama == '2') selected @endif>Protestan</option>
-                    <option value="3" @if ($siswa->agama == '3') selected @endif>Katolik</option>
-                    <option value="4" @if ($siswa->agama == '4') selected @endif>Hindu</option>
-                    <option value="5" @if ($siswa->agama == '5') selected @endif>Budha</option>
-                    <option value="6" @if ($siswa->agama == '6') selected @endif>Khonghucu</option>
-                    <option value="7" @if ($siswa->agama == '7') selected @endif>Lainnya</option>
-                </select>
-              </div>
-
-              <label for="warga_negara" class="col-sm-2 col-form-label">Warga Negara</label>
-              <div class="col-sm-4">
-                <input type="text" class="form-control" id="warga_negara" name="warga_negara" placeholder="Kewarganegaraan" value="{{ $siswa->warga_negara }}" >
-              </div>
-        </div>
-                                                                                                                            
-        <div class="form-group row">
-          <label for="jml_saudara_kandung" class="col-sm-3 col-form-label">Jumlah Saudara Kandung</label>
-          <div class="col-sm-3">
-            <input type="number" class="form-control" id="jml_saudara_kandung" name="jml_saudara_kandung"  value="{{ $siswa->jml_saudara_kandung }}" >
-          </div>
-          <label for="anak_ke" class="col-sm-2 col-form-label">Anak Ke</label>
-          <div class="col-sm-4">
-            <input type="number" class="form-control" id="anak_ke" name="anak_ke"  value="{{ $siswa->anak_ke }}" >
-          </div>
-        </div>
-
-        <div class="form-group row">
-          <label for="pas_photo" class="col-sm-3 col-form-label required">Pas Photo</label>
-          <div class="col-sm-4 custom-file">
-            <div class="input-group">
-                <div class="custom-file">
-                    <input type="file" name="pas_photo" class="custom-file-input form-control form-control" id="pas_photo" onchange="readURL(this);" >
+                        value="{{ $siswa->tanggal_lahir ? \Carbon\Carbon::parse($siswa->tanggal_lahir)->format('Y-m-d') : '' }}"
+                        required>
                 </div>
             </div>
-          </div>
-          <div class="col-sm-5">
-               @if (Storage::disk('public')->exists('siswa/' . $siswa->nis . '.jpg'))
-                    <img class="mb-2" src="{{ asset('storage/siswa/' . $siswa->nis . '.jpg') }}"
-                        id="pas_photo_preview" alt="{{ $siswa->pas_photo }}" alt="pas_photo" width="105px">
-                @else
-                    <img src="{{ asset('assets/dist/img/3x4.png') }}" alt="" id="pas_photo_preview"
-                        width="105px" height="144px">
+
+            <div class="form-group row">
+                <label for="agama" class="col-sm-3 col-form-label required">Agama</label>
+                <div class="col-sm-3">
+                    <select class="form-control form-select" name="agama" required>
+                        <option value="">-- Pilih Agama --</option>
+                        <option value="1" @if ($siswa->agama == '1') selected @endif>Islam</option>
+                        <option value="2" @if ($siswa->agama == '2') selected @endif>Protestan</option>
+                        <option value="3" @if ($siswa->agama == '3') selected @endif>Katolik</option>
+                        <option value="4" @if ($siswa->agama == '4') selected @endif>Hindu</option>
+                        <option value="5" @if ($siswa->agama == '5') selected @endif>Budha</option>
+                        <option value="6" @if ($siswa->agama == '6') selected @endif>Khonghucu</option>
+                        <option value="7" @if ($siswa->agama == '7') selected @endif>Lainnya</option>
+                    </select>
+                </div>
+
+                <label for="warga_negara" class="col-sm-2 col-form-label">Warga Negara</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" id="warga_negara" name="warga_negara"
+                        placeholder="Kewarganegaraan" value="{{ $siswa->warga_negara }}">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="jml_saudara_kandung" class="col-sm-3 col-form-label">Jumlah Saudara Kandung</label>
+                <div class="col-sm-3">
+                    <input type="number" class="form-control" id="jml_saudara_kandung" name="jml_saudara_kandung"
+                        value="{{ $siswa->jml_saudara_kandung }}">
+                </div>
+                <label for="anak_ke" class="col-sm-2 col-form-label">Anak Ke</label>
+                <div class="col-sm-4">
+                    <input type="number" class="form-control" id="anak_ke" name="anak_ke"
+                        value="{{ $siswa->anak_ke }}">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="pas_photo" class="col-sm-3 col-form-label required">Pas Photo</label>
+                <div class="col-sm-4 custom-file">
+                    <div class="input-group">
+                        <div class="custom-file">
+                            <input type="file" name="pas_photo"
+                                class="custom-file-input form-control form-control" id="pas_photo"
+                                onchange="readURL(this);">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-5">
+                    @if (Storage::disk('public')->exists('siswa/' . $siswa->nis . '.jpg'))
+                        <img class="mb-2" src="{{ asset('storage/siswa/' . $siswa->nis . '.jpg') }}"
+                            id="pas_photo_preview" alt="{{ $siswa->pas_photo }}" alt="pas_photo" width="105px">
+                    @else
+                        <img src="{{ asset('assets/dist/img/3x4.png') }}" alt="" id="pas_photo_preview"
+                            width="105px" height="144px">
                     @endif
 
                 </div>

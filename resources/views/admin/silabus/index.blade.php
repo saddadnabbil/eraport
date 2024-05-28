@@ -593,7 +593,6 @@
                                 kelas_id: kelasId
                             },
                             success: function(response) {
-                                console.log('Response received:', response);
                                 pembelajaranIdField.val(response.pembelajaran_id);
                                 pembelajaranIdField.attr('placeholder', response.placeholder_value);
                             },

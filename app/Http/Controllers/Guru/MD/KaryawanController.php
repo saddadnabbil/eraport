@@ -272,8 +272,12 @@ class KaryawanController extends Controller
 
         $user->username = $request->username;
 
-        if ($request->password_baru && $request->password_lama) {
-            $user->password = Hash::make($request->password_baru);
+        if ($request->password_baru && $request->password_lama && $request->password_lama) {
+            if (Hash::check($request->password_lama, $user->password)) {
+                $user->password = Hash::make($request->password_baru);
+            } else {
+                return redirect()->back()->with('error', 'Password lama tidak sesuai');
+            }
         }
         $user->save();
 

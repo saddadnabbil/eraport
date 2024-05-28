@@ -27,7 +27,7 @@
                 ],
                 [
                     'title' => $title,
-                    'url' => route('admin.tapel.index'),
+                    'url' => route('guru.tapel.index'),
                     'active' => false,
                 ],
             ],

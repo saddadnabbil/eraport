@@ -1,4 +1,4 @@
-<form action="{{ route('admin.siswa.update', $siswa->id) }}" method="POST" enctype="multipart/form-data">
+<form action="{{ route('profilesiswa.update', $siswa->id) }}" method="POST" enctype="multipart/form-data">
     {{ method_field('PATCH') }}
     @csrf
     <div class="modal-body">
@@ -30,10 +30,10 @@
         </ul>
 
         <div class="tab-content">
-            @include('admin.siswa.partials.edit.personal.index')
-            @include('admin.siswa.partials.edit.father.index')
-            @include('admin.siswa.partials.edit.mother.index')
-            @include('admin.siswa.partials.edit.guardian.index')
+            @include('siswa.profile.partials.edit.personal.index')
+            @include('siswa.profile.partials.edit.father.index')
+            @include('siswa.profile.partials.edit.mother.index')
+            @include('siswa.profile.partials.edit.guardian.index')
         </div>
 
         <div class="modal-footer justify-content-end">
