@@ -148,11 +148,6 @@ Route::group(['middleware' => ['auth']], function () {
                 Route::put('jadwalmengajar/{id}/manage', 'Admin\JadwalMengajarController@manageUpdate')->name('admin.jadwalmengajar.manage.update');
                 Route::get('jadwalmengajar/{id}/print', 'Admin\JadwalMengajarController@print')->name('admin.jadwalmengajar.print');
 
-                // Profile Controller
-                Route::resource('profileadmin', 'Admin\ProfileController')->only(['update'])->names([
-                    'update' => 'admin.profileadmin.update',
-                ]);
-
                 // Pengumuman Controller
                 Route::resource('pengumuman', 'Admin\PengumumanController')->only(['index', 'store', 'update', 'destroy'])->names([
                     'index' => 'admin.pengumuman.index',
@@ -346,7 +341,7 @@ Route::group(['middleware' => ['auth']], function () {
                     'create' => 'km.cp.create',
                 ]);
 
-                Route::resource('rencanaformatif', 'Admin\KM\RencanaNilaiFormatifController')->only(['index', 'store', 'show', 'edit', 'update', 'destroy'])->names([
+                Route::resource('rencanaformatif', 'Admin\KM\RencanaNilaiFormatifController')->only(['index', 'store', 'show', 'edit', 'update', 'destroy', 'create'])->names([
                     'index' => 'km.rencanaformatif.index',
                     'store' => 'km.rencanaformatif.store',
                     'show' => 'km.rencanaformatif.show',
@@ -355,13 +350,14 @@ Route::group(['middleware' => ['auth']], function () {
                     'destroy' => 'km.rencanaformatif.destroy',
                 ]);
 
-                Route::resource('rencanasumatif', 'Admin\KM\RencanaNilaiSumatifController')->only(['index', 'store', 'show', 'edit', 'update', 'destroy'])->names([
+                Route::resource('rencanasumatif', 'Admin\KM\RencanaNilaiSumatifController')->only(['index', 'store', 'show', 'edit', 'update', 'destroy', 'create'])->names([
                     'index' => 'km.rencanasumatif.index',
                     'store' => 'km.rencanasumatif.store',
                     'show' => 'km.rencanasumatif.show',
                     'edit' => 'km.rencanasumatif.edit',
                     'update' => 'km.rencanasumatif.update',
                     'destroy' => 'km.rencanasumatif.destroy',
+                    'create' => 'km.rencanasumatif.create',
                 ]);
 
                 Route::resource('penilaian', 'Admin\KM\PenilaianKurikulumMerdekaController')->only(['index', 'create', 'store', 'show', 'edit', 'update'])->names([
@@ -881,22 +877,24 @@ Route::group(['middleware' => ['auth']], function () {
                         'create' => 'guru.km.cp.create',
                     ]);
 
-                    Route::resource('rencanaformatif', 'Guru\KM\RencanaNilaiFormatifController')->only(['index', 'store', 'show', 'edit', 'update', 'destroy'])->names([
+                    Route::resource('rencanaformatif', 'Guru\KM\RencanaNilaiFormatifController')->only(['index', 'store', 'show', 'edit', 'update', 'destroy', 'create'])->names([
                         'index' => 'guru.km.rencanaformatif.index',
                         'store' => 'guru.km.rencanaformatif.store',
                         'show' => 'guru.km.rencanaformatif.show',
                         'edit' => 'guru.km.rencanaformatif.edit',
                         'update' => 'guru.km.rencanaformatif.update',
                         'destroy' => 'guru.km.rencanaformatif.destroy',
+                        'create' => 'guru.km.rencanaformatif.create',
                     ]);
 
-                    Route::resource('rencanasumatif', 'Guru\KM\RencanaNilaiSumatifController')->only(['index', 'store', 'show', 'edit', 'update', 'destroy'])->names([
+                    Route::resource('rencanasumatif', 'Guru\KM\RencanaNilaiSumatifController')->only(['index', 'store', 'show', 'edit', 'update', 'destroy', 'create'])->names([
                         'index' => 'guru.km.rencanasumatif.index',
                         'store' => 'guru.km.rencanasumatif.store',
                         'show' => 'guru.km.rencanasumatif.show',
                         'edit' => 'guru.km.rencanasumatif.edit',
                         'update' => 'guru.km.rencanasumatif.update',
                         'destroy' => 'guru.km.rencanasumatif.destroy',
+                        'create' => 'guru.km.rencanaformatif.create',
                     ]);
 
                     Route::resource('penilaian', 'Guru\KM\PenilaianKurikulumMerdekaController')->only(['index', 'create', 'store', 'show', 'edit', 'update'])->names([
