@@ -67,6 +67,10 @@ class CetakRaportP5Controller extends Controller
         $tapel = Tapel::where('status', 1)->first();
         $semester = Semester::findorfail($request->semester_id);
 
+        if ($tapel->km_tgl_raport == null) {
+            return redirect()->back()->with('toast_error', 'Tempat Print Raport Tidak Boleh Kosong');
+        }
+
         $data_kelas = Kelas::where('tapel_id', $tapel->id)
             ->whereNotIn('tingkatan_id', [1, 2, 3])
             ->get();

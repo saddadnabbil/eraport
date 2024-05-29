@@ -88,6 +88,10 @@ class CetakRaportTKController extends Controller
         $term = Term::findorfail($request->term_id);
         $user = Auth::user();
 
+        if ($tapel->tk_tgl_raport == null) {
+            return redirect()->back()->with('toast_error', 'Tempat Print Raport Tidak Boleh Kosong');
+        }
+
         if ($user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum']) && $user->hasAnyPermission(['teacher-pg-kg', 'homeroom-pg-kg'])) {
             $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
         }
@@ -128,10 +132,6 @@ class CetakRaportTKController extends Controller
         $nama = strtoupper($anggota_kelas->siswa->nama_lengkap);
         $kelas = strtoupper($anggota_kelas->kelas->nama_kelas);
         $nisn = $anggota_kelas->siswa->nisn;
-
-        if ($tapel->tk_tgl_raport->tempat_penerbitan == null) {
-            return redirect()->back()->with('toast_error', 'Tempat Penerbitan Tidak Boleh Kosong');
-        }
 
         if ($request->data_type == 1) {
             $title = 'Completeness of Report TK';
