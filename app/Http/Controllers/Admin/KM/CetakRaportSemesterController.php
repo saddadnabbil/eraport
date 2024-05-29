@@ -73,6 +73,10 @@ class CetakRaportSemesterController extends Controller
         $semester = Semester::findorfail($request->semester_id);
         $user = Auth::user();
 
+        if ($tapel->km_tgl_raport == null) {
+            return redirect()->back()->with('toast_error', 'Tanggal Print Raport Tidak Boleh Kosong');
+        }
+
         if ($user->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum']) && $user->hasAnyPermission(['teacher-km', 'homeroom', 'homeroom-km'])) {
             $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
         }

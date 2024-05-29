@@ -48,6 +48,6 @@ class Tapel extends Model
 
     public function tk_tgl_raport()
     {
-        return $this->hasOne('App\Models\KmTglRaport');
+        return $this->hasOne('App\Models\TkTglRaport');
     }
 }
