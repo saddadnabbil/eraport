@@ -52,7 +52,7 @@ class PenilaianKurikulumMerdekaController extends Controller
         if (count($data_mapel) == 0) {
             return redirect(route('guru.mapel.index'))->with('toast_warning', 'Mohon isikan Subject Data');
         } elseif (count($data_kelas) == 0) {
-            return redirect('admin/kelas')->with('toast_warning', 'Mohon isikan data kelas');
+            return redirect(route('guru.kelas.index'))->with('toast_warning', 'Mohon isikan data kelas');
         }
 
         return view('guru.km.penilaian.pilihkelas', compact('title', 'data_mapel', 'data_kelas', 'data_pembelajaran', 'tapel'));
