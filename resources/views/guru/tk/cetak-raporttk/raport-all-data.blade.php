@@ -667,8 +667,8 @@
                     <td style="width: 50%; text-align: center;">
                         <p class="s6" style="text-align: center;">
                             {{-- Serang, January 09, 2024<br>Homeroom Teacher --}}
-                            {{ $anggota_kelas->kelas->tapel->km_tgl_raport->tempat_penerbitan }}
-                            {{ $anggota_kelas->kelas->tapel->km_tgl_raport->tanggal_pembagian->isoFormat('MMMM D, Y') }}<br>Homeroom
+                            {{ $anggota_kelas->kelas->tapel->tk_tgl_raport->tempat_penerbitan }}
+                            {{ $anggota_kelas->kelas->tapel->tk_tgl_raport->tanggal_pembagian->isoFormat('MMMM D, Y') }}<br>Homeroom
                             Teacher
                         </p>
                         <p class="s7"

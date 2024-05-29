@@ -129,7 +129,7 @@ class CetakRaportTKController extends Controller
         $kelas = strtoupper($anggota_kelas->kelas->nama_kelas);
         $nisn = $anggota_kelas->siswa->nisn;
 
-        if ($tapel->km_tgl_raport->tempat_penerbitan == null) {
+        if ($tapel->tk_tgl_raport->tempat_penerbitan == null) {
             return redirect()->back()->with('toast_error', 'Tempat Penerbitan Tidak Boleh Kosong');
         }
 
