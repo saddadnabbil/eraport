@@ -1040,38 +1040,38 @@ Route::group(['middleware' => ['auth']], function () {
             // Start Route Wali Kelas KM
             Route::group(['middleware' => ['checkAksesGuru:homeroom-km', 'role:Teacher|Co-Teacher']], function () {
                 Route::prefix('km')->group(function () {
-                    Route::resource('pesertadidik', 'Walikelas\PesertaDidikController')->only(['index', 'show'])->names([
+                    Route::resource('pesertadidik', 'WaliKelas\PesertaDidikController')->only(['index', 'show'])->names([
                         'index' => 'walikelas.pesertadidik.index',
                         'show' => 'walikelas.pesertadidik.show',
                     ]);
 
-                    Route::resource('kehadiran', 'Walikelas\KehadiranSiswaController')->only(['index', 'store'])->names([
+                    Route::resource('kehadiran', 'WaliKelas\KehadiranSiswaController')->only(['index', 'store'])->names([
                         'index' => 'walikelas.kehadiran.index',
                         'store' => 'walikelas.kehadiran.store',
                     ]);
 
-                    Route::resource('prestasi', 'Walikelas\PrestasiSiswaController')->only(['index', 'store', 'update', 'destroy'])->names([
+                    Route::resource('prestasi', 'WaliKelas\PrestasiSiswaController')->only(['index', 'store', 'update', 'destroy'])->names([
                         'index' => 'walikelas.prestasi.index',
                         'store' => 'walikelas.prestasi.store',
                         'update' => 'walikelas.prestasi.update',
                         'destroy' => 'walikelas.prestasi.destroy',
                     ]);
 
-                    Route::resource('catatan', 'Walikelas\CatatanWaliKelasController')->only(['index', 'store'])->names([
+                    Route::resource('catatan', 'WaliKelas\CatatanWaliKelasController')->only(['index', 'store'])->names([
                         'index' => 'walikelas.catatan.index',
                         'store' => 'walikelas.catatan.store',
                     ]);
 
-                    Route::resource('kenaikan', 'Walikelas\KenaikanKelasController')->only(['index', 'store'])->names([
+                    Route::resource('kenaikan', 'WaliKelas\KenaikanKelasController')->only(['index', 'store'])->names([
                         'index' => 'walikelas.kenaikan.index',
                         'store' => 'walikelas.kenaikan.store',
                     ]);
 
-                    Route::resource('statusnilai', 'Walikelas\KM\StatusPenilaianController')->only(['index'])->names([
+                    Route::resource('statusnilai', 'WaliKelas\KM\StatusPenilaianController')->only(['index'])->names([
                         'index' => 'walikelas.statusnilaiguru.index',
                     ]);
 
-                    Route::resource('hasilnilai', 'Walikelas\KM\PengelolaanNilaiController')->only(['index'])->names([
+                    Route::resource('hasilnilai', 'WaliKelas\KM\PengelolaanNilaiController')->only(['index'])->names([
                         'index' => 'walikelas.hasilnilai.index',
                     ]);
 
@@ -1080,18 +1080,18 @@ Route::group(['middleware' => ['auth']], function () {
                         'store' => 'walikelas.nilairaport.store',
                     ]);
 
-                    Route::resource('leger', 'Walikelas\KM\LegerNilaiSiswaController')->only(['index', 'show'])->names([
+                    Route::resource('leger', 'WaliKelas\KM\LegerNilaiSiswaController')->only(['index', 'show'])->names([
                         'index' => 'walikelas.leger.index',
                         'show' => 'walikelas.leger.show',
                     ]);
 
-                    Route::resource('raportpts', 'Walikelas\KM\CetakRaportPTSController')->only(['index', 'show', 'store'])->names([
+                    Route::resource('raportpts', 'WaliKelas\KM\CetakRaportPTSController')->only(['index', 'show', 'store'])->names([
                         'index' => 'walikelas.raportpts.index',
                         'show' => 'walikelas.raportpts.show',
                         'store' => 'walikelas.raportpts.store',
                     ]);
 
-                    Route::resource('raportsemester', 'Walikelas\KM\CetakRaportSemesterController')->only(['index', 'show', 'store'])->names([
+                    Route::resource('raportsemester', 'WaliKelas\KM\CetakRaportSemesterController')->only(['index', 'show', 'store'])->names([
                         'index' => 'walikelas.raportsemester.index',
                         'show' => 'walikelas.raportsemester.show',
                         'store' => 'walikelas.raportsemester.store',
