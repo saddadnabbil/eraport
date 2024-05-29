@@ -80,7 +80,7 @@ class KehadiranSiswaController extends Controller
                     $cek_data->update($data);
                 }
             }
-            return redirect('guru/kehadiran')->with('toast_success', 'Kehadiran siswa berhasil disimpan');
+            return redirect()->back()->with('toast_success', 'Kehadiran siswa berhasil disimpan');
         }
     }
 }

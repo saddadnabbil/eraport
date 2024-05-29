@@ -127,32 +127,26 @@
                                                                 <td>
                                                                     <select class="form-control form-select" name="nilai[]"
                                                                         style="width: 100%;" required
-                                                                        oninvalid="this.setCustomValidity('silakan pilih item dalam daftar')"
-                                                                        oninput="setCustomValidity('')">
-                                                                        @if (is_null($anggota_ekstrakulikuler->nilai))
-                                                                            <option value="A">A</option>
-                                                                            <option value="B" selected>B</option>
-                                                                            <option value="C">C</option>
-                                                                            <option value="D">D</option>
-                                                                        @else
-                                                                            <option value="A"
-                                                                                @if ($anggota_ekstrakulikuler->nilai == 'A') selected @endif>
-                                                                                A</option>
-                                                                            <option value="B"
-                                                                                @if ($anggota_ekstrakulikuler->nilai == 'B') selected @endif>
-                                                                                B</option>
-                                                                            <option value="C"
-                                                                                @if ($anggota_ekstrakulikuler->nilai == 'C') selected @endif>
-                                                                                C</option>
-                                                                            <option value="D"
-                                                                                @if ($anggota_ekstrakulikuler->nilai == 'D') selected @endif>
-                                                                                D</option>
-                                                                        @endif
+                                                                        oninvalid="this.setCustomValidity('Silakan pilih item dalam daftar')"
+                                                                        oninput="setCustomValidity('')"
+                                                                        onchange="changeTextareaValue(this, 'deskripsiNilai{{ $no }}')">
+                                                                        <option value="A"
+                                                                            {{ $anggota_ekstrakulikuler->nilai == 'A' ? 'selected' : '' }}>
+                                                                            A</option>
+                                                                        <option value="B"
+                                                                            {{ $anggota_ekstrakulikuler->nilai == 'B' ? 'selected' : '' }}>
+                                                                            B</option>
+                                                                        <option value="C"
+                                                                            {{ $anggota_ekstrakulikuler->nilai == 'C' ? 'selected' : '' }}>
+                                                                            C</option>
+                                                                        <option value="D"
+                                                                            {{ $anggota_ekstrakulikuler->nilai == 'D' ? 'selected' : '' }}>
+                                                                            D</option>
                                                                     </select>
                                                                 </td>
                                                                 <td>
-                                                                    <textarea class="form-control" id="deskripsiNilai" name="deskripsi[]" rows="2" minlength="30" maxlength="200"
-                                                                        required oninvalid="this.setCustomValidity('Deskripsi harus berisi antara 20 s/d 100 karakter')"
+                                                                    <textarea class="form-control" id="deskripsiNilai{{ $no }}" name="deskripsi[]" rows="2" minlength="30"
+                                                                        maxlength="200" required oninvalid="this.setCustomValidity('Deskripsi harus berisi antara 20 s/d 100 karakter')"
                                                                         oninput="setCustomValidity('')" readonly>{{ $anggota_ekstrakulikuler->deskripsi }}</textarea>
                                                                 </td>
                                                             </tr>
@@ -196,7 +190,8 @@
                 var ekstrakulikuler_id = $(this).val();
                 if (ekstrakulikuler_id) {
                     $.ajax({
-                        url: '{{ route('guru.get.kelas.ekstra', ':id') }}'.replace(':id',
+                        url: '{{ route('guru.get.kelas.ekstra', ['id' => ':id']) }}'.replace(
+                            ':id',
                             ekstrakulikuler_id),
                         type: "GET",
                         dataType: "json",
@@ -220,23 +215,28 @@
             });
         });
 
-        $(document).ready(function() {
-            $('select[name="nilai[]"]').on('change', function() {
-                var selectedValue = $(this).val();
-                var deskripsi = $('#deskripsiNilai');
-                if (selectedValue === 'A') {
-                    deskripsi.val('Excellent');
-                } else if (selectedValue === 'B') {
-                    deskripsi.val('Good');
-                } else if (selectedValue === 'C') {
-                    deskripsi.val('Fair');
-                } else if (selectedValue === 'D') {
-                    deskripsi.val('Need Improvement');
-                } else {
-                    deskripsi.val('');
-                }
-            }).trigger('change');
-        });
+        // Fungsi untuk mengubah nilai teks textarea berdasarkan nilai dropdown yang dipilih
+        function changeTextareaValue(selectElement, textareaId) {
+            var selectedValue = selectElement.value;
+            var textarea = document.getElementById(textareaId);
+
+            switch (selectedValue) {
+                case 'A':
+                    textarea.value = 'Excellent';
+                    break;
+                case 'B':
+                    textarea.value = 'Good';
+                    break;
+                case 'C':
+                    textarea.value = 'Fair';
+                    break;
+                case 'D':
+                    textarea.value = 'Poor';
+                    break;
+                default:
+                    textarea.value = ''; // Kosongkan textarea jika tidak ada pilihan yang sesuai
+            }
+        }
     </script>
 @endpush
 

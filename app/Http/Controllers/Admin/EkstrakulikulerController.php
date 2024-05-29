@@ -71,10 +71,6 @@ class EkstrakulikulerController extends Controller
      */
     public function show($id)
     {
-        // AnggotaEkstrakulikuler::join('siswa', 'anggota_ekstrakulikuler.anggota_kelas_id', '=', 'siswa.id')
-        //         ->where('anggota_ekstrakulikuler.ekstrakulikuler_id', $ekstrakulikuler->id)
-        //         ->where('siswa.status', 1)
-        //         ->get();
         $title = 'Anggota Ekstrakulikuler';
         $tapel = Tapel::where('status', 1)->first();
 

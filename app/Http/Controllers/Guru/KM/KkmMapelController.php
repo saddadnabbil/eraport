@@ -30,12 +30,9 @@ class KkmMapelController extends Controller
         $id_kelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->get('id');
 
         $cek_pembelajaran = Pembelajaran::whereIn('mapel_id', $id_mapel)->whereNotNull('guru_id')->whereIn('kelas_id', $id_kelas)->where('status', 1)->get();
-        if (count($cek_pembelajaran) == 0) {
-            return redirect(route('guru.pembelajaran.index'))->with('toast_warning', 'Learning Data untuk mapel ini belum tersedia');
-        } else {
-            $data_kkm = KmKkmMapel::whereIn('mapel_id', $id_mapel)->get();
-            return view('guru.km.kkm.index', compact('title', 'data_mapel', 'data_kkm'));
-        }
+
+        $data_kkm = KmKkmMapel::whereIn('mapel_id', $id_mapel)->get();
+        return view('guru.km.kkm.index', compact('title', 'data_mapel', 'data_kkm'));
     }
 
     /**
