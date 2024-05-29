@@ -110,7 +110,7 @@ class NilaiEkstrakulikulerController extends Controller
                     $cek_data->update($data_nilai);
                 }
             }
-            return redirect('guru/nilaiekstra')->with('toast_success', 'Extracurricular Grade berhasil disimpan');
+            return redirect()->back()->with('toast_success', 'Extracurricular Grade berhasil disimpan');
         }
     }
 }

@@ -59,9 +59,9 @@
                                 <div class="customize-input">
                                     <select id="roleSelect"
                                         class="custom-select form-control bg-white custom-radius custom-shadow border-0">
-                                        <option value="1" @if (session()->get('akses_sebagai') == 'homeroom-km' && session()->get('akses_sebagai') == 'homeroom-km') selected @endif><a
+                                        <option value="1" @if (session()->get('akses_sebagai') == 'teacher-km' && session()->get('cek_homeroom') == true) selected @endif><a
                                                 class="dropdown-item" href="{{ route('ganti-akses') }}">
-                                                @if (session()->get('akses_sebagai') == 'teacher-km' && session()->get('akses_sebagai') == 'homeroom-km')
+                                                @if (session()->get('akses_sebagai') == 'teacher-km' && session()->get('cek_homeroom') == true)
                                                     Teacher
                                                 @else
                                                     Change
@@ -84,6 +84,7 @@
                         </li>
                     </div>
                 @endif
+                {{-- @dd(session()->all()) --}}
 
                 <div class="d-flex align-items-center justify-content-center"
                     style="padding: 0 15px; margin-left: 1rem;">
@@ -270,11 +271,11 @@
                                 class="svg-icon me-2 ms-1"></i>Change Password</a>
 
                         @if ($user->hasRole('Teacher'))
-                            @if (session()->get('akses_sebagai') == 'homeroom-km')
+                            @if (session()->get('akses_sebagai') == 'teacher-km')
                                 <a class="dropdown-item" href="{{ route('ganti-akses') }}"><i
                                         data-feather="toggle-right" class="svg-icon me-2 ms-1"></i> Change to
                                     Homeroom</a>
-                            @elseif (session()->get('akses_sebagai') == 'teacher-km')
+                            @elseif (session()->get('akses_sebagai') == 'homeroom-km')
                                 <a class="dropdown-item" href="{{ route('ganti-akses') }}"><i
                                         data-feather="toggle-left" class="svg-icon me-2 ms-1"></i> Change to
                                     Teacher</a>

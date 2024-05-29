@@ -60,7 +60,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('getKelasByTingkatan/ajax/{id}', 'AjaxController@ajax_kelas_by_tingkatan_id');
             Route::get('getAllSilabus/ajax/{id}', 'AjaxController@getAllSilabus')->name('admin.get.all.silabus');
             Route::get('getPembelajaranId/', 'AjaxController@getPembelajaranId')->name('get.pembelajaran.id');
-
+            Route::get('getKelas/ekstra/{id}', 'AjaxController@ajax_kelas_ekstra')->name('admin.get.kelas.ekstra');
             // User 
             Route::prefix('user')->group(function () {
                 Route::resource('user', 'Admin\UserController')
@@ -193,19 +193,19 @@ Route::group(['middleware' => ['auth']], function () {
                 ]);
 
                 // Guru Controller
-                Route::get('guru/data', 'Admin\GuruController@data')->name('admin.guru.data');
-                Route::get('guru/export', 'Admin\GuruController@export')->name('admin.guru.export');
-                Route::get('guru/import', 'Admin\GuruController@format_import')->name('admin.guru.format_import');
-                Route::post('guru/import', 'Admin\GuruController@import')->name('admin.guru.import');
+                Route::get('teacher/data', 'Admin\GuruController@data')->name('admin.guru.data');
+                Route::get('teacher/export', 'Admin\GuruController@export')->name('admin.guru.export');
+                Route::get('teacher/import', 'Admin\GuruController@format_import')->name('admin.guru.format_import');
+                Route::post('teacher/import', 'Admin\GuruController@import')->name('admin.guru.import');
                 Route::resource('guru', 'Admin\GuruController')->only(['index', 'store', 'update', 'destroy'])->names([
                     'index' => 'admin.guru.index',
                     'store' => 'admin.guru.store',
                     'update' => 'admin.guru.update',
                     'destroy' => 'admin.guru.destroy',
                 ]);
-                Route::get('guru/trash', 'Admin\GuruController@showTrash')->name('admin.guru.trash');
-                Route::delete('guru/{id}/permanent-delete', 'Admin\GuruController@destroyPermanent')->name('admin.guru.permanent-delete');
-                Route::patch('guru/{id}/restore', 'Admin\GuruController@restore')->name('admin.guru.restore');
+                Route::get('teacher/trash', 'Admin\GuruController@showTrash')->name('admin.guru.trash');
+                Route::delete('teacher/{id}/permanent-delete', 'Admin\GuruController@destroyPermanent')->name('admin.guru.permanent-delete');
+                Route::patch('teacher/{id}/restore', 'Admin\GuruController@restore')->name('admin.guru.restore');
 
                 // Tingkatan Controller
                 Route::resource('tingkatan', 'Admin\TingkatanController')->only(['index', 'store', 'update', 'destroy'])->names([
@@ -714,13 +714,13 @@ Route::group(['middleware' => ['auth']], function () {
                     ]);
 
                     // Guru Controller
-                    Route::get('guru/data', 'Guru\MD\GuruController@data')->name('guru.guru.data');
-                    Route::get('guru/export', 'Guru\MD\GuruController@export')->name('guru.guru.export');
-                    Route::get('guru/import', 'Guru\MD\GuruController@format_import')->name('guru.guru.format_import');
-                    Route::post('guru/import', 'Guru\MD\GuruController@import')->name('guru.guru.import');
-                    Route::get('guru/trash', 'Guru\MD\GuruController@showTrash')->name('guru.guru.trash');
-                    Route::delete('guru/{id}/permanent-delete', 'Guru\MD\GuruController@destroyPermanent')->name('guru.guru.permanent-delete');
-                    Route::patch('guru/{id}/restore', 'Guru\MD\GuruController@restore')->name('guru.guru.restore');
+                    Route::get('teacher/data', 'Guru\MD\GuruController@data')->name('guru.guru.data');
+                    Route::get('teacher/export', 'Guru\MD\GuruController@export')->name('guru.guru.export');
+                    Route::get('teacher/import', 'Guru\MD\GuruController@format_import')->name('guru.guru.format_import');
+                    Route::post('teacher/import', 'Guru\MD\GuruController@import')->name('guru.guru.import');
+                    Route::get('teacher/trash', 'Guru\MD\GuruController@showTrash')->name('guru.guru.trash');
+                    Route::delete('teacher/{id}/permanent-delete', 'Guru\MD\GuruController@destroyPermanent')->name('guru.guru.permanent-delete');
+                    Route::patch('teacher/{id}/restore', 'Guru\MD\GuruController@restore')->name('guru.guru.restore');
                     Route::resource('guru', 'Guru\MD\GuruController')->only(['index', 'store', 'update', 'destroy'])->names([
                         'index' => 'guru.guru.index',
                         'store' => 'guru.guru.store',

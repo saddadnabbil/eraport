@@ -137,8 +137,8 @@
                                                     @endif
                                                 </td>
                                                 <td>{{ $ekstrakulikuler->nama_ekstrakulikuler }}</td>
-                                                <td>{{ $ekstrakulikuler->pembina->nama_lengkap }}
-                                                    {{ $ekstrakulikuler->pembina->gelar }}</td>
+                                                <td>{{ $ekstrakulikuler->pembina->karyawan->nama_lengkap }}
+                                                    {{ $ekstrakulikuler->pembina->karyawan->gelar }}</td>
                                                 <td>
                                                     <a href="{{ route('guru.ekstrakulikuler.show', $ekstrakulikuler->id) }}"
                                                         class="btn btn-primary btn-sm">

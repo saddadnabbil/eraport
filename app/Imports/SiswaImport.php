@@ -67,9 +67,9 @@ class SiswaImport implements ToCollection
                     // Tentukan tingkatan_id berdasarkan tingkatan
                     if ($tingkatan === 'PG') {
                         $tingkatanId = 1; // PG
-                    } elseif ($tingkatan === 'KG') {
+                    } elseif ($tingkatan === 'KG-A') {
                         $tingkatanId = 2; // JHS
-                    } elseif ($tingkatan === 'KG') {
+                    } elseif ($tingkatan === 'KG-B') {
                         $tingkatanId = 3; // JHS
                     } elseif ($tingkatan === 'P') {
                         $tingkatanId = 4; // JHS
