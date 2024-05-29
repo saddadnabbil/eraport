@@ -68,9 +68,9 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
 
         // Middleware tambahan
-        'checkRole' => \App\Http\Middleware\CheckRole::class,
-        'checkKurikulum' => \App\Http\Middleware\CheckKurikulum::class,
-        'checkAksesGuru' => \App\Http\Middleware\CheckAksesGuru::class,
+        'checkRole' => \App\Http\Middleware\checkRole::class,
+        'checkKurikulum' => \App\Http\Middleware\checkKurikulum::class,
+        'checkAksesGuru' => \App\Http\Middleware\checkAksesGuru::class,
         'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
         'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
         'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
