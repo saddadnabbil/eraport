@@ -26,7 +26,8 @@ class JadwalMengajarController extends Controller
         $title = 'Select Teacher - Teaching Schedule';
 
         $guru_ids = Pembelajaran::pluck('guru_id');
-        $dataGuru = Guru::whereIn('id', $guru_ids)->orderBy('id', 'ASC')->get();
+        $kelas = Kelas::whereIn('guru_id', $guru_ids)->whereNotIn('tingkatan_id', [1, 2, 3])->get();
+        $dataGuru = Guru::whereIn('id', $kelas->pluck('guru_id'))->orderBy('id', 'ASC')->get();
 
         return view('guru.md.jadwalmengajar.pilihkelas', compact('title', 'dataGuru'));
     }
@@ -83,7 +84,7 @@ class JadwalMengajarController extends Controller
 
         $dataJadwalMengajarSlot = JadwalPelajaranSlot::where('tapel_id', $tapel->id)->orderBy('start_time', 'ASC')->get();
 
-        $dataKelas = Kelas::where('tapel_id', $tapel->id)->orderBy('id', 'ASC')->get();
+        $dataKelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->orderBy('id', 'ASC')->get();
 
         return view('guru.md.jadwalmengajar.build', compact('title', 'tapel', 'dataPembelajaran', 'guru', 'dataJadwalMengajarSlot', 'dataWeekdays', 'dataKelas', 'selected'));
     }
@@ -171,7 +172,7 @@ class JadwalMengajarController extends Controller
 
         $dataJadwalPelajaranSlot = JadwalPelajaranSlot::where('tapel_id', $tapel->id)->orderBy('start_time', 'ASC')->get();
 
-        $dataKelas = Kelas::where('tapel_id', $tapel->id)->orderBy('id', 'ASC')->get();
+        $dataKelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->orderBy('id', 'ASC')->get();
 
         return view('guru.md.jadwalmengajar.show', compact('title', 'dataWeekdays', 'selected', 'dataJadwalPelajaranSlot', 'dataKelas', 'pembelajaran'));
     }
@@ -206,7 +207,7 @@ class JadwalMengajarController extends Controller
 
         $dataJadwalPelajaranSlot = JadwalPelajaranSlot::where('tapel_id', $tapel->id)->orderBy('start_time', 'ASC')->get();
 
-        $dataKelas = Kelas::where('tapel_id', $tapel->id)->orderBy('id', 'ASC')->get();
+        $dataKelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->orderBy('id', 'ASC')->get();
 
         $timetable = PDF::loadview('guru.jadwalmengajar.print', compact('title', 'pembelajaran', 'dataWeekdays', 'selected', 'dataJadwalPelajaranSlot', 'dataKelas'))->setPaper('A4', 'landscape');
         return $timetable->stream('Print (' . $guru->karyawan->nama_lengkap . ' - ' . $pembelajaran->mapel->nama_mapel . ').pdf');

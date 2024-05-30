@@ -14,6 +14,7 @@
         'admin.silabus.*',
         'admin.jadwalmengajar.*',
         'admin.jadwalpelajaran.*',
+        'admin.timeslot.*',
     ]),
     'hasArrow' => true,
     'icon' => 'database',
