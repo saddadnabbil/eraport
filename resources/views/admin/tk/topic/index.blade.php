@@ -104,6 +104,12 @@
                                                     </select>
                                                 </div>
                                             </div>
+                                            <div class="form-group row">
+                                                <label for="color" class="col-sm-3 col-form-label">Color</label>
+                                                <div class="col-sm-9">
+                                                    <input type="color" name="color" id="color">
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="modal-footer justify-content-end">
                                             <button type="button" class="btn btn-default"
@@ -143,6 +149,7 @@
                                             <th>No</th>
                                             <th>Element</th>
                                             <th>Topic</th>
+                                            <th>Color</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -154,6 +161,8 @@
                                                 <td>{{ $no }}</td>
                                                 <td>{{ $topic->element->name }}</td>
                                                 <td>{{ $topic->name }}</td>
+                                                <td><input type="color" name="color" value="{{ $topic->color }}"
+                                                        disabled></td>
                                                 <td class="text-center">
                                                     @include('components.actions.delete-button', [
                                                         'route' => route('tk.topic.destroy', $topic->id),
@@ -221,6 +230,14 @@
                                                                                 </option>
                                                                             @endforeach
                                                                         </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group row">
+                                                                    <label for="color"
+                                                                        class="col-sm-3 col-form-label">Color</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="color" name="color"
+                                                                            id="color-edit" value="{{ $topic->color }}">
                                                                     </div>
                                                                 </div>
                                                             </div>

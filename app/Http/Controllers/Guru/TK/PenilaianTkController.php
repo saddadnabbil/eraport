@@ -69,7 +69,7 @@ class PenilaianTkController extends Controller
         if (count($data_mapel) == 0) {
             return redirect(route('guru.mapel.index'))->with('toast_warning', 'Mohon isikan Subject Data');
         } elseif (count($data_kelas) == 0) {
-            return redirect('admin/kelas')->with('toast_warning', 'Mohon isikan data kelas');
+            return redirect()->back()->with('toast_warning', 'Mohon isikan data kelas');
         }
 
         return view('guru.tk.penilaiantk.pilihkelas', compact('title', 'data_mapel', 'data_kelas', 'tapel', 'data_term', 'term'));

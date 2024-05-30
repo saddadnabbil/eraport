@@ -120,34 +120,6 @@ Route::group(['middleware' => ['auth']], function () {
 
             // Master Data
             Route::prefix('master-data')->group(function () {
-                Route::resource('jadwalpelajaran', 'Admin\JadwalPelajaranController', [
-                    'only' => ['index', 'create', 'store', 'show'],
-                ])->names([
-                    'index' => 'admin.jadwalpelajaran.index',
-                    'create' => 'admin.jadwalpelajaran.create',
-                    'store' => 'admin.jadwalpelajaran.store',
-                    'show' => 'admin.jadwalpelajaran.show',
-                ]);
-                Route::get('jadwalpelajaran/{id}/build', 'Admin\JadwalPelajaranController@build')->name('admin.jadwalpelajaran.build');
-                Route::post('jadwalpelajaran/manage', 'Admin\JadwalPelajaranController@manage')->name('admin.jadwalpelajaran.manage');
-                Route::put('jadwalpelajaran/{id}/manage', 'Admin\JadwalPelajaranController@manageUpdate')->name('admin.jadwalpelajaran.manage.update');
-                Route::get('jadwalpelajaran/{id}/print', 'Admin\JadwalPelajaranController@print')->name('admin.jadwalpelajaran.print');
-
-                Route::resource('jadwalmengajar', 'Admin\JadwalMengajarController', [
-                    'only' => ['index', 'create', 'store', 'show', 'edit', 'destroy'],
-                ])->names([
-                    'index' => 'admin.jadwalmengajar.index',
-                    'create' => 'admin.jadwalmengajar.create',
-                    'store' => 'admin.jadwalmengajar.store',
-                    'show' => 'admin.jadwalmengajar.show',
-                    'edit' => 'admin.jadwalmengajar.edit',
-                    'destroy' => 'admin.jadwalmengajar.destroy',
-                ]);
-                Route::get('jadwalmengajar/{id}/build', 'Admin\JadwalMengajarController@build')->name('admin.jadwalmengajar.build');
-                Route::post('jadwalmengajar/manage', 'Admin\JadwalMengajarController@manage')->name('admin.jadwalmengajar.manage');
-                Route::put('jadwalmengajar/{id}/manage', 'Admin\JadwalMengajarController@manageUpdate')->name('admin.jadwalmengajar.manage.update');
-                Route::get('jadwalmengajar/{id}/print', 'Admin\JadwalMengajarController@print')->name('admin.jadwalmengajar.print');
-
                 // Pengumuman Controller
                 Route::resource('pengumuman', 'Admin\PengumumanController')->only(['index', 'store', 'update', 'destroy'])->names([
                     'index' => 'admin.pengumuman.index',
@@ -278,6 +250,36 @@ Route::group(['middleware' => ['auth']], function () {
                 Route::put('timeslot/update/{id}', 'Admin\JadwalPelajaranController@updateTimeSlot')->name('admin.timeslot.update');
                 Route::delete('timeslot/{id}', 'Admin\JadwalPelajaranController@deleteTimeSlot')->name('admin.timeslot.destroy');
 
+                Route::resource('jadwalpelajaran', 'Admin\JadwalPelajaranController', [
+                    'only' => ['index', 'create', 'store', 'show'],
+                ])->names([
+                    'index' => 'admin.jadwalpelajaran.index',
+                    'create' => 'admin.jadwalpelajaran.create',
+                    'store' => 'admin.jadwalpelajaran.store',
+                    'show' => 'admin.jadwalpelajaran.show',
+                ]);
+
+                Route::get('jadwalpelajaran/{id}/build', 'Admin\JadwalPelajaranController@build')->name('admin.jadwalpelajaran.build');
+                Route::post('jadwalpelajaran/manage', 'Admin\JadwalPelajaranController@manage')->name('admin.jadwalpelajaran.manage');
+                Route::put('jadwalpelajaran/{id}/manage', 'Admin\JadwalPelajaranController@manageUpdate')->name('admin.jadwalpelajaran.manage.update');
+                Route::get('jadwalpelajaran/{id}/print', 'Admin\JadwalPelajaranController@print')->name('admin.jadwalpelajaran.print');
+
+                Route::resource('jadwalmengajar', 'Admin\JadwalMengajarController', [
+                    'only' => ['index', 'create', 'store', 'show', 'edit', 'destroy'],
+                ])->names([
+                    'index' => 'admin.jadwalmengajar.index',
+                    'create' => 'admin.jadwalmengajar.create',
+                    'store' => 'admin.jadwalmengajar.store',
+                    'show' => 'admin.jadwalmengajar.show',
+                    'edit' => 'admin.jadwalmengajar.edit',
+                    'destroy' => 'admin.jadwalmengajar.destroy',
+                ]);
+
+                Route::get('jadwalmengajar/{id}/build', 'Admin\JadwalMengajarController@build')->name('admin.jadwalmengajar.build');
+                Route::post('jadwalmengajar/manage', 'Admin\JadwalMengajarController@manage')->name('admin.jadwalmengajar.manage');
+                Route::put('jadwalmengajar/{id}/manage', 'Admin\JadwalMengajarController@manageUpdate')->name('admin.jadwalmengajar.manage.update');
+                Route::get('jadwalmengajar/{id}/print', 'Admin\JadwalMengajarController@print')->name('admin.jadwalmengajar.print');
+
                 // Silabus Controller
                 Route::resource('silabus', 'Admin\SilabusController')->only(['index', 'store', 'update', 'destroy'])->names([
                     'index' => 'admin.silabus.index',
@@ -348,6 +350,7 @@ Route::group(['middleware' => ['auth']], function () {
                     'edit' => 'km.rencanaformatif.edit',
                     'update' => 'km.rencanaformatif.update',
                     'destroy' => 'km.rencanaformatif.destroy',
+                    'create' => 'km.rencanaformatif.create',
                 ]);
 
                 Route::resource('rencanasumatif', 'Admin\KM\RencanaNilaiSumatifController')->only(['index', 'store', 'show', 'edit', 'update', 'destroy', 'create'])->names([
@@ -518,6 +521,43 @@ Route::group(['middleware' => ['auth']], function () {
                     'store' => 'tk.kehadiran.store',
                     'create' => 'tk.kehadiran.create',
                 ]);
+
+                // Timeslot
+                Route::get('timeslot', 'Admin\TK\TkJadwalPelajaranController@timeSlot')->name('admin.tk.timeslot.index');
+                Route::post('timeslot', 'Admin\TK\TkJadwalPelajaranController@storeTimeSlot')->name('admin.tk.timeslot.store');
+                Route::put('timeslot/update/{id}', 'Admin\TK\TkJadwalPelajaranController@updateTimeSlot')->name('admin.tk.timeslot.update');
+                Route::delete('timeslot/{id}', 'Admin\TK\TkJadwalPelajaranController@deleteTimeSlot')->name('admin.tk.timeslot.destroy');
+
+                Route::get('jadwalpelajaran/{id}/build', 'Admin\TK\TkJadwalPelajaranController@build')->name('admin.tk.jadwalpelajaran.build');
+                Route::post('jadwalpelajaran/manage', 'Admin\TK\TkJadwalPelajaranController@manage')->name('admin.tk.jadwalpelajaran.manage');
+                Route::put('jadwalpelajaran/{id}/manage', 'Admin\TK\TkJadwalPelajaranController@manageUpdate')->name('admin.tk.jadwalpelajaran.manage.update');
+                Route::get('jadwalpelajaran/{id}/print', 'Admin\TK\TkJadwalPelajaranController@print')->name('admin.tk.jadwalpelajaran.print');
+
+                Route::resource('jadwalpelajaran', 'Admin\TK\TkJadwalPelajaranController', [
+                    'only' => ['index', 'create', 'store', 'show'],
+                ])->names([
+                    'index' => 'admin.tk.jadwalpelajaran.index',
+                    'create' => 'admin.tk.jadwalpelajaran.create',
+                    'store' => 'admin.tk.jadwalpelajaran.store',
+                    'show' => 'admin.tk.jadwalpelajaran.show',
+                ]);
+
+                Route::get('jadwalmengajar/{id}/build', 'Admin\TK\TkJadwalMengajarController@build')->name('admin.tk.jadwalmengajar.build');
+                Route::post('jadwalmengajar/manage', 'Admin\TK\TkJadwalMengajarController@manage')->name('admin.tk.jadwalmengajar.manage');
+                Route::put('jadwalmengajar/{id}/manage', 'Admin\TK\TkJadwalMengajarController@manageUpdate')->name('admin.tk.jadwalmengajar.manage.update');
+                Route::get('jadwalmengajar/{id}/print', 'Admin\TK\TkJadwalMengajarController@print')->name('admin.tk.jadwalmengajar.print');
+
+                Route::resource('jadwalmengajar', 'Admin\TK\TkJadwalMengajarController', [
+                    'only' => ['index', 'create', 'store', 'show', 'edit', 'destroy'],
+                ])->names([
+                    'index' => 'admin.tk.jadwalmengajar.index',
+                    'create' => 'admin.tk.jadwalmengajar.create',
+                    'store' => 'admin.tk.jadwalmengajar.store',
+                    'show' => 'admin.tk.jadwalmengajar.show',
+                    'edit' => 'admin.tk.jadwalmengajar.edit',
+                    'destroy' => 'admin.tk.jadwalmengajar.destroy',
+                ]);
+
                 Route::resource('event', 'Admin\TK\TkEventController')->names([
                     'index' => 'tk.event.index',
                     'store' => 'tk.event.store',
@@ -1104,6 +1144,42 @@ Route::group(['middleware' => ['auth']], function () {
             // Start Route PG-KG
             Route::group(['middleware' => ['role:Teacher PG-KG|Co-Teacher PG-KG|Curriculum']], function () {
                 Route::prefix('tk')->group(function () {
+                    // Timeslot
+                    Route::get('timeslot', 'Guru\TK\TkJadwalPelajaranController@timeSlot')->name('guru.tk.timeslot.index');
+                    Route::post('timeslot', 'Guru\TK\TkJadwalPelajaranController@storeTimeSlot')->name('guru.tk.timeslot.store');
+                    Route::put('timeslot/update/{id}', 'Guru\TK\TkJadwalPelajaranController@updateTimeSlot')->name('guru.tk.timeslot.update');
+                    Route::delete('timeslot/{id}', 'Guru\TK\TkJadwalPelajaranController@deleteTimeSlot')->name('guru.tk.timeslot.destroy');
+
+                    Route::get('jadwalpelajaran/{id}/build', 'Guru\TK\TkJadwalPelajaranController@build')->name('guru.tk.jadwalpelajaran.build');
+                    Route::post('jadwalpelajaran/manage', 'Guru\TK\TkJadwalPelajaranController@manage')->name('guru.tk.jadwalpelajaran.manage');
+                    Route::put('jadwalpelajaran/{id}/manage', 'Guru\TK\TkJadwalPelajaranController@manageUpdate')->name('guru.tk.jadwalpelajaran.manage.update');
+                    Route::get('jadwalpelajaran/{id}/print', 'Guru\TK\TkJadwalPelajaranController@print')->name('guru.tk.jadwalpelajaran.print');
+
+                    Route::resource('jadwalpelajaran', 'Guru\TK\TkJadwalPelajaranController', [
+                        'only' => ['index', 'create', 'store', 'show'],
+                    ])->names([
+                        'index' => 'guru.tk.jadwalpelajaran.index',
+                        'create' => 'guru.tk.jadwalpelajaran.create',
+                        'store' => 'guru.tk.jadwalpelajaran.store',
+                        'show' => 'guru.tk.jadwalpelajaran.show',
+                    ]);
+
+                    Route::get('jadwalmengajar/{id}/build', 'Guru\TK\TkJadwalMengajarController@build')->name('guru.tk.jadwalmengajar.build');
+                    Route::post('jadwalmengajar/manage', 'Guru\TK\TkJadwalMengajarController@manage')->name('guru.tk.jadwalmengajar.manage');
+                    Route::put('jadwalmengajar/{id}/manage', 'Guru\TK\TkJadwalMengajarController@manageUpdate')->name('guru.tk.jadwalmengajar.manage.update');
+                    Route::get('jadwalmengajar/{id}/print', 'Guru\TK\TkJadwalMengajarController@print')->name('guru.tk.jadwalmengajar.print');
+
+                    Route::resource('jadwalmengajar', 'Guru\TK\TkJadwalMengajarController', [
+                        'only' => ['index', 'create', 'store', 'show', 'edit', 'destroy'],
+                    ])->names([
+                        'index' => 'guru.tk.jadwalmengajar.index',
+                        'create' => 'guru.tk.jadwalmengajar.create',
+                        'store' => 'guru.tk.jadwalmengajar.store',
+                        'show' => 'guru.tk.jadwalmengajar.show',
+                        'edit' => 'guru.tk.jadwalmengajar.edit',
+                        'destroy' => 'guru.tk.jadwalmengajar.destroy',
+                    ]);
+
                     Route::resource('kehadiran', 'Guru\TK\TkKehadiranSiswaController')->only(['index', 'store', 'create'])->names([
                         'index' => 'guru.tk.kehadiran.index',
                         'store' => 'guru.tk.kehadiran.store',

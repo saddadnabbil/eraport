@@ -166,7 +166,11 @@
                                                             @endphp
                                                             @if (!in_array(['slot_id' => $slot->id, 'days' => $weekdays, 'index' => $index], $skippedCells))
                                                                 <td class="p-3 border"
-                                                                    style="{{ $isPrimary ? ' background-color: 	#a7d7ff7d; color: #212529' : '' }}"
+                                                                    style=" @foreach ($dataMapel as $mapel)
+                                                                @if (isset($selected[$slot->id][$weekdays]) && $selected[$slot->id][$weekdays] == $mapel->id)
+                                                                    background-color: {{ $mapel->color }};
+                                                                    color: #212529;"
+                                                                @endif @endforeach
                                                                     rowspan="{{ $rowspan }}">
                                                                     @foreach ($dataMapel as $mapel)
                                                                         @if (isset($selected[$slot->id][$weekdays]) && $selected[$slot->id][$weekdays] == $mapel->id)

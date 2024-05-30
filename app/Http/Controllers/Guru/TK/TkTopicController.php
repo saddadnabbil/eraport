@@ -90,6 +90,7 @@ class TkTopicController extends Controller
             'name' => $request->name,
             'tk_element_id' => $request->tk_element_id,
             'guru_id' => $request->guru_id,
+            'color' => $request->color
         ]);
 
         return back()->with('success', 'Topic berhasil diperbarui.');

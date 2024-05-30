@@ -146,6 +146,14 @@
                                                         value="{{ old('ringkasan_mapel') }}">
                                                 </div>
                                             </div>
+
+                                            <div class="form-group row">
+                                                <label for="color" class="col-sm-3 col-form-label">Color</label>
+                                                <div class="col-sm-9">
+                                                    <input type="color" name="color" id="color"
+                                                        value="{{ old('color') }}">
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="modal-footer justify-content-end">
                                             <button type="button" class="btn btn-default"
@@ -167,6 +175,7 @@
                                             <th>Subject</th>
                                             <th>Nama Subject dalam Bahasa Indonesia</th>
                                             <th>Ringkas (Singkatan)</th>
+                                            <th>Color</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -179,6 +188,8 @@
                                                 <td>{{ $mapel->nama_mapel }}</td>
                                                 <td>{{ $mapel->nama_mapel_indonesian }}</td>
                                                 <td>{{ $mapel->ringkasan_mapel }}</td>
+                                                <td><input type="color" name="color" id="color"
+                                                        value="{{ $mapel->color }}" disabled></td>
                                                 <td>
                                                     @include('components.actions.delete-button', [
                                                         'route' => route('admin.mapel.destroy', $mapel->id),
@@ -235,6 +246,15 @@
                                                                         <input type="text" class="form-control"
                                                                             id="ringkasan_mapel" name="ringkasan_mapel"
                                                                             value="{{ $mapel->ringkasan_mapel }}">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group row">
+                                                                    <label for="color"
+                                                                        class="col-sm-3 col-form-label">Color</label>
+                                                                    <div class="col-sm-9">
+                                                                        <input type="color" id="color"
+                                                                            name="color" value="{{ $mapel->color }}">
                                                                     </div>
                                                                 </div>
                                                             </div>

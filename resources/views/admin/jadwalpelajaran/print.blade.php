@@ -58,7 +58,7 @@
         <table class="border-dark table-auto" style="">
             <thead>
                 <tr style="height: 10px">
-                    <th style="background-color: #93acd457; color: #212529; padding: 0px">
+                    <th style="background-color: #93acd457; color: #212529; padding: 0px;">
                         <p class="text-center mb-0">TIME</p>
                     </th>
                     @foreach ($dataWeekdays as $weekdays)
@@ -103,20 +103,34 @@
                                         @php
                                             $rowspan++;
                                             // Add the skipped cells to the list
-                                            $skippedCells[] = ['slot_id' => $dataJadwalPelajaranSlot[$i]->id, 'days' => $weekdays, 'index' => $i];
+                                            $skippedCells[] = [
+                                                'slot_id' => $dataJadwalPelajaranSlot[$i]->id,
+                                                'days' => $weekdays,
+                                                'index' => $i,
+                                            ];
                                         @endphp
                                     @endif
                                 @endfor
                                 @php
-                                    $isPrimary = isset($selected[$slot->id][$weekdays]) && $selected[$slot->id][$weekdays] && !in_array(['slot_id' => $slot->id, 'days' => $weekdays, 'index' => $index], $skippedCells);
+                                    $isPrimary =
+                                        isset($selected[$slot->id][$weekdays]) &&
+                                        $selected[$slot->id][$weekdays] &&
+                                        !in_array(
+                                            ['slot_id' => $slot->id, 'days' => $weekdays, 'index' => $index],
+                                            $skippedCells,
+                                        );
                                 @endphp
                                 @if (!in_array(['slot_id' => $slot->id, 'days' => $weekdays, 'index' => $index], $skippedCells))
                                     <td class="p-1 border"
-                                        style="{{ $isPrimary ? ' background-color: 	#a7d7ff7d; color: #212529' : '' }}"
+                                        style=" @foreach ($dataMapel as $mapel)
+                                    @if (isset($selected[$slot->id][$weekdays]) && $selected[$slot->id][$weekdays] == $mapel->id)
+                                        background-color: {{ $mapel->color }};
+                                        color: #212529;"
+                                    @endif @endforeach
                                         rowspan="{{ $rowspan }}">
                                         @foreach ($dataMapel as $mapel)
                                             @if (isset($selected[$slot->id][$weekdays]) && $selected[$slot->id][$weekdays] == $mapel->id)
-                                                <div class="text-center">
+                                                <div class="text-center" style="padding: 4px">
                                                     {{ $mapel->nama_mapel }}
                                                 </div>
                                             @endif

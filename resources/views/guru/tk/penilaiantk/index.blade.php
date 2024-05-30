@@ -70,7 +70,7 @@
                                                 @foreach ($data_pembelajaran as $pembelajaran)
                                                     <option value="{{ $pembelajaran->id }}"
                                                         @if ($pembelajaran->id == $pembelajaran_id) selected @endif>
-                                                        {{ $pembelajaran->mapel->nama_mapel }}
+                                                        {{ $pembelajaran->topic->name }}
                                                         ({{ $pembelajaran->kelas->nama_kelas }} -
                                                         {{ $pembelajaran->kelas->tingkatan->nama_tingkatan }})
                                                     </option>

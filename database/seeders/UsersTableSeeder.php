@@ -20,47 +20,47 @@ class UsersTableSeeder extends Seeder
         ]);
         $admin->assignRole('Admin');
 
-        // // siswas
-        // $siswa = User::create([
-        //     'username' => 'siswa',
-        //     'password' => bcrypt('123456'),
-        //     'status' => true,
-        // ]);
-        // $siswa->assignRole('Student');
+        // siswas
+        $siswa = User::create([
+            'username' => 'siswa',
+            'password' => bcrypt('123456'),
+            'status' => true,
+        ]);
+        $siswa->assignRole('Student');
 
-        // $siswa = User::create([
-        //     'username' => 'siswa2',
-        //     'password' => bcrypt('123456'),
-        //     'status' => true,
-        // ]);
-        // $siswa->assignRole('Student');
+        $siswa = User::create([
+            'username' => 'siswa2',
+            'password' => bcrypt('123456'),
+            'status' => true,
+        ]);
+        $siswa->assignRole('Student');
 
-        // $siswa = User::create([
-        //     'username' => 'siswa3',
-        //     'password' => bcrypt('123456'),
-        //     'status' => true,
-        // ]);
-        // $siswa->assignRole('Student');
+        $siswa = User::create([
+            'username' => 'siswa3',
+            'password' => bcrypt('123456'),
+            'status' => true,
+        ]);
+        $siswa->assignRole('Student');
 
-        // $guru = User::create([
-        //     'username' => 'guru',
-        //     'password' => bcrypt('123456'),
-        //     'status' => true,
-        // ]);
-        // $guru->assignRole(['Teacher']);
+        $guru = User::create([
+            'username' => 'guru',
+            'password' => bcrypt('123456'),
+            'status' => true,
+        ]);
+        $guru->assignRole(['Teacher']);
 
-        // $guru = User::create([
-        //     'username' => 'guru2',
-        //     'password' => bcrypt('123456'),
-        //     'status' => true,
-        // ]);
-        // $guru->assignRole('Teacher PG-KG');
+        $guru = User::create([
+            'username' => 'guru2',
+            'password' => bcrypt('123456'),
+            'status' => true,
+        ]);
+        $guru->assignRole('Teacher PG-KG');
 
-        // $curriculum = User::create([
-        //     'username' => 'curriculum',
-        //     'password' => bcrypt('123456'),
-        //     'status' => true,
-        // ]);
-        // $curriculum->assignRole('Curriculum');
+        $curriculum = User::create([
+            'username' => 'curriculum',
+            'password' => bcrypt('123456'),
+            'status' => true,
+        ]);
+        $curriculum->assignRole('Curriculum');
     }
 }

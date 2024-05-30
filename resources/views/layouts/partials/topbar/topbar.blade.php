@@ -84,7 +84,6 @@
                         </li>
                     </div>
                 @endif
-                {{-- @dd(session()->all()) --}}
 
                 <div class="d-flex align-items-center justify-content-center"
                     style="padding: 0 15px; margin-left: 1rem;">
@@ -247,6 +246,8 @@
                         </div>
                     </li>
                 @endif
+            </ul>
+            <ul class="navbar-nav float-end">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-bs-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
@@ -275,7 +276,7 @@
                                 <a class="dropdown-item" href="{{ route('ganti-akses') }}"><i
                                         data-feather="toggle-right" class="svg-icon me-2 ms-1"></i> Change to
                                     Homeroom</a>
-                            @elseif (session()->get('akses_sebagai') == 'homeroom-km')
+                            @elseif (session()->get('akses_sebagai') == 'teacher-km')
                                 <a class="dropdown-item" href="{{ route('ganti-akses') }}"><i
                                         data-feather="toggle-left" class="svg-icon me-2 ms-1"></i> Change to
                                     Teacher</a>

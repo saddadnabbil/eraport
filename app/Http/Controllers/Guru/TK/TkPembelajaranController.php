@@ -34,7 +34,7 @@ class TkPembelajaranController extends Controller
         if (count($data_topic) == 0) {
             return redirect(route('guru.mapel.index'))->with('toast_warning', 'Mohon isikan Subject Data');
         } elseif (count($data_kelas) == 0) {
-            return redirect('admin/kelas')->with('toast_warning', 'Mohon isikan data kelas');
+            return redirect()->back()->with('toast_warning', 'Mohon isikan data kelas');
         } else {
             $title = 'Learning Data TK';
             $id_tingkatan = Tingkatan::whereIn('id', [1, 2, 3])->get('id');

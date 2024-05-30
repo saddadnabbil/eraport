@@ -14,9 +14,6 @@ class JadwalPelajaranSlotTableSeeder extends Seeder
      */
     public function run()
     {
-        // $table->time('start_time');
-        // $table->time('stop_time');
-        // $table->enum('keterangan', ['1', '2', '3']);
         JadwalPelajaranSlot::create([
             'tapel_id' => 1,
             'start_time' => '07:30:00',

@@ -43,7 +43,7 @@
                     @if (request()->is('teacher/master-data/*') ||
                             request()->is('curriculum/dashboard') ||
                             request()->is('teacher/tk/*') ||
-                            request()->is('teacher/km/p5*'))
+                            request()->is('teacher/km/p5/*'))
                         <li class="nav-small-cap">
                             <span class="hide-menu">Curriculum</span>
                         </li>
@@ -56,6 +56,7 @@
                         </li>
                         @include('layouts.partials.sidebar.reportkm-tk.event')
                         @include('layouts.partials.sidebar.reportkm-tk.area-of-learning')
+                        @include('layouts.partials.sidebar.reportkm-tk.timeslot')
                         <li class="list-divider"></li>
 
                         <li class="nav-small-cap">
