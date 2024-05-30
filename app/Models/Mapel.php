@@ -15,7 +15,8 @@ class Mapel extends Model
         'tapel_id',
         'nama_mapel',
         'nama_mapel_indonesian',
-        'ringkasan_mapel'
+        'ringkasan_mapel',
+        'color'
     ];
 
     public function tapel()

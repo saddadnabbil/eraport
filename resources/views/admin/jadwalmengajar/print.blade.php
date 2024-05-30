@@ -98,12 +98,22 @@
                                         @php
                                             $rowspan++;
                                             // Add the skipped cells to the list
-                                            $skippedCells[] = ['slot_id' => $dataJadwalPelajaranSlot[$i]->id, 'days' => $weekdays, 'index' => $i];
+                                            $skippedCells[] = [
+                                                'slot_id' => $dataJadwalPelajaranSlot[$i]->id,
+                                                'days' => $weekdays,
+                                                'index' => $i,
+                                            ];
                                         @endphp
                                     @endif
                                 @endfor
                                 @php
-                                    $isPrimary = isset($selected[$slot->id][$weekdays]) && $selected[$slot->id][$weekdays] && !in_array(['slot_id' => $slot->id, 'days' => $weekdays, 'index' => $index], $skippedCells);
+                                    $isPrimary =
+                                        isset($selected[$slot->id][$weekdays]) &&
+                                        $selected[$slot->id][$weekdays] &&
+                                        !in_array(
+                                            ['slot_id' => $slot->id, 'days' => $weekdays, 'index' => $index],
+                                            $skippedCells,
+                                        );
                                 @endphp
                                 @if (!in_array(['slot_id' => $slot->id, 'days' => $weekdays, 'index' => $index], $skippedCells))
                                     <td class="p-1 border"

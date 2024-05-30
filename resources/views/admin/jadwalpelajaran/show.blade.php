@@ -78,7 +78,7 @@
                             <h3 class="card-title">{{ $title }}</h3>
                             <div class="card-tools">
                                 <div data-bs-toggle="tooltip" title="Print" class="d-inline-block" class="d-inline-block">
-                                    <a href="{{ route('admin.jadwalmengajar.print', $kelas->id) }}"
+                                    <a href="{{ route('admin.jadwalpelajaran.print', $kelas->id) }}"
                                         class="btn btn-tool btn-sm">
                                         <i class="fas fa-download"></i>
                                     </a>
@@ -166,7 +166,11 @@
                                                             @endphp
                                                             @if (!in_array(['slot_id' => $slot->id, 'days' => $weekdays, 'index' => $index], $skippedCells))
                                                                 <td class="p-3 border"
-                                                                    style="{{ $isPrimary ? ' background-color: 	#a7d7ff7d; color: #212529' : '' }}"
+                                                                    style=" @foreach ($dataMapel as $mapel)
+                                                                    @if (isset($selected[$slot->id][$weekdays]) && $selected[$slot->id][$weekdays] == $mapel->id)
+                                                                        background-color: {{ $mapel->color }};
+                                                                        color: #212529;"
+                                                                    @endif @endforeach
                                                                     rowspan="{{ $rowspan }}">
                                                                     @foreach ($dataMapel as $mapel)
                                                                         @if (isset($selected[$slot->id][$weekdays]) && $selected[$slot->id][$weekdays] == $mapel->id)

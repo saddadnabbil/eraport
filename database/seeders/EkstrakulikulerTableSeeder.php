@@ -16,7 +16,7 @@ class EkstrakulikulerTableSeeder extends Seeder
     {
         Ekstrakulikuler::create([
             'tapel_id' => 1,
-            'pembina_id' => 1,
+            'pembina_id' => 2,
             'nama_ekstrakulikuler' => 'Web Design',
         ]);
     }

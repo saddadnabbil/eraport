@@ -17,6 +17,7 @@ class CreateTkTopicsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('tk_element_id');
             $table->string('name');
+            $table->string('color')->nullable();
             $table->timestamps();
 
             $table->foreign('tk_element_id')->references('id')->on('tk_elements')->onDelete('cascade');

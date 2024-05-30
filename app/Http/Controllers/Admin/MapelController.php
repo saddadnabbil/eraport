@@ -40,6 +40,7 @@ class MapelController extends Controller
             'nama_mapel' => 'required|min:3|max:255',
             'nama_mapel_indonesian' => 'required|min:3|max:255',
             'ringkasan_mapel' => 'required|min:2|max:50',
+            'color' => 'nullable'
         ]);
         if ($validator->fails()) {
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
@@ -49,6 +50,7 @@ class MapelController extends Controller
                 'nama_mapel' => $request->nama_mapel,
                 'nama_mapel_indonesian' => $request->nama_mapel_indonesian,
                 'ringkasan_mapel' => $request->ringkasan_mapel,
+                'color' => $request->color
             ]);
             $mapel->save();
             return back()->with('toast_success', 'Subject berhasil ditambahkan');
@@ -68,6 +70,7 @@ class MapelController extends Controller
             'nama_mapel' => 'required|min:3|max:255',
             'nama_mapel_indonesian' => 'required|min:3|max:255',
             'ringkasan_mapel' => 'required|min:2|max:50',
+            'color' => 'nullable'
         ]);
         if ($validator->fails()) {
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
@@ -77,6 +80,7 @@ class MapelController extends Controller
                 'nama_mapel' => $request->nama_mapel,
                 'nama_mapel_indonesian' => $request->nama_mapel_indonesian,
                 'ringkasan_mapel' => $request->ringkasan_mapel,
+                'color' => $request->color
             ];
             $mapel->update($data_mapel);
             return back()->with('toast_success', 'Subject berhasil diedit');

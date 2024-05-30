@@ -20,6 +20,7 @@ class MapelFactory extends Factory
             'nama_mapel' => $namaMapel,
             'nama_mapel_indonesian' => $namaMapel,
             'ringkasan_mapel' => $namaMapel,
+            'color' => $this->faker->hexColor(),
         ];
     }
 }

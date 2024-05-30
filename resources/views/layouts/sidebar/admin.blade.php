@@ -43,6 +43,7 @@
                     @include('layouts.partials.sidebar.reportkm-tk.event')
                     @include('layouts.partials.sidebar.reportkm-tk.tgl-raport')
                     @include('layouts.partials.sidebar.reportkm-tk.area-of-learning')
+                    @include('layouts.partials.sidebar.reportkm-tk.timeslot')
                     @include('layouts.partials.sidebar.reportkm-tk.penilaian')
                     @include('layouts.partials.sidebar.reportkm-tk.printreport_tk')
                     <li class="list-divider"></li>
