@@ -16,8 +16,8 @@ class CreateKmMappingMapelsTable extends Migration
         Schema::create('km_mapping_mapels', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('mapel_id')->unsigned();
-            $table->enum('kelompok', ['A', 'B']);
-            $table->integer('nomor_urut');
+            $table->enum('kelompok', ['A', 'B'])->nullable();
+            $table->integer('nomor_urut')->nullable();
             $table->timestamps();
             $table->softDeletes();            
             
