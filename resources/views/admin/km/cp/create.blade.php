@@ -215,7 +215,7 @@
                     $('tbody').append(html);
                 } else {
                     html +=
-                        '<td><button class="text-center" type="button" name="add" id="add" class="btn btn-primary shadow btn-xs sharp"><i class="fa fa-plus"></i></button></td></tr>';
+                        '<td class="text-center"><button type="button" name="add" id="add" class="btn btn-primary shadow btn-xs sharp"><i class="fa fa-plus"></i></button></td></tr>';
                     $('tbody').html(html);
                 }
             }

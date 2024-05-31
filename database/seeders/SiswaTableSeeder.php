@@ -232,6 +232,6 @@ class SiswaTableSeeder extends Seeder
             'updated_at' => now(),
         ]);
 
-        Siswa::factory()->count(40)->create();
+        Siswa::factory()->count(5)->create();
     }
 }

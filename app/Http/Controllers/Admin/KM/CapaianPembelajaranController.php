@@ -36,7 +36,7 @@ class CapaianPembelajaranController extends Controller
         $id_mapel = Mapel::where('tapel_id', $tapel->id)->get('id');
 
         $data_kelas = Kelas::where('tapel_id', $tapel->id)->groupBy('tingkatan_id')->orderBy('tingkatan_id', 'ASC')->whereNotIn('tingkatan_id', [1, 2, 3])->get();
-        $id_kelas = Kelas::where('tapel_id', $tapel->id)->groupBy('tingkatan_id')->orderBy('tingkatan_id', 'ASC')->whereNotIn('tingkatan_id', [1, 2, 3])->get('id');
+        $id_kelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->get('id');
 
         if (isset($guru)) {
             $data_pembelajaran = Pembelajaran::where('guru_id', $guru->id)->whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
@@ -77,7 +77,7 @@ class CapaianPembelajaranController extends Controller
             $semester = Semester::findorfail($pembelajaran->kelas->tingkatan->semester_id);
 
             $pembelajaran_id = $request->pembelajaran_id;
-            $id_kelas = Kelas::where('tapel_id', $tapel->id)->groupBy('tingkatan_id')->orderBy('tingkatan_id', 'ASC')->whereNotIn('tingkatan_id', [1, 2, 3])->get('id');
+            $id_kelas = Kelas::where('tapel_id', $tapel->id)->orderBy('tingkatan_id', 'ASC')->whereNotIn('tingkatan_id', [1, 2, 3])->get('id');
 
             if (isset($guru)) {
                 $data_pembelajaran = Pembelajaran::where('guru_id', $guru->id)->whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
@@ -137,7 +137,7 @@ class CapaianPembelajaranController extends Controller
                             'mapel_id'            => $request->mapel_id,
                             'tingkatan_id'        => $request->tingkatan_id,
                             'pembelajaran_id'     => $request->pembelajaran_id,
-                            'semester'            => $request->semester,
+                            'semester_id'            => $request->semester_id,
                             'capaian_pembelajaran' => $request->capaian_pembelajaran[$count],
                             'ringkasan_cp'        => $request->ringkasan_cp[$count],
                             'updated_at'          => Carbon::now(),
@@ -146,14 +146,14 @@ class CapaianPembelajaranController extends Controller
                         CapaianPembelajaran::where('kode_cp', $request->kode_cp[$count])
                             ->update($data_cp);
                     } else {
-                        return back()->with('toast_error', 'Data sudah tersedia di pembelajaran lain');
+                        return back()->with('toast_error', 'Capaian Pembelajaran sudah digunakan');
                     }
                 } else {
                     $data_cp = [
                         'mapel_id'            => $request->mapel_id,
                         'tingkatan_id'        => $request->tingkatan_id,
                         'pembelajaran_id'     => $request->pembelajaran_id,
-                        'semester'            => $request->semester_id,
+                        'semester_id'            => $request->semester_id,
                         'kode_cp'             => $request->kode_cp[$count],
                         'capaian_pembelajaran' => $request->capaian_pembelajaran[$count],
                         'ringkasan_cp'        => $request->ringkasan_cp[$count],

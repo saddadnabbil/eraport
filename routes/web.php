@@ -343,8 +343,9 @@ Route::group(['middleware' => ['auth']], function () {
                     'create' => 'km.cp.create',
                 ]);
 
-                Route::resource('rencanaformatif', 'Admin\KM\RencanaNilaiFormatifController')->only(['index', 'store', 'show', 'edit', 'update', 'destroy', 'create'])->names([
+                Route::resource('rencanaformatif', 'Admin\KM\RencanaNilaiFormatifController')->only(['index', 'create', 'store', 'show', 'edit', 'update', 'destroy', 'create'])->names([
                     'index' => 'km.rencanaformatif.index',
+                    'create' => 'km.rencanaformatif.create',
                     'store' => 'km.rencanaformatif.store',
                     'show' => 'km.rencanaformatif.show',
                     'edit' => 'km.rencanaformatif.edit',
@@ -352,14 +353,14 @@ Route::group(['middleware' => ['auth']], function () {
                     'destroy' => 'km.rencanaformatif.destroy',
                 ]);
 
-                Route::resource('rencanasumatif', 'Admin\KM\RencanaNilaiSumatifController')->only(['index', 'store', 'show', 'edit', 'update', 'destroy', 'create'])->names([
+                Route::resource('rencanasumatif', 'Admin\KM\RencanaNilaiSumatifController')->only(['index', 'create', 'store', 'show', 'edit', 'update', 'destroy'])->names([
                     'index' => 'km.rencanasumatif.index',
+                    'create' => 'km.rencanasumatif.create',
                     'store' => 'km.rencanasumatif.store',
                     'show' => 'km.rencanasumatif.show',
                     'edit' => 'km.rencanasumatif.edit',
                     'update' => 'km.rencanasumatif.update',
                     'destroy' => 'km.rencanasumatif.destroy',
-                    'create' => 'km.rencanasumatif.create',
                 ]);
 
                 Route::resource('penilaian', 'Admin\KM\PenilaianKurikulumMerdekaController')->only(['index', 'create', 'store', 'show', 'edit', 'update'])->names([
@@ -902,8 +903,9 @@ Route::group(['middleware' => ['auth']], function () {
                         'create' => 'guru.km.cp.create',
                     ]);
 
-                    Route::resource('rencanaformatif', 'Guru\KM\RencanaNilaiFormatifController')->only(['index', 'store', 'show', 'edit', 'update', 'destroy', 'create'])->names([
+                    Route::resource('rencanaformatif', 'Guru\KM\RencanaNilaiFormatifController')->only(['index', 'create', 'store', 'show', 'edit', 'update', 'destroy', 'create'])->names([
                         'index' => 'guru.km.rencanaformatif.index',
+                        'create' => 'guru.km.rencanaformatif.create',
                         'store' => 'guru.km.rencanaformatif.store',
                         'show' => 'guru.km.rencanaformatif.show',
                         'edit' => 'guru.km.rencanaformatif.edit',
@@ -911,14 +913,14 @@ Route::group(['middleware' => ['auth']], function () {
                         'destroy' => 'guru.km.rencanaformatif.destroy',
                     ]);
 
-                    Route::resource('rencanasumatif', 'Guru\KM\RencanaNilaiSumatifController')->only(['index', 'store', 'show', 'edit', 'update', 'destroy', 'create'])->names([
+                    Route::resource('rencanasumatif', 'Guru\KM\RencanaNilaiSumatifController')->only(['index', 'create', 'store', 'show', 'edit', 'update', 'destroy'])->names([
                         'index' => 'guru.km.rencanasumatif.index',
+                        'create' => 'guru.km.rencanasumatif.create',
                         'store' => 'guru.km.rencanasumatif.store',
                         'show' => 'guru.km.rencanasumatif.show',
                         'edit' => 'guru.km.rencanasumatif.edit',
                         'update' => 'guru.km.rencanasumatif.update',
                         'destroy' => 'guru.km.rencanasumatif.destroy',
-                        'create' => 'guru.km.rencanasumatif.create',
                     ]);
 
                     Route::resource('penilaian', 'Guru\KM\PenilaianKurikulumMerdekaController')->only(['index', 'create', 'store', 'show', 'edit', 'update'])->names([

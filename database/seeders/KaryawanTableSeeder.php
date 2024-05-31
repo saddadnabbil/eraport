@@ -107,6 +107,6 @@ class KaryawanTableSeeder extends Seeder
             'nomor_fingerprint' => 123,
         ]);
 
-        Karyawan::factory()->count(10)->create();
+        // Karyawan::factory()->count()->create();
     }
 }
