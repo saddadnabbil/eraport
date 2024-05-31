@@ -2,7 +2,7 @@
     $userRole = Auth::user()->getRoleNames()->first();
 
     switch ($userRole) {
-        case 'Teacher':
+        case 'Teacher' or 'Co-Teacher' or 'Teacher PG-KG' or 'Co-Teacher PG-KG' or 'Curriculum':
             $checkRoute = request()->routeIs('walikelas.leger.*');
             $dynamicRoute = route('walikelas.leger.index');
 

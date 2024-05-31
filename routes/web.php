@@ -676,6 +676,15 @@ Route::group(['middleware' => ['auth']], function () {
 
             Route::get('getKelas/ekstra/{id}', 'AjaxController@ajax_kelas_ekstra')->name('guru.get.kelas.ekstra');
 
+            Route::resource('silabus', 'Guru\SilabusController')
+            ->only(['index', 'store', 'update', 'destroy'])
+            ->names([
+                'index' => 'guru.silabus.index',
+                'store' => 'guru.silabus.store',
+                'update' => 'guru.silabus.update',
+                'destroy' => 'guru.silabus.destroy',
+            ]);
+
             // Curriculum
             Route::group(['middleware' => 'role:Curriculum'], function () {
                 Route::prefix('master-data')->group(function () {
@@ -857,14 +866,6 @@ Route::group(['middleware' => ['auth']], function () {
             Route::group(['middleware' => ['role:Teacher|Co-Teacher|Curriculum']], function () {
                 // Start KM
                 Route::prefix('km')->group(function () {
-                    Route::resource('silabus', 'Guru\SilabusController')
-                        ->only(['index', 'store', 'update', 'destroy'])
-                        ->names([
-                            'index' => 'guru.silabus.index',
-                            'store' => 'guru.silabus.store',
-                            'update' => 'guru.silabus.update',
-                            'destroy' => 'guru.silabus.destroy',
-                        ]);
                     Route::delete('/silabus/{id}/destroy/{fileType}', 'Guru\MD\SilabusController@destroyFile')->name('guru.silabus.destroyFile');
                     Route::get('/silabus/pdf/{filename}', 'Guru\MD\PdfController@viewSilabusPDF')->name('guru.silabus.pdf.view');
 

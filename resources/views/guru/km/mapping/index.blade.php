@@ -1,6 +1,6 @@
 @extends('layouts.main.header')
 @section('sidebar')
-    @include('layouts.sidebar.admin')
+    @include('layouts.sidebar.guru')
 @endsection
 
 @section('content')
@@ -10,7 +10,7 @@
         <!-- ============================================================== -->
         @php
             $user = Auth::user();
-            $dashboard = route('admin.dashboard');
+            $dashboard = route('guru.dashboard');
         @endphp
         @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
             'titleBreadCrumb' => $title,
@@ -45,7 +45,7 @@
 
                         <div class="card-body">
 
-                            <form action="{{ route('km.mapping.store') }}" method="POST">
+                            <form action="{{ route('guru.km.mapping.store') }}" method="POST">
                                 @csrf
                                 <div class="table-responsive">
                                     <table class="table table-bordered table-striped table-hover">
@@ -68,7 +68,7 @@
                                                     </td>
                                                     <td>
                                                         <select class="form-control form-select" name="kelompok[]"
-                                                            style="width: 100%;">
+                                                            style="width: 100%;" >
                                                             <option value="">-- Pilih Kelompok Mapel-- </option>
                                                             <option value="A"
                                                                 @if ($mapel->kelompok == 'A') selected @endif>Kelompok A
@@ -80,7 +80,7 @@
                                                     </td>
                                                     <td>
                                                         <input type="number" class="form-control" name="nomor_urut[]"
-                                                            value="{{ $mapel->nomor_urut }}">
+                                                            value="{{ $mapel->nomor_urut }}" >
                                                     </td>
                                                 </tr>
                                             @endforeach

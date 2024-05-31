@@ -43,7 +43,7 @@
                     @if (request()->is('teacher/master-data/*') ||
                             request()->is('curriculum/dashboard') ||
                             request()->is('teacher/tk/*') ||
-                            request()->is('teacher/km/p5/*'))
+                            request()->is('teacher/km/*'))
                         <li class="nav-small-cap">
                             <span class="hide-menu">Curriculum</span>
                         </li>
@@ -60,6 +60,12 @@
                         <li class="list-divider"></li>
 
                         <li class="nav-small-cap">
+                            <span class="hide-menu">MANAGEMENT REPORT KM</span>
+                        </li>
+                        @include('layouts.partials.sidebar.reportkm.inputdata-curriculum')
+                        <li class="list-divider"></li>
+
+                        <li class="nav-small-cap">
                             <span class="hide-menu">MANAGEMENT REPORT P5BK</span>
                         </li>
                         @include('layouts.partials.sidebar.report-p5.inputdata')
@@ -68,7 +74,9 @@
                 @endif
 
                 @if ($user->hasRole('Teacher PG-KG'))
-                    @if ((request()->is('teacher/tk/*') || request()->is('teacher/dashboard')) && session('akses_sebagai') != 'teacher-km')
+                    @if (request()->is('teacher/tk/*') ||
+                            request()->is('teacher/dashboard') ||
+                            (request()->is('teacher/silabus') && session('akses_sebagai') != 'teacher-km'))
                         <li class="nav-small-cap">
                             <span class="hide-menu">REPORT TK</span>
                         </li>
@@ -80,7 +88,7 @@
                 @endif
 
                 @if ($user->hasRole('Teacher'))
-                    @if (request()->is('teacher/km/*') || request()->is('teacher/dashboard'))
+                    @if (request()->is('teacher/km/*') || request()->is('teacher/dashboard') || request()->is('teacher/silabus'))
                         <li class="nav-small-cap">
                             <span class="hide-menu">REPORT KM</span>
                         </li>

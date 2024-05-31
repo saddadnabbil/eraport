@@ -19,7 +19,7 @@ class KelasTableSeeder extends Seeder
             'tingkatan_id' => 1,
             'jurusan_id' => 3,
             'tapel_id' => 1,
-            'guru_id' => 2,
+            'guru_id' => 1,
             'nama_kelas' => 'PG',
         ]);
 
@@ -77,7 +77,7 @@ class KelasTableSeeder extends Seeder
             'tingkatan_id' => 4,
             'jurusan_id' => 3,
             'tapel_id' => 1,
-            'guru_id' => 1,
+            'guru_id' => 2,
             'nama_kelas' => 'P-1A',
         ]);
 
