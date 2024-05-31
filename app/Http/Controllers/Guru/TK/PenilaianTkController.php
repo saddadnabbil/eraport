@@ -50,15 +50,19 @@ class PenilaianTkController extends Controller
                 ->where('tapel_id', $tapel->id)
                 ->whereIn('tingkatan_id', [1, 2, 3])
                 ->get();
+            if (count($data_kelas) == 0) {
+                return redirect()->back()->with('toast_warning', 'Kelas tidak tersedia');
+            }
         } else {
             $data_kelas = Kelas::where('tapel_id', $tapel->id)
                 ->whereIn('tingkatan_id', [1, 2, 3])
                 ->get();
+            if (count($data_kelas) == 0) {
+                return redirect()->back()->with('toast_warning', 'Kelas tidak tersedia');
+            }
         }
 
-        if (count($data_kelas) == 0) {
-            return redirect(route('guru.kelas.index'))->with('toast_warning', 'Kelas Tingkatan TK Belum tersedia');
-        }
+
 
         $term = $data_kelas->first()->tingkatan->term_id;
 
@@ -67,7 +71,7 @@ class PenilaianTkController extends Controller
         $id_kelas = Kelas::where('tapel_id', $tapel->id)->where('tingkatan_id', [1, 2, 3])->get('id');
 
         if (count($data_mapel) == 0) {
-            return redirect(route('guru.mapel.index'))->with('toast_warning', 'Mohon isikan Subject Data');
+            return redirect()->back()->with('toast_warning', 'Mohon isikan Subject Data');
         } elseif (count($data_kelas) == 0) {
             return redirect()->back()->with('toast_warning', 'Mohon isikan data kelas');
         }
