@@ -22,7 +22,7 @@ class MapingMapelController extends Controller
         $data_mapel = Mapel::where('tapel_id', $tapel->id)->orderBy('nama_mapel', 'ASC')->get();
 
         if (count($data_mapel) == 0) {
-            return redirect(route('guru.mapel.index'))->with('toast_warning', 'Mohon isikan Subject Data');
+            return redirect()->back()->with('toast_warning', 'Mohon isikan Subject Data');
         } else {
             foreach ($data_mapel as $mapel) {
                 $mapping = KmMappingMapel::where('mapel_id', $mapel->id)->first();

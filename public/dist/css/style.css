@@ -19140,3 +19140,15 @@ th.orange {
     cursor: pointer;
     color: #fff !important;
 }
+
+/* hide scrollbar for Chrome, Safari and Opera */
+ul.login-history {
+    max-height: 500px;
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */
+    overflow-y: scroll;
+}
+
+ul.login-history::-webkit-scrollbar {
+    display: none; /* for Chrome, Safari, and Opera */
+}

@@ -39,7 +39,7 @@ class SiswaController extends Controller
         $jumlah_kelas = Kelas::where('tapel_id', $tapel->id)->count();
 
         if ($jumlah_kelas == 0) {
-            return redirect(route('guru.kelas.index'))->with('toast_warning', 'Mohon isikan data kelas');
+            return redirect()->back()->with('toast_warning', 'Mohon isikan data kelas');
         } else {
 
             $jumlah_kelas_per_level = Siswa::select('tingkatan_id', DB::raw('count(*) as total'))

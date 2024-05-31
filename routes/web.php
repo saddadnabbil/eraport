@@ -350,7 +350,6 @@ Route::group(['middleware' => ['auth']], function () {
                     'edit' => 'km.rencanaformatif.edit',
                     'update' => 'km.rencanaformatif.update',
                     'destroy' => 'km.rencanaformatif.destroy',
-                    'create' => 'km.rencanaformatif.create',
                 ]);
 
                 Route::resource('rencanasumatif', 'Admin\KM\RencanaNilaiSumatifController')->only(['index', 'store', 'show', 'edit', 'update', 'destroy', 'create'])->names([
@@ -910,7 +909,6 @@ Route::group(['middleware' => ['auth']], function () {
                         'edit' => 'guru.km.rencanaformatif.edit',
                         'update' => 'guru.km.rencanaformatif.update',
                         'destroy' => 'guru.km.rencanaformatif.destroy',
-                        'create' => 'guru.km.rencanaformatif.create',
                     ]);
 
                     Route::resource('rencanasumatif', 'Guru\KM\RencanaNilaiSumatifController')->only(['index', 'store', 'show', 'edit', 'update', 'destroy', 'create'])->names([
