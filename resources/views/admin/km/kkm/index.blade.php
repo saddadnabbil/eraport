@@ -99,11 +99,11 @@
                                     @csrf
                                     <div class="modal-body">
                                         <div class="form-group row">
-                                            <label for="mapel_id" class="col-sm-3 col-form-label">Subject</label>
+                                            <label for="mapel_id" class="col-sm-3 col-form-label">Learning Data</label>
                                             <div class="col-sm-9">
                                                 <select class="form-control form-select select2" name="mapel_id"
                                                     style="width: 100%;" required>
-                                                    <option value="">-- Pilih Subject -- </option>
+                                                    <option value="">-- Select Learning Data-- </option>
                                                     @foreach ($data_mapel as $mapel)
                                                         <option value="{{ $mapel->id }}"> {{ $mapel->nama_mapel }}
                                                         </option>
@@ -279,7 +279,7 @@
                 var mapel_id = $(this).val();
                 if (mapel_id) {
                     $.ajax({
-                        url: '/getKelas/ajax/' + mapel_id,
+                        url: '{{ route('admin.get.kelas', ':id') }}'.replace(':id', mapel_id),
                         type: "GET",
                         dataType: "json",
                         success: function(data) {
