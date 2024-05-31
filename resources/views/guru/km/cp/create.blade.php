@@ -73,7 +73,7 @@
                                 @csrf
                                 <input type="hidden" name="mapel_id" value="{{ $mapel_id }}">
                                 <input type="hidden" name="tingkatan_id" value="{{ $tingkatan_id }}">
-                                <input type="hidden" name="semester" value="{{ $semester }}">
+                                <input type="hidden" name="semester_id" value="{{ $semester->id }}">
                                 <input type="hidden" name="pembelajaran_id" value="{{ $pembelajaran_id }}">
 
                                 <div class="table-responsive">
@@ -186,13 +186,13 @@
             function dynamic_field(number) {
                 html = '<tr>';
                 html += '<td>' +
-                    '<input type="text" class="form-control" name="kode_cp[]" oninvalid="this.setCustomValidity(\'data tidak boleh kosong\')" oninput="setCustomValidity(\'\')">' +
+                    '<input type="text" class="form-control" name="kode_cp[]" oninvalid="this.setCustomValidity(\'data tidak boleh kosong\')" oninput="setCustomValidity(\'\')" required>' +
                     '</td>';
                 html += '<td>' +
-                    '<textarea class="form-control" name="capaian_pembelajaran[]" rows="2" oninvalid="this.setCustomValidity(\'data tidak boleh kosong\')" oninput="setCustomValidity(\'\')"></textarea>' +
+                    '<textarea class="form-control" name="capaian_pembelajaran[]" rows="2" oninvalid="this.setCustomValidity(\'data tidak boleh kosong\')" oninput="setCustomValidity(\'\')" required></textarea>' +
                     '</td>';
                 html += '<td>' +
-                    '<textarea class="form-control" name="ringkasan_cp[]" rows="2" oninvalid="this.setCustomValidity(\'data tidak boleh kosong\')" oninput="setCustomValidity(\'\')"></textarea>' +
+                    '<textarea class="form-control" name="ringkasan_cp[]" rows="2" oninvalid="this.setCustomValidity(\'data tidak boleh kosong\')" oninput="setCustomValidity(\'\')" required></textarea>' +
                     '</td>';
 
                 if (number > 1) {

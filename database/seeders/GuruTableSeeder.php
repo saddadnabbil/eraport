@@ -29,6 +29,6 @@ class GuruTableSeeder extends Seeder
             'karyawan_id' => 4,
         ]);
 
-        Guru::factory()->count(10)->create();
+        // Guru::factory()->count(10)->create();
     }
 }

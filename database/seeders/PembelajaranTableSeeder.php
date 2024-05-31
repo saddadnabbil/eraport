@@ -15,28 +15,28 @@ class PembelajaranTableSeeder extends Seeder
     public function run()
     {
         Pembelajaran::create([
-            'kelas_id' => 1,
+            'kelas_id' => 8,
             'mapel_id' => 1,
             'guru_id' => 1,
             'status' => true
         ]);
 
         Pembelajaran::create([
-            'kelas_id' => 1,
+            'kelas_id' => 8,
             'mapel_id' => 2,
             'guru_id' => 2,
             'status' => true
         ]);
 
         Pembelajaran::create([
-            'kelas_id' => 1,
+            'kelas_id' => 8,
             'mapel_id' => 3,
             'guru_id' => 3,
             'status' => true
         ]);
 
         Pembelajaran::create([
-            'kelas_id' => 2,
+            'kelas_id' => 9,
             'mapel_id' => 1,
             'guru_id' => 4,
             'status' => true

@@ -54,6 +54,35 @@ class RencanaNilaiFormatifController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create(Request $request)
+    {
+        $title = 'Tambah Rencana Nilai Formatif';
+        $tapel = Tapel::findorfail(session()->get('tapel_id'));
+        $semester = Semester::findorfail(session()->get('semester_id'));
+        $term = Term::findorfail(session()->get('term_id'));
+
+        $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
+        $kelas = Kelas::findorfail($pembelajaran->kelas_id);
+        $data_cp = CapaianPembelajaran::where([
+            'semester' => $semester->semester,
+            'pembelajaran_id' => $pembelajaran->id,
+        ])->orderBy('kode_cp', 'ASC')->get();
+
+        $data_rencana_penilaian = RencanaNilaiFormatif::where('pembelajaran_id', $pembelajaran->id)->where('term_id', $term->id)->get();
+
+        if (count($data_rencana_penilaian) >= 3) {
+            return redirect(route('rencanaformatif.index'))->with('toast_error', 'Data sudah tersedia');
+        }
+
+        $jumlah_penilaian = $request->jumlah_penilaian;
+        return view('guru.km.rencanaformatif.create', compact('title', 'pembelajaran', 'jumlah_penilaian', 'data_cp', 'data_rencana_penilaian', 'term', 'semester'));
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param  \App\RencanaNilaiFormatif  $rencanaNilaiFormatif

@@ -24,10 +24,10 @@ class KkmMapelController extends Controller
         $title = 'KKM Subject';
         $tapel = Tapel::where('status', 1)->first();
 
-        $data_mapel = Mapel::where('tapel_id', $tapel->id)->orderBy('nama_mapel', 'ASC')->get();
-        $id_mapel = Mapel::where('tapel_id', $tapel->id)->get('id');
-
         $id_kelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->get('id');
+        $pembelajaran = Pembelajaran::whereIn('kelas_id', $id_kelas)->where('status', 1)->get('mapel_id');
+        $data_mapel = Mapel::whereIn('id', $pembelajaran)->where('tapel_id', $tapel->id)->orderBy('nama_mapel', 'ASC')->get();
+        $id_mapel = Mapel::where('tapel_id', $tapel->id)->get('id');
 
         $cek_pembelajaran = Pembelajaran::whereIn('mapel_id', $id_mapel)->whereNotNull('guru_id')->whereIn('kelas_id', $id_kelas)->where('status', 1)->get();
 

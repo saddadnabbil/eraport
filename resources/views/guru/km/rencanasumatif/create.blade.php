@@ -87,7 +87,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="bg-primary">
+                                            <tr>
                                                 <td>Kelompok/Teknik Grading</td>
                                                 @for ($i = 1; $i <= $jumlah_penilaian; $i++)
                                                     <td>
@@ -109,7 +109,7 @@
                                                     </td>
                                                 @endfor
                                             </tr>
-                                            <tr class="bg-primary">
+                                            <tr>
                                                 <td>Kode Grading</td>
                                                 @for ($i = 1; $i <= $jumlah_penilaian; $i++)
                                                     <td>
@@ -120,7 +120,7 @@
                                                     </td>
                                                 @endfor
                                             </tr>
-                                            <tr class="bg-primary">
+                                            <tr>
                                                 <td>Bobot Teknik Grading</td>
                                                 @for ($i = 1; $i <= $jumlah_penilaian; $i++)
                                                     <td>
