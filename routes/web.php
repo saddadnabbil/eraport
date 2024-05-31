@@ -351,6 +351,7 @@ Route::group(['middleware' => ['auth']], function () {
                     'edit' => 'km.rencanaformatif.edit',
                     'update' => 'km.rencanaformatif.update',
                     'destroy' => 'km.rencanaformatif.destroy',
+                    'create' => 'km.rencanaformatif.create',
                 ]);
 
                 Route::resource('rencanasumatif', 'Admin\KM\RencanaNilaiSumatifController')->only(['index', 'create', 'store', 'show', 'edit', 'update', 'destroy'])->names([
