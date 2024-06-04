@@ -21,12 +21,19 @@ class Sekolah extends Model
         'logo',
         'kepala_sekolah',
         'nip_kepala_sekolah',
+        'ttd_kepala_sekolah',
         'tapel_id',
+        'tingkatan_id',
     ];
 
     public function tapel()
     {
         return $this->belongsTo(Tapel::class, 'tapel_id');
+    }
+
+    public function tingkatans()
+    {
+        return $this->hasMany(Tingkatan::class);
     }
 
     public function getTapelIdAttribute()

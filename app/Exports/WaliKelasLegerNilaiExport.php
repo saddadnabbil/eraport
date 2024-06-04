@@ -24,10 +24,11 @@ class WaliKelasLegerNilaiExport implements FromView, ShouldAutoSize
     {
         $time_download = date('Y-m-d H:i:s');
 
-        $sekolah = Sekolah::first();
         $tapel = Tapel::where('status', 1)->first();
         $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
         $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)->where('guru_id', $guru->id)->pluck('id')->toArray();
+        $kelas = Kelas::whereIn('id', $id_kelas_diampu)->first();
+        $sekolah = $kelas->tingkatan->sekolah;
 
         $data_id_mapel_semester_ini = Mapel::where('tapel_id', $tapel->id)->get('id');
 

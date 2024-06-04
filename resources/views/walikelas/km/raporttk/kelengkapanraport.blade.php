@@ -267,15 +267,15 @@
                     <td style="text-align: left; vertical-align: middle;">
                         <h5 class="title" style=" text-align: right; font-size: 10pt">
                             GLOBAL INDONESIA
-                            @if ($anggota_kelas->kelas->id == '1')
+                            @if ($anggota_kelas->kelas->id == '6')
                                 SENIOR HIGH SCHOOL
-                            @elseif($anggota_kelas->kelas->id == '2')
-                                JUNIOR HIGH SCHOOL
-                            @elseif($anggota_kelas->kelas->id == '3')
-                                PRIMARY SCHOOL
-                            @elseif($anggota_kelas->kelas->id == '4')
-                                KINDERGARTEN
                             @elseif($anggota_kelas->kelas->id == '5')
+                                JUNIOR HIGH SCHOOL
+                            @elseif($anggota_kelas->kelas->id == '4')
+                                PRIMARY SCHOOL
+                            @elseif($anggota_kelas->kelas->id == '3')
+                                KINDERGARTEN
+                            @elseif($anggota_kelas->kelas->id == '2')
                                 PLAYGROUP
                             @endif
                         </h5>

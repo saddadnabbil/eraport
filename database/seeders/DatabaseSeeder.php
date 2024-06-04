@@ -91,9 +91,9 @@ class DatabaseSeeder extends Seeder
             SemesterTableSeeder::class,
             TermTableSeeder::class,
             TapelTableSeeder::class,
+            GlobalSekolahTableSeeder::class,
             TingkatanTableSeeder::class,
             GlobalUsersTableSeeder::class,
-            GlobalSekolahTableSeeder::class,
 
             // // Timetable
             JadwalPelajaranSlotTableSeeder::class,

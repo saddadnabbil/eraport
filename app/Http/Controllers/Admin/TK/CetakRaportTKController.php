@@ -125,8 +125,8 @@ class CetakRaportTKController extends Controller
      */
     public function show(Request $request, $id)
     {
-        $sekolah = Sekolah::first();
         $anggota_kelas = AnggotaKelas::findorfail($id);
+        $sekolah = $anggota_kelas->kelas->tingkatan->sekolah;
         $tapel = Tapel::where('status', 1)->first();
         $term = Term::findorfail($request->term_id);
         $nama = strtoupper($anggota_kelas->siswa->nama_lengkap);
@@ -184,9 +184,9 @@ class CetakRaportTKController extends Controller
 
     public function export(Request $request, $id)
     {
-        $sekolah = Sekolah::first();
         $data_anggota_kelas = AnggotaKelas::where('kelas_id', $id)->get();
         $kelas = Kelas::where('id', $id)->first();
+        $sekolah = $kelas->tingkatan->sekolah;
         $tapel = Tapel::where('status', 1)->first();
         $term = Term::findorfail($request->term_id);
 

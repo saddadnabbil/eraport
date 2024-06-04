@@ -42,4 +42,9 @@ class Tingkatan extends Model
     {
         return $this->hasMany(CapaianPembelajaran::class);
     }
+
+    public function sekolah()
+    {
+        return $this->belongsTo(Sekolah::class);
+    }
 }

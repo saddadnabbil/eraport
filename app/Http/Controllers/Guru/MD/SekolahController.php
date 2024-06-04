@@ -17,8 +17,60 @@ class SekolahController extends Controller
     public function index()
     {
         $title = 'Profil Sekolah';
-        $sekolah = Sekolah::first();
-        return view('guru.md.sekolah.index', compact('title', 'sekolah'));
+        $sekolahs = Sekolah::get();
+        return view('guru.md.sekolah.index', compact('title', 'sekolahs'));
+    }
+
+    public function store(Request $request)
+    {
+        $validator = Validator::make(request()->all(), [
+            'nama_sekolah' => 'required|min:5|max:100',
+            'npsn' => 'required|numeric|digits_between:8,10',
+            'nss' => 'nullable|numeric|digits:15',
+            'alamat' => 'required|min:10|max:255',
+            'kode_pos' => 'required|numeric|digits:5',
+            'nomor_telpon' => 'required|numeric|digits_between:5,13',
+            'website' => 'nullable|min:5|max:100',
+            'email' => 'required|email|min:5|max:35',
+            'kepala_sekolah' => 'required|min:3|max:100',
+            'nip_kepala_sekolah' => 'nullable|digits:18',
+            'logo' => 'max:2048|image',
+        ]);
+
+        if ($validator->fails()) {
+            return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
+        } else {
+            if (request()->has('logo')) {
+                $logo_file = request()->file('logo');
+                $name_logo = 'logo.' . $logo_file->getClientOriginalExtension();
+                $logo_file->move('assets/images/logo/', $name_logo);
+            } else {
+                $name_logo = null;
+            }
+
+            Sekolah::create([
+                'nama_sekolah' => $request->input('nama_sekolah'),
+                'npsn' => $request->input('npsn'),
+                'nss' => $request->input('nss'),
+                'alamat' => $request->input('alamat'),
+                'kode_pos' => $request->input('kode_pos'),
+                'email' => $request->input('email'),
+                'nomor_telpon' => $request->input('nomor_telpon'),
+                'website' => $request->input('website'),
+                'kepala_sekolah' => $request->input('kepala_sekolah'),
+                'nip_kepala_sekolah' => $request->input('nip_kepala_sekolah'),
+                'logo' => $name_logo,
+            ]);
+
+            return redirect()->back()->with('toast_success', 'Data sekolah berhasil ditambahkan');
+        }
+    }
+
+    public function show($id)
+    {
+        $title = 'Profil Sekolah';
+        $sekolah = Sekolah::findorfail($id);
+        return view('guru.md.sekolah.show', compact('title', 'sekolah'));
     }
 
     /**

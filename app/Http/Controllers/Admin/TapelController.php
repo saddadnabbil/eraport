@@ -31,12 +31,12 @@ class TapelController extends Controller
         $data_term = Term::orderBy('id', 'ASC')->get();
         $data_tingkatan = Tingkatan::orderBy('id', 'ASC')->get();
 
-        $sekolah = Sekolah::first();
-        $tapel_id = $sekolah ? $sekolah->tapel_id : null;
-        $semester_id = $sekolah ? $sekolah->semester_id : null;
-        $term_id = $sekolah ? $sekolah->term_id : null;
+        $tapelActive = Tapel::where('status', 1)->first();
+        $tapel_id = $tapelActive ? $tapelActive->id : null;
+        $semester_id = $tapelActive ? $tapelActive->semester_id : null;
+        $term_id = $tapelActive ? $tapelActive->term_id : null;
 
-        return view('admin.tapel.index', compact('title', 'data_tapel', 'tapel_id', 'data_semester', 'semester_id', 'data_term', 'term_id', 'sekolah', 'data_tingkatan'));
+        return view('admin.tapel.index', compact('title', 'data_tapel', 'tapel_id', 'data_semester', 'semester_id', 'data_term', 'term_id', 'data_tingkatan'));
     }
 
     /**
@@ -95,23 +95,6 @@ class TapelController extends Controller
         }
     }
 
-    // public function destroy(AcademicYear $academicYear): RedirectResponse
-    // {
-    //     $this->academicYear->deleteAcademicYear($academicYear);
-
-    //     return back()->with('success', 'Academic year deleted successfully');
-    // }
-
-    // public function destroy($id)
-    // {
-    //     $tapel = Tapel::findorfail($id);
-    //     if ($tapel->status == 1) {
-    //         return back()->with('toast_error', 'Academic Year masih aktif');
-    //     }
-    //     $tapel->forceDelete();
-    //     return back()->with('toast_success', 'Academic Year berhasil dihapus');
-    // }
-
     public function setAcademicYear(Request $request): RedirectResponse
     {
         try {
@@ -130,7 +113,7 @@ class TapelController extends Controller
                 throw new \Exception($validator->messages()->first());
             }
 
-            $sekolah = Sekolah::first();
+            $sekolah = Sekolah::get();
             if (!$sekolah) {
                 throw new \Exception('Data Sekolah tidak ditemukan.');
             }
@@ -179,7 +162,9 @@ class TapelController extends Controller
 
             $tapel->update(['status' => 1]);
 
-            $sekolah->update(['tapel_id' => $request->select_tapel_id]);
+            foreach ($sekolah as $s) {
+                $s->update(['tapel_id' => $request->select_tapel_id]);
+            }
 
             session(['tapel_id' => $request->select_tapel_id]);
             session(['semester_id' => $tapel->semester_id]);

@@ -26,7 +26,6 @@ class PengelolaanNilaiController extends Controller
     public function index()
     {
         $title = 'Hasil Pengelolaan Nilai';
-        $sekolah = Sekolah::first();
         $tapel = Tapel::where('status', 1)->first();
         $guru = Guru::where('karyawan_id', Auth::user()->karyawan->id)->first();
         $id_kelas_diampu = Kelas::where('tapel_id', $tapel->id)->where('guru_id', $guru->id)->pluck('id')->toArray();
@@ -35,6 +34,7 @@ class PengelolaanNilaiController extends Controller
         $data_kelas = Kelas::where('guru_id', $guru->id)->where('tapel_id', $tapel->id)->get();
 
         $kelas = Kelas::findorfail($id_kelas_diampu[0]);
+        $sekolah = $kelas->tingkatan->sekolah;
 
         $term = Term::findorfail($kelas->tingkatan->term_id);
         $semester = Semester::findorfail($kelas->tingkatan->semester_id);

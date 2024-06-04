@@ -78,6 +78,7 @@
                                         <tr>
                                             <th>No</th>
                                             <th>Level Name</th>
+                                            <th>School</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -88,6 +89,7 @@
                                             <tr>
                                                 <td>{{ $no }}</td>
                                                 <td>{{ $tingkatan->nama_tingkatan }}</td>
+                                                <td>{{ $tingkatan->sekolah->nama_sekolah }}</td>
                                                 <td class="text-center">
                                                     @include('components.actions.delete-button', [
                                                         'route' => route(
@@ -102,7 +104,7 @@
                                             </tr>
 
                                             @include('admin.tingkatan.modal.edit', [
-                                                'tingkatan' => $tingkatan
+                                                'tingkatan' => $tingkatan,
                                             ])
                                         @endforeach
                                     </tbody>

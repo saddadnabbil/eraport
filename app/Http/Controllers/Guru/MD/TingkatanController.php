@@ -20,8 +20,9 @@ class TingkatanController extends Controller
         $tapel = Tapel::where('status', 1)->first();
 
         $data_tingkatan = Tingkatan::orderBy('id', 'ASC')->get();
+        $data_sekolah = Sekolah::orderBy('id', 'ASC')->get();
 
-        return view('guru.md.tingkatan.index', compact('title', 'data_tingkatan', 'tapel'));
+        return view('guru.md.tingkatan.index', compact('title', 'data_tingkatan', 'data_sekolah', 'tapel'));
     }
 
     public function store(StoreTingkatanRequest $request): RedirectResponse

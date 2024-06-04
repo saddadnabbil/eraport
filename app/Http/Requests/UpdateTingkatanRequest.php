@@ -24,6 +24,7 @@ class UpdateTingkatanRequest extends FormRequest
     public function rules()
     {
         return [
+            'sekolah_id' => 'required|exists:sekolah,id',
             'nama_tingkatan' => 'required|string|max:255',
         ];
     }

@@ -7,7 +7,6 @@ use App\Models\Term;
 use App\Models\Kelas;
 use App\Models\Siswa;
 use App\Models\Tapel;
-use App\Models\Sekolah;
 use Carbon\Carbon;
 use App\Models\KmKkmMapel;
 use App\Models\Pengumuman;
@@ -34,7 +33,6 @@ class DashboardController extends Controller
     public function index()
     {
         $title = 'Dashboard';
-        $sekolah = Sekolah::first();
         $tapel = Tapel::where('status', 1)->first();
         $user = Auth::user();
         $data_pengumuman = Pengumuman::latest()->take(3)->get();
@@ -95,7 +93,6 @@ class DashboardController extends Controller
                 'title',
                 'data_pengumuman',
                 'data_riwayat_login',
-                'sekolah',
                 'tapel',
                 'jumlah_guru',
                 'jumlah_siswa',
@@ -127,7 +124,6 @@ class DashboardController extends Controller
                 'title',
                 'data_pengumuman',
                 'data_riwayat_login',
-                'sekolah',
                 'tapel',
                 'jumlah_guru',
                 'jumlah_siswa',
@@ -198,7 +194,6 @@ class DashboardController extends Controller
                     'title',
                     'data_pengumuman',
                     'data_riwayat_login',
-                    'sekolah',
                     'tapel',
                     'jumlah_kelas_diampu',
                     'jumlah_mapel_diampu',
@@ -223,7 +218,6 @@ class DashboardController extends Controller
                     'title',
                     'data_pengumuman',
                     'data_riwayat_login',
-                    'sekolah',
                     'tapel',
                     'jumlah_anggota_kelas',
                     'jumlah_kirim_nilai',
@@ -255,7 +249,6 @@ class DashboardController extends Controller
                 'title',
                 'data_pengumuman',
                 'data_riwayat_login',
-                'sekolah',
                 'tapel',
                 'jumlah_ekstrakulikuler',
                 'jumlah_mapel',
