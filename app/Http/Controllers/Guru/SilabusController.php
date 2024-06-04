@@ -35,7 +35,7 @@ class SilabusController extends Controller
         $id_kelas = Kelas::where('tapel_id', $tapel->id)
             ->where('guru_id', $guru->id)
             ->pluck('id');
-        $data_pembelajaran = Pembelajaran::where('guru_id', $guru->id)->whereIn('kelas_id', $id_kelas)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
+        $data_pembelajaran = Pembelajaran::where('guru_id', $guru->id)->where('status', 1)->orderBy('mapel_id', 'ASC')->orderBy('kelas_id', 'ASC')->get();
 
         $kelas = Kelas::whereIn('id', $data_pembelajaran->pluck('kelas_id'))
             ->orderBy('nama_kelas', 'ASC')

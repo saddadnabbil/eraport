@@ -1,7 +1,7 @@
 @extends('layouts.main.header')
 
 @section('sidebar')
-    @include('layouts.sidebar.guru')
+        @include('layouts.sidebar.guru')
 @endsection
 
 @section('content')
@@ -619,6 +619,7 @@
                         var numericId = id.replace(/\D/g, ''); // Extract numeric part from ID
                         mapelId = $('#mapel_id_edit' + numericId).val();
                         kelasId = $('#kelas_id_edit' + numericId).val();
+                        
                         pembelajaranIdField = $('#pembelajaran_id_edit' + numericId);
                     } else {
                         mapelId = $('#mapel_id_tambah').val();
