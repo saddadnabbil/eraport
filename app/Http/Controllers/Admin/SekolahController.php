@@ -25,7 +25,7 @@ class SekolahController extends Controller
 
     public function store(Request $request)
     {
-        $tapel = Tapel::where('status', 1)->first();
+        $tapel = Tapel::where('status', '1')->first();
         $validator = Validator::make(request()->all(), [
             'nama_sekolah' => 'required|min:5|max:100',
             'npsn' => 'required|numeric|digits_between:8,10',
@@ -36,48 +36,65 @@ class SekolahController extends Controller
             'website' => 'nullable|min:5|max:100',
             'email' => 'required|email|min:5|max:35',
             'kepala_sekolah' => 'required|min:3|max:100',
-            'nip_kepala_sekolah' => 'nullable|digits:18',
+            'nip_kepala_sekolah' => 'required',
             'tdd_kepala_sekolah' => 'nullable|image|max:2048',
-            'logo' => 'image|max:2048',
         ]);
 
         if ($validator->fails()) {
             return back()->with('toast_error', $validator->messages()->all()[0])->withInput();
-        } else {
-            if (request()->has('logo')) {
-                $logo_file = request()->file('logo');
-                $name_logo = 'logo.' . $logo_file->getClientOriginalExtension();
-                $logo_file->move('assets/images/logo/', $name_logo);
-            } else {
-                $name_logo = null;
-            }
+        }
 
-            if (request()->has('tdd_kepala_sekolah')) {
-                $tdd_kepala_sekolah_file = request()->file('tdd_kepala_sekolah');
-                $name_tdd_kepala_sekolah = $request->input('kepala_sekolah') . '.' . $tdd_kepala_sekolah_file->getClientOriginalExtension();
-                $tdd_kepala_sekolah_file->move('assets/images/ttd/', $name_tdd_kepala_sekolah);
-                dd($name_tdd_kepala_sekolah);
-            } else {
-                $name_tdd_kepala_sekolah = null;
-            }
 
-            Sekolah::create([
-                'nama_sekolah' => $request->input('nama_sekolah'),
-                'npsn' => $request->input('npsn'),
-                'nss' => $request->input('nss'),
-                'alamat' => $request->input('alamat'),
-                'kode_pos' => $request->input('kode_pos'),
-                'email' => $request->input('email'),
-                'nomor_telpon' => $request->input('nomor_telpon'),
-                'website' => $request->input('website'),
-                'kepala_sekolah' => $request->input('kepala_sekolah'),
-                'nip_kepala_sekolah' => $request->input('nip_kepala_sekolah'),
-                'tdd_kepala_sekolah' => $name_tdd_kepala_sekolah,
-                'logo' => $name_logo,
-                'tapel_id' => $tapel->id,
-            ]);
+        $data_sekolah = [
+            'nama_sekolah' => strtoupper($request->nama_sekolah),
+            'npsn' => $request->npsn,
+            'nss' => $request->nss,
+            'alamat' => $request->alamat,
+            'kode_pos' => $request->kode_pos,
+            'email' => $request->email,
+            'nomor_telpon' => $request->nomor_telpon,
+            'website' => $request->website,
+            'kepala_sekolah' => strtoupper($request->kepala_sekolah),
+            'nip_kepala_sekolah' => $request->nip_kepala_sekolah,
+            'tapel_id' => $tapel->id
+        ];
+        $sekolah = new Sekolah($data_sekolah);
 
-            return redirect()->back()->with('toast_success', 'Data sekolah berhasil ditambahkan');
+        $sekolah->save();
+
+        $this->saveUploadedFiles($request, $sekolah);
+
+
+        return redirect()->back()->with('toast_success', 'Data sekolah berhasil ditambahkan');
+    }
+
+    private function saveUploadedFiles(Request $request, Sekolah $sekolah)
+    {
+        if ($request->hasFile('logo')) {
+            $pasPhoto = $request->file('logo');
+            $pasPhotoPath = $this->savePhoto($pasPhoto, 'logo', $request->npsn, '.jpg');
+            $sekolah->logo = $pasPhotoPath;
+        }
+
+        $this->savePhotoField('ttd_kepala_sekolah', $request, $sekolah, $request->nip_kepala_sekolah, '.jpg');
+
+        $sekolah->save();
+    }
+
+    private function savePhoto($file, $field, $kepala_sekolah, $extension = '.jpg')
+    {
+        // Make extension optional with default
+        $filename = $kepala_sekolah . $extension;
+        return $file->storeAs($field, $filename, 'public');
+    }
+
+    private function savePhotoField($inputName, Request $request, Sekolah $sekolah, $kodeKaryawan, $extension = '.jpg')
+    {
+        // Make extension optional with default
+        if ($request->hasFile($inputName)) {
+            $file = $request->file($inputName);
+            $path = $this->savePhoto($file, $inputName, $kodeKaryawan, $extension);
+            $sekolah->$inputName = $path;
         }
     }
 
@@ -108,7 +125,7 @@ class SekolahController extends Controller
             'website' => 'nullable|min:5|max:100',
             'email' => 'required|email|min:5|max:35',
             'kepala_sekolah' => 'required|min:3|max:100',
-            'nip_kepala_sekolah' => 'nullable|digits:18',
+            'nip_kepala_sekolah' => 'required',
             'tdd_kepala_sekolah' => 'nullable|image|max:2048',
             'logo' => 'max:2048|image',
         ]);
@@ -131,33 +148,7 @@ class SekolahController extends Controller
             'tapel_id' => $tapel->id
         ];
 
-        // Proses update gambar logo
-        if ($request->hasFile('logo')) {
-            $logo_file = $request->file('logo');
-            $name_logo = 'logo.' . $logo_file->getClientOriginalExtension();
-            $path_logo = $logo_file->storeAs('public/assets/images/logo', $name_logo);
-            $data_sekolah['logo'] = str_replace('public/', '', $path_logo);
-
-            // Hapus file lama jika ada
-            if ($sekolah->logo) {
-                Storage::delete('public/' . $sekolah->logo);
-            }
-        }
-
-        // Proses update gambar ttd kepala sekolah
-        if ($request->hasFile('ttd_kepala_sekolah')) {
-            $tdd_kepala_sekolah_file = $request->file('ttd_kepala_sekolah');
-            $name_tdd_kepala_sekolah = $sekolah->kepala_sekolah . $tdd_kepala_sekolah_file->getClientOriginalExtension();
-            $path_tdd_kepala_sekolah = $tdd_kepala_sekolah_file->storeAs('ttd', $name_tdd_kepala_sekolah);
-            $data_sekolah['tdd_kepala_sekolah'] = str_replace('public/', '', $path_tdd_kepala_sekolah);
-
-            dd($data_sekolah['tdd_kepala_sekolah']);
-
-            // Hapus file lama jika ada
-            if ($sekolah->tdd_kepala_sekolah) {
-                Storage::delete('public/' . $sekolah->tdd_kepala_sekolah);
-            }
-        }
+        $this->updateUploadedFiles($request, $sekolah);
 
         // Update data sekolah
         $sekolah->update($data_sekolah);
@@ -165,10 +156,47 @@ class SekolahController extends Controller
         return back()->with('toast_success', 'Data sekolah berhasil diedit');
     }
 
+    private function updateUploadedFiles(Request $request, Sekolah $sekolah)
+    {
+        if ($request->hasFile('logo')) {
+            $this->deletePhoto($sekolah->logo); // Hapus foto lama sebelum menyimpan yang baru
+            $logo = $request->file('logo');
+            $logoPath = $this->updatePhoto($logo, 'logo', $request->npsn, '.jpg');
+            $sekolah->logo = $logoPath;
+        }
+
+        $this->updatePhotoField('ttd_kepala_sekolah', $request, $sekolah, $request->nip_kepala_sekolah, '.jpg');
+    }
+
+    private function deletePhoto($path)
+    {
+        // Hapus foto dari penyimpanan
+        if ($path && Storage::disk('public')->exists($path)) {
+            Storage::disk('public')->delete($path);
+        }
+    }
+
+    private function updatePhoto($file, $field, $npsn, $extension = '.jpg')
+    {
+        // Make extension optional with default
+        $filename = $npsn . $extension;
+        return $file->storeAs('logo', $filename, 'public');
+    }
+
+    private function updatePhotoField($inputName, Request $request, Sekolah $sekolah, $kepala_sekolah, $extension = '.jpg')
+    {
+        // Make extension optional with default
+        if ($request->hasFile($inputName)) {
+            $file = $request->file($inputName);
+            $path = $this->savePhoto($file, $inputName, $kepala_sekolah, $extension);
+            $sekolah->$inputName = $path;
+        }
+    }
+
     public function destroy($id)
     {
         $sekolah = Sekolah::findorfail($id);
-        $sekolah->delete();
+        $sekolah->forceDelete();
         return back()->with('toast_success', 'Data sekolah berhasil dihapus');
     }
 }

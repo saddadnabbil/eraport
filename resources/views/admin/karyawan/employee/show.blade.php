@@ -457,6 +457,18 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
+                                    <label for="photo_kartu_identitas_show" class="col-sm-3 col-form-label disabled">
+                                        Signature</label>
+                                    <div class="col-sm-3">
+                                        @if ($karyawan->ttd == null)
+                                            <img src="{{ asset('assets/dist/img/preview.png') }}" alt=""
+                                                id="ttd_preview_show" width="190px" height="144px">
+                                        @else
+                                            <img class="mb-2" src="{{ asset('storage/' . $karyawan->ttd) }}"
+                                                alt="{{ $karyawan->ttd }}" alt="ttd_preview_show" width="190px"
+                                                height="144px">
+                                        @endif
+                                    </div>
                                     <label for="photo_kartu_identitas_show" class="col-sm-3 col-form-label disabled">Photo
                                         Identity Card</label>
                                     <div class="col-sm-3">
@@ -470,6 +482,8 @@
                                                 alt="photo_kartu_identitas_show" width="190px" height="144px">
                                         @endif
                                     </div>
+                                </div>
+                                <div class="form-group row">
                                     <label for="photo_taxpayer_show" class="col-sm-3 col-form-label disabled">Photo
                                         Taxpayer</label>
                                     <div class="col-sm-3">
@@ -482,8 +496,6 @@
                                                 width="190px" height="144px">
                                         @endif
                                     </div>
-                                </div>
-                                <div class="form-group row">
                                     <label for="photo_kk_show" class="col-sm-3 col-form-label disabled">Photo
                                         Family Card</label>
                                     <div class="col-sm-3">
@@ -496,6 +508,8 @@
                                                 height="144px">
                                         @endif
                                     </div>
+                                </div>
+                                <div class="form-group row">
 
                                     <label for="other_document_show" class="col-sm-3 col-form-label disabled">
                                         Other Document</label>
@@ -557,6 +571,19 @@
 @push('custom-scripts')
     <!-- pas_photo preview-->
     <script>
+        function readURLTtd(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $('#ttd_preview')
+                        .attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
         function readURLPasPhoto(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();

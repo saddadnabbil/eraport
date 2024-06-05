@@ -139,12 +139,14 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-5">
-                                        @if ($sekolah->ttd_kepala_sekolah == null)
-                                            <img src="{{ asset('assets/dist/img/preview.png') }}" alt=""
-                                                id="ttd_kepala_sekolah_preview" style="width: 190px;">
+                                        @if (Storage::disk('public')->exists('ttd_kepala_sekolah/' . $sekolah->nip_kepala_sekolah . '.jpg'))
+                                            <img class="mb-2"
+                                                src="{{ asset('storage/ttd_kepala_sekolah/' . $sekolah->nip_kepala_sekolah . '.jpg') }}"
+                                                alt="{{ $sekolah->nip_kepala_sekolah }}" width="190px"
+                                                id="ttd_kepala_sekolah_preview">
                                         @else
-                                            <img src="{{ asset('storage/' . $sekolah->tdd_kepala_sekolah) }}"
-                                                alt="{{ $sekolah->ttd_kepala_sekolah }}" style="width: 190px;">
+                                            <img src="{{ asset('assets/dist/img/preview.png') }}" alt="logo"
+                                                style="border: none" id="ttd_kepala_sekolah_preview" width="190px">
                                         @endif
                                     </div>
                                 </div>
@@ -158,12 +160,13 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-5">
-                                        @if ($sekolah->logo == null)
-                                            <img src="{{ asset('assets/dist/img/preview.png') }}" alt=""
-                                                id="pas_photo_preview" style="width: 190px;">
+                                        @if (Storage::disk('public')->exists('logo/' . $sekolah->npsn . '.jpg'))
+                                            <img class="mb-2"
+                                                src="{{ asset('storage/logo/' . $sekolah->npsn . '.jpg') }}"
+                                                alt="{{ $sekolah->npsn }}"width="190px" id="pas_photo_preview">
                                         @else
-                                            <img class="mb-2" src="{{ asset('assets/images/logo/' . $sekolah->logo) }}"
-                                                id="pas_photo_preview" alt="{{ $sekolah->logo }}" style="width: 190px;">
+                                            <img src="{{ asset('assets/dist/img/preview.png') }}" alt="logo"
+                                                style="border: none" id="pas_photo_preview" width="190px">
                                         @endif
                                     </div>
                                 </div>

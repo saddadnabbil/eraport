@@ -543,6 +543,28 @@
                         </div>
                     </div>
                     <div class="form-group row">
+                        <label for="ttd" class="col-sm-3 col-form-label required">
+                            Signature</label>
+                        <div class="col-sm-6 custom-file">
+                            <div class="input-group">
+                                <div class="custom-file">
+                                    <input type="file" name="ttd"
+                                        class="custom-file-input form-control form-control @error('ttd') is-invalid @enderror"
+                                        id="ttd" onchange="readURLTtd(this);">
+                                    @error('ttd')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <img src="{{ asset('assets/dist/img/preview.png') }}" alt="" id="ttd_preview"
+                                width="190px" height="144px">
+                        </div>
+                    </div>
+                    <div class="form-group row">
                         <label for="pas_photo" class="col-sm-3 col-form-label required">
                             Photo</label>
                         <div class="col-sm-6 custom-file">

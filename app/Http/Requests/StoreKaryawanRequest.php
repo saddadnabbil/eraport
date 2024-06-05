@@ -60,6 +60,7 @@ class StoreKaryawanRequest extends FormRequest
             'nama_pasangan' => 'nullable|string|max:255',
             'jumlah_anak' => 'nullable|string|max:255',
             'keterangan' => 'nullable|string',
+            'ttd' => 'nullable|image|max:2048', // Maksimum 2 MB
             'pas_photo' => 'nullable|image|max:2048', // Maksimum 2 MB
             'photo_kartu_identitas' => 'nullable|image|max:2048',
             'photo_taxpayer' => 'nullable|image|max:2048',
@@ -97,6 +98,7 @@ class StoreKaryawanRequest extends FormRequest
             'photo_taxpayer.*' => 'Photo taxpayer is required',
             'photo_kk.*' => 'Photo kk is required',
             'other_document.*' => 'Other document is required',
+            'ttd.*' => 'Ttd is required',
         ];
     }
 }
