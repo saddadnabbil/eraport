@@ -338,8 +338,13 @@
                         Place & Date of Birth
                     </td>
                     <td class="value">
-                        : {{ strtoupper($anggota_kelas->siswa->tempat_lahir) }}
-                        {{ strtoupper($anggota_kelas->siswa->tanggal_lahir->isoFormat('D MMMM Y')) }}
+                        @php
+                            $timestamp = strtotime($anggota_kelas->siswa->tanggal_lahir);
+
+                            $tanggal_lahir = date('j F Y', $timestamp);
+                        @endphp
+                        : {{ strtoupper($anggota_kelas->siswa->tempat_lahir) }},
+                        {{ strtoupper($tanggal_lahir) }}
                     </td>
                 </tr>
                 <tr>
