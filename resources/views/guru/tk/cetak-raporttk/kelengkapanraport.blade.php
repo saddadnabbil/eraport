@@ -699,9 +699,15 @@
                         <p style="font-size: 8pt">
                             Principal
                         </p>
-
+                        @if (Storage::disk('public')->exists('ttd_kepala_sekolah/' . $sekolah->nip_kepala_sekolah . '.jpg'))
+                            <div>
+                                <img src="{{ asset('storage/ttd_kepala_sekolah/' . $sekolah->nip_kepala_sekolah . '.jpg') }}"
+                                    alt="{{ $sekolah->nip_kepala_sekolah }}" width="120px"
+                                    class="text-align: center; ">
+                            </div>
+                        @endif
                         <h5
-                            style="font-size: 8pt; padding-top: 45pt; text-align: center; border-bottom: 0.4px solid black; display: inline-block; width: auto;">
+                            style="font-size: 8pt; text-align: center; border-bottom: 0.4px solid black; display: inline-block; width: auto;">
                             {{ $sekolah->kepala_sekolah }}</h5>
                     </td>
                 </tr>

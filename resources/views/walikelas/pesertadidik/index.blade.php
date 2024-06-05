@@ -81,7 +81,10 @@
                                                         href="{{ route('walikelas.pesertadidik.show', $anggota_kelas->siswa_id) }}">{{ $anggota_kelas->siswa->nama_lengkap }}
                                                     </a></td>
                                                 <td>{{ $anggota_kelas->siswa->tempat_lahir }}</td>
-                                                <td>{{ $anggota_kelas->siswa->tanggal_lahir->format('d-M-Y') }}</td>
+                                                @php
+                                                    $tanggal_lahir = new DateTime($anggota_kelas->siswa->tanggal_lahir);
+                                                @endphp
+                                                <td>{{ $tanggal_lahir->format('d-m-Y') }}</td>
                                                 <td>{{ $anggota_kelas->siswa->jenis_kelamin }}</td>
                                                 <td>{{ $anggota_kelas->kelas->nama_kelas }}</td>
                                                 <td>

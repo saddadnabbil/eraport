@@ -78,7 +78,12 @@
                                                             {{ '-' }}
                                                         @endif
                                                     </td>
-                                                    <td>{{ $anggota->siswa->tanggal_lahir ? $anggota->siswa->tanggal_lahir->format('d-m-Y') : '-' }}
+                                                    <td>
+                                                        @if ($anggota->siswa->tanggal_lahir)
+                                                            {{ (new DateTime($anggota->siswa->tanggal_lahir))->format('d-m-Y') }}
+                                                        @else
+                                                            -
+                                                        @endif
                                                     </td>
                                                     <td>{{ $anggota->siswa->jenis_kelamin ?? '-' }}</td>
                                                     <td>

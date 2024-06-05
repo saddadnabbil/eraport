@@ -190,7 +190,10 @@
                                                 <td><a class="text-decoration-none text-dark"
                                                         href="{{ route('guru.siswa.show', $anggota->siswa->id) }}">{{ $anggota->siswa->nama_lengkap }}</a>
                                                 </td>
-                                                <td>{{ $anggota->siswa->tanggal_lahir->format('d-m-Y') }}</td>
+                                                @php
+                                                    $tanggal_lahir = new DateTime($anggota->siswa->tanggal_lahir);
+                                                @endphp
+                                                <td>{{ $tanggal_lahir->format('d-m-Y') }}</td>
                                                 <td>{{ $anggota->siswa->jenis_kelamin }}</td>
                                                 <td>
                                                     @if ($anggota->pendaftaran == 1)

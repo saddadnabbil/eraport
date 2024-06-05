@@ -841,7 +841,6 @@
                                 </div>
                             </div>
 
-                            <a href="{{ route('siswa.index') }}" class="btn btn-success btn-sm">Back</a>
                         </div><!-- /.card-body -->
                     </div>
                     <!-- /.nav-tabs-custom -->
