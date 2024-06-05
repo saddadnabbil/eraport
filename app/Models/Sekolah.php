@@ -3,28 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Sekolah extends Model
 {
-    use \Illuminate\Database\Eloquent\SoftDeletes;
+    use SoftDeletes;
 
     protected $table = 'sekolah';
-    protected $fillable = [
-        'nama_sekolah',
-        'npsn',
-        'nss',
-        'kode_pos',
-        'nomor_telpon',
-        'alamat',
-        'website',
-        'email',
-        'logo',
-        'kepala_sekolah',
-        'nip_kepala_sekolah',
-        'ttd_kepala_sekolah',
-        'tapel_id',
-        'tingkatan_id',
-    ];
+    protected $guarded = ['id'];
 
     public function tapel()
     {

@@ -148,18 +148,32 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
+                                                <label for="ttd_kepala_sekolah" class="col-sm-2 col-form-label">Principal
+                                                    Signature</label>
+                                                <div class="col-sm-5">
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input form-control"
+                                                            name="ttd_kepala_sekolah" id="ttd_kepala_sekolah"
+                                                            onchange="readURLTtd(this);" accept="image/*">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-5">
+                                                    <img src="{{ asset('assets/dist/img/preview.png') }}" alt=""
+                                                        id="ttd_kepala_sekolah_preview" style="width: 190px;">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
                                                 <label for="logo" class="col-sm-2 col-form-label">School Logo</label>
                                                 <div class="col-sm-5">
                                                     <div class="custom-file">
                                                         <input type="file" class="custom-file-input form-control"
-                                                            name="logo" id="customFile" onchange="readURL(this);"
+                                                            name="logo" id="logo" onchange="readURLLogo(this);"
                                                             accept="image/*">
-                                                        </label>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-5">
-                                                    <img src="{{ asset('assets/dist/img/logo.png') }}" alt=""
-                                                        id="pas_photo_preview">
+                                                    <img src="{{ asset('assets/dist/img/preview.png') }}" alt=""
+                                                        id="pas_photo_preview" style="width: 190px;">
                                                 </div>
                                             </div>
                                         </div>
@@ -231,13 +245,24 @@
 @push('custom-scripts')
     <!-- pas_photo preview-->
     <script>
-        function readURL(input) {
+        function readURLTtd(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
 
                 reader.onload = function(e) {
-                    $('#pas_photo_preview')
-                        .attr('src', e.target.result);
+                    $('#ttd_kepala_sekolah_preview').attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function readURLLogo(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $('#pas_photo_preview').attr('src', e.target.result);
                 };
 
                 reader.readAsDataURL(input.files[0]);

@@ -63,6 +63,7 @@ class UpdateKaryawanRequest extends FormRequest
             'jumlah_anak' => 'nullable|string|max:255',
             'keterangan' => 'nullable|string',
             'pas_photo' => 'nullable|image|max:2048',
+            'ttd' => 'nullable|image|max:2048',
             'photo_kartu_identitas' => 'nullable|image|max:2048',
             'photo_taxpayer' => 'nullable|image|max:2048',
             'photo_kk' => 'nullable|image|max:2048',
@@ -114,6 +115,7 @@ class UpdateKaryawanRequest extends FormRequest
             'photo_taxpayer.image' => 'The photo taxpayer must be an image.',
             'photo_kk.image' => 'The photo kk must be an image.',
             'other_document.image' => 'The other document must be an image.',
+            'ttd.image' => 'The ttd must be an image.',
         ];
     }
 }

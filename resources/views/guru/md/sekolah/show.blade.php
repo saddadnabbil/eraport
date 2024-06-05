@@ -129,6 +129,28 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
+                                    <label for="ttd_kepala_sekolah" class="col-sm-2 col-form-label">Principal
+                                        Signature</label>
+                                    <div class="col-sm-5">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input form-control"
+                                                name="ttd_kepala_sekolah" id="ttd_kepala_sekolah"
+                                                onchange="readURLTtd(this);" accept="image/*">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        @if (Storage::disk('public')->exists('ttd_kepala_sekolah/' . $sekolah->nip_kepala_sekolah . '.jpg'))
+                                            <img class="mb-2"
+                                                src="{{ asset('storage/ttd_kepala_sekolah/' . $sekolah->nip_kepala_sekolah . '.jpg') }}"
+                                                alt="{{ $sekolah->ttd_kepala_sekolah }}" width="190px"
+                                                id="ttd_kepala_sekolah_preview">
+                                        @else
+                                            <img src="{{ asset('assets/dist/img/preview.png') }}" alt="logo"
+                                                style="border: none" id="ttd_kepala_sekolah_preview" width="190px">
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="form-group row">
                                     <label for="logo" class="col-sm-2 col-form-label">School Logo</label>
                                     <div class="col-sm-5">
                                         <div class="custom-file">
@@ -138,12 +160,13 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-5">
-                                        @if ($sekolah->logo == null)
-                                            <img src="{{ asset('assets/dist/img/logo.png') }}" alt=""
-                                                id="pas_photo_preview">
+                                        @if (Storage::disk('public')->exists('logo/' . $sekolah->npsn . '.jpg'))
+                                            <img class="mb-2"
+                                                src="{{ asset('storage/logo/' . $sekolah->npsn . '.jpg') }}"
+                                                alt="{{ $sekolah->npsn }}"width="190px" id="pas_photo_preview">
                                         @else
-                                            <img class="mb-2" src="{{ asset('assets/images/logo/' . $sekolah->logo) }}"
-                                                id="pas_photo_preview" alt="{{ $sekolah->logo }}">
+                                            <img src="{{ asset('assets/dist/img/preview.png') }}" alt="logo"
+                                                style="border: none" id="pas_photo_preview" width="190px">
                                         @endif
                                     </div>
                                 </div>
@@ -183,6 +206,19 @@
 
                 reader.onload = function(e) {
                     $('#pas_photo_preview')
+                        .attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function readURLTtd(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $('#ttd_kepala_sekolah_preview')
                         .attr('src', e.target.result);
                 };
 
