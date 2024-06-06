@@ -97,6 +97,7 @@ class ProfileController extends Controller
             $karyawan->pas_photo = $pasPhotoPath;
         }
 
+        $this->updatePhotoField('ttd', $request, $karyawan, $request->kode_karyawan, '.jpg');
         $this->updatePhotoField('photo_kartu_identitas', $request, $karyawan, $request->kode_karyawan, '.jpg');
         $this->updatePhotoField('photo_taxpayer', $request, $karyawan, $request->kode_karyawan, '.jpg');
         $this->updatePhotoField('photo_kk', $request, $karyawan, $request->kode_karyawan, '.jpg');

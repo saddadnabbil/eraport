@@ -620,6 +620,34 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label for="ttd" class="col-sm-3 col-form-label ">
+                                Signature</label>
+                            <div class="col-sm-6 custom-file">
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        <input type="file" name="ttd"
+                                            class="custom-file-input form-control form-control @error('ttd') is-invalid @enderror"
+                                            id="ttd" onchange="readURLTtd(this);">
+                                        @error('ttd')
+                                            <div class="invalid-feedback">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">
+                                @if (Storage::disk('public')->exists('ttd/' . $karyawan->kode_karyawan . '.jpg'))
+                                    <img class="mb-2"
+                                        src="{{ asset('storage/ttd/' . $karyawan->kode_karyawan . '.jpg') }}"
+                                        alt="{{ $karyawan->ttd }}" alt="ttd" id="ttd_preview" width="190px">
+                                @else
+                                    <img src="{{ asset('assets/dist/img/preview.png') }}" alt=""
+                                        id="ttd_preview" width="190px" height="144px">
+                                @endif
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label for="pas_photo" class="col-sm-3 col-form-label ">
                                 Photo</label>
                             <div class="col-sm-6 custom-file">
@@ -640,7 +668,8 @@
                                 @if (Storage::disk('public')->exists('karyawan/' . $karyawan->kode_karyawan . '.jpg'))
                                     <img class="mb-2"
                                         src="{{ asset('storage/karyawan/' . $karyawan->kode_karyawan . '.jpg') }}"
-                                        alt="{{ $karyawan->pas_photo }}" alt="pas_photo" width="105px">
+                                        alt="{{ $karyawan->pas_photo }}" alt="pas_photo" id="pas_photo_preview"
+                                        width="105px">
                                 @else
                                     <img src="{{ asset('assets/dist/img/3x4.png') }}" alt=""
                                         id="pas_photo_preview" width="105px" height="144px">

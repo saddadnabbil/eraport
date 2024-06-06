@@ -652,6 +652,46 @@ Route::group(['middleware' => ['auth']], function () {
     });
     // End Route Admin
 
+    // STart Route Admission
+    Route::group(['middleware' => 'role:Admission'], function () {
+        Route::prefix('admission')->group(function () {
+            Route::get('dashboard', 'DashboardController@index')->name('tu.dashboard');
+
+            Route::resource('profile', 'Guru\ProfileController')->only(['update'])->names([
+                'update' => 'tu.profile.update',
+            ]);
+
+            // Pengumuman Controller
+            Route::resource('announcement', 'Tu\PengumumanController')->only(['index', 'store', 'update', 'destroy'])->names([
+                'index' => 'tu.pengumuman.index',
+                'store' => 'tu.pengumuman.store',
+                'update' => 'tu.pengumuman.update',
+                'destroy' => 'tu.pengumuman.destroy',
+            ]);
+
+            // Siswa Conctroller
+            Route::get('siswa/export', 'Tu\SiswaController@export')->name('tu.siswa.export');
+            Route::get('siswa/data', 'Tu\SiswaController@data')->name('tu.siswa.data');
+            Route::get('siswa/import', 'Tu\SiswaController@format_import')->name('tu.siswa.format_import');
+            Route::post('siswa/import', 'Tu\SiswaController@import')->name('tu.siswa.import');
+            Route::post('siswa/registrasi', 'Tu\SiswaController@registrasi')->name('tu.siswa.registrasi');
+            Route::post('siswa/activate', 'Tu\SiswaController@activate')->name('tu.siswa.activate');
+            Route::get('siswa/trash', 'Tu\SiswaController@showTrash')->name('tu.siswa.trash');
+            Route::delete('siswa/{id}/permanent-delete', 'Tu\SiswaController@destroyPermanent')->name('tu.siswa.permanent-delete');
+            Route::patch('siswa/{id}/restore', 'Tu\SiswaController@restore')->name('tu.siswa.restore');
+            Route::resource('siswa', 'Tu\SiswaController', [
+                'only' => ['index', 'store', 'update', 'destroy', 'show'],
+            ])->names([
+                'index' => 'tu.siswa.index',
+                'store' => 'tu.siswa.store',
+                'update' => 'tu.siswa.update',
+                'destroy' => 'tu.siswa.destroy',
+                'show' => 'tu.siswa.show',
+            ]);
+        });
+    });
+    // End Route Admission
+
     // Start Route Curriculum
     Route::group(['middleware' => 'role:Curriculum'], function () {
         Route::prefix('curriculum')->group(function () {
@@ -725,7 +765,7 @@ Route::group(['middleware' => ['auth']], function () {
                     Route::get('jadwalmengajar/{id}/print', 'Guru\MD\JadwalMengajarController@print')->name('guru.jadwalmengajar.print');
 
                     // Pengumuman Controller
-                    Route::resource('pengumuman', 'Guru\MD\PengumumanController')->only(['index', 'store', 'update', 'destroy'])->names([
+                    Route::resource('announcement', 'Guru\MD\PengumumanController')->only(['index', 'store', 'update', 'destroy'])->names([
                         'index' => 'guru.pengumuman.index',
                         'store' => 'guru.pengumuman.store',
                         'update' => 'guru.pengumuman.update',

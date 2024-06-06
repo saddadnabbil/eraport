@@ -484,7 +484,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="{{ route('guru.dashboard') }}" class="btn btn-success btn-sm">Back</a>
+                            <a href="{{ route('tu.dashboard') }}" class="btn btn-success btn-sm">Back</a>
                             @if ($user->hasRole(['Admin', 'Admission', 'Curriculum', 'Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG']))
                                 <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                     data-bs-target="#modal-edit{{ $karyawan->id }}">Edit</button>

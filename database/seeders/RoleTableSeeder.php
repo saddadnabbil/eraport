@@ -50,6 +50,9 @@ class RoleTableSeeder extends Seeder
             'masterdata-management'
         ]);
 
+        $admission = Role::create(['name' => 'Admission']);
+        $admission->givePermissionTo([]);
+
         // Non Akademik
         $hrd = Role::create(['name' => 'HRD']);
 
@@ -58,8 +61,6 @@ class RoleTableSeeder extends Seeder
         $finance = Role::create(['name' => 'Finance']);
 
         $librarian = Role::create(['name' => 'Librarian']);
-
-        $admission = Role::create(['name' => 'Admission']);
 
         $ga = Role::create(['name' => 'General Affair']);
 

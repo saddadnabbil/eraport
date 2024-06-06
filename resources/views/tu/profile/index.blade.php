@@ -1,7 +1,7 @@
 @extends('layouts.main.header')
 
 @section('sidebar')
-    @include('layouts.sidebar.guru')
+    @include('layouts.sidebar.tu')
 @endsection
 
 @section('content')
@@ -11,7 +11,7 @@
         <!-- ============================================================== -->
         @php
             $user = Auth::user();
-            $dashboard = route('guru.dashboard');
+            $dashboard = route('tu.dashboard');
         @endphp
         @include('layouts.partials.breadcrumbs._breadcrumbs-item', [
             'titleBreadCrumb' => $title,
@@ -76,7 +76,7 @@
                             <h3 class="card-title"> Data Pribadi</h3>
                         </div><!-- /.card-header -->
                         <div class="card-body">
-                            <form action="{{ route('guru.profile.update', $guru->id) }}" method="POST"
+                            <form action="{{ route('tu.profile.update', $guru->id) }}" method="POST"
                                 enctype="multipart/form-data">
                                 @method('put')
                                 @csrf

@@ -41,7 +41,7 @@ class DashboardController extends Controller
                 ->where('updated_at', '>=', Carbon::today())
                 ->orderBy('status_login', 'DESC')
                 ->orderBy('updated_at', 'DESC')->get();
-        } elseif ($user->hasAnyRole(['Curriculum'])) {
+        } elseif ($user->hasAnyRole(['Curriculum', 'Admission'])) {
             $data_riwayat_login = RiwayatLogin::where('user_id', '!=', Auth::user()->id)->whereHas('user', function ($query) {
                 $query->whereHas('roles', function ($query) {
                     $query->whereIn('name', ['Curriculum', 'Teacher', 'Teacher PG-KG', 'Co-Teacher', 'Co-Teacher PG-KG', 'Student']);
@@ -90,6 +90,37 @@ class DashboardController extends Controller
             $jumlah_ekstrakulikuler = Ekstrakulikuler::where('tapel_id', $tapel->id)->count();
 
             return view('dashboard.admin', compact(
+                'title',
+                'data_pengumuman',
+                'data_riwayat_login',
+                'tapel',
+                'jumlah_guru',
+                'jumlah_siswa',
+                'jumlah_siswa_shs',
+                'jumlah_siswa_jhs',
+                'jumlah_siswa_ps',
+                'jumlah_siswa_kg_a',
+                'jumlah_siswa_kg_b',
+                'jumlah_siswa_pg',
+                'jumlah_kelas',
+                'jumlah_ekstrakulikuler',
+            ));
+        } elseif ($user->hasAnyRole(['Admission'])) {
+            $jumlah_guru = Guru::all()->count();
+            $jumlah_siswa = Siswa::where('status', 1)->count();
+
+            $jumlah_siswa_shs = Siswa::where('status', 1)->where('tingkatan_id', 6)->count();
+            $jumlah_siswa_jhs = Siswa::where('status', 1)->where('tingkatan_id', 5)->count();
+            $jumlah_siswa_ps = Siswa::where('status', 1)->where('tingkatan_id', 4)->count();
+            $jumlah_siswa_kg_b = Siswa::where('status', 1)->where('tingkatan_id', 3)->count();
+            $jumlah_siswa_kg_a = Siswa::where('status', 1)->where('tingkatan_id', 2)->count();
+            $jumlah_siswa_pg = Siswa::where('status', 1)->where('tingkatan_id', 1)->count();
+
+            $jumlah_kelas = Kelas::where('tapel_id', $tapel->id)->count();
+
+            $jumlah_ekstrakulikuler = Ekstrakulikuler::where('tapel_id', $tapel->id)->count();
+
+            return view('dashboard.tu', compact(
                 'title',
                 'data_pengumuman',
                 'data_riwayat_login',

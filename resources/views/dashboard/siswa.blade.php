@@ -25,13 +25,12 @@
             } else {
                 $greeting = 'Good evening, ';
             }
+
             $user = Auth::user();
-            if ($user->hasRole('Admin')) {
-                $fullName = optional(Auth::user()->admin)->nama_lengkap ?? 'Admin not available';
-            } elseif ($user->hasAnyRole(['Teacher', 'Teacher PG-KG'])) {
+            if (!$user->hasRole('Student')) {
                 $fullName = optional(Auth::user()->karyawan)->nama_lengkap ?? 'Guru not available';
-            } elseif ($user->hasRole('Student')) {
-                $fullName = optional(Auth::user()->siswa)->nama_lengkap ?? 'Siswa not available';
+            } else {
+                $fullName = Auth::user()->siswa->nama_lengkap;
             }
 
         @endphp

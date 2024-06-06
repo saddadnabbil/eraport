@@ -109,6 +109,8 @@ class AuthController extends Controller
                 return redirect()->route('curriculum.dashboard')->with('toast_success', 'Login successful');
             } elseif (Auth::user()->hasAnyRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum'])) {
                 return redirect()->route('guru.dashboard')->with('toast_success', 'Login successful');
+            } elseif (Auth::user()->hasRole('Admission')) {
+                return redirect()->route('tu.dashboard')->with('toast_success', 'Login successful');
             } elseif (Auth::user()->hasRole('Student')) {
                 return redirect()->route('siswa.dashboard')->with('toast_success', 'Login successful');
             } else {

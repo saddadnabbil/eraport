@@ -35,12 +35,16 @@
         if ($user) {
             if ($user->hasRole(['Admin'])) {
                 $dashboard = route('admin.dashboard');
+            } elseif ($user->hasAnyRole(['Admission'])) {
+                $dashboard = route('tu.dashboard');
             } elseif ($user->hasAnyRole(['Teacher', 'Teacher PG-KG', 'Co-Teacher', 'Co-Teacher PG-KG'])) {
                 $dashboard = route('guru.dashboard');
             } elseif ($user->hasRole('Curriculum')) {
                 $dashboard = route('curriculum.dashboard');
             } elseif ($user->hasRole('Student')) {
                 $dashboard = route('siswa.dashboard');
+            } else {
+                $dashboard = '#';
             }
         } else {
             // Jika pengguna belum login, arahkan kembali ke halaman login

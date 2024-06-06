@@ -120,8 +120,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label for="nip_kepala_sekolah" class="col-sm-2 col-form-label">NIP Principal
-                                        <small><i>(opsional)</i></small></label>
+                                    <label for="nip_kepala_sekolah" class="col-sm-2 col-form-label">NIP Principal</label>
                                     <div class="col-sm-10">
                                         <input type="number" class="form-control" id="nip_kepala_sekolah"
                                             name="nip_kepala_sekolah" placeholder="NIP Principal"

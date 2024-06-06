@@ -29,10 +29,11 @@
             } else {
                 $greeting = 'Good evening, ';
             }
+
             $user = Auth::user();
-            if ($user->hasAnyRole(['Admin', 'Teacher', 'Curriculum'])) {
+            if (!$user->hasRole('Student')) {
                 $fullName = optional(Auth::user()->karyawan)->nama_lengkap ?? 'Guru not available';
-            } elseif ($user->hasRole('Student')) {
+            } else {
                 $fullName = Auth::user()->siswa->nama_lengkap;
             }
         @endphp

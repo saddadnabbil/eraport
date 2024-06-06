@@ -510,7 +510,6 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-
                                     <label for="other_document_show" class="col-sm-3 col-form-label disabled">
                                         Other Document</label>
                                     <div class="col-sm-3">

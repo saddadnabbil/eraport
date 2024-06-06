@@ -36,6 +36,14 @@ class ProfileUserController extends Controller
             $dataRoles = Role::get();
 
             return view('admin.karyawan.employee.show', compact('title', 'karyawan', 'dataStatusKaryawan', 'dataUnitKaryawan', 'dataPositionKaryawan', 'dataRoles'));
+        } elseif ($user->hasRole('Admission')) {
+            $karyawan = Karyawan::where('user_id', Auth::user()->id)->first();
+            $dataStatusKaryawan = StatusKaryawan::all();
+            $dataUnitKaryawan = UnitKaryawan::all();
+            $dataPositionKaryawan = PositionKaryawan::all();
+            $dataRoles = Role::get();
+
+            return view('tu.profile.show', compact('title', 'karyawan', 'dataStatusKaryawan', 'dataUnitKaryawan', 'dataPositionKaryawan', 'dataRoles'));
         } elseif ($user->hasRole(['Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG', 'Curriculum'])) {
             $karyawan = Karyawan::where('user_id', Auth::user()->id)->first();
             $dataStatusKaryawan = StatusKaryawan::all();

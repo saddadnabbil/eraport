@@ -64,5 +64,12 @@ class UsersTableSeeder extends Seeder
             'status' => true,
         ]);
         $curriculum->assignRole('Curriculum');
+
+        $tu = User::create([
+            'username' => 'tu',
+            'password' => bcrypt('123456'),
+            'status' => true,
+        ]);
+        $tu->assignRole('Admission');
     }
 }

@@ -249,11 +249,9 @@
                             class="rounded-circle" width="40" />
                         <span class="ms-2 d-none d-lg-inline-block"><span>Hello,</span>
                             <span class="text-dark">
-                                @if ($user->hasRole('Admin'))
+                                @if (!$user->hasRole('Student'))
                                     {{ $user->karyawan->nama_lengkap }}
-                                @elseif ($user->hasAnyRole(['Teacher', 'Teacher PG-KG', 'Co-Teacher', 'Co-Teacher PG-KG', 'Curriculum']))
-                                    {{ $user->karyawan->nama_lengkap }}
-                                @elseif($user->hasRole('Student'))
+                                @else 
                                     {{ $user->siswa->nama_lengkap }}
                                 @endif
                             </span>
