@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use App\Models\Sekolah;
 use Illuminate\Database\Seeder;
 
@@ -24,7 +26,6 @@ class SekolahTableSeeder extends Seeder
             'email' => 'admin@gis.com',
             'kepala_sekolah' => 'IVAN SENEVIRATNE, M.ED',
         ]);
-
 
         // SD
         Sekolah::create([

@@ -3,9 +3,9 @@
 use App\Models\Kelas;
 use App\Models\P5Tema;
 use App\Models\TkPoint;
+
+
 use App\Models\Semester;
-
-
 use App\Models\TkElement;
 use App\Models\AnggotaKelas;
 use App\Models\TkSetTeacher;
@@ -33,8 +33,10 @@ use Database\Seeders\MapelTableSeeder;
 use Database\Seeders\SiswaTableSeeder;
 use Database\Seeders\TapelTableSeeder;
 use Database\Seeders\TkSubtopicSeeder;
+use Database\Seeders\UsersTableSeeder;
 use Database\Seeders\JurusanTableSeeder;
 use Database\Seeders\P5SubelementSeeder;
+use Database\Seeders\SekolahTableSeeder;
 use Database\Seeders\TkSetTeacherSeeder;
 use Database\Seeders\KaryawanTableSeeder;
 use Database\Seeders\SemesterTableSeeder;
@@ -56,13 +58,11 @@ use Database\Seeders\PrestasiSiswaTableSeeder;
 use Database\Seeders\KmMappingMapelTableSeeder;
 use Database\Seeders\KmNilaiSumatifTableSeeder;
 use Database\Seeders\StatusKaryawanTableSeeder;
-use UsersTableSeeder as GlobalUsersTableSeeder;
 use Database\Seeders\EkstrakulikulerTableSeeder;
 use Database\Seeders\JadwalPelajaranTableSeeder;
 use Database\Seeders\KmNilaiFormatifTableSeeder;
 use Database\Seeders\PositionKaryawanTableSeeder;
 use Database\Seeders\KmNilaiAkhirRaportTableSeeder;
-use SekolahTableSeeder as GlobalSekolahTableSeeder;
 use Database\Seeders\CapaianPembelajaranTableSeeder;
 use Database\Seeders\JadwalPelajaranSlotTableSeeder;
 use Database\Seeders\RencanaNilaiSumatifTableSeeder;
@@ -91,9 +91,9 @@ class DatabaseSeeder extends Seeder
             SemesterTableSeeder::class,
             TermTableSeeder::class,
             TapelTableSeeder::class,
-            GlobalSekolahTableSeeder::class,
+            SekolahTableSeeder::class,
             TingkatanTableSeeder::class,
-            GlobalUsersTableSeeder::class,
+            UsersTableSeeder::class,
 
             // // Timetable
             JadwalPelajaranSlotTableSeeder::class,
