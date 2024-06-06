@@ -49,102 +49,6 @@
             <!-- ============================================================== -->
             <ul class="navbar-nav float-left me-auto ms-3 ps-1">
                 @if (
-                    $user->hasAnyRole(['Teacher', 'Co-Teacher']) &&
-                        !request()->is('teacher/master-data/*') &&
-                        !request()->is('curriculum/dashboard'))
-                    <div style="padding: 0 15px; margin-left: 1rem;">
-                        <li class="nav-item d-none d-md-block">
-                            <a class="nav-link" href="javascript:void(0)">
-                                <div class="customize-input">
-                                    <select id="roleSelect"
-                                        class="custom-select form-control bg-white custom-radius custom-shadow border-0">
-                                        <option value="1" @if (session()->get('akses_sebagai') == 'teacher-km' && session()->get('cek_homeroom') == true) selected @endif><a
-                                                class="dropdown-item" href="{{ route('ganti-akses') }}">
-                                                @if (session()->get('akses_sebagai') == 'teacher-km' && session()->get('cek_homeroom') == true)
-                                                    Teacher
-                                                @else
-                                                    Change
-                                                    to Teacher
-                                                @endif
-                                            </a></option>
-                                        <option value="2" @if (session()->get('akses_sebagai') == 'homeroom-km') selected @endif>
-                                            <a class="dropdown-item" href="{{ route('ganti-akses') }}">
-                                                @if (session()->get('akses_sebagai') == 'homeroom-km')
-                                                    Homeroom
-                                                @else
-                                                    Change
-                                                    to Homeroom
-                                                @endif
-                                            </a>
-                                        </option>
-                                    </select>
-                                </div>
-                            </a>
-                        </li>
-                    </div>
-                @endif
-
-                <div class="d-flex align-items-center justify-content-center"
-                    style="padding: 0 15px; margin-left: 1rem;">
-                    <li class="nav-item d-none d-md-block">
-                        <a href="{{ $user->hasAnyRole(['Admin', 'Curriculum']) ? $tapel : 'javascript:void(0)' }}"
-                            style="line-height: 1">
-                            <div class="customize-input">
-                                <span class="badge bg-success">
-                                    @php
-                                        $tapel = App\Models\Tapel::where('status', 1)->first();
-                                        $term = App\Models\Term::find($tapel->term_id);
-
-                                        $pg = App\Models\Tingkatan::where('id', 1)->first();
-                                        $kg = App\Models\Tingkatan::where('id', 2)->first();
-                                        $ps = App\Models\Tingkatan::where('id', 3)->first();
-                                        $jhs = App\Models\Tingkatan::where('id', 4)->first();
-                                        $shs = App\Models\Tingkatan::where('id', 5)->first();
-                                    @endphp
-
-                                    @php
-                                        $tapel = App\Models\Tapel::where('status', 1)->first();
-                                        $term = App\Models\Term::find($tapel->term_id);
-
-                                        $pg_kg = App\Models\Tingkatan::whereIn('id', [1, 2, 3])->first();
-                                        $pg = App\Models\Tingkatan::where('id', 1)->first();
-                                        $kg = App\Models\Tingkatan::where('id', 2)->first();
-                                        $ps = App\Models\Tingkatan::where('id', 4)->first();
-                                        $jhs = App\Models\Tingkatan::where('id', 5)->first();
-                                        $shs = App\Models\Tingkatan::where('id', 6)->first();
-                                    @endphp
-
-                                    @if (optional($pg)->count() > 0 &&
-                                            optional($kg)->count() > 0 &&
-                                            optional($pg_kg)->count() > 0 &&
-                                            optional($ps)->count() > 0 &&
-                                            optional($jhs)->count() > 0 &&
-                                            optional($shs)->count() > 0)
-                                        School Year {{ str_replace('-', ' / ', $tapel->tahun_pelajaran) }} -
-                                        (Term PG/KG - {{ optional($pg_kg)->term_id }}) -
-                                        (Semester PS
-                                        {{ optional($ps)->semester_id . '-' . optional($ps)->term_id }}) -
-                                        (Semester JHS
-                                        {{ optional($jhs)->semester_id . '-' . optional($jhs)->term_id }}) -
-                                        (Semester SHS
-                                        {{ optional($shs)->semester_id . '-' . optional($shs)->term_id }}) - Term
-                                        {{ $term->id }}
-                                    @else
-                                        No Levels Found
-                                    @endif
-                                </span>
-                            </div>
-                        </a>
-                    </li>
-                </div>
-            </ul>
-            <!-- ============================================================== -->
-            <!-- Right side toggle and nav items -->
-            <!-- ============================================================== -->
-            {{-- role looping --}}
-
-            <ul class="navbar-nav float-end">
-                @if (
                     $user->hasAnyPermission([
                         'admin-access',
                         'masterdata-management',
@@ -154,10 +58,10 @@
                         'teacher-pg-kg',
                     ]))
 
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown d-flex align-items-center">
                         <a class="nav-link dropdown-toggle pl-md-3 position-relative" href="javascript:void(0)"
                             id="bell" role="button" data-bs-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="true">
+                            aria-expanded="true" data-bs-original-title="Menu">
                             <span><i data-feather="grid" class="svg-icon"></i></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-center mailbox animated bounceInDown">
@@ -245,7 +149,98 @@
                         </div>
                     </li>
                 @endif
+                @if (
+                    $user->hasAnyRole(['Teacher', 'Co-Teacher']) &&
+                        !request()->is('teacher/master-data/*') &&
+                        !request()->is('curriculum/dashboard'))
+                    <li class="nav-item d-none d-md-block" style="padding: 0 15px; margin-left: 1rem;">
+                        <a class="nav-link" href="javascript:void(0)">
+                            <div class="customize-input">
+                                <select id="roleSelect"
+                                    class="custom-select form-control bg-white custom-radius custom-shadow border-0">
+                                    <option value="1" @if (session()->get('akses_sebagai') == 'teacher-km' && session()->get('cek_homeroom') == true) selected @endif><a
+                                            class="dropdown-item" href="{{ route('ganti-akses') }}">
+                                            @if (session()->get('akses_sebagai') == 'teacher-km' && session()->get('cek_homeroom') == true)
+                                                Teacher
+                                            @else
+                                                Change
+                                                to Teacher
+                                            @endif
+                                        </a></option>
+                                    <option value="2" @if (session()->get('akses_sebagai') == 'homeroom-km') selected @endif>
+                                        <a class="dropdown-item" href="{{ route('ganti-akses') }}">
+                                            @if (session()->get('akses_sebagai') == 'homeroom-km')
+                                                Homeroom
+                                            @else
+                                                Change
+                                                to Homeroom
+                                            @endif
+                                        </a>
+                                    </option>
+                                </select>
+                            </div>
+                        </a>
+                    </li>
+                @endif
+
+                <div class="d-flex align-items-center justify-content-center">
+                    <li class="nav-item d-none d-md-block" style="padding: 0 15px; margin-left: 1rem;">
+                        <a href="{{ $user->hasAnyRole(['Admin', 'Curriculum']) ? $tapel : 'javascript:void(0)' }}"
+                            style="line-height: 1">
+                            <div class="customize-input">
+                                <span class="badge bg-success">
+                                    @php
+                                        $tapel = App\Models\Tapel::where('status', 1)->first();
+                                        $term = App\Models\Term::find($tapel->term_id);
+
+                                        $pg = App\Models\Tingkatan::where('id', 1)->first();
+                                        $kg = App\Models\Tingkatan::where('id', 2)->first();
+                                        $ps = App\Models\Tingkatan::where('id', 3)->first();
+                                        $jhs = App\Models\Tingkatan::where('id', 4)->first();
+                                        $shs = App\Models\Tingkatan::where('id', 5)->first();
+                                    @endphp
+
+                                    @php
+                                        $tapel = App\Models\Tapel::where('status', 1)->first();
+                                        $term = App\Models\Term::find($tapel->term_id);
+
+                                        $pg_kg = App\Models\Tingkatan::whereIn('id', [1, 2, 3])->first();
+                                        $pg = App\Models\Tingkatan::where('id', 1)->first();
+                                        $kg = App\Models\Tingkatan::where('id', 2)->first();
+                                        $ps = App\Models\Tingkatan::where('id', 4)->first();
+                                        $jhs = App\Models\Tingkatan::where('id', 5)->first();
+                                        $shs = App\Models\Tingkatan::where('id', 6)->first();
+                                    @endphp
+
+                                    @if (optional($pg)->count() > 0 &&
+                                            optional($kg)->count() > 0 &&
+                                            optional($pg_kg)->count() > 0 &&
+                                            optional($ps)->count() > 0 &&
+                                            optional($jhs)->count() > 0 &&
+                                            optional($shs)->count() > 0)
+                                        School Year {{ str_replace('-', ' / ', $tapel->tahun_pelajaran) }} -
+                                        (Term PG/KG - {{ optional($pg_kg)->term_id }}) -
+                                        (Semester PS
+                                        {{ optional($ps)->semester_id . '-' . optional($ps)->term_id }}) -
+                                        (Semester JHS
+                                        {{ optional($jhs)->semester_id . '-' . optional($jhs)->term_id }}) -
+                                        (Semester SHS
+                                        {{ optional($shs)->semester_id . '-' . optional($shs)->term_id }}) - Term
+                                        {{ $term->id }}
+                                    @else
+                                        No Levels Found
+                                    @endif
+                                </span>
+                            </div>
+                        </a>
+                    </li>
+                </div>
             </ul>
+            <!-- ============================================================== -->
+            <!-- Right side toggle and nav items -->
+            <!-- ============================================================== -->
+            {{-- role looping --}}
+
             <ul class="navbar-nav float-end">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-bs-toggle="dropdown"

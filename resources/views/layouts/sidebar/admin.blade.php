@@ -5,6 +5,32 @@
         <nav class="sidebar-nav">
             <ul id="sidebarnav">
                 <!-- Logo icon -->
+                {{-- <li class="sidebar-item d-flex align-items-center justify-content-center" style="padding-bottom: 30px;">
+                    <div class="">
+                        <select class=" form-control form-select">
+                            <option value="1" @if (session()->get('akses_sebagai') == 'teacher-km' && session()->get('cek_homeroom') == true) selected @endif><a
+                                    class="dropdown-item" href="{{ route('ganti-akses') }}">
+                                    @if (session()->get('akses_sebagai') == 'teacher-km' && session()->get('cek_homeroom') == true)
+                                        Teacher
+                                    @else
+                                        Change
+                                        to Teacher
+                                    @endif
+                                </a></option>
+                            <option value="2" @if (session()->get('akses_sebagai') == 'homeroom-km') selected @endif>
+                                <a class="dropdown-item" href="{{ route('ganti-akses') }}">
+                                    @if (session()->get('akses_sebagai') == 'homeroom-km')
+                                        Homeroom
+                                    @else
+                                        Change
+                                        to Homeroom
+                                    @endif
+                                </a>
+                            </option>
+                        </select>
+                    </div>
+                </li> --}}
+
                 @php
                     $user = Auth::user();
                 @endphp
