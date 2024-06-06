@@ -101,8 +101,8 @@ class CetakRaportSemesterController extends Controller
      */
     public function show(Request $request, $id)
     {
-        $sekolah = Sekolah::first();
         $anggota_kelas = AnggotaKelas::findorfail($id);
+        $sekolah = $anggota_kelas->kelas->tingkatan->sekolah;
         $tapel = Tapel::where('status', 1)->first();
         $semester = Semester::findorfail($request->semester_id);
 
@@ -254,8 +254,8 @@ class CetakRaportSemesterController extends Controller
 
     public function export(Request $request, $id)
     {
-        $sekolah = Sekolah::first();
         $kelas = Kelas::findorfail($id);
+        $sekolah = $kelas->tingkatan->sekolah;
         $data_anggota_kelas = AnggotaKelas::where('kelas_id', $id)->get();
         $tapel = Tapel::where('status', 1)->first();
         $semester = Semester::findorfail($request->semester_id);

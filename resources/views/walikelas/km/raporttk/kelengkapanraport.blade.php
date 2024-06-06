@@ -125,15 +125,11 @@
                         <div style="position: relative; left: -27px;">
                             <h1>
                                 GLOBAL INDONESIA
-                                @if ($anggota_kelas->kelas->tingkatan_id == '5')
-                                    SENIOR HIGH SCHOOL
-                                @elseif($anggota_kelas->kelas->tingkatan_id == '4')
-                                    JUNIOR HIGH SCHOOL
-                                @elseif($anggota_kelas->kelas->tingkatan_id == '3')
+                                @if ($anggota_kelas->kelas->tingkatan_id == '3')
                                     PRIMARY SCHOOL
-                                @elseif($anggota_kelas->kelas->tingkatan_id == '2')
+                                @elseif ($anggota_kelas->kelas->tingkatan_id == '2')
                                     KINDERGARTEN
-                                @elseif($anggota_kelas->kelas->tingkatan_id == '1')
+                                @elseif ($anggota_kelas->kelas->tingkatan_id == '1')
                                     PLAYGROUP
                                 @endif
                                 <br>
@@ -267,15 +263,11 @@
                     <td style="text-align: left; vertical-align: middle;">
                         <h5 class="title" style=" text-align: right; font-size: 10pt">
                             GLOBAL INDONESIA
-                            @if ($anggota_kelas->kelas->id == '1')
-                                SENIOR HIGH SCHOOL
-                            @elseif($anggota_kelas->kelas->id == '2')
-                                JUNIOR HIGH SCHOOL
-                            @elseif($anggota_kelas->kelas->id == '3')
+                            @if ($anggota_kelas->kelas->tingkatan_id == '3')
                                 PRIMARY SCHOOL
-                            @elseif($anggota_kelas->kelas->id == '4')
+                            @elseif ($anggota_kelas->kelas->tingkatan_id == '2')
                                 KINDERGARTEN
-                            @elseif($anggota_kelas->kelas->id == '5')
+                            @elseif ($anggota_kelas->kelas->tingkatan_id == '1')
                                 PLAYGROUP
                             @endif
                         </h5>
@@ -338,8 +330,13 @@
                         Place & Date of Birth
                     </td>
                     <td class="value">
-                        : {{ strtoupper($anggota_kelas->siswa->tempat_lahir) }}
-                        {{ strtoupper($anggota_kelas->siswa->tanggal_lahir->isoFormat('D MMMM Y')) }}
+                        @php
+                            $timestamp = strtotime($anggota_kelas->siswa->tanggal_lahir);
+
+                            $tanggal_lahir = date('j F Y', $timestamp);
+                        @endphp
+                        : {{ strtoupper($anggota_kelas->siswa->tempat_lahir) }},
+                        {{ strtoupper($tanggal_lahir) }}
                     </td>
                 </tr>
                 <tr>
@@ -681,10 +678,13 @@
                 <tr>
                     <td
                         style="text-align: left; vertical-align: middle; display: inline-block; border: 1px solid black; padding: 2pt">
-                        @if ($anggota_kelas->siswa->pas_photo != null)
-                            <img src="{{ asset('/storage/' . $anggota_kelas->siswa->pas_photo) }}" alt="4x3">
+                        @if (Storage::disk('public')->exists('siswa/' . $anggota_kelas->siswa->nis . '.jpg'))
+                            <img class="mb-2"
+                                src="{{ asset('storage/siswa/' . $anggota_kelas->siswa->nis . '.jpg') }}"
+                                alt="{{ $anggota_kelas->siswa->pas_photo }}" alt="pas_photo" width="105px">
                         @else
-                            <img src="{{ asset('/dist/img/4x3.png') }}" alt="4x3">
+                            <img src="{{ asset('assets/dist/img/3x4.png') }}" alt="" id="pas_photo_preview"
+                                width="105px" height="144px">
                         @endif
                     </td>
                     <td style=" text-align: center; vertical-align: middle; line-height: 1.3; padding-right: 160pt">
@@ -695,8 +695,15 @@
                             Principal
                         </p>
 
+                        @if (Storage::disk('public')->exists('ttd_kepala_sekolah/' . $sekolah->nip_kepala_sekolah . '.jpg'))
+                            <div>
+                                <img src="{{ asset('storage/ttd_kepala_sekolah/' . $sekolah->nip_kepala_sekolah . '.jpg') }}"
+                                    alt="{{ $sekolah->nip_kepala_sekolah }}" width="120px"
+                                    class="text-align: center; ">
+                            </div>
+                        @endif
                         <h5
-                            style="font-size: 8pt; padding-top: 45pt; text-align: center; border-bottom: 0.4px solid black; display: inline-block; width: auto;">
+                            style="font-size: 8pt; text-align: center; border-bottom: 0.4px solid black; display: inline-block; width: auto;">
                             {{ $sekolah->kepala_sekolah }}</h5>
                     </td>
                 </tr>

@@ -124,18 +124,7 @@
                     <td style="text-align: center; vertical-align: middle; width: 80%;">
                         <div style="position: relative; left: -27px;">
                             <h1>
-                                GLOBAL INDONESIA
-                                @if ($anggota_kelas->kelas->tingkatan_id == '6')
-                                    SENIOR HIGH SCHOOL
-                                @elseif($anggota_kelas->kelas->tingkatan_id == '5')
-                                    JUNIOR HIGH SCHOOL
-                                @elseif($anggota_kelas->kelas->tingkatan_id == '4')
-                                    PRIMARY SCHOOL
-                                @elseif($anggota_kelas->kelas->tingkatan_id == '2' || $anggota_kelas->kelas->tingkatan_id == '3')
-                                    KINDERGARTEN
-                                @elseif($anggota_kelas->kelas->tingkatan_id == '1')
-                                    PLAYGROUP
-                                @endif
+                                {{ strtoupper($sekolah->nama_sekolah) }}
                                 <br>
                                 <span style="font-weight: normal; font-size: 13pt; padding-top: 10;">
                                     DINAS PENDIDIKAN KABUPATEN SERANG
@@ -266,18 +255,7 @@
 
                     <td style="text-align: left; vertical-align: middle;">
                         <h5 class="title" style=" text-align: right; font-size: 10pt">
-                            GLOBAL INDONESIA
-                            @if ($anggota_kelas->kelas->id == '1')
-                                SENIOR HIGH SCHOOL
-                            @elseif($anggota_kelas->kelas->id == '2')
-                                JUNIOR HIGH SCHOOL
-                            @elseif($anggota_kelas->kelas->id == '3')
-                                PRIMARY SCHOOL
-                            @elseif($anggota_kelas->kelas->id == '4')
-                                KINDERGARTEN
-                            @elseif($anggota_kelas->kelas->id == '5')
-                                PLAYGROUP
-                            @endif
+                            {{ strtoupper($sekolah->nama_sekolah) }}
                         </h5>
                         <p
                             style="text-align: right; font-weight: normal; font-size: 6pt; line-height: 1.2; margin-left: 65px; vertical-align: middle">
@@ -338,8 +316,13 @@
                         Place & Date of Birth
                     </td>
                     <td class="value">
-                        : {{ strtoupper($anggota_kelas->siswa->tempat_lahir) }}
-                        {{ strtoupper($anggota_kelas->siswa->tanggal_lahir->isoFormat('D MMMM Y')) }}
+                        @php
+                            $timestamp = strtotime($anggota_kelas->siswa->tanggal_lahir);
+
+                            $tanggal_lahir = date('j F Y', $timestamp);
+                        @endphp
+                        : {{ strtoupper($anggota_kelas->siswa->tempat_lahir) }},
+                        {{ strtoupper($tanggal_lahir) }}
                     </td>
                 </tr>
                 <tr>
@@ -682,7 +665,8 @@
                     <td
                         style="text-align: left; vertical-align: middle; display: inline-block; border: 1px solid black; padding: 2pt">
                         @if ($anggota_kelas->siswa->pas_photo != null)
-                            <img src="{{ asset('/storage/' . $anggota_kelas->siswa->pas_photo) }}" alt="4x3">
+                            <img src="{{ asset('/storage/siswa/' . $anggota_kelas->siswa->pas_photo) }}"
+                                alt="4x3">
                         @else
                             <img src="{{ asset('/dist/img/4x3.png') }}" alt="4x3">
                         @endif

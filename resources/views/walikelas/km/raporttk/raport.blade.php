@@ -633,12 +633,23 @@
                 <td style="width: 50%; text-align: center;">
                     <p class="s6" style="text-align: center;">
                         {{-- Serang, January 09, 2024<br>Homeroom Teacher --}}
-                        {{ $anggota_kelas->kelas->tapel->km_tgl_raport->tempat_penerbitan }}
-                        {{ $anggota_kelas->kelas->tapel->km_tgl_raport->tanggal_pembagian->isoFormat('MMMM D, Y') }}<br>Homeroom
-                        Teacher
+                        @php
+                            $timestamp = strtotime($anggota_kelas->kelas->tapel->km_tgl_raport->tanggal_pembagian);
+
+                            $tanggal_lahir = date('j F Y', $timestamp);
+                        @endphp
+                        {{ $anggota_kelas->kelas->tapel->km_tgl_raport->tempat_penerbitan }},
+                        {{ $tanggal_lahir }}<br>Homeroom Teacher
                     </p>
+                    @if (Storage::disk('public')->exists('ttd/' . $anggota_kelas->kelas->guru->karyawan->kode_karyawan . '.jpg'))
+                        <div>
+                            <img src="{{ asset('storage/ttd/' . $anggota_kelas->kelas->guru->karyawan->kode_karyawan . '.jpg') }}"
+                                alt="{{ $anggota_kelas->kelas->guru->karyawan->kode_karyawan }}" width="120px"
+                                class="text-align: center; ">
+                        </div>
+                    @endif
                     <p class="s7"
-                        style="padding-top: 37pt; text-align: center; border-bottom: 1px solid black; display: inline-block; width: auto;">
+                        style="text-align: center; border-bottom: 1px solid black; display: inline-block; width: auto;">
                         @if ($anggota_kelas->kelas->guru)
                             {{ $anggota_kelas->kelas->guru->karyawan->nama_lengkap }}
                             {{ $anggota_kelas->kelas->guru->gelar }}
@@ -652,8 +663,15 @@
             <tr>
                 <td colspan="2" style="text-align: center; margin-top: 15px;">
                     <p class="s6" style="padding-top: 6pt; text-align: center;">Principal's Signature</p>
+                    @if (Storage::disk('public')->exists('ttd_kepala_sekolah/' . $sekolah->nip_kepala_sekolah . '.jpg'))
+                        <div>
+                            <img src="{{ asset('storage/ttd_kepala_sekolah/' . $sekolah->nip_kepala_sekolah . '.jpg') }}"
+                                alt="{{ $sekolah->nip_kepala_sekolah }}" width="120px"
+                                class="text-align: center; ">
+                        </div>
+                    @endif
                     <p class="s7"
-                        style="padding-top: 37pt; text-align: center; border-bottom: 1px solid black; display: inline-block; width: auto;">
+                        style="text-align: center; border-bottom: 1px solid black; display: inline-block; width: auto;">
                         {{ $sekolah->kepala_sekolah }}</p>
                 </td>
             </tr>

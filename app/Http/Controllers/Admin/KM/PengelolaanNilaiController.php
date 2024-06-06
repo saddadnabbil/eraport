@@ -40,11 +40,11 @@ class PengelolaanNilaiController extends Controller
     public function store(Request $request)
     {
         $title = 'Hasil Pengelolaan Nilai';
-        $sekolah = Sekolah::first();
         $tapel = Tapel::where('status', 1)->first();
         $data_kelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->get();
 
         $kelas = Kelas::findorfail($request->kelas_id);
+        $sekolah = $kelas->tingkatan->sekolah;
 
         $term = Term::findorfail($kelas->tingkatan->term_id);
         $semester = Semester::findorfail($kelas->tingkatan->semester_id);

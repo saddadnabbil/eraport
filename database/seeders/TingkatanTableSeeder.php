@@ -14,20 +14,21 @@ class TingkatanTableSeeder extends Seeder
      */
     public function run()
     {
-        $nama_tingkatan = [
-            "Playgroup",
-            "Kindergarten A",
-            "Kindergarten B",
-            "Primary School",
-            "Junior High School",
-            "Senior High School"
+        $datas = [
+            ["nama_tingkatan" => "Playgroup", "sekolah_id" => 1],
+            ["nama_tingkatan" => "Kindergarten A", "sekolah_id" => 1],
+            ["nama_tingkatan" => "Kindergarten B", "sekolah_id" => 1],
+            ["nama_tingkatan" => "Primary School", "sekolah_id" => 2],
+            ["nama_tingkatan" => "Junior High School", "sekolah_id" => 3],
+            ["nama_tingkatan" => "Senior High School", "sekolah_id" => 4],
         ];
 
-        foreach ($nama_tingkatan as $nama) {
+        foreach ($datas as $data) {
             Tingkatan::create([
-                'nama_tingkatan' => $nama,
+                'nama_tingkatan' => $data['nama_tingkatan'],
                 'term_id' => 1,
-                'semester_id' => 1
+                'semester_id' => 1,
+                'sekolah_id' => $data['sekolah_id'],
             ]);
         }
     }

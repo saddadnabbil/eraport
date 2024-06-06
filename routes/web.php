@@ -129,9 +129,12 @@ Route::group(['middleware' => ['auth']], function () {
                 ]);
 
                 // Sekolah Controller
-                Route::resource('sekolah', 'Admin\SekolahController')->only(['index', 'update'])->names([
+                Route::resource('sekolah', 'Admin\SekolahController')->only(['index', 'store', 'show', 'update', 'destroy'])->names([
                     'index' => 'admin.sekolah.index',
+                    'store' => 'admin.sekolah.store',
+                    'show' => 'admin.sekolah.show',
                     'update' => 'admin.sekolah.update',
+                    'destroy' => 'admin.sekolah.destroy',
                 ]);
 
                 // Academic Year Controller
@@ -677,13 +680,13 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('getKelas/ekstra/{id}', 'AjaxController@ajax_kelas_ekstra')->name('guru.get.kelas.ekstra');
 
             Route::resource('silabus', 'Guru\SilabusController')
-            ->only(['index', 'store', 'update', 'destroy'])
-            ->names([
-                'index' => 'guru.silabus.index',
-                'store' => 'guru.silabus.store',
-                'update' => 'guru.silabus.update',
-                'destroy' => 'guru.silabus.destroy',
-            ]);
+                ->only(['index', 'store', 'update', 'destroy'])
+                ->names([
+                    'index' => 'guru.silabus.index',
+                    'store' => 'guru.silabus.store',
+                    'update' => 'guru.silabus.update',
+                    'destroy' => 'guru.silabus.destroy',
+                ]);
 
             // Curriculum
             Route::group(['middleware' => 'role:Curriculum'], function () {
@@ -729,11 +732,12 @@ Route::group(['middleware' => ['auth']], function () {
                         'destroy' => 'guru.pengumuman.destroy',
                     ]);
 
-                    // Sekolah Controller
-                    Route::resource('sekolah', 'Guru\MD\SekolahController')->only(['index', 'update'])->names([
+                    Route::resource('sekolah', 'Guru\MD\SekolahController')->only(['index', 'store', 'show', 'update', 'destroy'])->names([
                         'index' => 'guru.sekolah.index',
+                        'store' => 'guru.sekolah.store',
+                        'show' => 'guru.sekolah.show',
                         'update' => 'guru.sekolah.update',
-
+                        'destroy' => 'guru.sekolah.destroy',
                     ]);
 
                     // Academic Year Controller

@@ -55,6 +55,7 @@ class CreateKaryawansTable extends Migration
             $table->string('keterangan')->nullable();
 
             $table->string('pas_photo')->nullable();
+            $table->string('ttd')->nullable();
             $table->string('photo_kartu_identitas')->nullable();
             $table->string('photo_taxpayer')->nullable();
             $table->string('photo_kk')->nullable();

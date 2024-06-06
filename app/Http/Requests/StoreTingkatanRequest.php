@@ -29,6 +29,7 @@ class StoreTingkatanRequest extends FormRequest
             'nama_tingkatan' => 'required|string|max:255',
             'term_id' => 'required|exists:terms,id',
             'semester_id' => 'required|exists:semesters,id',
+            'sekolah_id' => 'required|exists:sekolah,id',
         ];
     }
 

@@ -99,8 +99,8 @@ class CetakRaportP5Controller extends Controller
                 ->withInput();
         }
 
-        $sekolah = Sekolah::first();
         $anggota_kelas = AnggotaKelas::findorfail($id);
+        $sekolah = $anggota_kelas->kelas->tingkatan->sekolah;
         $tapel = Tapel::where('status', 1)->first();
         $semester = Semester::findorfail($request->semester_id);
 

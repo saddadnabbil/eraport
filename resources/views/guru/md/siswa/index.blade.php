@@ -79,7 +79,7 @@
 
                         <div class="info-box-content">
                             <span class="info-box-text">Kindergarten B</span>
-                            @if (isset($jumlah_kelas_per_level['2']))
+                            @if (isset($jumlah_kelas_per_level['3']))
                                 <span class="info-box-number">{{ $jumlah_kelas_per_level['3'] }}
                                     <small>students</small></span>
                             @else
@@ -98,7 +98,7 @@
 
                         <div class="info-box-content">
                             <span class="info-box-text">Primary School</span>
-                            @if (isset($jumlah_kelas_per_level['3']))
+                            @if (isset($jumlah_kelas_per_level['4']))
                                 <span class="info-box-number">{{ $jumlah_kelas_per_level['4'] }}
                                     <small>students</small></span>
                             @else
@@ -118,7 +118,7 @@
 
                         <div class="info-box-content">
                             <span class="info-box-text">Junior High School</span>
-                            @if (isset($jumlah_kelas_per_level['4']))
+                            @if (isset($jumlah_kelas_per_level['5']))
                                 <span class="info-box-number">{{ $jumlah_kelas_per_level['5'] }}
                                     <small>students</small></span>
                             @else
@@ -139,7 +139,7 @@
 
                         <div class="info-box-content">
                             <span class="info-box-text">Senior High School</span>
-                            @if (isset($jumlah_kelas_per_level['5']))
+                            @if (isset($jumlah_kelas_per_level['6']))
                                 <span class="info-box-number">{{ $jumlah_kelas_per_level['6'] }}
                                     <small>students</small></span>
                             @else

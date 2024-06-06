@@ -133,6 +133,19 @@
 
     <!-- pas_photo preview-->
     <script>
+        function readURLTtd(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $('#ttd_preview')
+                        .attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
         function readURLPasPhoto(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();

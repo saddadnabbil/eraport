@@ -47,13 +47,14 @@
                                 @csrf
                                 <div class="form-group row border-bottom">
                                     <div class="col-lg-5 col-md-6 form-inline" style="margin-bottom: 14px">
-                                        <label class="col-lg-6 col-md-6font-weight-normal" for="select_tapel_id">Academic Year</label>
+                                        <label class="col-lg-6 col-md-6font-weight-normal" for="select_tapel_id">Academic
+                                            Year</label>
                                         <div class="col-6">
                                             <select class="custom-select form-control" name="select_tapel_id">
                                                 {{-- <option selected>{{ $tapel_id }}</option> --}}
                                                 @foreach ($data_tapel as $tapel)
                                                     <option value="{{ $tapel->id }}"
-                                                        @if ($tapel->id == $sekolah->tapel_id) selected @endif>
+                                                        @if ($tapel->id == $tapel_id) selected @endif>
                                                         {{ $tapel->tahun_pelajaran }}
                                                     </option>
                                                 @endforeach

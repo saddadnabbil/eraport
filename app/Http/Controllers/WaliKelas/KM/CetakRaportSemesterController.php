@@ -76,8 +76,8 @@ class CetakRaportSemesterController extends Controller
      */
     public function show(Request $request, $id)
     {
-        $sekolah = Sekolah::first();
         $anggota_kelas = AnggotaKelas::findorfail($id);
+        $sekolah = $anggota_kelas->kelas->tingkatan->sekolah;
         $tapel = Tapel::where('status', 1)->first();
         $semester = Semester::findorfail($request->semester_id);
 

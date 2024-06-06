@@ -12,6 +12,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\StoreTingkatanRequest;
 use App\Http\Requests\UpdateTingkatanRequest;
+use App\Models\Sekolah;
 
 class TingkatanController extends Controller
 {
@@ -21,8 +22,9 @@ class TingkatanController extends Controller
         $tapel = Tapel::where('status', 1)->first();
 
         $data_tingkatan = Tingkatan::orderBy('id', 'ASC')->get();
+        $data_sekolah = Sekolah::orderBy('id', 'ASC')->get();
 
-        return view('admin.tingkatan.index', compact('title', 'data_tingkatan', 'tapel'));
+        return view('admin.tingkatan.index', compact('title', 'data_tingkatan', 'data_sekolah', 'tapel'));
     }
 
     public function store(StoreTingkatanRequest $request): RedirectResponse

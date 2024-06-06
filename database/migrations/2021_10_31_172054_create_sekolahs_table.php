@@ -15,6 +15,7 @@ class CreateSekolahsTable extends Migration
     {
         Schema::create('sekolah', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('tapel_id')->unsigned();
             $table->string('nama_sekolah', 100);
             $table->string('npsn', 10);
             $table->string('nss', 15)->nullable();
@@ -25,9 +26,12 @@ class CreateSekolahsTable extends Migration
             $table->string('email', 35)->nullable();
             $table->string('logo');
             $table->string('kepala_sekolah', 100);
-            $table->string('nip_kepala_sekolah', 18)->nullable();
+            $table->string('nip_kepala_sekolah', 18);
+            $table->string('ttd_kepala_sekolah')->nullable();
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('tapel_id')->references('id')->on('tapels')->onDelete('cascade');
         });
     }
 

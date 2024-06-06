@@ -88,8 +88,8 @@ class CetakRaportPTSController extends Controller
     public function show(Request $request, $id)
     {
         $title = 'Raport PTS';
-        $sekolah = Sekolah::first();
         $anggota_kelas = AnggotaKelas::findorfail($id);
+        $sekolah = $anggota_kelas->kelas->tingkatan->sekolah;
         $tapel = Tapel::where('status', 1)->first();
         $term = Term::findorfail($request->term_id);
         $semester = Semester::findorfail($request->term_id);

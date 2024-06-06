@@ -14,15 +14,18 @@ class CreateTingkatansTable extends Migration
     public function up()
     {
         Schema::create('tingkatans', function (Blueprint $table) {
-            $table->id();
-            $table->string('nama_tingkatan', 50);
             $table->unsignedBigInteger('term_id')->unsigned();
             $table->unsignedBigInteger('semester_id')->unsigned();
+            $table->unsignedBigInteger('sekolah_id')->unsigned();
+
+            $table->id();
+            $table->string('nama_tingkatan', 50);
             $table->timestamps();
-            $table->softDeletes();            
-            
-            $table->foreign('term_id')->references('id')->on('terms');
-            $table->foreign('semester_id')->references('id')->on('semesters');
+            $table->softDeletes();
+
+            $table->foreign('term_id')->references('id')->on('terms')->onDelete('cascade');
+            $table->foreign('semester_id')->references('id')->on('semesters')->onDelete('cascade');
+            $table->foreign('sekolah_id')->references('id')->on('sekolah')->onDelete('cascade');
         });
     }
 

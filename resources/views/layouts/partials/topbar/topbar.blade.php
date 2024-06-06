@@ -51,7 +51,6 @@
                 @if (
                     $user->hasAnyRole(['Teacher', 'Co-Teacher']) &&
                         !request()->is('teacher/master-data/*') &&
-                        session()->get('cek_homeroom_tk') != true &&
                         !request()->is('curriculum/dashboard'))
                     <div style="padding: 0 15px; margin-left: 1rem;">
                         <li class="nav-item d-none d-md-block">
