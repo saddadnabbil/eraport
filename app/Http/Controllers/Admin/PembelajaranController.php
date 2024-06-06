@@ -24,7 +24,7 @@ class PembelajaranController extends Controller
     {
         $tapel = Tapel::where('status', 1)->first();
         $data_mapel = Mapel::where('tapel_id', $tapel->id)->orderBy('nama_mapel', 'ASC')->get();
-        $data_kelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->orderBy('tingkatan_id', 'ASC')->get();
+        $data_kelas = Kelas::where('tapel_id', $tapel->id)->orderBy('tingkatan_id', 'ASC')->get();
 
         if (count($data_mapel) == 0) {
             return redirect(route('admin.mapel.index'))->with('toast_warning', 'Mohon isikan Subject Data');
@@ -43,7 +43,7 @@ class PembelajaranController extends Controller
         $title = 'Setting Pembelajaran';
         $tapel = Tapel::where('status', 1)->first();
         $kelas = Kelas::findorfail($request->kelas_id);
-        $data_kelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->orderBy('tingkatan_id', 'ASC')->get();
+        $data_kelas = Kelas::where('tapel_id', $tapel->id)->orderBy('tingkatan_id', 'ASC')->get();
 
         $data_pembelajaran_kelas = Pembelajaran::where('kelas_id', $request->kelas_id)->get();
         $mapel_id_pembelajaran_kelas = Pembelajaran::where('kelas_id', $request->kelas_id)->get('mapel_id');
