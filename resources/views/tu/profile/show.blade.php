@@ -2,10 +2,10 @@
 @section('sidebar')
     @php
         $user = Auth::user();
-        $dashboard = route('guru.dashboard');
+        $dashboard = route('tu.dashboard');
     @endphp
 
-    @include('layouts.sidebar.guru')
+    @include('layouts.sidebar.tu')
 @endsection
 
 @section('content')
@@ -103,7 +103,7 @@
                 <div class="col-md-12 col-lg-9">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title"> Detail {{ $user->hasRole('Admin') ? 'Karyawan' : 'Guru' }}</h3>
+                            <h3 class="card-title"> Detail Profile</h3>
                         </div><!-- /.card-header -->
                         <div class="card-body">
                             @if ($errors->any())
@@ -485,14 +485,14 @@
                                 </div>
                             </div>
                             <a href="{{ route('guru.dashboard') }}" class="btn btn-success btn-sm">Back</a>
-                            @if ($user->hasRole(['Admin', 'Curriculum', 'Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG']))
+                            @if ($user->hasRole(['Admin', 'Admission', 'Curriculum', 'Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG']))
                                 <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                     data-bs-target="#modal-edit{{ $karyawan->id }}">Edit</button>
                             @endif
                         </div>
 
-                        @if ($user->hasRole(['Admin', 'Curriculum', 'Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG']))
-                            @include('guru.profile.modal.edit')
+                        @if ($user->hasRole(['Admin', 'Admission', 'Curriculum', 'Teacher', 'Co-Teacher', 'Teacher PG-KG', 'Co-Teacher PG-KG']))
+                            @include('tu.profile.modal.edit')
                         @endif
                     </div>
                     <!-- /.row -->
