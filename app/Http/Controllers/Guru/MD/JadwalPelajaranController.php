@@ -29,7 +29,7 @@ class JadwalPelajaranController extends Controller
         $tapel = Tapel::where('status', 1)->first();
         $title = 'Pilih Kelas - Time Table';
 
-        $dataKelas = Kelas::where('tapel_id', $tapel->id)->whereNotIn('tingkatan_id', [1, 2, 3])->get();
+        $dataKelas = Kelas::where('tapel_id', $tapel->id)->get();
 
         return view('guru.md.jadwalpelajaran.pilihkelas', compact('title', 'dataKelas'));
     }

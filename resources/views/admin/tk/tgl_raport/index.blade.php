@@ -204,7 +204,8 @@
                                                                         <input type="date" class="form-control"
                                                                             id="tanggal_pembagian"
                                                                             name="tanggal_pembagian"
-                                                                            value="{{ $tgl_raport->tanggal_pembagian->format('Y-m-d') }}">
+                                                                            @php $tanggal_pembagian = new DateTime($tgl_raport->tanggal_pembagian); @endphp
+                                                                            value="{{ $tanggal_pembagian->format('Y-m-d') }}">
                                                                     </div>
                                                                 </div>
                                                             </div>

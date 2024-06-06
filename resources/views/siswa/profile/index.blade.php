@@ -111,7 +111,8 @@
                                     <label class="col-sm-2 col-form-label">Tanggal Lahir</label>
                                     <div class="col-sm-4">
                                         <input type="date" class="form-control" name="tanggal_lahir"
-                                            value="{{ $siswa->tanggal_lahir->format('Y-m-d') }}">
+                                            @php $tanggal_lahir = new DateTime($siswa->tanggal_lahir); @endphp
+                                            value="{{ $tanggal_lahir->format('Y-m-d') }}">
                                     </div>
                                 </div>
 
