@@ -50,6 +50,8 @@
                     </li>
                     @include('layouts.partials.sidebar.tu.pengumuman')
                     @include('layouts.partials.sidebar.tu.siswa')
+                    @include('layouts.partials.sidebar.tu.mapel')
+                    @include('layouts.partials.sidebar.tu.kelas')
                     <li class="list-divider"></li>
                 @endif
 

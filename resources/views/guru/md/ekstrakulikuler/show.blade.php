@@ -152,8 +152,8 @@
                                                         method="POST">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm mt-1"
-                                                            onclick="return confirm('Hapus {{ $title }} ?')">
+                                                        <button type="button" class="btn btn-danger btn-sm mt-1"
+                                                            onclick="return confirmAction('{{ $anggota->id }}', 'delete', 'Delete {{ $title }}', 'The data will be deleted')">
                                                             <i class="fas fa-trash-alt"></i>
                                                         </button>
                                                     </form>

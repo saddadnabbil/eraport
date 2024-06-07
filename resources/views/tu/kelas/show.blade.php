@@ -65,8 +65,115 @@
                                 @endif
                             </h3>
                             <div class="card-tools">
+                                @if ($user->hasRole('Admin'))
+                                    <div data-bs-toggle="tooltip" title="Create" class="d-inline-block">
+                                        <button type="button" class="btn btn-tool btn-sm" data-bs-toggle="modal"
+                                            data-bs-target="#modal-tambah">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                    </div>
+                                    {{-- get form trash --}}
+                                    <div data-bs-toggle="tooltip" title="Trash" class="d-inline-block"
+                                        class="d-inline-block">
+                                        {{-- Form untuk mengirimkan permintaan POST dengan menyertakan nilai $kelas->id --}}
+                                        <form action="{{ route('tu.kelas.anggota_kelas.trash', ['id' => $kelas->id]) }}"
+                                            method="get">
+                                            @csrf
+                                            <button type="submit" class="btn btn-tool btn-sm" data-bs-toggle="tooltip"
+                                                title="Trash">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                @endif
                             </div>
                         </div>
+
+                        @if ($user->hasRole('Admin'))
+                            <!-- Modal tambah  -->
+                            <div class="modal fade" id="modal-tambah">
+                                <div class="modal-dialog modal-xl">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Tambah {{ $title }}</h5>
+
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-hidden="true"></button>
+                                            </button>
+                                        </div>
+                                        <form action="{{ route('tu.kelas.anggota') }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="tapel_id" value="{{ $tapel->id }}">
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="form-group">
+                                                            <div class="callout callout-info">
+                                                                <label>
+                                                                    {{ $kelas->nama_kelas }}
+                                                                    {{ $kelas->tapel->tahun_pelajaran }} Semester
+                                                                    @if ($kelas->tapel->semester_id == 1)
+                                                                        Ganjil
+                                                                    @else
+                                                                        Genap
+                                                                    @endif
+                                                                </label>
+                                                                <p>Untuk menambahkan anggota kelas, silahkan pindahkan nama
+                                                                    siswa ke kolom sebelah kanan lalu klik tombol simpan.
+                                                                </p>
+                                                            </div>
+                                                            <input type="hidden" name="kelas_id"
+                                                                value="{{ $kelas->id }}">
+                                                            <select class="duallistbox" multiple="multiple"
+                                                                name="siswa_id[]">
+                                                                @foreach ($siswa_belum_masuk_kelas as $belum_masuk_kelas)
+                                                                    <option value="{{ $belum_masuk_kelas->id }}">
+                                                                        {{ $belum_masuk_kelas->nis }} |
+                                                                        {{ $belum_masuk_kelas->nisn }} |
+                                                                        {{ $belum_masuk_kelas->nama_lengkap }}
+                                                                        ({{ $belum_masuk_kelas->kelas_sebelumhya }})
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                            <div class="form-group row pt-3 pb-0 justify-content-end">
+                                                                <label for="pendaftaran"
+                                                                    class="col-sm-2 col-form-label">Jenis
+                                                                    Pendaftaran</label>
+                                                                <div class="col-sm-4">
+                                                                    <select class="form-control form-select"
+                                                                        name="pendaftaran" required>
+                                                                        <option value="">-- Pilih Jenis Pendaftaran --
+                                                                        </option>
+                                                                        <option value="2">Pindahan</option>
+                                                                        @if ($kelas->tapel->semester_id == 1)
+                                                                            <option value="1">Siswa Baru</option>
+                                                                            <option value="3">Naik Kelas</option>
+                                                                            <option value="5">Mengulang</option>
+                                                                        @else
+                                                                            <option value="4">Lanjutan Semester
+                                                                            </option>
+                                                                        @endif
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /.form-group -->
+                                                    </div>
+                                                    <!-- /.col -->
+                                                </div>
+                                                <!-- /.row -->
+                                            </div>
+                                            <div class="modal-footer justify-content-end">
+                                                <button type="button" class="btn btn-default"
+                                                    data-bs-dismiss="modal">Batal</button>
+                                                <button type="submit" class="btn btn-primary">Save</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Modal tambah -->
+                        @endif
 
                         <div class="card-body">
                             <div class="table-responsive">
@@ -80,6 +187,9 @@
                                             <th>Tanggal Lahir</th>
                                             <th>L/P</th>
                                             <th>Pendaftaran</th>
+                                            @if ($user->hasRole('Admin'))
+                                                <th>Action</th>
+                                            @endif
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -109,6 +219,22 @@
                                                         Naik Kelas
                                                     @elseif ($anggota->pendaftaran == 5)
                                                         Mengulang
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    @if ($user->hasRole('Admin'))
+                                                        <form action="{{ route('tu.kelas.anggota.delete', $anggota->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <a href="{{ route('admin.siswa.show', $anggota->siswa->id) }}"
+                                                                class="btn btn-warning btn-sm mt-1"><i
+                                                                    class="fas fa-eye"></i></a>
+                                                            <button type="button" class="btn btn-danger btn-sm mt-1"
+                                                                onclick="return confirmAction('{{ $anggota->id }}', 'delete', 'Delete {{ $title }}', 'The data will be deleted')">
+                                                                <i class="fas fa-trash-alt"></i>
+                                                            </button>
+                                                        </form>
                                                     @endif
                                                 </td>
                                             </tr>

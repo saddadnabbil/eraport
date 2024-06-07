@@ -217,8 +217,8 @@
                                                         <a href="{{ route('guru.siswa.show', $anggota->siswa->id) }}"
                                                             class="btn btn-warning btn-sm mt-1"><i
                                                                 class="fas fa-eye"></i></a>
-                                                        <button type="submit" class="btn btn-danger btn-sm mt-1"
-                                                            onclick="return confirm('Hapus {{ $title }} ?')">
+                                                        <button type="button" class="btn btn-danger btn-sm mt-1"
+                                                            onclick="return confirmAction('{{ $anggota->id }}', 'delete', 'Delete {{ $title }}', 'The data will be deleted')">
                                                             <i class="fas fa-trash-alt"></i>
                                                         </button>
                                                     </form>

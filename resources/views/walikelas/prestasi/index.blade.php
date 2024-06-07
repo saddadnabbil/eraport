@@ -209,8 +209,8 @@
                                                             data-bs-target="#modal-edit{{ $prestasi->id }}">
                                                             <i class="fas fa-pen"></i>
                                                         </button>
-                                                        <button type="submit" class="btn btn-danger btn-sm mt-1"
-                                                            onclick="return confirm('Hapus {{ $title }} ?')">
+                                                        <button type="button" class="btn btn-danger btn-sm mt-1"
+                                                            onclick="return confirmAction('{{ $prestasi->id }}', 'delete', 'Delete {{ $title }}', 'The data will be deleted')">
                                                             <i class="fas fa-trash-alt"></i>
                                                         </button>
                                                     </form>

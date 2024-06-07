@@ -190,15 +190,29 @@
                                                 <td>{{ $mapel->ringkasan_mapel }}</td>
                                                 <td><input type="color" name="color" id="color"
                                                         value="{{ $mapel->color }}" disabled></td>
-                                                <td class="text-center">
-                                                    <div data-bs-toggle="tooltip" data-bs-original-title="Edit">
-                                                        <button type="button" class="btn btn-warning btn-sm mt-1"
-                                                            data-bs-toggle="modal"
-                                                            data-bs-target="#modal-edit{{ $mapel->id }}">
-                                                            <i class="fas fa-pencil-alt"></i>
-                                                        </button>
-                                                    </div>
-                                                </td>
+
+                                                <form action="{{ route('tu.mapel.destroy', $mapel->id) }}" method="POST"
+                                                    id="deleteForm{{ $mapel->id }}">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <td class="d-flex gap-2 justify-content-center">
+                                                        <div data-bs-toggle="tooltip" data-bs-original-title="Edit">
+                                                            <button type="button" class="btn btn-warning btn-sm mt-1"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#modal-edit{{ $mapel->id }}">
+                                                                <i class="fas fa-pencil-alt"></i>
+                                                            </button>
+                                                        </div>
+                                                        @if ($user->hasRole('Admin'))
+                                                            <div data-bs-toggle="tooltip" data-bs-original-title="Delete">
+                                                                <button type="button" class="btn btn-danger btn-sm mt-1"
+                                                                    onclick="confirmAction('{{ $mapel->id }}', 'delete', 'Delete {{ $title }}', 'The data will be deleted')">
+                                                                    <i class="fas fa-trash-alt"></i>
+                                                                </button>
+                                                            </div>
+                                                        @endif
+                                                    </td>
+                                                </form>
                                             </tr>
 
                                             <!-- Modal edit  -->
