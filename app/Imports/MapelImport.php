@@ -16,7 +16,7 @@ class MapelImport implements ToCollection
      */
     public function collection(Collection $collection)
     {
-        $tapel = Tapel::orderBy('id', 'DESC')->limit(1)->first();
+        $tapel = Tapel::where('status', 1)->first();
 
         foreach ($collection as $key => $row) {
             if ($key >= 8 && $key <= 30) {
@@ -25,7 +25,7 @@ class MapelImport implements ToCollection
                     'nama_mapel' => $row[1],
                     'nama_mapel_indonesian' => $row[2],
                     'ringkasan_mapel' => $row[3],
-                    'mapel' => $row[4]
+                    'color' => $row[4]
                 ]);
             }
         }

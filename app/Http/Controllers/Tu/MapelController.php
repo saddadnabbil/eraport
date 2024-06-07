@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Tu;
 
-use App\Http\Controllers\Controller;
-use App\Imports\MapelImport;
 use App\Models\Mapel;
 use App\Models\Tapel;
+use App\Imports\MapelImport;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Excel;
+use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Validator;
 
 
 class MapelController extends Controller
