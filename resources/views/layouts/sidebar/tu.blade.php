@@ -44,18 +44,11 @@
                 </li>
                 <li class="list-divider"></li>
 
-                @if (request()->is('admin/user/*') || request()->is('admin/dashboard'))
-                    <li class="nav-small-cap">
-                        <span class="hide-menu">User Management</span>
-                    </li>
-                    @include('layouts.partials.sidebar.admin.user')
-                    @include('layouts.partials.sidebar.admin.karyawan')
-                    <li class="list-divider"></li>
-                @endif
-
                 @if (request()->is('admission/*'))
-                    @include('layouts.partials.sidebar.guru.pengumuman')
+                    @include('layouts.partials.sidebar.tu.pengumuman')
                     @include('layouts.partials.sidebar.tu.siswa')
+                    @include('layouts.partials.sidebar.tu.mapel')
+                    @include('layouts.partials.sidebar.tu.kelas')
                 @endif
                 <li class="list-divider"></li>
 

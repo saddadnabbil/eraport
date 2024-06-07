@@ -24,7 +24,8 @@ class MapelImport implements ToCollection
                     'tapel_id' => $tapel->id,
                     'nama_mapel' => $row[1],
                     'nama_mapel_indonesian' => $row[2],
-                    'ringkasan_mapel' => $row[3]
+                    'ringkasan_mapel' => $row[3],
+                    'mapel' => $row[4]
                 ]);
             }
         }

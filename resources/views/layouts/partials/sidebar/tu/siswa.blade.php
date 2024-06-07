@@ -1,5 +1,5 @@
 @include('layouts.partials.sidebar._sidebar-item', [
-    'isActive' => request()->routeIs('guru.siswa.*'),
+    'isActive' => request()->routeIs('tu.siswa.*'),
     'hasArrow' => false,
     'icon' => 'bell',
     'itemName' => 'Students',

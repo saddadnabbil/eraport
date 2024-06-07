@@ -19,10 +19,12 @@
                     } elseif ($user->hasRole(['Curriculum'])) {
                         $dashboard = route('curriculum.dashboard');
                         $tapel = route('guru.tapel.index');
-                    } elseif ($user->hasAnyRole(['Teacher', 'Teacher PG-KG', 'Teacher'])) {
+                    } elseif ($user->hasAnyRole(['Teacher', 'Teacher PG-KG', 'Co-Teacher', 'Co-Teacher PG-KG'])) {
                         $dashboard = route('guru.dashboard');
                     } elseif ($user->hasRole('Student')) {
                         $dashboard = route('siswa.dashboard');
+                    } elseif ($user->hasRole(['Admission'])) {
+                        $dashboard = route('tu.dashboard');
                     }
                 @endphp
                 <a href="{{ $dashboard }}">
@@ -70,7 +72,7 @@
                                     <div class="message-center notifications position-relative">
                                         @if ($user->hasRole('Admin'))
                                             <a href="{{ request()->is('admin/dashboard') || request()->is('admin/user/*') ? 'javascript:void(0)' : route('admin.dashboard') }}"
-                                                @if (request()->is('admin/dashboard/*') || request()->is('admin/user/*')) disabled style="background: #e8eaec;" @endif
+                                                @if (request()->is('admin/dashboard') || request()->is('admin/user/*')) disabled style="background: #e8eaec;" @endif
                                                 class="message-item d-flex align-items-center border-bottom px-3 py-2">
                                                 <div class="btn btn-danger rounded-circle btn-circle"><i
                                                         data-feather="airplay" class="text-white"></i></div>
@@ -88,7 +90,15 @@
                                                     <h6 class="message-title mb-0 mt-1 text-nowrap">Curriculum</h6>
                                                 </div>
                                             </a>
-
+                                            <a href="{{ request()->is('admission/*') || request()->routeIs('tu.dashboard') ? 'javascript:void(0)' : route('tu.dashboard') }}"
+                                                @if (request()->is('admission/*') || request()->routeIs('tu.dashboard')) disabled style="background: #e8eaec;" @endif
+                                                class="message-item d-flex align-items-center border-bottom px-3 py-2">
+                                                <div class="btn btn-danger rounded-circle btn-circle"><i
+                                                        data-feather="airplay" class="text-white"></i></div>
+                                                <div class="w-75 d-inline-block v-middle ps-2">
+                                                    <h6 class="message-title mb-0 mt-1 text-nowrap">Admission</h6>
+                                                </div>
+                                            </a>
                                             <a href="{{ request()->is('admin/tk/*') ? 'javascript:void(0)' : route('tk.event.index') }}"
                                                 @if (request()->is('admin/tk/*')) disabled style="background: #e8eaec;" @endif
                                                 class="message-item d-flex align-items-center border-bottom px-3 py-2">
@@ -118,6 +128,18 @@
                                                         data-feather="airplay" class="text-white"></i></div>
                                                 <div class="w-75 d-inline-block v-middle ps-2">
                                                     <h6 class="message-title mb-0 mt-1 text-nowrap">Curriculum</h6>
+                                                </div>
+                                            </a>
+                                        @endif
+
+                                        @if ($user->hasRole('Admission'))
+                                            <a href="{{ request()->is('admission/*') || request()->routeIs('tu.dashboard') ? 'javascript:void(0)' : route('tu.dashboard') }}"
+                                                @if (request()->is('admission/*') || request()->routeIs('tu.dashboard')) disabled style="background: #e8eaec;" @endif
+                                                class="message-item d-flex align-items-center border-bottom px-3 py-2">
+                                                <div class="btn btn-danger rounded-circle btn-circle"><i
+                                                        data-feather="airplay" class="text-white"></i></div>
+                                                <div class="w-75 d-inline-block v-middle ps-2">
+                                                    <h6 class="message-title mb-0 mt-1 text-nowrap">Admission</h6>
                                                 </div>
                                             </a>
                                         @endif
@@ -251,7 +273,7 @@
                             <span class="text-dark">
                                 @if (!$user->hasRole('Student'))
                                     {{ $user->karyawan->nama_lengkap }}
-                                @else 
+                                @else
                                     {{ $user->siswa->nama_lengkap }}
                                 @endif
                             </span>

@@ -50,7 +50,7 @@
             'breadcrumbs' => [
                 [
                     'title' => 'Dashboard',
-                    'url' => route('admin.dashboard'),
+                    'url' => route('tu.dashboard'),
                     'active' => false,
                 ],
             ],

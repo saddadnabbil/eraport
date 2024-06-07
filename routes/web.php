@@ -653,7 +653,7 @@ Route::group(['middleware' => ['auth']], function () {
     // End Route Admin
 
     // STart Route Admission
-    Route::group(['middleware' => 'role:Admission'], function () {
+    Route::group(['middleware' => 'role:Admission|Admin'], function () {
         Route::prefix('admission')->group(function () {
             Route::get('dashboard', 'DashboardController@index')->name('tu.dashboard');
 
@@ -687,6 +687,34 @@ Route::group(['middleware' => ['auth']], function () {
                 'update' => 'tu.siswa.update',
                 'destroy' => 'tu.siswa.destroy',
                 'show' => 'tu.siswa.show',
+            ]);
+
+            // Mapel Controller
+            Route::get('mapel/import', 'Tu\MapelController@format_import')->name('tu.mapel.format_import');
+            Route::post('mapel/import', 'Tu\MapelController@import')->name('tu.mapel.import');
+            Route::resource('mapel', 'Tu\MapelController', [
+                'only' => ['index', 'store', 'update', 'destroy'],
+            ])->names([
+                'index' => 'tu.mapel.index',
+                'store' => 'tu.mapel.store',
+                'update' => 'tu.mapel.update',
+                'destroy' => 'tu.mapel.destroy',
+            ]);
+
+            Route::post('kelas/anggota', 'Tu\KelasController@store_anggota')->name('tu.kelas.anggota');
+            Route::delete('kelas/anggota/{anggota}', 'Tu\KelasController@delete_anggota')->name('tu.kelas.anggota.delete');
+            Route::post('kelas/anggota/{anggota}', 'Tu\KelasController@pindah_kelas')->name('tu.kelas.anggota.pindah_kelas');
+            Route::get('kelas/{id}/trash', 'Tu\KelasController@showTrash')->name('tu.kelas.anggota_kelas.trash');
+            Route::delete('kelas/{id}/permanent-delete', 'Tu\KelasController@destroyPermanent')->name('tu.kelas.anggota_kelas.permanent-delete');
+            Route::patch('kelas/{id}/restore', 'Tu\KelasController@restore')->name('tu.kelas.anggota_kelas.restore');
+            Route::resource('kelas', 'Tu\KelasController', [
+                'only' => ['index', 'store', 'show', 'destroy', 'update'],
+            ])->names([
+                'index' => 'tu.kelas.index',
+                'store' => 'tu.kelas.store',
+                'show' => 'tu.kelas.show',
+                'destroy' => 'tu.kelas.destroy',
+                'update' => 'tu.kelas.update',
             ]);
         });
     });

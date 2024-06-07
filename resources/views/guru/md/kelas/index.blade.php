@@ -43,8 +43,8 @@
 
                         <div class="info-box-content">
                             <span class="info-box-text">Playgroup</span>
-                            <span class="info-box-number">{{ $jumlah_kelas_play_group }}
-                                <small>{{ $jumlah_kelas_junior_high_school > 1 ? 'classes' : 'class' }}</small></span>
+                            <span class="info-box-number">{{ $jumlah_kelas_per_tingkatan['1'] }}
+                                <small>{{ $jumlah_kelas_per_tingkatan['1'] > 1 ? 'classes' : 'class' }}</small></span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -57,8 +57,8 @@
 
                         <div class="info-box-content">
                             <span class="info-box-text">Kindergarten A</span>
-                            <span class="info-box-number">{{ $jumlah_kelas_kinder_garten_a }}
-                                <small>{{ $jumlah_kelas_kinder_garten_a > 1 ? 'classes' : 'class' }}</small></span>
+                            <span class="info-box-number">{{ $jumlah_kelas_per_tingkatan['2'] }}
+                                <small>{{ $jumlah_kelas_per_tingkatan['2'] > 1 ? 'classes' : 'class' }}</small></span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -71,8 +71,8 @@
 
                         <div class="info-box-content">
                             <span class="info-box-text">Kindergarten B</span>
-                            <span class="info-box-number">{{ $jumlah_kelas_kinder_garten_b }}
-                                <small>{{ $jumlah_kelas_kinder_garten_b > 1 ? 'classes' : 'class' }}</small></span>
+                            <span class="info-box-number">{{ $jumlah_kelas_per_tingkatan['3'] }}
+                                <small>{{ $jumlah_kelas_per_tingkatan['3'] > 1 ? 'classes' : 'class' }}</small></span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -88,8 +88,8 @@
 
                         <div class="info-box-content">
                             <span class="info-box-text">Primary School</span>
-                            <span class="info-box-number">{{ $jumlah_kelas_primary_school }}
-                                <small>{{ $jumlah_kelas_junior_high_school > 1 ? 'classes' : 'class' }}</small></span>
+                            <span class="info-box-number">{{ $jumlah_kelas_per_tingkatan['4'] }}
+                                <small>{{ $jumlah_kelas_per_tingkatan['4'] > 1 ? 'classes' : 'class' }}</small></span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -103,8 +103,8 @@
 
                         <div class="info-box-content">
                             <span class="info-box-text">Junior High School</span>
-                            <span class="info-box-number">{{ $jumlah_kelas_junior_high_school }}
-                                <small>{{ $jumlah_kelas_junior_high_school > 1 ? 'classes' : 'class' }}</small></span>
+                            <span class="info-box-number">{{ $jumlah_kelas_per_tingkatan['5'] }}
+                                <small>{{ $jumlah_kelas_per_tingkatan['5'] > 1 ? 'classes' : 'class' }}</small></span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -119,8 +119,8 @@
 
                         <div class="info-box-content">
                             <span class="info-box-text">Senior High School</span>
-                            <span class="info-box-number">{{ $jumlah_kelas_senior_high_school }}
-                                <small>{{ $jumlah_kelas_junior_high_school > 1 ? 'class' : 'classes' }}</small></span>
+                            <span class="info-box-number">{{ $jumlah_kelas_per_tingkatan['6'] }}
+                                <small>{{ $jumlah_kelas_per_tingkatan['6'] > 1 ? 'class' : 'classes' }}</small></span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -277,7 +277,13 @@
                                                 <td>
                                                     <a href="{{ route('guru.kelas.show', $kelas->id) }}"
                                                         class="btn btn-primary btn-sm">
-                                                        <i class="fas fa-list"></i> {{ $kelas->jumlah_anggota }} Siswa
+                                                        @if ($jumlah_anggota_kelas->has($kelas->id))
+                                                            <span
+                                                                class="info-box-number">{{ $jumlah_anggota_kelas[$kelas->id]->jumlah_anggota }}</span>
+                                                        @else
+                                                            <span class="info-box-number">0</span>
+                                                        @endif
+                                                        Siswa
                                                     </a>
                                                 </td>
                                                 <td>

@@ -44,6 +44,15 @@
                 </li>
                 <li class="list-divider"></li>
 
+                @if (request()->is('admission/*'))
+                    <li class="nav-small-cap">
+                        <span class="hide-menu">Admission</span>
+                    </li>
+                    @include('layouts.partials.sidebar.tu.pengumuman')
+                    @include('layouts.partials.sidebar.tu.siswa')
+                    <li class="list-divider"></li>
+                @endif
+
                 @if (request()->is('admin/user/*') || request()->is('admin/dashboard'))
                     <li class="nav-small-cap">
                         <span class="hide-menu">User Management</span>

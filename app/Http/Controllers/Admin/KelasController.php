@@ -14,6 +14,7 @@ use App\Models\AnggotaKelas;
 use Illuminate\Http\Request;
 
 
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
@@ -26,47 +27,42 @@ class KelasController extends Controller
      */
     public function index()
     {
+
         $tapel = Tapel::where('status', 1)->first();
-        $data_mapel = Mapel::where('tapel_id', $tapel->id)->get();
 
         $title = 'Data Kelas';
-        $data_kelas = Kelas::where('tapel_id', $tapel->id)->orderBy('tingkatan_id', 'ASC')->get();
+        $data_kelas = Kelas::with('anggota_kelas')
+            ->where('tapel_id', $tapel->id)
+            ->orderBy('tingkatan_id', 'ASC')
+            ->get();
 
-        foreach ($data_kelas as $kelas) {
-            $jumlah_anggota =  AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
-                ->where('anggota_kelas.tapel_id', $tapel->id)
-                ->where('anggota_kelas.kelas_id', $kelas->id)
-                ->where('siswa.status', 1)
-                ->orderBy('siswa.nama_lengkap', 'ASC')
-                ->count();
-
-            $kelas->jumlah_anggota = $jumlah_anggota;
-        }
+        $jumlah_anggota_kelas = AnggotaKelas::join('siswa', 'anggota_kelas.siswa_id', '=', 'siswa.id')
+            ->where('anggota_kelas.tapel_id', $tapel->id)
+            ->where('siswa.status', 1)
+            ->groupBy('anggota_kelas.kelas_id')
+            ->select('anggota_kelas.kelas_id', DB::raw('COUNT(*) as jumlah_anggota'))
+            ->get()
+            ->keyBy('kelas_id');
 
         $data_guru = Guru::orderBy('id', 'ASC')->get();
         $data_tingkatan = Tingkatan::orderBy('id', 'ASC')->get();
         $data_jurusan = Jurusan::orderBy('id', 'ASC')->get();
 
-        $jumlah_kelas_play_group = Kelas::where('tapel_id', $tapel->id)
-            ->where('tingkatan_id', '1')
-            ->count();
-        $jumlah_kelas_kinder_garten_a = Kelas::where('tapel_id', $tapel->id)
-            ->where('tingkatan_id', '2')
-            ->count();
-        $jumlah_kelas_kinder_garten_b = Kelas::where('tapel_id', $tapel->id)
-            ->where('tingkatan_id', '3')
-            ->count();
-        $jumlah_kelas_primary_school = Kelas::where('tapel_id', $tapel->id)
-            ->where('tingkatan_id', '4')
-            ->count();
-        $jumlah_kelas_junior_high_school = Kelas::where('tapel_id', $tapel->id)
-            ->where('tingkatan_id', '5')
-            ->count();
-        $jumlah_kelas_senior_high_school = Kelas::where('tapel_id', $tapel->id)
-            ->where('tingkatan_id', '6')
-            ->count();
+        $jumlah_kelas_per_tingkatan = Kelas::select('tingkatan_id', DB::raw('count(*) as jumlah_kelas'))
+            ->where('tapel_id', $tapel->id)
+            ->groupBy('tingkatan_id')
+            ->pluck('jumlah_kelas', 'tingkatan_id');
 
-        return view('admin.kelas.index', compact('title', 'data_kelas', 'tapel', 'data_guru', 'data_tingkatan', 'data_jurusan', 'jumlah_kelas_play_group', 'jumlah_kelas_kinder_garten_a', 'jumlah_kelas_kinder_garten_b', 'jumlah_kelas_primary_school', 'jumlah_kelas_junior_high_school', 'jumlah_kelas_senior_high_school'));
+        return view('admin.kelas.index', compact(
+            'title',
+            'data_kelas',
+            'tapel',
+            'data_guru',
+            'data_tingkatan',
+            'data_jurusan',
+            'jumlah_kelas_per_tingkatan',
+            'jumlah_anggota_kelas'
+        ));
     }
 
     /**
