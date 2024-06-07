@@ -62,7 +62,7 @@ class CetakRaportTKController extends Controller
                 ->get();
         }
 
-        return view('admin.km.raporttk.setpaper', compact('title', 'data_kelas', 'tapel'));
+        return view('admin.tk.raporttk.setpaper', compact('title', 'data_kelas', 'tapel'));
     }
 
     /**
@@ -114,7 +114,7 @@ class CetakRaportTKController extends Controller
         $paper_size = 'A4';
         $orientation = 'potrait';
 
-        return view('admin.km.raporttk.index', compact('title', 'kelas', 'tapel', 'data_kelas', 'data_anggota_kelas', 'paper_size', 'orientation', 'term'));
+        return view('admin.tk.raporttk.index', compact('title', 'kelas', 'tapel', 'data_kelas', 'data_anggota_kelas', 'paper_size', 'orientation', 'term'));
     }
 
     /**
@@ -135,7 +135,7 @@ class CetakRaportTKController extends Controller
 
         if ($request->data_type == 1) {
             $title = 'Completeness of Report TK';
-            $kelengkapan_raport = PDF::loadview('walikelas.km.raporttk.kelengkapanraport', compact('title', 'sekolah', 'anggota_kelas', 'term'))->setPaper($request->paper_size, $request->orientation);
+            $kelengkapan_raport = PDF::loadview('guru.tk.cetak-raporttk.kelengkapanraport', compact('title', 'sekolah', 'anggota_kelas', 'term', 'tapel'))->setPaper($request->paper_size, $request->orientation);
             return $kelengkapan_raport->stream('KELENGKAPAN RAPORT ' . $anggota_kelas->siswa->nama_lengkap . ' (' . $anggota_kelas->kelas->nama_kelas . ').pdf');
         } elseif ($request->data_type == 2) {
             $title = 'Raport TK';
@@ -155,7 +155,7 @@ class CetakRaportTKController extends Controller
             // EVENTS
             $dataEvents = TkEvent::where('tapel_id', $tapel->id)->where('term_id', $term->id)->get();
 
-            $raport = PDF::loadview('walikelas.km.raporttk.raport', compact('title', 'sekolah', 'anggota_kelas',  'term', 'data_id_pembelajaran', 'dataTkElements', 'dataTkTopics', 'dataTkSubtopics', 'dataTkPoints', 'dataAchivements', 'dataEvents', 'dataAchivementEvents', 'dataAttendance', 'dataCatatanWalikelas'))->setPaper($request->paper_size, $request->orientation);
+            $raport = PDF::loadview('guru.tk.cetak-raporttk.raport', compact('title', 'sekolah', 'anggota_kelas',  'term', 'tapel', 'data_id_pembelajaran', 'dataTkElements', 'dataTkTopics', 'dataTkSubtopics', 'dataTkPoints', 'dataAchivements', 'dataEvents', 'dataAchivementEvents', 'dataAttendance', 'dataCatatanWalikelas'))->setPaper($request->paper_size, $request->orientation);
 
             $raport->render();
             $dompdf = $raport->getDomPDF();
@@ -192,7 +192,7 @@ class CetakRaportTKController extends Controller
 
         if ($request->data_type == 1) {
             $title = 'Completeness of Report TK';
-            $kelengkapan_raport = PDF::loadview('walikelas.km.raporttk.kelengkapanraport-all-data', compact('title', 'sekolah', 'kelas', 'tapel', 'data_anggota_kelas', 'term'))->setPaper($request->paper_size, $request->orientation);
+            $kelengkapan_raport = PDF::loadview('guru.tk.cetak-raporttk.kelengkapanraport-all-data', compact('title', 'sekolah', 'kelas', 'tapel', 'data_anggota_kelas', 'term'))->setPaper($request->paper_size, $request->orientation);
             return $kelengkapan_raport->stream('KELENGKAPAN RAPORT  (' . $kelas->nama_kelas . ').pdf');
         } elseif ($request->data_type == 2) {
             $title = 'Raport TK';
@@ -211,7 +211,7 @@ class CetakRaportTKController extends Controller
             // EVENTS
             $dataEvents = TkEvent::where('tapel_id', $tapel->id)->where('term_id', $term->id)->get();
 
-            $raport = PDF::loadview('walikelas.km.raporttk.raport-all-data', compact('title', 'sekolah', 'data_anggota_kelas',  'term', 'dataTkElements', 'dataTkTopics', 'dataTkSubtopics', 'dataTkPoints', 'dataAchivements', 'dataEvents', 'dataAchivementEvents', 'dataAttendance', 'kelas', 'dataCatatanWalikelas'))->setPaper($request->paper_size, $request->orientation);
+            $raport = PDF::loadview('guru.tk.cetak-raporttk.raport-all-data', compact('title', 'sekolah', 'data_anggota_kelas',  'term', 'dataTkElements', 'dataTkTopics', 'dataTkSubtopics', 'dataTkPoints', 'dataAchivements', 'dataEvents', 'dataAchivementEvents', 'dataAttendance', 'kelas', 'dataCatatanWalikelas'))->setPaper($request->paper_size, $request->orientation);
 
             $raport->render();
             $dompdf = $raport->getDomPDF();

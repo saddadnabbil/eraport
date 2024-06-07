@@ -97,6 +97,33 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title"> Data Pribadi</h3>
+                            <div class="card-tools">
+                                <a href="{{ route('admin.siswa.index') }}" class="btn btn-success btn-sm">Back</a>
+                                <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#modal-edit{{ $siswa->id }}">Edit</button>
+                                <form action="{{ route('admin.siswa.print', $siswa->id) }}" method="GET" target="_black"
+                                    style="display: inline-block;">
+                                    @csrf
+                                    <input type="hidden" name="id" value="{{ $siswa->id }}">
+                                    <input type="hidden" name="paper_size" value="{{ $paper_size }}">
+                                    <input type="hidden" name="orientation" value="{{ $orientation }}">
+                                    <button type="submit" class="btn btn-primary btn-sm">Print</button>
+                                </form>
+                                @if ($siswa->status != false && $siswa->user->status != false)
+                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#modal-registrasi{{ $siswa->id }}" title="Non Active Siswa">
+                                        Non Active
+                                    </button>
+                                @else
+                                    <form action="{{ route('admin.siswa.activate') }}" method="POST"
+                                        style="display: inline-block;">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{ $siswa->id }}">
+                                        <button type="submit" class="btn btn-warning btn-sm"
+                                            onclick="confirmAndSubmit('{{ $title }}', {{ $siswa->id }})">Activate</button>
+                                    </form>
+                                @endif
+                            </div>
                         </div><!-- /.card-header -->
                         <div class="card-body">
                             @if ($errors->any())
@@ -848,8 +875,16 @@
                             </div>
 
                             <a href="{{ route('admin.siswa.index') }}" class="btn btn-success btn-sm">Back</a>
-                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                            <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#modal-edit{{ $siswa->id }}">Edit</button>
+                            <form action="{{ route('admin.siswa.print', $siswa->id) }}" method="GET" target="_black"
+                                style="display: inline-block;">
+                                @csrf
+                                <input type="hidden" name="id" value="{{ $siswa->id }}">
+                                <input type="hidden" name="paper_size" value="{{ $paper_size }}">
+                                <input type="hidden" name="orientation" value="{{ $orientation }}">
+                                <button type="submit" class="btn btn-primary btn-sm">Print</button>
+                            </form>
                             @if ($siswa->status != false && $siswa->user->status != false)
                                 <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
                                     data-bs-target="#modal-registrasi{{ $siswa->id }}" title="Non Active Siswa">
@@ -864,7 +899,6 @@
                                         onclick="confirmAndSubmit('{{ $title }}', {{ $siswa->id }})">Activate</button>
                                 </form>
                             @endif
-
                         </div><!-- /.card-body -->
                     </div>
                     <!-- /.nav-tabs-custom -->
@@ -913,49 +947,6 @@
             }
         }
     </script>
-
-    {{-- <!-- ajax get class id and and jurusan class name-->
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('select[name="tingkatan_id"]').on('change', function() {
-                var tingkatan_id = $(this).val();
-                if (tingkatan_id) {
-                    $.ajax({
-                        url: '/getKelasByTingkatan/ajax/' + tingkatan_id,
-                        type: "GET",
-                        dataType: "json",
-                        success: function(response) {
-                            $('select[name="kelas_id"]').empty();
-                            $('select[name="jurusan_id"]').empty();
-
-                            $('select[name="kelas_id"]').append(
-                                '<option value="">-- Select Class Name --</option>'
-                            );
-
-                            $('select[name="jurusan_id"]').append(
-                                '<option value="">-- Select Level Name --</option>'
-                            );
-
-                            $.each(response.data, function(i, item) {
-                                $('select[name="kelas_id"]').append(
-                                    '<option value="' +
-                                    item.id + '">' + item.nama_kelas + '</option>');
-                            });
-
-                            $.each(response.data_jurusan, function(i, item) {
-                                $('select[name="jurusan_id"]').append(
-                                    '<option value="' +
-                                    item.id + '">' + item.nama_jurusan + '</option>'
-                                );
-                            });
-                        }
-                    });
-                } else {
-                    $('select[name="kelas_id"').empty();
-                }
-            });
-        });
-    </script> --}}
 @endpush
 
 @section('footer')

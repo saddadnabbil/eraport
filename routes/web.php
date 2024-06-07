@@ -149,6 +149,7 @@ Route::group(['middleware' => ['auth']], function () {
 
                 // Siswa Controller
                 Route::get('siswa/export', 'Admin\SiswaController@export')->name('admin.siswa.export');
+                Route::get('siswa/print/{id}', 'Admin\SiswaController@print')->name('admin.siswa.print');
                 Route::get('siswa/data', 'Admin\SiswaController@data')->name('admin.siswa.data');
                 Route::get('siswa/import', 'Admin\SiswaController@format_import')->name('admin.siswa.format_import');
                 Route::post('siswa/import', 'Admin\SiswaController@import')->name('admin.siswa.import');
@@ -435,6 +436,7 @@ Route::group(['middleware' => ['auth']], function () {
                     'show' => 'km.leger.show',
                 ]);
 
+                Route::get('raportpts/export/{id}', 'Admin\KM\CetakRaportPTSController@export')->name('km.raportpts.export');
                 Route::resource('raportpts', 'Admin\KM\CetakRaportPTSController', [
                     'only' => ['index', 'store', 'show'],
                 ])->names([
@@ -671,6 +673,7 @@ Route::group(['middleware' => ['auth']], function () {
 
             // Siswa Conctroller
             Route::get('siswa/export', 'Tu\SiswaController@export')->name('tu.siswa.export');
+            Route::get('siswa/print/{id}', 'Tu\SiswaController@print')->name('tu.siswa.print');
             Route::get('siswa/data', 'Tu\SiswaController@data')->name('tu.siswa.data');
             Route::get('siswa/import', 'Tu\SiswaController@format_import')->name('tu.siswa.format_import');
             Route::post('siswa/import', 'Tu\SiswaController@import')->name('tu.siswa.import');
@@ -817,6 +820,7 @@ Route::group(['middleware' => ['auth']], function () {
                     Route::post('tapel/set', 'Guru\MD\TapelController@setAcademicYear')->name('guru.tapel.setAcademicYear');
 
                     Route::get('siswa/export', 'Guru\MD\SiswaController@export')->name('guru.siswa.export');
+                    Route::get('siswa/print/{id}', 'Guru\MD\SiswaController@print')->name('guru.siswa.print');
                     Route::get('siswa/data', 'Guru\MD\SiswaController@data')->name('guru.siswa.data');
                     Route::get('siswa/import', 'Guru\MD\SiswaController@format_import')->name('guru.siswa.format_import');
                     Route::post('siswa/import', 'Guru\MD\SiswaController@import')->name('guru.siswa.import');
@@ -1065,6 +1069,7 @@ Route::group(['middleware' => ['auth']], function () {
                         'show' => 'guru.km.leger.show',
                     ]);
 
+                    Route::get('raportpts/export/{id}', 'Guru\KM\CetakRaportPTSController@export')->name('guru.km.raportpts.export');
                     Route::resource('raportpts', 'Guru\KM\CetakRaportPTSController', [
                         'only' => ['index', 'store', 'show'],
                     ])->names([

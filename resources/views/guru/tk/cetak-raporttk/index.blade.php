@@ -1,5 +1,4 @@
 @extends('layouts.main.header')
-
 @section('sidebar')
     @include('layouts.sidebar.guru')
 @endsection
@@ -18,7 +17,7 @@
             'breadcrumbs' => [
                 [
                     'title' => 'Dashboard',
-                    'url' => route('guru.dashboard'),
+                    'url' => $dashboard,
                     'active' => true,
                 ],
                 [
@@ -46,23 +45,62 @@
 
                         <div class="card-body">
                             <div class="callout callout-info">
-                                <form action="{{ route('raportsemesterkm.store') }}" method="POST">
+                                <form action="{{ route('guru.tk.raport.store') }}" method="POST">
                                     @csrf
                                     <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Semester</label>
-                                        <div class="col-sm-9">
-                                            <select class="form-control form-select" name="semester_id" style="width: 100%;"
-                                                required>
-                                                <option value="">-- Pilih Semester --</option>
-                                                <option value="1" @if ($semester->id == '1') selected @endif>1
+                                        <label class="col-sm-2 col-form-label">Term</label>
+                                        <div class="col-sm-4">
+                                            <select class="form-control form-select" name="term_id" style="width: 100%;"
+                                                required onchange="this.form.submit();">
+                                                <option value="1" @if ($term->id == '1') selected @endif>1
                                                 </option>
-                                                <option value="2" @if ($semester->id == '2') selected @endif>2
+                                                <option value="2" @if ($term->id == '2') selected @endif>2
+                                                </option>
+                                                <option value="2" @if ($term->id == '3') selected @endif>3
+                                                </option>
+                                                <option value="2" @if ($term->id == '4') selected @endif>4
                                                 </option>
                                             </select>
                                         </div>
+                                        <label class="col-sm-2 col-form-label">Class</label>
+                                        <div class="col-sm-4">
+                                            <select class="form-control form-select select2" name="kelas_id"
+                                                style="width: 100%;" required onchange="this.form.submit();">
+                                                <option value="" disabled>-- Select Class --</option>
+                                                @foreach ($data_kelas->sortBy('tingkatan_id') as $kls)
+                                                    <option value="{{ $kls->id }}"
+                                                        @if ($kls->id == $kelas->id) selected @endif>
+                                                        {{ $kls->nama_kelas }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
+                                </form>
+                            </div>
+                            <div class="d-flex justify-content-end my-3 gap-2">
+                                <form action="{{ route('guru.tk.raport.export', $kelas->id) }}" target="_black"
+                                    method="GET">
+                                    @csrf
+                                    <input type="hidden" name="data_type" value="1">
                                     <input type="hidden" name="paper_size" value="{{ $paper_size }}">
                                     <input type="hidden" name="orientation" value="{{ $orientation }}">
+                                    <input type="hidden" name="term_id" value="{{ $term->id }}">
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-print"></i> Print All Data
+                                    </button>
+                                </form>
+                                <form action="{{ route('guru.tk.raport.export', $kelas->id) }}" target="_black"
+                                    method="get">
+                                    @csrf
+                                    <input type="hidden" name="data_type" value="2">
+                                    <input type="hidden" name="paper_size" value="{{ $paper_size }}">
+                                    <input type="hidden" name="orientation" value="{{ $orientation }}">
+                                    <input type="hidden" name="term_id" value="{{ $term->id }}">
+
+                                    <button type="submit" class="btn btn-primary btn-sm">
+                                        <i class="fas fa-download"></i> Print All Report Data
+                                    </button>
+
                                 </form>
                             </div>
 
@@ -80,8 +118,12 @@
                                     </thead>
                                     <tbody>
                                         <?php $no = 0; ?>
-                                        @if (!$data_anggota_kelas->isEmpty())
-                                            @foreach ($data_anggota_kelas->sortBy('siswa.nama_lengkap') as $anggota_kelas)
+                                        @if ($data_anggota_kelas->count() == 0)
+                                            <tr>
+                                                <td colspan="6" class="text-center">Tidak ada data</td>
+                                            </tr>
+                                        @else
+                                            @foreach ($data_anggota_kelas as $anggota_kelas)
                                                 <?php $no++; ?>
                                                 <tr>
                                                     <input type="hidden" name="anggota_kelas_id[]"
@@ -92,7 +134,7 @@
                                                     <td class="text-center">{{ $anggota_kelas->siswa->jenis_kelamin }}</td>
                                                     <td class="text-center">
                                                         <form
-                                                            action="{{ route('raportsemesterkm.show', $anggota_kelas->id) }}"
+                                                            action="{{ route('guru.tk.raport.show', $anggota_kelas->id) }}"
                                                             target="_black" method="GET">
                                                             @csrf
                                                             <input type="hidden" name="data_type" value="1">
@@ -100,8 +142,8 @@
                                                                 value="{{ $paper_size }}">
                                                             <input type="hidden" name="orientation"
                                                                 value="{{ $orientation }}">
-                                                            <input type="hidden" name="semester_id"
-                                                                value="{{ $semester->id }}">
+                                                            <input type="hidden" name="term_id"
+                                                                value="{{ $term->id }}">
                                                             <button type="submit" class="btn btn-danger btn-sm">
                                                                 <i class="fas fa-print"></i> Print Data
                                                             </button>
@@ -109,7 +151,7 @@
                                                     </td>
                                                     <td class="text-center">
                                                         <form
-                                                            action="{{ route('raportsemesterkm.show', $anggota_kelas->id) }}"
+                                                            action="{{ route('guru.tk.raport.show', $anggota_kelas->id) }}"
                                                             target="_black" method="GET">
                                                             @csrf
                                                             <input type="hidden" name="data_type" value="2">
@@ -117,8 +159,8 @@
                                                                 value="{{ $paper_size }}">
                                                             <input type="hidden" name="orientation"
                                                                 value="{{ $orientation }}">
-                                                            <input type="hidden" name="semester_id"
-                                                                value="{{ $semester->id }}">
+                                                            <input type="hidden" name="term_id"
+                                                                value="{{ $term->id }}">
                                                             <button type="submit" class="btn btn-primary btn-sm">
                                                                 <i class="fas fa-print"></i> Print Report
                                                             </button>
@@ -126,10 +168,6 @@
                                                     </td>
                                                 </tr>
                                             @endforeach
-                                        @else
-                                            <tr>
-                                                <td class="text-center" colspan="12">Data not available.</td>
-                                            </tr>
                                         @endif
                                     </tbody>
                                 </table>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Guru\MD;
 
 use Excel;
+use PDF;
 use App\Models\User;
 use App\Models\Kelas;
 use App\Models\Siswa;
@@ -111,7 +112,10 @@ class SiswaController extends Controller
         $data_kelas_terendah = Kelas::where('tapel_id', $tapel->id)->where('tingkatan_id', $tingkatan_terendah)->orderBy('tingkatan_id', 'ASC')->get();
         $data_kelas_all = Kelas::where('tapel_id', $tapel->id)->orderBy('tingkatan_id', 'ASC')->get();
 
-        return view('guru.md.siswa.show', compact('title', 'siswa', 'tingkatan_akhir', 'data_kelas_all', 'data_kelas_terendah', 'data_tingkatan', 'data_kelas', 'data_jurusan'));
+        $paper_size = 'A4';
+        $orientation = 'potrait';
+
+        return view('guru.md.siswa.show', compact('title', 'siswa', 'tingkatan_akhir', 'data_kelas_all', 'data_kelas_terendah', 'data_tingkatan', 'data_kelas', 'data_jurusan', 'paper_size', 'orientation'));
     }
 
     /**
@@ -337,8 +341,8 @@ class SiswaController extends Controller
         $user->save();
 
         $data_siswa = [
-            'tingkatan_id' => $request->kelas_id,
-            'jurusan_id' => $request->kelas_id,
+            'tingkatan_id' => $request->tingkatan_id,
+            'jurusan_id' => $request->jurusan_id,
             'kelas_id' => $request->kelas_id,
             'jenis_pendaftaran' => $request->jenis_pendaftaran,
             'tahun_masuk' => $request->tahun_masuk,
@@ -655,5 +659,19 @@ class SiswaController extends Controller
         $siswaTrashed = Siswa::onlyTrashed()->get();
 
         return view('guru.md.siswa.trash', compact('title', 'siswaTrashed'));
+    }
+
+    public function print(Request $request, $id)
+    {
+        $siswa = Siswa::findorfail($id);
+        $sekolah = $siswa->kelas->tingkatan->sekolah;
+        $tapel = Tapel::where('status', 1)->first();
+        $nama = strtoupper($siswa->nama_lengkap);
+        $kelas = strtoupper($siswa->kelas->nama_kelas);
+        $nisn = $siswa->nisn;
+
+        $title = 'Detail Siswa';
+        $kelengkapan_raport = PDF::loadview('admin.siswa.print.data', compact('title', 'sekolah', 'siswa'))->setPaper($request->paper_size, $request->orientation);
+        return $kelengkapan_raport->stream('KELENGKAPAN RAPORT ' . $siswa->nama_lengkap . ' (' . $siswa->kelas->nama_kelas . ').pdf');
     }
 }

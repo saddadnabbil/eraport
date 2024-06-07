@@ -1,5 +1,4 @@
 @extends('layouts.main.header')
-
 @section('sidebar')
     @include('layouts.sidebar.guru')
 @endsection
@@ -18,7 +17,7 @@
             'breadcrumbs' => [
                 [
                     'title' => 'Dashboard',
-                    'url' => route('guru.dashboard'),
+                    'url' => $dashboard,
                     'active' => true,
                 ],
                 [
@@ -46,16 +45,31 @@
 
                         <div class="card-body">
                             <div class="callout callout-info">
-                                <form action="{{ route('raportsemesterkm.store') }}" method="POST">
+                                <form action="{{ route('guru.tk.raport.store') }}" method="POST">
                                     @csrf
                                     <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label">Semester</label>
-                                        <div class="col-sm-9">
-                                            <select class="form-control form-select" name="semester_id" style="width: 100%;"
-                                                required onchange="this.form.submit()">
-                                                <option value="" selected>-- Pilih Semester --</option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
+                                        <label class="col-sm-2 col-form-label">Term</label>
+                                        <div class="col-sm-4">
+                                            <select class="form-control form-select" name="term_id" style="width: 100%;"
+                                                required>
+                                                <option value="1" @if ($tapel->term_id == '1') selected @endif>1
+                                                </option>
+                                                <option value="2" @if ($tapel->term_id == '2') selected @endif>2
+                                                </option>
+                                                <option value="2" @if ($tapel->term_id == '3') selected @endif>3
+                                                </option>
+                                                <option value="2" @if ($tapel->term_id == '4') selected @endif>4
+                                                </option>
+                                            </select>
+                                        </div>
+                                        <label class="col-sm-2 col-form-label">Class</label>
+                                        <div class="col-sm-4">
+                                            <select class="form-control form-select select2" name="kelas_id"
+                                                style="width: 100%;" required onchange="this.form.submit();">
+                                                <option value="">-- Select Class --</option>
+                                                @foreach ($data_kelas->sortBy('tingkatan_id') as $kls)
+                                                    <option value="{{ $kls->id }}">{{ $kls->nama_kelas }}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>

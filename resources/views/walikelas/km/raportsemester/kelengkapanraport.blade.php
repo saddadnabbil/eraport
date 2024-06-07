@@ -664,11 +664,13 @@
                 <tr>
                     <td
                         style="text-align: left; vertical-align: middle; display: inline-block; border: 1px solid black; padding: 2pt">
-                        @if ($anggota_kelas->siswa->pas_photo != null)
-                            <img src="{{ asset('/storage/siswa/' . $anggota_kelas->siswa->pas_photo) }}"
-                                alt="4x3">
+                        @if (Storage::disk('public')->exists('siswa/' . $anggota_kelas->siswa->nis . '.jpg'))
+                            <img class="mb-2"
+                                src="{{ asset('storage/siswa/' . $anggota_kelas->siswa->nis . '.jpg') }}"
+                                alt="{{ $anggota_kelas->siswa->pas_photo }}" alt="pas_photo" width="105px">
                         @else
-                            <img src="{{ asset('/dist/img/4x3.png') }}" alt="4x3">
+                            <img src="{{ asset('assets/dist/img/3x4.png') }}" alt="" id="pas_photo_preview"
+                                width="105px" height="144px">
                         @endif
                     </td>
                     <td style=" text-align: center; vertical-align: middle; line-height: 1.3; padding-right: 160pt">
@@ -678,9 +680,15 @@
                         <p style="font-size: 8pt">
                             Principal
                         </p>
-
+                        @if (Storage::disk('public')->exists('ttd_kepala_sekolah/' . $sekolah->nip_kepala_sekolah . '.jpg'))
+                            <div>
+                                <img src="{{ asset('storage/ttd_kepala_sekolah/' . $sekolah->nip_kepala_sekolah . '.jpg') }}"
+                                    alt="{{ $sekolah->nip_kepala_sekolah }}" width="120px"
+                                    class="text-align: center; ">
+                            </div>
+                        @endif
                         <h5
-                            style="font-size: 8pt; padding-top: 45pt; text-align: center; border-bottom: 0.4px solid black; display: inline-block; width: auto;">
+                            style="font-size: 8pt; text-align: center; border-bottom: 0.4px solid black; display: inline-block; width: auto;">
                             {{ $sekolah->kepala_sekolah }}</h5>
                     </td>
                 </tr>

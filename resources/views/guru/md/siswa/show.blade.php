@@ -97,6 +97,33 @@
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title"> Data Pribadi</h3>
+                            <div class="card-tools">
+                                <a href="{{ route('guru.siswa.index') }}" class="btn btn-success btn-sm">Back</a>
+                                <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#modal-edit{{ $siswa->id }}">Edit</button>
+                                <form action="{{ route('guru.siswa.print', $siswa->id) }}" method="GET" target="_black"
+                                    style="display: inline-block;">
+                                    @csrf
+                                    <input type="hidden" name="id" value="{{ $siswa->id }}">
+                                    <input type="hidden" name="paper_size" value="{{ $paper_size }}">
+                                    <input type="hidden" name="orientation" value="{{ $orientation }}">
+                                    <button type="submit" class="btn btn-primary btn-sm">Print</button>
+                                </form>
+                                @if ($siswa->status != false && $siswa->user->status != false)
+                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#modal-registrasi{{ $siswa->id }}" title="Non Active Siswa">
+                                        Non Active
+                                    </button>
+                                @else
+                                    <form action="{{ route('guru.siswa.activate') }}" method="POST"
+                                        style="display: inline-block;">
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{ $siswa->id }}">
+                                        <button type="submit" class="btn btn-warning btn-sm"
+                                            onclick="confirmAndSubmit('{{ $title }}', {{ $siswa->id }})">Activate</button>
+                                    </form>
+                                @endif
+                            </div>
                         </div><!-- /.card-header -->
                         <div class="card-body">
                             @if ($errors->any())
@@ -848,8 +875,16 @@
                             </div>
 
                             <a href="{{ route('guru.siswa.index') }}" class="btn btn-success btn-sm">Back</a>
-                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                            <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#modal-edit{{ $siswa->id }}">Edit</button>
+                            <form action="{{ route('guru.siswa.print', $siswa->id) }}" method="GET" target="_black"
+                                style="display: inline-block;">
+                                @csrf
+                                <input type="hidden" name="id" value="{{ $siswa->id }}">
+                                <input type="hidden" name="paper_size" value="{{ $paper_size }}">
+                                <input type="hidden" name="orientation" value="{{ $orientation }}">
+                                <button type="submit" class="btn btn-primary btn-sm">Print</button>
+                            </form>
                             @if ($siswa->status != false && $siswa->user->status != false)
                                 <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
                                     data-bs-target="#modal-registrasi{{ $siswa->id }}" title="Non Active Siswa">

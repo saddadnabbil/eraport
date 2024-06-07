@@ -211,7 +211,7 @@
                                                 </td>
                                                 <td>
                                                     <form action="{{ route('admin.kelas.anggota.delete', $anggota->id) }}"
-                                                        method="POST">
+                                                        method="POST" id="deleteForm{{ $anggota->id }}">
                                                         @csrf
                                                         @method('DELETE')
                                                         <a href="{{ route('admin.siswa.show', $anggota->siswa->id) }}"

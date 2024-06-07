@@ -346,14 +346,14 @@
                 <!-- Teacher's Section -->
                 <td style="width: 50%; text-align: center;">
                     <p class="s6" style="text-align: center;">
-                        {{-- Serang, January 09, 2024<br>Homeroom Teacher --}}
                         @php
                             $timestamp = strtotime($anggota_kelas->kelas->tapel->km_tgl_raport->tanggal_pembagian);
 
                             $tanggal_lahir = date('j F Y', $timestamp);
                         @endphp
                         {{ $anggota_kelas->kelas->tapel->km_tgl_raport->tempat_penerbitan }},
-                        {{ $tanggal_lahir }}<br>Homeroom Teacher
+                        {{ \Carbon\Carbon::parse($anggota_kelas->kelas->tapel->km_tgl_raport->tanggal_penerbitan)->format('d F Y') }}<br>Homeroom
+                        Teacher
                     </p>
                     @if (Storage::disk('public')->exists('ttd/' . $anggota_kelas->kelas->guru->karyawan->kode_karyawan . '.jpg'))
                         <div>

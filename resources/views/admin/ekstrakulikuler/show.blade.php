@@ -149,7 +149,7 @@
                                                 <td>
                                                     <form
                                                         action="{{ route('admin.ekstrakulikuler.anggota.delete', $anggota->id) }}"
-                                                        method="POST">
+                                                        method="POST" id="deleteForm{{ $anggota->id }}">
                                                         @csrf
                                                         @method('DELETE')
                                                         <button type="button" class="btn btn-danger btn-sm mt-1"

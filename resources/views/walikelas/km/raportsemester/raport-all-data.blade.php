@@ -1016,14 +1016,15 @@
                     <!-- Teacher's Section -->
                     <td style="width: 50%; text-align: center;">
                         <p class="s6" style="text-align: center;">
-                            {{-- Serang, January 09, 2024<br>Homeroom Teacher --}}
+
                             @php
                                 $timestamp = strtotime($anggota_kelas->kelas->tapel->km_tgl_raport->tanggal_pembagian);
 
                                 $tanggal_lahir = date('j F Y', $timestamp);
                             @endphp
                             {{ $anggota_kelas->kelas->tapel->km_tgl_raport->tempat_penerbitan }},
-                            {{ $tanggal_lahir }}<br>Homeroom Teacher
+                            {{ \Carbon\Carbon::parse($anggota_kelas->kelas->tapel->km_tgl_raport->tanggal_penerbitan)->format('d F Y') }}<br>Homeroom
+                            Teacher
                         </p>
                         @if (Storage::disk('public')->exists('ttd/' . $anggota_kelas->kelas->guru->karyawan->kode_karyawan . '.jpg'))
                             <div>
@@ -1033,7 +1034,7 @@
                             </div>
                         @endif
                         <p class="s7"
-                            style="padding-top: 37pt; text-align: center; border-bottom: 1px solid black; display: inline-block; width: auto;">
+                            style="text-align: center; border-bottom: 1px solid black; display: inline-block; width: auto;">
                             @if ($anggota_kelas->kelas->guru)
                                 {{ $anggota_kelas->kelas->guru->karyawan->nama_lengkap }}
                                 {{ $anggota_kelas->kelas->guru->gelar }}
@@ -1055,7 +1056,7 @@
                             </div>
                         @endif
                         <p class="s7"
-                            style="padding-top: 37pt; text-align: center; border-bottom: 1px solid black; display: inline-block; width: auto;">
+                            style="text-align: center; border-bottom: 1px solid black; display: inline-block; width: auto;">
                             {{ $sekolah->kepala_sekolah }}</p>
                     </td>
                 </tr>

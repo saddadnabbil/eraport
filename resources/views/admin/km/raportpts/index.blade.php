@@ -85,7 +85,21 @@
                                     </div>
                                 </form>
                             </div>
+                            <div class="d-flex justify-content-end my-3 gap-2">
+                                <form action="{{ route('km.raportpts.export', $kelas->id) }}" target="_black"
+                                    method="get">
+                                    @csrf
+                                    <input type="hidden" name="data_type" value="2">
+                                    <input type="hidden" name="paper_size" value="{{ $paper_size }}">
+                                    <input type="hidden" name="orientation" value="{{ $orientation }}">
+                                    <input type="hidden" name="semester_id" value="{{ $semester->id }}">
+                                    <input type="hidden" name="term_id" value="{{ $term->id }}">
 
+                                    <button type="submit" class="btn btn-primary btn-sm">
+                                        <i class="fas fa-download"></i> Print All Report Data
+                                    </button>
+                                </form>
+                            </div>
                             <div class="table-responsive">
                                 <table class="table table-bordered table-striped table-hover">
                                     <thead class="bg-info">

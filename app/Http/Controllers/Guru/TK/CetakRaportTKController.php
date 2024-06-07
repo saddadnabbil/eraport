@@ -62,7 +62,7 @@ class CetakRaportTKController extends Controller
                 ->get();
         }
 
-        return view('guru.km.raporttk.setpaper', compact('title', 'data_kelas', 'tapel'));
+        return view('guru.tk.cetak-raporttk.setpaper', compact('title', 'data_kelas', 'tapel'));
     }
 
     /**
@@ -110,7 +110,7 @@ class CetakRaportTKController extends Controller
         $paper_size = 'A4';
         $orientation = 'potrait';
 
-        return view('guru.km.raporttk.index', compact('title', 'kelas', 'tapel', 'data_kelas', 'data_anggota_kelas', 'paper_size', 'orientation', 'term'));
+        return view('guru.tk.cetak-raporttk.index', compact('title', 'kelas', 'tapel', 'data_kelas', 'data_anggota_kelas', 'paper_size', 'orientation', 'term'));
     }
 
     /**

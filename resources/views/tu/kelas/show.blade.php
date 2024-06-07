@@ -224,7 +224,7 @@
                                                 <td>
                                                     @if ($user->hasRole('Admin'))
                                                         <form action="{{ route('tu.kelas.anggota.delete', $anggota->id) }}"
-                                                            method="POST">
+                                                            method="POST" id="deleteForm{{ $anggota->id }}">
                                                             @csrf
                                                             @method('DELETE')
                                                             <a href="{{ route('admin.siswa.show', $anggota->siswa->id) }}"
