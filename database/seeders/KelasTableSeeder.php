@@ -72,6 +72,7 @@ class KelasTableSeeder extends Seeder
             'nama_kelas' => 'KG-B3',
         ]);
 
+        // id 8 ke atas
         // Seed data for P
         Kelas::create([
             'tingkatan_id' => 4,

@@ -201,89 +201,89 @@ class CetakRaportPTSController extends Controller
     {
         $title = 'Raport PTS';
         $data_anggota_kelas = AnggotaKelas::where('kelas_id', $id)->get();
-
-        $kelas = Kelas::where('id', $id)->first();
+        $kelas = Kelas::findOrFail($id);
         $sekolah = $kelas->tingkatan->sekolah;
         $tapel = Tapel::where('status', 1)->first();
-        $term = Term::findorfail($request->term_id);
-        $semester = Semester::findorfail($request->semester_id);
+        $semester = Semester::findOrFail($request->semester_id);
+        $term = Term::findOrFail($request->term_id);
 
         $data_id_mapel_semester_ini = Mapel::where('tapel_id', $tapel->id)->get('id');
-
         $data_id_pembelajaran = Pembelajaran::where('kelas_id', $kelas->id)->get('id');
-        $data_nilai = KmNilaiAkhirRaport::where('term_id', $term->id)->where('semester_id', $semester->id)->where('semester_id', $semester->id)->whereIn('pembelajaran_id', $data_id_pembelajaran)->where('anggota_kelas_id', $anggota_kelas->id)->get();
 
-        $data_nilai_term_1 = KmNilaiAkhirRaport::where('term_id', 1)->where('semester_id', $semester->id)->whereIn('pembelajaran_id', $data_id_pembelajaran)->where('anggota_kelas_id', $anggota_kelas->id)->get();
+        $data_nilai_total = [];
 
-        $nilai_akhir_term_1 = [];
-        foreach ($data_nilai_term_1 as $nilai_term_1) {
-            $nilai_akhir_term_1[] = [
-                'term' => $nilai_term_1->term_id,
-                'pembelajaran_id' => $nilai_term_1->pembelajaran_id,
-                'nilai_akhir_raport' => $nilai_term_1->nilai_akhir_raport,
-                'nama_mapel' => $nilai_term_1->pembelajaran->mapel->nama_mapel,
-                'nama_mapel_indonesian' => $nilai_term_1->pembelajaran->mapel->nama_mapel_indonesian,
-                'kkm' => $nilai_term_1->kkm,
-                'deskripsi_nilai' => $nilai_term_1->km_deskripsi_nilai_siswa
+        foreach ($data_anggota_kelas as $anggota) {
+            $data_id_pembelajaran = Pembelajaran::where('kelas_id', $anggota->kelas_id)->get('id');
+            $data_nilai = KmNilaiAkhirRaport::where('term_id', $term->id)
+                ->where('semester_id', $semester->id)
+                ->whereIn('pembelajaran_id', $data_id_pembelajaran)
+                ->where('anggota_kelas_id', $anggota->id)
+                ->get();
+
+            $nilai_siswa = [];
+
+            foreach ($data_nilai as $nilai) {
+                $nilai_siswa[] = [
+                    'term' => $nilai->term_id,
+                    'pembelajaran_id' => $nilai->pembelajaran_id,
+                    'nilai_akhir_raport' => $nilai->nilai_akhir_raport,
+                    'nama_mapel' => $nilai->pembelajaran->mapel->nama_mapel,
+                    'nama_mapel_indonesian' => $nilai->pembelajaran->mapel->nama_mapel_indonesian,
+                    'kkm' => $nilai->kkm,
+                    'deskripsi_nilai' => $nilai->km_deskripsi_nilai_siswa
+                ];
+            }
+
+            $nilai_akhir_total = [];
+
+            foreach ($nilai_siswa as $nilai) {
+                $pembelajaran_id = $nilai['pembelajaran_id'];
+                if (!isset($nilai_akhir_total[$pembelajaran_id])) {
+                    $nilai_akhir_total[$pembelajaran_id] = ['nilai' => 0, 'predikat' => '', 'nama_mapel' => ''];
+                }
+                $nilai_akhir_total[$pembelajaran_id]['nilai'] += $nilai['nilai_akhir_raport'];
+                $nilai_akhir_total[$pembelajaran_id]['nama_mapel'] = $nilai['nama_mapel'];
+                $nilai_akhir_total[$pembelajaran_id]['nama_mapel_indonesian'] = $nilai['nama_mapel_indonesian'];
+                $nilai_akhir_total[$pembelajaran_id]['kkm'] = $nilai['kkm'];
+                $nilai_akhir_total[$pembelajaran_id]['deskripsi_nilai'] = $nilai['deskripsi_nilai'];
+                $nilai_akhir_total[$pembelajaran_id]['term'] = $nilai['term'];
+            }
+
+            // Final Grade
+            // Membagi hasil jumlah nilai dengan 2 dan menambahkan predikat
+            $nilai_akhir_total = array_map(function ($data) {
+                // Interval KKM
+                $kkm = [
+                    'predikat_d' => 60.00,
+                    'predikat_c' => 70.00,
+                    'predikat_b' => 80.00,
+                    'predikat_a' => 100.00,
+                ];
+
+                if ($data['nilai'] < $kkm['predikat_d']) {
+                    $data['predikat'] = 'D';
+                } elseif ($data['nilai'] >= $kkm['predikat_d'] && $data['nilai'] < $kkm['predikat_c']) {
+                    $data['predikat'] = 'C';
+                } elseif ($data['nilai'] >= $kkm['predikat_c'] && $data['nilai'] < $kkm['predikat_b']) {
+                    $data['predikat'] = 'B';
+                } elseif ($data['nilai'] >= $kkm['predikat_b'] && $data['nilai'] <= $kkm['predikat_a']) {
+                    $data['predikat'] = 'A';
+                }
+
+                return $data;
+            }, $nilai_akhir_total);
+
+            $data_nilai_total[] = [
+                'siswa' => $anggota->siswa,
+                'nilai_akhir_total' => $nilai_akhir_total
             ];
         }
 
-        $nilai_akhir_total = [];
-
-        foreach ($nilai_akhir_term_1 as $nilai) {
-            $pembelajaran_id = $nilai['pembelajaran_id'];
-            if (!isset($nilai_akhir_total[$pembelajaran_id])) {
-                $nilai_akhir_total[$pembelajaran_id] = ['nilai' => 0, 'predikat' => '', 'nama_mapel' => ''];
-            }
-            $nilai_akhir_total[$pembelajaran_id]['nilai'] += $nilai['nilai_akhir_raport'];
-            $nilai_akhir_total[$pembelajaran_id]['nama_mapel'] = $nilai['nama_mapel'];
-            $nilai_akhir_total[$pembelajaran_id]['nama_mapel_indonesian'] = $nilai['nama_mapel_indonesian'];
-            $nilai_akhir_total[$pembelajaran_id]['kkm'] = $nilai['kkm'];
-            $nilai_akhir_total[$pembelajaran_id]['deskripsi_nilai'] = $nilai['deskripsi_nilai'];
-            $nilai_akhir_total[$pembelajaran_id]['term'] = $nilai['term'];
+        if ($data_nilai_total == null) {
+            return redirect()->back()->with('error', 'Data Nilai Tidak Ditemukan');
         }
 
-        // Final Grade
-        // Membagi hasil jumlah nilai dengan 2 dan menambahkan predikat
-        $nilai_akhir_total = array_map(function ($data) {
-            // Interval KKM
-            $kkm = [
-                'predikat_d' => 60.00,
-                'predikat_c' => 70.00,
-                'predikat_b' => 80.00,
-                'predikat_a' => 100.00,
-            ];
-
-            if ($data['nilai'] < $kkm['predikat_d']) {
-                $data['predikat'] = 'D';
-            } elseif ($data['nilai'] >= $kkm['predikat_d'] && $data['nilai'] < $kkm['predikat_c']) {
-                $data['predikat'] = 'C';
-            } elseif ($data['nilai'] >= $kkm['predikat_c'] && $data['nilai'] < $kkm['predikat_b']) {
-                $data['predikat'] = 'B';
-            } elseif ($data['nilai'] >= $kkm['predikat_b'] && $data['nilai'] <= $kkm['predikat_a']) {
-                $data['predikat'] = 'A';
-            }
-
-            return $data;
-        }, $nilai_akhir_total);
-
-        $data_id_ekstrakulikuler = Ekstrakulikuler::where('tapel_id', $tapel->id)->get('id');
-
-        $data_anggota_ekstrakulikuler = AnggotaEkstrakulikuler::whereIn('ekstrakulikuler_id', $data_id_ekstrakulikuler)->where('anggota_kelas_id', $anggota_kelas->id)->get();
-        foreach ($data_anggota_ekstrakulikuler as $anggota_ekstrakulikuler) {
-            $cek_nilai_ekstra = NilaiEkstrakulikuler::where('anggota_ekstrakulikuler_id', $anggota_ekstrakulikuler->id)->first();
-            if (is_null($cek_nilai_ekstra)) {
-                $anggota_ekstrakulikuler->nilai = null;
-                $anggota_ekstrakulikuler->deskripsi = null;
-            } else {
-                $anggota_ekstrakulikuler->nilai = $cek_nilai_ekstra->nilai;
-                $anggota_ekstrakulikuler->deskripsi = $cek_nilai_ekstra->deskripsi;
-            }
-        }
-        $kehadiran_siswa = KehadiranSiswa::where('anggota_kelas_id', $anggota_kelas->id)->first();
-        $catatan_wali_kelas = CatatanWaliKelas::where('anggota_kelas_id', $anggota_kelas->id)->first();
-
-        $raport = PDF::loadview('walikelas.km.raportpts.raport', compact('title', 'sekolah', 'anggota_kelas', 'data_nilai', 'data_anggota_ekstrakulikuler', 'kehadiran_siswa', 'catatan_wali_kelas', 'nilai_akhir_total', 'semester', 'term'))->setPaper($request->paper_size, $request->orientation);
-        return $raport->stream('RAPORT PTS ' . $anggota_kelas->siswa->nama_lengkap . ' (' . $anggota_kelas->kelas->nama_kelas . ').pdf');
+        $raport = PDF::loadview('walikelas.km.raportpts.raport-all-data', compact('title', 'sekolah', 'data_nilai_total', 'semester', 'term', 'data_anggota_kelas'))->setPaper($request->paper_size, $request->orientation);
+        return $raport->stream('RAPORT PTS Kelas ' . $kelas->nama_kelas . '.pdf');
     }
 }

@@ -24,14 +24,14 @@ class AnggotaKelasTableSeeder extends Seeder
         AnggotaKelas::create([
             'siswa_id' => 2,
             'tapel_id' => 1,
-            'kelas_id' => 24,
+            'kelas_id' => 8,
             'pendaftaran' => 1
         ]);
 
         AnggotaKelas::create([
             'siswa_id' => 3,
             'tapel_id' => 1,
-            'kelas_id' => 2,
+            'kelas_id' => 9,
             'pendaftaran' => 1
         ]);
 
