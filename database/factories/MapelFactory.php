@@ -12,7 +12,7 @@ class MapelFactory extends Factory
     public function definition()
     {
         $namaMapel = $this->faker->unique()->randomElement([
-            'Informatics', 'Mathematics', 'Indonesian Language', 'English Language', 'Science', 'Social Studies', 'Arts and Culture', 'Religious Education', 'Physical Education', 'Geography', 'History',
+            'Informatics', 'Mathematics', 'Indonesian Language', 'English Language', 'Science', 'Social Studies', 'Arts and Culture', 'Religious Education', 'agama-islam', 'Geography', 'History',
         ]);
 
         return [

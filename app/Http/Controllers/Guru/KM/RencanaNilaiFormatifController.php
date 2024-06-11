@@ -68,7 +68,7 @@ class RencanaNilaiFormatifController extends Controller
         $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
         $kelas = Kelas::findorfail($pembelajaran->kelas_id);
         $data_cp = CapaianPembelajaran::where([
-            'semester' => $semester->semester,
+            'semester_id' => $semester->semester,
             'pembelajaran_id' => $pembelajaran->id,
         ])->orderBy('kode_cp', 'ASC')->get();
 

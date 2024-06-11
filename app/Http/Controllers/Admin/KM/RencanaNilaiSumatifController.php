@@ -103,7 +103,7 @@ class RencanaNilaiSumatifController extends Controller
 
         $kelas = Kelas::findorfail($pembelajaran->kelas_id);
         $data_cp = CapaianPembelajaran::where([
-            'semester' => $pembelajaran->kelas->tingkatan->semester_id,
+            'semester_id' => $pembelajaran->kelas->tingkatan->semester_id,
             'pembelajaran_id' => $pembelajaran->id,
         ])->orderBy('kode_cp', 'ASC')->get();
 

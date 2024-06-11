@@ -85,10 +85,53 @@ class PenilaianKurikulumMerdekaController extends Controller
                 $pembelajaran = Pembelajaran::findorfail($request->pembelajaran_id);
             }
 
+            $ringkasan_mapel = $pembelajaran->mapel->ringkasan_mapel;
+
+            $mapel_kata_pertama = explode('-', $ringkasan_mapel)[0];
+
+            $agama = null;
+
+            if (strtolower($mapel_kata_pertama) === 'agama') {
+                $mapel_singkatan = explode('-', $ringkasan_mapel);
+                if (count($mapel_singkatan) > 1) {
+                    $agama_singkatan = strtolower($mapel_singkatan[1]);
+
+                    switch ($agama_singkatan) {
+                        case 'islam':
+                            $agama = 1;
+                            break;
+                        case 'protestan':
+                            $agama = 2;
+                            break;
+                        case 'katolik':
+                            $agama = 3;
+                            break;
+                        case 'hindu':
+                            $agama = 4;
+                            break;
+                        case 'budha':
+                            $agama = 5;
+                            break;
+                        case 'khonghucu':
+                            $agama = 6;
+                            break;
+                        case 'lainnya':
+                            $agama = 7;
+                            break;
+                        default:
+                            $agama = null;
+                            break;
+                    }
+                }
+            }
+
             $data_anggota_kelas = AnggotaKelas::where('kelas_id', $pembelajaran->kelas_id)
                 ->orderBy('id', 'DESC')
-                ->whereHas('siswa', function ($query) {
+                ->whereHas('siswa', function ($query) use ($agama) {
                     $query->where('status', 1);
+                    if ($agama !== null) {
+                        $query->where('agama', $agama);
+                    }
                 })
                 ->get();
             $pembelajaran_id = $request->pembelajaran_id;
