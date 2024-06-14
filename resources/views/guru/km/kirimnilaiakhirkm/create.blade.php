@@ -165,7 +165,7 @@
                                                     <input type="hidden" name="kkm" value="{{ $kkm->kkm }}">
 
                                                     <?php $no = 0; ?>
-                                                    @foreach ($data_anggota_kelas->sortBy('siswa.nama_lengkap') as $anggota_kelas)
+                                                    @forelse ($data_anggota_kelas ? $data_anggota_kelas->sortBy('siswa.nama_lengkap') : [] as $anggota_kelas)
                                                         <?php $no++; ?>
                                                         <tr>
                                                             <td class="text-center" style="width: 100px;">
@@ -176,31 +176,6 @@
                                                                 value="{{ $anggota_kelas->id }}">
 
                                                             <td class="text-center">{{ $kkm->kkm }}</td>
-
-                                                            <td class="text-center">
-                                                                {{ $anggota_kelas->nilai_pengetahuan }}</td>
-                                                            <input type="hidden" name="nilai_pengetahuan[]"
-                                                                value="{{ $anggota_kelas->nilai_pengetahuan }}">
-
-                                                            <td class="text-center">
-                                                                @if ($anggota_kelas->nilai_pengetahuan < $kkm->predikat_d)
-                                                                    D
-                                                                    <input type="hidden" name="predikat_pengetahuan[]"
-                                                                        value="D">
-                                                                @elseif($anggota_kelas->nilai_pengetahuan >= $kkm->predikat_d && $anggota_kelas->nilai_pengetahuan < $kkm->predikat_c)
-                                                                    C
-                                                                    <input type="hidden" name="predikat_pengetahuan[]"
-                                                                        value="C">
-                                                                @elseif($anggota_kelas->nilai_pengetahuan >= $kkm->predikat_c && $anggota_kelas->nilai_pengetahuan < $kkm->predikat_b)
-                                                                    B
-                                                                    <input type="hidden" name="predikat_pengetahuan[]"
-                                                                        value="B">
-                                                                @elseif($anggota_kelas->nilai_pengetahuan >= $kkm->predikat_b && $anggota_kelas->nilai_pengetahuan <= $kkm->predikat_a)
-                                                                    A
-                                                                    <input type="hidden" name="predikat_pengetahuan[]"
-                                                                        value="A">
-                                                                @endif
-                                                            </td>
 
                                                             <td class="text-center">
                                                                 {{ $anggota_kelas->nilai_keterampilan }}</td>
@@ -223,6 +198,31 @@
                                                                 @elseif($anggota_kelas->nilai_keterampilan >= $kkm->predikat_b && $anggota_kelas->nilai_keterampilan <= $kkm->predikat_a)
                                                                     A
                                                                     <input type="hidden" name="predikat_keterampilan[]"
+                                                                        value="A">
+                                                                @endif
+                                                            </td>
+
+                                                            <td class="text-center">
+                                                                {{ $anggota_kelas->nilai_pengetahuan }}</td>
+                                                            <input type="hidden" name="nilai_pengetahuan[]"
+                                                                value="{{ $anggota_kelas->nilai_pengetahuan }}">
+
+                                                            <td class="text-center">
+                                                                @if ($anggota_kelas->nilai_pengetahuan < $kkm->predikat_d)
+                                                                    D
+                                                                    <input type="hidden" name="predikat_pengetahuan[]"
+                                                                        value="D">
+                                                                @elseif($anggota_kelas->nilai_pengetahuan >= $kkm->predikat_d && $anggota_kelas->nilai_pengetahuan < $kkm->predikat_c)
+                                                                    C
+                                                                    <input type="hidden" name="predikat_pengetahuan[]"
+                                                                        value="C">
+                                                                @elseif($anggota_kelas->nilai_pengetahuan >= $kkm->predikat_c && $anggota_kelas->nilai_pengetahuan < $kkm->predikat_b)
+                                                                    B
+                                                                    <input type="hidden" name="predikat_pengetahuan[]"
+                                                                        value="B">
+                                                                @elseif($anggota_kelas->nilai_pengetahuan >= $kkm->predikat_b && $anggota_kelas->nilai_pengetahuan <= $kkm->predikat_a)
+                                                                    A
+                                                                    <input type="hidden" name="predikat_pengetahuan[]"
                                                                         value="A">
                                                                 @endif
                                                             </td>
@@ -252,7 +252,11 @@
                                                                 @endif
                                                             </td>
                                                         </tr>
-                                                    @endforeach
+                                                    @empty
+                                                        <tr>
+                                                            <td class="text-center" colspan="12">Data not available.</td>
+                                                        </tr>
+                                                    @endforelse
                                                 </tbody>
                                             </table>
                                         </div>
