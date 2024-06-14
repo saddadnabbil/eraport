@@ -119,37 +119,41 @@
                                             </thead>
                                             <tbody>
                                                 <?php $no = 0; ?>
-                                                @if ($data_nilai_terkirim->isEmpty())
+                                                @forelse ($data_nilai_terkirim ? $data_nilai_terkirim->sortBy('anggota_kelas.siswa.nama_lengkap') : [] as $nilai_terkirim)
+                                                    <?php $no++; ?>
                                                     <tr>
-                                                        <td colspan="9" class="text-center">Data not available</td>
+                                                        <td class="text-center" style="width: 100px;">
+                                                            {{ $no }}</td>
+
+                                                        <td>
+                                                            @if ($nilai_terkirim && $nilai_terkirim->anggota_kelas && $nilai_terkirim->anggota_kelas->siswa)
+                                                                {{ $nilai_terkirim->anggota_kelas->siswa->nama_lengkap }}
+                                                            @else
+                                                                -
+                                                            @endif
+                                                        </td>
+                                                        <td class="text-center">{{ $nilai_terkirim->kkm }}</td>
+
+                                                        <td class="text-center">{{ $nilai_terkirim->nilai_sumatif }}
+                                                        </td>
+                                                        <td class="text-center">{{ $nilai_terkirim->predikat_sumatif }}
+                                                        </td>
+                                                        <td class="text-center">{{ $nilai_terkirim->nilai_formatif }}
+                                                        </td>
+                                                        <td class="text-center">
+                                                            {{ $nilai_terkirim->predikat_formatif }}</td>
+
+                                                        <td class="text-center">
+                                                            {{ $nilai_terkirim->nilai_akhir_raport }}</td>
+                                                        <td class="text-center">
+                                                            {{ $nilai_terkirim->predikat_akhir_raport }}</td>
                                                     </tr>
-                                                @else
-                                                    @foreach ($data_nilai_terkirim->sortBy('anggota_kelas.siswa.nama_lengkap') as $nilai_terkirim)
-                                                        <?php $no++; ?>
-                                                        <tr>
-                                                            <td class="text-center" style="width: 100px;">
-                                                                {{ $no }}</td>
-
-                                                            <td>{{ $nilai_terkirim->anggota_kelas->siswa->nama_lengkap }}
-                                                            </td>
-                                                            <td class="text-center">{{ $nilai_terkirim->kkm }}</td>
-
-                                                            <td class="text-center">{{ $nilai_terkirim->nilai_sumatif }}
-                                                            </td>
-                                                            <td class="text-center">{{ $nilai_terkirim->predikat_sumatif }}
-                                                            </td>
-                                                            <td class="text-center">{{ $nilai_terkirim->nilai_formatif }}
-                                                            </td>
-                                                            <td class="text-center">
-                                                                {{ $nilai_terkirim->predikat_formatif }}</td>
-
-                                                            <td class="text-center">
-                                                                {{ $nilai_terkirim->nilai_akhir_raport }}</td>
-                                                            <td class="text-center">
-                                                                {{ $nilai_terkirim->predikat_akhir_raport }}</td>
-                                                        </tr>
-                                                    @endforeach
-                                                @endif
+                                                @empty
+                                                    <tr>
+                                                        <td colspan="9" class="text-center">Data not available
+                                                        </td>
+                                                    </tr>
+                                                @endforelse
                                             </tbody>
                                         </table>
                                     </div>
