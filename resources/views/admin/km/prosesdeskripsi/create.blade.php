@@ -120,7 +120,13 @@
                                                             value="{{ $nilai_siswa->id }}">
                                                         <tr>
                                                             <td class="text-center">{{ $no }}</td>
-                                                            <td>{{ $nilai_siswa->anggota_kelas->siswa->nama_lengkap }}</td>
+                                                            <td>
+                                                                @if ($nilai_siswa && $nilai_siswa->anggota_kelas && $nilai_siswa->anggota_kelas->siswa)
+                                                                    {{ $nilai_siswa->anggota_kelas->siswa->nama_lengkap }}
+                                                                @else
+                                                                    -
+                                                                @endif
+                                                            </td>
 
                                                             <td class="text-center">{{ $nilai_siswa->nilai_formatif }}</td>
 
