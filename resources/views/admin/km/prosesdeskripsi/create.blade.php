@@ -114,7 +114,7 @@
                                                         value="{{ $pembelajaran->id }}">
 
                                                     <?php $no = 0; ?>
-                                                    @forelse($data_nilai_siswa->sortBy('anggota_kelas.siswa.nama_lengkap') as $nilai_siswa)
+                                                    @forelse($data_nilai_siswa ? $data_nilai_siswa->sortBy('anggota_kelas.siswa.nama_lengkap') : [] as $nilai_siswa)
                                                         <?php $no++; ?>
                                                         <input type="hidden" name="nilai_akhir_raport_id[]"
                                                             value="{{ $nilai_siswa->id }}">
