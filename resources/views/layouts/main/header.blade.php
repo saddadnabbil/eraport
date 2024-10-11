@@ -7,11 +7,18 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/dist/img/logo.png') }}" />
-    <title>{{ $title }} | {{ env('APP_NAME') }}</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="https://alsyukrouniversal.sch.id/images/favicon_1_.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://alsyukrouniversal.sch.id/images/favicon_1_.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://alsyukrouniversal.sch.id/images/favicon_1_.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="https://alsyukrouniversal.sch.id/images/favicon_1_.ico">
+    <link rel="manifest" href="{{ asset('assets/images/favicons/manifest.json') }}">
+    <script src="{{ asset('dist/js/config.js') }}"></script>
+    <script src="{{ asset('assets/libs/simplebar/simplebar.min.js') }}"></script>
+    <title>{{ $title }} | Perguruan Islam Al-Syukro Universal</title>
 
     <!-- CSS Kustom -->
     <link href="{{ asset('dist/css/style.min.css') }}" rel="stylesheet" />
+    {{-- <link href="{{ asset('dist/css/theme.min.css') }}" rel="stylesheet" id="style-default"> --}}
     <!-- Summernote -->
     <link rel="stylesheet" href="{{ asset('assets/libs/summernote/summernote-bs4.css') }}">
     <!-- Font Awesome Icons -->

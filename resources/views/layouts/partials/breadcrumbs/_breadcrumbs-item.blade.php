@@ -1,5 +1,10 @@
 <div class="page-breadcrumb"
-    style="background: linear-gradient(to right,#8971ea,#7f72ea,#7574ea,#6a75e9,#5f76e8); padding-bottom: 90px; padding-top: 40px; margin-bottom: -90px">
+    style="background: linear-gradient(to right,
+                #006e3b,
+                #057841,
+                #0a8447,
+                #10904c,
+                #169c52); padding-bottom: 90px; padding-top: 40px; margin-bottom: -90px">
     <div class="row">
         <div class="col-5 align-self-center">
             <h4 class="page-title text-truncate font-weight-medium mb-1 text-light">{{ $titleBreadCrumb }}</h4>

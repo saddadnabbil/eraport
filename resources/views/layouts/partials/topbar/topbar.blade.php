@@ -28,7 +28,8 @@
                     }
                 @endphp
                 <a href="{{ $dashboard }}">
-                    <img src="{{ asset('assets/images/logo-gis.png') }}" alt="" class="img-fluid" />
+                    <img src="https://alsyukrouniversal.sch.id/images/logo-alsyukro-ok.png" alt=""
+                        class="img-fluid" />
                 </a>
             </div>
             <!-- ============================================================== -->

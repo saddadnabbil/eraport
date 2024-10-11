@@ -65,15 +65,13 @@
             <!-- *************************************************************** -->
             <div class="row">
                 <div class="col-sm-6 col-lg-3">
-                    <div class="card border-end">
+                    <div class="card"
+                        style="position: relative; border-left: 5px solid orange; bacground-color: #eaeaea94">
                         <div class="card-body">
                             <div class="d-flex align-items-center">
                                 <div class="w-80">
                                     <div class="d-inline-flex align-items-center">
-                                        <h2 class="text-dark mb-1 font-weight-medium">{{ $jumlah_guru }} </h2>
-                                        {{-- <span
-                                            class="badge bg-primary font-12 text-white font-weight-medium rounded-pill ms-2 d-lg-block d-md-none">+18.33%</span>
-                                        --}}
+                                        <h2 class="text-warning mb-1 font-weight-medium">{{ $jumlah_guru }} </h2>
                                     </div>
                                     <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">
                                         Number of Teachers
@@ -87,11 +85,12 @@
                     </div>
                 </div>
                 <div class="col-sm-6 col-lg-3">
-                    <div class="card border-end">
+                    <div class="card"
+                        style="position: relative; border-left: 5px solid rgb(68, 174, 255); bacground-color: #eaeaea94">
                         <div class="card-body">
                             <div class="d-flex align-items-center">
                                 <div class="w-80">
-                                    <h2 class="text-dark mb-1 w-100 text-truncate font-weight-medium">
+                                    <h2 class="text-info mb-1 w-100 text-truncate font-weight-medium">
                                         {{-- <sup class="set-doller">$</sup>18,306 --}}
                                         {{ $jumlah_siswa }}
                                     </h2>
@@ -107,7 +106,8 @@
                     </div>
                 </div>
                 <div class="col-sm-6 col-lg-3">
-                    <div class="card border-end">
+                    <div class="card"
+                        style="position: relative; border-left: 5px solid rgb(18, 220, 18); bacground-color: #eaeaea94">
                         <div class="card-body">
                             <div class="d-flex align-items-center">
                                 <div class="w-80">
@@ -129,7 +129,8 @@
                     </div>
                 </div>
                 <div class="col-sm-6 col-lg-3">
-                    <div class="card">
+                    <div class="card"
+                        style="position: relative; border-left: 5px solid rgb(240, 65, 65); bacground-color: #eaeaea94">
                         <div class="card-body">
                             <div class="d-flex align-items-center">
                                 <div class="w-80">
@@ -212,7 +213,7 @@
                                 <h4 class="card-title">Recent Announcement</h4>
                                 <div class="mt-4 activity">
                                     @foreach ($data_pengumuman->sortByDesc('created_at') as $pengumuman)
-                                        <div class="d-flex align-items-start border-left-line">
+                                        <div class="d-flex align-items-start border-left-l10ne">
                                             <div>
                                                 <a href="javascript:void(0)" class="btn btn-cyan btn-circle mb-2 btn-item">
                                                     <i data-feather="bell"></i>
@@ -232,7 +233,8 @@
                                                     -
                                                     {{ \Carbon\Carbon::parse($pengumuman->created_at)->diffForHumans() }}</span>
                                                 @if (Auth::user()->id == $pengumuman->user_id)
-                                                    <form action="{{ route('admin.pengumuman.destroy', $pengumuman->id) }}"
+                                                    <form
+                                                        action="{{ route('admin.pengumuman.destroy', $pengumuman->id) }}"
                                                         method="POST">
                                                         @csrf
                                                         @method('DELETE')
