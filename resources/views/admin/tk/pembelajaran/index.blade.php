@@ -43,9 +43,10 @@
                             <h3 class="card-title"><i class="fas fa-book-open"></i> {{ $title }}</h3>
                             <div class="card-tools">
                                 <div data-bs-toggle="tooltip" title="Setting" class="d-inline-block" class="d-inline-block">
-                                    <button type="button" class="btn btn-tool btn-sm" data-bs-toggle="modal"
+                                    <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#modal-settings">
                                         <i class="fas fa-cog"></i>
+                                        Setting
                                     </button>
                                 </div>
                                 {{-- <div data-bs-toggle="tooltip" title="Export" class="d-inline-block" class="d-inline-block">

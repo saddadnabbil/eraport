@@ -4,7 +4,7 @@
 @endsection
 
 @section('content')
-    <div class="page-wrapper">
+    <div class="page-wrapper" style="background-color: #eaeaeaea">
         <!-- ============================================================== -->
         <!-- Bread crumb and right sidebar toggle -->
         <!-- ============================================================== -->
@@ -35,10 +35,10 @@
         <!-- Container fluid  -->
         <!-- ============================================================== -->
         <div class="container-fluid">
-            <div class="callout callout-info">
+            <div class="callout callout-success">
                 <h5>Create, edit, and delete {{ $title }}</h5>
                 <p>Please go through the Employee menu or click the button below.</p>
-                <a href="{{ route('karyawan.index') }}" class="btn btn-primary text-white mt-2" style="text-decoration:none">
+                <a href="{{ route('karyawan.index') }}" class="btn btn-success text-white mt-2" style="text-decoration:none">
                     Employee</a>
             </div>
 
@@ -61,7 +61,7 @@
                                             <th>Identity Card</th>
                                             <th>Number Phone</th>
                                             <th>Gender</th>
-                                            <th>Action</th>
+                                            <th class="text-center">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>

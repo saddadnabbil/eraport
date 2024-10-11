@@ -69,3 +69,18 @@
     </div>
     <!-- End Sidebar scroll-->
 </aside>
+
+<style>
+    .sidebar-nav #sidebarnav .sidebar-item.selected>.sidebar-link {
+        border-radius: 0px 60px 60px 0px;
+        color: #fff !important;
+        background: linear-gradient(to right,
+                #006e3b,
+                #057841,
+                #0a8447,
+                #10904c,
+                #169c52);
+        box-shadow: 0px 7px 12px 0px rgba(95, 118, 232, 0.21);
+        opacity: 1;
+    }
+</style>

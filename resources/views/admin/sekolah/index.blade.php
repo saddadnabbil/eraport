@@ -4,7 +4,7 @@
 @endsection
 
 @section('content')
-    <div class="page-wrapper">
+    <div class="page-wrapper" style="background-color: #eaeaeaea">
         <!-- ============================================================== -->
         <!-- Bread crumb and right sidebar toggle -->
         <!-- ============================================================== -->
@@ -41,10 +41,11 @@
                         <div class="card-header">
                             <h3 class="card-title"><i class="fas fa-user-friends"></i> {{ $title }}</h3>
                             <div class="card-tools">
-                                <div data-bs-toggle="tooltip" title="Create" class="d-inline-block">
-                                    <button type="button" class="btn btn-tool btn-sm" data-bs-toggle="modal"
+                                <div class="d-inline-block">
+                                    <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#modal-tambah">
                                         <i class="fas fa-plus"></i>
+                                        Create
                                     </button>
                                 </div>
                             </div>
@@ -178,9 +179,9 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer justify-content-end">
-                                            <button type="button" class="btn btn-default"
+                                            <button type="button" class="btn btn-secondary"
                                                 data-bs-dismiss="modal">Batal</button>
-                                            <button type="submit" class="btn btn-primary">Save</button>
+                                            <button type="submit" class="btn btn-success">Save</button>
                                         </div>
                                     </form>
                                 </div>
@@ -197,7 +198,7 @@
                                             <th>Nama Sekolah</th>
                                             <th>NPSN</th>
                                             <th>Kepala Sekolah</th>
-                                            <th>Action</th>
+                                            <th class="text-center">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>

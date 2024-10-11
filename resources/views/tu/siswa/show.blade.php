@@ -4,7 +4,7 @@
 @endsection
 
 @section('content')
-    <div class="page-wrapper">
+    <div class="page-wrapper" style="background-color: #eaeaeaea">
         <!-- ============================================================== -->
         <!-- Bread crumb and right sidebar toggle -->
         <!-- ============================================================== -->
@@ -98,7 +98,7 @@
                         <div class="card-header">
                             <h3 class="card-title"> Data Pribadi</h3>
                             <div class="card-tools">
-                                <a href="{{ route('tu.siswa.index') }}" class="btn btn-success btn-sm">Back</a>
+                                <a href="{{ route('tu.siswa.index') }}" class="btn btn-secondary btn-sm">Back</a>
                                 <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
                                     data-bs-target="#modal-edit{{ $siswa->id }}">Edit</button>
                                 <form action="{{ route('tu.siswa.print', $siswa->id) }}" method="GET" target="_black"
@@ -470,7 +470,7 @@
                                                     <div class="custom-file">
                                                         @if (isset($siswa->file_document_kesehatan))
                                                             <a href="/storage/{{ $siswa->file_document_kesehatan }}"
-                                                                class="badge bg-info badge-sm" target="_blank"><i
+                                                                class="badge bg-success badge-sm" target="_blank"><i
                                                                     class="nav-icon fas fa-download"></i> &nbsp; Dokument
                                                                 Kesehatan</a>
                                                         @endif
@@ -485,7 +485,7 @@
                                                     <div class="custom-file">
                                                         @if (isset($siswa->file_list_pertanyaan))
                                                             <a href="/storage/{{ $siswa->file_list_pertanyaan }}"
-                                                                class="badge bg-info badge-sm" target="_blank"><i
+                                                                class="badge bg-success badge-sm" target="_blank"><i
                                                                     class="nav-icon fas fa-download"></i> &nbsp; Dokument
                                                                 List Pertanyaan</a>
                                                         @endif
@@ -567,7 +567,7 @@
                                                 <div class="input-group">
                                                     @if (isset($siswa->file_dokument_sekolah_lama))
                                                         <a href="/storage/{{ $siswa->file_dokument_sekolah_lama }}"
-                                                            class="badge bg-info badge-sm" target="_blank"><i
+                                                            class="badge bg-success badge-sm" target="_blank"><i
                                                                 class="nav-icon fas fa-download"></i> &nbsp; Dokument
                                                             Sekolah Lama</a>
                                                     @endif
@@ -874,7 +874,7 @@
                                 </div>
                             </div>
 
-                            <a href="{{ route('tu.siswa.index') }}" class="btn btn-success btn-sm">Back</a>
+                            <a href="{{ route('tu.siswa.index') }}" class="btn btn-secondary btn-sm">Back</a>
                             <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
                                 data-bs-target="#modal-edit{{ $siswa->id }}">Edit</button>
                             <form action="{{ route('tu.siswa.print', $siswa->id) }}" method="GET" target="_black"
@@ -931,6 +931,15 @@
         <!-- End Container fluid  -->
         <!-- ============================================================== -->
     </div>
+
+    <style>
+        .nav-pills .nav-link.active,
+        .nav-pills .show>.nav-link {
+            background-color: #22ca80;
+            color: white;
+
+        }
+    </style>
 @endsection
 
 @push('custom-scripts')

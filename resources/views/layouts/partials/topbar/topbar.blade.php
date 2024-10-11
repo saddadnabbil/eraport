@@ -65,7 +65,7 @@
                         <a class="nav-link dropdown-toggle pl-md-3 position-relative" href="javascript:void(0)"
                             id="bell" role="button" data-bs-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="true" data-bs-original-title="Menu">
-                            <span><i data-feather="grid" class="svg-icon"></i></span>
+                            <span><i data-feather="grid" class="svg-icon bg-success"></i></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-center mailbox animated bounceInDown">
                             <ul class="list-style-none">
@@ -75,7 +75,7 @@
                                             <a href="{{ request()->is('admin/dashboard') || request()->is('admin/user/*') ? 'javascript:void(0)' : route('admin.dashboard') }}"
                                                 @if (request()->is('admin/dashboard') || request()->is('admin/user/*')) disabled style="background: #e8eaec;" @endif
                                                 class="message-item d-flex align-items-center border-bottom px-3 py-2">
-                                                <div class="btn btn-danger rounded-circle btn-circle"><i
+                                                <div class="btn btn-success rounded-circle btn-circle"><i
                                                         data-feather="airplay" class="text-white"></i></div>
                                                 <div class="w-75 d-inline-block v-middle ps-2">
                                                     <h6 class="message-title mb-0 mt-1 text-nowrap">Admin</h6>
@@ -85,7 +85,7 @@
                                             <a href="{{ request()->is('admin/master-data/*') ? 'javascript:void(0)' : route('admin.sekolah.index') }}"
                                                 @if (request()->is('admin/master-data/*')) disabled style="background: #e8eaec;" @endif
                                                 class="message-item d-flex align-items-center border-bottom px-3 py-2">
-                                                <div class="btn btn-danger rounded-circle btn-circle"><i
+                                                <div class="btn btn-success rounded-circle btn-circle"><i
                                                         data-feather="airplay" class="text-white"></i></div>
                                                 <div class="w-75 d-inline-block v-middle ps-2">
                                                     <h6 class="message-title mb-0 mt-1 text-nowrap">Curriculum</h6>
@@ -94,7 +94,7 @@
                                             <a href="{{ request()->is('admission/*') || request()->routeIs('tu.dashboard') ? 'javascript:void(0)' : route('tu.dashboard') }}"
                                                 @if (request()->is('admission/*') || request()->routeIs('tu.dashboard')) disabled style="background: #e8eaec;" @endif
                                                 class="message-item d-flex align-items-center border-bottom px-3 py-2">
-                                                <div class="btn btn-danger rounded-circle btn-circle"><i
+                                                <div class="btn btn-success rounded-circle btn-circle"><i
                                                         data-feather="airplay" class="text-white"></i></div>
                                                 <div class="w-75 d-inline-block v-middle ps-2">
                                                     <h6 class="message-title mb-0 mt-1 text-nowrap">Admission</h6>
@@ -103,7 +103,7 @@
                                             <a href="{{ request()->is('admin/tk/*') ? 'javascript:void(0)' : route('tk.event.index') }}"
                                                 @if (request()->is('admin/tk/*')) disabled style="background: #e8eaec;" @endif
                                                 class="message-item d-flex align-items-center border-bottom px-3 py-2">
-                                                <div class="btn btn-danger rounded-circle btn-circle"><i
+                                                <div class="btn btn-success rounded-circle btn-circle"><i
                                                         data-feather="airplay" class="text-white"></i></div>
                                                 <div class="w-75 d-inline-block v-middle ps-2">
                                                     <h6 class="message-title mb-0 mt-1 text-nowrap">Report TK</h6>
@@ -113,7 +113,7 @@
                                             <a href="{{ request()->is('admin/km/*') ? 'javascript:void(0)' : route('km.kkm.index') }}"
                                                 @if (request()->is('admin/km/*')) disabled style="background: #e8eaec;" @endif
                                                 class="message-item d-flex align-items-center border-bottom px-3 py-2">
-                                                <div class="btn btn-danger rounded-circle btn-circle"><i
+                                                <div class="btn btn-success rounded-circle btn-circle"><i
                                                         data-feather="airplay" class="text-white"></i></div>
                                                 <div class="w-75 d-inline-block v-middle ps-2">
                                                     <h6 class="message-title mb-0 mt-1 text-nowrap">Raport KM</h6>
@@ -125,7 +125,7 @@
                                             <a href="{{ request()->is('teacher/master-data/*') || request()->routeIs('curriculum.dashboard') ? 'javascript:void(0)' : route('curriculum.dashboard') }}"
                                                 @if (request()->is('teacher/master-data/*') || request()->routeIs('curriculum.dashboard')) disabled style="background: #e8eaec;" @endif
                                                 class="message-item d-flex align-items-center border-bottom px-3 py-2">
-                                                <div class="btn btn-danger rounded-circle btn-circle"><i
+                                                <div class="btn btn-success rounded-circle btn-circle"><i
                                                         data-feather="airplay" class="text-white"></i></div>
                                                 <div class="w-75 d-inline-block v-middle ps-2">
                                                     <h6 class="message-title mb-0 mt-1 text-nowrap">Curriculum</h6>
@@ -137,7 +137,7 @@
                                             <a href="{{ request()->is('admission/*') || request()->routeIs('tu.dashboard') ? 'javascript:void(0)' : route('tu.dashboard') }}"
                                                 @if (request()->is('admission/*') || request()->routeIs('tu.dashboard')) disabled style="background: #e8eaec;" @endif
                                                 class="message-item d-flex align-items-center border-bottom px-3 py-2">
-                                                <div class="btn btn-danger rounded-circle btn-circle"><i
+                                                <div class="btn btn-success rounded-circle btn-circle"><i
                                                         data-feather="airplay" class="text-white"></i></div>
                                                 <div class="w-75 d-inline-block v-middle ps-2">
                                                     <h6 class="message-title mb-0 mt-1 text-nowrap">Admission</h6>
@@ -148,7 +148,7 @@
                                         @if ($user->hasRole('Teacher PG-KG'))
                                             <a href="{{ route('guru.tk.penilaian.index') }}"
                                                 class="message-item d-flex align-items-center border-bottom px-3 py-2">
-                                                <div class="btn btn-danger rounded-circle btn-circle"><i
+                                                <div class="btn btn-success rounded-circle btn-circle"><i
                                                         data-feather="airplay" class="text-white"></i></div>
                                                 <div class="w-75 d-inline-block v-middle ps-2">
                                                     <h6 class="message-title mb-0 mt-1 text-nowrap">Report TK</h6>
@@ -159,7 +159,7 @@
                                         @if ($user->hasRole('Teacher'))
                                             <a href="{{ route('guru.dashboard') }}"
                                                 class="message-item d-flex align-items-center border-bottom px-3 py-2">
-                                                <div class="btn btn-danger rounded-circle btn-circle"><i
+                                                <div class="btn btn-success rounded-circle btn-circle"><i
                                                         data-feather="airplay" class="text-white"></i></div>
                                                 <div class="w-75 d-inline-block v-middle ps-2">
                                                     <h6 class="message-title mb-0 mt-1 text-nowrap">Raport KM</h6>
@@ -271,7 +271,7 @@
                         <img src="{{ asset('assets/dist/img/avatar/default.png') }}" alt="user"
                             class="rounded-circle" width="40" />
                         <span class="ms-2 d-none d-lg-inline-block"><span>Hello,</span>
-                            <span class="text-dark">
+                            <span class="text-success font-weight-bold">
                                 @if (!$user->hasRole('Student'))
                                     {{ $user->karyawan->nama_lengkap }}
                                 @else
@@ -280,7 +280,8 @@
                             </span>
                             <i data-feather="chevron-down" class="svg-icon"></i></span>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-end dropdown-menu-right user-dd animated flipInY">
+                    <div
+                        class="dropdown-menu dropdown-menu-end dropdown-menu-right user-dd animated flipInY bg-success">
                         <a class="dropdown-item" href="{{ route('profile') }}"><i data-feather="user"
                                 class="svg-icon me-2 ms-1"></i> My Profile</a>
                         <a class="dropdown-item" href="{{ route('gantipassword') }}"><i data-feather="settings"
@@ -305,7 +306,7 @@
                             <button type="button" onclick="confirmLogout()"
                                 class="text-decoration-none border-0 bg-transparent btn-link text-danger"><i
                                     data-feather="log-out"
-                                    class="svg-icon me-2 ms-1 feather-icon text-danger"></i>Logout</button>
+                                    class="svg-icon me-2 ms-1 feather-icon text-danger font-weight-bold"></i>Logout</button>
                         </form>
                     </div>
                 </li>
@@ -316,6 +317,12 @@
         </div>
     </nav>
 </header>
+<style>
+    .dropdown-item:hover {
+        background-color: rgb(13, 171, 42);
+        opacity: 1;
+    }
+</style>
 
 @if (
     ($user->hasRole(['Teacher']) && request()->is('teacher/km/*')) ||

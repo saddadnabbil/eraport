@@ -12,10 +12,10 @@
                 enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
-                    <div class="callout callout-info">
+                    <div class="callout callout-success">
                         <h5>Download format import</h5>
                         <p>Silahkan download file format import melalui tombol dibawah ini.</p>
-                        <a href="{{ route('admin.siswa.format_import') }}" class="btn btn-primary text-white"
+                        <a href="{{ route('admin.siswa.format_import') }}" class="btn btn-success text-white"
                             style="text-decoration:none"><i class="fas fa-file-download"></i> Download</a>
                     </div>
                     <div class="form-group row pt-2">
@@ -33,8 +33,8 @@
                     </div>
                 </div>
                 <div class="modal-footer justify-content-end">
-                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary position-relative">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-success position-relative">
                         <div class="spinner-border spinner-border-sm" role="status" id="loading"
                             style="display: none">
                             <span class="sr-only">Loading...</span>

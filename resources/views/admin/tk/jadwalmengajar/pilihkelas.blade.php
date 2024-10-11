@@ -44,7 +44,7 @@
                         </div>
 
                         <div class="card-body">
-                            <div class="callout callout-info">
+                            <div class="callout callout-success">
                                 <form action="{{ route('admin.tk.jadwalmengajar.create') }}" method="GET">
                                     @csrf
 

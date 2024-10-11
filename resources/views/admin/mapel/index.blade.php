@@ -4,7 +4,7 @@
 @endsection
 
 @section('content')
-    <div class="page-wrapper">
+    <div class="page-wrapper" style="background-color: #eaeaeaea">
         <!-- ============================================================== -->
         <!-- Bread crumb and right sidebar toggle -->
         <!-- ============================================================== -->
@@ -42,16 +42,18 @@
                         <div class="card-header">
                             <h3 class="card-title"><i class="fas fa-book"></i> {{ $title }}</h3>
                             <div class="card-tools">
-                                <div data-bs-toggle="tooltip" title="Create" class="d-inline-block" class="d-inline-block">
-                                    <button type="button" class="btn btn-tool btn-sm" data-bs-toggle="modal"
+                                <div class="d-inline-block" class="d-inline-block">
+                                    <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#modal-tambah">
                                         <i class="fas fa-plus"></i>
+                                        Create
                                     </button>
                                 </div>
-                                <div data-bs-toggle="tooltip" title="Import" class="d-inline-block" class="d-inline-block">
-                                    <button type="button" class="btn btn-tool btn-sm" data-bs-toggle="modal"
+                                <div class="d-inline-block" class="d-inline-block">
+                                    <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#modal-import">
                                         <i class="fas fa-upload"></i>
+                                        Import
                                 </div>
                                 </button>
                             </div>
@@ -72,11 +74,11 @@
                                         enctype="multipart/form-data">
                                         @csrf
                                         <div class="modal-body">
-                                            <div class="callout callout-info">
+                                            <div class="callout callout-success">
                                                 <h5>Download format import</h5>
                                                 <p>Silahkan download file format import melalui tombol dibawah ini.</p>
                                                 <a href="{{ route('admin.mapel.format_import') }}"
-                                                    class="btn btn-primary text-white" style="text-decoration:none"><i
+                                                    class="btn btn-success text-white" style="text-decoration:none"><i
                                                         class="fas fa-file-download"></i> Download</a>
                                             </div>
                                             <div class="form-group row pt-2">
@@ -92,9 +94,9 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer justify-content-end">
-                                            <button type="button" class="btn btn-default"
+                                            <button type="button" class="btn btn-secondary"
                                                 data-bs-dismiss="modal">Batal</button>
-                                            <button type="submit" class="btn btn-primary">Import</button>
+                                            <button type="submit" class="btn btn-success">Import</button>
                                         </div>
                                     </form>
                                 </div>
@@ -156,9 +158,9 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer justify-content-end">
-                                            <button type="button" class="btn btn-default"
+                                            <button type="button" class="btn btn-secondary"
                                                 data-bs-dismiss="modal">Batal</button>
-                                            <button type="submit" class="btn btn-primary">Save</button>
+                                            <button type="submit" class="btn btn-success">Save</button>
                                         </div>
                                     </form>
                                 </div>
@@ -176,7 +178,7 @@
                                             <th>Nama Subject dalam Bahasa Indonesia</th>
                                             <th>Ringkas (Singkatan)</th>
                                             <th>Color</th>
-                                            <th>Action</th>
+                                            <th class="text-center">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>

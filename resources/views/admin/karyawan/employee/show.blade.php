@@ -13,7 +13,7 @@
 @endsection
 
 @section('content')
-    <div class="page-wrapper">
+    <div class="page-wrapper" style="background-color: #eaeaeaea">
         <!-- ============================================================== -->
         <!-- Bread crumb and right sidebar toggle -->
         <!-- ============================================================== -->
@@ -525,9 +525,9 @@
                                 </div>
                             </div>
                             <a href="{{ $user->hasRole('Curriculum') ? route('guru.guru.index') : route('karyawan.index') }}"
-                                class="btn btn-success btn-sm">Back</a>
+                                class="btn btn-secondary btn-sm">Back</a>
                             @if ($user->hasRole(['Admin']))
-                                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
                                     data-bs-target="#modal-edit{{ $karyawan->id }}">Edit</button>
                                 @if (
                                     $karyawan->status != false &&

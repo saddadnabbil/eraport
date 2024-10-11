@@ -4,7 +4,7 @@
 @endsection
 
 @section('content')
-    <div class="page-wrapper">
+    <div class="page-wrapper" style="background-color: #eaeaea">
         <!-- ============================================================== -->
         <!-- Bread crumb and right sidebar toggle -->
         <!-- ============================================================== -->
@@ -115,8 +115,9 @@
                                 <div class="form-group row">
                                     <label for="kepala_sekolah" class="col-sm-2 col-form-label">Principal</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="kepala_sekolah" name="kepala_sekolah"
-                                            placeholder="Principal" value="{{ $sekolah->kepala_sekolah }}">
+                                        <input type="text" class="form-control" id="kepala_sekolah"
+                                            name="kepala_sekolah" placeholder="Principal"
+                                            value="{{ $sekolah->kepala_sekolah }}">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -180,7 +181,7 @@
                                 </div>
                                 <div class="form-group row">
                                     <div class="offset-sm-2 col-sm-10">
-                                        <button type="submit" class="btn btn-primary">Save</button>
+                                        <button type="submit" class="btn btn-success">Save</button>
                                     </div>
                                 </div>
                             </form>

@@ -4,7 +4,7 @@
 @endsection
 
 @section('content')
-    <div class="page-wrapper">
+    <div class="page-wrapper" style="background-color: #eaeaeaea">
         <!-- ============================================================== -->
         <!-- Bread crumb and right sidebar toggle -->
         <!-- ============================================================== -->
@@ -44,21 +44,24 @@
                         <div class="card-header">
                             <h3 class="card-title">{{ $title }}</h3>
                             <div class="card-tools">
-                                <div data-bs-toggle="tooltip" title="Create" class="d-inline-block">
-                                    <button type="button" class="btn btn-tool btn-sm" data-bs-toggle="modal"
+                                <div class="d-inline-block">
+                                    <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#modal-tambah">
                                         <i class="fas fa-plus"></i>
+                                        Create
                                     </button>
                                 </div>
-                                <div data-bs-toggle="tooltip" title="Import" class="d-inline-block" class="d-inline-block">
-                                    <button type="button" class="btn btn-tool btn-sm" data-bs-toggle="modal"
+                                <div class="d-inline-block" class="d-inline-block">
+                                    <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#modal-import">
                                         <i class="fas fa-upload"></i>
+                                        Import
                                     </button>
                                 </div>
-                                <div data-bs-toggle="tooltip" title="Trash" class="d-inline-block" class="d-inline-block">
-                                    <a href="{{ route('karyawan.trash') }}" class="btn btn-tool btn-sm">
+                                <div class="d-inline-block" class="d-inline-block">
+                                    <a href="{{ route('karyawan.trash') }}" class="btn btn-danger btn-sm">
                                         <i class="fas fa-trash"></i>
+                                        Trash
                                     </a>
                                 </div>
                             </div>
@@ -95,7 +98,7 @@
                                             <th>Unit</th>
                                             <th>Position</th>
                                             <th>Status</th>
-                                            <th>Action</th>
+                                            <th class="text-center">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>

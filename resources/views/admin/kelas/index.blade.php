@@ -4,7 +4,7 @@
 @endsection
 
 @section('content')
-    <div class="page-wrapper">
+    <div class="page-wrapper" style="background-color: #eaeaeaea">
         <!-- ============================================================== -->
         <!-- Bread crumb and right sidebar toggle -->
         <!-- ============================================================== -->
@@ -38,7 +38,7 @@
             <!-- Info boxes -->
             <div class="row">
                 <div class="col-12 col-sm-6 col-md-3">
-                    <div class="info-box">
+                    <div class="info-box" style="position: relative; border-right: 5px solid #5f76e8">
                         <span class="info-box-icon bg-info elevation-1"><i class="fas fa-layer-group  text-light"></i></span>
 
                         <div class="info-box-content">
@@ -52,7 +52,7 @@
                 </div>
                 <!-- /.col -->
                 <div class="col-12 col-sm-6 col-md-3">
-                    <div class="info-box mb-3">
+                    <div class="info-box mb-3" style="position: relative; border-right: 5px solid #ff4f70">
                         <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-book  text-light"></i></span>
 
                         <div class="info-box-content">
@@ -66,7 +66,7 @@
                 </div>
                 <!-- /.col -->
                 <div class="col-12 col-sm-6 col-md-3">
-                    <div class="info-box mb-3">
+                    <div class="info-box mb-3" style="position: relative; border-right: 5px solid #ff4f70">
                         <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-book  text-light"></i></span>
 
                         <div class="info-box-content">
@@ -83,7 +83,7 @@
                 {{-- <div class="clearfix hidden-md-up"></div> --}}
 
                 <div class="col-12 col-sm-6 col-md-3">
-                    <div class="info-box mb-3">
+                    <div class="info-box mb-3" style="position: relative; border-right: 5px solid #22ca80">
                         <span class="info-box-icon bg-success elevation-1"><i class="fas fa-users text-light"></i></span>
 
                         <div class="info-box-content">
@@ -97,7 +97,7 @@
                 </div>
                 <!-- /.col -->
                 <div class="col-12 col-sm-6 col-md-3">
-                    <div class="info-box mb-3">
+                    <div class="info-box mb-3" style="position: relative; border-right: 5px solid #fdc16a">
                         <span class="info-box-icon bg-warning elevation-1"><i
                                 class="fas fa-book-reader text-light"></i></span>
 
@@ -113,7 +113,7 @@
                 <!-- /.col -->
                 <!-- /.col -->
                 <div class="col-12 col-sm-6 col-md-3">
-                    <div class="info-box mb-3">
+                    <div class="info-box mb-3" style="position: relative; border-right: 5px solid #fdc16a">
                         <span class="info-box-icon bg-warning elevation-1"><i
                                 class="fas fa-book-reader  text-light"></i></span>
 
@@ -137,10 +137,11 @@
                         <div class="card-header">
                             <h3 class="card-title">{{ $title }}</h3>
                             <div class="card-tools">
-                                <div data-bs-toggle="tooltip" title="Create" class="d-inline-block">
-                                    <button type="button" class="btn btn-tool btn-sm" data-bs-toggle="modal"
+                                <div class="d-inline-block">
+                                    <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#modal-tambah">
                                         <i class="fas fa-plus"></i>
+                                        Create
                                     </button>
                                 </div>
                             </div>
@@ -220,9 +221,9 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer justify-content-end">
-                                            <button type="button" class="btn btn-default"
+                                            <button type="button" class="btn btn-secondary"
                                                 data-bs-dismiss="modal">Batal</button>
-                                            <button type="submit" class="btn btn-primary">Save</button>
+                                            <button type="submit" class="btn btn-success">Save</button>
                                         </div>
                                     </form>
                                 </div>
@@ -242,7 +243,7 @@
                                             <th>Class</th>
                                             <th>Wali Kelas</th>
                                             <th>Jml Anggota</th>
-                                            <th>Action</th>
+                                            <th class="text-center">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>

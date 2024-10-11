@@ -14,7 +14,7 @@
     <!-- ============================================================== -->
     <!-- Page wrapper  -->
     <!-- ============================================================== -->
-    <div class="page-wrapper">
+    <div class="page-wrapper" style="background-color: #eaeaeaea">
         @php
             $time = date('H');
             $greeting = '';
@@ -65,82 +65,75 @@
             <!-- *************************************************************** -->
             <div class="row">
                 <div class="col-sm-6 col-lg-3">
-                    <div class="card"
-                        style="position: relative; border-left: 5px solid orange; bacground-color: #eaeaea94">
+                    <div class="card shadow-lg" style="background-color: orange">
                         <div class="card-body">
                             <div class="d-flex align-items-center">
                                 <div class="w-80">
                                     <div class="d-inline-flex align-items-center">
-                                        <h2 class="text-warning mb-1 font-weight-medium">{{ $jumlah_guru }} </h2>
+                                        <h2 class="text-dark mb-1 font-weight-bold">{{ $jumlah_guru }} </h2>
                                     </div>
-                                    <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">
+                                    <h6 class="text-dark font-weight-normal mb-0 w-100 text-truncate">
                                         Number of Teachers
                                     </h6>
                                 </div>
                                 <div class="ms-auto mt-md-3 mt-lg-0">
-                                    <span class="opacity-7 text-muted"><i data-feather="user-plus"></i></span>
+                                    <span class="opacity-7 text-dark"><i data-feather="user-plus"></i></span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-6 col-lg-3">
-                    <div class="card"
-                        style="position: relative; border-left: 5px solid rgb(68, 174, 255); bacground-color: #eaeaea94">
+                    <div class="card" style="background-color: rgb(68, 174, 255)">
                         <div class="card-body">
                             <div class="d-flex align-items-center">
                                 <div class="w-80">
-                                    <h2 class="text-info mb-1 w-100 text-truncate font-weight-medium">
+                                    <h2 class="text-dark mb-1 w-100 text-truncate font-weight-bold">
                                         {{-- <sup class="set-doller">$</sup>18,306 --}}
                                         {{ $jumlah_siswa }}
                                     </h2>
-                                    <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">
+                                    <h6 class="text-dark font-weight-bold mb-0 w-100 text-truncate">
                                         Number of Students
                                     </h6>
                                 </div>
                                 <div class="ms-auto mt-md-3 mt-lg-0">
-                                    <span class="opacity-7 text-muted"><i data-feather="dollar-sign"></i></span>
+                                    <span class="opacity-7 text-dark"><i data-feather="dollar-sign"></i></span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-6 col-lg-3">
-                    <div class="card"
-                        style="position: relative; border-left: 5px solid rgb(18, 220, 18); bacground-color: #eaeaea94">
+                    <div class="card" style="background-color: rgb(18, 220, 18)">
                         <div class="card-body">
                             <div class="d-flex align-items-center">
                                 <div class="w-80">
                                     <div class="d-inline-flex align-items-center">
-                                        <h2 class="text-dark mb-1 font-weight-medium">{{ $jumlah_kelas }}</h2>
-                                        {{-- <span
-                                            class="badge bg-danger font-12 text-white font-weight-medium rounded-pill ms-2 d-md-none d-lg-block">-18.33%</span>
-                                        --}}
+                                        <h2 class="text-dark mb-1 font-weight-bold">{{ $jumlah_kelas }}</h2>
                                     </div>
-                                    <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">
+                                    <h6 class="text-dark font-weight-bold mb-0 w-100 text-truncate">
                                         Number of Classes
                                     </h6>
                                 </div>
                                 <div class="ms-auto mt-md-3 mt-lg-0">
-                                    <span class="opacity-7 text-muted"><i data-feather="file-plus"></i></span>
+                                    <span class="opacity-7 text-dark"><i data-feather="file-plus"></i></span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-6 col-lg-3">
-                    <div class="card"
-                        style="position: relative; border-left: 5px solid rgb(240, 65, 65); bacground-color: #eaeaea94">
+                    <div class="card" style="background-color: rgb(227, 88, 88)">
                         <div class="card-body">
                             <div class="d-flex align-items-center">
                                 <div class="w-80">
-                                    <h2 class="text-dark mb-1 font-weight-medium">{{ $jumlah_ekstrakulikuler }}</h2>
-                                    <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">
+                                    <h2 class="text-dark mb-1 font-weight-bold">{{ $jumlah_ekstrakulikuler }}</h2>
+                                    <h6 class="text-dark font-weight-bold mb-0 w-100 text-truncate">
                                         Number of Extracurricular
                                     </h6>
                                 </div>
                                 <div class="ms-auto mt-md-3 mt-lg-0">
-                                    <span class="opacity-7 text-muted"><i data-feather="globe"></i></span>
+                                    <span class="opacity-7 text-dark"><i data-feather="globe"></i></span>
                                 </div>
                             </div>
                         </div>

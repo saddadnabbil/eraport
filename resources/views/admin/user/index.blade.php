@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <div class="page-wrapper">
+    <div class="page-wrapper" style="background-color: #eaeaeaea">
         <!-- ============================================================== -->
         <!-- Bread crumb and right sidebar toggle -->
         <!-- ============================================================== -->
@@ -36,7 +36,7 @@
         <!-- Container fluid  -->
         <!-- ============================================================== -->
         <div class="container-fluid">
-            <div class="callout callout-info">
+            <div class="callout callout-success">
                 <h5>Create, edit, and delete {{ $title }}</h5>
                 <p>Please go through the Employee menu or click the button below.</p>
                 <a href="{{ route('karyawan.index') }}" class="btn btn-primary text-white mt-2" style="text-decoration:none">
@@ -48,7 +48,7 @@
 
             <div class="row">
                 <div class="col-12">
-                    <div class="card">
+                    <div class="card shadow-lg">
                         <div class="card-header">
                             <h3 class="card-title"><i class="fas fa-user-friends"></i> {{ $title }}</h3>
                             <div class="card-tools">

@@ -4,7 +4,7 @@
 @endsection
 
 @section('content')
-    <div class="page-wrapper">
+    <div class="page-wrapper" style="background-color: #eaeaeaea">
         <!-- ============================================================== -->
         <!-- Bread crumb and right sidebar toggle -->
         <!-- ============================================================== -->
@@ -42,15 +42,17 @@
                         <div class="card-header">
                             <h3 class="card-title"><i class="fas fa-book-open"></i> {{ $title }}</h3>
                             <div class="card-tools">
-                                <div data-bs-toggle="tooltip" title="Setting" class="d-inline-block" class="d-inline-block">
-                                    <button type="button" class="btn btn-tool btn-sm" data-bs-toggle="modal"
+                                <div class="d-inline-block" class="d-inline-block">
+                                    <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#modal-settings">
                                         <i class="fas fa-cog"></i>
+                                        Setting
                                     </button>
                                 </div>
-                                <div data-bs-toggle="tooltip" title="Export" class="d-inline-block" class="d-inline-block">
-                                    <a href="{{ route('admin.pembelajaran.export') }}" class="btn btn-tool btn-sm">
+                                <div class="d-inline-block" class="d-inline-block">
+                                    <a href="{{ route('admin.pembelajaran.export') }}" class="btn btn-warning btn-sm">
                                         <i class="fas fa-download"></i>
+                                        Export
                                     </a>
                                 </div>
                             </div>

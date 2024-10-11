@@ -13,7 +13,7 @@
                 <input type="hidden" name="tapel_id" value="{{ $tapel->id }}">
                 <div class="modal-body">
                     <div class="container">
-                        <ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
+                        <ul class="nav nav-pills bg-nav-pills nav-justified mb-3 text-success">
                             <li class="nav-item">
                                 <a href="#student1" data-bs-toggle="tab" aria-expanded="false"
                                     class="nav-link rounded-0 active">
@@ -785,11 +785,20 @@
                     </div>
                 </div>
                 <div class="modal-footer justify-content-end">
-                    <button type="button" class="btn btn-default" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-success">Save</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+<style>
+    .nav-pills .nav-link.active,
+    .nav-pills .show>.nav-link {
+        background-color: #22ca80;
+        color: white;
+
+    }
+</style>
 <!-- End Modal tambah -->
