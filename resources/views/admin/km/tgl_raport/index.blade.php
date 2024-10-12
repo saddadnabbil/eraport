@@ -42,10 +42,11 @@
                         <div class="card-header">
                             <h3 class="card-title">{{ $title }}</h3>
                             <div class="card-tools">
-                                <div data-bs-toggle="tooltip" title="Create" class="d-inline-block">
-                                    <button type="button" class="btn btn-tool btn-sm" data-bs-toggle="modal"
+                                <div class="d-inline-block">
+                                    <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#modal-tambah">
                                         <i class="fas fa-plus"></i>
+                                        Create
                                     </button>
                                 </div>
                             </div>
@@ -97,9 +98,9 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer justify-content-end">
-                                            <button type="button" class="btn btn-default"
+                                            <button type="button" class="btn btn-secondary"
                                                 data-bs-dismiss="modal">Batal</button>
-                                            <button type="submit" class="btn btn-primary">Save</button>
+                                            <button type="submit" class="btn btn-success">Save</button>
                                         </div>
                                     </form>
                                 </div>
@@ -116,7 +117,7 @@
                                             <th>Semester</th>
                                             <th>Tempat</th>
                                             <th>Tanggal Pembagian Raport</th>
-                                            <th>Action</th>
+                                            <th class="text-center">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -134,7 +135,7 @@
                                                 </td>
                                                 <td>{{ $tgl_raport->tempat_penerbitan }}</td>
                                                 <td>{{ date('d-M-Y', strtotime($tgl_raport->tanggal_pembagian)) }}</td>
-                                                <td>
+                                                <td class="text-center">
                                                     <form action="{{ route('km.tglraport.destroy', $tgl_raport->id) }}"
                                                         method="POST">
                                                         @csrf
@@ -206,10 +207,10 @@
                                                                 </div>
                                                             </div>
                                                             <div class="modal-footer justify-content-end">
-                                                                <button type="button" class="btn btn-default"
+                                                                <button type="button" class="btn btn-secondary"
                                                                     data-bs-dismiss="modal">Batal</button>
                                                                 <button type="submit"
-                                                                    class="btn btn-primary">Save</button>
+                                                                    class="btn btn-success">Save</button>
                                                             </div>
                                                         </form>
                                                     </div>

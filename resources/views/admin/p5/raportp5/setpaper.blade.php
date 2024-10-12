@@ -44,7 +44,7 @@
                         </div>
 
                         <div class="card-body">
-                            <div class="callout callout-info">
+                            <div class="callout callout-success">
                                 <form action="{{ route('p5.raport.store') }}" method="POST">
                                     @csrf
                                     <div class="form-group row">

@@ -49,7 +49,7 @@
                                 @csrf
                                 <div class="table-responsive">
                                     <table class="table table-bordered table-striped table-hover">
-                                        <thead class="bg-info">
+                                        <thead class="bg-success">
                                             <tr>
                                                 <th class="text-center">No</th>
                                                 <th class="text-center">Subject</th>

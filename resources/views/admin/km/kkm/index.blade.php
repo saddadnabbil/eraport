@@ -4,7 +4,7 @@
 @endsection
 
 @section('content')
-    <div class="page-wrapper">
+    <div class="page-wrapper" style="background-color: #eaeaeaea">
         <!-- ============================================================== -->
         <!-- Bread crumb and right sidebar toggle -->
         <!-- ============================================================== -->
@@ -54,10 +54,10 @@
                                     enctype="multipart/form-data">
                                     @csrf
                                     <div class="modal-body">
-                                        <div class="callout callout-info">
+                                        <div class="callout callout-success">
                                             <h5>Download format import</h5>
                                             <p>Silahkan download file format import melalui tombol dibawah ini.</p>
-                                            <a href="{{ route('km.kkm.format_import') }}" class="btn btn-primary text-white"
+                                            <a href="{{ route('km.kkm.format_import') }}" class="btn btn-success text-white"
                                                 style="text-decoration:none"><i class="fas fa-file-download"></i>
                                                 Download</a>
                                         </div>
@@ -74,9 +74,9 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer justify-content-end">
-                                        <button type="button" class="btn btn-default"
+                                        <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Batal</button>
-                                        <button type="submit" class="btn btn-primary">Import</button>
+                                        <button type="submit" class="btn btn-success">Import</button>
                                     </div>
                                 </form>
                             </div>
@@ -127,9 +127,9 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer justify-content-end">
-                                        <button type="button" class="btn btn-default"
+                                        <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal">Batal</button>
-                                        <button type="submit" class="btn btn-primary">Save</button>
+                                        <button type="submit" class="btn btn-success">Save</button>
                                     </div>
                                 </form>
                             </div>
@@ -141,16 +141,18 @@
                         <div class="card-header">
                             <h3 class="card-title">{{ $title }}</h3>
                             <div class="card-tools">
-                                <div data-bs-toggle="tooltip" title="Create" class="d-inline-block" class="d-inline-block">
-                                    <button type="button" class="btn btn-tool btn-sm" data-bs-toggle="modal"
+                                <div class="d-inline-block" class="d-inline-block">
+                                    <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#modal-tambah">
                                         <i class="fas fa-plus"></i>
+                                        Create
                                     </button>
                                 </div>
-                                <div data-bs-toggle="tooltip" title="Import" class="d-inline-block" class="d-inline-block">
-                                    <button type="button" class="btn btn-tool btn-sm" data-bs-toggle="modal"
+                                <div class="d-inline-block" class="d-inline-block">
+                                    <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#modal-import">
                                         <i class="fas fa-upload"></i>
+                                        Import
                                     </button>
                                 </div>
                             </div>
@@ -166,7 +168,7 @@
                                             <th>Semester</th>
                                             <th>Class</th>
                                             <th>KKM</th>
-                                            <th>Action</th>
+                                            <th class="text-center">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -243,10 +245,10 @@
                                                                 </div>
                                                             </div>
                                                             <div class="modal-footer justify-content-end">
-                                                                <button type="button" class="btn btn-default"
+                                                                <button type="button" class="btn btn-secondary"
                                                                     data-bs-dismiss="modal">Batal</button>
                                                                 <button type="submit"
-                                                                    class="btn btn-primary">Save</button>
+                                                                    class="btn btn-success">Save</button>
                                                             </div>
                                                         </form>
                                                     </div>

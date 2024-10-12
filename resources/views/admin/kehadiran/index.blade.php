@@ -44,7 +44,7 @@
                         </div>
 
                         <div class="card-body">
-                            <div class="callout callout-info">
+                            <div class="callout callout-success">
                                 <form action="{{ route('km.kehadiran.create') }}" method="GET">
                                     @csrf
                                     <div class="form-group row">
